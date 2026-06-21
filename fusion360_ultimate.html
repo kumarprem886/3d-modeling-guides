@@ -1,0 +1,2616 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fusion 360 — Ultimate Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── STICKY NAV ── */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.5rem;
+    gap: 1rem;
+  }
+  .top-nav a {
+    color: #1890ff;
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .top-nav a:hover { text-decoration: underline; }
+  .nav-center {
+    font-size: 17px;
+    font-weight: 700;
+    color: #e6edf3;
+    text-align: center;
+    flex: 1;
+  }
+  .nav-right {
+    font-size: 13px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.5rem;
+    flex-wrap: wrap;
+  }
+  .pill {
+    background: #1890ff;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+  .pill.dim { background: #21262d; color: #8b949e; }
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    overflow-x: auto;
+    padding: 0 1rem;
+    gap: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: #30363d #0d1117;
+  }
+  .tab-bar::-webkit-scrollbar { height: 4px; }
+  .tab-bar::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
+
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-bottom: none;
+    color: #8b949e;
+    padding: 0.5rem 1rem;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 6px 6px 0 0;
+    margin-top: 6px;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+  }
+  .tab-btn:hover { background: #21262d; color: #c9d1d9; }
+  .tab-btn.active { background: #1890ff; color: #fff; border-color: #1890ff; }
+
+  /* ── MAIN CONTENT ── */
+  .content-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── HEADINGS ── */
+  h1 { font-size: 26px; font-weight: 700; color: #e6edf3; margin-bottom: 0.3rem; }
+  h2 { font-size: 20px; font-weight: 700; color: #e6edf3; margin: 1.4rem 0 0.6rem; }
+  .section-heading {
+    color: #1890ff;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 1.1rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  h4 { color: #e6edf3; font-size: 14px; font-weight: 600; margin: 0.8rem 0 0.3rem; }
+
+  p { margin-bottom: 0.7rem; }
+  ul, ol { margin: 0.4rem 0 0.7rem 1.4rem; }
+  li { margin-bottom: 0.25rem; }
+
+  /* ── KBD / SHORTCUTS ── */
+  kbd {
+    background: #21262d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: #e6edf3;
+    font-size: 12px;
+    display: inline-block;
+  }
+
+  .shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #21262d;
+    padding: 6px 0;
+    gap: 1rem;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #c9d1d9; font-size: 13px; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; }
+
+  .shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 0.8rem;
+  }
+  .shortcut-table th {
+    background: #21262d;
+    color: #8b949e;
+    text-align: left;
+    padding: 6px 10px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .shortcut-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #21262d;
+    vertical-align: top;
+  }
+  .shortcut-table tr:last-child td { border-bottom: none; }
+  .shortcut-table tr:hover td { background: #1c2128; }
+
+  /* ── TIP BOXES ── */
+  .tip { border-radius: 8px; padding: 0.8rem 1rem; margin: 0.8rem 0; font-size: 14px; }
+  .tip-green { background: #0d4429; border-left: 4px solid #2daa6b; }
+  .tip-yellow { background: #3d2c00; border-left: 4px solid #f0a500; }
+  .tip-red { background: #3d0000; border-left: 4px solid #e74c3c; }
+  .tip-blue { background: #001d3d; border-left: 4px solid #1890ff; }
+  .tip strong { display: block; margin-bottom: 0.2rem; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip-green strong { color: #2daa6b; }
+  .tip-yellow strong { color: #f0a500; }
+  .tip-red strong { color: #e74c3c; }
+  .tip-blue strong { color: #1890ff; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .badge-blue { background: #1890ff22; color: #1890ff; border: 1px solid #1890ff55; }
+  .badge-green { background: #2daa6b22; color: #2daa6b; border: 1px solid #2daa6b55; }
+  .badge-orange { background: #f0a50022; color: #f0a500; border: 1px solid #f0a50055; }
+
+  /* ── WORKSPACE GRID ── */
+  .ws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+  }
+  .ws-card {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+  }
+  .ws-card h4 { color: #1890ff; margin: 0 0 0.25rem; font-size: 14px; }
+  .ws-card p { font-size: 13px; color: #8b949e; margin: 0; }
+
+  /* ── CONCEPT LIST ── */
+  .concept-list { list-style: none; margin: 0; padding: 0; }
+  .concept-list li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 14px;
+  }
+  .concept-list li:last-child { border-bottom: none; }
+  .concept-num {
+    background: #1890ff;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── COLOR CODE LEGEND ── */
+  .color-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 7px 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 14px;
+  }
+  .color-row:last-child { border-bottom: none; }
+  .color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .color-label { font-weight: 600; min-width: 70px; }
+
+  /* ── TOOL GRID ── */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .tool-item {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.55rem 0.8rem;
+    font-size: 13px;
+  }
+  .tool-item .tool-name { color: #1890ff; font-weight: 600; }
+  .tool-item .tool-key { float: right; }
+  .tool-item p { color: #8b949e; font-size: 12px; margin: 0.15rem 0 0; }
+
+  /* ── CONSTRAINT GRID ── */
+  .constraint-list { list-style: none; margin: 0; padding: 0; }
+  .constraint-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 14px;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+  .constraint-list li:last-child { border-bottom: none; }
+  .constraint-icon {
+    color: #1890ff;
+    font-weight: 700;
+    min-width: 18px;
+    margin-top: 1px;
+  }
+
+  /* ── FEATURE BLOCKS ── */
+  .feature-block {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.7rem;
+  }
+  .feature-block h4 {
+    color: #1890ff;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .feature-block ul { margin: 0.3rem 0 0 1.2rem; }
+  .feature-block li { font-size: 13px; color: #c9d1d9; margin-bottom: 0.2rem; }
+
+  /* ── JOINT TABLE ── */
+  .joint-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .joint-item {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+  .joint-num {
+    background: #1890ff;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    width: 2rem;
+  }
+  .joint-body h4 { color: #e6edf3; font-size: 14px; margin: 0 0 0.2rem; }
+  .joint-body p { font-size: 13px; color: #8b949e; margin: 0; }
+
+  /* ── LOADING PLACEHOLDER ── */
+  .loading-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 1rem;
+    color: #484f58;
+  }
+  .loading-placeholder .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid #21262d;
+    border-top-color: #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-placeholder p { font-size: 14px; }
+
+  /* ── INTERFACE DIAGRAM ── */
+  .interface-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .interface-item {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 0.7rem 0.9rem;
+    font-size: 13px;
+  }
+  .interface-item .iface-name { color: #1890ff; font-weight: 600; margin-bottom: 0.2rem; }
+  .interface-item p { color: #8b949e; font-size: 12px; margin: 0; }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── COMPARE TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 0.6rem 0;
+  }
+  .compare-table th {
+    background: #21262d;
+    color: #e6edf3;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 14px;
+  }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 7px 12px; border-bottom: 1px solid #21262d; vertical-align: top; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: #1c2128; }
+  .compare-table .label { color: #8b949e; font-weight: 600; }
+
+  .tab-intro { font-size: 16px; color: #8b949e; margin-bottom: 1.2rem; line-height: 1.7; }
+
+  hr.divider { border: none; border-top: 1px solid #30363d; margin: 1.2rem 0; }
+
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #21262d;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #79c0ff;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ STICKY NAV ═══════════════════════════ -->
+<nav class="top-nav">
+  <a href="index.html">← Back to Hub</a>
+  <div class="nav-center">⚙️ Fusion 360 — Ultimate Guide</div>
+  <div class="nav-right">Beginner to Expert</div>
+</nav>
+
+<!-- ═══════════════════════════ PROGRESS BAR ═══════════════════════════ -->
+<div class="progress-bar">
+  <span class="pill">Beginner</span>
+  <span class="pill">Intermediate</span>
+  <span class="pill">Advanced</span>
+  <span class="pill dim">Expert</span>
+</div>
+
+<!-- ═══════════════════════════ TAB BAR ═══════════════════════════ -->
+<div class="tab-bar" id="tabBar">
+  <button class="tab-btn active" onclick="switchTab(1)">1 · Understanding Fusion</button>
+  <button class="tab-btn" onclick="switchTab(2)">2 · Navigation Mastery</button>
+  <button class="tab-btn" onclick="switchTab(3)">3 · Sketching</button>
+  <button class="tab-btn" onclick="switchTab(4)">4 · 3D Features</button>
+  <button class="tab-btn" onclick="switchTab(5)">5 · Advanced &amp; Parametric</button>
+  <button class="tab-btn" onclick="switchTab(6)">6 · Assemblies &amp; Joints</button>
+  <button class="tab-btn" onclick="switchTab(7)">7 · CAM Basics</button>
+  <button class="tab-btn" onclick="switchTab(8)">8 · Simulation/FEA</button>
+  <button class="tab-btn" onclick="switchTab(9)">9 · Rendering</button>
+  <button class="tab-btn" onclick="switchTab(10)">10 · Drawings</button>
+  <button class="tab-btn" onclick="switchTab(11)">11 · Workflows</button>
+  <button class="tab-btn" onclick="switchTab(12)">12 · Master Shortcuts</button>
+</div>
+
+<!-- ═══════════════════════════ CONTENT ═══════════════════════════ -->
+<div class="content-wrap">
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 1 — Understanding Fusion 360
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab1">
+
+  <h1>Understanding Fusion 360</h1>
+  <p class="tab-intro">Fusion 360 is Autodesk's cloud-connected, all-in-one parametric CAD/CAM/CAE platform. It combines mechanical design, product engineering, manufacturing preparation, and simulation in a single application — accessible on Windows and macOS with cloud storage built in.</p>
+
+  <!-- What it is -->
+  <div class="card">
+    <div class="section-heading">🔷 What Is Fusion 360?</div>
+    <p>Fusion 360 is used by <strong>mechanical engineers, product designers, makers, and manufacturers</strong> worldwide. Unlike traditional CAD tools, it runs designs in the cloud (Autodesk cloud), allows version history, and integrates CAD → CAM → Simulation in one window — so you can design a part and generate CNC toolpaths without leaving the app.</p>
+    <ul>
+      <li><strong>Parametric CAD</strong> — every dimension is a living variable, not a fixed number</li>
+      <li><strong>CAM (Computer-Aided Manufacturing)</strong> — generate CNC, lathe, and additive toolpaths</li>
+      <li><strong>CAE / Simulation</strong> — finite element analysis (FEA) for stress, thermal, modal</li>
+      <li><strong>Rendering</strong> — photorealistic product renders with cloud or local GPU</li>
+      <li><strong>Drawing</strong> — 2D engineering drawings (title blocks, views, tolerances)</li>
+    </ul>
+  </div>
+
+  <!-- Fusion vs Blender -->
+  <div class="card">
+    <div class="section-heading">⚖️ Fusion 360 vs Blender — Know the Difference</div>
+    <table class="compare-table">
+      <thead>
+        <tr><th>Aspect</th><th>Fusion 360</th><th>Blender</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="label">Purpose</td><td>Engineering &amp; manufacturing precision</td><td>Artistic 3D — animation, VFX, games</td></tr>
+        <tr><td class="label">Dimensions</td><td>Exact measurements (mm, in) — dimensions matter</td><td>Relative scale — artistic feel</td></tr>
+        <tr><td class="label">Modeling style</td><td>Parametric (history-based, constraint-driven)</td><td>Polygon/Sculpt (mesh-based, freeform)</td></tr>
+        <tr><td class="label">Organic shapes</td><td>Harder (T-Splines help)</td><td>Excellent (sculpt mode, subdivision)</td></tr>
+        <tr><td class="label">Engineering features</td><td>Holes, threads, drafts, tolerances</td><td>None natively</td></tr>
+        <tr><td class="label">Manufacturing</td><td>Built-in CAM, drawings, BOM</td><td>Not applicable</td></tr>
+        <tr><td class="label">Assemblies</td><td>Full joint/constraint system</td><td>Manual parenting only</td></tr>
+        <tr><td class="label">Use when</td><td>You need to <em>build or manufacture</em> it</td><td>You need to <em>render or animate</em> it</td></tr>
+      </tbody>
+    </table>
+    <div class="tip tip-blue"><strong>Rule of Thumb</strong>If you're designing something that will be 3D printed, CNC machined, or mass-produced — use Fusion 360. If you're making a movie asset or game model — use Blender.</div>
+  </div>
+
+  <!-- 5 Workspaces -->
+  <div class="card">
+    <div class="section-heading">🗂️ The 5 Core Workspaces</div>
+    <div class="ws-grid">
+      <div class="ws-card">
+        <h4>Design <span class="badge badge-blue">Main</span></h4>
+        <p>Where you spend 90% of your time. Solid modeling, surface modeling, T-Spline sculpting, sheet metal, PCB.</p>
+      </div>
+      <div class="ws-card">
+        <h4>Manufacturing / CAM</h4>
+        <p>Generate toolpaths for CNC mills, lathes, routers, EDM, and additive (3D printing) processes.</p>
+      </div>
+      <div class="ws-card">
+        <h4>Simulation / FEA</h4>
+        <p>Run structural stress, thermal, buckling, modal, and fatigue analyses. Find weak points before building.</p>
+      </div>
+      <div class="ws-card">
+        <h4>Render</h4>
+        <p>Apply real-world materials, set up lighting environments, and produce photorealistic images or turntable animations.</p>
+      </div>
+      <div class="ws-card">
+        <h4>Drawing</h4>
+        <p>Create 2D engineering drawings from your 3D model — views, sections, dimensions, title blocks, and GD&amp;T.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parametric Philosophy -->
+  <div class="card">
+    <div class="section-heading">🧠 The Parametric Philosophy</div>
+    <p>Fusion 360 is built on <strong>parametric modeling</strong> — a fundamentally different approach from "dumb" solid modelers or mesh editors:</p>
+    <ul>
+      <li><strong>Every dimension is editable</strong> — change a sketch dimension and the entire model updates automatically</li>
+      <li><strong>The Timeline records history</strong> — operations are stored in sequence; you can go back and edit any past step</li>
+      <li><strong>Constraints drive geometry</strong> — lines aren't just lines; they have relationships (parallel, perpendicular, tangent) that are maintained when you edit</li>
+      <li><strong>Intent is preserved</strong> — if you specify a hole is centered on a face, it stays centered even when the face resizes</li>
+    </ul>
+    <div class="tip tip-green"><strong>Why This Matters</strong>In a non-parametric tool, changing a dimension means redrawing. In Fusion 360, changing "width=50mm" to "width=80mm" updates every sketch, extrude, hole, and pattern that references it — instantly.</div>
+  </div>
+
+  <!-- Key Concepts -->
+  <div class="card">
+    <div class="section-heading">🔑 8 Key Concepts Every Beginner Must Learn</div>
+    <ul class="concept-list">
+      <li>
+        <span class="concept-num">1</span>
+        <div><strong>Sketch → 3D Feature Workflow</strong> — Always sketch first (a 2D profile), then apply a 3D feature (Extrude, Revolve, Loft). You cannot extrude without a sketch profile. This is the fundamental loop of parametric CAD.</div>
+      </li>
+      <li>
+        <span class="concept-num">2</span>
+        <div><strong>Fully Constrained Sketches</strong> — <span style="color:#4d9eff">Blue lines</span> are unconstrained (free to move), <span style="color:#aaa">Black lines</span> are fully constrained (locked — this is your goal), <span style="color:#e74c3c">Red lines</span> are over-constrained or conflicting (fix immediately). Always finish a sketch fully black before extruding.</div>
+      </li>
+      <li>
+        <span class="concept-num">3</span>
+        <div><strong>The Timeline (bottom of screen)</strong> — Every sketch, extrude, fillet, and joint is a step in the timeline. Right-click any step to edit, suppress, delete, or move it. The timeline is what makes Fusion 360 parametric.</div>
+      </li>
+      <li>
+        <span class="concept-num">4</span>
+        <div><strong>Parameters</strong> — User-defined variables like <code>width=50mm</code> or <code>wallThick=3mm</code>. These are the power user's superpower. Instead of typing "50" in a dimension, type "width" — now every feature that uses "width" updates together when you change the parameter.</div>
+      </li>
+      <li>
+        <span class="concept-num">5</span>
+        <div><strong>Bodies vs Components</strong> — A <em>Body</em> is a piece of geometry (a shape). A <em>Component</em> is a "part" with its own origin, coordinate system, and parameters — used in assemblies. Rule: use Components whenever you're building an assembly.</div>
+      </li>
+      <li>
+        <span class="concept-num">6</span>
+        <div><strong>Origin Planes (XY / YZ / XZ)</strong> — Every model starts relative to three infinite reference planes. Always start your first sketch on an origin plane. This grounds your model in space and makes future operations predictable.</div>
+      </li>
+      <li>
+        <span class="concept-num">7</span>
+        <div><strong>Capture Design History vs Direct Modeling</strong> — Fusion has two modes. <em>Capture Design History ON</em> (default): parametric, timeline visible, fully editable. <em>Direct Modeling</em>: push/pull faces freely, no history — faster for quick edits but loses parametric ability.</div>
+      </li>
+      <li>
+        <span class="concept-num">8</span>
+        <div><strong>Saving</strong> — <kbd>Ctrl</kbd>+<kbd>S</kbd> saves to Autodesk cloud (version history). <strong>File → Export</strong> saves locally as .f3d, .step, .iges, .stl, etc. Always use Ctrl+S frequently during work.</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Interface Areas -->
+  <div class="card">
+    <div class="section-heading">🖥️ Interface Areas — Know Your Screen</div>
+    <div class="interface-grid">
+      <div class="interface-item">
+        <div class="iface-name">Application Bar</div>
+        <p>Very top — file menu, save, undo/redo, account, notifications.</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">Toolbar</div>
+        <p>Below app bar — workspace tabs (Design/CAM/etc) and tool panels (Solid, Surface, Mesh, Sheet Metal…).</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">Browser (left)</div>
+        <p>Tree of all components, bodies, sketches, origins, joints. Lightbulb = toggle visibility.</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">Canvas</div>
+        <p>The 3D viewport — where you model, click geometry, and see your design.</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">Timeline (bottom)</div>
+        <p>Chronological history of every operation. Drag the blue bar to roll back in time.</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">Navigation Bar</div>
+        <p>Bottom right — display mode, grid, ViewCube, look-at, pan, orbit, zoom controls.</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">ViewCube</div>
+        <p>Top-right 3D cube — click face/edge/corner to snap view; drag to rotate freely.</p>
+      </div>
+      <div class="interface-item">
+        <div class="iface-name">Marking Menu</div>
+        <p>Hold right-click for pie menu with the most common tools in the current context.</p>
+      </div>
+    </div>
+    <div class="tip tip-blue"><strong>Pro Tip</strong>Start every project by going to <strong>Modify → Parameters</strong> and defining your key dimensions as named user parameters <em>before</em> you draw a single line. This habit turns a simple model into a fully flexible, reusable design template.</div>
+  </div>
+
+</div><!-- /tab1 -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 2 — Navigation Mastery
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab2">
+
+  <h1>Navigation Mastery</h1>
+  <p class="tab-intro">Fast navigation is the difference between fighting Fusion 360 and flowing through it. Master these controls until they're muscle memory — your productivity will triple.</p>
+
+  <!-- Mouse Controls -->
+  <div class="card">
+    <div class="section-heading">🖱️ Mouse Controls — Core Navigation</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Select object / click to place</span><span class="shortcut-keys"><kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Context menu (right-click menu)</span><span class="shortcut-keys"><kbd>RMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Hold right-click = Marking Menu (pie menu)</span><span class="shortcut-keys"><kbd>Hold RMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit (rotate the view)</span><span class="shortcut-keys"><kbd>MMB drag</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan (move the view laterally)</span><span class="shortcut-keys"><kbd>Shift</kbd>+<kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><span class="shortcut-keys"><kbd>Scroll wheel</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Set orbit center (click to pivot around that point)</span><span class="shortcut-keys"><kbd>MMB click</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit (alternate — Mac / pen tablet users)</span><span class="shortcut-keys"><kbd>Alt</kbd>+<kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom to fit (zoom extents)</span><span class="shortcut-keys"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Box select — drag to select multiple</span><span class="shortcut-keys"><kbd>LMB drag</kbd></span></div>
+    <div class="tip tip-yellow"><strong>Note for Trackpad Users</strong>Two-finger scroll = zoom. Two-finger drag = pan. Three-finger drag (on some configs) = orbit. Consider a 3-button mouse — it dramatically improves Fusion 360 navigation.</div>
+  </div>
+
+  <!-- ViewCube -->
+  <div class="card">
+    <div class="section-heading">🧊 ViewCube — Your 3D Compass</div>
+    <p>The ViewCube sits in the top-right corner of the canvas. It's your fastest way to snap to exact orthographic views:</p>
+    <div class="shortcut-row"><span class="shortcut-desc">Snap to top, front, right, left, bottom, back views</span><span class="shortcut-keys"><kbd>Click a face</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Snap to isometric corner view (30°/45° style)</span><span class="shortcut-keys"><kbd>Click a corner</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Snap to angled edge view</span><span class="shortcut-keys"><kbd>Click an edge</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Free-rotate the view smoothly</span><span class="shortcut-keys"><kbd>Drag the cube</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Reset to home view (default isometric)</span><span class="shortcut-keys"><kbd>Home icon</kbd> below cube</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle orthographic / perspective projection</span><span class="shortcut-keys">Right-click cube → Orthographic</span></div>
+    <div class="tip tip-blue"><strong>Tip</strong>Right-click the ViewCube to set your "home" view or change the projection mode between perspective and orthographic. For engineering drawings, orthographic is preferred.</div>
+  </div>
+
+  <!-- Keyboard Navigation -->
+  <div class="card">
+    <div class="section-heading">⌨️ Keyboard Navigation Shortcuts</div>
+    <table class="shortcut-table">
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>F6</kbd></td><td>Fit all / home view (zoom extents to all geometry)</td></tr>
+        <tr><td><kbd>F7</kbd></td><td>Grid settings dialog</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd></td><td>Zoom to fit all objects</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>1</kbd></td><td>Snap to front view</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>2</kbd></td><td>Snap to back view</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>3</kbd></td><td>Snap to top view</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>4</kbd></td><td>Snap to bottom view</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>5</kbd></td><td>Snap to right view</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>6</kbd></td><td>Snap to left view</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo last action</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Redo</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save to cloud</td></tr>
+        <tr><td><kbd>Escape</kbd></td><td>Cancel current tool / deselect</td></tr>
+        <tr><td><kbd>Delete</kbd></td><td>Delete selected object</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Select all</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>V</kbd></td><td>Copy / Paste</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Selection modes -->
+  <div class="card">
+    <div class="section-heading">🎯 Selection Modes</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Single click — select one object (face, edge, body, component)</span><span class="shortcut-keys"><kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Add to selection</span><span class="shortcut-keys"><kbd>Ctrl</kbd>+<kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Box select — drag left-to-right: window select (only fully inside)</span><span class="shortcut-keys"><kbd>LMB drag →</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Box select — drag right-to-left: crossing select (anything touched)</span><span class="shortcut-keys"><kbd>LMB drag ←</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Select all edges in a loop (tangent chain)</span><span class="shortcut-keys">Right-click edge → Select Edge Loop</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Select connected faces</span><span class="shortcut-keys">Right-click face → Select All Same Body</span></div>
+    <p style="margin-top:0.7rem; font-size:13px; color:#8b949e;">In the toolbar's <strong>Select</strong> dropdown you can filter selection by: Bodies, Faces, Edges, Vertices, Sketch Geometry, Components — useful in complex models.</p>
+  </div>
+
+  <!-- Right-click Context Menus -->
+  <div class="card">
+    <div class="section-heading">📋 Right-Click Context Menu Contents</div>
+    <div class="two-col">
+      <div>
+        <h4>On Canvas (empty space)</h4>
+        <ul style="font-size:13px;">
+          <li>Create Sketch</li>
+          <li>New Component</li>
+          <li>Paste</li>
+          <li>Look At</li>
+          <li>View options</li>
+        </ul>
+        <h4>On a Body</h4>
+        <ul style="font-size:13px;">
+          <li>Edit Feature (last feature)</li>
+          <li>Properties (rename, material)</li>
+          <li>Appearance</li>
+          <li>Physical Material</li>
+          <li>Create Component from Body</li>
+          <li>Move/Copy</li>
+          <li>Hide / Show</li>
+        </ul>
+      </div>
+      <div>
+        <h4>On a Sketch</h4>
+        <ul style="font-size:13px;">
+          <li>Edit Sketch</li>
+          <li>Delete</li>
+          <li>Share Sketch</li>
+          <li>Find in Browser</li>
+          <li>Show Dimensions</li>
+        </ul>
+        <h4>On a Face</h4>
+        <ul style="font-size:13px;">
+          <li>Press Pull</li>
+          <li>Create Sketch (on this face)</li>
+          <li>Extrude</li>
+          <li>Fillet / Chamfer</li>
+          <li>Shell</li>
+          <li>Draft</li>
+          <li>Look At (align view perpendicular to face)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display Modes -->
+  <div class="card">
+    <div class="section-heading">🎨 Display Modes &amp; Visual Options</div>
+    <p>Access via the <strong>Display Settings</strong> icon in the navigation bar (bottom of canvas), or the View menu:</p>
+    <div class="shortcut-row"><span class="shortcut-desc">Shaded (default) — smooth shading, no edges shown</span><span class="shortcut-keys">Navigation bar → Display Settings</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Shaded + Visible Edges (most common for engineering)</span><span class="shortcut-keys">Display Settings → Shaded with Visible Edges</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Wireframe — see all edges, no surfaces</span><span class="shortcut-keys">Display Settings → Wireframe</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Hidden Line — wireframe with hidden edges dashed</span><span class="shortcut-keys">Display Settings → Hidden Line</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Section Analysis — cut a cross-section through the model</span><span class="shortcut-keys">Inspect → Section Analysis</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle component visibility (show/hide)</span><span class="shortcut-keys">Click lightbulb icon in Browser</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Change appearance / material visually</span><span class="shortcut-keys">Modify → Appearance (<kbd>A</kbd>)</span></div>
+    <div class="tip tip-green"><strong>Section Analysis</strong>View → Section Analysis is invaluable for checking wall thickness, internal features, and assembly fits. You can drag the cut plane in real time. Multiple section planes can be active simultaneously.</div>
+  </div>
+
+</div><!-- /tab2 -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 3 — Sketching
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab3">
+
+  <h1>Sketching — The Foundation of Everything</h1>
+  <p class="tab-intro">In Fusion 360, almost every 3D feature starts with a 2D sketch. Master sketching — constraints, dimensions, and the color-code system — and the rest of Fusion 360 falls into place naturally.</p>
+
+  <!-- Creating a sketch -->
+  <div class="card">
+    <div class="section-heading">▶ Creating a Sketch</div>
+    <ol>
+      <li>Go to <strong>Solid</strong> tab (or Surface/Sheet Metal) → <strong>Create Sketch</strong></li>
+      <li>Click a <strong>plane</strong> (XY, YZ, or XZ origin plane) or a <strong>flat face</strong> on an existing solid</li>
+      <li>The view snaps to look at the sketch plane. You're now in Sketch mode.</li>
+      <li>Draw geometry, add constraints and dimensions, then click <strong>Stop Sketch</strong> or press <kbd>Escape</kbd> → Finish Sketch</li>
+    </ol>
+    <div class="tip tip-blue"><strong>Tip</strong>You can also right-click on any flat face in the canvas and choose <strong>Create Sketch</strong> — Fusion attaches the sketch directly to that face.</div>
+  </div>
+
+  <!-- Color Code Legend -->
+  <div class="card">
+    <div class="section-heading">🎨 Sketch Color Codes — CRITICAL — Memorize These</div>
+    <p>The color of sketch geometry tells you its constraint state at a glance:</p>
+    <div class="color-row">
+      <div class="color-dot" style="background:#4d9eff;"></div>
+      <span class="color-label" style="color:#4d9eff;">Blue</span>
+      <span>Unconstrained — the element can still move or resize freely. Needs more constraints or dimensions.</span>
+    </div>
+    <div class="color-row">
+      <div class="color-dot" style="background:#c9d1d9;"></div>
+      <span class="color-label" style="color:#c9d1d9;">Black</span>
+      <span>Fully constrained — position and size are completely locked. <strong>This is the goal.</strong> Every sketch should be all-black before extruding.</span>
+    </div>
+    <div class="color-row">
+      <div class="color-dot" style="background:#e74c3c;"></div>
+      <span class="color-label" style="color:#e74c3c;">Red</span>
+      <span>Over-constrained or conflicting — too many conflicting constraints applied. Fix immediately by removing a constraint or dimension.</span>
+    </div>
+    <div class="color-row">
+      <div class="color-dot" style="background:#f0a500;"></div>
+      <span class="color-label" style="color:#f0a500;">Yellow</span>
+      <span>Reference/Construction geometry — guide lines for sketching. Not used as profiles for 3D features. Toggle construction mode with <kbd>X</kbd> key.</span>
+    </div>
+    <div class="tip tip-red"><strong>Red = Fix Immediately</strong>A red sketch usually means you applied two constraints that contradict each other (e.g., a line that's both Horizontal AND Vertical). Check the Sketch Palette and remove the conflicting constraint.</div>
+    <div class="tip tip-yellow"><strong>Why Fully Constrained?</strong>A blue (unconstrained) sketch can be accidentally dragged or changed later in the timeline. Fully black sketches are immune to accidental edits and communicate clear design intent.</div>
+  </div>
+
+  <!-- All Sketch Tools -->
+  <div class="card">
+    <div class="section-heading">🛠️ All Sketch Tools — Complete Reference</div>
+    <div class="tool-grid">
+      <div class="tool-item"><div class="tool-name">Line <span class="tool-key"><kbd>L</kbd></span></div><p>Draw straight lines. Click to set start, click to set end. Double-click or Escape to finish chain.</p></div>
+      <div class="tool-item"><div class="tool-name">Rectangle <span class="tool-key"><kbd>R</kbd></span></div><p>Corner, Center, or 3-Point rectangle. Most used for base sketches.</p></div>
+      <div class="tool-item"><div class="tool-name">Circle <span class="tool-key"><kbd>C</kbd></span></div><p>Center Point, 3-Point, or 2-Point circle. Also Tangent Circles.</p></div>
+      <div class="tool-item"><div class="tool-name">Arc</div><p>3-Point Arc, Tangent Arc, or Center-Point Arc. Click 3 points or specify center and endpoints.</p></div>
+      <div class="tool-item"><div class="tool-name">Ellipse</div><p>Click center, then define major and minor axes. Great for oval cutouts.</p></div>
+      <div class="tool-item"><div class="tool-name">Slot</div><p>Center-to-Center, Overall Length, 3-Point, or Center Point slot. Common for elongated holes allowing adjustment.</p></div>
+      <div class="tool-item"><div class="tool-name">Polygon</div><p>Inscribed (fits inside a circle) or Circumscribed (fits outside). Set number of sides. Great for hex bolt heads.</p></div>
+      <div class="tool-item"><div class="tool-name">Spline</div><p>Fit Points (curve passes through points) or Control Vertices (curve is attracted to points). For organic shapes.</p></div>
+      <div class="tool-item"><div class="tool-name">Conic Curve</div><p>Define curve by endpoints and a rho value (0=parabola, 0-1 controls curvature). Advanced aerodynamic profiles.</p></div>
+      <div class="tool-item"><div class="tool-name">Point</div><p>Place a reference point. Used as a center for circles, or to place Hole features precisely.</p></div>
+      <div class="tool-item"><div class="tool-name">Mirror</div><p>Mirror selected sketch geometry across a line. Changes stay linked — edit one side, the other updates.</p></div>
+      <div class="tool-item"><div class="tool-name">Circular Pattern</div><p>Repeat sketch elements around a center point. Specify count and angle range.</p></div>
+      <div class="tool-item"><div class="tool-name">Rectangular Pattern</div><p>Repeat sketch elements in a grid. Set X and Y direction, spacing, and count.</p></div>
+      <div class="tool-item"><div class="tool-name">Offset <span class="tool-key"><kbd>O</kbd></span></div><p>Create a parallel copy of lines/curves at a specified distance. Great for wall thickness in profiles.</p></div>
+      <div class="tool-item"><div class="tool-name">Trim <span class="tool-key"><kbd>T</kbd></span></div><p>Remove a segment of a line/curve up to its nearest intersection. Click what you want to remove.</p></div>
+      <div class="tool-item"><div class="tool-name">Extend</div><p>Extend a line or curve to meet another element. Opposite of Trim.</p></div>
+      <div class="tool-item"><div class="tool-name">Break</div><p>Split a curve at a selected point into two separate segments.</p></div>
+      <div class="tool-item"><div class="tool-name">Fillet <span class="tool-key"><kbd>F</kbd></span></div><p>Round a corner inside a sketch. Sets a radius between two intersecting lines. Good for profile rounding.</p></div>
+      <div class="tool-item"><div class="tool-name">Chamfer</div><p>Add a bevel (angled cut) at a sketch corner. Specify distance or distance+angle.</p></div>
+      <div class="tool-item"><div class="tool-name">Project <span class="tool-key"><kbd>P</kbd></span></div><p>Project edges, vertices, or geometry from the 3D model onto the current sketch plane. Creates reference geometry.</p></div>
+      <div class="tool-item"><div class="tool-name">Intersect</div><p>Create sketch geometry at the intersection of a body's faces with the sketch plane. Similar to Project but uses body intersections.</p></div>
+    </div>
+  </div>
+
+  <!-- All Sketch Constraints -->
+  <div class="card">
+    <div class="section-heading">🔒 All Sketch Constraints — Complete Reference</div>
+    <p style="font-size:13px; color:#8b949e; margin-bottom:0.7rem;">Constraints define <em>relationships</em> between sketch elements. They reduce degrees of freedom without specifying a numeric value. To apply: click the constraint icon in the toolbar, then click the geometry — or right-click geometry for the constraint list.</p>
+    <ul class="constraint-list">
+      <li><span class="constraint-icon">◎</span><div><strong>Coincident</strong> — two points share the exact same location. Most common constraint — connects endpoints of lines.</div></li>
+      <li><span class="constraint-icon">—</span><div><strong>Collinear</strong> — two separate lines lie on the same infinite line (they're colinear even if not touching).</div></li>
+      <li><span class="constraint-icon">⊙</span><div><strong>Concentric</strong> — two circles, arcs, or ellipses share the same center point.</div></li>
+      <li><span class="constraint-icon">⊥</span><div><strong>Midpoint</strong> — a point is constrained to lie exactly at the midpoint of a line or arc.</div></li>
+      <li><span class="constraint-icon">⊕</span><div><strong>Fixed / Ground</strong> — the element is locked in absolute position and cannot move at all. Use sparingly — usually prefer dimensioning from origin instead.</div></li>
+      <li><span class="constraint-icon">∥</span><div><strong>Parallel</strong> — two lines are parallel to each other (same direction, any distance apart).</div></li>
+      <li><span class="constraint-icon">⊥</span><div><strong>Perpendicular</strong> — two lines meet at exactly 90°. They don't have to intersect — the angle between their directions is 90°.</div></li>
+      <li><span class="constraint-icon">↔</span><div><strong>Horizontal</strong> — a line is constrained to be exactly horizontal (parallel to X-axis). Also works on points: forces them to the same Y value.</div></li>
+      <li><span class="constraint-icon">↕</span><div><strong>Vertical</strong> — a line is constrained to be exactly vertical (parallel to Y-axis). Also forces two points to the same X value.</div></li>
+      <li><span class="constraint-icon">⌒</span><div><strong>Tangent</strong> — a line, arc, or spline meets a circle or arc smoothly with no sharp corner. Critical for blending curves.</div></li>
+      <li><span class="constraint-icon">~</span><div><strong>Smooth (G2)</strong> — a spline meets an adjacent curve with curvature continuity (not just tangency). The rate of curvature change is also matched — produces the smoothest possible blends.</div></li>
+      <li><span class="constraint-icon">⟺</span><div><strong>Symmetric</strong> — two elements are mirror images of each other across a centerline. Edit one side and the other mirrors automatically.</div></li>
+      <li><span class="constraint-icon">=</span><div><strong>Equal</strong> — two lines have the same length, or two circles/arcs have the same radius. Change one and the other follows.</div></li>
+    </ul>
+  </div>
+
+  <!-- Dimensions -->
+  <div class="card">
+    <div class="section-heading">📐 Dimensions — Driving Your Sketch</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Smart Dimension (auto-detects what to dimension)</span><span class="shortcut-keys"><kbd>D</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Dimension a line → its length</span><span class="shortcut-keys"><kbd>D</kbd> then click line</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Dimension a circle/arc → its radius or diameter</span><span class="shortcut-keys"><kbd>D</kbd> then click circle</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Dimension angle between two lines</span><span class="shortcut-keys"><kbd>D</kbd> then click two lines</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Dimension distance between two points</span><span class="shortcut-keys"><kbd>D</kbd> then click two points</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Change an existing dimension</span><span class="shortcut-keys">Double-click the dimension text</span></div>
+    <hr class="divider">
+    <h4>Driving vs Driven Dimensions</h4>
+    <ul style="font-size:13px;">
+      <li><strong>Driving dimension</strong> — controls the sketch geometry. Change the value, the geometry moves.</li>
+      <li><strong>Driven dimension (reference)</strong> — shown in parentheses, e.g. <code>(45.00)</code>. Tells you a measurement but doesn't control it (it's already fully constrained by other means).</li>
+    </ul>
+    <h4>Parametric Dimensions — The Key Technique</h4>
+    <p style="font-size:13px;">When the dimension dialog opens, instead of typing a number, type a <strong>name=value</strong> pair like <code>width=50 mm</code> or just reference an existing parameter like <code>wallThick</code>. Fusion creates a User Parameter automatically and links the dimension to it.</p>
+    <div class="tip tip-green"><strong>Power Move</strong>Type <code>width/2</code> or <code>height*0.75</code> in a dimension box — Fusion evaluates expressions. This lets you drive related dimensions mathematically without creating separate parameters for everything.</div>
+  </div>
+
+  <!-- Parameters Deep Dive -->
+  <div class="card">
+    <div class="section-heading">⚙️ Parameters Deep Dive</div>
+    <p>Access the Parameters dialog via <strong>Modify → Parameters</strong> (or press <kbd>P</kbd> while in a sketch — note: <kbd>P</kbd> in canvas = Project, but in the menu = Parameters).</p>
+    <div class="two-col">
+      <div>
+        <h4>User Parameters</h4>
+        <ul style="font-size:13px;">
+          <li>Created by you: <code>Height = 100 mm</code></li>
+          <li><code>WallThick = 3 mm</code></li>
+          <li><code>BoltDiam = 6 mm</code></li>
+          <li>Referenced by name in any dimension</li>
+          <li>Change one → all linked dims update</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Model Parameters</h4>
+        <ul style="font-size:13px;">
+          <li>Auto-created by Fusion for each dim</li>
+          <li>Named d1, d2, d3… by default</li>
+          <li>Can be renamed and reused</li>
+          <li>Visible in Parameters dialog</li>
+        </ul>
+      </div>
+    </div>
+    <h4>Supported Expressions in Parameters</h4>
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.5rem 0;">
+      <code>WallThick * 2</code>
+      <code>Height / 3</code>
+      <code>sqrt(Area)</code>
+      <code>sin(45 deg)</code>
+      <code>BoltDiam + 0.5</code>
+      <code>max(A, B)</code>
+    </div>
+    <div class="tip tip-blue"><strong>Best Practice</strong>Before sketching anything, open Parameters and define your key dimensions: overall Width, Height, Depth, WallThick, BoltDiam, etc. Then reference these by name as you sketch. This turns your model into a reusable template — change one number and everything updates.</div>
+  </div>
+
+  <!-- Workflow Tip -->
+  <div class="card">
+    <div class="section-heading">✅ Sketching Workflow Best Practices</div>
+    <ol style="font-size:14px;">
+      <li><strong>Set Parameters first</strong> — define key dimensions in Modify → Parameters before starting</li>
+      <li><strong>Start from the origin</strong> — lock your first point or line to the origin (Coincident with the origin point)</li>
+      <li><strong>Sketch the shape, then constrain</strong> — rough shape first, then add geometric constraints, then add dimensions</li>
+      <li><strong>Constrain before dimensioning</strong> — parallel/perpendicular/tangent constraints should be applied before numeric dimensions</li>
+      <li><strong>Use construction lines</strong> — press <kbd>X</kbd> to toggle construction mode for centerlines and guide lines</li>
+      <li><strong>Stop only when all-black</strong> — don't proceed to 3D features until the sketch is fully constrained (all black lines)</li>
+      <li><strong>Name your sketches</strong> — double-click the sketch in the browser and rename it (e.g., "Profile - Side Bracket") for clarity</li>
+    </ol>
+    <div class="tip tip-red"><strong>Common Mistake</strong>Extruding a blue (partially constrained) sketch. The sketch looks fine but can be accidentally modified later, causing the extruded feature to change unexpectedly. Always get to all-black first.</div>
+  </div>
+
+</div><!-- /tab3 -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 4 — 3D Features Complete Reference
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab4">
+
+  <h1>3D Features — Complete Reference</h1>
+  <p class="tab-intro">These are the tools that turn your 2D sketches into 3D solid geometry. Every feature in this list is parametric — edit the inputs and the geometry updates. Accessed from the <strong>Solid</strong> tab in the Design workspace.</p>
+
+  <!-- Extrude -->
+  <div class="card">
+    <div class="section-heading">📦 EXTRUDE <kbd>E</kbd></div>
+    <p>The most-used 3D feature. Takes a closed 2D sketch profile and pushes it in a direction to create a solid.</p>
+    <div class="two-col">
+      <div>
+        <h4>Direction Options</h4>
+        <ul style="font-size:13px;">
+          <li><strong>One Side</strong> — extrude in one direction only</li>
+          <li><strong>Symmetric</strong> — equal distance both sides of the sketch plane</li>
+          <li><strong>Two Sides</strong> — different distances on each side independently</li>
+        </ul>
+        <h4>Extent Options</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Distance</strong> — exact numeric distance</li>
+          <li><strong>To Object</strong> — extrude until it hits a selected face or body</li>
+          <li><strong>To Body</strong> — extrude until it fills the boundary of another body</li>
+          <li><strong>Through All</strong> — infinite — goes through everything (great for cut operations)</li>
+          <li><strong>To Next</strong> — stops at the very next face it encounters</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Operation (what to do with the result)</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Join</strong> — merge extruded volume with existing solid (Boolean union)</li>
+          <li><strong>Cut</strong> — subtract extruded volume from existing solid (Boolean difference)</li>
+          <li><strong>Intersect</strong> — keep only the overlapping volume</li>
+          <li><strong>New Body</strong> — create an independent body (not merged)</li>
+          <li><strong>New Component</strong> — create as a separate component</li>
+        </ul>
+        <h4>Additional Options</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Taper Angle</strong> — add draft (inward or outward taper) as you extrude</li>
+          <li><strong>Chain Faces</strong> — automatically include adjacent tangent faces</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip tip-blue"><strong>Quick Tip</strong>Click any flat face on the canvas and press <kbd>E</kbd> — Fusion opens Extrude with that face pre-selected. Drag the blue arrow to extrude interactively.</div>
+  </div>
+
+  <!-- Revolve -->
+  <div class="card">
+    <div class="section-heading">🔄 REVOLVE</div>
+    <p>Rotates a sketch profile around an axis line to create a solid of revolution (axially symmetric parts: shafts, bottles, bowls, discs).</p>
+    <ul style="font-size:13px;">
+      <li>Select the <strong>Profile</strong> (closed sketch region) and the <strong>Axis</strong> (a sketch line, edge, or axis)</li>
+      <li><strong>Angle</strong> options: full 360°, partial angle (e.g., 180° for a half-shell), or symmetric (±angle)</li>
+      <li>Operations: Join / Cut / Intersect / New Body (same as Extrude)</li>
+      <li>A centerline in the sketch serves as the revolve axis automatically if it's a construction line</li>
+    </ul>
+    <div class="tip tip-green"><strong>Best for</strong>Turned parts (lathe parts): shafts, flanges, pulleys, knobs, bottles, lenses. The sketch should be on one side of the axis — the profile represents the cross-section that gets rotated.</div>
+  </div>
+
+  <!-- Sweep -->
+  <div class="card">
+    <div class="section-heading">🌊 SWEEP</div>
+    <p>Extrudes a profile along a curved path instead of a straight line. Creates tubes, rails, custom extrusions, and any shape that follows a curve.</p>
+    <ul style="font-size:13px;">
+      <li><strong>Profile</strong> — the cross-section shape (must be perpendicular to path start)</li>
+      <li><strong>Path</strong> — the curve the profile travels along (can be open or closed)</li>
+      <li><strong>Guide Rail</strong> — additional curve that controls how the profile scales or rotates as it sweeps</li>
+      <li><strong>Orientation — Perpendicular to Path</strong>: profile always stays perpendicular to path direction (normal sweep)</li>
+      <li><strong>Orientation — Parallel to Original</strong>: profile keeps its original orientation throughout (parallel translation)</li>
+      <li><strong>Twist Angle</strong>: rotate the profile as it travels along the path</li>
+    </ul>
+    <div class="tip tip-blue"><strong>Example Uses</strong>Pipe/tube bends, door handles, guitar bodies, cable channels, helical springs (use a helix path).</div>
+  </div>
+
+  <!-- Loft -->
+  <div class="card">
+    <div class="section-heading">🏔️ LOFT</div>
+    <p>Creates a smooth solid by blending between two or more profiles at different positions. The profiles can be different shapes — circles, rectangles, splines, or anything.</p>
+    <ul style="font-size:13px;">
+      <li>Add profiles in order (each profile is a cross-section at a different position)</li>
+      <li><strong>Rails</strong> — optional guide curves that control the shape of the blend between profiles</li>
+      <li><strong>Centerline Loft</strong> — all profiles lie along a centerline curve</li>
+      <li><strong>Profile Connections</strong> — "Matched" (smooth transition) or "Tangent" (tangent to adjacent geometry)</li>
+      <li>Operations: Join / Cut / Intersect / New Body</li>
+    </ul>
+    <div class="tip tip-green"><strong>Example Uses</strong>Airplane fuselages, car hoods, bottle necks, nozzle transitions (circle to rectangle), ergonomic grip shapes.</div>
+  </div>
+
+  <!-- Hole -->
+  <div class="card">
+    <div class="section-heading">⭕ HOLE</div>
+    <p>Dedicated hole tool — smarter than just cutting a revolved circle because it understands engineering intent (countersinks, threads, standard sizes).</p>
+    <div class="two-col">
+      <div>
+        <h4>Hole Types</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Simple</strong> — straight cylindrical hole</li>
+          <li><strong>Counterbore (↲)</strong> — wider recessed area at top for bolt head to sit flush</li>
+          <li><strong>Countersink (∨)</strong> — conical recess for flat-head screws</li>
+          <li><strong>Spotface</strong> — shallow flat area around the hole for a washer face</li>
+        </ul>
+        <h4>Drill Tip</h4>
+        <ul style="font-size:13px;">
+          <li>Flat (end mills)</li>
+          <li>118° (standard twist drill)</li>
+          <li>Custom angle</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Depth Options</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Blind</strong> — goes to a specific depth</li>
+          <li><strong>Through All</strong> — goes completely through</li>
+          <li><strong>To Object</strong> — stops at a specified face</li>
+        </ul>
+        <h4>Thread Option</h4>
+        <ul style="font-size:13px;">
+          <li>Enable threading inside the hole</li>
+          <li>Choose thread type (M metric, UNC, UNF, etc.)</li>
+          <li>Thread class (1A, 2A, 3A for external; 1B, 2B, 3B for internal)</li>
+          <li>Cosmetic (fast, display only) or Modeled (actual geometry)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip tip-blue"><strong>Placement</strong>Place a sketch Point where you want the hole center, then use the Hole tool. Or click the Hole tool and click directly on a face — Fusion lets you snap to edges and centers for placement.</div>
+  </div>
+
+  <!-- Thread -->
+  <div class="card">
+    <div class="section-heading">🔩 THREAD</div>
+    <p>Applies thread specification to a cylindrical face (external shaft or internal hole). Covers all standard thread types.</p>
+    <ul style="font-size:13px;">
+      <li>Select a cylindrical face (shaft exterior or hole interior)</li>
+      <li><strong>Thread Types</strong>: M (ISO metric), UNC (Unified Coarse), UNF (Unified Fine), BSPP, NPT, and many more</li>
+      <li><strong>Cosmetic Thread</strong> — fast display-only representation, shown as a surface feature, no geometry added to model. Recommended for assemblies (faster)</li>
+      <li><strong>Modeled Thread</strong> — actual helical groove cut into/onto the cylinder. Accurate geometry for renders and FEA. Slower, heavier file.</li>
+      <li><strong>Thread Class</strong> — fit tolerance (2A = standard external, 2B = standard internal)</li>
+      <li><strong>Full Length</strong> — thread runs the entire length of the cylinder, or specify a depth</li>
+    </ul>
+  </div>
+
+  <!-- Fillet -->
+  <div class="card">
+    <div class="section-heading">🟡 FILLET <kbd>F</kbd></div>
+    <p>Rounds sharp edges. Essential for safety, aesthetics, and reducing stress concentrations in engineering parts.</p>
+    <ul style="font-size:13px;">
+      <li>Select edges → set radius → preview → OK</li>
+      <li><strong>Tangent Chain</strong> — automatically select all edges tangent to the clicked edge</li>
+      <li><strong>Feature Set</strong> — select all edges created by a specific feature</li>
+      <li><strong>G1 (Tangent)</strong> — standard fillet, tangent to adjacent faces</li>
+      <li><strong>G2 (Curvature Continuous)</strong> — smoother blend, curvature also matches adjacent faces — used in premium product design</li>
+      <li><strong>Variable Radius Fillet</strong> — set a different radius at each endpoint of an edge. Useful for tapered transitions.</li>
+      <li><strong>Full Round Fillet</strong> — selects three faces; removes the middle face and replaces it entirely with a tangent round blend</li>
+    </ul>
+    <div class="tip tip-yellow"><strong>Order Matters</strong>Apply fillets last, after all cuts, holes, and features. Adding a fillet early and then cutting across it often causes errors. Exception: functional fillets (like sealing radiuses) that define the geometry.</div>
+  </div>
+
+  <!-- Chamfer -->
+  <div class="card">
+    <div class="section-heading">◤ CHAMFER</div>
+    <p>Creates a beveled (angled flat) edge instead of a round. Common in machined parts, entry chamfers on holes, and decorative edges.</p>
+    <ul style="font-size:13px;">
+      <li><strong>Equal Distance</strong> — same distance on both faces (45° chamfer)</li>
+      <li><strong>Distance + Angle</strong> — specify one distance and the angle of the bevel</li>
+      <li><strong>Two Distances</strong> — different distances on each adjacent face</li>
+      <li>Select individual edges or use tangent chain / feature set selection</li>
+    </ul>
+  </div>
+
+  <!-- Shell -->
+  <div class="card">
+    <div class="section-heading">🫙 SHELL</div>
+    <p>Hollows out a solid body to create a thin-walled part. Essential for plastic enclosures, containers, and any hollow product.</p>
+    <ul style="font-size:13px;">
+      <li>Select one or more <strong>faces to remove</strong> (these become the opening — like removing the lid)</li>
+      <li>Set the <strong>wall thickness</strong></li>
+      <li><strong>Inside</strong> — shell removes material inward (external dimensions preserved)</li>
+      <li><strong>Outside</strong> — shell adds material outward (internal dimensions preserved)</li>
+      <li><strong>Both</strong> — adds material equally in both directions</li>
+      <li><strong>Multiple Thickness</strong> — assign different thicknesses to different faces (e.g., thicker bottom, thinner walls)</li>
+    </ul>
+    <div class="tip tip-green"><strong>Example</strong>Design a solid box → Shell it with the top face removed → you have a hollow container with walls and a bottom of specified thickness. Then add a lip, threads, or a lid component.</div>
+  </div>
+
+  <!-- Draft -->
+  <div class="card">
+    <div class="section-heading">📐 DRAFT</div>
+    <p>Applies a taper angle to faces. <strong>Required for injection-molded parts</strong> to allow the part to release from the mold without sticking.</p>
+    <ul style="font-size:13px;">
+      <li><strong>Fixed Plane method</strong> — specify the pull direction (mold open direction) and apply draft to perpendicular faces</li>
+      <li><strong>Pull Direction method</strong> — define the direction the mold opens and apply draft automatically</li>
+      <li><strong>Parting Line method</strong> — draft above and below a parting line (for two-piece molds)</li>
+      <li>Typical draft angles: 1°–3° for plastic, up to 7° for rough textures</li>
+    </ul>
+    <div class="tip tip-yellow"><strong>Manufacturing Requirement</strong>If you're designing for injection molding or die casting, always add draft before finalizing. No draft = part sticks in mold = expensive tooling problems.</div>
+  </div>
+
+  <!-- Mirror -->
+  <div class="card">
+    <div class="section-heading">🪞 MIRROR (Solid)</div>
+    <p>Creates a mirrored copy of features or bodies across a plane. Far faster than recreating geometry on both sides.</p>
+    <ul style="font-size:13px;">
+      <li>Select <strong>Features</strong> (parametric steps in the timeline) or <strong>Bodies</strong></li>
+      <li>Select a <strong>Mirror Plane</strong> (origin plane, flat face, or construction plane)</li>
+      <li>Mirrored features are <strong>linked</strong> by default — edit the original and the mirror updates</li>
+      <li>To make an independent copy: Combine → New Body and pattern it separately</li>
+    </ul>
+  </div>
+
+  <!-- Pattern -->
+  <div class="card">
+    <div class="section-heading">⬛⬛⬛ PATTERN</div>
+    <div class="two-col">
+      <div>
+        <h4>Rectangular Pattern</h4>
+        <ul style="font-size:13px;">
+          <li>Direction 1 + Direction 2</li>
+          <li>Distance between instances (or spacing total)</li>
+          <li>Quantity in each direction</li>
+          <li>Fill area option: fill a region automatically</li>
+        </ul>
+        <h4>Circular Pattern</h4>
+        <ul style="font-size:13px;">
+          <li>Select axis of rotation</li>
+          <li>Angle range (full 360° or partial)</li>
+          <li>Quantity of instances</li>
+          <li>Symmetric option</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Pattern on Path</h4>
+        <ul style="font-size:13px;">
+          <li>Follow a curve (open or closed)</li>
+          <li>Evenly distributed or manual spacing</li>
+          <li>Orient to path (rotate with curve direction) or keep orientation fixed</li>
+        </ul>
+        <h4>What to Pattern</h4>
+        <ul style="font-size:13px;">
+          <li>Features (specific timeline steps)</li>
+          <li>Bodies (entire solid bodies)</li>
+          <li>Faces (specific faces only)</li>
+          <li>Components (in assemblies)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boolean / Combine -->
+  <div class="card">
+    <div class="section-heading">🔀 BOOLEAN OPERATIONS — Combine</div>
+    <p>Perform set operations between bodies. Accessed via <strong>Modify → Combine</strong>. These are the same as Blender's Boolean modifier but fully parametric.</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Operation</th><th>Result</th><th>Equivalent</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Join</strong></td><td>Merges the tool body into the target — one unified solid</td><td>Union / Add</td></tr>
+        <tr><td><strong>Cut</strong></td><td>Subtracts the tool body from the target — removes overlapping volume</td><td>Subtract / Difference</td></tr>
+        <tr><td><strong>Intersect</strong></td><td>Keeps only the volume where both bodies overlap — discards the rest</td><td>Intersection</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;">Select <strong>Target Body</strong> (what you're modifying) and <strong>Tool Body</strong> (what you're using to modify). The tool body is consumed by default (toggle "Keep Tool Bodies" to preserve it).</p>
+  </div>
+
+  <!-- Thicken -->
+  <div class="card">
+    <div class="section-heading">📄 THICKEN</div>
+    <p>Adds material thickness to a surface (2D surface body) to convert it into a solid 3D body. Used after surface modeling to create shell-like structures.</p>
+    <ul style="font-size:13px;">
+      <li>Select one or more surface faces or the entire surface body</li>
+      <li>Set thickness amount and direction (one side / symmetric / both sides)</li>
+      <li>Operations: New Body / Join / Cut / Intersect</li>
+    </ul>
+  </div>
+
+</div><!-- /tab4 -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 5 — Advanced Features & Parametric Mastery
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab5">
+
+  <h1>Advanced Features &amp; Parametric Mastery</h1>
+  <p class="tab-intro">Once you're comfortable with solid features, these advanced capabilities separate intermediate users from experts: surface modeling for complex shapes, deep timeline control, freeform T-Spline sculpting, sheet metal, and mastering the parametric system fully.</p>
+
+  <!-- Surface Modeling -->
+  <div class="card">
+    <div class="section-heading">🌊 SURFACE MODELING (Patch Workspace / Surface Tab)</div>
+    <h4>When to Use Surfaces</h4>
+    <p style="font-size:13px;">Use surface modeling when solid features can't achieve the required shape — complex aerodynamic curves, automotive body panels, ergonomic organic housings, or any shape where you need precise control over curvature.</p>
+    <div class="feature-block">
+      <h4>Patch</h4>
+      <ul>
+        <li>Fill an open boundary (a set of connected edges or curves) with a surface</li>
+        <li>Set boundary continuity: None (sharp), Tangent (G1), or Curvature (G2) at each edge</li>
+        <li>Add internal rails for more shape control</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h4>Loft (Surface)</h4>
+      <ul>
+        <li>Same as solid loft but creates a surface skin between profiles</li>
+        <li>Add guide rails for controlled shape between profiles</li>
+        <li>Used for smooth aerodynamic skins: car hoods, aircraft panels</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h4>Ruled Surface</h4>
+      <ul>
+        <li>Extends a surface outward from an existing edge at a controllable angle</li>
+        <li>Used to create tangent or normal extensions for trimming operations</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h4>Offset Surface</h4>
+      <ul>
+        <li>Creates a parallel copy of a surface at a specified distance</li>
+        <li>Useful for creating parting surfaces or clearance surfaces</li>
+      </ul>
+    </div>
+    <div class="feature-block">
+      <h4>Trim / Extend / Merge</h4>
+      <ul>
+        <li><strong>Trim</strong>: cut a surface using another surface or curve as the cutting tool</li>
+        <li><strong>Extend</strong>: lengthen a surface edge by a distance, tangent or curvature continuous</li>
+        <li><strong>Merge</strong>: combine multiple adjacent surfaces into one unified surface body</li>
+      </ul>
+    </div>
+    <h4>Surface Modeling Workflow</h4>
+    <ol style="font-size:13px;">
+      <li>Sketch cross-section profiles and guide rail curves in 3D space</li>
+      <li>Create Loft surfaces between profiles using rails for shape control</li>
+      <li>Use Patch to close any open boundaries</li>
+      <li>Trim surfaces against each other to create clean intersections</li>
+      <li>Merge all surfaces into a closed, watertight surface body</li>
+      <li>Use <strong>Thicken</strong> to convert the surface body to a solid</li>
+      <li>Add fillets and other solid features to complete the model</li>
+    </ol>
+    <div class="tip tip-blue"><strong>Watertight Check</strong>Before Thicken, ensure your surface body is completely closed (no gaps or holes). Use Inspect → Surface Analysis to check curvature distribution and find problem areas.</div>
+  </div>
+
+  <!-- Parameters Deep Dive -->
+  <div class="card">
+    <div class="section-heading">⚙️ PARAMETERS — Advanced Mastery</div>
+    <h4>Building a Fully Parametric Model — The Process</h4>
+    <ol style="font-size:13px;">
+      <li>Open <strong>Modify → Parameters</strong> before starting</li>
+      <li>Create all key User Parameters: Width, Height, Depth, WallThick, BoltDiam, Clearance, etc.</li>
+      <li>Sketch using parameter names instead of numbers everywhere</li>
+      <li>When a dimension appears that derives from others, use an expression: <code>Width/2</code>, <code>Height - WallThick*2</code></li>
+      <li>Test: change one master parameter and verify the entire model updates correctly</li>
+    </ol>
+    <div class="two-col">
+      <div>
+        <h4>Linking Parameters (Dependencies)</h4>
+        <ul style="font-size:13px;">
+          <li><code>WallThick</code> → drives Shell Thickness</li>
+          <li><code>Height</code> → drives multiple feature depths</li>
+          <li><code>BoltDiam</code> → drives Hole diameter + Counterbore</li>
+          <li><code>BoltDiam * 1.5</code> → automatically sized counterbore</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Supported Math Functions</h4>
+        <ul style="font-size:13px;">
+          <li><code>sqrt(x)</code> — square root</li>
+          <li><code>sin(x deg)</code>, <code>cos(x deg)</code>, <code>tan(x deg)</code></li>
+          <li><code>abs(x)</code> — absolute value</li>
+          <li><code>max(a, b)</code>, <code>min(a, b)</code></li>
+          <li><code>floor(x)</code>, <code>ceil(x)</code>, <code>round(x)</code></li>
+          <li><code>PI</code> — π constant</li>
+        </ul>
+      </div>
+    </div>
+    <h4>Conditional Parameters (Limited Support)</h4>
+    <p style="font-size:13px;">Fusion 360 has limited <code>if()</code> support in parameters. For complex conditional logic, consider using design variants or configurations instead. Simple example: use maximum/minimum clamps with <code>max(MinWall, ComputedWall)</code>.</p>
+    <h4>Exporting &amp; Importing Parameter Tables</h4>
+    <p style="font-size:13px;">In the Parameters dialog, use the <strong>Export CSV</strong> button to save your parameter table. Share it with team members or import it into another Fusion file via <strong>Import CSV</strong>. This is powerful for standardized part families.</p>
+    <div class="tip tip-green"><strong>Parameter Tables for Part Families</strong>Build one model (e.g., a bolt), parametrize everything (length, diameter, head size, thread pitch), then export/import different CSV parameter sets to instantly generate M3×10, M4×16, M6×30 variants — same geometry, different parameters.</div>
+  </div>
+
+  <!-- Timeline Mastery -->
+  <div class="card">
+    <div class="section-heading">⏱️ TIMELINE MASTERY</div>
+    <p>The Timeline (bottom of the canvas) is Fusion 360's most powerful differentiator from direct modelers. Every operation — sketches, extrudes, fillets, joints — is a step you can go back to and modify.</p>
+    <h4>Timeline Operations — Right-Click Any Step</h4>
+    <table class="shortcut-table">
+      <thead><tr><th>Action</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Edit Feature</strong></td><td>Go back to that operation and change its inputs — dimensions, options, faces. The model rolls back in time, you make changes, then rolls forward.</td></tr>
+        <tr><td><strong>Suppress</strong></td><td>Temporarily hide/disable that feature from the model. The step stays in the timeline but is greyed out. Useful for testing "what if I remove this fillet?"</td></tr>
+        <tr><td><strong>Delete</strong></td><td>Permanently remove the step. Warning: if later steps depend on this one (parent-child relationship), they may fail.</td></tr>
+        <tr><td><strong>Move Before / After</strong></td><td>Reorder timeline steps. Sometimes the order matters — a fillet on an edge that gets cut later may fail if reordered incorrectly.</td></tr>
+        <tr><td><strong>Edit Sketch</strong></td><td>For sketch steps: re-enter the sketch editor to change geometry.</td></tr>
+        <tr><td><strong>New Group</strong></td><td>Create a folder to organize related steps (e.g., group all steps that make the mounting boss).</td></tr>
+      </tbody>
+    </table>
+    <h4>Rolling Back the Timeline</h4>
+    <p style="font-size:13px;">Drag the <strong>blue bar</strong> (the timeline playhead) left to roll back the model to any earlier state. The model visually shows what it looked like at that point. Drag right to roll forward again. You can add new features while rolled back — they insert at that point in history.</p>
+    <h4>Error Flags</h4>
+    <div class="color-row">
+      <div class="color-dot" style="background:#f0a500;"></div>
+      <span class="color-label" style="color:#f0a500;">Yellow warning</span>
+      <span>Non-critical issue — the feature computed but something unexpected happened (e.g., a fillet that couldn't fully blend). Right-click → Edit Feature to investigate.</span>
+    </div>
+    <div class="color-row">
+      <div class="color-dot" style="background:#e74c3c;"></div>
+      <span class="color-label" style="color:#e74c3c;">Red error</span>
+      <span>The feature failed to compute entirely — often because referenced geometry was deleted or changed. Right-click → Edit Feature and reselect the missing references.</span>
+    </div>
+    <h4>Parent-Child Dependencies</h4>
+    <p style="font-size:13px;">When one feature references geometry created by another (e.g., a Fillet on an edge created by an Extrude), the Extrude is the <em>parent</em> and the Fillet is the <em>child</em>. Deleting the parent breaks the child. Before deleting, right-click → Show Dependencies to see what will be affected.</p>
+    <div class="tip tip-blue"><strong>Best Practice</strong>Keep your timeline tidy. Use New Group (right-click timeline → New Group) to organize related steps. Name each group clearly (e.g., "Mounting Boss", "Hinge Cutout"). A well-organized timeline is much easier to edit later.</div>
+  </div>
+
+  <!-- T-Splines / Form -->
+  <div class="card">
+    <div class="section-heading">🎨 FORM / FREEFORM MODELING (T-Splines)</div>
+    <p>Fusion 360's Form environment lets you sculpt organic 3D shapes by pushing and pulling a mesh — similar to Blender's sculpt/edit mode but integrated with the parametric CAD workflow. Access via <strong>Create → Form</strong> (in the Design workspace).</p>
+    <div class="tip tip-yellow"><strong>Shortcut</strong>Press <kbd>Q</kbd> to toggle into and out of Sculpt/Form mode from the Design workspace.</div>
+    <h4>Starting Primitives</h4>
+    <div class="tool-grid">
+      <div class="tool-item"><div class="tool-name">Box</div><p>Start with a rectangular block — most flexible starting point</p></div>
+      <div class="tool-item"><div class="tool-name">Cylinder</div><p>Circular cross-section tube form</p></div>
+      <div class="tool-item"><div class="tool-name">Sphere</div><p>Spherical mesh — good for rounded organics</p></div>
+      <div class="tool-item"><div class="tool-name">Torus</div><p>Donut/ring shape — good for handles and rings</p></div>
+      <div class="tool-item"><div class="tool-name">Quad Ball</div><p>Sphere built from quad faces — better topology for sculpting</p></div>
+      <div class="tool-item"><div class="tool-name">Plane</div><p>Flat surface — good for starting a surface form</p></div>
+    </div>
+    <h4>Manipulation Techniques</h4>
+    <ul style="font-size:13px;">
+      <li>Select Faces / Edges / Vertices and use the transform gizmo (arrows, rotation rings) to push/pull them</li>
+      <li>Double-click to select a loop; triple-click to select all connected</li>
+      <li><strong>Edit Form</strong> tool: multi-mode transform — translate, rotate, scale in one tool</li>
+      <li><strong>Insert Edge</strong>: add edge loops to add detail where you need it</li>
+      <li><strong>Delete Faces</strong>: remove faces to create holes and open boundaries</li>
+      <li><strong>Bridge</strong>: connect two open surface boundaries with a blended transition</li>
+      <li><strong>Weld Vertices</strong>: merge two close vertices into one for seamless topology</li>
+    </ul>
+    <h4>Crease Edges (Sharp Edges in T-Splines)</h4>
+    <ul style="font-size:13px;">
+      <li>By default all edges in T-Splines are smooth and rounded</li>
+      <li>To create a sharp crease: select edges → right-click → <strong>Set Edge Crease</strong> → Full Crease</li>
+      <li>Partial crease values (0.0 to 1.0) give a controllable sharpness</li>
+      <li>Useful for product design where some edges need to be sharp (corners, seams) while others are smooth</li>
+    </ul>
+    <h4>Symmetry in Form Mode</h4>
+    <ul style="font-size:13px;">
+      <li><strong>Mirror Internal</strong> — sculpt one half; the other half updates in real time but is not independent geometry</li>
+      <li><strong>Mirror Duplicate</strong> — creates an actual second body that mirrors your sculpt</li>
+      <li>Symmetry axis: X, Y, or Z (or multiple simultaneously)</li>
+    </ul>
+    <h4>Finishing a Form</h4>
+    <p style="font-size:13px;">When done sculpting, click <strong>Finish Form</strong> in the toolbar. Fusion converts the T-Spline surface into a B-Rep solid (the standard parametric solid format). You can then apply Fillet, Shell, Extrude, and all other solid features to the result.</p>
+    <div class="tip tip-green"><strong>Best For</strong>Ergonomic handles and grips, consumer electronics housings, car body styling, sports equipment, shoe lasts, medical device housings, organic product forms — anywhere dimensions matter less than <em>feel</em> and <em>curvature quality</em>.</div>
+  </div>
+
+  <!-- Sheet Metal -->
+  <div class="card">
+    <div class="section-heading">🔧 SHEET METAL</div>
+    <p>Fusion 360 has a dedicated Sheet Metal environment (in the Design workspace toolbar) for designing parts made from flat sheet stock that is bent into shape.</p>
+    <div class="two-col">
+      <div>
+        <h4>Key Sheet Metal Features</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Flange</strong> — create a flat face from a sketch, or add a flange (bent tab) to an existing edge</li>
+          <li><strong>Bend</strong> — add a bend between two flat faces at a specified angle and radius</li>
+          <li><strong>Unfold</strong> — flatten the part to see the flat pattern (what gets cut from sheet stock)</li>
+          <li><strong>Refold</strong> — fold it back to 3D after checking the flat pattern</li>
+          <li><strong>Hem</strong> — fold the edge back on itself for safety and stiffness</li>
+          <li><strong>Contour Flange</strong> — sweep a profile along a path to create complex formed shapes</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Material &amp; Bend Rules</h4>
+        <ul style="font-size:13px;">
+          <li><strong>Thickness</strong> — material thickness (set once, applies everywhere)</li>
+          <li><strong>Bend Radius</strong> — minimum bend radius depends on material type and thickness. Typically 1× material thickness for steel.</li>
+          <li><strong>K-Factor</strong> — accounts for material stretching during bending. Affects flat pattern accuracy. Typical K = 0.44 for steel.</li>
+          <li><strong>Relief Type</strong> — corner relief cut shape to prevent tearing at bend intersections (Round, Square, Tear, Linear)</li>
+        </ul>
+        <h4>Manufacturing Output</h4>
+        <ul style="font-size:13px;">
+          <li>Flat Pattern for laser/plasma cutting DXF export</li>
+          <li>Bend Table in Drawing for shop floor instructions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab5 -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TAB 6 — Assemblies & Joints
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab6">
+
+  <h1>Assemblies &amp; Joints</h1>
+  <p class="tab-intro">Assemblies bring multiple parts together into a working mechanism. Fusion 360's joint system is one of its most powerful features — it lets you define exactly how parts move relative to each other and simulate motion.</p>
+
+  <!-- Bodies vs Components -->
+  <div class="card">
+    <div class="section-heading">⚠️ BODIES vs COMPONENTS — Critical Distinction</div>
+    <div class="tip tip-red"><strong>The Most Important Assembly Rule</strong>Always convert geometry to Components before adding Joints. Joints connect Components, not Bodies. If you try to joint Bodies, you'll have problems.</div>
+    <table class="compare-table">
+      <thead><tr><th>Aspect</th><th>Body</th><th>Component</th></tr></thead>
+      <tbody>
+        <tr><td class="label">What it is</td><td>A piece of geometry — a shape defined by faces and edges</td><td>A "part" — has its own origin, coordinate system, can be reused</td></tr>
+        <tr><td class="label">Parameters</td><td>Shares parameters with the parent component</td><td>Can have its own independent parameter set</td></tr>
+        <tr><td class="label">Joints</td><td>Cannot be jointed to other bodies directly</td><td>Joints connect components to each other</td></tr>
+        <tr><td class="label">Reuse</td><td>Cannot be easily reused across projects</td><td>Can be saved as its own .f3d file and inserted into other assemblies</td></tr>
+        <tr><td class="label">Motion</td><td>Cannot move independently</td><td>Can move relative to other components via joints</td></tr>
+        <tr><td class="label">Use for</td><td>Intermediate modeling steps within one part</td><td>Any part that is a separate physical piece in the real assembly</td></tr>
+      </tbody>
+    </table>
+    <h4>How to Create Components</h4>
+    <ul style="font-size:13px;">
+      <li><strong>From an existing body</strong>: right-click the body in the browser → <strong>Create Component from Body</strong></li>
+      <li><strong>New empty component</strong>: right-click in the browser (top level) → <strong>New Component</strong></li>
+      <li><strong>While modeling</strong>: in the Extrude/Revolve dialog, set Operation = <strong>New Component</strong></li>
+      <li>Always name components immediately after creating them</li>
+    </ul>
+  </div>
+
+  <!-- 7 Joint Types -->
+  <div class="card">
+    <div class="section-heading">🔗 The 7 Joint Types — Complete Reference</div>
+    <p style="font-size:13px; color:#8b949e; margin-bottom:0.8rem;">Each joint type constrains specific degrees of freedom (DOF). A rigid body in free space has 6 DOF (3 translation, 3 rotation). Each joint type removes some of those freedoms.</p>
+    <div class="joint-grid">
+      <div class="joint-item">
+        <div class="joint-num">1</div>
+        <div class="joint-body">
+          <h4>Rigid <span class="badge badge-blue">0 DOF</span></h4>
+          <p>Parts are completely locked together — zero degrees of freedom. No relative motion at all. Like two parts that are glued, welded, or bolted solid. Use for sub-assemblies that act as one unit.</p>
+        </div>
+      </div>
+      <div class="joint-item">
+        <div class="joint-num">2</div>
+        <div class="joint-body">
+          <h4>Revolute <span class="badge badge-blue">1 DOF</span></h4>
+          <p>Rotates around a single axis. The hinge joint — like a door hinge, pivot pin, motor shaft bearing, or any pin connection. Can set angle limits (min/max rotation angle). Most common joint type in mechanisms.</p>
+        </div>
+      </div>
+      <div class="joint-item">
+        <div class="joint-num">3</div>
+        <div class="joint-body">
+          <h4>Slider <span class="badge badge-blue">1 DOF</span></h4>
+          <p>Translates (slides) along a single axis. Like a drawer, piston, linear rail, or telescoping tube. Can set position limits (min/max travel distance). No rotation — pure linear motion.</p>
+        </div>
+      </div>
+      <div class="joint-item">
+        <div class="joint-num">4</div>
+        <div class="joint-body">
+          <h4>Cylindrical <span class="badge badge-blue">2 DOF</span></h4>
+          <p>Rotation AND translation on the same axis simultaneously — like a nut on a bolt that can both spin freely and slide along the bolt. Or a shaft in a bearing that can both rotate and slide axially.</p>
+        </div>
+      </div>
+      <div class="joint-item">
+        <div class="joint-num">5</div>
+        <div class="joint-body">
+          <h4>Pin-Slot <span class="badge badge-blue">2 DOF</span></h4>
+          <p>Rotation around one axis PLUS translation along a <em>different</em> axis. Like a pin riding in a slot — it pivots and slides in the slot simultaneously. Used in cam mechanisms and Geneva drives.</p>
+        </div>
+      </div>
+      <div class="joint-item">
+        <div class="joint-num">6</div>
+        <div class="joint-body">
+          <h4>Planar <span class="badge badge-blue">3 DOF</span></h4>
+          <p>Translation in a plane (X and Y) PLUS rotation around the perpendicular axis (Z). Like a puck sliding freely on an air-hockey table. 3 degrees of freedom total. Used for parts that can move and rotate within a flat surface.</p>
+        </div>
+      </div>
+      <div class="joint-item">
+        <div class="joint-num">7</div>
+        <div class="joint-body">
+          <h4>Ball <span class="badge badge-blue">3 DOF rotation</span></h4>
+          <p>Rotation in all 3 directions — like a ball-and-socket joint (your shoulder or hip joint). Cannot translate — the center point is fixed. Used for universal joints, ball joints, and articulated connections. Can set cone angle limit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to Add a Joint -->
+  <div class="card">
+    <div class="section-heading">➕ Adding Joints — Step by Step</div>
+    <h4>Standard Joint</h4>
+    <ol style="font-size:13px;">
+      <li>Go to <strong>Assemble → Joint</strong> (or press <kbd>J</kbd>)</li>
+      <li>Click the <strong>Joint Origin</strong> on the first component (snap to vertex, center, midpoint, or face)</li>
+      <li>Click the <strong>Joint Origin</strong> on the second component</li>
+      <li>Fusion moves the components together at those points</li>
+      <li>Select the <strong>Joint Type</strong> from the dropdown</li>
+      <li>Set the <strong>Motion axis</strong> if needed (which direction does it rotate/slide)</li>
+      <li>Set <strong>Limits</strong> (min angle, max angle, or min/max position) if applicable</li>
+      <li>Click OK</li>
+    </ol>
+    <h4>As-Built Joint</h4>
+    <p style="font-size:13px;"><strong>Assemble → As-Built Joint</strong> — adds a joint without moving the components. Fusion defines the joint at their current position. Use this when you've already positioned components where you want them (via Move/Copy) and just need to add motion constraints.</p>
+    <h4>Joint Origins</h4>
+    <p style="font-size:13px;">Joint Origins are the connection points. They snap to: vertices, edge midpoints, face centers, arc/circle centers, or you can place them at a custom location. For a hinge: snap to the center of the hinge pin hole on each component — Fusion lines them up.</p>
+    <div class="tip tip-yellow"><strong>Grounding the Base</strong>Before adding joints, right-click your base/fixed component in the browser → <strong>Ground</strong>. A grounded component is locked in space. This gives joints a stable reference and prevents the whole assembly from floating when you add motion.</div>
+  </div>
+
+  <!-- Motion Study -->
+  <div class="card">
+    <div class="section-heading">🎬 MOTION STUDY</div>
+    <p>Create an animation that shows how your mechanism moves. Access via <strong>Assemble → Motion Study</strong>.</p>
+    <ul style="font-size:13px;">
+      <li>Set the motion for each joint: angle or position over time (key frames)</li>
+      <li>Add multiple key frames to create complex multi-step animations</li>
+      <li>Play the animation in real time in the canvas</li>
+      <li>Record and export as an .avi video file for presentations or client reviews</li>
+      <li>Useful for demonstrating folding mechanisms, opening panels, or robotic arm paths</li>
+    </ul>
+  </div>
+
+  <!-- Contact Sets -->
+  <div class="card">
+    <div class="section-heading">💥 CONTACT SETS — Collision Detection</div>
+    <p>By default, components in Fusion 360 can pass through each other during motion simulation. Contact Sets prevent this.</p>
+    <ul style="font-size:13px;">
+      <li>Enable via: <strong>Assemble → Enable Contact Sets</strong></li>
+      <li>Select which component pairs should physically interact (collide)</li>
+      <li>During motion simulation, the selected components stop when they touch</li>
+      <li>Useful for checking: cam follower motion, drawer stop limits, gear tooth contact</li>
+    </ul>
+    <div class="tip tip-yellow"><strong>Performance Note</strong>Contact computation is expensive. Only enable Contact Sets for the specific pairs you need to check — not for every component in a large assembly.</div>
+  </div>
+
+  <!-- Interference Check -->
+  <div class="card">
+    <div class="section-heading">🔍 INTERFERENCE CHECK</div>
+    <p>Static check for overlapping (intersecting) volumes between components — a critical quality step before manufacturing.</p>
+    <ul style="font-size:13px;">
+      <li>Access via: <strong>Inspect → Interference</strong></li>
+      <li>Select the components or bodies to check against each other</li>
+      <li>Fusion highlights overlapping volumes in red and reports their volume</li>
+      <li>Zero interference = components fit correctly in 3D space</li>
+      <li>Any interference = you have a design error — components physically overlap, which is impossible in reality</li>
+      <li>Run this check before sending to manufacturing</li>
+    </ul>
+    <div class="tip tip-red"><strong>Always Run Before Manufacturing</strong>Interference check catches clearance errors that are impossible to see visually in a complex assembly. A 0.1mm overlap between a shaft and a housing means the assembly won't go together — find it in the model before machining the parts.</div>
+  </div>
+
+  <!-- Motion Link -->
+  <div class="card">
+    <div class="section-heading">⚙️ MOTION LINK — Coupled Motion</div>
+    <p>Link two joints so their motion is mathematically coupled — one moves, the other moves proportionally.</p>
+    <ul style="font-size:13px;">
+      <li>Access via: <strong>Assemble → Motion Link</strong></li>
+      <li>Select two joints and define the ratio between their motions</li>
+      <li><strong>Example — Gear pair</strong>: Revolute joint A (driving gear) linked to Revolute joint B (driven gear) with ratio 2:1. Turn gear A one revolution → gear B turns two revolutions.</li>
+      <li><strong>Example — Rack and pinion</strong>: Revolute joint (pinion rotation) linked to Slider joint (rack translation). Pinion turns → rack translates proportionally.</li>
+      <li>Direction (same or reverse) can be set for the linked motion</li>
+    </ul>
+  </div>
+
+  <!-- Assembly Best Practices -->
+  <div class="card">
+    <div class="section-heading">✅ Assembly Best Practices</div>
+    <ul style="font-size:14px;">
+      <li><strong>Plan your assembly structure first</strong> — top-level assembly → sub-assemblies → individual parts. Sketch a tree diagram before modeling.</li>
+      <li><strong>Name every component immediately</strong> after creating it. "Component1", "Component2" becomes unmanageable fast.</li>
+      <li><strong>Ground the base component</strong> — the frame, housing, or chassis that everything else attaches to. Right-click → Ground.</li>
+      <li><strong>Add joints one at a time</strong> and test motion after each one. Don't add all joints at once then wonder why nothing works.</li>
+      <li><strong>Use sub-assemblies</strong> for groups of parts that move together (e.g., a door with its hinges and handle is one sub-assembly).</li>
+      <li><strong>Save components as individual files</strong> if they'll be reused across projects. Insert them via Insert → Insert Into Current Design.</li>
+      <li><strong>Check interference</strong> at each major design stage — not just at the end.</li>
+      <li><strong>Use the Browser visibility (lightbulb)</strong> aggressively — hide components to work on adjacent ones clearly.</li>
+    </ul>
+  </div>
+
+</div><!-- /tab6 -->
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TABS 7-12 — LOADING PLACEHOLDERS
+══════════════════════════════════════════════════════════ -->
+<div class="tab-panel" id="tab7">
+  <div class="loading-placeholder">
+    <div class="spinner"></div>
+    <p>Tab 7 · CAM Basics — content in Part B</p>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab8">
+  <div class="loading-placeholder">
+    <div class="spinner"></div>
+    <p>Tab 8 · Simulation / FEA — content in Part B</p>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab9">
+  <div class="loading-placeholder">
+    <div class="spinner"></div>
+    <p>Tab 9 · Rendering — content in Part B</p>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab10">
+  <div class="loading-placeholder">
+    <div class="spinner"></div>
+    <p>Tab 10 · Drawings — content in Part B</p>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab11">
+  <div class="loading-placeholder">
+    <div class="spinner"></div>
+    <p>Tab 11 · Workflows — content in Part B</p>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab12">
+  <div class="loading-placeholder">
+    <div class="spinner"></div>
+    <p>Tab 12 · Master Shortcuts — content in Part B</p>
+  </div>
+</div>
+
+</div><!-- /content-wrap -->
+
+<script>
+  function switchTab(n) {
+    // Hide all panels
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    // Deactivate all buttons
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    // Show target panel
+    var panel = document.getElementById('tab' + n);
+    if (panel) panel.classList.add('active');
+    // Activate target button
+    var buttons = document.querySelectorAll('.tab-btn');
+    if (buttons[n - 1]) buttons[n - 1].classList.add('active');
+    // Scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+<div id="tab7" class="tab-content" style="display:none">
+  <h2 class="section-heading">All Shortcuts Master Reference</h2>
+
+  <div class="tip-box info">
+    <strong>Pro tip:</strong> Press <kbd>S</kbd> at any time (without a tool active) to open the <strong>Commands Search</strong> palette — type any command name to run it instantly. This is the fastest way to access any feature in Fusion 360.
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Navigation Shortcuts</h3>
+    <div class="shortcut-row"><kbd>F6</kbd><span>Home view (isometric reset)</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Shift</kbd>+<kbd>MMB</kbd><span>Pan (slide view)</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>MMB drag</kbd><span>Orbit (rotate view)</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Scroll</kbd><span>Zoom in / out</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Alt</kbd>+<kbd>MMB</kbd><span>Orbit (alternate method)</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>F7</kbd><span>Grid and snapping settings</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd><span>Home / reset view</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>1–7</kbd><span>Set standard views (Front / Back / Left / Right / Top / Bottom / Iso)</span><span style="color:#888;font-size:0.85em">General</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Sketch Shortcuts</h3>
+    <div class="shortcut-row"><kbd>L</kbd><span>Line tool</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>R</kbd><span>Rectangle (2-point)</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>C</kbd><span>Circle (center point)</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>D</kbd><span>Smart Dimension</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>O</kbd><span>Offset sketch entities</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>T</kbd><span>Trim sketch entities</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>X</kbd><span>Delete sketch entity</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>P</kbd><span>Project / Include geometry</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Z</kbd><span>Undo</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+    <div class="shortcut-row"><kbd>Escape</kbd><span>Exit current tool / cancel</span><span style="color:#888;font-size:0.85em">Sketch</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">3D Feature Shortcuts</h3>
+    <div class="shortcut-row"><kbd>E</kbd><span>Extrude</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>Q</kbd><span>Press Pull (smart extrude / face offset)</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>F</kbd><span>Fillet</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>J</kbd><span>Joint (assembly context)</span><span style="color:#888;font-size:0.85em">Assembly</span></div>
+    <div class="shortcut-row"><kbd>S</kbd><span>Create new Sketch (or Commands Search when no tool active)</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>M</kbd><span>Move / Copy body or component</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>D</kbd><span>Appearance (assign material look)</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>Shift</kbd>+<kbd>N</kbd><span>New component</span><span style="color:#888;font-size:0.85em">3D / Assembly</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>G</kbd><span>Group selected features</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>V</kbd><span>Copy / Paste body or component</span><span style="color:#888;font-size:0.85em">General</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">General Shortcuts</h3>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Z</kbd><span>Undo</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Y</kbd><span>Redo</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>S</kbd><span>Save to cloud</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd><span>Save As</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>F2</kbd><span>Rename selected item</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Delete</kbd><span>Delete selected</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>A</kbd><span>Select all</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>N</kbd><span>Toggle component / body names in viewport</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>V</kbd><span>Toggle joint visibility</span><span style="color:#888;font-size:0.85em">Assembly</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Inspection Shortcuts</h3>
+    <div class="shortcut-row"><kbd>I</kbd><span>Inspect / Measure tool</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Shift</kbd>+<kbd>I</kbd><span>Interference check</span><span style="color:#888;font-size:0.85em">Assembly</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd><span>Mass Properties</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>E</kbd><span>Export</span><span style="color:#888;font-size:0.85em">General</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Mouse Shortcuts &amp; Context Actions</h3>
+    <div class="shortcut-row"><kbd>Double-click face</kbd><span>Edit the sketch that created that face</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>Double-click timeline step</kbd><span>Edit that feature</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Right-click canvas</kbd><span>Repeat last command (top of menu)</span><span style="color:#888;font-size:0.85em">General</span></div>
+    <div class="shortcut-row"><kbd>Right-click body</kbd><span>Context menu: common body operations</span><span style="color:#888;font-size:0.85em">3D</span></div>
+    <div class="shortcut-row"><kbd>Right-click component (browser)</kbd><span>Show/Hide, Lock, Ground, Isolate, etc.</span><span style="color:#888;font-size:0.85em">Assembly</span></div>
+    <div class="shortcut-row"><kbd>Hold RMB + drag</kbd><span>Radial marking menu (try dragging slowly in different directions)</span><span style="color:#888;font-size:0.85em">General</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Complete Shortcut Reference Table</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:0.9em">
+        <thead>
+          <tr style="background:#1890ff;color:#fff">
+            <th style="padding:8px 12px;text-align:left">Shortcut</th>
+            <th style="padding:8px 12px;text-align:left">Action</th>
+            <th style="padding:8px 12px;text-align:left">When Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>F6</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Home / isometric view</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Shift+MMB</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Pan view</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>MMB drag</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Orbit view</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Scroll</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Zoom</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>F7</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Grid settings</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+1–7</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Standard views</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>L</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Line tool</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>R</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Rectangle (2-point)</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>C</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Circle (center)</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>D</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Smart Dimension</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>O</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Offset sketch</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>T</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Trim sketch entity</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>X</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Delete sketch entity</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>P</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Project / Include geometry</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Sketch</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>E</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Extrude</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Q</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Press Pull (smart extrude/offset)</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>F</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Fillet</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>J</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Joint</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Assembly</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>S</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">New Sketch / Commands Search</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D / General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>M</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Move / Copy</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>I</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Inspect / Measure</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Shift+I</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Interference check</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Assembly</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+D</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Appearance</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Shift+N</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">New component</td><td style="padding:7px 12px;border-bottom:1px solid #eee">3D / Assembly</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+Z</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Undo</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+Y</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Redo</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+S</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Save to cloud</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+Shift+S</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Save As</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>F2</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Rename selected</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Delete</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Delete selected</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+A</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Select all</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>N</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Toggle body/component names</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>V</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Toggle joint visibility</td><td style="padding:7px 12px;border-bottom:1px solid #eee">Assembly</td></tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)"><td style="padding:7px 12px;border-bottom:1px solid #eee"><kbd>Ctrl+Shift+M</kbd></td><td style="padding:7px 12px;border-bottom:1px solid #eee">Mass Properties</td><td style="padding:7px 12px;border-bottom:1px solid #eee">General</td></tr>
+          <tr style="background:var(--bg-card,#fff)"><td style="padding:7px 12px"><kbd>Ctrl+E</kbd></td><td style="padding:7px 12px">Export</td><td style="padding:7px 12px">General</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>Marking Menus:</strong> Hold <kbd>RMB</kbd> and slowly drag in a direction on the canvas to access radial marking menus. Fusion 360 shows context-sensitive radial options for quick access to common commands without navigating menus.
+  </div>
+</div>
+
+<div id="tab8" class="tab-content" style="display:none">
+  <h2 class="section-heading">Simulation &amp; Rendering</h2>
+
+  <h3 style="color:#1890ff">Simulation (FEA — Finite Element Analysis)</h3>
+  <div class="tip-box info">
+    <strong>What it is:</strong> Simulation lets you test how your design handles real-world forces, heat, and vibration <em>before</em> building a physical prototype — saving time, money, and material.
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Setting Up a Static Stress Study</h3>
+    <p>Switch to the <strong>Simulation workspace</strong> via the workspace dropdown.</p>
+    <ol style="line-height:2">
+      <li><strong>New Study → Static Stress</strong></li>
+      <li><strong>Assign Material:</strong> right-click the body → Assign Material → pick from the library (Steel, Aluminum 6061-T6, Nylon, ABS, etc.)</li>
+      <li><strong>Apply Constraint (Fixed):</strong> Constraints → Fixed → select the faces that are bolted or grounded in real use</li>
+      <li><strong>Apply Load (Force):</strong> Loads → Force → select a face → set direction and magnitude (e.g. 1000 N downward)</li>
+      <li><strong>Solve:</strong> Solve → Solve (Fusion meshes the part and runs the FEA calculation — may take 1–5 min)</li>
+      <li><strong>View Results:</strong> Color map overlay appears — red = high stress, blue = low stress</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Reading Simulation Results</h3>
+    <div class="concept-grid">
+      <div class="concept-item">
+        <strong>Von Mises Stress</strong>
+        <p>Combined equivalent stress value. If it exceeds the material's Yield Strength, the part will deform permanently.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Factor of Safety (FoS)</strong>
+        <p>= Yield Strength ÷ Max Stress. Aim for <strong>2.0+</strong> for safety-critical parts, <strong>1.5+</strong> for non-critical. Values below 1.0 (red) = will fail.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Displacement Plot</strong>
+        <p>Shows how much the part deflects under the applied load. Look for unexpected bending or deformation far from the load point.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Reaction Forces</strong>
+        <p>Verify the sum of reaction forces at constraints equals your applied loads. Mismatch = incorrect boundary conditions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Thermal Simulation</h3>
+    <ol style="line-height:2">
+      <li>New Study → <strong>Thermal</strong></li>
+      <li><strong>Apply Temperature:</strong> fixed temperature on a face (simulating a heat source, e.g. 150°C)</li>
+      <li><strong>Apply Convection:</strong> air cooling — set convection coefficient (W/m²·K) and ambient temperature</li>
+      <li>Solve → Results show <strong>temperature distribution</strong> across the part</li>
+    </ol>
+    <p>Useful for: heatsinks, electronic enclosures, engine components, plastic parts near heat sources.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Modal Frequency Analysis</h3>
+    <p>Finds the <strong>natural resonant frequencies</strong> of your part — the frequencies at which it will vibrate if excited.</p>
+    <ul style="line-height:2">
+      <li>New Study → <strong>Modal Frequencies</strong></li>
+      <li>Apply fixed constraints (as in static stress), but no force loads</li>
+      <li>Solve → results show <strong>mode shapes</strong> and frequencies (Hz)</li>
+      <li><strong>Critical rule:</strong> ensure operating frequency ≠ any resonant frequency — resonance causes rapid failure</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Simulation Best Practices</h3>
+    <div class="tip-box warning">
+      <strong>Simplify geometry first:</strong> Remove small fillets, tiny holes, and cosmetic features that don't affect structural behavior. Simpler geometry = faster, more stable mesh.
+    </div>
+    <ul style="line-height:2">
+      <li><strong>Mesh refinement:</strong> Mesh Settings → reduce element size near stress concentrations (corners, holes, transitions) for more accurate results</li>
+      <li><strong>Mesh independence study:</strong> keep refining the mesh until results stop changing significantly — that's your converged answer</li>
+      <li><strong>Verify boundary conditions:</strong> wrong constraint placement is the #1 cause of wrong simulation results</li>
+      <li><strong>Always check units:</strong> confirm forces are in Newtons, not pounds-force, and dimensions are consistent</li>
+    </ul>
+  </div>
+
+  <hr style="border:none;border-top:1px solid #eee;margin:30px 0">
+  <h3 style="color:#1890ff">Rendering Workspace</h3>
+  <p>Switch to <strong>Render workspace</strong> via the workspace dropdown (top toolbar).</p>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Scene Setup</h3>
+    <ul style="line-height:2">
+      <li><strong>Environment Library:</strong> choose a lighting environment — studio, outdoor, industrial, gradient, etc.</li>
+      <li><strong>Environment Rotation:</strong> rotate the HDRI background to control where specular highlights fall</li>
+      <li><strong>Ground Plane:</strong> toggle on/off, adjust reflection intensity and shadow softness</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Appearance (Materials)</h3>
+    <ul style="line-height:2">
+      <li>Drag appearances from the <strong>Appearance Library</strong>: brushed aluminum, carbon fiber, wood grain, painted plastic, glass, chrome, etc.</li>
+      <li><strong>Custom appearance:</strong> set Color (hex or picker), Roughness (0=mirror, 1=matte), Reflectance</li>
+      <li><strong>Decal:</strong> Appearance → Decal → apply an image texture (PNG/JPG) to a face — use for labels, logos, stickers, warning text</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Camera Settings</h3>
+    <ul style="line-height:2">
+      <li><strong>Perspective</strong> vs <strong>Orthographic</strong> projection</li>
+      <li><strong>Focal length / lens type:</strong> wider focal length = dramatic perspective; longer = compressed look</li>
+      <li><strong>Depth of Field:</strong> set focus distance and aperture — background/foreground blurs for product photography look</li>
+      <li><strong>Exposure / Brightness:</strong> adjust overall scene brightness</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Render Settings &amp; Output</h3>
+    <div class="concept-grid">
+      <div class="concept-item">
+        <strong>In-Canvas Render</strong>
+        <p>Quick preview render in the Fusion viewport. Good for testing appearances and lighting.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Local Render</strong>
+        <p>Uses your GPU/CPU for higher quality. Set resolution and ray tracing quality.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Cloud Render</strong>
+        <p>Offloads to Autodesk cloud servers. Uses render credits. Highest quality output.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Export Image</strong>
+        <p>Render → Capture Image — saves PNG/JPG at your specified resolution.</p>
+      </div>
+    </div>
+    <p style="margin-top:10px">Ray tracing options: toggle <strong>reflections</strong>, <strong>shadows</strong>, and <strong>ambient occlusion</strong> individually for quality vs. speed trade-off.</p>
+  </div>
+</div>
+
+<div id="tab9" class="tab-content" style="display:none">
+  <h2 class="section-heading">CAM — Computer-Aided Manufacturing</h2>
+
+  <div class="tip-box info">
+    <strong>What CAM does:</strong> Generates G-code — the machine instruction language that tells a CNC mill, router, or lathe exactly where to move its cutting tool, at what speed, and at what depth. Switch to the <strong>Manufacturing workspace</strong> to access CAM.
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Core CAM Concepts</h3>
+    <div class="concept-grid">
+      <div class="concept-item">
+        <strong>Stock</strong>
+        <p>The raw material block you'll be cutting from — slightly larger than the finished part.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Tool</strong>
+        <p>End mill, drill bit, ball nose, face mill — each has defined geometry (diameter, flute count, corner radius) that affects cutting behavior.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Toolpath</strong>
+        <p>The precise 3D path the cutter follows through the material to achieve the desired shape.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Feed Rate</strong>
+        <p>Speed the tool moves through material (mm/min or in/min). Too fast = tool breakage; too slow = inefficiency.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Spindle Speed</strong>
+        <p>RPM of the rotating tool. Depends on material, tool diameter, and coating.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Depth of Cut (DOC)</strong>
+        <p>How deep each pass cuts into the material. Axial DOC (Z depth) and radial DOC (side engagement).</p>
+      </div>
+      <div class="concept-item">
+        <strong>Stepover</strong>
+        <p>How far the tool shifts sideways between adjacent passes. Smaller stepover = smoother surface, more passes.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Setting Up a CAM Job</h3>
+    <ol style="line-height:2.2">
+      <li><strong>Manufacturing → Setup → New Setup</strong></li>
+      <li>Set <strong>orientation:</strong> pick which face is the "top" of the part relative to the machine (Z+ is typically up)</li>
+      <li>Set <strong>Stock:</strong> Bounding Box with a small positive offset (e.g. 2mm) — represents the raw material slightly larger than the part</li>
+      <li>Create <strong>toolpath operations</strong> from the Manufacturing menu (2D, 3D, Drilling, etc.)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">2D Operations (Most Common for Beginners)</h3>
+    <div class="modifier-item">
+      <strong>2D Pocket</strong> — Clears out a recessed area (slot, pocket, recess). Tool spirals or zigzags inward to remove all material from an enclosed profile.
+    </div>
+    <div class="modifier-item">
+      <strong>2D Contour</strong> — Cuts along the outside profile of a shape. Used to trim a part to its final outer boundary.
+    </div>
+    <div class="modifier-item">
+      <strong>2D Adaptive Clearing</strong> — Smart roughing strategy that maintains a constant chip load by varying the engagement angle. Protects the tool and allows higher feed rates.
+    </div>
+    <div class="modifier-item">
+      <strong>Face</strong> — Flattens the top surface of the stock. First operation in almost every job.
+    </div>
+    <div class="modifier-item">
+      <strong>Drill</strong> — Peck drilling cycle for holes. Supports full drill cycles including peck depth, retract, and dwell.
+    </div>
+    <div class="modifier-item">
+      <strong>Thread Milling</strong> — Helical path to cut internal or external threads using a thread mill cutter.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">3D Operations (Complex Surfaces)</h3>
+    <div class="modifier-item">
+      <strong>Adaptive Clearing 3D</strong> — Roughing for complex 3D shapes. Leaves even stock allowance all around the part.
+    </div>
+    <div class="modifier-item">
+      <strong>Parallel</strong> — Finishing passes in parallel lines across a surface. Good for shallow, flat-ish surfaces.
+    </div>
+    <div class="modifier-item">
+      <strong>Scallop</strong> — Maintains a consistent scallop (cusp) height across complex curved surfaces. More uniform surface finish than Parallel.
+    </div>
+    <div class="modifier-item">
+      <strong>Contour</strong> — Follows the contour lines of a surface (like terrain elevation lines on a map). Good for steep walls.
+    </div>
+    <div class="modifier-item">
+      <strong>Pencil</strong> — Traces concave corners and fillets with the tool tip. Used as a finishing pass to clean up corners that other strategies miss.
+    </div>
+    <div class="modifier-item">
+      <strong>Radial</strong> — Passes radiate outward from a center point. Good for circular or radially symmetric parts.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">CAM Simulation (Verify Before Cutting)</h3>
+    <p>After creating toolpaths: <strong>Actions → Simulate</strong></p>
+    <ul style="line-height:2">
+      <li>Watch the animated cutting simulation play through your entire toolpath</li>
+      <li>Check for <strong>gouges</strong> — areas where the tool cuts into geometry it shouldn't</li>
+      <li>Check for <strong>collisions</strong> — tool holder or spindle hitting the workpiece or fixture</li>
+      <li>Orange/red areas show material being removed as expected</li>
+      <li><strong>Always simulate before sending G-code to a real machine</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Post Processing — Generating G-Code</h3>
+    <ol style="line-height:2">
+      <li>Select your Setup in the browser</li>
+      <li><strong>Actions → Post Process</strong></li>
+      <li>Choose the correct <strong>post processor</strong> for your machine controller:
+        <ul>
+          <li>Grbl (hobby CNC, most 3-axis routers)</li>
+          <li>Fanuc (industrial mills)</li>
+          <li>Haas (Haas CNC machines)</li>
+          <li>Mach3 / Mach4 (hobby/semi-pro)</li>
+          <li>LinuxCNC (open-source controller)</li>
+        </ul>
+      </li>
+      <li>Set output folder and file name</li>
+      <li>Click <strong>Post</strong> — output is a <code>.nc</code> or <code>.gcode</code> file</li>
+      <li>Load file into your machine's controller software to run</li>
+    </ol>
+    <div class="tip-box warning">
+      <strong>Important:</strong> Always verify the G-code post processor matches your exact machine model. Wrong post processor = wrong coordinate system, wrong feeds, potential crash.
+    </div>
+  </div>
+</div>
+
+<div id="tab10" class="tab-content" style="display:none">
+  <h2 class="section-heading">Design for Manufacturing (DFM)</h2>
+  <p>DFM means designing parts so they can actually be manufactured efficiently and reliably. Each process has specific rules that must be followed.</p>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Section A: Injection Molding Design Rules</h3>
+
+    <div class="modifier-item">
+      <strong>Draft Angle</strong> — ALL vertical walls need 1–3° taper so the part can eject from the mold without sticking. Use the <strong>Draft feature</strong> in Fusion. Use <strong>Inspect → Draft Analysis</strong> to verify: green = good draft, red = no draft.
+    </div>
+    <div class="modifier-item">
+      <strong>Uniform Wall Thickness</strong> — Keep wall thickness consistent, typically 1.5–4mm for most plastics. Thick sections cool slower and cause <em>sink marks</em> (depressions on the outer surface opposite a thick section).
+    </div>
+    <div class="modifier-item">
+      <strong>Ribs</strong> — Add structural ribs to stiffen walls without adding bulk. Rib thickness = 60% of wall thickness. Maximum rib height = 3× wall thickness. Add draft to rib sides.
+    </div>
+    <div class="modifier-item">
+      <strong>Bosses</strong> — Cylindrical posts for screws. Outer diameter = 2× screw diameter. Inner diameter = screw minor diameter + 0.4mm. Add gussets around bosses for strength.
+    </div>
+    <div class="modifier-item">
+      <strong>Undercuts</strong> — Features that prevent the part from sliding out of the mold in the pull direction. Avoid them. If necessary, add side actions or lifters (significantly increases mold cost).
+    </div>
+    <div class="modifier-item">
+      <strong>Parting Line</strong> — Where the two mold halves meet. Place it at the widest cross-section so both halves can release the part cleanly.
+    </div>
+    <div class="modifier-item">
+      <strong>Gate Location</strong> — Where molten plastic enters the mold. Affects weld lines (where two flow fronts meet — a weakness) and sink marks. Gates are typically at the thickest section.
+    </div>
+    <div class="modifier-item">
+      <strong>Fillet All Inside Corners</strong> — Sharp inside corners concentrate stress and restrict plastic flow. Add minimum 0.5mm fillet; 1mm+ preferred.
+    </div>
+
+    <div class="tip-box">
+      <strong>Quick check:</strong> Inspect → Draft Analysis. Run this before finalizing any injection-molded part. Every red face needs a draft angle added.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Section B: 3D Printing Design Rules (FDM)</h3>
+
+    <div class="modifier-item">
+      <strong>Minimum Wall Thickness</strong> — 1.2mm minimum for FDM (= 3 perimeters at 0.4mm nozzle). Thinner walls may not print reliably.
+    </div>
+    <div class="modifier-item">
+      <strong>Overhangs</strong> — Beyond 45° from horizontal requires support structures. Design parts to minimize overhangs where possible (orient parts smartly).
+    </div>
+    <div class="modifier-item">
+      <strong>Bridging</strong> — Horizontal spans up to ~50mm can bridge without supports with good cooling and print settings. Beyond that, use supports or redesign.
+    </div>
+    <div class="modifier-item">
+      <strong>Holes in Print Direction (Z-axis)</strong> — Tend to come out slightly oval due to layer stacking. Design 0.2mm oversize, or drill to final dimension after printing.
+    </div>
+    <div class="modifier-item">
+      <strong>Tolerances for Fit:</strong>
+      <ul>
+        <li>Press fit: 0.2mm clearance (tight)</li>
+        <li>Clearance / slip fit: 0.4mm clearance (slides freely)</li>
+        <li>These values vary by printer calibration — test with a fit test print first</li>
+      </ul>
+    </div>
+    <div class="modifier-item">
+      <strong>Orientation for Strength</strong> — FDM parts are weakest between layers (Z direction). Orient critical load paths in XY (within layers) for maximum strength.
+    </div>
+    <div class="modifier-item">
+      <strong>Thread Inserts</strong> — Use heat-set threaded inserts (press in with a soldering iron) rather than printing threads for strong, reusable fastenings. M3/M4/M5 inserts are standard.
+    </div>
+    <div class="modifier-item">
+      <strong>Embossed Text</strong> — Minimum 0.5mm relief height. Use bold sans-serif fonts for legibility (thin strokes may not print).
+    </div>
+    <div class="modifier-item">
+      <strong>Thin Vertical Features</strong> — Pins thinner than 3mm diameter often snap during or after printing. Add fillets at the base and consider widening them.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Section C: CNC Machining Rules</h3>
+
+    <div class="modifier-item">
+      <strong>Inside Corner Radii</strong> — CNC tools are round. Every inside corner will have a radius equal to (at least) the cutter radius. Design internal pockets with this radius in mind, or specify the radius to the machinist.
+    </div>
+    <div class="modifier-item">
+      <strong>Deep Narrow Slots</strong> — Tool length limits how deep you can go. Keep depth:width ratio ≤ 6:1 for standard tooling.
+    </div>
+    <div class="modifier-item">
+      <strong>Tall Thin Walls</strong> — Vibrate during machining, causing chatter and poor surface finish. Keep height:thickness ratio ≤ 8:1.
+    </div>
+    <div class="modifier-item">
+      <strong>Design for Fixturing</strong> — The part must be held securely in a vise or fixture during cutting. Include flat parallel faces for clamping. Avoid features that make clamping impossible.
+    </div>
+    <div class="modifier-item">
+      <strong>Through-Holes Preferred</strong> — Through-holes are faster and cheaper to machine than blind holes. Use blind holes only when structurally or functionally required.
+    </div>
+    <div class="modifier-item">
+      <strong>Standard Drill Sizes</strong> — Design holes to standard drill bit sizes to avoid custom tooling cost. Reference ISO or ANSI drill size charts.
+    </div>
+    <div class="modifier-item">
+      <strong>Surface Finish Specification:</strong>
+      <ul>
+        <li>Ra 3.2µm — as-machined (coarse, no secondary operation)</li>
+        <li>Ra 1.6µm — standard machined finish</li>
+        <li>Ra 0.8µm — fine finish (requires extra passes, costs more)</li>
+        <li>Ra 0.4µm and below — ground or polished (significant cost premium)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Section D: GD&amp;T Basics (Geometric Dimensioning &amp; Tolerancing)</h3>
+    <p>GD&T is the standardized language for communicating precise dimensional requirements on engineering drawings.</p>
+
+    <div class="concept-grid">
+      <div class="concept-item">
+        <strong>Linear Tolerance</strong>
+        <p>e.g. 25.00 ±0.1mm. Simple plus/minus on a dimension. Most common, but imprecise for location control.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Feature Control Frame</strong>
+        <p>The rectangular box on a drawing containing: geometric symbol | tolerance value | datum references. Reads: "This feature must be within [tolerance] relative to datum [A, B, C]."</p>
+      </div>
+      <div class="concept-item">
+        <strong>Datum Reference Frame</strong>
+        <p>Three mutually perpendicular planes (A, B, C) that define the part's coordinate system. All GD&T tolerances reference these datums.</p>
+      </div>
+      <div class="concept-item">
+        <strong>True Position</strong>
+        <p>Controls the location of hole centers relative to datums. Uses a cylindrical tolerance zone. Critical for bolt patterns in assemblies.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Flatness</strong>
+        <p>Surface must lie within two parallel planes separated by the tolerance value. No datum reference needed — self-contained.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Perpendicularity</strong>
+        <p>A face or axis must be within a tolerance zone perpendicular to the reference datum. Common for mating surfaces.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Concentricity</strong>
+        <p>The axis of a cylindrical feature must fall within a cylindrical tolerance zone coaxial with the datum axis.</p>
+      </div>
+    </div>
+
+    <div class="tip-box info">
+      <strong>In Fusion 360:</strong> Switch to the <strong>Drawing workspace</strong> → Annotate menu → GD&T symbols. You can add feature control frames, datum symbols, and surface finish callouts directly to your drawing views.
+    </div>
+  </div>
+</div>
+
+<div id="tab11" class="tab-content" style="display:none">
+  <h2 class="section-heading">Practice Projects</h2>
+  <p>These five projects are arranged in order of complexity. Complete them in sequence to build skills progressively. Each project introduces new tools and concepts.</p>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Project 1 — Phone Stand <span style="font-size:0.75em;background:#e6f7ff;color:#1890ff;padding:2px 8px;border-radius:4px;margin-left:8px">Beginner</span></h3>
+    <p><strong>Skills:</strong> Sketching, Extrude, Fillet, basic constraints, User Parameters, STL export</p>
+    <ol style="line-height:2.2">
+      <li>New design → <strong>User Parameters:</strong> BaseWidth=80mm, BaseDepth=60mm, Height=100mm, Angle=70deg, Thickness=5mm</li>
+      <li>Create sketch on XY plane: draw rectangle (BaseWidth × BaseDepth) for the base footprint</li>
+      <li>Extrude Thickness mm upward to create the base plate</li>
+      <li>Create new sketch on the top face of the base: draw a line angled at the Angle parameter — this defines the phone groove direction</li>
+      <li>Create the supporting back wall profile in a second sketch on the YZ plane — triangular cross-section to form the angled support</li>
+      <li>Extrude the support sketch</li>
+      <li>Create phone channel: sketch a slot shape on the front face, Extrude → Cut to create the groove that holds the phone edge</li>
+      <li>Fillet all sharp edges: press <kbd>F</kbd> → select edges → 3mm radius</li>
+      <li>Add chamfer to bottom edges for a clean, professional look</li>
+      <li>Apply material appearance: matte black plastic</li>
+      <li>Export: File → 3D Print → STL format for printing</li>
+    </ol>
+    <div class="tip-box">Try changing the Angle parameter — the entire design updates automatically, demonstrating the power of parametric modeling.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Project 2 — Mounting Bracket <span style="font-size:0.75em;background:#fff7e6;color:#fa8c16;padding:2px 8px;border-radius:4px;margin-left:8px">Intermediate</span></h3>
+    <p><strong>Skills:</strong> Multiple features, mirroring, countersink holes, reinforcement ribs, simulation, drawing</p>
+    <ol style="line-height:2.2">
+      <li>Parameters: Length=100mm, Width=60mm, Height=40mm, Thick=4mm</li>
+      <li>Sketch base plate rectangle on XY plane, extrude Thick mm</li>
+      <li>Sketch and extrude vertical wall (Height mm tall)</li>
+      <li>Add Fillet at the base-wall junction: 8mm radius for structural strength</li>
+      <li>Mounting holes: sketch 4 circles at corner positions (15mm from edges each direction), Extrude Cut → Through All</li>
+      <li>Countersink for screw heads: Hole tool → Countersink, select the same face and positions</li>
+      <li>Reinforcement rib: sketch a triangle between the base and wall on the side face, extrude (Thick×0.75 mm deep)</li>
+      <li>Mirror the bracket half across the YZ plane to create a symmetric bracket</li>
+      <li>Fillet all remaining sharp edges: 2mm radius</li>
+      <li>Assign material: Aluminum 6061-T6</li>
+      <li>Run Simulation: Fixed constraint on back wall faces, 500N downward on the base plate → check Safety Factor (target: 2.0+)</li>
+      <li>Create Drawing: Drawing workspace → add Front, Top, Right, and Isometric views → add dimensions → fill in title block</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Project 3 — Electronic Enclosure <span style="font-size:0.75em;background:#fff7e6;color:#fa8c16;padding:2px 8px;border-radius:4px;margin-left:8px">Intermediate–Advanced</span></h3>
+    <p><strong>Skills:</strong> Shell, Lip/Flange design, Screw bosses, PCB standoffs, Ventilation pattern, Assembly with Slider joint</p>
+    <ol style="line-height:2.2">
+      <li>Parameters: BoxL=120mm, BoxW=80mm, BoxH=40mm, Wall=2.5mm, LidH=10mm</li>
+      <li>Outer box: sketch rectangle, extrude (BoxL × BoxW × BoxH) solid rectangular body</li>
+      <li><strong>Shell feature:</strong> Shell → remove top face → Wall thickness → creates hollow box with open top</li>
+      <li><strong>Lid:</strong> create offset plane at BoxH−LidH height → sketch matching rectangle with 1mm inset → extrude LidH mm upward</li>
+      <li><strong>Lip for lid:</strong> sketch a small channel profile on the box top edge → extrude a flange inward so the lid seats on it</li>
+      <li><strong>Screw bosses:</strong> sketch circles at the 4 inside corners → extrude up from box bottom → add a hollowed center for the screw shaft</li>
+      <li><strong>PCB standoffs:</strong> 4 posts inside the box — 3mm diameter, M3 thread depth, positioned at standard PCB mounting spacing</li>
+      <li><strong>Ventilation slots:</strong> sketch a rectangular array on a side wall → Extrude Cut → Through All</li>
+      <li><strong>Cable grommet hole:</strong> circular hole in the rear wall, sized for your cable diameter + 0.5mm clearance</li>
+      <li><strong>Component panel cutout:</strong> sketch on the front face from reference positions for connector cutouts → Extrude Cut</li>
+      <li><strong>Assembly:</strong> make box and lid separate components → add Slider joint (lid translates straight up to open)</li>
+      <li>Export both components as STL files for 3D printing</li>
+    </ol>
+    <div class="tip-box info">Check wall thickness uniformity with Inspect → Section Analysis before printing. Any thin spots in the shell will cause print failures.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Project 4 — Turbine Blade, Disk &amp; Full Assembly <span style="font-size:0.75em;background:#fff1f0;color:#f5222d;padding:2px 8px;border-radius:4px;margin-left:8px">Advanced</span></h3>
+    <p><strong>Skills:</strong> Loft, Fit Point Spline, offset planes, airfoil cross-sections, Circular Pattern, Component Pattern, Motion Study</p>
+
+    <h4 style="color:#555;margin-bottom:8px">Turbine Blade</h4>
+    <ol style="line-height:2.2">
+      <li>Parameters: BladeHeight=80mm, ChordRoot=30mm, ChordTip=18mm, TwistAngle=25deg</li>
+      <li>Root profile sketch on XY plane: draw an elongated teardrop / leaf shape using <strong>Fit Point Spline</strong>. Width = ChordRoot, thickness ratio ~12% (3.6mm max thickness at 30% chord from leading edge). Leading edge = round, trailing edge = nearly pointed (tangent splines). Fully constrain the sketch.</li>
+      <li>Create an offset plane at BladeHeight from XY plane</li>
+      <li>Tip profile sketch on the new plane: smaller chord (ChordTip), rotated by TwistAngle relative to root profile. Same spline method — smaller and more twisted.</li>
+      <li><strong>Loft:</strong> Solid → Loft → select root profile, then tip profile. Add Z-axis centerline as a guide rail for smooth twist control.</li>
+      <li>Root attachment: sketch T-slot or dovetail profile on the bottom of the blade → Extrude the root attachment shape → Mirror for symmetry</li>
+      <li>Fillet leading/trailing edge transitions at the root-to-body junction: 2mm</li>
+    </ol>
+
+    <h4 style="color:#555;margin-bottom:8px">Turbine Disk</h4>
+    <ol style="line-height:2.2">
+      <li>New component in the same design</li>
+      <li>Sketch on XY plane: large outer circle OD=150mm, hub hole ID=30mm</li>
+      <li>Extrude 20mm thick</li>
+      <li>Fillet top and bottom edges of disk: 2mm</li>
+      <li>Blade slot: Extrude Cut using the same T-slot / dovetail profile used on the blade root</li>
+      <li><strong>Circular Pattern:</strong> select the slot cut feature → Axis = Z axis through disk center → Quantity = 12 (for 12 blade slots)</li>
+    </ol>
+
+    <h4 style="color:#555;margin-bottom:8px">Full Assembly</h4>
+    <ol style="line-height:2.2">
+      <li>Both blade and disk exist as components in the same design (or use Insert → Insert into Current Design to combine separate files)</li>
+      <li>Ground the disk component (right-click → Ground)</li>
+      <li>Add Joint: blade root → disk slot. Select Rigid joint (blade is fixed in disk slot)</li>
+      <li><strong>Circular Pattern of Components:</strong> Assemble → Pattern → Circular → select blade component → Z axis → 12 count (places 12 blades around the disk)</li>
+      <li>Motion Study: add Revolute joint for the entire disk assembly → set rotation → play animation to see the turbine spinning</li>
+      <li>Run Interference check (Inspect → Interference) to verify no blades overlap each other or the disk</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Project 5 — Parametric Gear <span style="font-size:0.75em;background:#fff1f0;color:#f5222d;padding:2px 8px;border-radius:4px;margin-left:8px">Advanced</span></h3>
+    <p><strong>Skills:</strong> Equation-driven parameters, involute tooth geometry, Circular Pattern, gear mating, Motion Link</p>
+    <ol style="line-height:2.2">
+      <li>
+        Parameters:
+        <ul>
+          <li>Module = 2mm (controls tooth size — larger module = larger teeth)</li>
+          <li>NumTeeth = 20</li>
+          <li>PressureAngle = 20deg</li>
+          <li>PitchDiameter = Module × NumTeeth = 40mm (calculated)</li>
+          <li>AddendumCircle = PitchDiameter + 2×Module = 44mm (tooth tip circle)</li>
+          <li>DedendumCircle = PitchDiameter − 2.5×Module = 35mm (tooth root circle)</li>
+        </ul>
+      </li>
+      <li>Sketch base circles: Pitch circle (construction line), Addendum circle (tooth tips), Dedendum circle (tooth roots)</li>
+      <li>Involute tooth profile: approximate with arcs. For Module=2, tooth width at pitch circle ≈ π×Module/2 ≈ 3.14mm. Draw one full tooth from dedendum to addendum using the involute arc shape with a round root fillet.</li>
+      <li><strong>Circular Pattern:</strong> pattern the tooth profile × NumTeeth (20) around the center to complete the gear profile</li>
+      <li>Extrude the full gear profile by 15mm</li>
+      <li>Center hub hole: Extrude Cut → diameter = 8mm through the center</li>
+      <li>Keyway: sketch a small rectangle on the hub hole interior → Extrude Cut for the shaft key slot</li>
+      <li>Create a mating gear (same Module, different NumTeeth for different ratio). Position at correct center distance = Module×(Teeth1+Teeth2)/2</li>
+      <li>Add Revolute joints to both gears. Add <strong>Motion Link</strong> between them with ratio = −Teeth1/Teeth2 (negative = opposite rotation direction, magnitude = gear ratio)</li>
+      <li>Animate: drag one gear — the other rotates at the correct ratio and direction</li>
+    </ol>
+    <div class="tip-box">Change the Module parameter and watch both gears automatically resize while maintaining proper mesh geometry — this is parametric design at its best.</div>
+  </div>
+</div>
+
+<div id="tab12" class="tab-content" style="display:none">
+  <h2 class="section-heading">Expert Knowledge</h2>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">What Experts Do Differently</h3>
+    <div class="concept-grid">
+      <div class="concept-item">
+        <strong>Plan Before Modeling</strong>
+        <p>Sketch on paper first. Identify the key parametric relationships and feature order before opening Fusion.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Name Everything</strong>
+        <p>Components, bodies, sketches, planes, parameters — use consistent, descriptive names. "Extrude12" tells you nothing; "BaseExtrude" does.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Parameters First</strong>
+        <p>Create all key variables as User Parameters before creating the first sketch. Build the model by referencing these parameters, never hardcoded numbers.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Design Intent</strong>
+        <p>Model features in the order they'd be manufactured — think like a machinist or toolmaker. The history tree should tell the manufacturing story.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Timeline Discipline</strong>
+        <p>Keep the timeline clean. Use <strong>groups</strong> to organize related features. Suppress unused features during work to speed up computation.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Version Control</strong>
+        <p>File → Version History → save named checkpoints before major changes. "Before_Shell_Op" is more useful than relying on undo history.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Design Table</strong>
+        <p>Export parameter table, modify values in Excel, reimport — instantly generates design variants (different sizes, configurations) from one master model.</p>
+      </div>
+      <div class="concept-item">
+        <strong>Test Early</strong>
+        <p>Run interference checks and basic simulation at each design stage, not just at the end when changes are expensive and timeline is long.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Common Beginner Mistakes to Avoid</h3>
+
+    <div class="tip-box danger">
+      <strong>Over-constraining sketches</strong> — adding redundant dimensions that conflict. Fusion shows them red. Remove the conflicting dimension or constraint.
+    </div>
+    <div class="tip-box warning">
+      <strong>Under-constraining sketches</strong> — leaving sketch geometry blue (unconstrained). Blue geometry drifts when parent features are edited, causing unexpected model changes.
+    </div>
+    <div class="tip-box warning">
+      <strong>Mixing bodies and components haphazardly</strong> — Bodies are geometry; Components have their own coordinate system and work in assemblies. Use Components from the start for anything that will move, mate, or be assembled.
+    </div>
+    <div class="tip-box warning">
+      <strong>Not using parameters</strong> — Hardcoded dimensions make even simple design changes painful. Every key dimension should be a named parameter.
+    </div>
+    <div class="tip-box warning">
+      <strong>Adding fillets too early</strong> — Add all structural features (extrudes, cuts, ribs) first. Add fillets last, just before manufacturing. Fillets added mid-model complicate feature edits.
+    </div>
+    <div class="tip-box warning">
+      <strong>Boolean operations before features are finalized</strong> — Combining bodies early makes individual features hard to edit. Keep bodies separate until the design is finalized.
+    </div>
+    <div class="tip-box danger">
+      <strong>Ignoring draft analysis for injection-molded parts</strong> — Missing draft angles on a mold design means the part won't eject. Discovering this after tooling is cut costs tens of thousands of dollars.
+    </div>
+    <div class="tip-box danger">
+      <strong>Wrong material in simulation</strong> — Simulating steel but the part will be made from ABS plastic gives completely wrong safety factors. Always verify material assignment.
+    </div>
+    <div class="tip-box">
+      <strong>Not naming timeline steps</strong> — After editing a feature, right-click it in the timeline → Rename. "Cut12" vs "VentilationSlots" — one is useless three months later.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Fusion 360 vs Other CAD Tools</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:0.9em">
+        <thead>
+          <tr style="background:#1890ff;color:#fff">
+            <th style="padding:10px 14px;text-align:left">Tool</th>
+            <th style="padding:10px 14px;text-align:left">Strengths</th>
+            <th style="padding:10px 14px;text-align:left">Weaknesses vs Fusion</th>
+            <th style="padding:10px 14px;text-align:left">Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--bg-card,#fff)">
+            <td style="padding:9px 14px;border-bottom:1px solid #eee"><strong>SolidWorks</strong></td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Industry-standard, excellent simulation (SIMULIA), strong PDM/PLM integration, massive ecosystem</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Very expensive, desktop-only, steeper initial cost</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Large enterprises, aerospace/automotive, full engineering teams</td>
+          </tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)">
+            <td style="padding:9px 14px;border-bottom:1px solid #eee"><strong>Onshape</strong></td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Cloud-native like Fusion, superior real-time collaboration and version control for teams</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Weaker CAM, fewer manufacturing-focused features</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Distributed design teams needing true simultaneous collaboration</td>
+          </tr>
+          <tr style="background:var(--bg-card,#fff)">
+            <td style="padding:9px 14px;border-bottom:1px solid #eee"><strong>CATIA</strong></td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Unmatched for complex surface modeling, aerospace/automotive OEM standard, massive capability</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Extremely expensive, steep learning curve, overkill for most uses</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Aerospace OEMs, automotive body design, large programs with huge tooling budgets</td>
+          </tr>
+          <tr style="background:var(--bg-alt,#f8f9fa)">
+            <td style="padding:9px 14px;border-bottom:1px solid #eee"><strong>FreeCAD</strong></td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Fully free and open-source, no subscription ever, scripting/macro support</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">More complex UI, less polished UX, smaller community, less CAM capability</td>
+            <td style="padding:9px 14px;border-bottom:1px solid #eee">Budget-constrained users, open-source advocates willing to invest learning time</td>
+          </tr>
+          <tr style="background:var(--bg-card,#fff)">
+            <td style="padding:9px 14px"><strong>Rhino 3D</strong></td>
+            <td style="padding:9px 14px">NURBS surface modeling specialist, organic and freeform shapes, used in jewelry/architecture/yacht design</td>
+            <td style="padding:9px 14px">Not parametric, no native history tree, limited manufacturing tools</td>
+            <td style="padding:9px 14px">Industrial design, architecture, organic/freeform shapes where parametric history isn't needed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px;color:#555">Fusion 360 occupies the sweet spot: parametric, cloud-based, integrated CAM, reasonable cost — covering 90% of hobbyist through professional manufacturing tasks.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">The Fusion 360 Learning Path</h3>
+
+    <div style="border-left:4px solid #1890ff;padding-left:20px;margin-bottom:20px">
+      <h4 style="color:#1890ff;margin:0 0 8px 0">Week 1–2: Foundations</h4>
+      <ul style="line-height:2;margin:0">
+        <li>Master 3D navigation without thinking about it</li>
+        <li>Create <strong>fully constrained sketches every time</strong> (no blue lines)</li>
+        <li>Practice projects: Phone Stand, simple bracket</li>
+        <li>Goal: understand parametric modeling concept — changing a parameter updates everything</li>
+      </ul>
+    </div>
+
+    <div style="border-left:4px solid #52c41a;padding-left:20px;margin-bottom:20px">
+      <h4 style="color:#52c41a;margin:0 0 8px 0">Week 3–4: Solid Features Mastery</h4>
+      <ul style="line-height:2;margin:0">
+        <li>Learn all solid modeling features: Extrude, Revolve, Sweep, Loft, Fillet, Chamfer, Shell, Draft, Hole, Thread</li>
+        <li>Learn Circular Pattern, Rectangular Pattern, Mirror</li>
+        <li>Practice projects: Mounting Bracket, Electronic Enclosure</li>
+        <li>Goal: build any solid geometry from a sketch</li>
+      </ul>
+    </div>
+
+    <div style="border-left:4px solid #fa8c16;padding-left:20px;margin-bottom:20px">
+      <h4 style="color:#fa8c16;margin:0 0 8px 0">Month 2: Parameters &amp; Assemblies</h4>
+      <ul style="line-height:2;margin:0">
+        <li>Master User Parameters — rebuild a design entirely from parameters</li>
+        <li>Learn all 7 joint types and when to use each</li>
+        <li>Motion Study: animate assemblies</li>
+        <li>Practice: simple hinge assembly, 2-gear set with Motion Link</li>
+        <li>Goal: build multi-component assemblies with correct kinematics</li>
+      </ul>
+    </div>
+
+    <div style="border-left:4px solid #eb2f96;padding-left:20px;margin-bottom:20px">
+      <h4 style="color:#eb2f96;margin:0 0 8px 0">Month 3: Manufacturing Tools</h4>
+      <ul style="line-height:2;margin:0">
+        <li>CAM: set up a 2D pocket + 2D contour toolpath, post-process G-code</li>
+        <li>Simulation: static stress test on your bracket design</li>
+        <li>Drawings: create a fully dimensioned engineering drawing with title block</li>
+        <li>Practice: Turbine Blade + Disk Assembly project</li>
+        <li>Goal: take a part from design to manufacturable documentation</li>
+      </ul>
+    </div>
+
+    <div style="border-left:4px solid #722ed1;padding-left:20px">
+      <h4 style="color:#722ed1;margin:0 0 8px 0">Month 4+: Specialize</h4>
+      <div class="concept-grid" style="margin-top:10px">
+        <div class="concept-item">
+          <strong>Product Design Track</strong>
+          <p>Surface modeling (patch, loft surfaces), T-Splines / Form workspace for organic shapes, rendering, consumer product portfolio.</p>
+        </div>
+        <div class="concept-item">
+          <strong>Manufacturing Track</strong>
+          <p>Deep CAM: adaptive clearing, multi-axis (3+2 and 5-axis), toolpath optimization, post-processor customization.</p>
+        </div>
+        <div class="concept-item">
+          <strong>Engineering Track</strong>
+          <p>Advanced FEA studies, thermal and modal analysis, GD&T in drawings, tolerance stack-up analysis.</p>
+        </div>
+        <div class="concept-item">
+          <strong>Maker / Hobbyist Track</strong>
+          <p>DFM for FDM 3D printing, parametric enclosures and cases, slicer integration, 3D printing settings optimization.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#1890ff;margin-top:0">Certification &amp; Portfolio</h3>
+
+    <div class="modifier-item">
+      <strong>Autodesk Certified Professional (ACP) in Fusion 360</strong> — The official industry certification. Available through Autodesk Certiport testing centers. Validates competency in all core Fusion 360 workflows. Recognized by employers in product design and manufacturing.
+    </div>
+
+    <div class="modifier-item">
+      <strong>Portfolio Projects to Show Employers:</strong>
+      <ul style="margin-top:8px;line-height:2">
+        <li>Parametric product with full engineering drawing (shows design + documentation skill)</li>
+        <li>Assembly with motion study video (shows understanding of kinematics and joints)</li>
+        <li>3D-printed prototype with before/after photos (shows design-to-manufacturing workflow)</li>
+        <li>CAM toolpath for a simple machined part (shows manufacturing knowledge)</li>
+        <li>Simulation study with results report (shows analytical engineering ability)</li>
+      </ul>
+    </div>
+
+    <div class="modifier-item">
+      <strong>Communities &amp; Resources:</strong>
+      <ul style="margin-top:8px;line-height:2">
+        <li>Autodesk Fusion Forum — forums.autodesk.com (official, developers answer questions)</li>
+        <li>r/Fusion360 — active Reddit community, good for troubleshooting</li>
+        <li>GrabCAD — model sharing platform, browse others' Fusion 360 work</li>
+        <li>Lars Christensen on YouTube — best beginner tutorial series for Fusion 360</li>
+        <li>Product Design Online — Kevin Kennedy's structured Fusion 360 courses</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#e6f7ff 0%,#f0f5ff 100%);border:2px solid #1890ff">
+    <h3 style="color:#1890ff;margin-top:0">Quick Shortcut Cheat Card</h3>
+    <p style="color:#555;margin-bottom:16px">The most-used shortcuts — commit these to muscle memory first:</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">E</kbd> Extrude</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">Q</kbd> Press Pull</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">F</kbd> Fillet</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">D</kbd> Dimension</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">L</kbd> Line</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">R</kbd> Rectangle</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">C</kbd> Circle</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">T</kbd> Trim</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">O</kbd> Offset</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">P</kbd> Project</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">J</kbd> Joint</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">S</kbd> Commands Search</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">I</kbd> Inspect/Measure</span>
+      <span style="background:#1890ff;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">M</kbd> Move/Copy</span>
+      <span style="background:#52c41a;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">Ctrl+S</kbd> Save</span>
+      <span style="background:#52c41a;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">Ctrl+Z</kbd> Undo</span>
+      <span style="background:#52c41a;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">F6</kbd> Home View</span>
+      <span style="background:#f5222d;color:#fff;padding:6px 12px;border-radius:6px;font-size:0.85em"><kbd style="background:rgba(255,255,255,0.2);border:none;color:#fff;padding:2px 5px">Delete</kbd> Delete</span>
+    </div>
+    <p style="margin-top:16px;color:#555;font-size:0.9em">Blue = modeling tools &nbsp;|&nbsp; Green = file/view &nbsp;|&nbsp; Red = delete. Print this section and pin it next to your monitor until they're automatic.</p>
+  </div>
+</div><!-- /tabs-container --></div><!-- /main --></body></html>
