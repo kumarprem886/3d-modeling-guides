@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autodesk Fusion 360 — Beginner to Expert Guide</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f7f4;color:#1a1a1a;min-height:100vh}
+  .header{background:#0f5c3a;color:#fff;padding:1.5rem 2rem;display:flex;align-items:center;gap:14px}
+  .header-icon{width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .header h1{font-size:22px;font-weight:600;margin-bottom:2px}
+  .header p{font-size:13px;opacity:.7}
+  .progress-bar{display:flex;gap:8px;background:#084d30;padding:.75rem 2rem}
+  .prog-item{flex:1;padding:8px;border-radius:8px;text-align:center;font-size:11px;font-weight:600}
+  .prog-item.b{background:#d4edda;color:#155724}
+  .prog-item.i{background:#d1ecf1;color:#0c5460}
+  .prog-item.a{background:#fff3cd;color:#856404}
+  .prog-item.e{background:#cce5ff;color:#004085}
+  .container{max-width:1100px;margin:0 auto;padding:1.5rem}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+  .tab{font-size:13px;padding:8px 16px;border:1.5px solid #ccc;border-radius:8px;cursor:pointer;background:#fff;color:#555;transition:all .15s;font-weight:500}
+  .tab.active{background:#0f5c3a;color:#fff;border-color:#0f5c3a}
+  .tab:hover:not(.active){background:#eee}
+  .section{display:none}
+  .section.active{display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:1rem}
+  .card{background:#fff;border:1px solid #d0e8de;border-radius:12px;padding:1.1rem 1.3rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .card-title{font-size:14px;font-weight:700;color:#0f5c3a;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f0f0f0;gap:8px}
+  .shortcut-row:last-child{border-bottom:none}
+  .shortcut-desc{font-size:13px;color:#555;flex:1}
+  .keys{display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+  kbd{background:#f3f3f3;border:1px solid #ccc;border-bottom:2px solid #bbb;border-radius:5px;padding:2px 7px;font-size:11px;font-family:'Courier New',monospace;color:#222;white-space:nowrap}
+  .tip-box{background:#e8f8f0;border-left:4px solid #2daa6b;border-radius:0 8px 8px 0;padding:.75rem 1rem;margin:8px 0;font-size:13px;color:#145c38;line-height:1.5}
+  .tip-box.warn{background:#fff8e1;border-color:#f5a623;color:#7a4f00}
+  .tip-box.info{background:#e8f4fd;border-color:#3498db;color:#1a5276}
+  .tip-box.danger{background:#fde9e9;border-color:#e74c3c;color:#7b1e1e}
+  .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;margin-left:8px}
+  .badge.beginner{background:#d4edda;color:#155724}
+  .badge.intermediate{background:#d1ecf1;color:#0c5460}
+  .badge.advanced{background:#fff3cd;color:#856404}
+  .section-head{font-size:17px;font-weight:700;margin:1rem 0 .6rem;color:#0f5c3a}
+  .workflow-step{display:flex;gap:12px;margin:10px 0;align-items:flex-start}
+  .step-num{width:26px;height:26px;border-radius:50%;background:#0f5c3a;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .step-text{font-size:13px;color:#444;line-height:1.6}
+  .step-text strong{color:#111}
+  .concept-box{background:#f0f9f5;border:1px solid #c3e6d8;border-radius:8px;padding:.7rem 1rem;margin:6px 0;font-size:13px}
+  .concept-title{font-weight:700;color:#0f5c3a;font-size:11px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+  .color-legend{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap}
+  .color-pill{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600}
+  footer{text-align:center;padding:2rem;font-size:12px;color:#999}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">📐</div>
+  <div>
+    <h1>Autodesk Fusion 360 — Complete CAD Guide</h1>
+    <p>Beginner to Expert &nbsp;·&nbsp; Shortcuts, Tips & Workflows</p>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-item b">🟢 Beginner — UI & Sketching</div>
+  <div class="prog-item i">🔵 Intermediate — 3D Features</div>
+  <div class="prog-item a">🟡 Advanced — Assembly & CAM</div>
+  <div class="prog-item e">🔷 Expert — Simulation & API</div>
+</div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('nav',this)">🖱️ Navigation</button>
+    <button class="tab" onclick="showTab('sketch',this)">✏️ Sketching</button>
+    <button class="tab" onclick="showTab('features',this)">📦 3D Features</button>
+    <button class="tab" onclick="showTab('shortcuts',this)">⌨️ All Shortcuts</button>
+    <button class="tab" onclick="showTab('assembly',this)">🔩 Assembly</button>
+    <button class="tab" onclick="showTab('tips',this)">💡 Pro Tips</button>
+    <button class="tab" onclick="showTab('workflow',this)">🗺️ Workflows</button>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="section active" id="tab-nav">
+    <p class="section-head">Navigation & Mouse Controls <span class="badge beginner">Beginner</span></p>
+    <div class="tip-box info" style="margin-bottom:14px">ℹ️ Fusion 360 uses a different mouse scheme than Blender. The middle mouse button orbits, <kbd>Shift</kbd>+<kbd>MMB</kbd> pans. Get this muscle memory right first — it's the foundation of everything.</div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🔄 Viewport Navigation</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Orbit / rotate view</span><div class="keys"><kbd>MMB</kbd><kbd>drag</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="keys"><kbd>Shift</kbd><kbd>MMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Zoom in/out</span><div class="keys"><kbd>Scroll</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Fit all to view</span><div class="keys"><kbd>F</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Zoom to selection</span><div class="keys"><kbd>F</kbd> (with selection)</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Home / reset view</span><div class="keys"><kbd>Home</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Standard views</span><div class="keys">ViewCube click</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Isometric view</span><div class="keys">ViewCube corner</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Look at a face</span><div class="keys">Select face → <kbd>L</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle perspective/ortho</span><div class="keys">ViewCube menu</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Zoom precise</span><div class="keys"><kbd>Ctrl</kbd><kbd>Scroll</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔲 Selection</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select object/face/edge</span><div class="keys"><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add to selection</span><div class="keys"><kbd>Ctrl</kbd><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Box select (full enclosure)</span><div class="keys">drag left → right</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Crossing select (touch)</span><div class="keys">drag right → left</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select all</span><div class="keys"><kbd>Ctrl</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Deselect / cancel</span><div class="keys"><kbd>Esc</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select tangent chain</span><div class="keys">RMB → Select Tangent Chain</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select body/component</span><div class="keys">Selection filter toolbar</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Cycle through overlapping</span><div class="keys"><kbd>Alt</kbd><kbd>LMB</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKETCH -->
+  <div class="section" id="tab-sketch">
+    <p class="section-head">Sketch Mode — The Foundation <span class="badge beginner">Beginner</span></p>
+    <div class="tip-box danger" style="margin-bottom:14px">🚨 <strong>Most critical rule:</strong> Always fully constrain your sketches. Under-constrained sketches (shown in blue) will cause unpredictable parametric behavior when you edit the model later. All lines should be black before you extrude.</div>
+
+    <div class="color-legend">
+      <span class="color-pill" style="background:#cce5ff;color:#004085">🔵 Blue = Under-constrained (needs more dimensions)</span>
+      <span class="color-pill" style="background:#333;color:#fff">⚫ Black = Fully constrained ✓</span>
+      <span class="color-pill" style="background:#fde9e9;color:#7b1e1e">🔴 Red = Over-constrained (conflict — fix it!)</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">✏️ Sketch Tools</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Create new sketch</span><div class="keys"><kbd>S</kbd> → Sketch</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Line tool</span><div class="keys"><kbd>L</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rectangle (2-point)</span><div class="keys"><kbd>R</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Circle (center point)</span><div class="keys"><kbd>C</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Arc (3 point)</span><div class="keys"><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Spline / freeform curve</span><div class="keys">Sketch → Spline</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Polygon</span><div class="keys">Sketch → Polygon</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Slot</span><div class="keys">Sketch → Slot</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Offset curve</span><div class="keys"><kbd>O</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Trim geometry</span><div class="keys"><kbd>T</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Extend curve</span><div class="keys"><kbd>X</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Project/include geometry</span><div class="keys"><kbd>P</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mirror sketch entities</span><div class="keys">Sketch → Mirror</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Circular pattern</span><div class="keys">Sketch → Circular Pattern</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add dimension</span><div class="keys"><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Construction line toggle</span><div class="keys"><kbd>X</kbd> on line</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Finish sketch</span><div class="keys"><kbd>Esc</kbd> or toolbar</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔒 Constraints (The Key to Parametric)</div>
+        <div class="concept-box">
+          <div class="concept-title">Coincident</div>
+          Connects two points together so they share the same location.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Horizontal / Vertical</div>
+          Forces a line to be exactly horizontal or exactly vertical.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Parallel</div>
+          Makes two lines run in the same direction — useful for channels, slots.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Perpendicular</div>
+          Forces two lines to meet at exactly 90°.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Tangent</div>
+          Smoothly joins a line to an arc or two arcs together — no kink.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Equal</div>
+          Makes two lines the same length or two arcs the same radius.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Symmetric</div>
+          Mirrors geometry about a centerline automatically.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Fix / Unfix</div>
+          Pins a point to its current position in space — use sparingly.
+        </div>
+        <div class="tip-box" style="margin-top:10px">✅ Use constraints first, dimensions second. Constraints define relationships; dimensions define sizes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section" id="tab-features">
+    <p class="section-head">3D Features & Solid Modeling <span class="badge intermediate">Intermediate</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">📦 Create Features</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Extrude (add or cut)</span><div class="keys"><kbd>E</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Revolve around axis</span><div class="keys"><kbd>Q</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Sweep along path</span><div class="keys">Solid → Sweep</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Loft between profiles</span><div class="keys">Solid → Loft</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Hole feature</span><div class="keys"><kbd>H</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shell (hollow out body)</span><div class="keys">Solid → Shell</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Fillet edges (round)</span><div class="keys"><kbd>F</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Chamfer edges (bevel)</span><div class="keys">Solid → Chamfer</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mirror feature</span><div class="keys">Solid → Mirror</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rectangular pattern</span><div class="keys">Solid → Rectangular Pattern</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Circular pattern</span><div class="keys">Solid → Circular Pattern</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Draft angle (mold release)</span><div class="keys">Solid → Draft</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rib (reinforcement)</span><div class="keys">Solid → Rib</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Thread feature</span><div class="keys">Solid → Thread</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Coil / spring</span><div class="keys">Solid → Coil</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">✂️ Modify & Boolean</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Combine (union/cut/intersect)</span><div class="keys">Solid → Combine</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Split body with surface/plane</span><div class="keys">Solid → Split Body</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Split face</span><div class="keys">Solid → Split Face</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Move / copy body</span><div class="keys"><kbd>M</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Scale body</span><div class="keys">Modify → Scale</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Align bodies</span><div class="keys">Modify → Align</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Replace face</span><div class="keys">Modify → Replace Face</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Press Pull (push/pull a face)</span><div class="keys"><kbd>Q</kbd> on face</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Thicken surface to solid</span><div class="keys">Solid → Thicken</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Stitch surfaces together</span><div class="keys">Surface → Stitch</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Offset face</span><div class="keys">Solid → Offset Face</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📋 Timeline & Parametric Editing</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Edit a feature</span><div class="keys">double-click in timeline</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Roll back model history</span><div class="keys">drag timeline marker left</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Suppress / unsuppress feature</span><div class="keys">RMB → Suppress Features</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete a feature</span><div class="keys">RMB → Delete</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Reorder features</span><div class="keys">drag in timeline</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Named parameters / equations</span><div class="keys">Modify → Change Parameters</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Change document units</span><div class="keys">Document Settings</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Edit sketch of a feature</span><div class="keys">RMB feature → Edit Sketch</div></div>
+        <div class="tip-box warn" style="margin-top:8px">⚠️ Never delete timeline features without suppressing them first and testing. Deleting can break downstream references and crash your model.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHORTCUTS -->
+  <div class="section" id="tab-shortcuts">
+    <p class="section-head">Complete Keyboard Reference <span class="badge intermediate">Intermediate</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">⌨️ General Commands</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Command search menu</span><div class="keys"><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="keys"><kbd>Ctrl</kbd><kbd>Y</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save to cloud</span><div class="keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Cancel current command</span><div class="keys"><kbd>Esc</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Repeat last command</span><div class="keys"><kbd>Enter</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Hide/show body</span><div class="keys"><kbd>V</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Measure distance/angle</span><div class="keys"><kbd>I</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">New component</span><div class="keys">Assemble → New Component</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle browser panel</span><div class="keys"><kbd>Alt</kbd><kbd>B</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖥️ Display & View Modes</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Wireframe display</span><div class="keys"><kbd>Ctrl</kbd><kbd>1</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shaded display</span><div class="keys"><kbd>Ctrl</kbd><kbd>2</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shaded + visible edges</span><div class="keys"><kbd>Ctrl</kbd><kbd>3</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shaded + all edges</span><div class="keys"><kbd>Ctrl</kbd><kbd>4</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle UI panels</span><div class="keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>H</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Section analysis view</span><div class="keys">Inspect → Section Analysis</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Interference check</span><div class="keys">Inspect → Interference</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Measure tool</span><div class="keys">Inspect → Measure</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Component colors</span><div class="keys">RMB → Appearance</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Explode assembly view</span><div class="keys">Assemble → Explode</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🛠️ Surface Modeling</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Switch to Surface workspace</span><div class="keys">Toolbar dropdown</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Extrude surface</span><div class="keys"><kbd>E</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Loft surfaces</span><div class="keys">Surface → Loft</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Patch open surface gap</span><div class="keys">Surface → Patch</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Offset surface</span><div class="keys">Surface → Offset</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Reverse surface normal</span><div class="keys">Surface → Reverse Normal</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Trim with surface</span><div class="keys">Surface → Trim</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Extend surface</span><div class="keys">Surface → Extend</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Stitch to solid</span><div class="keys">Surface → Stitch</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📄 Drawing / 2D Output</div>
+        <div class="shortcut-row"><span class="shortcut-desc">New drawing from design</span><div class="keys">File → New Drawing</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Base view</span><div class="keys">Drawing → Base View</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Projected view</span><div class="keys">Drawing → Projected View</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Section view</span><div class="keys">Drawing → Section View</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Detail view (zoomed)</span><div class="keys">Drawing → Detail View</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add dimension</span><div class="keys"><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add centerline</span><div class="keys">Drawing → Centerline</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add text / note</span><div class="keys">Drawing → Text</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Export to DXF / PDF / DWG</span><div class="keys">File → Export</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSEMBLY -->
+  <div class="section" id="tab-assembly">
+    <p class="section-head">Assembly & Joints <span class="badge advanced">Advanced</span></p>
+    <div class="tip-box info" style="margin-bottom:14px">ℹ️ <strong>Key concept:</strong> In Fusion 360, joints define how components move relative to each other. Always ground one component as the fixed base, then add joints to all other components relative to it.</div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🔗 Joint Types — Explained Simply</div>
+        <div class="concept-box">
+          <div class="concept-title">Rigid Joint</div>
+          No movement at all. Locks two components as if they were welded. Use for fixed attachments like screws in place.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Revolute Joint</div>
+          Rotates around one single axis only. Think: door hinge, motor shaft, steering knuckle.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Slider Joint</div>
+          Slides along one axis only — no rotation. Think: drawer, piston rod, linear rail.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Cylindrical Joint</div>
+          Both rotates AND slides along the same axis. Think: bolt in a hole, telescoping pole.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Pin-Slot Joint</div>
+          Rotates at one end, slides in a slot at the other. Think: crank-slider mechanism.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Planar Joint</div>
+          Slides freely in a 2D plane. Think: sliding block on a flat surface.
+        </div>
+        <div class="concept-box">
+          <div class="concept-title">Ball Joint</div>
+          Rotates freely in all 3 directions. Think: shoulder joint, trackball, car tie rod end.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔩 Assembly Shortcuts & Tools</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Insert joint</span><div class="keys"><kbd>J</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">As-built joint (snap in place)</span><div class="keys">Assemble → As-Built Joint</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Ground component (fix in space)</span><div class="keys">RMB component → Ground</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rigid group (lock group)</span><div class="keys">Assemble → Rigid Group</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Motion link (gear ratio)</span><div class="keys">Assemble → Motion Link</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Drive joints (animate motion)</span><div class="keys">RMB joint → Drive</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Contact sets (collision)</span><div class="keys">Assemble → Enable Contact Sets</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Explode assembly view</span><div class="keys">Assemble → Explode</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">New component</span><div class="keys">Assemble → New Component</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Insert McMaster-Carr part</span><div class="keys">Insert → McMaster-Carr</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Insert from library</span><div class="keys">Insert → Insert from My Computer</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Check interference</span><div class="keys">Inspect → Interference</div></div>
+        <div class="tip-box" style="margin-top:10px">✅ Activate a component before sketching on it (double-click in browser). Otherwise your sketch belongs to the wrong component!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section" id="tab-tips">
+    <p class="section-head">Pro Tips & Common Mistakes</p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🚀 Expert Design Tips</div>
+        <div class="tip-box" style="margin:0 0 7px">Use <strong>named parameters</strong> (Modify → Change Parameters) instead of raw numbers. Set "wall_thickness = 3mm" once and every wall updates automatically.</div>
+        <div class="tip-box" style="margin:0 0 7px">Always model using the <strong>origin planes</strong> as symmetry axes — makes mirroring and future assemblies completely predictable.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Add fillets last</strong> — fillets as the final features are easy to edit. Fillets in the middle of your timeline become a nightmare to work around.</div>
+        <div class="tip-box" style="margin:0 0 7px">The <kbd>S</kbd> search menu finds any command faster than clicking through ribbons — commit this habit on day one.</div>
+        <div class="tip-box" style="margin:0 0 7px">Use <strong>construction geometry</strong> (toggle with <kbd>X</kbd>) in sketches for centerlines and reference geometry that won't create solid edges.</div>
+        <div class="tip-box" style="margin:0">Turn on <strong>Design History</strong> (right-click top component → Do Not Capture Design History = OFF) so your timeline is always active for edits.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Common Beginner Mistakes</div>
+        <div class="tip-box warn" style="margin:0 0 7px">Never leave sketches under-constrained (blue lines). Every sketch should be fully black before you extrude.</div>
+        <div class="tip-box warn" style="margin:0 0 7px">Don't extrude open profiles. If your extrude fails, your sketch has a gap — zoom in and close the loop.</div>
+        <div class="tip-box warn" style="margin:0 0 7px">Avoid using Move in sketch mode when a constraint is what you actually need. Moves are baked in; constraints are editable.</div>
+        <div class="tip-box warn" style="margin:0 0 7px">Plan your component structure at the start — creating components after modeling is done causes joint and reference headaches.</div>
+        <div class="tip-box warn" style="margin:0 0 7px">Don't delete timeline features directly — suppress first, verify nothing breaks, then delete.</div>
+        <div class="tip-box danger" style="margin:0">Never save over your only version without using Fusion's version history. Ctrl+S creates a version automatically — use it often.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">✨ Expert-Level Features</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Form workspace (T-Splines):</strong> For organic, freeform shapes. Use Edit Form tools, then convert to solid when done.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Simulation workspace:</strong> Run stress analysis. Apply loads and fixtures, check safety factor (target 2.0+), identify weak spots before manufacturing.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>CAM workspace:</strong> Generate CNC toolpaths. Use Adaptive Clearing for roughing — it's the most efficient strategy for most materials.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>API / Scripting:</strong> Automate repetitive modeling tasks with Python scripts in Tools → Add-Ins → Scripts and Add-Ins.</div>
+        <div class="tip-box" style="margin:0"><strong>Generative Design:</strong> Define loads, constraints, preserved geometry, and material — let Fusion generate structurally optimal organic shapes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="section" id="tab-workflow">
+    <p class="section-head">Professional Workflows <span class="badge advanced">Advanced</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🏭 Product Design Workflow</div>
+        <div class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Project setup:</strong> Create a named project in Fusion Team Hub. Set units (mm or inches), plan your component structure before touching any geometry.</div></div>
+        <div class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Sketch profile:</strong> Select a plane → Create Sketch. Draw geometry, apply constraints, drive all sizes with dimensions or named parameters. Close the loop fully — all lines should turn black.</div></div>
+        <div class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Create 3D features:</strong> Extrude, revolve, or loft the sketch. Add secondary features (holes, patterns). Keep timeline organized — suppress anything you're not sure about.</div></div>
+        <div class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Design for manufacturing:</strong> Add draft angles for injection molded parts (1–3°). Check wall thickness (Inspect → Thickness Analysis). Add fillets for structural strength as the final step.</div></div>
+        <div class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Assembly:</strong> Create individual components, define joint types, test motion by driving joints. Run interference check (Inspect → Interference) to catch clashes.</div></div>
+        <div class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Output:</strong> 2D drawings with dimensions for manufacturing. Export STL for 3D printing, STEP for CNC machining, DXF for laser cutting.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖨️ 3D Print Preparation</div>
+        <div class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Design rules:</strong> Minimum wall thickness 1.2mm for FDM, 0.8mm for resin. Keep overhangs under 45° or design in support-friendly geometry.</div></div>
+        <div class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Check clearances:</strong> Moving/fitting parts need 0.2–0.4mm clearance gap. Use Inspect → Interference to find clashes before printing.</div></div>
+        <div class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Orient for strength:</strong> FDM layer lines are weakest under tension. Orient the part so stress runs parallel to the layers, not across them.</div></div>
+        <div class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Export STL:</strong> File → Export → .STL. Set refinement to High for curved or organic surfaces to avoid faceting.</div></div>
+        <div class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Slice:</strong> Import STL to PrusaSlicer, Cura, or Bambu Studio. Check layer preview, set infill (15% for prototypes, 40%+ for functional parts), generate supports if needed.</div></div>
+        <div class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Iterate:</strong> Measure printed part with calipers. Edit dimensions in Fusion (parametric means one number change updates everything), re-export STL, reprint.</div></div>
+      </div>
+    </div>
+    <div class="tip-box info">🏅 <strong>Expert-level milestone:</strong> You've reached expert level when you can design a fully constrained parametric assembly, validate it with simulation, generate CAM toolpaths for CNC, and produce complete manufacturing drawings — all inside a single Fusion 360 project file.</div>
+  </div>
+
+</div>
+<footer>Autodesk Fusion 360 Complete Guide · Save this file and open in any browser · Works fully offline</footer>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meshmixer Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #1a1208;
+    color: #f0e6d3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    background: #7a3a00;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 64px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+  }
+
+  .back-link {
+    color: #ffb870;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.9;
+    transition: opacity 0.15s;
+  }
+  .back-link:hover { opacity: 1; text-decoration: underline; }
+
+  .header-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.25);
+  }
+
+  header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+
+  header .subtitle {
+    font-size: 13px;
+    color: #ffc890;
+    margin-left: auto;
+    opacity: 0.85;
+  }
+
+  /* Tab bar */
+  .tab-bar {
+    background: #2d1a00;
+    display: flex;
+    padding: 0 32px;
+    gap: 2px;
+    border-bottom: 2px solid #7a3a00;
+    flex-shrink: 0;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: #c4956a;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 14px 20px 12px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-btn:hover { color: #ffb870; background: rgba(255,255,255,0.04); }
+  .tab-btn.active {
+    color: #fff;
+    border-bottom-color: #ff8c00;
+    background: rgba(255,140,0,0.08);
+  }
+
+  /* Content area */
+  .content {
+    flex: 1;
+    padding: 36px 40px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Section title */
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ff9d3a;
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: #b8906a;
+    margin-bottom: 28px;
+  }
+
+  /* Cards grid */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: #2a1800;
+    border: 1px solid #5a2d00;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .card h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #ff8c00;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 .icon {
+    font-size: 16px;
+  }
+
+  /* Key-value rows */
+  .kv { display: flex; flex-direction: column; gap: 8px; }
+  .kv-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    transition: background 0.1s;
+  }
+  .kv-row:hover { background: rgba(255,140,0,0.07); }
+  .kv-key {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12.5px;
+    background: #4a2200;
+    color: #ffb870;
+    border: 1px solid #7a4400;
+    border-radius: 5px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .kv-val {
+    font-size: 13.5px;
+    color: #ddc9aa;
+    line-height: 1.4;
+  }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: #2a1800;
+    border: 1px solid #5a2d00;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .step-num {
+    width: 34px;
+    height: 34px;
+    background: #7a3a00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-body h4 {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #ffb870;
+    margin-bottom: 4px;
+  }
+  .step-body p {
+    font-size: 13.5px;
+    color: #c4956a;
+    line-height: 1.5;
+  }
+  .step-body code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    background: #4a2200;
+    color: #ffb870;
+    border: 1px solid #7a4400;
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+
+  /* Shortcut table */
+  .shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .shortcut-table th {
+    background: #4a2200;
+    color: #ff9d3a;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 2px solid #7a3a00;
+  }
+  .shortcut-table td {
+    padding: 9px 16px;
+    border-bottom: 1px solid #3a1e00;
+    vertical-align: top;
+  }
+  .shortcut-table tr:last-child td { border-bottom: none; }
+  .shortcut-table tr:hover td { background: rgba(255,140,0,0.05); }
+  .shortcut-table .key-cell {
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffb870;
+    white-space: nowrap;
+    width: 200px;
+  }
+  .shortcut-table .desc-cell { color: #ddc9aa; }
+
+  .table-wrapper {
+    background: #2a1800;
+    border: 1px solid #5a2d00;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .table-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7a4a2a;
+    padding: 10px 16px 4px;
+    background: #231400;
+  }
+
+  /* Info banner */
+  .tip-banner {
+    background: rgba(255, 140, 0, 0.08);
+    border: 1px solid rgba(255, 140, 0, 0.25);
+    border-left: 4px solid #ff8c00;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: #c4956a;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .tip-banner strong { color: #ffb870; }
+
+  /* Wide card */
+  .card-full {
+    background: #2a1800;
+    border: 1px solid #5a2d00;
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .card-full h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #ff8c00;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back-link" href="index.html">&#8592; Back to Hub</a>
+  <div class="header-divider"></div>
+  <h1>Meshmixer Guide</h1>
+  <span class="subtitle">Mesh repair &amp; 3D print optimization</span>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(0)">Navigation</button>
+  <button class="tab-btn" onclick="switchTab(1)">Import, Analysis &amp; Repair</button>
+  <button class="tab-btn" onclick="switchTab(2)">Sculpting</button>
+  <button class="tab-btn" onclick="switchTab(3)">Boolean &amp; Supports</button>
+  <button class="tab-btn" onclick="switchTab(4)">All Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab(5)">3D Print Workflow</button>
+</div>
+
+<!-- TAB 1: Navigation -->
+<div class="content">
+
+  <div class="tab-panel active" id="tab-0">
+    <div class="section-title">Navigation</div>
+    <div class="section-desc">Viewport controls and view management</div>
+
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">&#128065;</span>Viewport Controls</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Alt + LMB</span><span class="kv-val">Orbit / rotate view</span></div>
+          <div class="kv-row"><span class="kv-key">Alt + MMB</span><span class="kv-val">Pan view</span></div>
+          <div class="kv-row"><span class="kv-key">Scroll Wheel</span><span class="kv-val">Zoom in / out</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128247;</span>View Commands</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">F</span><span class="kv-val">Fit selection / model to view</span></div>
+          <div class="kv-row"><span class="kv-key">Space</span><span class="kv-val">Open context action menu</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-banner">
+      <strong>Tip:</strong> Middle-click drag also pans in most configurations. If your Alt key conflicts with system shortcuts on Windows, check Edit &rarr; Preferences for alternate bindings.
+    </div>
+  </div>
+
+  <!-- TAB 2: Import, Analysis & Repair -->
+  <div class="tab-panel" id="tab-1">
+    <div class="section-title">Import, Analysis &amp; Repair</div>
+    <div class="section-desc">Getting meshes in, finding problems, and fixing them</div>
+
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">&#128228;</span>Importing Files</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">File → Import</span><span class="kv-val">STL, OBJ, PLY, AMF supported</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128269;</span>Inspector &amp; Auto Repair</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Analysis → Inspector</span><span class="kv-val">Auto-detects holes and non-manifold edges (colored balls at problem areas)</span></div>
+          <div class="kv-row"><span class="kv-key">Auto Repair All</span><span class="kv-val">One-click fix for all detected issues</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#9881;</span>Edit Operations</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Edit → Separate Shells</span><span class="kv-val">Split mesh into individual disconnected shells</span></div>
+          <div class="kv-row"><span class="kv-key">Edit → Combine</span><span class="kv-val">Merge two meshes into a single object</span></div>
+          <div class="kv-row"><span class="kv-key">Edit → Make Solid</span><span class="kv-val">Full repair for 3D printing — produces a clean manifold mesh</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128022;</span>Hollow &amp; Thickness</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Edit → Hollow</span><span class="kv-val">Hollow interior for resin printing — reduces material cost</span></div>
+          <div class="kv-row"><span class="kv-key">Analysis → Thickness</span><span class="kv-val">Visualize wall thickness across the model</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-banner">
+      <strong>Colored balls in Inspector:</strong> Red = boundary holes &nbsp;|&nbsp; Blue = small holes &nbsp;|&nbsp; Pink = non-manifold edges. Click any ball to repair just that region, or use <strong>Auto Repair All</strong>.
+    </div>
+  </div>
+
+  <!-- TAB 3: Sculpting -->
+  <div class="tab-panel" id="tab-2">
+    <div class="section-title">Sculpting</div>
+    <div class="section-desc">Organic shaping and surface refinement brushes</div>
+
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">&#128396;</span>Mode Entry</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Q</span><span class="kv-val">Enter Sculpt mode (SculptView)</span></div>
+          <div class="kv-row"><span class="kv-key">Ctrl + D</span><span class="kv-val">Switch to DrawMode</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128336;</span>Brush Controls</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">B → drag</span><span class="kv-val">Resize brush interactively</span></div>
+          <div class="kv-row"><span class="kv-key">Shift + drag</span><span class="kv-val">Smooth brush (temporary)</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#127912;</span>Main Brushes</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Flatten</span><span class="kv-val">Level surface to a plane</span></div>
+          <div class="kv-row"><span class="kv-key">Inflate</span><span class="kv-val">Push surface outward along normals</span></div>
+          <div class="kv-row"><span class="kv-key">Pinch</span><span class="kv-val">Draw edges and creases together</span></div>
+          <div class="kv-row"><span class="kv-key">Drag</span><span class="kv-val">Pull surface in screen direction</span></div>
+          <div class="kv-row"><span class="kv-key">Smooth</span><span class="kv-val">Relax mesh locally</span></div>
+          <div class="kv-row"><span class="kv-key">Robust Smooth</span><span class="kv-val">Stronger smoothing that preserves volume</span></div>
+          <div class="kv-row"><span class="kv-key">Move</span><span class="kv-val">Large-scale repositioning of geometry</span></div>
+          <div class="kv-row"><span class="kv-key">Refine</span><span class="kv-val">Adds geometry (subdivides) where needed</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128200;</span>Mesh Density</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Remesh</span><span class="kv-val">Enable in sculpt settings to increase mesh density globally before sculpting</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-banner">
+      <strong>Workflow tip:</strong> Run a Remesh pass before heavy sculpting so you have enough polygons to capture detail. Use <strong>Refine</strong> brush to add geometry only in areas of high detail, keeping the rest of the mesh light.
+    </div>
+  </div>
+
+  <!-- TAB 4: Boolean & Support Operations -->
+  <div class="tab-panel" id="tab-3">
+    <div class="section-title">Boolean &amp; Support Operations</div>
+    <div class="section-desc">Combining geometry and preparing supports for printing</div>
+
+    <div class="cards">
+      <div class="card">
+        <h3><span class="icon">&#9874;</span>Boolean Operations</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Edit → Boolean → Union</span><span class="kv-val">Merge two solids into one</span></div>
+          <div class="kv-row"><span class="kv-key">Edit → Boolean → Subtract</span><span class="kv-val">Cut one solid from another</span></div>
+          <div class="kv-row"><span class="kv-key">Edit → Boolean → Intersect</span><span class="kv-val">Keep only overlapping volume</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128022;</span>Hollow</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Edit → Hollow</span><span class="kv-val">Shell the model with custom wall thickness</span></div>
+          <div class="kv-row"><span class="kv-key">Escape hole size</span><span class="kv-val">Set drain holes for uncured resin to escape</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#128346;</span>Generate Supports</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Analysis → Overhangs → Generate Support</span><span class="kv-val">Auto-generate print supports</span></div>
+          <div class="kv-row"><span class="kv-key">Angle threshold</span><span class="kv-val">Overhang angle to trigger support (commonly 45°)</span></div>
+          <div class="kv-row"><span class="kv-key">Density</span><span class="kv-val">How closely spaced support columns are</span></div>
+          <div class="kv-row"><span class="kv-key">Column size</span><span class="kv-val">Diameter of each support pillar</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="icon">&#9986;</span>Support Management &amp; Plane Cut</h3>
+        <div class="kv">
+          <div class="kv-row"><span class="kv-key">Convert to mesh</span><span class="kv-val">Turns supports into editable geometry for manual tweaks</span></div>
+          <div class="kv-row"><span class="kv-key">Select → Delete</span><span class="kv-val">Remove selected supports</span></div>
+          <div class="kv-row"><span class="kv-key">Edit → Plane Cut</span><span class="kv-val">Slice model with a plane; optionally keep both halves</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div class="tab-panel" id="tab-4">
+    <div class="section-title">All Shortcuts</div>
+    <div class="section-desc">Complete keyboard shortcut reference</div>
+
+    <div class="table-wrapper">
+      <div class="table-section-label">General</div>
+      <table class="shortcut-table">
+        <thead>
+          <tr><th>Shortcut</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="key-cell">Ctrl + Z</td><td class="desc-cell">Undo</td></tr>
+          <tr><td class="key-cell">Ctrl + Y</td><td class="desc-cell">Redo</td></tr>
+          <tr><td class="key-cell">Ctrl + A</td><td class="desc-cell">Select all</td></tr>
+          <tr><td class="key-cell">Delete</td><td class="desc-cell">Delete selection</td></tr>
+          <tr><td class="key-cell">Space</td><td class="desc-cell">Open action menu</td></tr>
+          <tr><td class="key-cell">F</td><td class="desc-cell">Fit to view</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-section-label">Modes</div>
+      <table class="shortcut-table">
+        <tbody>
+          <tr><td class="key-cell">D</td><td class="desc-cell">Select mode</td></tr>
+          <tr><td class="key-cell">S</td><td class="desc-cell">Sculpt mode</td></tr>
+          <tr><td class="key-cell">W</td><td class="desc-cell">Smooth tool</td></tr>
+          <tr><td class="key-cell">Q</td><td class="desc-cell">SculptView / Sculpt mode</td></tr>
+          <tr><td class="key-cell">Ctrl + D</td><td class="desc-cell">DrawMode</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-section-label">Selection</div>
+      <table class="shortcut-table">
+        <tbody>
+          <tr><td class="key-cell">R</td><td class="desc-cell">Selection lasso</td></tr>
+          <tr><td class="key-cell">Ctrl + I</td><td class="desc-cell">Invert selection</td></tr>
+          <tr><td class="key-cell">V</td><td class="desc-cell">Select visible faces only</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-section-label">View &amp; Display</div>
+      <table class="shortcut-table">
+        <tbody>
+          <tr><td class="key-cell">1</td><td class="desc-cell">Wireframe view</td></tr>
+          <tr><td class="key-cell">2</td><td class="desc-cell">Solid view</td></tr>
+          <tr><td class="key-cell">3</td><td class="desc-cell">Rendered view</td></tr>
+          <tr><td class="key-cell">T</td><td class="desc-cell">Toggle smooth shading</td></tr>
+        </tbody>
+      </table>
+
+      <div class="table-section-label">Transform &amp; Mesh</div>
+      <table class="shortcut-table">
+        <tbody>
+          <tr><td class="key-cell">X / Y / Z</td><td class="desc-cell">Constrain transform to axis</td></tr>
+          <tr><td class="key-cell">Ctrl + Shift + M</td><td class="desc-cell">Mirror</td></tr>
+          <tr><td class="key-cell">B</td><td class="desc-cell">Remesh selected region</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div class="tab-panel" id="tab-5">
+    <div class="section-title">3D Print Optimization Workflow</div>
+    <div class="section-desc">End-to-end steps from import to slicer</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Import your model</h4>
+          <p>Use <code>File → Import</code> to bring in your STL from Fusion 360, Blender, or another CAD tool. Supported formats: STL, OBJ, PLY, AMF.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Run Inspector</h4>
+          <p>Go to <code>Analysis → Inspector</code>. Meshmixer highlights problem areas with colored balls — red for open holes, blue for small gaps, pink for non-manifold edges. Fix each one or click <code>Auto Repair All</code>.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Make Solid (if needed)</h4>
+          <p>If the model has many complex issues, use <code>Edit → Make Solid</code>. This voxelises and re-meshes everything into a clean, watertight manifold — ideal for models with overlapping shells or heavy self-intersection.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Hollow for resin printing (optional)</h4>
+          <p>For large resin prints, use <code>Edit → Hollow</code> to shell the model. Set a wall thickness (1.5–3 mm typical) and add escape holes so uncured resin can drain out after printing.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Generate supports</h4>
+          <p>Go to <code>Analysis → Overhangs</code>, set the overhang angle to <code>45°</code>, then click <code>Generate Support</code>. Adjust density and column size for the print material and scale. Convert to mesh for manual editing if needed.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Plane Cut to fit print bed</h4>
+          <p>Use <code>Edit → Plane Cut</code> to split large models into parts that fit within your printer's build volume. You can keep both halves and export them separately, then glue after printing.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h4>Export and slice</h4>
+          <p>Export as STL via <code>File → Export</code>. Import the file into your slicer — PrusaSlicer, Cura, or Bambu Studio — for final layer settings and g-code generation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .content -->
+
+<script>
+  function switchTab(index) {
+    var panels = document.querySelectorAll('.tab-panel');
+    var buttons = document.querySelectorAll('.tab-btn');
+    for (var i = 0; i < panels.length; i++) {
+      panels[i].classList.remove('active');
+      buttons[i].classList.remove('active');
+    }
+    panels[index].classList.add('active');
+    buttons[index].classList.add('active');
+  }
+</script>
+
+</body>
+</html>

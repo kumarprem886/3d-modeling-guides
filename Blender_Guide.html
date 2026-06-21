@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blender — Beginner to Expert Guide</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
+  .header{background:#2d2b55;color:#fff;padding:1.5rem 2rem;display:flex;align-items:center;gap:14px}
+  .header-icon{width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .header h1{font-size:22px;font-weight:600;margin-bottom:2px}
+  .header p{font-size:13px;opacity:.7}
+  .progress-bar{display:flex;gap:0;background:#1e1c3d;padding:.75rem 2rem;gap:8px}
+  .prog-item{flex:1;padding:8px;border-radius:8px;text-align:center;font-size:11px;font-weight:600;letter-spacing:.3px}
+  .prog-item.b{background:#d4edda;color:#155724}
+  .prog-item.i{background:#fff3cd;color:#856404}
+  .prog-item.a{background:#ffe0d6;color:#7d2600}
+  .prog-item.e{background:#e0d9ff;color:#3d2b8c}
+  .container{max-width:1100px;margin:0 auto;padding:1.5rem}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+  .tab{font-size:13px;padding:8px 16px;border:1.5px solid #ccc;border-radius:8px;cursor:pointer;background:#fff;color:#555;transition:all .15s;font-weight:500}
+  .tab.active{background:#2d2b55;color:#fff;border-color:#2d2b55}
+  .tab:hover:not(.active){background:#eee}
+  .section{display:none}
+  .section.active{display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:1rem}
+  .card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1.1rem 1.3rem;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .card-title{font-size:14px;font-weight:700;color:#2d2b55;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f0f0f0;gap:8px}
+  .shortcut-row:last-child{border-bottom:none}
+  .shortcut-desc{font-size:13px;color:#555;flex:1}
+  .keys{display:flex;gap:3px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+  kbd{background:#f3f3f3;border:1px solid #ccc;border-bottom:2px solid #bbb;border-radius:5px;padding:2px 7px;font-size:11px;font-family:'Courier New',monospace;color:#222;white-space:nowrap}
+  .tip-box{background:#e8f8f0;border-left:4px solid #2daa6b;border-radius:0 8px 8px 0;padding:.75rem 1rem;margin:8px 0;font-size:13px;color:#145c38;line-height:1.5}
+  .tip-box.warn{background:#fff8e1;border-color:#f5a623;color:#7a4f00}
+  .tip-box.info{background:#ede9ff;border-color:#7c6fff;color:#3d2b8c}
+  .tip-box.danger{background:#fde9e9;border-color:#e74c3c;color:#7b1e1e}
+  .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600;margin-left:8px}
+  .badge.beginner{background:#d4edda;color:#155724}
+  .badge.intermediate{background:#fff3cd;color:#856404}
+  .badge.advanced{background:#ffe0d6;color:#7d2600}
+  .section-head{font-size:17px;font-weight:700;margin:1rem 0 .6rem;color:#2d2b55}
+  .workflow-step{display:flex;gap:12px;margin:10px 0;align-items:flex-start}
+  .step-num{width:26px;height:26px;border-radius:50%;background:#2d2b55;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .step-text{font-size:13px;color:#444;line-height:1.6}
+  .step-text strong{color:#111}
+  .mouse-diagram{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap}
+  .mouse-btn{background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:10px 14px;font-size:12px;text-align:center;min-width:90px}
+  .mouse-btn .icon{font-size:18px;margin-bottom:4px}
+  .mouse-btn .label{font-size:11px;color:#666;margin-top:4px;line-height:1.3}
+  .concept-box{background:#f8f8f8;border:1px solid #e8e8e8;border-radius:8px;padding:.7rem 1rem;margin:6px 0;font-size:13px}
+  .concept-title{font-weight:700;color:#2daa6b;font-size:11px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+  footer{text-align:center;padding:2rem;font-size:12px;color:#999}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🎨</div>
+  <div>
+    <h1>Blender — Complete 3D Guide</h1>
+    <p>Beginner to Expert &nbsp;·&nbsp; Shortcuts, Tips & Workflows</p>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-item b">🟢 Beginner — Basics & UI</div>
+  <div class="prog-item i">🟡 Intermediate — Modeling</div>
+  <div class="prog-item a">🟠 Advanced — Materials & Rigging</div>
+  <div class="prog-item e">🟣 Expert — Rendering & VFX</div>
+</div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('nav',this)">🖱️ Navigation</button>
+    <button class="tab" onclick="showTab('edit',this)">✏️ Editing</button>
+    <button class="tab" onclick="showTab('modeling',this)">📦 Modeling</button>
+    <button class="tab" onclick="showTab('shortcuts',this)">⌨️ All Shortcuts</button>
+    <button class="tab" onclick="showTab('materials',this)">🎨 Materials</button>
+    <button class="tab" onclick="showTab('tips',this)">💡 Pro Tips</button>
+    <button class="tab" onclick="showTab('workflow',this)">🗺️ Workflows</button>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="section active" id="tab-nav">
+    <p class="section-head">Mouse & Viewport Navigation <span class="badge beginner">Beginner</span></p>
+    <div class="mouse-diagram">
+      <div class="mouse-btn"><div class="icon">🖱️</div><strong>LMB</strong><div class="label">Select / Place Cursor</div></div>
+      <div class="mouse-btn"><div class="icon">🖱️</div><strong>MMB</strong><div class="label">Orbit View</div></div>
+      <div class="mouse-btn"><div class="icon">🖱️</div><strong>RMB</strong><div class="label">Context Menu</div></div>
+      <div class="mouse-btn"><div class="icon">↕️</div><strong>Scroll</strong><div class="label">Zoom In / Out</div></div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🔄 Viewport Controls</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Orbit / Rotate view</span><div class="keys"><kbd>MMB</kbd><kbd>drag</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="keys"><kbd>Shift</kbd><kbd>MMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Zoom in/out</span><div class="keys"><kbd>Scroll</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Zoom to selection</span><div class="keys"><kbd>Numpad .</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">View all objects</span><div class="keys"><kbd>Home</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle perspective/ortho</span><div class="keys"><kbd>Numpad 5</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Front view</span><div class="keys"><kbd>Numpad 1</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Side view (right)</span><div class="keys"><kbd>Numpad 3</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Top view</span><div class="keys"><kbd>Numpad 7</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Camera view</span><div class="keys"><kbd>Numpad 0</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Walk/Fly navigation</span><div class="keys"><kbd>Shift</kbd><kbd>~</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Smooth zoom</span><div class="keys"><kbd>Ctrl</kbd><kbd>MMB</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖥️ Editor & UI</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle fullscreen area</span><div class="keys"><kbd>Ctrl</kbd><kbd>Space</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Properties panel toggle</span><div class="keys"><kbd>N</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Tool shelf toggle</span><div class="keys"><kbd>T</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Search for any command</span><div class="keys"><kbd>F3</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Render image</span><div class="keys"><kbd>F12</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save file</span><div class="keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Viewport pie menu</span><div class="keys"><kbd>~</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shade pie menu</span><div class="keys"><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Quick favorites menu</span><div class="keys"><kbd>Q</kbd></div></div>
+      </div>
+    </div>
+    <div class="tip-box info">💡 <strong>Tip:</strong> Hold <kbd>Ctrl</kbd> + <kbd>MMB</kbd> to zoom smoothly. Use the Numpad pie menu (<kbd>~</kbd>) to jump between views without memorizing all numpad numbers.</div>
+  </div>
+
+  <!-- EDITING -->
+  <div class="section" id="tab-edit">
+    <p class="section-head">Object & Edit Mode <span class="badge beginner">Beginner</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🔲 Selection</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select object/vertex</span><div class="keys"><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle select all</span><div class="keys"><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Deselect all</span><div class="keys"><kbd>Alt</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Box select</span><div class="keys"><kbd>B</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Circle select</span><div class="keys"><kbd>C</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Lasso select</span><div class="keys"><kbd>Ctrl</kbd><kbd>RMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Invert selection</span><div class="keys"><kbd>Ctrl</kbd><kbd>I</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select linked</span><div class="keys"><kbd>L</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select edge loop</span><div class="keys"><kbd>Alt</kbd><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Grow selection</span><div class="keys"><kbd>Ctrl</kbd><kbd>+</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shrink selection</span><div class="keys"><kbd>Ctrl</kbd><kbd>-</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select checker</span><div class="keys">Select → Checker Deselect</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">↔️ Transform</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Grab / Move</span><div class="keys"><kbd>G</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rotate</span><div class="keys"><kbd>R</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Scale</span><div class="keys"><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Constrain to X axis</span><div class="keys"><kbd>G</kbd> → <kbd>X</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Constrain to Y axis</span><div class="keys"><kbd>G</kbd> → <kbd>Y</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Constrain to Z axis</span><div class="keys"><kbd>G</kbd> → <kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Type exact value (e.g. move 2m)</span><div class="keys"><kbd>G</kbd><kbd>X</kbd><kbd>2</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Snap while moving</span><div class="keys"><kbd>Ctrl</kbd><kbd>drag</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Confirm transform</span><div class="keys"><kbd>Enter</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Cancel transform</span><div class="keys"><kbd>Esc</kbd> or <kbd>RMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Scale along normals</span><div class="keys"><kbd>Alt</kbd><kbd>S</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔀 Modes</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle Object / Edit mode</span><div class="keys"><kbd>Tab</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mode pie menu</span><div class="keys"><kbd>Ctrl</kbd><kbd>Tab</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Vertex select mode</span><div class="keys"><kbd>1</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Edge select mode</span><div class="keys"><kbd>2</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Face select mode</span><div class="keys"><kbd>3</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Proportional editing</span><div class="keys"><kbd>O</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Hide selected</span><div class="keys"><kbd>H</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Unhide all</span><div class="keys"><kbd>Alt</kbd><kbd>H</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">X-Ray toggle</span><div class="keys"><kbd>Alt</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Local view (isolate)</span><div class="keys"><kbd>/</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODELING -->
+  <div class="section" id="tab-modeling">
+    <p class="section-head">Mesh Modeling <span class="badge intermediate">Intermediate</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🔧 Core Edit Tools</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Extrude region</span><div class="keys"><kbd>E</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Extrude along normals</span><div class="keys"><kbd>Alt</kbd><kbd>E</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Inset faces</span><div class="keys"><kbd>I</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Bevel edges/vertices</span><div class="keys"><kbd>Ctrl</kbd><kbd>B</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Loop cut</span><div class="keys"><kbd>Ctrl</kbd><kbd>R</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Knife tool</span><div class="keys"><kbd>K</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Fill face</span><div class="keys"><kbd>F</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Grid fill</span><div class="keys">Face → Grid Fill</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Merge vertices</span><div class="keys"><kbd>M</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rip vertices</span><div class="keys"><kbd>V</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Edge slide</span><div class="keys"><kbd>G</kbd><kbd>G</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Spin tool</span><div class="keys"><kbd>Alt</kbd><kbd>R</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📦 Object Operations</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add object/mesh</span><div class="keys"><kbd>Shift</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete object</span><div class="keys"><kbd>X</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Duplicate object</span><div class="keys"><kbd>Shift</kbd><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Linked duplicate</span><div class="keys"><kbd>Alt</kbd><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Join objects</span><div class="keys"><kbd>Ctrl</kbd><kbd>J</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Separate mesh</span><div class="keys"><kbd>P</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Apply transforms</span><div class="keys"><kbd>Ctrl</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mirror object</span><div class="keys"><kbd>Ctrl</kbd><kbd>M</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Snap menu</span><div class="keys"><kbd>Shift</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Link/transfer data</span><div class="keys"><kbd>Ctrl</kbd><kbd>L</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Make single user</span><div class="keys"><kbd>U</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚙️ Modifiers (Non-Destructive)</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Subdivision Surface</span><div class="keys"><kbd>Ctrl</kbd><kbd>1-5</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mirror modifier</span><div class="keys">Properties → Wrench</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Bevel modifier</span><div class="keys">Edge chamfer control</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Boolean modifier</span><div class="keys">Add/Subtract shapes</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Array modifier</span><div class="keys">Repeat patterns</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Solidify modifier</span><div class="keys">Add thickness</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shrinkwrap modifier</span><div class="keys">Snap to surface</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Curve modifier</span><div class="keys">Deform along curve</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Weighted Normals</span><div class="keys">Fix shading artifacts</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Apply modifier</span><div class="keys">Modifier stack → Apply</div></div>
+      </div>
+    </div>
+    <div class="tip-box">✅ <strong>Best practice:</strong> Always work non-destructively — add modifiers first and only apply them when you're done. Use Mirror + Subdivision Surface for organic and hard-surface modeling.</div>
+  </div>
+
+  <!-- SHORTCUTS -->
+  <div class="section" id="tab-shortcuts">
+    <p class="section-head">Master Shortcut Reference <span class="badge advanced">Advanced</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🗿 Sculpt Mode</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Brush size</span><div class="keys"><kbd>F</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Brush strength</span><div class="keys"><kbd>Shift</kbd><kbd>F</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Smooth brush</span><div class="keys"><kbd>Shift</kbd><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Invert brush direction</span><div class="keys"><kbd>Ctrl</kbd><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Dynamic topology on/off</span><div class="keys"><kbd>Ctrl</kbd><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mask brush</span><div class="keys"><kbd>M</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Brush picker palette</span><div class="keys"><kbd>Shift</kbd><kbd>Space</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Box mask</span><div class="keys"><kbd>B</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Lasso mask</span><div class="keys"><kbd>Ctrl</kbd><kbd>LMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Invert mask</span><div class="keys"><kbd>Ctrl</kbd><kbd>I</kbd></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎬 Animation</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Insert keyframe</span><div class="keys"><kbd>I</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete keyframe</span><div class="keys"><kbd>Alt</kbd><kbd>I</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Play / pause</span><div class="keys"><kbd>Space</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Next frame</span><div class="keys"><kbd>→</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Previous frame</span><div class="keys"><kbd>←</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Jump to start</span><div class="keys"><kbd>Shift</kbd><kbd>←</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Jump to end</span><div class="keys"><kbd>Shift</kbd><kbd>→</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Auto keyframe toggle</span><div class="keys">Timeline red dot</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Graph editor (curves)</span><div class="keys">Workspace → Animation</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📷 Camera & Render</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Set active camera</span><div class="keys"><kbd>Ctrl</kbd><kbd>Numpad 0</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Camera view</span><div class="keys"><kbd>Numpad 0</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Render still</span><div class="keys"><kbd>F12</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Render animation</span><div class="keys"><kbd>Ctrl</kbd><kbd>F12</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">View render result</span><div class="keys"><kbd>F11</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Viewport shading pie</span><div class="keys"><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Material preview</span><div class="keys"><kbd>Z</kbd> → Material</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rendered preview</span><div class="keys"><kbd>Z</kbd> → Rendered</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔗 Shader Nodes</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add node</span><div class="keys"><kbd>Shift</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete node</span><div class="keys"><kbd>X</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Cut node links</span><div class="keys"><kbd>Ctrl</kbd><kbd>RMB</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Frame/group nodes</span><div class="keys"><kbd>Ctrl</kbd><kbd>J</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mute node</span><div class="keys"><kbd>M</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Hide node sockets</span><div class="keys"><kbd>H</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Duplicate node</span><div class="keys"><kbd>Shift</kbd><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Preview node (Node Wrangler)</span><div class="keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>LMB</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATERIALS -->
+  <div class="section" id="tab-materials">
+    <p class="section-head">Materials, Shading & Lighting <span class="badge advanced">Advanced</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🎨 PBR Material Setup</div>
+        <div class="shortcut-row"><span class="shortcut-desc">Start with</span><div class="keys">Principled BSDF node</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Base Color (Albedo)</span><div class="keys">Texture or flat color</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Metallic value</span><div class="keys">0 = plastic, 1 = metal</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Roughness value</span><div class="keys">0 = mirror, 1 = matte</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Normal map</span><div class="keys">Image Tex → Normal Map node</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">UV unwrap</span><div class="keys"><kbd>U</kbd> in Edit Mode</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Smart UV project</span><div class="keys"><kbd>U</kbd> → Smart UV</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Mark seam</span><div class="keys"><kbd>Ctrl</kbd><kbd>E</kbd> → Mark Seam</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Assign material to face</span><div class="keys">Select faces → Assign</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">☀️ Lighting Setup</div>
+        <div class="shortcut-row"><span class="shortcut-desc">3-point light setup</span><div class="keys">Key + Fill + Rim</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">HDRI environment</span><div class="keys">World → Environment Texture</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add area light</span><div class="keys"><kbd>Shift</kbd><kbd>A</kbd> → Light → Area</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Emissive material light</span><div class="keys">Emission shader node</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Shadow catcher</span><div class="keys">Object Properties → Visibility</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Light linking</span><div class="keys">Object → Light Linking</div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Volumetrics</span><div class="keys">World → Volume Scatter</div></div>
+      </div>
+    </div>
+    <div class="tip-box info">⭐ <strong>Pro tip:</strong> Use Cycles for photorealistic results. Set GPU rendering in Preferences → System. Enable Denoising (OptiX/OIDN) to reduce render times by up to 10x with minimal quality loss.</div>
+    <div class="tip-box warn">⚠️ <strong>Watch out:</strong> Always apply scale (<kbd>Ctrl</kbd><kbd>A</kbd> → Scale) before UV unwrapping or using physics simulations — non-uniform scale causes problems with modifiers.</div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section" id="tab-tips">
+    <p class="section-head">Expert Tips & Tricks</p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🚀 Speed & Efficiency</div>
+        <div class="tip-box" style="margin:0 0 7px">Use <kbd>F3</kbd> (Search) for any command you can't remember — faster than hunting through menus.</div>
+        <div class="tip-box" style="margin:0 0 7px">Press <kbd>Shift</kbd><kbd>D</kbd> then immediately <kbd>Esc</kbd> to duplicate an object in place without moving it.</div>
+        <div class="tip-box" style="margin:0 0 7px">Middle-click drag a property field to copy its value from another object in the scene.</div>
+        <div class="tip-box" style="margin:0 0 7px">Use <kbd>Alt</kbd> + click any property to set it as a keyframe directly from the Properties panel.</div>
+        <div class="tip-box" style="margin:0">Pin the N-panel (right-click → Pin) to keep sidebar open while selecting other objects.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">✨ Modeling Tricks</div>
+        <div class="tip-box" style="margin:0 0 7px">Use <strong>Proportional Editing</strong> (<kbd>O</kbd>) for smooth, organic deformations affecting nearby vertices.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Snap to face</strong> (<kbd>Shift</kbd><kbd>Tab</kbd>) for placing objects perfectly flush on surfaces.</div>
+        <div class="tip-box" style="margin:0 0 7px">Use <strong>Shrinkwrap modifier</strong> to retopologize clean geometry over a high-poly sculpt.</div>
+        <div class="tip-box" style="margin:0 0 7px">Loop cuts (<kbd>Ctrl</kbd><kbd>R</kbd>) + slide = topology control without adding unnecessary vertices.</div>
+        <div class="tip-box" style="margin:0"><kbd>Alt</kbd><kbd>S</kbd> = scale along normals (perfect for inflating/deflating a mesh evenly).</div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚙️ Essential Add-ons to Enable</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Node Wrangler</strong> — Essential for shader work. <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>LMB</kbd> previews any node instantly.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>LoopTools</strong> — Circle, relax, and space tools for cleaner topology.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Extra Objects</strong> — More primitive shapes for faster blockouts.</div>
+        <div class="tip-box" style="margin:0 0 7px"><strong>Auto-Save</strong> — Enable in Preferences → Save & Load → Auto Save. Set to every 2 minutes.</div>
+        <div class="tip-box" style="margin:0">Enable <strong>Statistics overlay</strong> to always see vertex/face/triangle counts while modeling.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="section" id="tab-workflow">
+    <p class="section-head">End-to-End Workflows <span class="badge advanced">Advanced</span></p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">🔩 Hard Surface Workflow</div>
+        <div class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Blockout:</strong> Use basic primitives. Don't add detail yet — get the overall shape and proportions correct first.</div></div>
+        <div class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Modeling:</strong> Add loop cuts and bevel for hard edges. Use Mirror modifier for symmetrical shapes.</div></div>
+        <div class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Booleans:</strong> Cut holes and add panel details with Boolean modifier. Bevel the cut edges afterward.</div></div>
+        <div class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Smooth shading:</strong> Right-click → Shade Smooth, then add Edge Split or Weighted Normals modifier to fix shading.</div></div>
+        <div class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Materials:</strong> Assign PBR materials. UV unwrap if using textures, otherwise use procedural Shader nodes.</div></div>
+        <div class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Render:</strong> Set up 3-point lighting + HDRI. Use Cycles for final render with OIDN denoising enabled.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🧑 Character / Organic Workflow</div>
+        <div class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Sculpt:</strong> Start with a sphere in Sculpt mode. Use Dyntopo for dynamic resolution. Block big shapes first before details.</div></div>
+        <div class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Retopology:</strong> Use Shrinkwrap modifier or Retopoflow add-on to create clean, game-ready quad topology.</div></div>
+        <div class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Rigging:</strong> Add armature (<kbd>Shift</kbd><kbd>A</kbd> → Armature). Parent mesh to armature with automatic weights.</div></div>
+        <div class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Weight paint:</strong> Refine bone influences in Weight Paint mode for smooth, realistic deformations.</div></div>
+        <div class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Texture:</strong> Bake normal maps from high-poly to low-poly. Paint diffuse maps in Texture Paint mode.</div></div>
+        <div class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Animate:</strong> Pose bones, insert keyframes (<kbd>I</kbd>), use NLA Editor for blending and mixing animations.</div></div>
+      </div>
+    </div>
+    <div class="tip-box info">🏅 <strong>Expert level:</strong> Learn Geometry Nodes for procedural modeling, Python scripting for automation, and Compositing nodes for professional post-processing — these three skills separate intermediate from expert Blender artists.</div>
+  </div>
+
+</div>
+<footer>Blender Complete Guide · Save this file and open in any browser · Works offline</footer>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

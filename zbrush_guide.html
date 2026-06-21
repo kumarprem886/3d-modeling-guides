@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZBrush Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1a17;
+    color: #d4ede6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: #1a5c4a;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 60px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .back-link {
+    color: #7ddfc3;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border: 1px solid #2d8a6e;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .back-link:hover { background: #2d8a6e; color: #fff; }
+
+  .header-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  .header-title span {
+    color: #7ddfc3;
+  }
+
+  .header-badge {
+    margin-left: auto;
+    background: #2d8a6e;
+    color: #b6f0de;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* NOTICE BOX */
+  .notice-banner {
+    background: linear-gradient(90deg, #1a3d32, #1e4d3c);
+    border-left: 4px solid #3dbf8f;
+    margin: 20px 24px 0 24px;
+    padding: 12px 18px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13.5px;
+    color: #a8ddd0;
+    line-height: 1.6;
+  }
+  .notice-banner strong { color: #7ddfc3; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    padding: 20px 24px 0 24px;
+    border-bottom: 2px solid #1e3d31;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: #162e25;
+    color: #7db8a8;
+    border: 1px solid #1e3d31;
+    border-bottom: none;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 7px 7px 0 0;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { background: #1e4535; color: #b6f0de; }
+  .tab-btn.active {
+    background: #1a5c4a;
+    color: #fff;
+    border-color: #2d8a6e;
+    border-bottom: 2px solid #1a5c4a;
+    margin-bottom: -2px;
+  }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 28px 24px; }
+  .tab-content.active { display: block; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #7ddfc3;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1e3d31;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #3dbf8f;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 24px 0 10px 0;
+  }
+  h3:first-of-type { margin-top: 0; }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    background: #132620;
+    border: 1px solid #1e3d31;
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #7ddfc3;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .icon {
+    width: 22px;
+    height: 22px;
+    background: #1a5c4a;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  /* SHORTCUT TABLE */
+  .shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-bottom: 20px;
+  }
+  .shortcut-table th {
+    background: #1a5c4a;
+    color: #b6f0de;
+    padding: 9px 14px;
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .shortcut-table th:first-child { border-radius: 7px 0 0 0; }
+  .shortcut-table th:last-child { border-radius: 0 7px 0 0; }
+  .shortcut-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid #1a2e26;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .shortcut-table tr:last-child td { border-bottom: none; }
+  .shortcut-table tr:nth-child(even) td { background: #0f1e1a; }
+  .shortcut-table tr:hover td { background: #152920; }
+
+  kbd {
+    display: inline-block;
+    background: #1e4535;
+    border: 1px solid #2d8a6e;
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: 'Courier New', monospace;
+    font-size: 11.5px;
+    color: #7ddfc3;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+
+  .desc { color: #a8c9bf; font-size: 13px; }
+
+  /* STEP LIST */
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #1a2e26;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: #1a5c4a;
+    border: 2px solid #2d8a6e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #7ddfc3;
+  }
+  .step-body { flex: 1; }
+  .step-body strong {
+    display: block;
+    font-size: 14px;
+    color: #d4ede6;
+    margin-bottom: 4px;
+  }
+  .step-body span { font-size: 13px; color: #8ab8ad; line-height: 1.5; }
+
+  /* PILL TAGS */
+  .brush-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .brush-pill {
+    background: #1a3d32;
+    border: 1px solid #2d8a6e;
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-size: 12.5px;
+    color: #7ddfc3;
+    font-weight: 600;
+  }
+
+  /* SECTION BLOCK */
+  .section-block {
+    background: #132620;
+    border: 1px solid #1e3d31;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+
+  /* HIGHLIGHT NOTE */
+  .note-inline {
+    background: #0f2a22;
+    border: 1px solid #2d8a6e;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #8ab8ad;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+  .note-inline strong { color: #7ddfc3; }
+
+  /* SEPARATOR */
+  .sep { height: 1px; background: #1e3d31; margin: 22px 0; }
+
+  @media (max-width: 640px) {
+    header { padding: 0 14px; gap: 12px; }
+    .header-badge { display: none; }
+    .tab-bar { padding: 16px 14px 0 14px; gap: 3px; }
+    .tab-btn { padding: 7px 11px; font-size: 12px; }
+    .tab-content { padding: 20px 14px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .notice-banner { margin: 14px 14px 0 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="back-link">&#8592; Back to Hub</a>
+  <div class="header-title">ZBrush <span>Guide</span></div>
+  <div class="header-badge">Digital Sculpting</div>
+</header>
+
+<div class="notice-banner">
+  <strong>Important:</strong> ZBrush uses a <strong>very unique UI</strong> — it is NOT a standard 3D application. The canvas is a 2.5D paint surface; your model exists on it. Take time to learn the <strong>canvas vs 3D model</strong> distinction before diving into shortcuts — many operations behave differently depending on whether you are in Edit mode or not.
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('nav', this)">Navigation</button>
+  <button class="tab-btn" onclick="switchTab('brushes', this)">Brushes</button>
+  <button class="tab-btn" onclick="switchTab('zspheres', this)">ZSpheres &amp; ZRemesher</button>
+  <button class="tab-btn" onclick="switchTab('masking', this)">Masking &amp; Selection</button>
+  <button class="tab-btn" onclick="switchTab('shortcuts', this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab('polypaint', this)">Polypainting</button>
+  <button class="tab-btn" onclick="switchTab('workflow', this)">Workflow</button>
+</div>
+
+<!-- TAB 1: NAVIGATION -->
+<div id="tab-nav" class="tab-content active">
+  <h2>Navigation</h2>
+
+  <div class="note-inline" style="margin-bottom:22px;">
+    <strong>ZBrush has NO traditional orbit control.</strong> Navigation works through modifier key combinations on the canvas — not a middle mouse button or numpad like most 3D apps.
+  </div>
+
+  <h3>Core Navigation Controls</h3>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Action</th><th>Shortcut</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Orbit / Rotate</td>
+        <td><kbd>Alt</kbd> + Drag (on model)</td>
+        <td class="desc">Drag on the model while holding Alt to rotate the view around it</td>
+      </tr>
+      <tr>
+        <td>Frame / Reset view</td>
+        <td><kbd>Alt</kbd> + Click (empty area)</td>
+        <td class="desc">Click on an empty area of the canvas to snap back to a neutral view</td>
+      </tr>
+      <tr>
+        <td>Zoom (canvas)</td>
+        <td><kbd>Ctrl</kbd> + Drag</td>
+        <td class="desc">Zooms the canvas — distinct from zooming the 3D model itself</td>
+      </tr>
+      <tr>
+        <td>Pan / Move</td>
+        <td><kbd>Shift</kbd> + Drag (right-click drag)</td>
+        <td class="desc">Pans the canvas left/right/up/down</td>
+      </tr>
+      <tr>
+        <td>Frame model</td>
+        <td><kbd>F</kbd></td>
+        <td class="desc">Fits the active subtool into the viewport</td>
+      </tr>
+      <tr>
+        <td>Perspective toggle</td>
+        <td><kbd>P</kbd></td>
+        <td class="desc">Switches between perspective and orthographic projection</td>
+      </tr>
+      <tr>
+        <td>Floor grid</td>
+        <td><kbd>Shift</kbd> + <kbd>P</kbd></td>
+        <td class="desc">Toggles the floor grid display</td>
+      </tr>
+      <tr>
+        <td>Transform widget (Gizmo 3D)</td>
+        <td><kbd>Y</kbd></td>
+        <td class="desc">Toggles the Gizmo 3D transform widget on/off</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sep"></div>
+
+  <h3>Canvas vs Model Zoom</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><span class="icon">C</span>Canvas Zoom</div>
+      <p class="desc">Uses <kbd>Ctrl</kbd> + drag. This zooms the entire canvas view — like zooming a photo. Your model gets bigger on screen but its actual 3D size has not changed. Use this for viewport navigation.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">M</span>Model Zoom</div>
+      <p class="desc">Use the Scale gizmo (<kbd>E</kbd>) or Transform &gt; Scale to resize the actual 3D object. The Zoom slider in the right tray also adjusts the 3D zoom level independently.</p>
+    </div>
+  </div>
+
+  <div class="note-inline">
+    <strong>Tip:</strong> If your model disappears or the canvas looks blank, press <kbd>F</kbd> to re-frame, or <kbd>Alt</kbd> + click on empty canvas to reset the view position.
+  </div>
+</div>
+
+<!-- TAB 2: BRUSHES -->
+<div id="tab-brushes" class="tab-content">
+  <h2>Brushes</h2>
+
+  <h3>Brush Size &amp; Intensity Controls</h3>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Property</th><th>Shortcut</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Draw Size</td>
+        <td><kbd>S</kbd> then drag</td>
+        <td class="desc">Press S, hold and drag left/right to resize the brush radius</td>
+      </tr>
+      <tr>
+        <td>Focal Shift</td>
+        <td><kbd>Alt</kbd> + <kbd>S</kbd> → drag</td>
+        <td class="desc">Controls brush falloff — how soft/hard the brush edge is</td>
+      </tr>
+      <tr>
+        <td>RGB Intensity</td>
+        <td><kbd>I</kbd> then drag</td>
+        <td class="desc">Controls color strength when painting with Rgb or Mrgb mode</td>
+      </tr>
+      <tr>
+        <td>Z Intensity</td>
+        <td><kbd>U</kbd></td>
+        <td class="desc">Controls sculpt depth/strength — how much the brush pushes or pulls geometry</td>
+      </tr>
+      <tr>
+        <td>Smooth</td>
+        <td>Hold <kbd>Shift</kbd></td>
+        <td class="desc">Temporarily switches to the Smooth brush while held</td>
+      </tr>
+      <tr>
+        <td>Lazy Mouse</td>
+        <td><kbd>L</kbd></td>
+        <td class="desc">Toggles Lazy Mouse — adds a trailing delay for smooth, controlled strokes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sep"></div>
+
+  <h3>Essential Brushes</h3>
+  <div class="brush-grid">
+    <span class="brush-pill">ClayBuildup</span>
+    <span class="brush-pill">Dam_Standard</span>
+    <span class="brush-pill">TrimDynamic</span>
+    <span class="brush-pill">Slash3</span>
+    <span class="brush-pill">hPolish</span>
+    <span class="brush-pill">Pinch</span>
+    <span class="brush-pill">Inflate</span>
+    <span class="brush-pill">Smooth</span>
+    <span class="brush-pill">Move</span>
+    <span class="brush-pill">Standard</span>
+  </div>
+
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Brush</th><th>Best For</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ClayBuildup</strong></td>
+        <td class="desc">Adding mass and volume quickly — mimics real clay buildup, great for primary forms</td>
+      </tr>
+      <tr>
+        <td><strong>Dam_Standard</strong></td>
+        <td class="desc">Cutting sharp creases, wrinkles, and cracks into the surface</td>
+      </tr>
+      <tr>
+        <td><strong>TrimDynamic</strong></td>
+        <td class="desc">Flattening and trimming surfaces — great for hard surface and organic planes</td>
+      </tr>
+      <tr>
+        <td><strong>Slash3</strong></td>
+        <td class="desc">Cutting fine surface detail lines — good for scales, stitching, and secondary details</td>
+      </tr>
+      <tr>
+        <td><strong>hPolish</strong></td>
+        <td class="desc">Polishing and flattening large surface areas with a gentle smoothing effect</td>
+      </tr>
+      <tr>
+        <td><strong>Pinch</strong></td>
+        <td class="desc">Pulling geometry into a sharp ridge or edge — great for sharpening forms</td>
+      </tr>
+      <tr>
+        <td><strong>Inflate</strong></td>
+        <td class="desc">Pushing geometry outward along normals — useful for puffing up areas</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sep"></div>
+
+  <h3>Stroke Types &amp; Top Bar Modes</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><span class="icon">S</span>Stroke Types</div>
+      <p class="desc" style="margin-bottom:8px;"><strong style="color:#d4ede6;">Spray</strong> — Scatters multiple brush stamps along the stroke path. Good for textures and organic variation.</p>
+      <p class="desc"><strong style="color:#d4ede6;">DragRect</strong> — Draws one brush stamp by dragging a rectangle. Used for precise alpha placement.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">M</span>Top Bar Mode Buttons</div>
+      <p class="desc" style="margin-bottom:6px;"><kbd>Mrgb</kbd> — Affects both Material and RGB color when sculpting/painting</p>
+      <p class="desc" style="margin-bottom:6px;"><kbd>Rgb</kbd> — Affects color only, not depth</p>
+      <p class="desc"><kbd>M</kbd> — Affects material only, not color or depth</p>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: ZSPHERES & ZREMESHER -->
+<div id="tab-zspheres" class="tab-content">
+  <h2>ZSpheres &amp; ZRemesher</h2>
+
+  <h3>ZSpheres — Base Mesh Creation</h3>
+  <div class="section-block">
+    <p class="desc" style="margin-bottom:12px;">ZSpheres are a unique ZBrush tool for building a poseable skeleton-like armature that converts into a sculptable mesh. Ideal for character base meshes and complex organic shapes.</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Action</th><th>How To</th></tr></thead>
+      <tbody>
+        <tr><td>Add ZSphere child</td><td class="desc">Draw on an existing ZSphere to add a connected child sphere</td></tr>
+        <tr><td>Preview mesh</td><td class="desc">Tool → Adaptive Skin → Preview (A key) to see the mesh</td></tr>
+        <tr><td>Make adaptive skin</td><td class="desc">Tool → Adaptive Skin → Make Adaptive Skin to convert to polygon mesh</td></tr>
+        <tr><td>Pose/move ZSpheres</td><td class="desc">Use Move (<kbd>W</kbd>) and Rotate (<kbd>R</kbd>) gizmos to position spheres</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sep"></div>
+
+  <h3>DynaMesh — Continuous Sculpting</h3>
+  <div class="section-block">
+    <p class="desc" style="margin-bottom:12px;">DynaMesh re-distributes polygons evenly across the surface so you can add or remove mass without stretching. Perfect for the early blocking phase.</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Action</th><th>Shortcut / Location</th></tr></thead>
+      <tbody>
+        <tr><td>Enable DynaMesh</td><td class="desc">Tool → Geometry → DynaMesh → toggle on</td></tr>
+        <tr><td>Remesh (update topology)</td><td class="desc"><kbd>Ctrl</kbd> + drag on empty canvas area</td></tr>
+        <tr><td>Resolution</td><td class="desc">Increase the DynaMesh resolution slider before remeshing for finer detail</td></tr>
+        <tr><td>Boolean merge</td><td class="desc">Insert a subtool, use Live Boolean, then Ctrl+drag to merge</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sep"></div>
+
+  <h3>ZRemesher — Automatic Retopology</h3>
+  <div class="section-block">
+    <p class="desc" style="margin-bottom:12px;">ZRemesher generates clean, evenly distributed quad topology automatically. Use it after DynaMesh sculpting to get a mesh ready for subdivision and detail work.</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Action</th><th>Location / Shortcut</th></tr></thead>
+      <tbody>
+        <tr><td>Run ZRemesher</td><td class="desc">Tool → Geometry → ZRemesher → ZRemesher button</td></tr>
+        <tr><td>Target polygon count</td><td class="desc">Adjust the Target Polygons Count slider (in thousands) before running</td></tr>
+        <tr><td>Half / Double</td><td class="desc">Half and Double buttons multiply the target count × 0.5 or × 2</td></tr>
+        <tr><td>ZRemesher guides</td><td class="desc">Use ZRemesherGuide brush to paint flow direction hints on the surface</td></tr>
+        <tr><td>Adaptive density</td><td class="desc">Enable AdaptiveSize to put more polygons in curved/detailed areas</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sep"></div>
+
+  <h3>Subdivision &amp; GoZ</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+    <tbody>
+      <tr><td>Add subdivision level</td><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td></tr>
+      <tr><td>Go to higher subdivision</td><td><kbd>D</kbd></td></tr>
+      <tr><td>Go to lower subdivision</td><td><kbd>Shift</kbd> + <kbd>D</kbd></td></tr>
+      <tr><td>Delete lower subdivisions</td><td class="desc">Tool → Geometry → Del Lower</td></tr>
+      <tr><td>GoZ to other app</td><td class="desc">Tool → GoZ — sends mesh to Blender, Maya, Cinema 4D, etc. (requires GoZ install)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- TAB 4: MASKING & SELECTION -->
+<div id="tab-masking" class="tab-content">
+  <h2>Masking &amp; Selection</h2>
+
+  <h3>Masking Controls</h3>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Action</th><th>Shortcut</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Paint mask</td>
+        <td><kbd>Ctrl</kbd> + Drag (on model)</td>
+        <td class="desc">Paints a mask on the surface — masked areas (dark) are protected from sculpting</td>
+      </tr>
+      <tr>
+        <td>Clear mask</td>
+        <td><kbd>Ctrl</kbd> + Click (empty area)</td>
+        <td class="desc">Removes all masking from the entire mesh</td>
+      </tr>
+      <tr>
+        <td>Invert mask</td>
+        <td><kbd>Ctrl</kbd> + Click (on model)</td>
+        <td class="desc">Inverts — what was masked becomes unmasked and vice versa</td>
+      </tr>
+      <tr>
+        <td>Erase mask</td>
+        <td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + Drag</td>
+        <td class="desc">Paints to erase/remove existing mask in specific areas</td>
+      </tr>
+      <tr>
+        <td>Blur mask</td>
+        <td><kbd>Ctrl</kbd> + Click (on model, twice)</td>
+        <td class="desc">Softens the mask edges for a smoother transition</td>
+      </tr>
+      <tr>
+        <td>Sharpen mask</td>
+        <td><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + Click</td>
+        <td class="desc">Sharpens the mask edges for a harder boundary</td>
+      </tr>
+      <tr>
+        <td>Mask by cavity</td>
+        <td class="desc">Tool → Masking → Mask By Cavity</td>
+        <td class="desc">Auto-masks concave areas (recesses) of the mesh</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sep"></div>
+
+  <h3>Selection (Visibility)</h3>
+  <table class="shortcut-table">
+    <thead>
+      <tr><th>Action</th><th>Shortcut</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Select rectangle region (hide outside)</td>
+        <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + Drag</td>
+      </tr>
+      <tr>
+        <td>SelectLasso</td>
+        <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + drag with Lasso stroke active</td>
+      </tr>
+      <tr>
+        <td>Invert visibility</td>
+        <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + Click (empty area)</td>
+      </tr>
+      <tr>
+        <td>Show all</td>
+        <td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + Click (on model)</td>
+      </tr>
+      <tr>
+        <td>Grow selection</td>
+        <td class="desc">Tool → Visibility → Grow</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sep"></div>
+
+  <h3>Polygroups</h3>
+  <div class="section-block">
+    <p class="desc" style="margin-bottom:12px;">Polygroups assign color-coded groups to polygon regions. They are essential for masking, selection, and organizing complex meshes.</p>
+    <table class="shortcut-table">
+      <thead><tr><th>Action</th><th>Shortcut / Location</th></tr></thead>
+      <tbody>
+        <tr><td>Group visible polygons</td><td><kbd>Ctrl</kbd> + <kbd>W</kbd></td></tr>
+        <tr><td>Show/hide polyframe colors</td><td><kbd>Shift</kbd> + <kbd>F</kbd></td></tr>
+        <tr><td>Isolate polygroup</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + Click on a polygroup</td></tr>
+        <tr><td>Auto group</td><td class="desc">Tool → Polygroups → Auto Groups</td></tr>
+        <tr><td>Group by normals</td><td class="desc">Tool → Polygroups → Group by Normals</td></tr>
+        <tr><td>Mask by polygroup</td><td class="desc">Tool → Masking → Mask by Polygroups</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 5: ALL SHORTCUTS -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2>All Shortcuts Reference</h2>
+
+  <h3>File &amp; Project</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+    <tbody>
+      <tr><td>Save project (.ZPR)</td><td><kbd>Ctrl</kbd> + <kbd>S</kbd></td></tr>
+      <tr><td>Export mesh</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd></td></tr>
+      <tr><td>Undo</td><td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td></tr>
+      <tr><td>Redo</td><td><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></td></tr>
+      <tr><td>LightBox toggle</td><td><kbd>,</kbd> (comma)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Navigation</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+    <tbody>
+      <tr><td>Orbit</td><td><kbd>Alt</kbd> + Drag</td></tr>
+      <tr><td>Frame model</td><td><kbd>F</kbd></td></tr>
+      <tr><td>Perspective toggle</td><td><kbd>P</kbd></td></tr>
+      <tr><td>Floor grid toggle</td><td><kbd>Shift</kbd> + <kbd>P</kbd></td></tr>
+      <tr><td>Gizmo 3D toggle</td><td><kbd>Y</kbd></td></tr>
+      <tr><td>Zoom (canvas)</td><td><kbd>Ctrl</kbd> + Drag</td></tr>
+      <tr><td>Pan</td><td><kbd>Shift</kbd> + Drag</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Transform (Gizmo 3D)</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+    <tbody>
+      <tr><td>Move gizmo</td><td><kbd>W</kbd></td></tr>
+      <tr><td>Scale gizmo</td><td><kbd>E</kbd></td></tr>
+      <tr><td>Rotate gizmo</td><td><kbd>R</kbd></td></tr>
+      <tr><td>Toggle Gizmo</td><td><kbd>Y</kbd></td></tr>
+      <tr><td>Solo subtool</td><td><kbd>Alt</kbd> + Click subtool in list</td></tr>
+      <tr><td>Mirror and Weld</td><td class="desc">Tool → Geometry → Mirror and Weld</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Sculpting</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+    <tbody>
+      <tr><td>Draw Size</td><td><kbd>S</kbd> → drag</td></tr>
+      <tr><td>Z Intensity</td><td><kbd>U</kbd></td></tr>
+      <tr><td>RGB Intensity</td><td><kbd>I</kbd> → drag</td></tr>
+      <tr><td>Smooth</td><td>Hold <kbd>Shift</kbd></td></tr>
+      <tr><td>Lazy Mouse</td><td><kbd>L</kbd></td></tr>
+      <tr><td>Snapshot to canvas</td><td><kbd>Shift</kbd> + <kbd>S</kbd></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Subdivision &amp; Geometry</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+    <tbody>
+      <tr><td>Add subdivision level</td><td><kbd>Ctrl</kbd> + <kbd>D</kbd></td></tr>
+      <tr><td>Higher subdivision</td><td><kbd>D</kbd></td></tr>
+      <tr><td>Lower subdivision</td><td><kbd>Shift</kbd> + <kbd>D</kbd></td></tr>
+      <tr><td>DynaMesh remesh</td><td><kbd>Ctrl</kbd> + Drag (empty canvas)</td></tr>
+      <tr><td>Group visible</td><td><kbd>Ctrl</kbd> + <kbd>W</kbd></td></tr>
+      <tr><td>Show/hide polyframe</td><td><kbd>Shift</kbd> + <kbd>F</kbd></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Rendering &amp; Export</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Action</th><th>Shortcut / Location</th></tr></thead>
+    <tbody>
+      <tr><td>BPR Render</td><td><kbd>Shift</kbd> + <kbd>R</kbd></td></tr>
+      <tr><td>Snapshot to canvas</td><td><kbd>Shift</kbd> + <kbd>S</kbd></td></tr>
+      <tr><td>Multi Map Exporter</td><td class="desc">ZPlugin → Multi Map Exporter</td></tr>
+      <tr><td>GoZ export</td><td class="desc">Tool → GoZ</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- TAB 6: POLYPAINTING & TEXTURING -->
+<div id="tab-polypaint" class="tab-content">
+  <h2>Polypainting &amp; Texturing</h2>
+
+  <div class="note-inline" style="margin-bottom:20px;">
+    Polypainting stores color directly on mesh vertices — no UVs required for painting. UVs are only needed when you bake textures for export.
+  </div>
+
+  <h3>Enable &amp; Paint</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Step</th><th>Action</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>1. Enable</td>
+        <td class="desc">Tool → Polypaint → Colorize (toggle on)</td>
+        <td class="desc">Activates vertex color storage on the mesh</td>
+      </tr>
+      <tr>
+        <td>2. Set mode</td>
+        <td><kbd>Rgb</kbd> or <kbd>Mrgb</kbd> on top bar</td>
+        <td class="desc">Rgb = color only, Mrgb = color + material</td>
+      </tr>
+      <tr>
+        <td>3. Set intensity</td>
+        <td><kbd>I</kbd> → drag for RGB intensity</td>
+        <td class="desc">Lower intensity for subtle color blending</td>
+      </tr>
+      <tr>
+        <td>4. Paint</td>
+        <td class="desc">Use Standard or Color spray brush on the surface</td>
+        <td class="desc">Z Intensity should be 0 if you only want to paint color</td>
+      </tr>
+      <tr>
+        <td>5. Fill object</td>
+        <td class="desc">Tool → Polypaint → Fill Object</td>
+        <td class="desc">Floods the entire mesh with the active color</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sep"></div>
+
+  <h3>Intensity Controls</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><span class="icon">R</span>RGB Intensity</div>
+      <p class="desc">Controls how strongly color is applied per brush stroke. Press <kbd>I</kbd> and drag. Low values (5–20) allow gradual color blending like real paint.</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">Z</span>Z Intensity</div>
+      <p class="desc">Controls sculpt depth. When polypainting, set Z Intensity to 0 so strokes do not push/pull the surface — only apply color.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <h3>UV Unwrap &amp; Texture Baking</h3>
+  <table class="shortcut-table">
+    <thead><tr><th>Task</th><th>Tool / Location</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>UV unwrap</td>
+        <td class="desc">ZPlugin → UV Master → Unwrap. Enable Polygroups option for seam control.</td>
+      </tr>
+      <tr>
+        <td>Check UVs</td>
+        <td class="desc">Tool → UV Map → Morph UV to flatten and inspect UV layout</td>
+      </tr>
+      <tr>
+        <td>Bake all maps</td>
+        <td class="desc">ZPlugin → Multi Map Exporter → select map types → Export All Maps</td>
+      </tr>
+      <tr>
+        <td>Map types available</td>
+        <td class="desc">Color / Diffuse, Normal, Displacement, Ambient Occlusion, Cavity</td>
+      </tr>
+      <tr>
+        <td>Texture resolution</td>
+        <td class="desc">Set in Multi Map Exporter — common values: 2048, 4096, 8192</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-inline">
+    <strong>Workflow note:</strong> Always run UV Master <em>before</em> exporting textures. ZBrush cannot bake texture maps without valid UVs on the mesh.
+  </div>
+</div>
+
+<!-- TAB 7: WORKFLOW -->
+<div id="tab-workflow" class="tab-content">
+  <h2>Concept to Export Workflow</h2>
+
+  <p class="desc" style="margin-bottom:24px;">A standard ZBrush production workflow — from first DynaMesh block-out through to exporting maps for a game engine or rendering application.</p>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Block Out Primary Forms with DynaMesh</strong>
+        <span>Start from a DynaMesh sphere (Tool → DynaMesh, enable). Sculpt large shapes using ClayBuildup and Move brushes. Do not worry about topology yet. Remesh frequently with <kbd>Ctrl</kbd> + drag on empty canvas to keep polygon distribution even. Adjust resolution as forms get more complex.</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Retopologize with ZRemesher</strong>
+        <span>Once primary forms are solid, run Tool → Geometry → ZRemesher to generate clean quad topology. Set target polygon count appropriate for your level of detail (e.g. 5K–20K for a character base). Use ZRemesherGuide brush to hint edge flow around eyes, mouth, and limbs if needed.</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Subdivide and Sculpt Secondary &amp; Tertiary Detail</strong>
+        <span>Subdivide with <kbd>Ctrl</kbd> + <kbd>D</kbd> up to the level needed (typically 4–6 for detailed character work). Navigate levels with <kbd>D</kbd> and <kbd>Shift</kbd> + <kbd>D</kbd>. Add secondary forms, muscle structure, skin folds. Use Dam_Standard for creases and Slash3 for fine surface lines. Use TrimDynamic and hPolish for clean planar surfaces.</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Polypaint Surface Color &amp; Details</strong>
+        <span>Enable Tool → Polypaint → Colorize. Switch the top bar to <kbd>Rgb</kbd> mode and set Z Intensity to 0. Paint color gradients, skin tones, or material zones using the Standard brush at low RGB intensity. Use Fill Object for base color floods. Use Spray stroke for texture variation.</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>UV Unwrap with UV Master</strong>
+        <span>Run ZPlugin → UV Master → Unwrap to generate automatic UVs. Enable Polygroups to use your existing polygroup seams. Check the result with Tool → UV Map → Morph UV. Re-unwrap if needed with Protect and Attract painting to guide seam placement.</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <strong>Bake Maps with Multi Map Exporter</strong>
+        <span>Open ZPlugin → Multi Map Exporter. Select Color, Normal, Displacement, and AO maps. Set resolution (4096 recommended). Click Export All Maps. Normal and displacement maps capture the high-poly detail and apply it to the low-poly base mesh in your target application.</span>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <strong>Export Base Mesh as OBJ or via GoZ</strong>
+        <span>Go to the lowest subdivision level (<kbd>Shift</kbd> + <kbd>D</kbd> repeatedly). Export as OBJ: Tool → Export → OBJ. Alternatively, use Tool → GoZ to send directly to Blender, Maya, or Cinema 4D. Import the OBJ and baked maps into your renderer or game engine, apply the normal/displacement maps to recover detail.</span>
+      </div>
+    </li>
+  </ol>
+
+  <div class="sep"></div>
+
+  <h3>Quick Pipeline Summary</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title"><span class="icon">1</span>Blocking</div>
+      <p class="desc">DynaMesh sphere → ClayBuildup + Move → Ctrl+drag to remesh</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">2</span>Retopo</div>
+      <p class="desc">ZRemesher → clean quads → ready for subdivision</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">3</span>Detail</div>
+      <p class="desc">Ctrl+D subdivide → Dam_Standard, TrimDynamic, Slash3</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">4</span>Paint</div>
+      <p class="desc">Polypaint → UV Master → Multi Map Exporter</p>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">5</span>Export</div>
+      <p class="desc">OBJ (low subdiv) + baked maps → Blender / game engine</p>
+    </div>
+  </div>
+
+  <div class="note-inline">
+    <strong>Remember:</strong> ZBrush is a non-destructive, multi-resolution sculpting app. You can always go back to a lower subdivision level to adjust forms without losing high-poly detail. Plan your subdivision workflow before starting detail work.
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId, btn) {
+    var contents = document.querySelectorAll('.tab-content');
+    var buttons = document.querySelectorAll('.tab-btn');
+    for (var i = 0; i < contents.length; i++) {
+      contents[i].classList.remove('active');
+    }
+    for (var j = 0; j < buttons.length; j++) {
+      buttons[j].classList.remove('active');
+    }
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
