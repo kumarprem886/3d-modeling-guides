@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sculptris — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+  a { color: #60c8a0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #e6edf3; font-size: 14px; margin: 18px 20px; transition: background 0.2s; }
+  .back-link:hover { background: #1f2937; text-decoration: none; }
+
+  .header { background: #1a4a3a; padding: 36px 40px 28px; border-bottom: 3px solid #2a7a5a; }
+  .header h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+  .header p { color: #90d8b8; font-size: 16px; margin-top: 6px; }
+
+  .tabs-wrapper { max-width: 1100px; margin: 30px auto; padding: 0 20px 60px; }
+  .tab-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab-btn { padding: 9px 16px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #8b949e; font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .tab-btn:hover { background: #1f2937; color: #e6edf3; }
+  .tab-btn.active { background: #1a4a3a; border-color: #2a7a5a; color: #fff; }
+
+  .tab-panel { display: none; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 28px; animation: fadeIn 0.2s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .panel-title { font-size: 20px; font-weight: 700; color: #e6edf3; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #30363d; }
+
+  .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .shortcut-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; }
+  .key { font-family: 'Courier New', monospace; background: #1a4a3a; color: #60c8a0; padding: 3px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; flex-shrink: 0; border: 1px solid #2a7a5a; }
+  .key-desc { font-size: 13px; color: #8b949e; line-height: 1.4; }
+
+  .info-block { margin-bottom: 20px; }
+  .info-block h3 { font-size: 15px; font-weight: 600; color: #60c8a0; margin-bottom: 10px; }
+  .info-block h3::before { content: '▸'; margin-right: 8px; color: #2a7a5a; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .info-list li { padding: 10px 14px; background: #0d1117; border: 1px solid #30363d; border-left: 3px solid #1a4a3a; border-radius: 0 6px 6px 0; font-size: 13px; color: #c9d1d9; line-height: 1.5; }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; padding: 14px 16px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; }
+  .step-num { width: 28px; height: 28px; background: #1a4a3a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .step-text { font-size: 13px; color: #c9d1d9; line-height: 1.6; }
+
+  .callout { background: #1a4a3a22; border: 1px solid #2a7a5a; border-radius: 8px; padding: 14px 18px; margin-bottom: 18px; font-size: 13px; color: #60c8a0; }
+  .callout strong { color: #90d8b8; }
+
+  .badge { display: inline-block; background: #1a4a3a; color: #60c8a0; border: 1px solid #2a7a5a; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600; margin-left: 8px; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Back to Hub</a>
+
+<div class="header">
+  <h1>Sculptris — Complete Guide <span class="badge">FREE</span></h1>
+  <p>Free Beginner Sculpting — The Gateway to ZBrush</p>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('nav')">Navigation &amp; Interface</button>
+    <button class="tab-btn" onclick="showTab('tools')">Sculpting Tools</button>
+    <button class="tab-btn" onclick="showTab('tess')">Dynamic Tessellation</button>
+    <button class="tab-btn" onclick="showTab('materials')">Materials &amp; Render</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">Shortcuts &amp; Tips</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1 -->
+  <div class="tab-panel active" id="tab-nav">
+    <div class="panel-title">Navigation &amp; Interface</div>
+
+    <div class="callout"><strong>Sculptris is free</strong> from Pixologic (the ZBrush makers). It's an ideal gateway into sculpting — extremely beginner-friendly with no resolution management needed. Download from pixologic.com.</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Alt+LMB drag</span><span class="key-desc">Rotate the view around the model</span></div>
+      <div class="shortcut-item"><span class="key">Alt+MMB drag</span><span class="key-desc">Pan the view (move camera)</span></div>
+      <div class="shortcut-item"><span class="key">Scroll wheel</span><span class="key-desc">Zoom in and out</span></div>
+      <div class="shortcut-item"><span class="key">F</span><span class="key-desc">Frame / fit model centred in view</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Interface Layout</h3>
+      <ul class="info-list">
+        <li><strong>Toolbar (left)</strong> — sculpting tool buttons: Draw, Smooth, Grab, Pinch, Flatten, Inflate, Crease</li>
+        <li><strong>Brush settings (right)</strong> — Size slider, Strength slider, DynaTess toggle, Detail level</li>
+        <li><strong>Undo history (bottom)</strong> — visual stack of recent operations</li>
+        <li>Start sculpting in under 1 minute — just open Sculptris and a sphere is ready to go</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div class="tab-panel" id="tab-tools">
+    <div class="panel-title">Sculpting Tools</div>
+
+    <div class="info-block">
+      <h3>Core Brushes</h3>
+      <ul class="info-list">
+        <li><strong>Draw</strong> (default) — Push the mesh surface outward. The primary building brush for adding volume.</li>
+        <li><strong>Smooth</strong> — Flatten and even out surface irregularities. Also activate by holding <strong>Shift</strong> while using any other brush.</li>
+        <li><strong>Grab</strong> — Click and drag to pull large areas of mesh. Great for establishing major forms quickly.</li>
+        <li><strong>Pinch</strong> — Pull surface edges tighter. Creates sharp ridges and fine definition.</li>
+        <li><strong>Flatten</strong> — Press the surface down to align with the local average plane.</li>
+        <li><strong>Inflate</strong> — Push mesh outward uniformly in all directions, like inflating a balloon. Good for puffing up lips, cheeks.</li>
+        <li><strong>Crease</strong> — Create sharp indented lines. Perfect for nostrils, ear lines, eyelids, wrinkles.</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Brush Controls</h3>
+      <ul class="info-list">
+        <li><strong>Brush size</strong> — Right slider in the toolbar, or scroll the mouse wheel (if not zooming)</li>
+        <li><strong>Brush strength</strong> — Left slider in the toolbar</li>
+        <li><strong>Invert brush</strong> — Hold <strong>Alt</strong> while painting to push inward instead of outward (works on all brushes)</li>
+        <li><strong>Smooth while sculpting</strong> — Hold <strong>Shift</strong> to temporarily switch to Smooth brush on any tool</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 3 -->
+  <div class="tab-panel" id="tab-tess">
+    <div class="panel-title">Dynamic Tessellation — The Key Feature</div>
+
+    <div class="callout"><strong>Dynamic Tessellation (DynaTess)</strong> is Sculptris's defining feature. Unlike traditional sculpting apps, you never manually subdivide — the mesh automatically gets more triangles exactly where you paint, and fewer where you don't.</div>
+
+    <div class="info-block">
+      <h3>How DynaTess Works</h3>
+      <ul class="info-list">
+        <li>Sculptris adds new triangles automatically under your brush as you paint in fine detail</li>
+        <li>Areas you haven't touched stay low-poly — efficient memory usage</li>
+        <li>No need to manage subdivision levels, layers, or LODs</li>
+        <li><strong>Enable/disable</strong> — checkbox labelled "DynaTess" in the brush settings panel (on by default)</li>
+        <li><strong>Detail slider</strong> — Controls how fine the tessellation gets. Higher = more triangles = smoother curves = slower performance</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Managing Mesh Resolution</h3>
+      <ul class="info-list">
+        <li><strong>Reduce mesh</strong> — Filter → Reduce Selected (decrease poly count when sculpting is done, for export)</li>
+        <li><strong>Import mesh</strong> — File → Import Mesh (OBJ format only)</li>
+        <li><strong>Export mesh</strong> — File → Export (OBJ format only)</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>ZBrush Pipeline</h3>
+      <ul class="info-list">
+        <li>Block in major forms in Sculptris (fast and intuitive)</li>
+        <li>File → Export as OBJ when rough form is ready</li>
+        <li>Import OBJ into ZBrush → subdivide → add production-level microdetail (pores, wrinkles, fabric)</li>
+        <li>This is the classic beginner-to-pro pipeline used by many artists</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 4 -->
+  <div class="tab-panel" id="tab-materials">
+    <div class="panel-title">Materials &amp; Render</div>
+
+    <div class="info-block">
+      <h3>Matcap Materials</h3>
+      <ul class="info-list">
+        <li><strong>Material preview sphere</strong> — Right panel. Click it to cycle through built-in Matcap lighting presets.</li>
+        <li>Matcaps (Material Capture) simulate full studio lighting in a single texture — great for checking form.</li>
+        <li><strong>Custom Matcap</strong> — Drag any image file onto the material sphere to use it as a custom matcap.</li>
+        <li>Download free Matcaps from ZBrush Central or Pixologic's resource library.</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Scene &amp; Rendering</h3>
+      <ul class="info-list">
+        <li><strong>Background color</strong> — Change in Scene settings panel</li>
+        <li><strong>No dedicated render output</strong> — Sculptris has no renderer. Use OS screenshot (Win+Shift+S) to capture viewport.</li>
+        <li><strong>For proper rendering</strong> — File → Export OBJ → import into Blender → apply materials and render with Cycles or EEVEE</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 5 -->
+  <div class="tab-panel" id="tab-shortcuts">
+    <div class="panel-title">Shortcuts &amp; Tips</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Ctrl+Z</span><span class="key-desc">Undo (many levels supported)</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+Shift+Z</span><span class="key-desc">Redo</span></div>
+      <div class="shortcut-item"><span class="key">F</span><span class="key-desc">Frame model centred in view</span></div>
+      <div class="shortcut-item"><span class="key">[</span><span class="key-desc">Decrease brush size</span></div>
+      <div class="shortcut-item"><span class="key">]</span><span class="key-desc">Increase brush size</span></div>
+      <div class="shortcut-item"><span class="key">Shift+drag</span><span class="key-desc">Smooth while using any sculpt tool</span></div>
+      <div class="shortcut-item"><span class="key">Alt+drag</span><span class="key-desc">Invert brush direction (push vs pull)</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+Shift+drag</span><span class="key-desc">Rotate the symmetry plane</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Symmetry</h3>
+      <ul class="info-list">
+        <li>Enable radial X symmetry via the <strong>Symmetry checkbox</strong> in the toolbar</li>
+        <li>Sculpt one side of a face or character, the other side mirrors automatically</li>
+        <li>Rotate symmetry plane with Ctrl+Shift+drag if your model is off-axis</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>File Operations</h3>
+      <ul class="info-list">
+        <li><strong>File → New</strong> — Start fresh with a new default sphere</li>
+        <li><strong>File → Import Mesh</strong> — OBJ format only. Import any existing mesh to continue sculpting.</li>
+        <li><strong>File → Export</strong> — OBJ format only. Always export as OBJ for use in other apps.</li>
+        <li><strong>Important:</strong> Sculptris only supports OBJ. No FBX, no STL, no GLTF. Export OBJ and convert in Blender if needed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 6 -->
+  <div class="tab-panel" id="tab-workflow">
+    <div class="panel-title">Workflow — Beginner's First Sculpt</div>
+
+    <div class="callout">This workflow walks through sculpting a basic head/face from scratch in Sculptris, then exporting for use in other software.</div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Open Sculptris</strong> — A sphere appears automatically. This is your starting point. Every sculpt begins from a primitive shape.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Enable Symmetry</strong> — Check the X axis symmetry checkbox in the toolbar. This mirrors every brushstroke so both sides of the face are sculpted simultaneously.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Block major forms with Grab</strong> — Use Grab tool with a large brush to pull out: nose area, eye socket indentations, chin. Establish proportions before adding any detail.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Build volume with Draw</strong> — Switch to Draw tool to build up: cheeks, brow ridge, lips, forehead. Hold Alt to push inward for concave areas like eye sockets.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Define edges with Crease</strong> — Use Crease tool for sharp definition: nostril edges, ear canal, eyelid crease, lip line, philtrum groove. Reduce brush size significantly for this step.</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Smooth and refine</strong> — Hold Shift to smooth out any lumpy areas. Then go back with a smaller Draw or Pinch brush for refined surface detail. Iterate smooth → refine → smooth.</div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-text"><strong>Export and continue</strong> — File → Export as OBJ. Import into ZBrush for production-level microdetail and texturing, or import into Blender for rigging, rendering, or 3D printing prep.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

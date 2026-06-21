@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adobe Substance 3D Painter — Complete Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; }
+  .nav { position: sticky; top: 0; z-index: 100; background: #3a1a4a; padding: 12px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .back-link { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; white-space: nowrap; }
+  .back-link:hover { opacity: 1; text-decoration: underline; }
+  .nav-title { color: #fff; font-size: 18px; font-weight: 700; }
+  .nav-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .progress-bar { background: #1a1d26; padding: 10px 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #888; border-bottom: 1px solid #2a2d36; }
+  .progress-track { flex: 1; height: 6px; background: #2a2d36; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 78%; background: linear-gradient(90deg, #3a1a4a, #7ec8e3); border-radius: 3px; }
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 12px 20px; background: #13161f; border-bottom: 1px solid #2a2d36; }
+  .tab-btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; background: #1e2130; color: #aaa; transition: all 0.2s; }
+  .tab-btn:hover { background: #252840; color: #fff; }
+  .tab-btn.active { background: #3a1a4a; color: #fff; font-weight: 600; }
+  .content { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 4px; background: #1a1d26; }
+  .shortcut-row:nth-child(even) { background: #1e2130; }
+  .shortcut-desc { font-size: 14px; color: #c0c0c0; flex: 1; }
+  .shortcut-key { margin-left: 16px; flex-shrink: 0; }
+  kbd { background: #2a2d3e; border: 1px solid #444; border-bottom: 3px solid #333; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #e0e0e0; white-space: nowrap; }
+  .muted { font-size: 12px; color: #666; font-style: italic; }
+  .tip-box { background: #1a2a1a; border-left: 4px solid #4caf50; border-radius: 4px; padding: 12px 16px; margin: 16px 0; font-size: 14px; color: #b8e6b8; }
+  .tip-box.blue { background: #1a1f3a; border-color: #4a7fd4; color: #b0c8f0; }
+  .tip-box.orange { background: #2a1f0a; border-color: #f0a030; color: #f0d090; }
+  .tip-box.purple { background: #1f1a2a; border-color: #9c6fd4; color: #d0b8f0; }
+  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .step-num { background: #3a1a4a; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .step-text { font-size: 14px; color: #c0c0c0; line-height: 1.6; padding-top: 5px; }
+  h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 24px 0 12px; }
+  h3 { font-size: 15px; font-weight: 600; color: #ddd; margin: 16px 0 8px; }
+  @media (max-width: 600px) {
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .shortcut-key { margin-left: 0; }
+    .nav-subtitle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="back-link">&#8592; Back to Hub</a>
+  <div>
+    <div class="nav-title">Adobe Substance 3D Painter — Complete Guide</div>
+    <div class="nav-subtitle">Industry Standard PBR Texture Painting</div>
+  </div>
+</nav>
+
+<div class="progress-bar">
+  <span>Beginner</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>Expert</span>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab(this,'tab-nav')">Navigation</button>
+  <button class="tab-btn" onclick="showTab(this,'tab-layers')">Layer Stack</button>
+  <button class="tab-btn" onclick="showTab(this,'tab-painting')">Painting Tools</button>
+  <button class="tab-btn" onclick="showTab(this,'tab-baking')">Baking</button>
+  <button class="tab-btn" onclick="showTab(this,'tab-shortcuts')">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab(this,'tab-export')">Export &amp; Integration</button>
+  <button class="tab-btn" onclick="showTab(this,'tab-workflow')">Workflow</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation -->
+  <div id="tab-nav" class="tab-panel active">
+    <h2>Viewport Navigation</h2>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>RMB</kbd> or <kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit view</span><span class="shortcut-key"><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Frame UV view</span><span class="shortcut-key"><kbd>Shift</kbd>+<kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle 3D / UV viewport</span><span class="shortcut-key"><kbd>Tab</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Add new layer</span><span class="shortcut-key"><kbd>Shift</kbd>+<kbd>A</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Duplicate layer</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>D</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Group layers</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>G</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Select by material</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>click</kbd></span></div>
+    <div class="tip-box blue">Use <kbd>Tab</kbd> to quickly toggle between the 3D viewport and the UV view — essential for checking seam placement and texel density.</div>
+  </div>
+
+  <!-- TAB 2: Layer Stack -->
+  <div id="tab-layers" class="tab-panel">
+    <h2>Layer Stack — Core Concept</h2>
+    <div class="shortcut-row"><span class="shortcut-desc">Fill Layer — flat solid material across entire mesh</span><span class="shortcut-key"><span class="muted">(layer type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Paint Layer — hand-painted strokes on mesh</span><span class="shortcut-key"><span class="muted">(layer type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Smart Material — pre-built complex material</span><span class="shortcut-key"><span class="muted">(layer type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Mask (black) — hide layer</span><span class="shortcut-key"><span class="muted">(mask)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Mask (white) — show layer</span><span class="shortcut-key"><span class="muted">(mask)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Smart Mask — procedural mask from curvature / AO / position</span><span class="shortcut-key"><span class="muted">(mask type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Generator — drives masks from mesh data (edge wear, dirt)</span><span class="shortcut-key"><span class="muted">(effect)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Anchor Points — reference a layer from another layer</span><span class="shortcut-key"><span class="muted">(effect)</span></span></div>
+    <div class="tip-box">Layer stack renders bottom-up, just like Photoshop. Smart Masks are the key to realistic procedural wear without hand-painting every surface.</div>
+    <div class="tip-box purple">Anchor Points let you drive a mask or effect from any other layer's output — powerful for creating linked, interdependent material effects.</div>
+  </div>
+
+  <!-- TAB 3: Painting Tools -->
+  <div id="tab-painting" class="tab-panel">
+    <h2>Painting Tools &amp; Channels</h2>
+    <div class="shortcut-row"><span class="shortcut-desc">Paint Brush (Shift = straight line)</span><span class="shortcut-key"><kbd>B</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Erase painted strokes</span><span class="shortcut-key"><kbd>E</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Flood-fill selected area / material ID</span><span class="shortcut-key"><span class="muted">Fill Bucket</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fill by UV island or polygon</span><span class="shortcut-key"><kbd>G</kbd> <span class="muted">(Polygon Fill)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Smear — blend / push paint</span><span class="shortcut-key"><span class="muted">(tool)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Blur — soften painted areas</span><span class="shortcut-key"><span class="muted">(tool)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Clone — clone from one area to another</span><span class="shortcut-key"><span class="muted">(tool)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Enable / disable painting per channel</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>click</kbd> <span class="muted">channel icon</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Opacity</span><span class="shortcut-key"><kbd>O</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Flow (fade brush transparency)</span><span class="shortcut-key"><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Brush Size</span><span class="shortcut-key"><kbd>[</kbd> / <kbd>]</kbd></span></div>
+    <div class="tip-box orange">You can paint Base Color, Roughness, Metallic, Height, Normal, and Emissive channels independently. Toggle which channels receive paint at the top of the viewport.</div>
+    <div class="tip-box blue">Use Polygon Fill with material IDs to instantly isolate material zones on a complex mesh — a huge time saver over hand-masking.</div>
+  </div>
+
+  <!-- TAB 4: Baking -->
+  <div id="tab-baking" class="tab-panel">
+    <h2>Baking — Critical First Step</h2>
+    <div class="shortcut-row"><span class="shortcut-desc">Open bake dialog</span><span class="shortcut-key"><kbd>Texture Set Settings → Bake Mesh Maps</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Normal (from high poly) — bake surface detail</span><span class="shortcut-key"><span class="muted">(map type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">AO — ambient occlusion map</span><span class="shortcut-key"><span class="muted">(map type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Curvature — edge highlight / cavity map</span><span class="shortcut-key"><span class="muted">(map type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Position — world-space gradient map</span><span class="shortcut-key"><span class="muted">(map type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Thickness — subsurface thickness map</span><span class="shortcut-key"><span class="muted">(map type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">World Space Normal — for advanced effects</span><span class="shortcut-key"><span class="muted">(map type)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Production bake resolution</span><span class="shortcut-key"><kbd>4096</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Draft bake resolution</span><span class="shortcut-key"><kbd>2048</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Auto-match high / low by mesh name</span><span class="shortcut-key"><span class="muted">suffix _high and _low</span></span></div>
+    <div class="tip-box orange">Baking MUST be done before painting if you plan to use Generators or Smart Masks — they rely entirely on baked mesh map data to drive their effects.</div>
+    <div class="tip-box blue">Set your High Definition Meshes in the bake dialog. Use the "Match by Mesh Name" option with <kbd>_high</kbd> / <kbd>_low</kbd> suffixes for clean automatic pairing of high and low poly.</div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div id="tab-shortcuts" class="tab-panel">
+    <h2>Complete Keyboard Reference</h2>
+    <h3>General</h3>
+    <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Z</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>S</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Export Textures</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></span></div>
+    <h3>Painting</h3>
+    <div class="shortcut-row"><span class="shortcut-desc">Paint Brush</span><span class="shortcut-key"><kbd>B</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Erase</span><span class="shortcut-key"><kbd>E</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fill</span><span class="shortcut-key"><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Polygon Fill</span><span class="shortcut-key"><kbd>G</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Brush Size</span><span class="shortcut-key"><kbd>[</kbd> / <kbd>]</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Brush Rotation</span><span class="shortcut-key"><kbd>Shift</kbd>+<kbd>RMB</kbd> drag</span></div>
+    <h3>Layers</h3>
+    <div class="shortcut-row"><span class="shortcut-desc">Duplicate Layer</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>D</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Delete Selected Layer</span><span class="shortcut-key"><kbd>Delete</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Solo / Isolate Layer</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>click</kbd> layer</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Create Layer Group</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>G</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">View Mask in Grayscale</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>click</kbd> mask</span></div>
+    <h3>Viewport</h3>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><span class="shortcut-key"><kbd>Alt</kbd>+<kbd>RMB</kbd> / <kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan (alternate)</span><span class="shortcut-key"><kbd>Space</kbd>+drag</span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle 3D / UV</span><span class="shortcut-key"><kbd>Tab</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Frame UV</span><span class="shortcut-key"><kbd>Shift</kbd>+<kbd>F</kbd></span></div>
+  </div>
+
+  <!-- TAB 6: Export & Integration -->
+  <div id="tab-export" class="tab-panel">
+    <h2>Export &amp; Engine Integration</h2>
+    <div class="shortcut-row"><span class="shortcut-desc">Export Textures dialog</span><span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Unreal Engine 4/5 preset — auto-packs channels correctly</span><span class="shortcut-key"><span class="muted">(export preset)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Unity preset — auto-packs channels correctly</span><span class="shortcut-key"><span class="muted">(export preset)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Arnold / V-Ray / Blender presets</span><span class="shortcut-key"><span class="muted">(export preset)</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">BaseColor export format</span><span class="shortcut-key"><span class="muted">sRGB PNG</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Normal map export format</span><span class="shortcut-key"><span class="muted">Linear PNG</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">ORM channel pack</span><span class="shortcut-key"><span class="muted">Occlusion + Roughness + Metallic → R, G, B</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Preview in Marmoset Toolbag</span><span class="shortcut-key"><kbd>File → Send to Marmoset Toolbag</kbd></span></div>
+    <div class="tip-box blue">Use UE4 ORM packing to save texture slots — Occlusion, Roughness, and Metallic are packed into one texture's RGB channels, halving your texture count.</div>
+    <div class="tip-box">Drag any completed texture set to the Shelf to reuse it as a Smart Material on future projects — builds up a personal material library over time.</div>
+  </div>
+
+  <!-- TAB 7: Workflow -->
+  <div id="tab-workflow" class="tab-panel">
+    <h2>Texturing a Game Asset — Full Pipeline</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">UV unwrap in Blender or Maya — non-overlapping islands, consistent texel density across the mesh</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Export as OBJ or FBX; import into Substance Painter via <strong>File → New → load mesh</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Bake all mesh maps (Normal, AO, Curvature, Position) at 4K resolution before any painting begins</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Build base fill layers for each material zone — metal, fabric, plastic, glass — one fill layer per zone</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">Add Smart Materials or Generators for procedural wear: edge damage, dirt accumulation, surface scratches</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">Paint unique hand-crafted details on Paint layers — decals, text markings, scuffs, stains, unique wear patterns</div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-text">Export with the correct preset for your render target: Unreal Engine, Unity, or Blender/Cycles</div>
+    </div>
+    <div class="tip-box orange">Work material zone by material zone — finish one material completely before moving to the next. This keeps the layer stack readable and manageable on complex assets.</div>
+  </div>
+
+</div><!-- /content -->
+
+<script>
+function showTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>

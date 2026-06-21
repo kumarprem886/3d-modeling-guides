@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adobe Substance 3D Designer — Complete Guide</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; }
+.nav { position: sticky; top: 0; z-index: 100; background: #1a3a4a; padding: 12px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.back-link { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; white-space: nowrap; }
+.back-link:hover { opacity: 1; text-decoration: underline; }
+.nav-title { color: #fff; font-size: 18px; font-weight: 700; }
+.nav-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; }
+.progress-bar { background: #1a1d26; padding: 10px 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #888; border-bottom: 1px solid #2a2d36; }
+.progress-track { flex: 1; height: 6px; background: #2a2d36; border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #1a3a4a, #7ec8e3); border-radius: 3px; }
+.tab-nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 12px 20px; background: #13161f; border-bottom: 1px solid #2a2d36; }
+.tab-btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; background: #1e2130; color: #aaa; transition: all 0.2s; }
+.tab-btn:hover { background: #252840; color: #fff; }
+.tab-btn.active { background: #1a3a4a; color: #fff; font-weight: 600; }
+.content { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 4px; background: #1a1d26; }
+.shortcut-row:nth-child(even) { background: #1e2130; }
+.shortcut-desc { font-size: 14px; color: #c0c0c0; flex: 1; }
+.shortcut-key { margin-left: 16px; flex-shrink: 0; }
+kbd { background: #2a2d3e; border: 1px solid #444; border-bottom: 3px solid #333; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #e0e0e0; white-space: nowrap; }
+.tip-box { background: #1a2a1a; border-left: 4px solid #4caf50; border-radius: 4px; padding: 12px 16px; margin: 16px 0; font-size: 14px; color: #b8e6b8; }
+.tip-box.blue { background: #1a1f3a; border-color: #4a7fd4; color: #b0c8f0; }
+.tip-box.orange { background: #2a1f0a; border-color: #f0a030; color: #f0d090; }
+.tip-box.purple { background: #1f1a2a; border-color: #9c6fd4; color: #d0b8f0; }
+.step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+.step-num { background: #1a3a4a; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.step-text { font-size: 14px; color: #c0c0c0; line-height: 1.6; padding-top: 5px; }
+h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 24px 0 12px; }
+h3 { font-size: 15px; font-weight: 600; color: #ddd; margin: 16px 0 8px; }
+@media (max-width: 600px) {
+  .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .shortcut-key { margin-left: 0; }
+  .nav-subtitle { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="back-link">← Back</a>
+  <div>
+    <div class="nav-title">Adobe Substance 3D Designer — Complete Guide</div>
+    <div class="nav-subtitle">Node-Based Procedural Texture &amp; Material Creation</div>
+  </div>
+</nav>
+
+<div class="progress-bar">
+  <span>Progress</span>
+  <div class="progress-track"><div class="progress-fill" style="width:65%"></div></div>
+  <span>65%</span>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('tab1', this)">Introduction</button>
+  <button class="tab-btn" onclick="showTab('tab2', this)">Node Graph Basics</button>
+  <button class="tab-btn" onclick="showTab('tab3', this)">Key Nodes</button>
+  <button class="tab-btn" onclick="showTab('tab4', this)">Procedural Workflow</button>
+  <button class="tab-btn" onclick="showTab('tab5', this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('tab6', this)">Workflow</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Introduction -->
+  <div class="tab-panel active" id="tab1">
+    <h2>Introduction</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Designer creates MATERIALS → tileable, infinite-resolution, fully procedural</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Core Concept</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Painter APPLIES materials → to a specific 3D mesh</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Comparison</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Designer output: .sbsar file → usable in Painter, Blender, Unreal, Unity</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Output Format</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Node graph → change any input, texture updates live</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Workflow</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Uses → create rock, wood, metal, fabric, skin from scratch</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Use Cases</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Industry standard → AAA games, VFX, arch-viz</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Industry</span>
+    </div>
+    <div class="tip-box">Designer and Painter are complementary tools — Designer creates reusable materials, Painter applies them to your specific mesh.</div>
+  </div>
+
+  <!-- TAB 2: Node Graph Basics -->
+  <div class="tab-panel" id="tab2">
+    <h2>Node Graph Basics</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add node (search dialog)</span>
+      <span class="shortcut-key"><kbd>Space</kbd> / <kbd>Tab</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Context menu in graph</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">RMB</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Connect nodes</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Drag output circle to input circle</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Break connection</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Alt+click connector</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Frame selected nodes</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">2D texture preview</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">2D View</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">3D material preview</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">3D View</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Undo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Redo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Y</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Parameters for selected node</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Left panel</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Preview node in 2D view</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">Click output circle</span>
+    </div>
+    <div class="tip-box blue">Common flow: Uniform Color → Blend → Levels → Normal → Output node</div>
+  </div>
+
+  <!-- TAB 3: Key Nodes -->
+  <div class="tab-panel" id="tab3">
+    <h2>Key Nodes</h2>
+
+    <h3>Generators</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Noise</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">base grayscale noise patterns</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Tile Generator</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">repeating tile patterns</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Gradient</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">linear/radial gradients</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Waveform</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">sine/square wave patterns</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Splatter</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">scattered shape distribution</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Polygon</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">geometric polygon shapes</span>
+    </div>
+
+    <h3>Filters</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Blur</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">soften/blur texture</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Sharpen</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">increase edge contrast</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Levels</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">remap value ranges</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Histogram Scan</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">precise value range control</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Warp</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">distort with another texture</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Slope Blur</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">blur along slope direction</span>
+    </div>
+
+    <h3>Blending &amp; Transform</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Blend</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">combine two inputs (multiply, add, overlay, etc.)</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Transform 2D</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">move/rotate/tile a texture</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Tile Sampler</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">place instances across UV space</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Pattern</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">create repeated geometric patterns</span>
+    </div>
+
+    <h3>Normal &amp; Output</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Normal (from height)</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">convert height to normal map</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Normal Combine</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">merge two normal maps</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">RGBA Merge/Split</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">combine or split color channels</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc" style="color:#7ec8e3;">Output nodes</span>
+      <span class="shortcut-key" style="color:#7ec8e3;font-size:13px;">define what textures export</span>
+    </div>
+  </div>
+
+  <!-- TAB 4: Procedural Workflow -->
+  <div class="tab-panel" id="tab4">
+    <h2>Procedural Workflow</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Start with Generators (noise, cloud, tile) for base shapes</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Blend/mask generators to create varied base pattern</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Use Slope Blur and Warp for natural-looking irregularity</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Histogram Scan to control exact range of values</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">Add detail with Grunge maps from Substance Library (1000s available)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">Create separate height, roughness, and base color graphs (or one unified graph)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-text">Connect to Output nodes and publish as .sbsar</div>
+    </div>
+    <div class="tip-box orange">Substance Library has thousands of grunge/noise maps ready to use as inputs. Build modular graphs — one for base, one for detail.</div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div class="tab-panel" id="tab5">
+    <h2>All Shortcuts</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add node</span>
+      <span class="shortcut-key"><kbd>Space</kbd> / <kbd>Tab</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Delete node</span>
+      <span class="shortcut-key"><kbd>Delete</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Duplicate node</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>D</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Copy node</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>C</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Paste node</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>V</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Frame selected nodes</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Auto-layout graph</span>
+      <span class="shortcut-key"><kbd>L</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">View in 2D</span>
+      <span class="shortcut-key"><kbd>1</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">View in 3D</span>
+      <span class="shortcut-key"><kbd>2</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom in graph</span>
+      <span class="shortcut-key"><kbd>Scroll</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Pan graph</span>
+      <span class="shortcut-key"><kbd>MMB drag</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Open parameters panel</span>
+      <span class="shortcut-key"><kbd>P</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Confirm value</span>
+      <span class="shortcut-key"><kbd>Enter</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Cancel</span>
+      <span class="shortcut-key"><kbd>Escape</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Snap nodes to grid toggle</span>
+      <span class="shortcut-key"><kbd>S</kbd></span>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div class="tab-panel" id="tab6">
+    <h2>Workflow / Create Tileable Material</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">New graph → blank. Add Output nodes for BaseColor, Roughness, Metallic, Normal, Height</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Generate base: add Tile Generator → set pattern (brick, stone, etc.)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Add noise variation: Clouds node → Warp the tile pattern for irregularity</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Histogram Scan to create clean black/white mask for mortar/grout areas</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">Blend colors: Uniform Color for stone + Blend with Grunge for variation</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">Build Roughness: stones = low roughness (smooth), mortar = high roughness</div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-text">Height map drives Normal map: use Normal node from height → connect to Normal output</div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-text">Export Substance Archive (.sbsar) or PNG maps at any resolution</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

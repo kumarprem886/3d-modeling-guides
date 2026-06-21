@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HueForge — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f9f5f8;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: #6a0a4a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    height: 56px;
+    gap: 20px;
+  }
+  nav a.back {
+    color: #e8aad4;
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  nav a.back:hover { color: #fff; }
+  .nav-title-block { flex: 1; }
+  .nav-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .nav-subtitle {
+    font-size: 0.75rem;
+    color: #e8aad4;
+    line-height: 1.2;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 4px;
+    background: #6a0a4a;
+    width: 100%;
+  }
+
+  /* TABS */
+  .tabs-wrapper {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    overflow-x: auto;
+  }
+  .tabs {
+    display: flex;
+    list-style: none;
+    padding: 0 16px;
+    min-width: max-content;
+  }
+  .tabs li button {
+    background: none;
+    border: none;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tabs li button:hover { color: #6a0a4a; }
+  .tabs li button.active {
+    color: #6a0a4a;
+    border-bottom-color: #6a0a4a;
+    font-weight: 700;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION TITLE */
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #6a0a4a;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8aad4;
+  }
+
+  /* SHORTCUT / INFO ROWS */
+  .shortcut-list {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+  .shortcut-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+  }
+  .shortcut-list li:last-child { border-bottom: none; }
+  .shortcut-desc {
+    color: #333;
+    flex: 1;
+  }
+  kbd {
+    display: inline-block;
+    background: #f9f0f6;
+    border: 1px solid #c8a8c0;
+    border-bottom: 2px solid #a880a0;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    color: #3a0028;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* TIP BOXES */
+  .box {
+    border-left: 4px solid;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .box.tip    { border-color: #2e7d32; background: #f1f8f1; color: #1b4a1e; }
+  .box.warn   { border-color: #b8860b; background: #fffbf0; color: #5a4000; }
+  .box.danger { border-color: #c62828; background: #fff5f5; color: #5a1010; }
+  .box.info   { border-color: #1565c0; background: #f0f4ff; color: #0d2b5e; }
+  .box-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .box.tip    .box-label { color: #2e7d32; }
+  .box.warn   .box-label { color: #b8860b; }
+  .box.danger .box-label { color: #c62828; }
+  .box.info   .box-label { color: #1565c0; }
+
+  /* NUMBERED STEPS */
+  ol.steps {
+    padding-left: 0;
+    list-style: none;
+    counter-reset: step-counter;
+    margin-bottom: 24px;
+  }
+  ol.steps li {
+    counter-increment: step-counter;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+  }
+  ol.steps li:last-child { border-bottom: none; }
+  ol.steps li::before {
+    content: counter(step-counter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    background: #6a0a4a;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back" href="index.html">&#8592; Back to Hub</a>
+  <div class="nav-title-block">
+    <div class="nav-title">HueForge — Complete Guide</div>
+    <div class="nav-subtitle">Photo-to-3D Multi-Color Filament Painting</div>
+  </div>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="tabs-wrapper">
+  <ul class="tabs" id="tab-list">
+    <li><button class="active" onclick="switchTab(0)">What is HueForge</button></li>
+    <li><button onclick="switchTab(1)">Interface &amp; Import</button></li>
+    <li><button onclick="switchTab(2)">Filament Library &amp; TD</button></li>
+    <li><button onclick="switchTab(3)">Optimization &amp; Export</button></li>
+    <li><button onclick="switchTab(4)">Slicer Integration</button></li>
+    <li><button onclick="switchTab(5)">Workflow — Photo to Print</button></li>
+  </ul>
+</div>
+
+<div class="content">
+
+  <!-- TAB 0: What is HueForge -->
+  <div class="tab-panel active" id="panel-0">
+    <h2>What is HueForge</h2>
+    <div class="box info"><div class="box-label">Info</div>HueForge converts images and photos into 3D-printable multi-color stacked filament prints.</div>
+    <div class="box info"><div class="box-label">Info</div>Core concept: each filament has a Transmission Distance (TD) value — darker/lower TD = blocks more light.</div>
+    <div class="box info"><div class="box-label">Info</div>HueForge stacks layers of different colored filaments to mix colors optically — like pointillism with plastic.</div>
+    <div class="box info"><div class="box-label">Info</div>Output: STL file + layer-change G-code instructions for your slicer.</div>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Best printer types</span><kbd>Bambu Lab (AMS), Prusa MMU, Palette, single-color with manual swaps</kbd></li>
+      <li><span class="shortcut-desc">Best subject matter</span><kbd>Image plaques, portraits, logos, art prints</kbd></li>
+      <li><span class="shortcut-desc">Result type</span><kbd>Wall art — all from standard FDM filament, no painting needed</kbd></li>
+    </ul>
+  </div>
+
+  <!-- TAB 1: Interface & Image Import -->
+  <div class="tab-panel" id="panel-1">
+    <h2>Interface &amp; Image Import</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Import image</span><kbd>File → Import Image (JPEG, PNG, SVG)</kbd></li>
+      <li><span class="shortcut-desc">Image adjustments</span><kbd>Crop, brightness, contrast, saturation sliders</kbd></li>
+      <li><span class="shortcut-desc">Print width</span><kbd>Set mm width of final print (150–200mm for wall art)</kbd></li>
+      <li><span class="shortcut-desc">Print depth</span><kbd>Total height in mm (typically 2–4mm for plaques)</kbd></li>
+      <li><span class="shortcut-desc">Print resolution</span><kbd>0.4mm minimum detail with 0.4mm nozzle</kbd></li>
+      <li><span class="shortcut-desc">Preview</span><kbd>Real-time colored preview updates as you adjust</kbd></li>
+    </ul>
+    <div class="box tip"><div class="box-label">Tip</div>High-contrast images work best — portraits, logos, and nature scenes with clear light/dark separation.</div>
+    <div class="box warn"><div class="box-label">Warning</div>Check your nozzle size matches the detail resolution — a 0.6mm nozzle cannot reproduce 0.4mm details.</div>
+  </div>
+
+  <!-- TAB 2: Filament Library & TD Values -->
+  <div class="tab-panel" id="panel-2">
+    <h2>Filament Library &amp; TD Values</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Low TD (0–10)</span><kbd>Very opaque (white, grey) — blocks light completely</kbd></li>
+      <li><span class="shortcut-desc">Mid TD (10–40)</span><kbd>Semi-transparent — layers blend colors</kbd></li>
+      <li><span class="shortcut-desc">High TD (40+)</span><kbd>Transparent/translucent — light passes through</kbd></li>
+      <li><span class="shortcut-desc">Add filaments</span><kbd>Filament Manager → Add Filament → set brand, color, TD value</kbd></li>
+      <li><span class="shortcut-desc">Filament packs</span><kbd>Download from HueForge Discord or website</kbd></li>
+      <li><span class="shortcut-desc">Built-in brands</span><kbd>Bambu, Prusament, Polymaker, and others pre-loaded</kbd></li>
+      <li><span class="shortcut-desc">TD calibration</span><kbd>Print TD calibration card → measure → enter value</kbd></li>
+    </ul>
+    <div class="box tip"><div class="box-label">Tip</div>Start with 4–6 filaments maximum — fewer colors = simpler print with less risk of color change issues.</div>
+    <div class="box warn"><div class="box-label">Warning</div>Always calibrate TD for your exact filament batch — TD can vary between colors and even batches of the same brand.</div>
+    <div class="box info"><div class="box-label">Info</div>Community filament packs on HueForge Discord have pre-measured TD values for hundreds of filaments.</div>
+  </div>
+
+  <!-- TAB 3: Optimization & Export -->
+  <div class="tab-panel" id="panel-3">
+    <h2>Optimization &amp; Export</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Filament stack order</span><kbd>HueForge auto-calculates optimal stacking</kbd></li>
+      <li><span class="shortcut-desc">Dithering type</span><kbd>Floyd-Steinberg (detailed) or Ordered (cleaner)</kbd></li>
+      <li><span class="shortcut-desc">Problem areas</span><kbd>Red highlights = poor color match zones</kbd></li>
+      <li><span class="shortcut-desc">Slicer layer height match</span><kbd>0.1 / 0.12 / 0.15 / 0.2mm — must match slicer exactly</kbd></li>
+      <li><span class="shortcut-desc">Export format</span><kbd>STL + color change G-code list, or separate STL per filament</kbd></li>
+    </ul>
+    <div class="box tip"><div class="box-label">Tip</div>Toggle each filament layer on/off in the preview to inspect its coverage before exporting.</div>
+    <div class="box warn"><div class="box-label">Warning</div>The layer height in HueForge and your slicer MUST match exactly — even 0.01mm difference causes color misalignment.</div>
+    <div class="box info"><div class="box-label">Info</div>Reduce number of active filaments and preview result — sometimes 4 filaments looks nearly as good as 8 with less complexity.</div>
+  </div>
+
+  <!-- TAB 4: Slicer Integration -->
+  <div class="tab-panel" id="panel-4">
+    <h2>Slicer Integration</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">PrusaSlicer</span><kbd>Import STL, add filament color changes at layer heights (right-click layer timeline)</kbd></li>
+      <li><span class="shortcut-desc">Bambu Studio</span><kbd>Import STL with AMS filament assignments or color painting mode</kbd></li>
+      <li><span class="shortcut-desc">Cura</span><kbd>Install Filament Change plugin → add pauses at each layer from HueForge list</kbd></li>
+      <li><span class="shortcut-desc">OrcaSlicer</span><kbd>Best Bambu integration, color changes via pause G-code</kbd></li>
+      <li><span class="shortcut-desc">Print speed</span><kbd>50% normal speed for quality on detailed images</kbd></li>
+      <li><span class="shortcut-desc">First layer filament</span><kbd>Use same as bottom of stack (usually darkest)</kbd></li>
+    </ul>
+    <div class="box tip"><div class="box-label">Tip</div>OrcaSlicer or Bambu Studio give the cleanest integration with AMS — use them if you have a Bambu printer.</div>
+    <div class="box warn"><div class="box-label">Warning</div>Double-check every layer change entry before printing — a single wrong layer number shifts all colors above it.</div>
+  </div>
+
+  <!-- TAB 5: Workflow -->
+  <div class="tab-panel" id="panel-5">
+    <h2>Workflow — Photo to Print</h2>
+    <ol class="steps">
+      <li>Choose high-contrast image — portraits, logos, and nature scenes work best.</li>
+      <li>Import to HueForge. Adjust brightness and contrast for best tonal range.</li>
+      <li>Set dimensions: width (150–200mm for wall art), depth (2–3mm standard).</li>
+      <li>Add your filament library. Match TD values by calibrating or using community values.</li>
+      <li>HueForge suggests a filament stack. Enable/disable filaments, preview result live.</li>
+      <li>Export STL + layer change list. Note the exact layer numbers for each color change.</li>
+      <li>Import to slicer. Set exact matching layer height. Add filament pauses at listed layers.</li>
+      <li>Print. Swap filament at each pause and resume. No post-processing needed.</li>
+    </ol>
+    <div class="box tip"><div class="box-label">Tip</div>Print a small test version (50mm wide) before committing to a full-size print — verify color accuracy and layer alignment.</div>
+    <div class="box info"><div class="box-label">Info</div>The wipe tower or purge block in your slicer is essential for clean color transitions — always enable it for HueForge prints.</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(index) {
+    var buttons = document.querySelectorAll('#tab-list button');
+    var panels = document.querySelectorAll('.tab-panel');
+    buttons.forEach(function(btn, i) {
+      btn.classList.toggle('active', i === index);
+    });
+    panels.forEach(function(panel, i) {
+      panel.classList.toggle('active', i === index);
+    });
+  }
+</script>
+</body>
+</html>

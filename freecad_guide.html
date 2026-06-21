@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreeCAD — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+  a.back-link { display: inline-flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 0.85rem; padding: 10px 20px; transition: color 0.2s; }
+  a.back-link:hover { color: #fff; }
+  header { background: #1a3a00; padding: 32px 40px 28px; border-bottom: 3px solid #2a5a00; }
+  header h1 { font-size: 2rem; font-weight: 700; color: #fff; }
+  header p { color: #a8c890; margin-top: 6px; font-size: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab-btn { background: #1e1e1e; border: 1px solid #333; color: #bbb; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-family: inherit; transition: all 0.2s; }
+  .tab-btn:hover { background: #2a2a2a; color: #fff; }
+  .tab-btn.active { background: #1a3a00; border-color: #2a5a00; color: #fff; font-weight: 600; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; color: #9fc87a; margin-bottom: 16px; font-weight: 600; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #222; gap: 16px; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom: 3px solid #555; border-radius: 4px; padding: 3px 8px; font-size: 0.78rem; color: #e0e0e0; font-family: inherit; white-space: nowrap; }
+  .tip-box { border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+  .tip-box.green { background: #0d2a0d; border-left: 4px solid #4a9a4a; color: #a8d8a8; }
+  .tip-box.yellow { background: #2a2200; border-left: 4px solid #a08000; color: #d4c060; }
+  .tip-box.blue { background: #0a1a2a; border-left: 4px solid #2a6aaa; color: #80b8e8; }
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #222; }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before { content: counter(steps); background: #1a3a00; color: #9fc87a; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  code { background: #252525; border: 1px solid #363636; border-radius: 4px; padding: 2px 6px; font-size: 0.82rem; color: #c8e8a8; font-family: 'Consolas', 'Monaco', monospace; }
+  @media (max-width: 600px) { header { padding: 20px; } header h1 { font-size: 1.4rem; } .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; } }
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Hub</a>
+<header>
+  <h1>FreeCAD — Complete Guide</h1>
+  <p>Free &amp; Open-Source Parametric CAD</p>
+</header>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('nav')">Navigation</button>
+    <button class="tab-btn" onclick="showTab('partdesign')">Part Design</button>
+    <button class="tab-btn" onclick="showTab('sketcher')">Sketcher Tools</button>
+    <button class="tab-btn" onclick="showTab('part')">Part Workbench</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1: Navigation -->
+  <div id="tab-nav" class="tab-content active">
+    <div class="card">
+      <h2>Viewport Navigation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate view</span><div class="shortcut-keys"><kbd>MMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>MMB</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><div class="shortcut-keys"><kbd>Scroll wheel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit all objects in view</span><div class="shortcut-keys"><kbd>V</kbd><kbd>F</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit selection in view</span><div class="shortcut-keys"><kbd>V</kbd><kbd>S</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Camera / isometric view</span><div class="shortcut-keys"><kbd>Numpad 0</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate view incrementally</span><div class="shortcut-keys"><kbd>Numpad 2/4/6/8</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle selected object visibility</span><div class="shortcut-keys"><kbd>Space</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Toggle between Orthographic and Perspective projection via <strong>View → Orthographic / Perspective</strong>. Orthographic is better for technical work.</div>
+    <div class="tip-box green">FreeCAD supports multiple navigation styles. Go to <strong>Preferences → Display → Navigation</strong> to switch between Blender, CAD, OpenCascade, and other navigation modes.</div>
+  </div>
+
+  <!-- Tab 2: Part Design -->
+  <div id="tab-partdesign" class="tab-content">
+    <div class="card">
+      <h2>Part Design Workbench — Main Workflow</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Switch workbench</span><div class="shortcut-keys"><kbd>Workbench dropdown</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create Body (required first step)</span><div class="shortcut-keys"><kbd>Part Design → Body</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">New Sketch (select face/plane first)</span><div class="shortcut-keys"><kbd>Part Design → New Sketch</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pad (extrude sketch)</span><div class="shortcut-keys"><kbd>Part Design → Pad</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pocket (cut into solid)</span><div class="shortcut-keys"><kbd>Part Design → Pocket</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolution (revolve sketch)</span><div class="shortcut-keys"><kbd>Part Design → Revolution</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fillet (round edges)</span><div class="shortcut-keys"><kbd>Part Design → Fillet</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Chamfer (angled edges)</span><div class="shortcut-keys"><kbd>Part Design → Chamfer</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Draft angle</span><div class="shortcut-keys"><kbd>Part Design → Draft</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror body about a plane</span><div class="shortcut-keys"><kbd>Part Design → Mirrored</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Repeat features linearly or radially</span><div class="shortcut-keys"><kbd>Linear / Polar Pattern</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hollow out a solid body</span><div class="shortcut-keys"><kbd>Part Design → Thickness</kbd></div></div>
+    </div>
+    <div class="tip-box green">Always create a <strong>Body</strong> before starting any sketch. Part Design is parametric — features build on each other in the model tree.</div>
+    <div class="tip-box yellow">A sketch must be <strong>fully constrained</strong> (all dimensions defined) before padding/pocketing for reliable parametric behavior.</div>
+  </div>
+
+  <!-- Tab 3: Sketcher -->
+  <div id="tab-sketcher" class="tab-content">
+    <div class="card">
+      <h2>Sketcher Drawing Tools</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Line</span><div class="shortcut-keys"><kbd>L</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rectangle</span><div class="shortcut-keys"><kbd>R</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Circle</span><div class="shortcut-keys"><kbd>C</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Arc</span><div class="shortcut-keys"><kbd>A</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Polyline</span><div class="shortcut-keys"><kbd>P</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Trim edge</span><div class="shortcut-keys"><kbd>T</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extend edge</span><div class="shortcut-keys"><kbd>E</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror entity</span><div class="shortcut-keys"><kbd>M</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Sketch Constraints</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Constrain horizontal distance</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>H</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Constrain vertical distance</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>V</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Constrain distance</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>D</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Geometric constraints available</span><div class="shortcut-keys"><kbd>Coincident</kbd><kbd>Equal</kbd><kbd>Tangent</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fix a point (fully constrain position)</span><div class="shortcut-keys"><kbd>Fix constraint</kbd></div></div>
+    </div>
+    <div class="tip-box blue"><strong>Sketch color guide:</strong> Blue = under-constrained (needs more dimensions/constraints). Green = fully constrained (good to go). Red = over-constrained (conflict — remove a constraint).</div>
+  </div>
+
+  <!-- Tab 4: Part Workbench -->
+  <div id="tab-part" class="tab-content">
+    <div class="card">
+      <h2>Part Workbench — Boolean Operations</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Union (add shapes together)</span><div class="shortcut-keys"><kbd>Part → Boolean → Union</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cut (subtract one from another)</span><div class="shortcut-keys"><kbd>Part → Boolean → Cut</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Common (intersection only)</span><div class="shortcut-keys"><kbd>Part → Boolean → Common</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Section (cross-section surface)</span><div class="shortcut-keys"><kbd>Part → Boolean → Section</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Part Primitives &amp; Operations</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Create primitive shapes</span><div class="shortcut-keys"><kbd>Box</kbd><kbd>Cylinder</kbd><kbd>Sphere</kbd><kbd>Cone</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">More primitives</span><div class="shortcut-keys"><kbd>Torus</kbd><kbd>Wedge</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude a sketch/face</span><div class="shortcut-keys"><kbd>Part → Extrude</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolve around axis</span><div class="shortcut-keys"><kbd>Part → Revolve</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sweep profile along path</span><div class="shortcut-keys"><kbd>Part → Sweep</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Loft between profiles</span><div class="shortcut-keys"><kbd>Part → Loft</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create a copy of shape</span><div class="shortcut-keys"><kbd>Part → Create a copy</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Check and repair geometry</span><div class="shortcut-keys"><kbd>Part → Check Geometry</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Measure distances/angles</span><div class="shortcut-keys"><kbd>Part → Measure</kbd></div></div>
+    </div>
+    <div class="tip-box yellow">Part Workbench is for <strong>direct solid operations</strong>, while Part Design is parametric (feature-based). Use Part Design for most modeling; use Part for quick boolean operations between imported shapes.</div>
+  </div>
+
+  <!-- Tab 5: All Shortcuts -->
+  <div id="tab-shortcuts" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <h2>General Shortcuts</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save file</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save a copy</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select all</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle object visibility</span><div class="shortcut-keys"><kbd>Space</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete selected</span><div class="shortcut-keys"><kbd>Delete</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Duplicate object</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Copy / Paste</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>C</kbd> / <kbd>Ctrl</kbd><kbd>V</kbd></div></div>
+      </div>
+      <div class="card">
+        <h2>View &amp; Panels</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle constraints panel</span><div class="shortcut-keys"><kbd>P</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Display modes (wireframe, shaded)</span><div class="shortcut-keys"><kbd>View menu</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Report view (errors/warnings)</span><div class="shortcut-keys"><kbd>View → Panels → Report View</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Python console</span><div class="shortcut-keys"><kbd>View → Panels → Python Console</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 6: Workflow -->
+  <div id="tab-workflow" class="tab-content">
+    <div class="card">
+      <h2>Workflow: 3D Print Ready Part</h2>
+      <ol class="step-list">
+        <li><span class="step-text">Open FreeCAD → <strong>File → New</strong>. Switch to <strong>Part Design workbench</strong> using the workbench dropdown menu at the top.</span></li>
+        <li><span class="step-text">Create a Body: <strong>Part Design → Body</strong>. Then create a Sketch: <strong>Part Design → New Sketch</strong> — select the XY plane when prompted.</span></li>
+        <li><span class="step-text">Draw your sketch profile using the Sketcher tools. Apply constraints (dimensions, coincident, etc.) until the sketch turns <strong>fully constrained (green)</strong>.</span></li>
+        <li><span class="step-text">Pad to desired height: <strong>Part Design → Pad</strong>. Add Pocket features for holes and recesses in the design.</span></li>
+        <li><span class="step-text">Add fillets on critical edges: <strong>Part Design → Fillet</strong>. This reduces stress concentration and improves 3D print quality at layer transitions.</span></li>
+        <li><span class="step-text">Export: <strong>File → Export → .STL</strong> for 3D printing, or <strong>.STEP</strong> for CAD interchange with other software.</span></li>
+      </ol>
+    </div>
+    <div class="tip-box green">FreeCAD is completely free and open-source. It runs on Windows, macOS, and Linux with no license fees.</div>
+    <div class="tip-box blue">Use the <strong>Model tree</strong> on the left to navigate and edit any feature in your history — just double-click to reopen and modify it.</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

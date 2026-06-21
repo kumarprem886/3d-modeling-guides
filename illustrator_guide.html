@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adobe Illustrator — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+  a { color: #f0a060; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #e6edf3; font-size: 14px; margin: 18px 20px; transition: background 0.2s; }
+  .back-link:hover { background: #1f2937; text-decoration: none; }
+
+  .header { background: #3a1a00; padding: 36px 40px 28px; border-bottom: 3px solid #7a3800; }
+  .header h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+  .header p { color: #f0c090; font-size: 16px; margin-top: 6px; }
+
+  .tabs-wrapper { max-width: 1100px; margin: 30px auto; padding: 0 20px 60px; }
+  .tab-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab-btn { padding: 9px 16px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #8b949e; font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .tab-btn:hover { background: #1f2937; color: #e6edf3; }
+  .tab-btn.active { background: #3a1a00; border-color: #7a3800; color: #fff; }
+
+  .tab-panel { display: none; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 28px; animation: fadeIn 0.2s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .panel-title { font-size: 20px; font-weight: 700; color: #e6edf3; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #30363d; }
+
+  .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .shortcut-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; }
+  .key { font-family: 'Courier New', monospace; background: #3a1a00; color: #f0a060; padding: 3px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; flex-shrink: 0; border: 1px solid #7a3800; }
+  .key-desc { font-size: 13px; color: #8b949e; line-height: 1.4; }
+
+  .info-block { margin-bottom: 20px; }
+  .info-block h3 { font-size: 15px; font-weight: 600; color: #f0a060; margin-bottom: 10px; }
+  .info-block h3::before { content: '▸'; margin-right: 8px; color: #7a3800; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .info-list li { padding: 10px 14px; background: #0d1117; border: 1px solid #30363d; border-left: 3px solid #3a1a00; border-radius: 0 6px 6px 0; font-size: 13px; color: #c9d1d9; line-height: 1.5; }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; padding: 14px 16px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; }
+  .step-num { width: 28px; height: 28px; background: #3a1a00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .step-text { font-size: 13px; color: #c9d1d9; line-height: 1.6; }
+
+  .callout { background: #3a1a0022; border: 1px solid #7a3800; border-radius: 8px; padding: 14px 18px; margin-bottom: 18px; font-size: 13px; color: #f0a060; }
+  .callout strong { color: #ffb870; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Back to Hub</a>
+
+<div class="header">
+  <h1>Adobe Illustrator — Complete Guide</h1>
+  <p>Industry Standard Vector Graphics for 3D Artists</p>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('nav')">Navigation</button>
+    <button class="tab-btn" onclick="showTab('drawing')">Drawing Tools</button>
+    <button class="tab-btn" onclick="showTab('nodes')">Bezier &amp; Nodes</button>
+    <button class="tab-btn" onclick="showTab('effects')">Effects &amp; Appearance</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1 -->
+  <div class="tab-panel active" id="tab-nav">
+    <div class="panel-title">Navigation</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Ctrl+Space+drag</span><span class="key-desc">Zoom in on canvas</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+Alt+Space+drag</span><span class="key-desc">Zoom out on canvas</span></div>
+      <div class="shortcut-item"><span class="key">Space+drag</span><span class="key-desc">Pan canvas (Hand tool temporary)</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+0</span><span class="key-desc">Fit artboard to window</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+1</span><span class="key-desc">Zoom to 100% actual size</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+3/4/5</span><span class="key-desc">Zoom to 33% / 50% / 66%</span></div>
+      <div class="shortcut-item"><span class="key">H</span><span class="key-desc">Hand tool — pan the canvas</span></div>
+      <div class="shortcut-item"><span class="key">Z</span><span class="key-desc">Zoom tool — click to zoom in</span></div>
+      <div class="shortcut-item"><span class="key">V</span><span class="key-desc">Selection tool — select and move whole objects</span></div>
+      <div class="shortcut-item"><span class="key">A</span><span class="key-desc">Direct Selection — select and edit anchor points</span></div>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div class="tab-panel" id="tab-drawing">
+    <div class="panel-title">Drawing Tools</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">V</span><span class="key-desc">Selection tool — move entire objects</span></div>
+      <div class="shortcut-item"><span class="key">A</span><span class="key-desc">Direct Selection — edit anchor points</span></div>
+      <div class="shortcut-item"><span class="key">P</span><span class="key-desc">Pen tool — click=corner, drag=curve</span></div>
+      <div class="shortcut-item"><span class="key">Shift+P</span><span class="key-desc">Curvature Pen — AI-guided smooth curves</span></div>
+      <div class="shortcut-item"><span class="key">M</span><span class="key-desc">Rectangle tool</span></div>
+      <div class="shortcut-item"><span class="key">L</span><span class="key-desc">Ellipse tool</span></div>
+      <div class="shortcut-item"><span class="key">\</span><span class="key-desc">Line Segment tool</span></div>
+      <div class="shortcut-item"><span class="key">T</span><span class="key-desc">Type tool — click to add text</span></div>
+      <div class="shortcut-item"><span class="key">Shift+T</span><span class="key-desc">Type on a Path tool</span></div>
+      <div class="shortcut-item"><span class="key">B</span><span class="key-desc">Brush tool — paint with brush strokes</span></div>
+      <div class="shortcut-item"><span class="key">N</span><span class="key-desc">Pencil tool — freehand drawing</span></div>
+      <div class="shortcut-item"><span class="key">Shift+R</span><span class="key-desc">Warp tool — push/pull mesh distortion</span></div>
+      <div class="shortcut-item"><span class="key">Shift+M</span><span class="key-desc">Shape Builder — drag to merge, Alt+drag to subtract</span></div>
+      <div class="shortcut-item"><span class="key">K</span><span class="key-desc">Live Paint Bucket — fill enclosed areas</span></div>
+      <div class="shortcut-item"><span class="key">C</span><span class="key-desc">Scissors tool — cut path at a point</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Pathfinder Panel (Window → Pathfinder)</h3>
+      <ul class="info-list">
+        <li><strong>Unite</strong> — Merge all selected shapes into one combined outline</li>
+        <li><strong>Minus Front</strong> — Subtract the front shape from the back shape</li>
+        <li><strong>Intersect</strong> — Keep only the overlapping area</li>
+        <li><strong>Exclude</strong> — Remove the overlapping area (like XOR)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 3 -->
+  <div class="tab-panel" id="tab-nodes">
+    <div class="panel-title">Bezier &amp; Node Editing</div>
+
+    <div class="callout">Press <strong>A</strong> (Direct Selection) to select and manipulate anchor points. Click a path first, then click individual anchors.</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Ctrl+click on path</span><span class="key-desc">Add anchor point at that location</span></div>
+      <div class="shortcut-item"><span class="key">Alt+click anchor</span><span class="key-desc">Delete that anchor point</span></div>
+      <div class="shortcut-item"><span class="key">Shift+C</span><span class="key-desc">Anchor Point tool — convert smooth↔corner</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+J</span><span class="key-desc">Join two open end points</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+Shift+J</span><span class="key-desc">Join with average (meet in the middle)</span></div>
+      <div class="shortcut-item"><span class="key">Shift+F7</span><span class="key-desc">Open Align panel — align selected anchors</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Path Operations</h3>
+      <ul class="info-list">
+        <li><strong>Object → Path → Simplify</strong> — Automatically reduce anchor count while maintaining shape fidelity</li>
+        <li><strong>Scissors tool (C)</strong> — Click on a path at any point to cut it there into two open paths</li>
+        <li><strong>Knife tool</strong> — Click and drag across a shape to freehand slice it into separate pieces</li>
+        <li><strong>Convert Anchor Point tool (Shift+C)</strong> — Click smooth node to convert to corner, drag corner to make smooth</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 4 -->
+  <div class="tab-panel" id="tab-effects">
+    <div class="panel-title">Effects &amp; Appearance</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Shift+Ctrl+F9</span><span class="key-desc">Open Appearance panel — layer fills, strokes, effects</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Appearance Panel (Core Workflow)</h3>
+      <ul class="info-list">
+        <li>Stack multiple fills and strokes on a single object — each with its own effect</li>
+        <li>Add effects per fill/stroke (not just per object) for complex styles without extra layers</li>
+        <li>All effects are live (non-destructive) — click any entry to edit or remove</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Effects Menu</h3>
+      <ul class="info-list">
+        <li><strong>Effect → 3D &amp; Materials → Extrude &amp; Bevel</strong> — Basic 3D extrusion directly in Illustrator</li>
+        <li><strong>Offset Path</strong> — Object → Path → Offset Path (grow/shrink shape outline)</li>
+        <li><strong>Pattern</strong> — Object → Pattern → Make (create seamless tileable pattern)</li>
+        <li><strong>Envelope Distort</strong> — Object → Envelope Distort → Make with Mesh / Make with Top Object (warp shapes)</li>
+        <li><strong>Gradient Mesh</strong> — Object → Create Gradient Mesh (complex smooth color transitions)</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Symbols</h3>
+      <ul class="info-list">
+        <li>Window → Symbols panel — create reusable instances of artwork</li>
+        <li>Select art → drag into Symbols panel to define</li>
+        <li>Place instances with Symbol Sprayer tool — all update when master is edited</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 5 -->
+  <div class="tab-panel" id="tab-shortcuts">
+    <div class="panel-title">All Shortcuts Reference</div>
+
+    <div class="info-block">
+      <h3>File</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Ctrl+Z</span><span class="key-desc">Undo</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+Z</span><span class="key-desc">Redo</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+S</span><span class="key-desc">Save</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+S</span><span class="key-desc">Save As</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+E</span><span class="key-desc">Export</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+Alt+S</span><span class="key-desc">Save for Web (legacy)</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>Selection &amp; Layers</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Ctrl+A</span><span class="key-desc">Select all</span></div>
+        <div class="shortcut-item"><span class="key">Escape</span><span class="key-desc">Deselect all</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+G</span><span class="key-desc">Group</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+G</span><span class="key-desc">Ungroup</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+]</span><span class="key-desc">Raise one step</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+[</span><span class="key-desc">Lower one step</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+]</span><span class="key-desc">Bring to front</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+[</span><span class="key-desc">Send to back</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>Edit</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Ctrl+C</span><span class="key-desc">Copy</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+F</span><span class="key-desc">Paste in front</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+B</span><span class="key-desc">Paste in back</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Alt+Shift+V</span><span class="key-desc">Paste in place</span></div>
+        <div class="shortcut-item"><span class="key">D</span><span class="key-desc">Default fill (white) / stroke (black)</span></div>
+        <div class="shortcut-item"><span class="key">X</span><span class="key-desc">Toggle active: fill or stroke</span></div>
+        <div class="shortcut-item"><span class="key">Shift+X</span><span class="key-desc">Swap fill and stroke colors</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>View</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Tab</span><span class="key-desc">Show/hide all panels</span></div>
+        <div class="shortcut-item"><span class="key">F</span><span class="key-desc">Cycle screen modes (Normal → Full Screen)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 6 -->
+  <div class="tab-panel" id="tab-workflow">
+    <div class="panel-title">Workflow — Texture Art for 3D</div>
+
+    <div class="callout">This workflow produces high-resolution texture assets for Substance Painter decal layers or Blender shader nodes.</div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Set document at texture resolution</strong> — New Document → Width 4096 px, Height 4096 px, 72 DPI (pixels are what matter for GPU textures, not DPI).</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Design the decal or label</strong> — Use Pen tool for custom paths, Shape Builder (Shift+M) to merge geometry, Pathfinder for boolean operations.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Use Appearance panel</strong> — Stack fills and strokes to create complex multi-layer effects on a single vector object without creating extra layers.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Export as PNG</strong> — File → Export → Export As → PNG. Set resolution to full document size. Uncheck "Use Artboards" if you want the whole canvas. No compression for maximum fidelity.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Import into Substance Painter</strong> — Use the PNG as a decal layer in the Texture Set. Scale and position it on the UV map using the 3D viewport.</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-text"><strong>SVG → Blender</strong> — File → Save As → SVG format. In Blender: File → Import → Scalable Vector Graphics (.svg). Shape arrives as curve objects. Object → Convert → Mesh to make it editable geometry.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Coat — Complete Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; }
+  .nav { position: sticky; top: 0; z-index: 100; background: #4a2a00; padding: 12px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .back-link { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; white-space: nowrap; }
+  .back-link:hover { opacity: 1; text-decoration: underline; }
+  .nav-title { color: #fff; font-size: 18px; font-weight: 700; }
+  .nav-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .progress-bar { background: #1a1d26; padding: 10px 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #888; border-bottom: 1px solid #2a2d36; }
+  .progress-track { flex: 1; height: 6px; background: #2a2d36; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #4a2a00, #f0a030); border-radius: 3px; width: 100%; }
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 12px 20px; background: #13161f; border-bottom: 1px solid #2a2d36; }
+  .tab-btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; background: #1e2130; color: #aaa; transition: all 0.2s; }
+  .tab-btn:hover { background: #252840; color: #fff; }
+  .tab-btn.active { background: #4a2a00; color: #fff; font-weight: 600; }
+  .content { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 4px; background: #1a1d26; }
+  .shortcut-row:nth-child(even) { background: #1e2130; }
+  .shortcut-desc { font-size: 14px; color: #c0c0c0; flex: 1; }
+  .shortcut-key { margin-left: 16px; flex-shrink: 0; }
+  kbd { background: #2a2d3e; border: 1px solid #444; border-bottom: 3px solid #333; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #e0e0e0; white-space: nowrap; }
+  .tip-box { background: #1a2a1a; border-left: 4px solid #4caf50; border-radius: 4px; padding: 12px 16px; margin: 16px 0; font-size: 14px; color: #b8e6b8; }
+  .tip-box.blue { background: #1a1f3a; border-color: #4a7fd4; color: #b0c8f0; }
+  .tip-box.orange { background: #2a1f0a; border-color: #f0a030; color: #f0d090; }
+  .tip-box.purple { background: #1f1a2a; border-color: #9c6fd4; color: #d0b8f0; }
+  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .step-num { background: #4a2a00; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .step-text { font-size: 14px; color: #c0c0c0; line-height: 1.6; padding-top: 5px; }
+  h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 24px 0 12px; }
+  h3 { font-size: 15px; font-weight: 600; color: #ddd; margin: 16px 0 8px; }
+  @media (max-width: 600px) {
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .shortcut-key { margin-left: 0; }
+    .nav-subtitle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+  <div>
+    <div class="nav-title">3D Coat — Complete Guide</div>
+    <div class="nav-subtitle">All-in-One Retopology, UV, Sculpting &amp; Painting</div>
+  </div>
+</nav>
+
+<div class="progress-bar">
+  <span>Beginner</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>Expert</span>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab(this, 'tab1')">Navigation</button>
+  <button class="tab-btn" onclick="showTab(this, 'tab2')">Sculpt Room</button>
+  <button class="tab-btn" onclick="showTab(this, 'tab3')">Retopo Room</button>
+  <button class="tab-btn" onclick="showTab(this, 'tab4')">UV &amp; Paint Room</button>
+  <button class="tab-btn" onclick="showTab(this, 'tab5')">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab(this, 'tab6')">Workflow</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation -->
+  <div class="tab-panel active" id="tab1">
+    <h2>Navigation</h2>
+
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Orbit</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>LMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Pan</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>MMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom</span>
+      <span class="shortcut-key"><kbd>Scroll</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom (alternate)</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>RMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fit selection</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Show/hide all panels</span>
+      <span class="shortcut-key"><kbd>Space</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Front / Side / Top views</span>
+      <span class="shortcut-key"><kbd>Numpad 1</kbd> / <kbd>3</kbd> / <kbd>7</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle view between all workspaces</span>
+      <span class="shortcut-key"><kbd>~</kbd></span>
+    </div>
+
+    <div class="tip-box orange">
+      <strong>Tip:</strong> 3D Coat has 4 main rooms: <strong>Sculpt</strong>, <strong>Retopo</strong>, <strong>UV</strong>, and <strong>Paint</strong>. Select the active room from the top bar. Each room has its own tool set and panels.
+    </div>
+  </div>
+
+  <!-- TAB 2: Sculpt Room -->
+  <div class="tab-panel" id="tab2">
+    <h2>Sculpt Room</h2>
+
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add primitive or import mesh</span>
+      <span class="shortcut-key"><kbd>Shift</kbd> + <kbd>A</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Smooth brush</span>
+      <span class="shortcut-key"><kbd>Shift</kbd> + <kbd>LMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Invert brush</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>LMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Layers panel</span>
+      <span class="shortcut-key"><kbd>Add layer for non-destructive sculpting</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Voxel sculpting</span>
+      <span class="shortcut-key"><kbd>Unlimited boolean-like sculpting</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Surface sculpting</span>
+      <span class="shortcut-key"><kbd>Like ZBrush, works on mesh surface</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Auto Retopo</span>
+      <span class="shortcut-key"><kbd>Retopo → Autopo</kbd></span>
+    </div>
+
+    <div class="tip-box blue">
+      <strong>Tip:</strong> Import reference meshes via top menu → Import → Import Mesh. Use voxel sculpting for destructive boolean operations and surface sculpting for fine detail work.
+    </div>
+    <div class="tip-box">
+      <strong>Tip:</strong> Voxel mode treats the mesh like a volume — you can freely add and subtract without worrying about topology. Switch to Surface mode for ZBrush-style detailed sculpting.
+    </div>
+  </div>
+
+  <!-- TAB 3: Retopo Room -->
+  <div class="tab-panel" id="tab3">
+    <h2>Retopo Room — Manual Retopology</h2>
+
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Draw faces tool</span>
+      <span class="shortcut-key"><kbd>Click to place quads on high-res surface</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Quads draw</span>
+      <span class="shortcut-key"><kbd>Click vertices to place clean quads</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Brush-based retopo</span>
+      <span class="shortcut-key"><kbd>Stroke to place edge loops</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add edge loop</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>click edge</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Relax</span>
+      <span class="shortcut-key"><kbd>Smooth vertices keeping them on surface</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Shrinkwrap</span>
+      <span class="shortcut-key"><kbd>Vertices snap to underlying high-res surface</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Tweak mode</span>
+      <span class="shortcut-key"><kbd>Move individual verts/edges</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake</span>
+      <span class="shortcut-key"><kbd>Bake with normal map (high-res to low-res)</kbd></span>
+    </div>
+
+    <div class="tip-box orange">
+      <strong>Standout Feature:</strong> The Retopo Room is 3D Coat's crown jewel. It lets you draw clean quad topology directly on top of your high-poly sculpt, then bake all the detail down to a normal map — the complete game-asset workflow in one tool.
+    </div>
+  </div>
+
+  <!-- TAB 4: UV Room & Paint Room -->
+  <div class="tab-panel" id="tab4">
+    <h2>UV Room</h2>
+
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Auto unwrap</span>
+      <span class="shortcut-key"><kbd>UV → Unwrap</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Mark seams</span>
+      <span class="shortcut-key"><kbd>Select edges → Mark Seams</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Pack UVs</span>
+      <span class="shortcut-key"><kbd>Fills UV space efficiently</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Color checker</span>
+      <span class="shortcut-key"><kbd>Check stretching with texture checker</kbd></span>
+    </div>
+
+    <h2>Paint Room</h2>
+
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Layer painting</span>
+      <span class="shortcut-key"><kbd>Like Photoshop but in 3D</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Paint simultaneously</span>
+      <span class="shortcut-key"><kbd>Diffuse, roughness, metalness, normal, emissive</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Smart Materials</span>
+      <span class="shortcut-key"><kbd>Complex material presets (leather, metal, wood)</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Stencils</span>
+      <span class="shortcut-key"><kbd>Stamp patterns and alphas onto surface</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Clone brush</span>
+      <span class="shortcut-key"><kbd>Clone texture from one area to another</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fill</span>
+      <span class="shortcut-key"><kbd>By polygroup or UV island</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export textures</span>
+      <span class="shortcut-key"><kbd>File → Export Textures (PBR set)</kbd></span>
+    </div>
+
+    <div class="tip-box purple">
+      <strong>Tip:</strong> Smart Materials apply complex layered effects (edge wear, dirt, grunge) automatically using curvature and ambient occlusion data baked from your mesh.
+    </div>
+    <div class="tip-box blue">
+      <strong>Tip:</strong> Paint Room paints all PBR channels simultaneously — one brush stroke can add color, roughness variation, and a normal bump at the same time.
+    </div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div class="tab-panel" id="tab5">
+    <h2>All Shortcuts</h2>
+
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Undo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Redo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Save</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>S</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Erase (in paint)</span>
+      <span class="shortcut-key"><kbd>E</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Smooth</span>
+      <span class="shortcut-key"><kbd>Shift</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Invert brush</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fill tool</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Lasso select</span>
+      <span class="shortcut-key"><kbd>L</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Box select</span>
+      <span class="shortcut-key"><kbd>B</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Decrease / Increase brush size</span>
+      <span class="shortcut-key"><kbd>[</kbd> / <kbd>]</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Rotate symmetry plane</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>drag</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle normal map display</span>
+      <span class="shortcut-key"><kbd>N</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake dialog</span>
+      <span class="shortcut-key"><kbd>B</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Sculpt / Retopo / UV / Paint rooms</span>
+      <span class="shortcut-key"><kbd>F5</kbd> / <kbd>F6</kbd> / <kbd>F7</kbd> / <kbd>F8</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle tool properties panel</span>
+      <span class="shortcut-key"><kbd>Tab</kbd></span>
+    </div>
+
+    <div class="tip-box orange">
+      <strong>Tip:</strong> F5–F8 are the fastest way to switch between rooms. Memorise these four shortcuts early — they define how you navigate 3D Coat's entire workflow.
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div class="tab-panel" id="tab6">
+    <h2>Workflow — Game Asset Pipeline</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Sculpt the high-poly mesh in the <strong>Sculpt Room</strong> using voxel or surface sculpting mode. Alternatively, import a high-poly from ZBrush or Blender via top menu → Import → Import Mesh.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Switch to the <strong>Retopo Room</strong> (F6). Use Auto Retopo (Retopo → Autopo) for a fast result, or manually draw clean quads using the Draw Faces and Quads Draw tools. Target your game polygon count.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">UV unwrap in the <strong>UV Room</strong> (F7). Mark seams on natural breaks (joints, edges, hidden areas), run Unwrap, then Pack UVs to fill the UV space efficiently. Check for stretching with the texture checker.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Bake the high-poly detail to the low-poly mesh using the <strong>Bake menu</strong>. This generates a normal map that transfers all the sculpted detail onto the clean retopologized mesh.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">Paint textures in the <strong>Paint Room</strong> (F8): apply diffuse color, roughness, metalness, and emissive maps simultaneously. Use Smart Materials for realistic surface presets and stencils for surface detail.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">Export the full texture set at 4K resolution (PNG or TGA) via File → Export Textures, plus the low-poly mesh as OBJ. Import into Substance Painter for further texturing or directly into your game engine.</div>
+    </div>
+
+    <div class="tip-box orange">
+      <strong>Pipeline Tip:</strong> 3D Coat covers the entire game-asset pipeline in one application — sculpt, retopo, UV, bake, paint. Mastering the room-switching workflow (F5–F8) is the key to a fast, professional pipeline.
+    </div>
+    <div class="tip-box blue">
+      <strong>Export Tip:</strong> Export a 4K PBR texture set: Diffuse (albedo), Normal, Roughness, Metalness, and optionally AO and Emissive. These map directly to standard PBR slots in Unity, Unreal, and Blender.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>

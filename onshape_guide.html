@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onshape — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+  a.back-link { display: inline-flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 0.85rem; padding: 10px 20px; transition: color 0.2s; }
+  a.back-link:hover { color: #fff; }
+  header { background: #004a5c; padding: 32px 40px 28px; border-bottom: 3px solid #006a8c; }
+  header h1 { font-size: 2rem; font-weight: 700; color: #fff; }
+  header p { color: #80d8e8; margin-top: 6px; font-size: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab-btn { background: #1e1e1e; border: 1px solid #333; color: #bbb; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-family: inherit; transition: all 0.2s; }
+  .tab-btn:hover { background: #2a2a2a; color: #fff; }
+  .tab-btn.active { background: #004a5c; border-color: #006a8c; color: #fff; font-weight: 600; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; color: #50c8d8; margin-bottom: 16px; font-weight: 600; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #222; gap: 16px; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom: 3px solid #555; border-radius: 4px; padding: 3px 8px; font-size: 0.78rem; color: #e0e0e0; font-family: inherit; white-space: nowrap; }
+  .tip-box { border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+  .tip-box.green { background: #0d2a0d; border-left: 4px solid #4a9a4a; color: #a8d8a8; }
+  .tip-box.yellow { background: #2a2200; border-left: 4px solid #a08000; color: #d4c060; }
+  .tip-box.blue { background: #0a1a2a; border-left: 4px solid #2a6aaa; color: #80b8e8; }
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #222; }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before { content: counter(steps); background: #004a5c; color: #50c8d8; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  code { background: #252525; border: 1px solid #363636; border-radius: 4px; padding: 2px 6px; font-size: 0.82rem; color: #50c8d8; font-family: 'Consolas', 'Monaco', monospace; }
+  @media (max-width: 600px) { header { padding: 20px; } header h1 { font-size: 1.4rem; } .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; } }
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Hub</a>
+<header>
+  <h1>Onshape — Complete Guide</h1>
+  <p>Cloud-Native CAD — Works in Any Browser, No Install</p>
+</header>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('intro')">Introduction &amp; Nav</button>
+    <button class="tab-btn" onclick="showTab('partstudio')">Part Studio</button>
+    <button class="tab-btn" onclick="showTab('sketch')">Sketch &amp; Constraints</button>
+    <button class="tab-btn" onclick="showTab('assembly')">Assemblies &amp; Mates</button>
+    <button class="tab-btn" onclick="showTab('collab')">Collaboration &amp; Versions</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1: Introduction -->
+  <div id="tab-intro" class="tab-content active">
+    <div class="tip-box green">Onshape runs <strong>100% in your browser</strong> — no download, no installation, no license dongle. A free plan is available at <strong>onshape.com</strong> with public documents.</div>
+    <div class="card">
+      <h2>Viewport Navigation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit / rotate view</span><div class="shortcut-keys"><kbd>RMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="shortcut-keys"><kbd>MMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><div class="shortcut-keys"><kbd>Scroll wheel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit all in view</span><div class="shortcut-keys"><kbd>F</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit all (alternate)</span><div class="shortcut-keys"><kbd>Double-click empty space</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Normal to selected face</span><div class="shortcut-keys"><kbd>N</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Saved named views</span><div class="shortcut-keys"><kbd>View panel → favorites</kbd></div></div>
+    </div>
+    <div class="tip-box blue">All work <strong>saves to the cloud automatically</strong> — there is no Save button. Changes are instantly synced and visible to all collaborators in real time.</div>
+    <div class="tip-box green">Onshape has <strong>built-in version management</strong> — similar to Git for CAD. You can branch, merge, compare, and restore any version of your design at any time.</div>
+  </div>
+
+  <!-- Tab 2: Part Studio -->
+  <div id="tab-partstudio" class="tab-content">
+    <div class="card">
+      <h2>Part Studio Modeling Tools</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Create new sketch (on plane or face)</span><div class="shortcut-keys"><kbd>S</kbd> or <kbd>Sketch button</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude sketch</span><div class="shortcut-keys"><kbd>E</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolve sketch around axis</span><div class="shortcut-keys"><kbd>R</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sweep profile along path</span><div class="shortcut-keys"><kbd>Sweep button</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Loft between profiles</span><div class="shortcut-keys"><kbd>Loft button</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fillet — round edges</span><div class="shortcut-keys"><kbd>F</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Chamfer — angled edges</span><div class="shortcut-keys"><kbd>C</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Shell — hollow solid</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>S</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Boolean operations</span><div class="shortcut-keys"><kbd>Merge / Subtract / Intersect (in Extrude dialog)</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Feature List Management</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Edit a feature</span><div class="shortcut-keys"><kbd>Click feature in left panel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reorder features</span><div class="shortcut-keys"><kbd>Drag feature in list</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Suppress / delete / rename feature</span><div class="shortcut-keys"><kbd>RMB on feature</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Onshape uses <strong>Part Studios</strong> for modeling (equivalent to SolidWorks Part files). Multiple parts can be modeled in a single Part Studio tab, which is useful for designing parts in context of each other.</div>
+  </div>
+
+  <!-- Tab 3: Sketch & Constraints -->
+  <div id="tab-sketch" class="tab-content">
+    <div class="card">
+      <h2>Sketch Drawing Tools</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Line</span><div class="shortcut-keys"><kbd>L</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rectangle</span><div class="shortcut-keys"><kbd>R</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Circle</span><div class="shortcut-keys"><kbd>C</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Center-point arc</span><div class="shortcut-keys"><kbd>A</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Trim edge</span><div class="shortcut-keys"><kbd>T</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Offset entity</span><div class="shortcut-keys"><kbd>O</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror entities about a line</span><div class="shortcut-keys"><kbd>M</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle construction geometry</span><div class="shortcut-keys"><kbd>Q</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Dimensions &amp; Constraints</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Smart Dimension</span><div class="shortcut-keys"><kbd>D</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add geometric constraints</span><div class="shortcut-keys"><kbd>Constraint toolbar icons</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Constraint types available</span><div class="shortcut-keys"><kbd>Coincident</kbd><kbd>Tangent</kbd><kbd>Equal</kbd><kbd>Midpoint</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fully defined sketch state</span><div class="shortcut-keys"><kbd>All entities turn black</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Find under-defined entities</span><div class="shortcut-keys"><kbd>Magnification glass icon (lower-right)</kbd></div></div>
+    </div>
+    <div class="tip-box green">Onshape's sketch tools work identically to SolidWorks — if you know one, you know the other. This makes Onshape an excellent SolidWorks replacement for cloud workflows.</div>
+  </div>
+
+  <!-- Tab 4: Assemblies & Mates -->
+  <div id="tab-assembly" class="tab-content">
+    <div class="card">
+      <h2>Assembly Setup</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Add new Assembly tab</span><div class="shortcut-keys"><kbd>+ button at bottom</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Insert parts into assembly</span><div class="shortcut-keys"><kbd>Insert → existing parts</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fix first part to ground</span><div class="shortcut-keys"><kbd>Right-click → Fix</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add mates between parts</span><div class="shortcut-keys"><kbd>Insert → Mate</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Array parts in assembly</span><div class="shortcut-keys"><kbd>Replicate tool</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create exploded view</span><div class="shortcut-keys"><kbd>Insert → Exploded view</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Onshape Mate Types</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Fastened — rigid, no movement</span><div class="shortcut-keys"><kbd>Fastened</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolute — rotation around axis (hinge)</span><div class="shortcut-keys"><kbd>Revolute</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Slider — linear motion only</span><div class="shortcut-keys"><kbd>Slider</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cylindrical — rotate + slide</span><div class="shortcut-keys"><kbd>Cylindrical</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Ball — 3-axis rotation (universal)</span><div class="shortcut-keys"><kbd>Ball</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Planar — slides freely on a plane</span><div class="shortcut-keys"><kbd>Planar</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Onshape's mate system is <strong>more intuitive than SolidWorks</strong> — instead of multiple separate mate types, each Onshape mate defines exactly which degrees of freedom are constrained. Fewer mates, cleaner assemblies.</div>
+  </div>
+
+  <!-- Tab 5: Collaboration & Versions -->
+  <div id="tab-collab" class="tab-content">
+    <div class="card">
+      <h2>Sharing &amp; Permissions</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Share document with others</span><div class="shortcut-keys"><kbd>Top-right → Share</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Set view / edit / comment permissions</span><div class="shortcut-keys"><kbd>Share dialog → permission level</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Leave a comment on geometry</span><div class="shortcut-keys"><kbd>Comment icon → click on geometry</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">See teammate cursor live</span><div class="shortcut-keys"><kbd>Automatic when shared doc is open</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Follow a user's view</span><div class="shortcut-keys"><kbd>Follow user option</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Version Control (Git-like)</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Create a named version snapshot</span><div class="shortcut-keys"><kbd>Versions and history panel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create a branch for variation</span><div class="shortcut-keys"><kbd>Branch button in version panel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Merge branch back to main</span><div class="shortcut-keys"><kbd>Merge option in version panel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Compare two versions</span><div class="shortcut-keys"><kbd>Compare versions → side-by-side diff</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Import files into Onshape</span><div class="shortcut-keys"><kbd>File → Import (STEP, IGES, OBJ, DXF, DWG)</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export from Onshape</span><div class="shortcut-keys"><kbd>File → Export (same formats)</kbd></div></div>
+    </div>
+    <div class="tip-box green">Onshape's version control means you can <strong>never lose your work</strong>. Every change is tracked and you can restore any previous state at any time — no more "save as V1, V2, V3_final_FINAL" file naming.</div>
+    <div class="tip-box blue">Branching lets teams work on <strong>design variations in parallel</strong> without overwriting each other's work — then merge the best elements back into the main design.</div>
+  </div>
+
+  <!-- Tab 6: Workflow -->
+  <div id="tab-workflow" class="tab-content">
+    <div class="card">
+      <h2>Workflow: Team Collaboration</h2>
+      <ol class="step-list">
+        <li><span class="step-text">Create a free account at <strong>onshape.com</strong>. Click <strong>Create New Document</strong> from your dashboard. Name your document descriptively.</span></li>
+        <li><span class="step-text">Add a <strong>Part Studio tab</strong>. Set your units (millimeters for metric). Create a sketch on the origin plane — click the plane in the graphics area.</span></li>
+        <li><span class="step-text">Model your part parametrically: Sketch a profile → <kbd>E</kbd> to Extrude → add more sketches on faces for cuts and features → add Fillets on edges.</span></li>
+        <li><span class="step-text">Add an <strong>Assembly tab</strong>. Insert your parts. Fix the first part. Add mates (Fastened, Revolute, etc.) to define how parts move relative to each other.</span></li>
+        <li><span class="step-text"><strong>Share the document</strong> with teammates using the top-right Share button. Set their permission (view-only or can edit). They open the link in their own browser and see your changes in real time.</span></li>
+        <li><span class="step-text">Add a <strong>Drawing tab</strong>: Insert model views → add projected views (front, top, right, isometric) → apply Smart Dimensions and annotations.</span></li>
+        <li><span class="step-text">Export: <strong>STEP</strong> for manufacturing / CNC, <strong>STL</strong> for 3D printing, <strong>PDF</strong> of the drawing for the shop floor. All exports from the top File menu.</span></li>
+      </ol>
+    </div>
+    <div class="tip-box green">Onshape is <strong>free for public documents and students</strong>. The Professional plan (paid) adds private documents, custom properties, and enterprise features.</div>
+    <div class="tip-box yellow">On the <strong>free plan, all documents are public</strong> — anyone can find and view them. Do not use the free plan for proprietary or confidential designs. Use the Education or Professional plan for private work.</div>
+    <div class="tip-box blue">Onshape runs natively on <strong>iOS and Android</strong> tablets and phones — you can view, annotate, and even model on your phone in the field. The mobile app is free with your account.</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

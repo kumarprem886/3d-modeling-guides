@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3ds Max — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .top-nav { position: sticky; top: 0; z-index: 100; background: #3a1a00; display: flex; align-items: center; padding: 0 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .nav-back { font-size: 0.9rem; color: #e0a060; white-space: nowrap; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+  .nav-title { flex: 1; text-align: center; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-spacer { width: 100px; }
+
+  .progress-bar { background: #1a1a24; border-bottom: 1px solid #2a2a3a; padding: 0.75rem 1.5rem; display: flex; align-items: center; }
+  .prog-level { flex: 1; text-align: center; font-size: 0.72rem; font-weight: 600; padding: 0.35rem 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .prog-beginner { background: linear-gradient(135deg, #1a4a1a, #1e5a1e); color: #6fcf6f; border-radius: 4px 0 0 4px; }
+  .prog-intermediate { background: linear-gradient(135deg, #4a3a00, #5a4a00); color: #f0c040; }
+  .prog-advanced { background: linear-gradient(135deg, #4a1a00, #5a2a00); color: #f08040; }
+  .prog-expert { background: linear-gradient(135deg, #3a0a4a, #4a1a5a); color: #c080f0; border-radius: 0 4px 4px 0; }
+
+  .tabs-wrap { background: #14141e; border-bottom: 1px solid #2a2a3a; padding: 0 1rem; display: flex; gap: 0.25rem; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: #888; font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.85rem 1.1rem; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #e08040; border-bottom-color: #3a1a00; }
+
+  .tab-content { display: none; padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .section-title { font-size: 1.3rem; font-weight: 700; color: #e08040; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3a1a00; }
+
+  .card { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #e08040; margin-bottom: 0.85rem; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #222230; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { font-size: 0.9rem; color: #ccc; flex: 1; }
+  .shortcut-keys { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+  kbd { background: #252535; border: 1px solid #3a3a50; border-bottom: 3px solid #3a3a50; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.78rem; font-family: inherit; color: #e0e0e0; white-space: nowrap; }
+
+  .tip-box { border-radius: 6px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; border-left: 4px solid; }
+  .tip-box.tip { background: #0d2a0d; border-color: #2ea82e; color: #8de88d; }
+  .tip-box.warning { background: #2a2000; border-color: #c8a000; color: #f0d060; }
+  .tip-box.danger { background: #2a0800; border-color: #c83000; color: #f08060; }
+  .tip-box.info { background: #0a1a2a; border-color: #1a6ab0; color: #60a8e0; }
+  .tip-box strong { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  .workflow-steps { list-style: none; }
+  .workflow-step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #1e1e2a; }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #3a1a00; color: #e08040; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 0.9rem; color: #ccc; line-height: 1.6; padding-top: 0.3rem; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .top-nav { padding: 0 1rem; }
+    .nav-title { font-size: 0.9rem; }
+    .tab-content { padding: 1.25rem 1rem; }
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .shortcut-keys { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <div class="nav-title">3ds Max — Complete Guide</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="progress-bar">
+  <div class="prog-level prog-beginner">Beginner</div>
+  <div class="prog-level prog-intermediate">Intermediate</div>
+  <div class="prog-level prog-advanced">Advanced</div>
+  <div class="prog-level prog-expert">Expert</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="showTab('nav',this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('modeling',this)">Modeling</button>
+  <button class="tab-btn" onclick="showTab('materials',this)">Materials</button>
+  <button class="tab-btn" onclick="showTab('shortcuts',this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('rendering',this)">Rendering (V-Ray)</button>
+  <button class="tab-btn" onclick="showTab('archviz',this)">Arch-Viz Tips</button>
+  <button class="tab-btn" onclick="showTab('workflow',this)">Workflow</button>
+</div>
+
+<!-- TAB 1 -->
+<div id="tab-nav" class="tab-content active">
+  <h2 class="section-title">Viewport Navigation</h2>
+  <div class="tip-box info"><strong>Info</strong>3ds Max uses Alt+Middle Mouse for orbit (called Arc Rotate). The scroll wheel zooms. All navigation stays consistent regardless of which tool is active.</div>
+  <div class="card">
+    <div class="card-title">Core Navigation</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit / arc rotate</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan viewport</span><span class="shortcut-keys"><kbd>MMB</kbd><span style="color:#666">drag</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom in/out</span><span class="shortcut-keys"><kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Maximize / restore viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>W</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom extents (fit all)</span><span class="shortcut-keys"><kbd>Z</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom extents selected</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Z</kbd></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Viewport Presets &amp; Display</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle grid</span><span class="shortcut-keys"><kbd>G</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle viewport stats</span><span class="shortcut-keys"><kbd>7</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Wireframe toggle</span><span class="shortcut-keys"><kbd>F3</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Show edges on shaded</span><span class="shortcut-keys"><kbd>F4</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Perspective view</span><span class="shortcut-keys"><kbd>P</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Front view</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Top view</span><span class="shortcut-keys"><kbd>T</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Left view</span><span class="shortcut-keys"><kbd>L</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Camera view</span><span class="shortcut-keys"><kbd>C</kbd></span></div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div id="tab-modeling" class="tab-content">
+  <h2 class="section-title">Editable Poly Modeling</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Right-click any object → Convert to Editable Poly to unlock full polygon editing. This is the core modeling workflow in 3ds Max.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Sub-Object Levels</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Vertex level</span><span class="shortcut-keys"><kbd>1</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Edge level</span><span class="shortcut-keys"><kbd>2</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Border level</span><span class="shortcut-keys"><kbd>3</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Polygon level</span><span class="shortcut-keys"><kbd>4</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Element level</span><span class="shortcut-keys"><kbd>5</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Mesh Operations (RMB)</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude faces</span><span class="shortcut-keys"><kbd>RMB</kbd><span style="color:#666">→ Extrude</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bevel faces</span><span class="shortcut-keys"><kbd>RMB</kbd><span style="color:#666">→ Bevel</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bridge borders</span><span class="shortcut-keys"><kbd>RMB</kbd><span style="color:#666">→ Bridge</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Connect edges (add loops)</span><span class="shortcut-keys"><kbd>RMB</kbd><span style="color:#666">→ Connect</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Chamfer edges</span><span class="shortcut-keys"><kbd>RMB</kbd><span style="color:#666">→ Chamfer</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Weld vertices</span><span class="shortcut-keys"><kbd>RMB</kbd><span style="color:#666">→ Weld</span></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cut &amp; Loop Tools</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cut tool (freeform)</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>C</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Swift Loop (instant edge loop)</span><span class="shortcut-keys"><kbd>Swift Loop Tool</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">ProBoolean operations</span><span class="shortcut-keys"><kbd>Compound Objects → ProBoolean</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Modifier Stack</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add edge loops smoothly</span><span class="shortcut-keys"><kbd>TurboSmooth</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add thickness to surface</span><span class="shortcut-keys"><kbd>Shell Modifier</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bend deformation</span><span class="shortcut-keys"><kbd>Bend Modifier</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Twist deformation</span><span class="shortcut-keys"><kbd>Twist Modifier</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>The modifier stack is non-destructive. Stack modifiers on top of each other and toggle them on/off. Collapse stack only when you are sure you no longer need the history.</div>
+</div>
+
+<!-- TAB 3 -->
+<div id="tab-materials" class="tab-content">
+  <h2 class="section-title">Material Editor</h2>
+  <div class="tip-box info"><strong>Info</strong>3ds Max has two Material Editor modes: Compact (classic) and Slate (node-based). Use Slate for complex material networks — it is far easier to manage.</div>
+  <div class="card">
+    <div class="card-title">Material Editor Controls</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Open Material Editor</span><span class="shortcut-keys"><kbd>M</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Assign material to selection</span><span class="shortcut-keys"><kbd>Drag material</kbd><span style="color:#666">to object</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Copy material (leave original)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><span style="color:#666">+drag</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Move material to slot</span><span class="shortcut-keys"><kbd>Shift</kbd><span style="color:#666">+drag</span></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">UV Mapping</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Box/planar/cylindrical UV</span><span class="shortcut-keys"><kbd>UVW Map Modifier</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Manual UV editor</span><span class="shortcut-keys"><kbd>Unwrap UVW Modifier</kbd></span></div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>For PBR materials: use the Physical Material (or Arnold Standard Surface if using Arnold). Feed textures into Base Color, Roughness, Metalness, and Normal slots.</div>
+</div>
+
+<!-- TAB 4 -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2 class="section-title">All Shortcuts Reference</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">General</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select by name dialog</span><span class="shortcut-keys"><kbd>H</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Transform</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select tool</span><span class="shortcut-keys"><kbd>Q</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Move tool</span><span class="shortcut-keys"><kbd>W</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate tool</span><span class="shortcut-keys"><kbd>E</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale tool</span><span class="shortcut-keys"><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lock selection toggle</span><span class="shortcut-keys"><kbd>Space</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Render</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Quick render (active view)</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>Q</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render Setup dialog</span><span class="shortcut-keys"><kbd>F10</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render last (repeat)</span><span class="shortcut-keys"><kbd>F9</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Selection &amp; Isolation</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Isolate selection toggle</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>Q</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle snap</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle angle snap</span><span class="shortcut-keys"><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Group objects</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Ungroup</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Align dialog</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>A</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5 -->
+<div id="tab-rendering" class="tab-content">
+  <h2 class="section-title">Rendering with V-Ray</h2>
+  <div class="tip-box info"><strong>Info</strong>V-Ray by Chaos Group is the dominant renderer for architectural visualization and product rendering. It's a biased renderer that balances quality and speed for production.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">V-Ray Camera &amp; Lighting</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Physical camera with real exposure</span><span class="shortcut-keys"><kbd>V-Ray Physical Camera</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Outdoor daylight rig</span><span class="shortcut-keys"><kbd>V-Ray Sun + Sky</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">HDRI environment dome</span><span class="shortcut-keys"><kbd>V-Ray HDRI + Dome Light</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">V-Ray Material</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Diffuse / base color</span><span class="shortcut-keys"><kbd>Diffuse slot</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reflection color/intensity</span><span class="shortcut-keys"><kbd>Reflect slot</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Surface roughness (IOR)</span><span class="shortcut-keys"><kbd>Glossiness</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Surface detail map</span><span class="shortcut-keys"><kbd>Bump / Normal slot</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">V-Ray Frame Buffer &amp; Passes</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Color correction post-render</span><span class="shortcut-keys"><kbd>V-Ray Frame Buffer (VFB)</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render element passes</span><span class="shortcut-keys"><kbd>Render Setup → Render Elements</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Distributed network render</span><span class="shortcut-keys"><kbd>V-Ray DR (Distributed Rendering)</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>Use the V-Ray Frame Buffer LUT feature to apply a cinematic look (ACES, filmic) directly in the VFB without needing Photoshop post-processing.</div>
+  <div class="tip-box warning"><strong>Warning</strong>Always use V-Ray Physical Camera instead of the standard Max camera when rendering with V-Ray — the exposure, DOF, and motion blur work in real-world units and prevent blown-out renders.</div>
+</div>
+
+<!-- TAB 6 -->
+<div id="tab-archviz" class="tab-content">
+  <h2 class="section-title">Architecture Visualization Tips</h2>
+  <div class="tip-box info"><strong>Info</strong>3ds Max is the most widely used software for architectural visualization (arch-viz). It integrates directly with AutoCAD and has a rich ecosystem of arch-viz plugins.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Import &amp; Reference</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Import AutoCAD DWG floor plan</span><span class="shortcut-keys"><kbd>File → Import</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Walls from AEC Extended</span><span class="shortcut-keys"><kbd>AEC Extended → Wall</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Stairs, doors, windows</span><span class="shortcut-keys"><kbd>AEC Extended primitives</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Vegetation &amp; Population</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scatter trees/plants on terrain</span><span class="shortcut-keys"><kbd>Forest Pack plugin</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Repeat fences, railings, tiles</span><span class="shortcut-keys"><kbd>RailClone plugin</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Crowd simulation</span><span class="shortcut-keys"><kbd>Population tools</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Animation &amp; Cameras</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Animation curve editor</span><span class="shortcut-keys"><kbd>Track View → Curve Editor</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Camera walkthrough path</span><span class="shortcut-keys"><kbd>Path Constraint on camera</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 7 -->
+<div id="tab-workflow" class="tab-content">
+  <h2 class="section-title">Arch-Viz Pipeline — Step by Step</h2>
+  <div class="tip-box info"><strong>Info</strong>This workflow covers a typical interior architectural visualization project from CAD import to final deliverable.</div>
+  <ul class="workflow-steps">
+    <li class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Import Floor Plan:</strong> File → Import the AutoCAD DWG. Lock the DWG layer and use it as a tracing reference. Set units to match the drawing (millimeters or meters).</div></li>
+    <li class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Model Walls:</strong> Use the Wall object from AEC Extended to trace the floor plan outline, or draw splines over the plan and extrude to wall height. Keep each room as a separate element for easy material assignment.</div></li>
+    <li class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Add Doors &amp; Windows:</strong> Use AEC Extended door/window objects for parametric openings, or model custom openings by drawing rectangles on the wall mesh and using ProBoolean to cut through.</div></li>
+    <li class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Import Furniture:</strong> Download high-quality assets from Evermotion, CGAxis, or 3D Warehouse. Import as XRef or merge. Use ProxyMesh for heavy objects to keep viewport fast.</div></li>
+    <li class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Apply V-Ray Materials:</strong> Set up materials in the Slate Material Editor. Use V-Ray materials with proper IOR values (glass = 1.52, chrome = 0.04 roughness). Add displacement maps for carpet and stone.</div></li>
+    <li class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Place Camera:</strong> Create a V-Ray Physical Camera at eye level (900-1600mm). Set F-stop (f/8 for most interiors), ISO (800-1600), and shutter speed. Enable DOF for foreground blur if needed.</div></li>
+    <li class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>Render &amp; Post-Process:</strong> Render at high resolution (3000-5000px wide). Use the V-Ray Frame Buffer to apply color correction and LUT. Export to Photoshop for final touch-ups, or use VFB compositing directly for faster iteration.</div></li>
+  </ul>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

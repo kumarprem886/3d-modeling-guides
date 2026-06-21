@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affinity Designer — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+  a { color: #7c9ef5; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Back link */
+  .back-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #e6edf3; font-size: 14px; margin: 18px 20px; transition: background 0.2s; }
+  .back-link:hover { background: #1f2937; text-decoration: none; }
+
+  /* Header */
+  .header { background: #1a3a6a; padding: 36px 40px 28px; border-bottom: 3px solid #2a5298; }
+  .header h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+  .header p { color: #a8c4f5; font-size: 16px; margin-top: 6px; }
+
+  /* Tabs */
+  .tabs-wrapper { max-width: 1100px; margin: 30px auto; padding: 0 20px 60px; }
+  .tab-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tab-btn { padding: 9px 16px; background: #161b22; border: 1px solid #30363d; border-radius: 8px; color: #8b949e; font-size: 13px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .tab-btn:hover { background: #1f2937; color: #e6edf3; }
+  .tab-btn.active { background: #1a3a6a; border-color: #2a5298; color: #fff; }
+
+  /* Panels */
+  .tab-panel { display: none; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 28px; animation: fadeIn 0.2s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .panel-title { font-size: 20px; font-weight: 700; color: #e6edf3; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #30363d; }
+
+  /* Shortcut grid */
+  .shortcut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+  .shortcut-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; }
+  .key { font-family: 'Courier New', monospace; background: #1a3a6a; color: #a8c4f5; padding: 3px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; flex-shrink: 0; border: 1px solid #2a5298; }
+  .key-desc { font-size: 13px; color: #8b949e; line-height: 1.4; }
+
+  /* Info blocks */
+  .info-block { margin-bottom: 20px; }
+  .info-block h3 { font-size: 15px; font-weight: 600; color: #a8c4f5; margin-bottom: 10px; display: flex; align-items: center; gap-8px; }
+  .info-block h3::before { content: '▸'; margin-right: 8px; color: #2a5298; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .info-list li { padding: 10px 14px; background: #0d1117; border: 1px solid #30363d; border-left: 3px solid #1a3a6a; border-radius: 0 6px 6px 0; font-size: 13px; color: #c9d1d9; line-height: 1.5; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; padding: 14px 16px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; }
+  .step-num { width: 28px; height: 28px; background: #1a3a6a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .step-text { font-size: 13px; color: #c9d1d9; line-height: 1.6; }
+
+  /* Note callout */
+  .callout { background: #1a3a6a22; border: 1px solid #1a3a6a; border-radius: 8px; padding: 14px 18px; margin-bottom: 18px; font-size: 13px; color: #a8c4f5; }
+  .callout strong { color: #7c9ef5; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Back to Hub</a>
+
+<div class="header">
+  <h1>Affinity Designer — Complete Guide</h1>
+  <p>Professional Vector &amp; Raster Design — One-Time Purchase</p>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('nav')">Navigation &amp; Personas</button>
+    <button class="tab-btn" onclick="showTab('vector')">Vector Persona Tools</button>
+    <button class="tab-btn" onclick="showTab('nodes')">Node Editing</button>
+    <button class="tab-btn" onclick="showTab('layers')">Layers &amp; Effects</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1 -->
+  <div class="tab-panel active" id="tab-nav">
+    <div class="panel-title">Navigation &amp; Personas</div>
+
+    <div class="callout"><strong>3 Personas (Modes):</strong> Affinity Designer switches between Vector, Pixel, and Export personas — each unlocks a different set of tools.</div>
+
+    <div class="info-block">
+      <h3>Switching Personas</h3>
+      <ul class="info-list">
+        <li><strong>Vector Persona</strong> — Pen tip icon top-left. Draw and edit vector paths, shapes, boolean operations.</li>
+        <li><strong>Pixel Persona</strong> — Brush icon top-left. Paint pixels, use raster brushes and filters.</li>
+        <li><strong>Export Persona</strong> — Arrow-box icon top-left. Set up export slices and presets for batch export.</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Navigation</h3>
+      <ul class="info-list">
+        <li>Scroll wheel = Zoom in/out on canvas</li>
+        <li>Middle Mouse Button drag (MMB) = Pan canvas</li>
+        <li>Space + drag = Pan canvas (alternate — works with any tool active)</li>
+        <li>Ctrl+0 = Fit entire document to window</li>
+        <li>Ctrl+1 = 100% zoom (actual pixels)</li>
+        <li>Ctrl+2 = 200% zoom, Ctrl+3 = 300% zoom</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Essential Tool Keys</h3>
+      <ul class="info-list">
+        <li>V = Move tool — select and reposition objects</li>
+        <li>A = Node tool — edit bezier anchor points and handles</li>
+        <li>P = Pen tool — draw new paths and shapes</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div class="tab-panel" id="tab-vector">
+    <div class="panel-title">Vector Persona Tools</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">V</span><span class="key-desc">Move tool — select and move objects</span></div>
+      <div class="shortcut-item"><span class="key">A</span><span class="key-desc">Node tool — edit bezier anchor points</span></div>
+      <div class="shortcut-item"><span class="key">P</span><span class="key-desc">Pen tool — click=corner node, click+drag=curve</span></div>
+      <div class="shortcut-item"><span class="key">O</span><span class="key-desc">Ellipse tool — draw circles and ovals</span></div>
+      <div class="shortcut-item"><span class="key">M</span><span class="key-desc">Rectangle tool — draw rectangles</span></div>
+      <div class="shortcut-item"><span class="key">Shift+M</span><span class="key-desc">Rounded Rectangle tool</span></div>
+      <div class="shortcut-item"><span class="key">T</span><span class="key-desc">Text tool — artistic text (single click)</span></div>
+      <div class="shortcut-item"><span class="key">Shift+T</span><span class="key-desc">Frame text — text in a box with flow</span></div>
+      <div class="shortcut-item"><span class="key">L</span><span class="key-desc">Line tool — draw straight lines</span></div>
+      <div class="shortcut-item"><span class="key">C</span><span class="key-desc">Pencil tool — freehand drawing</span></div>
+      <div class="shortcut-item"><span class="key">G</span><span class="key-desc">Grid tool — create grid-based shapes</span></div>
+      <div class="shortcut-item"><span class="key">Z</span><span class="key-desc">Zoom tool — click to zoom in</span></div>
+      <div class="shortcut-item"><span class="key">H</span><span class="key-desc">View tool — pan the canvas</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Boolean Operations</h3>
+      <ul class="info-list">
+        <li><strong>Add</strong> — Layer menu → Geometry → Add. Merges selected shapes into one united shape.</li>
+        <li><strong>Subtract</strong> — Cuts the top shape out of the bottom shape.</li>
+        <li><strong>Intersect</strong> — Keeps only the overlapping area.</li>
+        <li><strong>Divide</strong> — Cuts shapes into separate pieces at intersections.</li>
+        <li><strong>Combine</strong> — Merges paths as compound path (keeps overlap holes).</li>
+        <li><strong>XOR</strong> — Keeps non-overlapping areas, removes intersections.</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Other Operations</h3>
+      <ul class="info-list">
+        <li>Knife tool — Click and drag across a shape to slice it into separate pieces</li>
+        <li>Add Artboard — Document menu → Insert Artboard (or A key in toolbar mode)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 3 -->
+  <div class="tab-panel" id="tab-nodes">
+    <div class="panel-title">Node Editing — Bezier Mastery</div>
+
+    <div class="callout">Press <strong>A</strong> to activate the Node tool before any of the actions below. The Node tool reveals all anchor points on selected paths.</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Click curve</span><span class="key-desc">Click between nodes on a path segment to add a new node</span></div>
+      <div class="shortcut-item"><span class="key">Alt+click node</span><span class="key-desc">Delete that node from the path</span></div>
+      <div class="shortcut-item"><span class="key">Shift+click</span><span class="key-desc">Add more nodes to the current selection</span></div>
+      <div class="shortcut-item"><span class="key">Drag node</span><span class="key-desc">Move the node to a new position</span></div>
+      <div class="shortcut-item"><span class="key">Drag handle</span><span class="key-desc">Adjust the bezier curve on both sides symmetrically</span></div>
+      <div class="shortcut-item"><span class="key">Alt+drag handle</span><span class="key-desc">Break handle symmetry — adjust one handle independently</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+J</span><span class="key-desc">Join two selected end nodes into one</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+Shift+J</span><span class="key-desc">Join curves into a compound path</span></div>
+      <div class="shortcut-item"><span class="key">Enter</span><span class="key-desc">Close an open path (connect end to start)</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Node Types (toolbar buttons when Node tool active)</h3>
+      <ul class="info-list">
+        <li><strong>Sharp (Corner) node</strong> — Handles move independently. Click the sharp node icon in top toolbar.</li>
+        <li><strong>Smooth node</strong> — Handles stay collinear (opposite). Click smooth icon in top toolbar.</li>
+        <li>To convert: select a node, then click the node type button in toolbar.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 4 -->
+  <div class="tab-panel" id="tab-layers">
+    <div class="panel-title">Layers &amp; Effects</div>
+
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="key">Ctrl+J</span><span class="key-desc">Duplicate selected layer</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+G</span><span class="key-desc">Group selected layers</span></div>
+      <div class="shortcut-item"><span class="key">Ctrl+Shift+G</span><span class="key-desc">Ungroup</span></div>
+      <div class="shortcut-item"><span class="key">Alt+click between layers</span><span class="key-desc">Create clipping mask (clips top layer to bottom)</span></div>
+    </div>
+
+    <div class="info-block" style="margin-top:22px;">
+      <h3>Layer FX (Non-Destructive Effects)</h3>
+      <ul class="info-list">
+        <li><strong>FX Panel</strong> — Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Outline, Color Overlay, Gradient Overlay, Bevel/Emboss. All are non-destructive and editable.</li>
+        <li><strong>Blend Modes</strong> — Full Photoshop-compatible list in the Layers panel: Normal, Multiply, Screen, Overlay, Soft Light, Hard Light, Color Dodge, etc.</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Symbols</h3>
+      <ul class="info-list">
+        <li>Create reusable components: select shapes → Layer → Create Symbol</li>
+        <li>Manage in Assets panel → Symbols tab</li>
+        <li>Edit one Symbol instance → all instances update automatically</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Styles</h3>
+      <ul class="info-list">
+        <li>Save a consistent look (fill + stroke + FX) as a named Style</li>
+        <li>Open Styles panel → click Add Style with object selected</li>
+        <li>Apply to any object by clicking the Style thumbnail</li>
+      </ul>
+    </div>
+
+    <div class="info-block">
+      <h3>Adjustment Layers</h3>
+      <ul class="info-list">
+        <li>Layer menu → New Adjustment Layer → Curves / Levels / HSL / Brightness-Contrast / etc.</li>
+        <li>All adjustments are fully non-destructive and reorderable</li>
+        <li>Clip an adjustment to a single layer using Alt+click between them</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 5 -->
+  <div class="tab-panel" id="tab-shortcuts">
+    <div class="panel-title">All Shortcuts Reference</div>
+
+    <div class="info-block">
+      <h3>File Operations</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Ctrl+Z</span><span class="key-desc">Undo</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+Z</span><span class="key-desc">Redo</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+S</span><span class="key-desc">Save</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+S</span><span class="key-desc">Save As</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+E</span><span class="key-desc">Export current selection</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+E</span><span class="key-desc">Open Export Persona</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>Selection</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Ctrl+A</span><span class="key-desc">Select all objects</span></div>
+        <div class="shortcut-item"><span class="key">Escape</span><span class="key-desc">Deselect all</span></div>
+        <div class="shortcut-item"><span class="key">Tab</span><span class="key-desc">Cycle through objects on canvas</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>Tools</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">V</span><span class="key-desc">Move tool</span></div>
+        <div class="shortcut-item"><span class="key">A</span><span class="key-desc">Node tool</span></div>
+        <div class="shortcut-item"><span class="key">P</span><span class="key-desc">Pen tool</span></div>
+        <div class="shortcut-item"><span class="key">O</span><span class="key-desc">Ellipse tool</span></div>
+        <div class="shortcut-item"><span class="key">M</span><span class="key-desc">Rectangle tool</span></div>
+        <div class="shortcut-item"><span class="key">T</span><span class="key-desc">Text tool</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>Edit</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">Ctrl+C</span><span class="key-desc">Copy</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+V</span><span class="key-desc">Paste</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Alt+V</span><span class="key-desc">Paste in place (same position)</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+G</span><span class="key-desc">Group</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+Shift+G</span><span class="key-desc">Ungroup</span></div>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h3>Transform</h3>
+      <div class="shortcut-grid">
+        <div class="shortcut-item"><span class="key">H</span><span class="key-desc">Flip horizontal</span></div>
+        <div class="shortcut-item"><span class="key">J</span><span class="key-desc">Flip vertical</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+[</span><span class="key-desc">Move layer down in stack</span></div>
+        <div class="shortcut-item"><span class="key">Ctrl+]</span><span class="key-desc">Move layer up in stack</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 6 -->
+  <div class="tab-panel" id="tab-workflow">
+    <div class="panel-title">Workflow — Logo for 3D Decal/Texture</div>
+
+    <div class="callout">This workflow produces export-ready assets for use as decals in Substance Painter or as imported curves/meshes in Blender.</div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Set document units to mm</strong> — match the units of your 3D model's UV space for accurate scale. File → Document Setup → Units.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>Draw logo shapes</strong> — Use the Pen tool for custom paths and geometric primitives (M, O, Shift+M) for common shapes. Work in Vector Persona.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>Apply boolean operations</strong> — Layer → Geometry → Add / Subtract / Intersect to combine or subtract shapes cleanly. No stray overlap geometry.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text"><strong>Assign flat colors only</strong> — Avoid gradients for clean decal use. Flat fills export predictably and look correct when projected onto 3D surfaces.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text"><strong>Switch to Export Persona</strong> (arrow-box icon) → Add export preset → PNG at 4096×4096 px for maximum resolution, or SVG for vector import into Blender.</div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-text"><strong>Import into 3D software</strong> — PNG into Substance Painter as a decal sticker layer, or import SVG into Blender via File → Import → SVG (imports as curve objects, convert to mesh as needed).</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

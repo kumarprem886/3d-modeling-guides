@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marvelous Designer — Complete Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; }
+  .nav { position: sticky; top: 0; z-index: 100; background: #4a001a; padding: 12px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .back-link { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; white-space: nowrap; }
+  .back-link:hover { opacity: 1; text-decoration: underline; }
+  .nav-title { color: #fff; font-size: 18px; font-weight: 700; }
+  .nav-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .progress-bar { background: #1a1d26; padding: 10px 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #888; border-bottom: 1px solid #2a2d36; }
+  .progress-track { flex: 1; height: 6px; background: #2a2d36; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #4a001a, #7ec8e3); border-radius: 3px; width: 100%; }
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 12px 20px; background: #13161f; border-bottom: 1px solid #2a2d36; }
+  .tab-btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; background: #1e2130; color: #aaa; transition: all 0.2s; }
+  .tab-btn:hover { background: #252840; color: #fff; }
+  .tab-btn.active { background: #4a001a; color: #fff; font-weight: 600; }
+  .content { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 4px; background: #1a1d26; }
+  .shortcut-row:nth-child(even) { background: #1e2130; }
+  .shortcut-desc { font-size: 14px; color: #c0c0c0; flex: 1; }
+  .shortcut-key { margin-left: 16px; flex-shrink: 0; }
+  kbd { background: #2a2d3e; border: 1px solid #444; border-bottom: 3px solid #333; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #e0e0e0; white-space: nowrap; }
+  .tip-box { background: #1a2a1a; border-left: 4px solid #4caf50; border-radius: 4px; padding: 12px 16px; margin: 16px 0; font-size: 14px; color: #b8e6b8; }
+  .tip-box.blue { background: #1a1f3a; border-color: #4a7fd4; color: #b0c8f0; }
+  .tip-box.orange { background: #2a1f0a; border-color: #f0a030; color: #f0d090; }
+  .tip-box.purple { background: #1f1a2a; border-color: #9c6fd4; color: #d0b8f0; }
+  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .step-num { background: #4a001a; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .step-text { font-size: 14px; color: #c0c0c0; line-height: 1.6; padding-top: 5px; }
+  h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 24px 0 12px; }
+  h3 { font-size: 15px; font-weight: 600; color: #ddd; margin: 16px 0 8px; }
+  @media (max-width: 600px) {
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .shortcut-key { margin-left: 0; }
+    .nav-subtitle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="back-link">&#8592; Back to Hub</a>
+  <div>
+    <div class="nav-title">Marvelous Designer</div>
+    <div class="nav-subtitle">3D Cloth Simulation &amp; Fashion Design</div>
+  </div>
+</nav>
+
+<div class="progress-bar">
+  <span>Beginner</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>Expert</span>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('tab1', this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('tab2', this)">2D Pattern Tools</button>
+  <button class="tab-btn" onclick="showTab('tab3', this)">Simulation</button>
+  <button class="tab-btn" onclick="showTab('tab4', this)">Fabric Properties</button>
+  <button class="tab-btn" onclick="showTab('tab5', this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('tab6', this)">Export &amp; Pipeline</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation -->
+  <div id="tab1" class="tab-panel active">
+    <h2>Viewport Navigation</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Orbit 3D viewport</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>LMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Pan 3D viewport</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>MMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom in / out</span>
+      <span class="shortcut-key"><kbd>Scroll</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Start / stop simulation</span>
+      <span class="shortcut-key"><kbd>Space</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Undo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Redo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Y</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Select all</span>
+      <span class="shortcut-key"><kbd>A</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Deselect everything</span>
+      <span class="shortcut-key"><kbd>Escape</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fit 3D view to content</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fit 2D patterns view</span>
+      <span class="shortcut-key"><kbd>Shift</kbd> + <kbd>F</kbd></span>
+    </div>
+    <div class="tip-box blue">
+      <strong>Tip:</strong> The 2D Pattern editor is the left panel; the 3D simulation viewport is the right panel. Both update simultaneously — changes to 2D patterns are reflected live in the 3D view.
+    </div>
+  </div>
+
+  <!-- TAB 2: 2D Pattern Tools -->
+  <div id="tab2" class="tab-panel">
+    <h2>2D Pattern Tools</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Rectangle tool — draw fabric panel rectangles</span>
+      <span class="shortcut-key"><kbd>R</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Polygon tool — draw custom panel shapes</span>
+      <span class="shortcut-key"><kbd>P</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Move anchor points on panel edges</span>
+      <span class="shortcut-key">Edit Curve Point tool</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add fold lines / seam lines inside panels</span>
+      <span class="shortcut-key">Internal Line tool</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Connect edges of two panels (sewn in simulation)</span>
+      <span class="shortcut-key"><kbd>Add Seam</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Sew specific segment to segment (length-matched)</span>
+      <span class="shortcut-key"><kbd>Segment Sew</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Sew in any direction for complex garments</span>
+      <span class="shortcut-key"><kbd>Free Sew</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Stitch pattern for realistic seam appearance</span>
+      <span class="shortcut-key"><kbd>M-Stitch</kbd></span>
+    </div>
+    <div class="tip-box">
+      <strong>Tip:</strong> Plan your panels in 2D like a real dressmaker pattern before simulating. Accurate 2D shapes produce much better 3D cloth results — don't rush to simulate.
+    </div>
+  </div>
+
+  <!-- TAB 3: Simulation Controls -->
+  <div id="tab3" class="tab-panel">
+    <h2>Simulation Controls</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Simulate — drape cloth onto avatar</span>
+      <span class="shortcut-key"><kbd>Space</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Simulation quality — lower = higher quality</span>
+      <span class="shortcut-key">Particle Distance setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Reset garment to arrangement positions</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Pin cloth in current simulated state</span>
+      <span class="shortcut-key">Freeze</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add wind force to simulation</span>
+      <span class="shortcut-key"><kbd>Simulation</kbd> → <kbd>Wind</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add air pressure (for inflatable shapes)</span>
+      <span class="shortcut-key">Pressure setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Adjust gravity strength</span>
+      <span class="shortcut-key">Gravity setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Load avatar or OBJ character mesh</span>
+      <span class="shortcut-key"><kbd>File</kbd> → <kbd>Load Avatar</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Position panels around avatar before simulating</span>
+      <span class="shortcut-key">Arrangement points</span>
+    </div>
+    <div class="tip-box orange">
+      <strong>Tip:</strong> Lower Particle Distance (5–10mm) gives very high quality cloth but is much slower. Use 20mm for quick tests, then drop to 5mm for your final simulation pass.
+    </div>
+  </div>
+
+  <!-- TAB 4: Fabric Properties -->
+  <div id="tab4" class="tab-panel">
+    <h2>Fabric Properties</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Preset fabrics: Cotton, Silk, Denim, Leather, Knit</span>
+      <span class="shortcut-key">Fabric Library</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Scale fabric in warp/weft directions</span>
+      <span class="shortcut-key">Shrinkage setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Controls stiff vs droopy cloth behavior</span>
+      <span class="shortcut-key">Bending stiffness</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">High = grips itself, low = slides freely</span>
+      <span class="shortcut-key">Friction setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Physical thickness of the fabric layer</span>
+      <span class="shortcut-key">Thickness setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Assign color or texture image to fabric</span>
+      <span class="shortcut-key">Color / Texture slot</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Edit all fabric settings for selected panel</span>
+      <span class="shortcut-key">Select panel → Property Editor (right panel)</span>
+    </div>
+    <div class="tip-box purple">
+      <strong>Tip:</strong> Use the Fabric Library presets as starting points, then adjust Bending stiffness for your specific look. Denim is much stiffer than Silk — the presets give you the right ballpark immediately.
+    </div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div id="tab5" class="tab-panel">
+    <h2>All Shortcuts Reference</h2>
+    <h3>Simulation</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Simulate / pause</span>
+      <span class="shortcut-key"><kbd>Space</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Reset arrangement points</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd></span>
+    </div>
+    <h3>Edit</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Undo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Redo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Y</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Select all</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>A</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Delete selected</span>
+      <span class="shortcut-key"><kbd>Delete</kbd></span>
+    </div>
+    <h3>Pattern Tools</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Rectangle pattern</span>
+      <span class="shortcut-key"><kbd>R</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Polygon pattern</span>
+      <span class="shortcut-key"><kbd>P</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Select tool</span>
+      <span class="shortcut-key"><kbd>S</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Normal edit</span>
+      <span class="shortcut-key"><kbd>N</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Transform</span>
+      <span class="shortcut-key"><kbd>T</kbd></span>
+    </div>
+    <h3>Transform Modes</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Move</span>
+      <span class="shortcut-key"><kbd>1</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Rotate</span>
+      <span class="shortcut-key"><kbd>2</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Scale</span>
+      <span class="shortcut-key"><kbd>3</kbd></span>
+    </div>
+    <h3>View</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom 2D to selection</span>
+      <span class="shortcut-key"><kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom 3D to selection</span>
+      <span class="shortcut-key"><kbd>X</kbd></span>
+    </div>
+    <h3>Export</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export OBJ</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>E</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export OBJ with subdivision</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd></span>
+    </div>
+    <h3>Special</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add triangular flare insert (godet)</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>G</kbd></span>
+    </div>
+  </div>
+
+  <!-- TAB 6: Export & Pipeline -->
+  <div id="tab6" class="tab-panel">
+    <h2>Export &amp; 3D Pipeline Integration</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export garment as OBJ (with or without UV)</span>
+      <span class="shortcut-key"><kbd>File</kbd> → <kbd>Export</kbd> → <kbd>OBJ</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export with quad mesh and unified UVs</span>
+      <span class="shortcut-key"><kbd>File</kbd> → <kbd>Export</kbd> → <kbd>OBJ</kbd> with Unified UV Coordinates</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Increase polygon count for smoother look on export</span>
+      <span class="shortcut-key">Subdivision on export setting</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export multiple clothing states / poses</span>
+      <span class="shortcut-key"><kbd>File</kbd> → <kbd>Export</kbd> → <kbd>Multiple Poses</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Import into Blender as cloth or static mesh</span>
+      <span class="shortcut-key">Blender → OBJ Import</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Import into ZBrush for surface detail sculpting</span>
+      <span class="shortcut-key">ZBrush → Import OBJ</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export animated cloth cache for Maya / Houdini / Blender</span>
+      <span class="shortcut-key"><kbd>File</kbd> → <kbd>Export</kbd> → <kbd>Alembic (.abc)</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake wrinkles from high-sim to game-res mesh</span>
+      <span class="shortcut-key">Normal map bake in Marmoset Baker</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add fabric texture, print, embroidery</span>
+      <span class="shortcut-key">Substance Painter → Import OBJ</span>
+    </div>
+    <div class="tip-box blue">
+      <strong>Pipeline tip:</strong> The standard workflow is: Marvelous Designer (cloth sim) → Marmoset Baker (bake wrinkle normals) → Substance Painter (texture) → Marmoset Toolbag (final render). Export OBJ with Unified UVs at each handoff.
+    </div>
+    <div class="tip-box">
+      <strong>Alembic tip:</strong> Use Alembic (.abc) export to carry animated cloth simulations into Blender or Houdini as a cache — no re-simulation needed in the target app.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

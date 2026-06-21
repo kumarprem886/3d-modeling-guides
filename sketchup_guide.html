@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SketchUp — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .top-nav { position: sticky; top: 0; z-index: 100; background: #1a4a2a; display: flex; align-items: center; padding: 0 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .nav-back { font-size: 0.9rem; color: #80d0a0; white-space: nowrap; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+  .nav-title { flex: 1; text-align: center; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-spacer { width: 100px; }
+
+  .progress-bar { background: #1a1a24; border-bottom: 1px solid #2a2a3a; padding: 0.75rem 1.5rem; display: flex; align-items: center; }
+  .prog-level { flex: 1; text-align: center; font-size: 0.72rem; font-weight: 600; padding: 0.35rem 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .prog-beginner { background: linear-gradient(135deg, #1a4a1a, #1e5a1e); color: #6fcf6f; border-radius: 4px 0 0 4px; }
+  .prog-intermediate { background: linear-gradient(135deg, #4a3a00, #5a4a00); color: #f0c040; }
+  .prog-advanced { background: linear-gradient(135deg, #4a1a00, #5a2a00); color: #f08040; }
+  .prog-expert { background: linear-gradient(135deg, #3a0a4a, #4a1a5a); color: #c080f0; border-radius: 0 4px 4px 0; }
+
+  .tabs-wrap { background: #14141e; border-bottom: 1px solid #2a2a3a; padding: 0 1rem; display: flex; gap: 0.25rem; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: #888; font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.85rem 1.1rem; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #60c080; border-bottom-color: #1a4a2a; }
+
+  .tab-content { display: none; padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .section-title { font-size: 1.3rem; font-weight: 700; color: #60c080; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #1a4a2a; }
+
+  .card { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #60c080; margin-bottom: 0.85rem; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #222230; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { font-size: 0.9rem; color: #ccc; flex: 1; }
+  .shortcut-keys { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+  kbd { background: #252535; border: 1px solid #3a3a50; border-bottom: 3px solid #3a3a50; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.78rem; font-family: inherit; color: #e0e0e0; white-space: nowrap; }
+
+  .tip-box { border-radius: 6px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; border-left: 4px solid; }
+  .tip-box.tip { background: #0d2a0d; border-color: #2ea82e; color: #8de88d; }
+  .tip-box.warning { background: #2a2000; border-color: #c8a000; color: #f0d060; }
+  .tip-box.danger { background: #2a0800; border-color: #c83000; color: #f08060; }
+  .tip-box.info { background: #0a1a2a; border-color: #1a6ab0; color: #60a8e0; }
+  .tip-box strong { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  .workflow-steps { list-style: none; }
+  .workflow-step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #1e1e2a; }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #1a4a2a; color: #60c080; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 0.9rem; color: #ccc; line-height: 1.6; padding-top: 0.3rem; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .top-nav { padding: 0 1rem; }
+    .nav-title { font-size: 0.9rem; }
+    .tab-content { padding: 1.25rem 1rem; }
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .shortcut-keys { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <div class="nav-title">SketchUp — Complete Guide</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="progress-bar">
+  <div class="prog-level prog-beginner">Beginner</div>
+  <div class="prog-level prog-intermediate">Intermediate</div>
+  <div class="prog-level prog-advanced">Advanced</div>
+  <div class="prog-level prog-expert">Expert</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="showTab('nav',this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('drawing',this)">Drawing Tools</button>
+  <button class="tab-btn" onclick="showTab('pushpull',this)">Push/Pull &amp; Follow Me</button>
+  <button class="tab-btn" onclick="showTab('components',this)">Components &amp; Groups</button>
+  <button class="tab-btn" onclick="showTab('shortcuts',this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('workflow',this)">Workflow</button>
+</div>
+
+<!-- TAB 1: NAVIGATION -->
+<div id="tab-nav" class="tab-content active">
+  <h2 class="section-title">Viewport Navigation</h2>
+  <div class="tip-box info"><strong>Info</strong>SketchUp's navigation is designed to feel natural and fast. Spacebar always returns you to the Select tool — the single most important shortcut to learn first.</div>
+  <div class="card">
+    <div class="card-title">Core Navigation</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom in/out</span><span class="shortcut-keys"><kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit around model</span><span class="shortcut-keys"><kbd>MMB</kbd><span style="color:#666">drag</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan viewport</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit tool</span><span class="shortcut-keys"><kbd>O</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom tool</span><span class="shortcut-keys"><kbd>Z</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan tool</span><span class="shortcut-keys"><kbd>H</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom extents (fit all)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>E</kbd></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">View Presets</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Standard views (front/top/etc)</span><span class="shortcut-keys"><kbd>Camera → Standard Views</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle perspective</span><span class="shortcut-keys"><kbd>Camera → Perspective</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Parallel projection (orthographic)</span><span class="shortcut-keys"><kbd>Camera → Parallel Projection</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Return to select tool</span><span class="shortcut-keys"><kbd>Spacebar</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">First-person walk</span><span class="shortcut-keys"><kbd>W</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Look around (pivot in place)</span><span class="shortcut-keys"><kbd>A</kbd></span></div>
+  </div>
+</div>
+
+<!-- TAB 2: DRAWING -->
+<div id="tab-drawing" class="tab-content">
+  <h2 class="section-title">Drawing Tools</h2>
+  <div class="tip-box tip"><strong>Tip</strong>In SketchUp, type a measurement after drawing to set exact dimensions. You don't need to click the measurement box — just type the number and press Enter.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Basic Drawing</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Line tool</span><span class="shortcut-keys"><kbd>L</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rectangle tool</span><span class="shortcut-keys"><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Circle tool</span><span class="shortcut-keys"><kbd>C</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Arc tool</span><span class="shortcut-keys"><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Polygon tool</span><span class="shortcut-keys"><kbd>Polygon Tool (toolbar)</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Modification Tools</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Push/Pull (extrude face)</span><span class="shortcut-keys"><kbd>P</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Move tool</span><span class="shortcut-keys"><kbd>M</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate tool</span><span class="shortcut-keys"><kbd>Q</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale tool</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Offset (inner/outer face copy)</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Tape measure / guide lines</span><span class="shortcut-keys"><kbd>T</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Special Tools</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Eraser (remove lines)</span><span class="shortcut-keys"><kbd>E</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Paint bucket (apply material)</span><span class="shortcut-keys"><kbd>B</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Dimension tool</span><span class="shortcut-keys"><kbd>D</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Section plane</span><span class="shortcut-keys"><kbd>X</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Make group / component</span><span class="shortcut-keys"><kbd>G</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>The Eraser tool softens edges when you hold Ctrl while erasing — useful for smoothing curved surfaces by hiding the edge lines without deleting geometry.</div>
+</div>
+
+<!-- TAB 3: PUSH/PULL -->
+<div id="tab-pushpull" class="tab-content">
+  <h2 class="section-title">Push/Pull &amp; Follow Me</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Push/Pull is SketchUp's signature tool. It's intuitive: click any flat face, drag to extrude it into 3D. Double-click repeats the last distance — essential for batch-extruding matching walls.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Push/Pull (P)</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude face up/down</span><span class="shortcut-keys"><kbd>P</kbd><span style="color:#666">click → drag</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create new face (leave original)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><span style="color:#666">+Push/Pull</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Repeat last distance</span><span class="shortcut-keys"><kbd>Double-click</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cut hole through solid</span><span class="shortcut-keys"><kbd>Push through</kbd><span style="color:#666">to opposite face</span></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Follow Me Tool</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Draw profile shape first</span><span class="shortcut-keys"><kbd>Step 1</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select the path (edges/loop)</span><span class="shortcut-keys"><kbd>Step 2</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Click Follow Me, then profile</span><span class="shortcut-keys"><kbd>Follow Me → click profile</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Use for moldings, pipes, rounded edges along any path</span><span class="shortcut-keys"><kbd>Follow Me</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Boolean-Like Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Intersect geometry with model</span><span class="shortcut-keys"><kbd>Draw → Intersect Faces → With Model</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Union two solid groups (Pro)</span><span class="shortcut-keys"><kbd>Solid Tools → Union</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Subtract (Pro only)</span><span class="shortcut-keys"><kbd>Solid Tools → Subtract</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Trim (Pro only)</span><span class="shortcut-keys"><kbd>Solid Tools → Trim</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box warning"><strong>Warning</strong>Solid Tools (Union, Subtract, Trim) require that both objects are "solid" — closed shells with no holes or stray edges. Use Entity Info to check if an object is classified as Solid.</div>
+</div>
+
+<!-- TAB 4: COMPONENTS -->
+<div id="tab-components" class="tab-content">
+  <h2 class="section-title">Components &amp; Groups</h2>
+  <div class="tip-box info"><strong>Info</strong>Groups isolate geometry so it doesn't stick to other surfaces. Components are reusable instances — edit one and all copies update. Use Components for repeated objects like chairs, windows, trees.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Creating &amp; Editing</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Make Component</span><span class="shortcut-keys"><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Make Group</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Enter group/component to edit</span><span class="shortcut-keys"><kbd>Double-click</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Exit group/component editing</span><span class="shortcut-keys"><kbd>Escape</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror along axis</span><span class="shortcut-keys"><kbd>RMB → Flip Along</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Organization</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Component browser (3D Warehouse)</span><span class="shortcut-keys"><kbd>Window → Components</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scene hierarchy / outliner</span><span class="shortcut-keys"><kbd>Window → Outliner</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Tags / layers (visibility)</span><span class="shortcut-keys"><kbd>Window → Tags</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Material browser</span><span class="shortcut-keys"><kbd>Window → Materials</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Extensions &amp; Plugins</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Plugin marketplace</span><span class="shortcut-keys"><kbd>Window → Extension Warehouse</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Professional rendering</span><span class="shortcut-keys"><kbd>V-Ray for SketchUp</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Real-time render viewport</span><span class="shortcut-keys"><kbd>Enscape plugin</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: SHORTCUTS -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2 class="section-title">All Shortcuts Reference</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">General</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Deselect all</span><span class="shortcut-keys"><kbd>Escape</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Edit</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Copy</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>C</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Paste</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>V</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cut</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>X</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Paste in place</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>V</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete selected</span><span class="shortcut-keys"><kbd>Delete</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Views &amp; Display</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Return to select tool</span><span class="shortcut-keys"><kbd>Spacebar</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Customize toolbar layout</span><span class="shortcut-keys"><kbd>View → Toolbars</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add scene viewpoint</span><span class="shortcut-keys"><kbd>Camera → Add Scene</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: WORKFLOW -->
+<div id="tab-workflow" class="tab-content">
+  <h2 class="section-title">Architecture / Product Workflow — Step by Step</h2>
+  <div class="tip-box info"><strong>Info</strong>SketchUp excels at fast concept modeling and architectural design. It's loved for its low learning curve — most users can build their first room in under an hour.</div>
+  <ul class="workflow-steps">
+    <li class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Import Reference:</strong> File → Import a reference image (set as "Use as Image" and align to ground plane) or import a DWG floor plan. Lock it in a separate Tag/Layer so it doesn't get edited accidentally.</div></li>
+    <li class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Draw 2D Floor Plan:</strong> Use the Line tool (L) to trace the floor plan outline on the blue/red ground plane. Close all loops — SketchUp automatically fills enclosed areas with a face. This face is what you'll push/pull to create walls.</div></li>
+    <li class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Push/Pull Walls:</strong> Select the floor face, use Push/Pull (P) to extrude it to ceiling height. Type the exact height numerically (e.g., "2800mm" or "9'2""). Use Ctrl+Push/Pull on interior walls to leave the floor face intact.</div></li>
+    <li class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Add Openings:</strong> Draw rectangles directly on wall faces where doors and windows go. Push/Pull these rectangles inward — when you push through to the opposite wall face, SketchUp automatically creates a hole. No boolean needed.</div></li>
+    <li class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Import Furniture as Components:</strong> Use Window → Components to access 3D Warehouse directly. Search for furniture, fixtures, and fittings. Import them as Components so you can swap models later without breaking the scene.</div></li>
+    <li class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Apply Materials:</strong> Open Window → Materials and drag materials onto faces. Use the Texture Adjust option (RMB on textured face) to scale and position textures to real-world size. Match tile/wood grain scale to actual dimensions.</div></li>
+    <li class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>Set Up Scenes:</strong> Position camera for each key view. Camera → Add Scene for each viewpoint. Scenes capture camera position, style settings, and tag visibility — use them for client presentation or as render viewpoints in V-Ray/Enscape.</div></li>
+    <li class="workflow-step"><div class="step-num">8</div><div class="step-text"><strong>Render or Export:</strong> Use Enscape for a real-time walkthrough or V-Ray for high-quality stills. Alternatively, File → Export 3D Model (OBJ/FBX) to take the model into Blender, 3ds Max, or Lumion for advanced rendering.</div></li>
+  </ul>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

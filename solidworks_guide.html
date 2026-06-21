@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolidWorks — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+  a.back-link { display: inline-flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 0.85rem; padding: 10px 20px; transition: color 0.2s; }
+  a.back-link:hover { color: #fff; }
+  header { background: #5c1a00; padding: 32px 40px 28px; border-bottom: 3px solid #8c2a00; }
+  header h1 { font-size: 2rem; font-weight: 700; color: #fff; }
+  header p { color: #e8a080; margin-top: 6px; font-size: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab-btn { background: #1e1e1e; border: 1px solid #333; color: #bbb; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-family: inherit; transition: all 0.2s; }
+  .tab-btn:hover { background: #2a2a2a; color: #fff; }
+  .tab-btn.active { background: #5c1a00; border-color: #8c2a00; color: #fff; font-weight: 600; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; color: #e08060; margin-bottom: 16px; font-weight: 600; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #222; gap: 16px; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom: 3px solid #555; border-radius: 4px; padding: 3px 8px; font-size: 0.78rem; color: #e0e0e0; font-family: inherit; white-space: nowrap; }
+  .tip-box { border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+  .tip-box.green { background: #0d2a0d; border-left: 4px solid #4a9a4a; color: #a8d8a8; }
+  .tip-box.yellow { background: #2a2200; border-left: 4px solid #a08000; color: #d4c060; }
+  .tip-box.blue { background: #0a1a2a; border-left: 4px solid #2a6aaa; color: #80b8e8; }
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #222; }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before { content: counter(steps); background: #5c1a00; color: #e08060; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  code { background: #252525; border: 1px solid #363636; border-radius: 4px; padding: 2px 6px; font-size: 0.82rem; color: #e08060; font-family: 'Consolas', 'Monaco', monospace; }
+  @media (max-width: 600px) { header { padding: 20px; } header h1 { font-size: 1.4rem; } .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; } }
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Hub</a>
+<header>
+  <h1>SolidWorks — Complete Guide</h1>
+  <p>Professional CAD for Engineering &amp; Product Design</p>
+</header>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('nav')">Navigation</button>
+    <button class="tab-btn" onclick="showTab('sketch')">Sketch Tools</button>
+    <button class="tab-btn" onclick="showTab('features')">Features</button>
+    <button class="tab-btn" onclick="showTab('assembly')">Assembly</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+    <button class="tab-btn" onclick="showTab('drawings')">Drawings</button>
+    <button class="tab-btn" onclick="showTab('simulation')">Simulation</button>
+  </div>
+
+  <!-- Tab 1: Navigation -->
+  <div id="tab-nav" class="tab-content active">
+    <div class="card">
+      <h2>Viewport Navigation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit / rotate view</span><div class="shortcut-keys"><kbd>MMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>MMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><div class="shortcut-keys"><kbd>Scroll wheel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom to fit all</span><div class="shortcut-keys"><kbd>F</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Magnifier (zoom into cursor area)</span><div class="shortcut-keys"><kbd>G</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Open View Orientation dialog</span><div class="shortcut-keys"><kbd>Space</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Isometric view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>7</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Front view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>1</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Back view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>2</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Left view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>3</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Right view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>4</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Top view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>5</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bottom view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>6</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Normal to selected face</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>8</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Press <kbd>Space</kbd> to open the View Orientation dialog — click any view name for instant view switching. Pin it to keep it open.</div>
+  </div>
+
+  <!-- Tab 2: Sketch Tools -->
+  <div id="tab-sketch" class="tab-content">
+    <div class="card">
+      <h2>Sketch Creation Tools</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Context-sensitive shortcut bar</span><div class="shortcut-keys"><kbd>S</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Line tool</span><div class="shortcut-keys"><kbd>L</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rectangle (3 types available)</span><div class="shortcut-keys"><kbd>R</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Circle or arc</span><div class="shortcut-keys"><kbd>C</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Exit current tool</span><div class="shortcut-keys"><kbd>Escape</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Smart Dimension (universal)</span><div class="shortcut-keys"><kbd>D</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Sketch Constraints &amp; Status</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Fully defined sketch (all constrained)</span><div class="shortcut-keys"><kbd>Black lines</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Under-defined sketch (needs more)</span><div class="shortcut-keys"><kbd>Blue lines</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Over-defined sketch (conflict!)</span><div class="shortcut-keys"><kbd>Red lines</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Available relations (constraints)</span><div class="shortcut-keys"><kbd>Coincident</kbd><kbd>Tangent</kbd><kbd>Equal</kbd><kbd>Parallel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">More relations</span><div class="shortcut-keys"><kbd>Perpendicular</kbd><kbd>Colinear</kbd><kbd>Symmetric</kbd><kbd>Fix</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror sketch entities</span><div class="shortcut-keys"><kbd>Tools → Sketch Tools → Mirror</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Instant 3D — extrude by dragging</span><div class="shortcut-keys"><kbd>Drag face handle in 3D view</kbd></div></div>
+    </div>
+    <div class="tip-box green"><strong>S key shortcut bar</strong> is context-sensitive — in a sketch it shows sketch tools, in 3D mode it shows feature tools. Customize it to put your most-used commands within reach.</div>
+    <div class="tip-box yellow">Always make sketches <strong>fully defined (black)</strong> before creating features. Under-defined sketches can cause unpredictable behavior when dimensions change.</div>
+  </div>
+
+  <!-- Tab 3: Features -->
+  <div id="tab-features" class="tab-content">
+    <div class="card">
+      <h2>Boss / Material Addition Features</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Extruded Boss/Base — most common</span><div class="shortcut-keys"><kbd>Features → Extruded Boss/Base</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolved Boss/Base</span><div class="shortcut-keys"><kbd>Features → Revolved Boss/Base</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Swept Boss — profile along a path</span><div class="shortcut-keys"><kbd>Features → Swept Boss/Base</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Loft — between multiple profiles</span><div class="shortcut-keys"><kbd>Features → Loft</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rib — reinforcing ribs from sketch</span><div class="shortcut-keys"><kbd>Features → Rib</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Cut / Material Removal Features</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Extruded Cut</span><div class="shortcut-keys"><kbd>Features → Extruded Cut</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolved Cut</span><div class="shortcut-keys"><kbd>Features → Revolved Cut</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Edge &amp; Pattern Features</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Fillet — round edges (constant/variable)</span><div class="shortcut-keys"><kbd>Features → Fillet</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Chamfer — angled edge treatment</span><div class="shortcut-keys"><kbd>Features → Chamfer</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Shell — hollow out solid</span><div class="shortcut-keys"><kbd>Features → Shell</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Draft — add taper for molding</span><div class="shortcut-keys"><kbd>Features → Draft</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Linear Pattern</span><div class="shortcut-keys"><kbd>Features → Linear Pattern</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Circular Pattern</span><div class="shortcut-keys"><kbd>Features → Circular Pattern</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror Feature about a plane</span><div class="shortcut-keys"><kbd>Features → Mirror</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Wrap sketch onto curved surface</span><div class="shortcut-keys"><kbd>Features → Wrap</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Indent — push surface into body</span><div class="shortcut-keys"><kbd>Features → Indent</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Use <strong>Equations</strong> (E key or Tools → Equations) to create relationships between dimensions — e.g., <code>Fillet_R = Wall_T / 2</code>. This is the key to truly parametric SolidWorks models.</div>
+  </div>
+
+  <!-- Tab 4: Assembly -->
+  <div id="tab-assembly" class="tab-content">
+    <div class="card">
+      <h2>Assembly Basics</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Create new assembly</span><div class="shortcut-keys"><kbd>File → New → Assembly</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Insert component into assembly</span><div class="shortcut-keys"><kbd>Insert → Component</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add mates (joints)</span><div class="shortcut-keys"><kbd>Insert → Mate</kbd> or <kbd>M</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Mate Types</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Coincident — faces flush together</span><div class="shortcut-keys"><kbd>Coincident mate</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Concentric — cylinders share axis</span><div class="shortcut-keys"><kbd>Concentric mate</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Distance — specific gap between faces</span><div class="shortcut-keys"><kbd>Distance mate</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Angle — specific angle between faces</span><div class="shortcut-keys"><kbd>Angle mate</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Parallel / Perpendicular / Tangent</span><div class="shortcut-keys"><kbd>Standard mates</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Assembly Tools</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Smart Mates — drag near mating geometry</span><div class="shortcut-keys"><kbd>Green flash = auto-mate</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Copy part in assembly</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cycle through mates</span><div class="shortcut-keys"><kbd>Tab</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pack and Go (zip all files)</span><div class="shortcut-keys"><kbd>File → Pack and Go</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Exploded View</span><div class="shortcut-keys"><kbd>Insert → Exploded View</kbd></div></div>
+    </div>
+    <div class="tip-box green"><strong>Smart Mates</strong> are the fastest way to add mates — drag a part close to where it should go, and SolidWorks detects the correct mate type automatically when edges/faces align.</div>
+    <div class="tip-box yellow">Always <strong>Fix the first part</strong> in an assembly (right-click → Fix) to anchor it to the origin. All other parts are then mated relative to this fixed component.</div>
+  </div>
+
+  <!-- Tab 5: All Shortcuts -->
+  <div id="tab-shortcuts" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <h2>General Shortcuts</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save as</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Context shortcut bar</span><div class="shortcut-keys"><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Task pane toggle</span><div class="shortcut-keys"><kbd>T</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Smart dimension (sketch)</span><div class="shortcut-keys"><kbd>D</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Equations dialog</span><div class="shortcut-keys"><kbd>E</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rebuild model</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>B</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Force full rebuild</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Q</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rotate model (alternate)</span><div class="shortcut-keys"><kbd>Alt</kbd><kbd>drag</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete feature</span><div class="shortcut-keys"><kbd>Delete</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Edit selected feature properties</span><div class="shortcut-keys"><kbd>Alt</kbd><kbd>Enter</kbd></div></div>
+      </div>
+      <div class="card">
+        <h2>Standard Views</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Front view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>1</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Back view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>2</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Left view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>3</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Right view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>4</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Top view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>5</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Bottom view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>6</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Isometric view</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>7</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Normal to face</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>8</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 6: Drawings -->
+  <div id="tab-drawings" class="tab-content">
+    <div class="card">
+      <h2>Drawing Setup</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Create new drawing</span><div class="shortcut-keys"><kbd>File → New → Drawing</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Insert model view</span><div class="shortcut-keys"><kbd>Insert → Drawing View → Model</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Auto-project front/top/right</span><div class="shortcut-keys"><kbd>Projected View</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Section view (cut through model)</span><div class="shortcut-keys"><kbd>Section View</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Detail view (magnified area)</span><div class="shortcut-keys"><kbd>Detail View</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Annotation &amp; Export</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Smart Dimension in drawing</span><div class="shortcut-keys"><kbd>D</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Geometric Tolerance (GD&amp;T)</span><div class="shortcut-keys"><kbd>Insert → Annotations → Geometric Tolerance</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bill of Materials (BOM)</span><div class="shortcut-keys"><kbd>Insert → Tables → Bill of Materials</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export drawing</span><div class="shortcut-keys"><kbd>File → Save As → PDF / DXF / DWG</kbd></div></div>
+    </div>
+    <div class="tip-box blue">SolidWorks drawings are <strong>fully associative</strong> — when you change the 3D model, all dimensions and views in the drawing update automatically. This is a major workflow advantage over manual drafting.</div>
+    <div class="tip-box green">Use <strong>eDrawings</strong> to share your designs with clients and manufacturers who don't have SolidWorks — they can view, rotate, and measure the model for free.</div>
+  </div>
+
+  <!-- Tab 7: Simulation -->
+  <div id="tab-simulation" class="tab-content">
+    <div class="card">
+      <h2>SolidWorks Simulation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Static structural analysis</span><div class="shortcut-keys"><kbd>Simulation → New Study → Static</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Apply loads and fixtures</span><div class="shortcut-keys"><kbd>Right-click study tree</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Generate mesh and run analysis</span><div class="shortcut-keys"><kbd>Run → Mesh → Run</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Safety factor visualization</span><div class="shortcut-keys"><kbd>Results → Factor of Safety plot</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Topology study (material optimization)</span><div class="shortcut-keys"><kbd>New Study → Topology</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Advanced Simulation Modules</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">CFD — fluid/air flow analysis</span><div class="shortcut-keys"><kbd>Flow Simulation module</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Assembly motion with physics</span><div class="shortcut-keys"><kbd>Motion Analysis</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Injection molding fill analysis</span><div class="shortcut-keys"><kbd>Plastics module</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Photorealistic rendering</span><div class="shortcut-keys"><kbd>SolidWorks Visualize</kbd></div></div>
+    </div>
+    <div class="tip-box yellow">Simulation modules require <strong>additional licenses</strong> beyond the base SolidWorks license. Check with your reseller or institution for which modules are included in your subscription.</div>
+    <div class="tip-box blue">The <strong>Topology Study</strong> is a powerful tool for lightweighting — it shows you which material can be removed while still meeting your structural requirements under defined loads.</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

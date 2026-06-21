@@ -1,397 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Modeling Mastery Hub</title>
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Mastery Hub — Complete Reference</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background-color: #0d1117;
-      color: #c9d1d9;
-      min-height: 100vh;
-      line-height: 1.6;
-    }
+  /* Navbar */
+  .navbar {
+    position: sticky; top: 0; z-index: 100;
+    background: #161b22; border-bottom: 1px solid #30363d;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px; height: 56px;
+  }
+  .navbar-brand { font-size: 18px; font-weight: 700; color: #e6edf3; letter-spacing: -0.3px; }
+  .navbar-count { background: #30363d; color: #8b949e; border-radius: 20px; padding: 4px 12px; font-size: 13px; font-weight: 600; }
 
-    /* ── NAV ── */
-    nav {
-      background-color: #161b22;
-      border-bottom: 1px solid #21262d;
-      padding: 0 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 56px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #161b22 0%, #0d1117 60%, #161b22 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 64px 28px 52px; text-align: center;
+  }
+  .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -1px; color: #e6edf3; line-height: 1.2; }
+  .hero h1 span { color: #7c6fff; }
+  .hero p { color: #8b949e; font-size: 17px; margin-top: 14px; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+  .search-box {
+    margin: 28px auto 0; max-width: 480px;
+    display: flex;
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden;
+  }
+  .search-box input {
+    flex: 1; background: transparent; border: none; outline: none;
+    padding: 13px 18px; font-size: 14px; color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .search-box input::placeholder { color: #484f58; }
+  .search-box button {
+    background: #7c6fff; border: none; padding: 0 20px; cursor: pointer;
+    color: #fff; font-size: 15px; transition: background 0.2s;
+  }
+  .search-box button:hover { background: #6a5fe0; }
 
-    .nav-brand {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #e6edf3;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
+  /* Main layout */
+  .main { max-width: 1200px; margin: 0 auto; padding: 48px 24px 80px; }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      list-style: none;
-      flex-wrap: wrap;
-    }
+  /* Category section */
+  .category { margin-bottom: 52px; }
+  .category-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 2px solid #30363d;
+  }
+  .category-title { font-size: 21px; font-weight: 700; color: #e6edf3; }
+  .category-count { font-size: 13px; color: #8b949e; margin-left: auto; background: #161b22; border: 1px solid #30363d; border-radius: 20px; padding: 3px 10px; }
 
-    .nav-links a {
-      color: #8b949e;
-      text-decoration: none;
-      font-size: 0.875rem;
-      padding: 0.4rem 0.75rem;
-      border-radius: 6px;
-      transition: color 0.2s, background-color 0.2s;
-    }
+  /* App grid */
+  .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
 
-    .nav-links a:hover {
-      color: #e6edf3;
-      background-color: #21262d;
-    }
+  /* App card */
+  .card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+    padding: 18px; display: flex; flex-direction: column; gap: 12px;
+    border-left-width: 4px; border-left-style: solid;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .card-name { font-size: 15px; font-weight: 700; color: #e6edf3; }
+  .card-desc { font-size: 12px; color: #8b949e; line-height: 1.5; flex: 1; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 3px 9px; border-radius: 20px; background: #0d1117; border: 1px solid #30363d; color: #8b949e; }
+  .card-btn {
+    display: block; width: 100%; padding: 10px;
+    border: none; border-radius: 8px; cursor: pointer;
+    font-size: 13px; font-weight: 600; color: #fff; text-align: center;
+    transition: opacity 0.2s; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  .card-btn:hover { opacity: 0.85; text-decoration: none; }
 
-    .nav-links a.active {
-      color: #e6edf3;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      text-align: center;
-      padding: 4rem 2rem 3rem;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      font-weight: 800;
-      color: #e6edf3;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-    }
-
-    .hero p {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      color: #8b949e;
-      margin-bottom: 2rem;
-    }
-
-    .accent-line {
-      height: 3px;
-      width: 180px;
-      margin: 0 auto;
-      border-radius: 99px;
-      background: linear-gradient(90deg, #9b59b6, #1abc9c);
-    }
-
-    /* ── SECTION LABELS ── */
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #484f58;
-      margin-bottom: 1.25rem;
-    }
-
-    /* ── TOOL GRID ── */
-    .tools-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem 3rem;
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.25rem;
-    }
-
-    .card {
-      background-color: #161b22;
-      border: 1px solid #21262d;
-      border-radius: 10px;
-      border-left: 4px solid var(--accent);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-      border-left-color: var(--accent);
-    }
-
-    .card-icon {
-      font-size: 2.25rem;
-      line-height: 1;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #e6edf3;
-    }
-
-    .card-desc {
-      font-size: 0.875rem;
-      color: #8b949e;
-      line-height: 1.55;
-      flex: 1;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .tag {
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 99px;
-      background-color: rgba(255,255,255,0.06);
-      color: #8b949e;
-      border: 1px solid #30363d;
-      letter-spacing: 0.03em;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 0.25rem;
-      padding: 0.5rem 1.1rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #e6edf3;
-      background-color: rgba(255,255,255,0.06);
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background-color 0.18s, border-color 0.18s, color 0.18s;
-      align-self: flex-start;
-    }
-
-    .btn:hover {
-      background-color: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    /* ── QUICK TIPS ── */
-    .tips-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem 3rem;
-    }
-
-    .tips-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-
-    .tip-card {
-      background-color: #161b22;
-      border: 1px solid #21262d;
-      border-radius: 10px;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .tip-number {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #484f58;
-    }
-
-    .tip-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #e6edf3;
-    }
-
-    .tip-desc {
-      font-size: 0.85rem;
-      color: #8b949e;
-    }
-
-    .tip-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #9b59b6, #1abc9c);
-      margin-bottom: 0.25rem;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid #21262d;
-      text-align: center;
-      padding: 1.75rem 2rem;
-      font-size: 0.8rem;
-      color: #484f58;
-      letter-spacing: 0.03em;
-    }
-
-    footer span {
-      color: #30363d;
-      margin: 0 0.5rem;
-    }
-  </style>
+  /* Footer */
+  .footer {
+    background: #161b22; border-top: 1px solid #30363d;
+    text-align: center; padding: 32px 24px;
+    color: #8b949e; font-size: 13px; line-height: 1.8;
+  }
+  .footer a { color: #7c6fff; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-count { display: inline-block; margin-top: 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-brand">3D Mastery Hub</div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="Blender_Guide.html">Blender</a></li>
-      <li><a href="Fusion360_Guide.html">Fusion 360</a></li>
-      <li><a href="zbrush_guide.html">ZBrush</a></li>
-      <li><a href="inkscape_guide.html">Inkscape</a></li>
-      <li><a href="meshmixer_guide.html">Meshmixer</a></li>
-    </ul>
-  </nav>
+<!-- Navbar -->
+<nav class="navbar">
+  <span class="navbar-brand">🎨 3D Mastery Hub</span>
+  <span class="navbar-count">30 Guides</span>
+</nav>
 
-  <!-- HERO -->
-  <header class="hero">
-    <h1>3D Modeling Mastery Hub</h1>
-    <p>Your complete offline reference for professional 3D tools</p>
-    <div class="accent-line"></div>
-  </header>
+<!-- Hero -->
+<section class="hero">
+  <h1>The Complete <span>3D Modeling</span><br>Reference Hub</h1>
+  <p>Shortcuts, workflows, and tool guides for every major 3D app — fully offline, no account needed.</p>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search guides… e.g. Blender, ZBrush, Cura" onkeydown="handleSearch(event)" />
+    <button onclick="doSearch()">→</button>
+  </div>
+</section>
 
-  <!-- TOOL CARDS -->
-  <section class="tools-section">
-    <p class="section-label">Tool Guides</p>
-    <div class="tools-grid">
+<main class="main">
 
-      <!-- Blender -->
-      <div class="card" style="--accent: #7c6fff;">
-        <div class="card-icon">🎨</div>
-        <div class="card-title">Blender</div>
-        <div class="card-desc">Open-source 3D creation suite for modeling, animation &amp; rendering</div>
-        <div class="tags">
-          <span class="tag">Modeling</span>
-          <span class="tag">Animation</span>
-          <span class="tag">Rendering</span>
-        </div>
-        <a class="btn" href="Blender_Guide.html">Open Guide →</a>
+  <!-- 1. 3D Modeling -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#7c6fff;">
+      <span class="category-title">🎨 3D Modeling</span>
+      <span class="category-count">7 apps</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">Blender</div>
+        <div class="card-desc">Free open-source powerhouse. Modeling, sculpting, rigging, rendering, compositing and more.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">Modeling</span><span class="tag">Rendering</span></div>
+        <a href="Blender_Guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
       </div>
-
-      <!-- Fusion 360 -->
-      <div class="card" style="--accent: #2daa6b;">
-        <div class="card-icon">📐</div>
-        <div class="card-title">Autodesk Fusion 360</div>
-        <div class="card-desc">Professional CAD/CAM for engineering, product design &amp; manufacturing</div>
-        <div class="tags">
-          <span class="tag">CAD</span>
-          <span class="tag">Engineering</span>
-          <span class="tag">CAM</span>
-        </div>
-        <a class="btn" href="Fusion360_Guide.html">Open Guide →</a>
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">Cinema 4D</div>
+        <div class="card-desc">Motion graphics and 3D design. Industry standard for broadcast and product visualization.</div>
+        <div class="card-tags"><span class="tag">Motion Graphics</span><span class="tag">MoGraph</span><span class="tag">Rendering</span></div>
+        <a href="cinema4d_guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
       </div>
-
-      <!-- ZBrush -->
-      <div class="card" style="--accent: #ff6b35;">
-        <div class="card-icon">🗿</div>
-        <div class="card-title">ZBrush</div>
-        <div class="card-desc">Industry-standard digital sculpting for characters, creatures &amp; details</div>
-        <div class="tags">
-          <span class="tag">Sculpting</span>
-          <span class="tag">Characters</span>
-          <span class="tag">Texturing</span>
-        </div>
-        <a class="btn" href="zbrush_guide.html">Open Guide →</a>
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">Maya</div>
+        <div class="card-desc">Autodesk's industry-standard for film, VFX, and game character production pipelines.</div>
+        <div class="card-tags"><span class="tag">Film/VFX</span><span class="tag">Rigging</span><span class="tag">Animation</span></div>
+        <a href="maya_guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
       </div>
-
-      <!-- Inkscape -->
-      <div class="card" style="--accent: #9b59b6;">
-        <div class="card-icon">✏️</div>
-        <div class="card-title">Inkscape</div>
-        <div class="card-desc">Free vector graphics editor for concept art, textures &amp; reference sheets</div>
-        <div class="tags">
-          <span class="tag">Vector</span>
-          <span class="tag">2D</span>
-          <span class="tag">Concept Art</span>
-        </div>
-        <a class="btn" href="inkscape_guide.html">Open Guide →</a>
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">3ds Max</div>
+        <div class="card-desc">Autodesk's powerhouse for architectural visualization, game assets, and product rendering.</div>
+        <div class="card-tags"><span class="tag">Arch-Viz</span><span class="tag">Game Assets</span><span class="tag">Modifiers</span></div>
+        <a href="3dsmax_guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
       </div>
-
-      <!-- Meshmixer -->
-      <div class="card" style="--accent: #e67e22;">
-        <div class="card-icon">🖨️</div>
-        <div class="card-title">Meshmixer</div>
-        <div class="card-desc">Mesh repair, hollowing, support generation &amp; 3D print optimization</div>
-        <div class="tags">
-          <span class="tag">3D Print</span>
-          <span class="tag">Repair</span>
-          <span class="tag">Boolean</span>
-        </div>
-        <a class="btn" href="meshmixer_guide.html">Open Guide →</a>
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">Houdini</div>
+        <div class="card-desc">Procedural 3D for VFX, simulations, destruction, fluids and complex motion pipelines.</div>
+        <div class="card-tags"><span class="tag">Procedural</span><span class="tag">VFX</span><span class="tag">Simulation</span></div>
+        <a href="houdini_guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
       </div>
-
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">SketchUp</div>
+        <div class="card-desc">Fast architectural and interior design modeling. Push/pull workflow ideal for buildings and spaces.</div>
+        <div class="card-tags"><span class="tag">Architecture</span><span class="tag">Interior Design</span><span class="tag">Fast</span></div>
+        <a href="sketchup_guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#7c6fff;">
+        <div class="card-name">Plasticity</div>
+        <div class="card-desc">Modern CAD-style hard-surface modeling with a Blender-like feel. NURBS-based, game-dev friendly.</div>
+        <div class="card-tags"><span class="tag">Hard Surface</span><span class="tag">NURBS</span><span class="tag">CAD</span></div>
+        <a href="plasticity_guide.html" class="card-btn" style="background:#7c6fff;">Open Guide →</a>
+      </div>
     </div>
   </section>
 
-  <!-- QUICK TIPS -->
-  <section class="tips-section">
-    <p class="section-label">Quick Start Tips</p>
-    <div class="tips-grid">
-
-      <div class="tip-card">
-        <div class="tip-dot"></div>
-        <div class="tip-number">Tip 01</div>
-        <div class="tip-title">Start in Blender</div>
-        <div class="tip-desc">Best free all-rounder for beginners — covers modeling, rigging, animation, and rendering in one app.</div>
+  <!-- 2. CAD & Engineering -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#2daa6b;">
+      <span class="category-title">📐 CAD &amp; Engineering</span>
+      <span class="category-count">7 apps</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">Fusion 360</div>
+        <div class="card-desc">Autodesk's cloud CAD for parametric modeling, simulation, and CAM toolpath generation.</div>
+        <div class="card-tags"><span class="tag">Parametric</span><span class="tag">CAM</span><span class="tag">Simulation</span></div>
+        <a href="Fusion360_Guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
       </div>
-
-      <div class="tip-card">
-        <div class="tip-dot"></div>
-        <div class="tip-number">Tip 02</div>
-        <div class="tip-title">Sculpt in ZBrush</div>
-        <div class="tip-desc">Industry standard for characters — unmatched brush feel, subdivision workflow, and detail density.</div>
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">FreeCAD</div>
+        <div class="card-desc">Free open-source parametric CAD. Constraint-based part design with full Python scripting.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">Parametric</span><span class="tag">Open Source</span></div>
+        <a href="freecad_guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
       </div>
-
-      <div class="tip-card">
-        <div class="tip-dot"></div>
-        <div class="tip-number">Tip 03</div>
-        <div class="tip-title">Engineer in Fusion 360</div>
-        <div class="tip-desc">Parametric CAD for real-world parts — history-based sketches, assemblies, and direct manufacturing export.</div>
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">Rhino 3D</div>
+        <div class="card-desc">NURBS surface modeling for industrial design, jewelry, architecture, and product development.</div>
+        <div class="card-tags"><span class="tag">NURBS</span><span class="tag">Industrial</span><span class="tag">Jewelry</span></div>
+        <a href="rhino_guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
       </div>
-
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">OpenSCAD</div>
+        <div class="card-desc">Code-based parametric 3D. Define geometry with script — perfect for engineers and makers.</div>
+        <div class="card-tags"><span class="tag">Code-Based</span><span class="tag">Parametric</span><span class="tag">Maker</span></div>
+        <a href="openscad_guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">Tinkercad</div>
+        <div class="card-desc">Browser-based beginner CAD. Drag-and-drop shapes make it ideal for students and first-timers.</div>
+        <div class="card-tags"><span class="tag">Beginner</span><span class="tag">Browser</span><span class="tag">Education</span></div>
+        <a href="tinkercad_guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">SolidWorks</div>
+        <div class="card-desc">Professional parametric CAD for mechanical engineering, assemblies, and manufacturing drawings.</div>
+        <div class="card-tags"><span class="tag">Professional</span><span class="tag">Assemblies</span><span class="tag">Manufacturing</span></div>
+        <a href="solidworks_guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#2daa6b;">
+        <div class="card-name">Onshape</div>
+        <div class="card-desc">Full cloud-native parametric CAD with real-time collaboration. No install required.</div>
+        <div class="card-tags"><span class="tag">Cloud</span><span class="tag">Collaboration</span><span class="tag">Parametric</span></div>
+        <a href="onshape_guide.html" class="card-btn" style="background:#2daa6b;">Open Guide →</a>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    Works fully offline
-    <span>·</span>
-    Open source
-    <span>·</span>
-    No login required
-  </footer>
+  <!-- 3. Sculpting -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#ff6b35;">
+      <span class="category-title">🗿 Sculpting</span>
+      <span class="category-count">5 apps</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#ff6b35;">
+        <div class="card-name">ZBrush</div>
+        <div class="card-desc">Industry-leading digital sculpting for film, games, and collectibles. Subdivision-based detail.</div>
+        <div class="card-tags"><span class="tag">Film/Games</span><span class="tag">High Detail</span><span class="tag">Industry Std</span></div>
+        <a href="zbrush_guide.html" class="card-btn" style="background:#ff6b35;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#ff6b35;">
+        <div class="card-name">Nomad Sculpt</div>
+        <div class="card-desc">Professional iPad sculpting app. ZBrush-level power in a mobile-first touch interface.</div>
+        <div class="card-tags"><span class="tag">iPad</span><span class="tag">Touch</span><span class="tag">Mobile</span></div>
+        <a href="nomad_guide.html" class="card-btn" style="background:#ff6b35;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#ff6b35;">
+        <div class="card-name">3D Coat</div>
+        <div class="card-desc">Voxel sculpting, retopology tools, UV unwrapping, and texture painting in one package.</div>
+        <div class="card-tags"><span class="tag">Voxel</span><span class="tag">Retopology</span><span class="tag">UV Tools</span></div>
+        <a href="3dcoat_guide.html" class="card-btn" style="background:#ff6b35;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#ff6b35;">
+        <div class="card-name">Mudbox</div>
+        <div class="card-desc">Autodesk's digital painting and sculpting app, tightly integrated with Maya pipeline.</div>
+        <div class="card-tags"><span class="tag">Autodesk</span><span class="tag">Painting</span><span class="tag">Maya Pipeline</span></div>
+        <a href="mudbox_guide.html" class="card-btn" style="background:#ff6b35;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#ff6b35;">
+        <div class="card-name">Sculptris</div>
+        <div class="card-desc">Free beginner sculpting from Pixologic. Dynamic tessellation makes it ideal as a ZBrush gateway.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">Beginner</span><span class="tag">ZBrush Intro</span></div>
+        <a href="sculptris_guide.html" class="card-btn" style="background:#ff6b35;">Open Guide →</a>
+      </div>
+    </div>
+  </section>
 
+  <!-- 4. 3D Printing & Slicers -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#e74c3c;">
+      <span class="category-title">🖨️ 3D Printing &amp; Slicers</span>
+      <span class="category-count">8 apps</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">Meshmixer</div>
+        <div class="card-desc">Free mesh repair, hollowing, supports, and sculpting from Autodesk. Print prep specialist.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">Mesh Repair</span><span class="tag">Print Prep</span></div>
+        <a href="meshmixer_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">PrusaSlicer</div>
+        <div class="card-desc">Open-source FDM slicer from Prusa Research. Powerful supports, variable layer heights, multi-material.</div>
+        <div class="card-tags"><span class="tag">FDM</span><span class="tag">Open Source</span><span class="tag">Prusa</span></div>
+        <a href="prusaslicer_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">Ultimaker Cura</div>
+        <div class="card-desc">Most widely used FDM slicer. Huge plugin ecosystem, profile library for 400+ printers.</div>
+        <div class="card-tags"><span class="tag">FDM</span><span class="tag">Plugins</span><span class="tag">Beginner Friendly</span></div>
+        <a href="cura_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">Bambu Studio</div>
+        <div class="card-desc">Official slicer for Bambu Lab printers. AMS multi-color support, fast cloud slicing.</div>
+        <div class="card-tags"><span class="tag">Bambu Lab</span><span class="tag">Multi-Color</span><span class="tag">AMS</span></div>
+        <a href="bambu_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">ChiTuBox</div>
+        <div class="card-desc">Leading resin (MSLA/DLP) slicer. Hollow, drain holes, auto-supports for resin printers.</div>
+        <div class="card-tags"><span class="tag">Resin</span><span class="tag">MSLA</span><span class="tag">Supports</span></div>
+        <a href="chitubox_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">Lychee Slicer</div>
+        <div class="card-desc">Advanced resin slicer with AI auto-supports, island detection, and scene analysis.</div>
+        <div class="card-tags"><span class="tag">Resin</span><span class="tag">AI Supports</span><span class="tag">Analysis</span></div>
+        <a href="lychee_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">OrcaSlicer</div>
+        <div class="card-desc">Open-source fork of Bambu Studio. Works with any FDM printer, adds calibration tools.</div>
+        <div class="card-tags"><span class="tag">FDM</span><span class="tag">Open Source</span><span class="tag">Calibration</span></div>
+        <a href="orcaslicer_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#e74c3c;">
+        <div class="card-name">MeshLab</div>
+        <div class="card-desc">Open-source mesh processing: clean, repair, remesh, simplify, measure and convert 3D files.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">Mesh Repair</span><span class="tag">Remesh</span></div>
+        <a href="meshlab_guide.html" class="card-btn" style="background:#e74c3c;">Open Guide →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. HueForge -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#e91e63;">
+      <span class="category-title">🌈 HueForge &amp; Multi-Color</span>
+      <span class="category-count">1 app</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#e91e63;">
+        <div class="card-name">HueForge</div>
+        <div class="card-desc">Convert images into multi-filament 3D prints. Calculates layer heights per color for photo-realistic lithophane prints.</div>
+        <div class="card-tags"><span class="tag">Multi-Color</span><span class="tag">Filament Art</span><span class="tag">Image Conversion</span></div>
+        <a href="hueforge_guide.html" class="card-btn" style="background:#e91e63;">Open Guide →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Texturing & Painting -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#3498db;">
+      <span class="category-title">🎨 Texturing &amp; Painting</span>
+      <span class="category-count">5 apps</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#3498db;">
+        <div class="card-name">Substance Painter</div>
+        <div class="card-desc">Industry-standard PBR texture painting. Smart masks, procedural generators, real-time baking.</div>
+        <div class="card-tags"><span class="tag">PBR</span><span class="tag">Smart Masks</span><span class="tag">Industry Std</span></div>
+        <a href="substance_painter_guide.html" class="card-btn" style="background:#3498db;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#3498db;">
+        <div class="card-name">Substance Designer</div>
+        <div class="card-desc">Node-based procedural material authoring. Create tileable textures and full PBR material graphs.</div>
+        <div class="card-tags"><span class="tag">Procedural</span><span class="tag">Node-Based</span><span class="tag">Materials</span></div>
+        <a href="substance_designer_guide.html" class="card-btn" style="background:#3498db;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#3498db;">
+        <div class="card-name">Krita</div>
+        <div class="card-desc">Free open-source digital painting. Professional brush engine, great for concept art and textures.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">Painting</span><span class="tag">Concept Art</span></div>
+        <a href="krita_guide.html" class="card-btn" style="background:#3498db;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#3498db;">
+        <div class="card-name">Marmoset Toolbag</div>
+        <div class="card-desc">Real-time rendering, baking, and texture presentation. Portfolio-quality renders from game assets.</div>
+        <div class="card-tags"><span class="tag">Real-Time</span><span class="tag">Baking</span><span class="tag">Portfolio</span></div>
+        <a href="marmoset_guide.html" class="card-btn" style="background:#3498db;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#3498db;">
+        <div class="card-name">3D Coat</div>
+        <div class="card-desc">Voxel sculpting, retopology, UV tools, and full texture painting suite in one package.</div>
+        <div class="card-tags"><span class="tag">Voxel</span><span class="tag">UV Tools</span><span class="tag">Painting</span></div>
+        <a href="3dcoat_guide.html" class="card-btn" style="background:#3498db;">Open Guide →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Vector & 2D -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#9b59b6;">
+      <span class="category-title">✏️ Vector &amp; 2D</span>
+      <span class="category-count">3 apps</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#9b59b6;">
+        <div class="card-name">Inkscape</div>
+        <div class="card-desc">Free open-source vector editor. SVG-native, ideal for logos, decals, laser cutting, and CNC paths.</div>
+        <div class="card-tags"><span class="tag">Free</span><span class="tag">SVG</span><span class="tag">Laser/CNC</span></div>
+        <a href="inkscape_guide.html" class="card-btn" style="background:#9b59b6;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#9b59b6;">
+        <div class="card-name">Affinity Designer</div>
+        <div class="card-desc">Professional vector and raster design. One-time purchase with three personas (Vector, Pixel, Export).</div>
+        <div class="card-tags"><span class="tag">One-Time Buy</span><span class="tag">Vector</span><span class="tag">Raster</span></div>
+        <a href="affinity_guide.html" class="card-btn" style="background:#9b59b6;">Open Guide →</a>
+      </div>
+      <div class="card" style="border-left-color:#9b59b6;">
+        <div class="card-name">Adobe Illustrator</div>
+        <div class="card-desc">Industry-standard vector graphics for logos, icons, decals, and pattern design for 3D surfaces.</div>
+        <div class="card-tags"><span class="tag">Industry Std</span><span class="tag">Vector</span><span class="tag">Adobe CC</span></div>
+        <a href="illustrator_guide.html" class="card-btn" style="background:#9b59b6;">Open Guide →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Simulation -->
+  <section class="category">
+    <div class="category-header" style="border-bottom-color:#1abc9c;">
+      <span class="category-title">👗 Simulation</span>
+      <span class="category-count">1 app</span>
+    </div>
+    <div class="app-grid">
+      <div class="card" style="border-left-color:#1abc9c;">
+        <div class="card-name">Marvelous Designer</div>
+        <div class="card-desc">Cloth simulation and garment creation. Design real sewing patterns that drape realistically on 3D avatars.</div>
+        <div class="card-tags"><span class="tag">Cloth Sim</span><span class="tag">Garments</span><span class="tag">Fashion</span></div>
+        <a href="marvelous_guide.html" class="card-btn" style="background:#1abc9c;">Open Guide →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div>Built for 3D artists worldwide &nbsp;·&nbsp; Fully offline capable &nbsp;·&nbsp; <a href="https://github.com/kumarprem886/3d-modeling-guides" target="_blank">Open source on GitHub</a></div>
+  <div class="footer-count">30 Guides across 8 Categories</div>
+</footer>
+
+<script>
+function handleSearch(e) {
+  if (e.key === 'Enter') doSearch();
+}
+function doSearch() {
+  var q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) {
+    document.querySelectorAll('.card').forEach(function(c) { c.style.outline = ''; });
+    return;
+  }
+  var cards = document.querySelectorAll('.card');
+  var firstMatch = null;
+  cards.forEach(function(card) {
+    var text = card.textContent.toLowerCase();
+    if (text.includes(q)) {
+      card.style.outline = '2px solid #7c6fff';
+      card.style.outlineOffset = '2px';
+      if (!firstMatch) firstMatch = card;
+    } else {
+      card.style.outline = '';
+    }
+  });
+  if (firstMatch) {
+    firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    cards.forEach(function(c) { c.style.outline = ''; });
+    alert('No guides found for "' + q + '"');
+  }
+}
+</script>
 </body>
 </html>

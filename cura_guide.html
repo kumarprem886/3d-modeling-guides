@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimaker Cura — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; min-height: 100vh; }
+
+  /* NAV */
+  nav { background: #003a7a; color: #fff; display: flex; align-items: center; padding: 0 20px; height: 54px; gap: 16px; position: sticky; top: 0; z-index: 100; }
+  nav a.back { color: #b8d0ff; text-decoration: none; font-size: 0.9rem; white-space: nowrap; flex-shrink: 0; }
+  nav a.back:hover { color: #fff; text-decoration: underline; }
+  nav .nav-title { font-size: 1rem; font-weight: 600; color: #fff; flex: 1; text-align: center; padding-right: 80px; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 4px; background: #0057b8; width: 100%; }
+
+  /* HERO */
+  .hero { background: #003a7a; color: #fff; padding: 28px 24px 24px; }
+  .hero h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 0.95rem; opacity: 0.85; }
+
+  /* TABS */
+  .tab-bar { background: #002a5c; display: flex; gap: 2px; padding: 0 16px; overflow-x: auto; flex-wrap: nowrap; }
+  .tab-btn { background: transparent; border: none; color: #b8d0ff; padding: 12px 16px; cursor: pointer; font-size: 0.85rem; font-family: inherit; white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .tab-btn:hover { color: #fff; }
+  .tab-btn.active { color: #fff; border-bottom-color: #66aaff; font-weight: 600; }
+
+  /* CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title { font-size: 1.1rem; font-weight: 700; color: #003a7a; margin: 0 0 14px; border-bottom: 2px solid #b8d0e8; padding-bottom: 6px; }
+
+  /* SHORTCUT / INFO ROWS */
+  .row-list { list-style: none; margin-bottom: 20px; border: 1px solid #ccdaed; border-radius: 8px; overflow: hidden; }
+  .row-list li { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #fff; border-bottom: 1px solid #e8f0f8; gap: 12px; }
+  .row-list li:last-child { border-bottom: none; }
+  .row-list li:nth-child(even) { background: #f7faff; }
+  .row-desc { font-size: 0.9rem; color: #333; flex: 1; }
+  kbd { display: inline-block; background: #edf2fa; border: 1px solid #b0c4de; border-bottom: 3px solid #8aaac8; border-radius: 5px; padding: 2px 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.8rem; color: #002060; white-space: nowrap; }
+  .row-val { font-size: 0.85rem; color: #003a7a; font-weight: 600; white-space: nowrap; }
+
+  /* TIP BOXES */
+  .box { border-radius: 7px; padding: 12px 16px; margin-bottom: 14px; font-size: 0.88rem; line-height: 1.5; border-left: 4px solid; }
+  .box strong { display: block; margin-bottom: 3px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .box-tip { background: #f0faf0; border-color: #2d8a2d; color: #1a4d1a; }
+  .box-tip strong { color: #2d8a2d; }
+  .box-warn { background: #fffbea; border-color: #c8960a; color: #4d3800; }
+  .box-warn strong { color: #a07800; }
+  .box-danger { background: #fff0f0; border-color: #c82d2d; color: #4d0000; }
+  .box-danger strong { color: #c82d2d; }
+  .box-info { background: #eef4ff; border-color: #2d6abf; color: #0a2d5c; }
+  .box-info strong { color: #2d6abf; }
+
+  /* NUMBERED STEPS */
+  .steps { padding-left: 0; list-style: none; margin-bottom: 20px; counter-reset: step-counter; }
+  .steps li { counter-increment: step-counter; display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; background: #fff; border: 1px solid #ccdaed; border-bottom: none; font-size: 0.9rem; line-height: 1.5; }
+  .steps li:first-child { border-radius: 8px 8px 0 0; }
+  .steps li:last-child { border-bottom: 1px solid #ccdaed; border-radius: 0 0 8px 8px; }
+  .steps li::before { content: counter(step-counter); background: #003a7a; color: #fff; font-weight: 700; font-size: 0.8rem; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back" href="index.html">&#8592; Back to Hub</a>
+  <span class="nav-title">Ultimaker Cura — Complete Guide</span>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="hero">
+  <h1>Ultimaker Cura — Complete Guide</h1>
+  <p>Most Popular FDM Slicer — Free for Any Printer</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(event,'tab1')">Navigation &amp; Interface</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab2')">Key Print Settings</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab3')">Support &amp; Special Tools</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab4')">Advanced &amp; Plugins</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab5')">All Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab6')">Workflow — Optimize for Quality</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1 -->
+  <div id="tab1" class="tab-panel active">
+    <p class="section-title">Navigation &amp; Interface Shortcuts</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Orbit (default)</span><kbd>LMB drag</kbd></li>
+      <li><span class="row-desc">Pan</span><kbd>MMB drag</kbd></li>
+      <li><span class="row-desc">Zoom</span><kbd>Scroll wheel</kbd></li>
+      <li><span class="row-desc">Fit to view</span><kbd>F</kbd></li>
+      <li><span class="row-desc">Open file</span><kbd>Ctrl+O</kbd></li>
+      <li><span class="row-desc">Undo</span><kbd>Ctrl+Z</kbd></li>
+      <li><span class="row-desc">Redo</span><kbd>Ctrl+Y</kbd></li>
+    </ul>
+    <div class="box box-info"><strong>Info</strong>Right panel toggles between Recommended and Custom settings. Switch to Custom for full control.</div>
+    <div class="box box-info"><strong>Info</strong>Marketplace (Ctrl+M): install printer profiles, plugins, and material settings.</div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div id="tab2" class="tab-panel">
+    <p class="section-title">Key Print Settings</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Layer height — fine</span><span class="row-val">0.12mm</span></li>
+      <li><span class="row-desc">Layer height — normal</span><span class="row-val">0.2mm</span></li>
+      <li><span class="row-desc">Layer height — fast</span><span class="row-val">0.28mm</span></li>
+      <li><span class="row-desc">Wall count</span><span class="row-val">3 (recommended)</span></li>
+      <li><span class="row-desc">Top/bottom layers</span><span class="row-val">4 layers min</span></li>
+      <li><span class="row-desc">Top/bottom thickness</span><span class="row-val">0.8mm min</span></li>
+      <li><span class="row-desc">Infill — standard</span><span class="row-val">20%</span></li>
+      <li><span class="row-desc">Infill — mechanical</span><span class="row-val">40%+</span></li>
+      <li><span class="row-desc">Infill pattern</span><span class="row-val">Grid / Gyroid / Lightning</span></li>
+      <li><span class="row-desc">Print speed — standard</span><span class="row-val">50mm/s</span></li>
+      <li><span class="row-desc">Print speed — fast printers</span><span class="row-val">100mm/s+</span></li>
+      <li><span class="row-desc">Cooling — PLA</span><span class="row-val">100% fan</span></li>
+      <li><span class="row-desc">Cooling — ABS/ASA</span><span class="row-val">0–50% fan</span></li>
+    </ul>
+    <div class="box box-tip"><strong>Tip</strong>Tree Support is best for complex overhangs — leaves less scarring than normal support.</div>
+    <div class="box box-info"><strong>Info</strong>Build plate adhesion: Skirt = test, Brim = grip, Raft = maximum adhesion.</div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div id="tab3" class="tab-panel">
+    <p class="section-title">Support &amp; Special Tools</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Support overhang angle</span><span class="row-val">45° (default)</span></li>
+      <li><span class="row-desc">Support interface</span><span class="row-val">Enable for smoother separation</span></li>
+      <li><span class="row-desc">Support blocker</span><span class="row-val">Click model → Add Support Blocker</span></li>
+      <li><span class="row-desc">Per-model settings</span><span class="row-val">Right-click → Per Model Settings</span></li>
+    </ul>
+    <div class="box box-tip"><strong>Tip</strong>Use X-Ray view to check internal geometry and support placement before slicing.</div>
+    <div class="box box-info"><strong>Info</strong>Marketplace plugins: Custom Support, Mesh Tools, Calibration Shapes, Settings Guide.</div>
+    <div class="box box-info"><strong>Info</strong>Cut model at specific Z: Marketplace → Mesh Tools.</div>
+  </div>
+
+  <!-- TAB 4 -->
+  <div id="tab4" class="tab-panel">
+    <p class="section-title">Advanced &amp; Plugins</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Variable layer height</span><span class="row-val">Right-click → Adaptive Layers</span></li>
+      <li><span class="row-desc">Ironing (smooth tops)</span><span class="row-val">Experimental settings</span></li>
+      <li><span class="row-desc">Z-seam alignment</span><span class="row-val">Rear (most hidden)</span></li>
+      <li><span class="row-desc">Coasting</span><span class="row-val">Reduces blobs at end of moves</span></li>
+      <li><span class="row-desc">Combing</span><span class="row-val">Avoids crossing perimeters on travel</span></li>
+      <li><span class="row-desc">Retraction — Bowden</span><span class="row-val">1–6mm</span></li>
+      <li><span class="row-desc">Retraction — direct drive</span><span class="row-val">0.5–2mm</span></li>
+    </ul>
+    <div class="box box-tip"><strong>Tip</strong>Temperature tower: use Calibration Shapes plugin to find optimal temp for any filament.</div>
+    <div class="box box-warn"><strong>Warning</strong>Ironing significantly increases print time — only enable for visible top surfaces.</div>
+  </div>
+
+  <!-- TAB 5 -->
+  <div id="tab5" class="tab-panel">
+    <p class="section-title">All Shortcuts</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Undo</span><kbd>Ctrl+Z</kbd></li>
+      <li><span class="row-desc">Redo</span><kbd>Ctrl+Y</kbd></li>
+      <li><span class="row-desc">Save</span><kbd>Ctrl+S</kbd></li>
+      <li><span class="row-desc">Open file</span><kbd>Ctrl+O</kbd></li>
+      <li><span class="row-desc">Arrange all on plate</span><kbd>A</kbd></li>
+      <li><span class="row-desc">Delete selected</span><kbd>Delete</kbd></li>
+      <li><span class="row-desc">Select all</span><kbd>Ctrl+A</kbd></li>
+      <li><span class="row-desc">Open Marketplace</span><kbd>Ctrl+M</kbd></li>
+      <li><span class="row-desc">Slice / generate G-code</span><kbd>Ctrl+Shift+G</kbd></li>
+      <li><span class="row-desc">Solid view</span><kbd>S (left sidebar)</kbd></li>
+      <li><span class="row-desc">X-ray view</span><kbd>X (left sidebar)</kbd></li>
+      <li><span class="row-desc">Layers view</span><kbd>L (left sidebar)</kbd></li>
+      <li><span class="row-desc">Per model settings</span><kbd>RMB on model</kbd></li>
+    </ul>
+  </div>
+
+  <!-- TAB 6 -->
+  <div id="tab6" class="tab-panel">
+    <p class="section-title">Workflow — Optimize for Quality</p>
+    <ol class="steps">
+      <li>Install Cura, add printer (or select from 400+ built-in profiles).</li>
+      <li>Import STL. Place flat face on bed. Use Rotate (R) to orient.</li>
+      <li>Switch to Custom view. Set layer height, walls (3+), infill (20%).</li>
+      <li>Enable Tree Support if overhangs detected (check with X-Ray view).</li>
+      <li>Add Brim if print has small base footprint.</li>
+      <li>Slice → preview every layer with slider → look for any issues before printing.</li>
+      <li>Save to SD or send via OctoPrint/Klipper. Monitor first layers carefully.</li>
+    </ol>
+    <div class="box box-tip"><strong>Tip</strong>Use the layer preview slider to check support placement and infill pattern before committing to a print.</div>
+    <div class="box box-warn"><strong>Warning</strong>First layer is critical — if it doesn't stick properly, pause and re-level the bed before continuing.</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    e.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plasticity — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .top-nav { position: sticky; top: 0; z-index: 100; background: #3a004a; display: flex; align-items: center; padding: 0 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .nav-back { font-size: 0.9rem; color: #c080e0; white-space: nowrap; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+  .nav-title { flex: 1; text-align: center; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-spacer { width: 100px; }
+
+  .progress-bar { background: #1a1a24; border-bottom: 1px solid #2a2a3a; padding: 0.75rem 1.5rem; display: flex; align-items: center; }
+  .prog-level { flex: 1; text-align: center; font-size: 0.72rem; font-weight: 600; padding: 0.35rem 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .prog-beginner { background: linear-gradient(135deg, #1a4a1a, #1e5a1e); color: #6fcf6f; border-radius: 4px 0 0 4px; }
+  .prog-intermediate { background: linear-gradient(135deg, #4a3a00, #5a4a00); color: #f0c040; }
+  .prog-advanced { background: linear-gradient(135deg, #4a1a00, #5a2a00); color: #f08040; }
+  .prog-expert { background: linear-gradient(135deg, #3a0a4a, #4a1a5a); color: #c080f0; border-radius: 0 4px 4px 0; }
+
+  .tabs-wrap { background: #14141e; border-bottom: 1px solid #2a2a3a; padding: 0 1rem; display: flex; gap: 0.25rem; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: #888; font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.85rem 1.1rem; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #c080e0; border-bottom-color: #3a004a; }
+
+  .tab-content { display: none; padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .section-title { font-size: 1.3rem; font-weight: 700; color: #c080e0; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3a004a; }
+
+  .card { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #c080e0; margin-bottom: 0.85rem; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #222230; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { font-size: 0.9rem; color: #ccc; flex: 1; }
+  .shortcut-keys { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+  kbd { background: #252535; border: 1px solid #3a3a50; border-bottom: 3px solid #3a3a50; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.78rem; font-family: inherit; color: #e0e0e0; white-space: nowrap; }
+
+  .tip-box { border-radius: 6px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; border-left: 4px solid; }
+  .tip-box.tip { background: #0d2a0d; border-color: #2ea82e; color: #8de88d; }
+  .tip-box.warning { background: #2a2000; border-color: #c8a000; color: #f0d060; }
+  .tip-box.danger { background: #2a0800; border-color: #c83000; color: #f08060; }
+  .tip-box.info { background: #0a1a2a; border-color: #1a6ab0; color: #60a8e0; }
+  .tip-box strong { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  .workflow-steps { list-style: none; }
+  .workflow-step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #1e1e2a; }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #3a004a; color: #c080e0; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 0.9rem; color: #ccc; line-height: 1.6; padding-top: 0.3rem; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .top-nav { padding: 0 1rem; }
+    .nav-title { font-size: 0.9rem; }
+    .tab-content { padding: 1.25rem 1rem; }
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .shortcut-keys { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <div class="nav-title">Plasticity — Complete Guide</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="progress-bar">
+  <div class="prog-level prog-beginner">Beginner</div>
+  <div class="prog-level prog-intermediate">Intermediate</div>
+  <div class="prog-level prog-advanced">Advanced</div>
+  <div class="prog-level prog-expert">Expert</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="showTab('nav',this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('core',this)">Core Modeling</button>
+  <button class="tab-btn" onclick="showTab('edges',this)">Edge &amp; Vertex Tools</button>
+  <button class="tab-btn" onclick="showTab('shortcuts',this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('export',this)">Export &amp; Integration</button>
+  <button class="tab-btn" onclick="showTab('workflow',this)">Workflow</button>
+</div>
+
+<!-- TAB 1: NAVIGATION -->
+<div id="tab-nav" class="tab-content active">
+  <h2 class="section-title">Viewport Navigation</h2>
+  <div class="tip-box info"><strong>Info</strong>Plasticity uses a Blender-inspired navigation model with middle mouse drag for orbit. This makes it feel familiar to artists coming from Blender.</div>
+  <div class="card">
+    <div class="card-title">Core Navigation</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit viewport</span><span class="shortcut-keys"><kbd>MMB</kbd><span style="color:#666">drag</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan viewport</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom in/out</span><span class="shortcut-keys"><kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit selection in view</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit all in view</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Focus on selection</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle wireframe</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>W</kbd></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Numpad Views (Blender Convention)</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Front view</span><span class="shortcut-keys"><kbd>Num 1</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Right view</span><span class="shortcut-keys"><kbd>Num 3</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Top view</span><span class="shortcut-keys"><kbd>Num 7</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Camera / perspective</span><span class="shortcut-keys"><kbd>Num 0</kbd></span></div>
+  </div>
+</div>
+
+<!-- TAB 2: CORE MODELING -->
+<div id="tab-core" class="tab-content">
+  <h2 class="section-title">Core Modeling — NURBS for Artists</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Plasticity is NURBS-based CAD but designed for artists, not engineers. You don't need to worry about technical constraints — just model by feel, and the math handles precision automatically.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Primitive Creation</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add object menu (box, sphere, etc.)</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Draw NURBS curves</span><span class="shortcut-keys"><kbd>C</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create solid by drawing curves</span><span class="shortcut-keys"><kbd>N</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Face &amp; Surface Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude face or edge</span><span class="shortcut-keys"><kbd>E</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fill (create face from edge loop)</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Patch surface from curves</span><span class="shortcut-keys"><kbd>P</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Offset selected face outward/inward</span><span class="shortcut-keys"><kbd>O</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Shell (create thin-walled solid)</span><span class="shortcut-keys"><kbd>Shell Tool</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Advanced Surface Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Loft between multiple curves</span><span class="shortcut-keys"><kbd>Select curves → L</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pipe along curve</span><span class="shortcut-keys"><kbd>Draw curve → Shift+P</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Project curve onto surface (imprint)</span><span class="shortcut-keys"><kbd>Imprint</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Boolean Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Boolean Union (merge)</span><span class="shortcut-keys"><kbd>J</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Boolean Subtract (cut)</span><span class="shortcut-keys"><kbd>K</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Boolean Intersect (keep overlap)</span><span class="shortcut-keys"><kbd>L</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>Use boolean operations freely and early in the design process. Unlike polygon booleans in other apps, NURBS booleans in Plasticity produce clean, mathematically precise edges that fillet perfectly.</div>
+</div>
+
+<!-- TAB 3: EDGES -->
+<div id="tab-edges" class="tab-content">
+  <h2 class="section-title">Edge &amp; Vertex Tools</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Fillets in Plasticity are mathematically perfect NURBS curves — they won't break or pinch the way polygon bevels do in other software. Add fillets at the end of your modeling process after all major booleans are done.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Edge Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fillet edges (round them)</span><span class="shortcut-keys"><kbd>F</kbd><span style="color:#666">on selected edges</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Chamfer edges (flat bevel)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>F</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bridge two edge loops</span><span class="shortcut-keys"><kbd>B</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extend edge or surface</span><span class="shortcut-keys"><kbd>X</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Curve Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Imprint curve on surface</span><span class="shortcut-keys"><kbd>Imprint</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Insert point on curve</span><span class="shortcut-keys"><kbd>I</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rebuild for smoother NURBS</span><span class="shortcut-keys"><kbd>Rebuild Curve</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box warning"><strong>Warning</strong>Apply fillets after all boolean operations are complete. Adding fillets before booleans can cause geometry failures because the fillet edge topology may conflict with the boolean cutter path.</div>
+</div>
+
+<!-- TAB 4: SHORTCUTS -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2 class="section-title">All Shortcuts Reference</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">General</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Transform</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select tool</span><span class="shortcut-keys"><kbd>Q</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Grab / move</span><span class="shortcut-keys"><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate</span><span class="shortcut-keys"><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Constrain to X axis</span><span class="shortcut-keys"><kbd>X</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Constrain to Y axis</span><span class="shortcut-keys"><kbd>Y</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Constrain to Z axis</span><span class="shortcut-keys"><kbd>Z</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Selection</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cycle selection mode (vertex/edge/face/body)</span><span class="shortcut-keys"><kbd>Tab</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Vertex sub-object</span><span class="shortcut-keys"><kbd>1</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Edge sub-object</span><span class="shortcut-keys"><kbd>2</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Face sub-object</span><span class="shortcut-keys"><kbd>3</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Deselect</span><span class="shortcut-keys"><kbd>Escape</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Visibility &amp; Duplication</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hide selection</span><span class="shortcut-keys"><kbd>H</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Unhide all</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>H</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hide unselected</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>H</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>D</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate and move</span><span class="shortcut-keys"><kbd>Alt</kbd><span style="color:#666">+drag</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete with healing</span><span class="shortcut-keys"><kbd>Delete</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete without healing</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Delete</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: EXPORT -->
+<div id="tab-export" class="tab-content">
+  <h2 class="section-title">Export &amp; Integration</h2>
+  <div class="tip-box info"><strong>Info</strong>Plasticity is designed to sit at the beginning of a hard-surface pipeline. Model in Plasticity, detail in ZBrush, texture in Substance Painter — each tool at what it does best.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Export Formats</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export for Blender / game engines</span><span class="shortcut-keys"><kbd>File → Export → OBJ</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export for animation rigs</span><span class="shortcut-keys"><kbd>File → Export → FBX</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export for other CAD software</span><span class="shortcut-keys"><kbd>File → Export → STEP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export for legacy CAD systems</span><span class="shortcut-keys"><kbd>File → Export → IGES</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Target Application</div>
+      <div class="shortcut-row"><span class="shortcut-desc">To Blender (with N-gons → triangulate)</span><span class="shortcut-keys"><kbd>OBJ format</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">To Fusion 360 (exact NURBS)</span><span class="shortcut-keys"><kbd>STEP format</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">To ZBrush for sculpting</span><span class="shortcut-keys"><kbd>OBJ format</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">To Substance Painter for texturing</span><span class="shortcut-keys"><kbd>OBJ/FBX</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Blender Live Link</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Real-time sync with Blender</span><span class="shortcut-keys"><kbd>Plasticity Blender Plugin</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Update mesh in Blender on save</span><span class="shortcut-keys"><kbd>Auto-sync on Ctrl+S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Grid snapping in viewport</span><span class="shortcut-keys"><kbd>Toggle Snap in toolbar</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>STEP format preserves the NURBS data exactly — meaning Fusion 360, SolidWorks, or other CAD tools can open it with full parametric fidelity. For anything going to polygon-based tools, use OBJ or FBX.</div>
+</div>
+
+<!-- TAB 6: WORKFLOW -->
+<div id="tab-workflow" class="tab-content">
+  <h2 class="section-title">Hard Surface for Artists — Step by Step</h2>
+  <div class="tip-box info"><strong>Info</strong>Plasticity is best for hard-surface mechanical shapes: vehicles, weapons, sci-fi props, product design. Its NURBS foundation produces mathematically perfect curves and fillets that polygon modeling can never match.</div>
+  <ul class="workflow-steps">
+    <li class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Concept Silhouette:</strong> Sketch the concept silhouette or gather reference images. Plasticity is best for hard-surface shapes with clear mechanical forms. Import a reference image as a backdrop if needed to trace proportions.</div></li>
+    <li class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Block Primary Form:</strong> Use <kbd>Shift+A</kbd> to add primitive solids (box, cylinder, sphere). Combine them with boolean Union (<kbd>J</kbd>) and Subtract (<kbd>K</kbd>) to rough out the main shape. Work fast here — booleans are instant and reversible.</div></li>
+    <li class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Add Secondary Forms:</strong> Draw NURBS curves (<kbd>C</kbd>) to define complex profiles and sweeps. Use Loft (select curves → <kbd>L</kbd>) to create surfaces between curves. Use Pipe (<kbd>Shift+P</kbd>) to run tubes/cables along drawn paths.</div></li>
+    <li class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Fillet All Sharp Edges:</strong> Select edges and press <kbd>F</kbd> to fillet them. Drag to set the radius — Plasticity shows a live preview. Plasticity fillets are mathematically perfect NURBS curves, unlike polygon bevels that distort at corners.</div></li>
+    <li class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Export to Target App:</strong> File → Export → OBJ for Blender/ZBrush, or STEP for Fusion 360/other CAD. For Blender, use the Plasticity Live Link plugin for real-time sync — update geometry in Plasticity and it appears instantly in Blender.</div></li>
+    <li class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Texture &amp; Detail:</strong> In Blender, UV unwrap the OBJ and add modifiers (bevel, subdivision). Import into Substance Painter for PBR texturing. For organic surface detail (scratches, wear), take to ZBrush and use ZBrush's surface noise and polish tools.</div></li>
+  </ul>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

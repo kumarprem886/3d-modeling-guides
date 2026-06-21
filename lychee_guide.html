@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lychee Slicer — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; min-height: 100vh; }
+
+  /* NAV */
+  nav { background: #4a1a3a; color: #fff; display: flex; align-items: center; gap: 1.5rem; padding: 0 1.5rem; height: 52px; position: sticky; top: 0; z-index: 100; }
+  nav a { color: #e8c8e0; text-decoration: none; font-size: 0.875rem; white-space: nowrap; }
+  nav a:hover { color: #fff; }
+  .nav-title { font-size: 1rem; font-weight: 600; color: #fff; }
+  .nav-subtitle { font-size: 0.78rem; color: #c8a0bc; margin-top: 1px; }
+  .nav-text { display: flex; flex-direction: column; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 4px; background: #4a1a3a; width: 100%; }
+
+  /* TABS */
+  .tab-bar { background: #fff; border-bottom: 1px solid #e0e0e5; display: flex; overflow-x: auto; padding: 0 1.5rem; gap: 0; }
+  .tab-bar::-webkit-scrollbar { height: 0; }
+  .tab-btn { padding: 0.75rem 1.1rem; font-size: 0.85rem; font-weight: 500; color: #555; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+  .tab-btn:hover { color: #4a1a3a; }
+  .tab-btn.active { color: #4a1a3a; border-bottom-color: #4a1a3a; font-weight: 600; }
+
+  /* CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .panel-heading { font-size: 1.25rem; font-weight: 700; color: #4a1a3a; margin-bottom: 1.25rem; }
+
+  /* SHORTCUT ROWS */
+  .shortcut-list { display: flex; flex-direction: column; gap: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem; background: #fff; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid #ececec; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-row:nth-child(even) { background: #faf5f9; }
+  .shortcut-desc { font-size: 0.9rem; color: #333; }
+  kbd { background: #f0e8ef; border: 1px solid #c8a0bc; border-bottom-width: 2px; border-radius: 5px; padding: 0.18rem 0.55rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.8rem; color: #4a1a3a; white-space: nowrap; font-weight: 600; }
+
+  /* INFO ROWS (same style but value is text not kbd) */
+  .info-list { display: flex; flex-direction: column; gap: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem; background: #fff; }
+  .info-row { display: flex; align-items: flex-start; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid #ececec; gap: 1rem; }
+  .info-row:last-child { border-bottom: none; }
+  .info-row:nth-child(even) { background: #faf5f9; }
+  .info-key { font-size: 0.9rem; color: #333; flex-shrink: 0; }
+  .info-val { font-size: 0.85rem; color: #555; text-align: right; }
+
+  /* TIP BOXES */
+  .box { border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.55; }
+  .box-label { font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .box-tip { border-color: #2d8a4e; background: #edf7f1; color: #1a5c33; }
+  .box-tip .box-label { color: #2d8a4e; }
+  .box-warn { border-color: #b8860b; background: #fffbea; color: #6b4c00; }
+  .box-warn .box-label { color: #b8860b; }
+  .box-danger { border-color: #c0392b; background: #fdf0ee; color: #7b1a13; }
+  .box-danger .box-label { color: #c0392b; }
+  .box-info { border-color: #1a6fa8; background: #edf4fb; color: #0d3d63; }
+  .box-info .box-label { color: #1a6fa8; }
+
+  /* WORKFLOW STEPS */
+  .workflow-steps { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1rem 1.25rem 1rem 1.5rem; margin-bottom: 1.25rem; }
+  .workflow-steps ol { padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0; }
+  .workflow-steps li { font-size: 0.9rem; color: #333; padding: 0.55rem 0; border-bottom: 1px solid #ececec; line-height: 1.5; }
+  .workflow-steps li:last-child { border-bottom: none; }
+  .workflow-steps li::marker { color: #4a1a3a; font-weight: 700; }
+
+  /* SECTION LABEL */
+  .section-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #4a1a3a; margin-bottom: 0.5rem; margin-top: 1.25rem; }
+  .section-label:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">&#8592; Back to Hub</a>
+  <div class="nav-text">
+    <span class="nav-title">Lychee Slicer — Complete Guide</span>
+    <span class="nav-subtitle">Advanced Resin Slicer with Smart Supports &amp; Analysis</span>
+  </div>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(event,'tab-navigation')">Navigation</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-prepare')">Smart Prepare &amp; Orientation</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-supports')">Smart Supports</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-exposure')">Exposure &amp; Slice Settings</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-shortcuts')">All Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-workflow')">Workflow — Detailed Miniature</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation -->
+  <div class="tab-panel active" id="tab-navigation">
+    <div class="panel-heading">Navigation</div>
+    <div class="section-label">Viewport Controls</div>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><kbd>Alt + LMB</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan</span><kbd>Alt + MMB</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reset view</span><kbd>Home</kbd></div>
+    </div>
+    <div class="box box-info"><div class="box-label">Info</div>Lychee has 4 workflow stages: Prepare &rarr; Support &rarr; Slice &rarr; Export. Work left to right.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Smart analysis auto-detects problem areas with color coding (orange/red = needs attention).</div>
+  </div>
+
+  <!-- TAB 2: Smart Prepare & Orientation -->
+  <div class="tab-panel" id="tab-prepare">
+    <div class="panel-heading">Smart Prepare &amp; Orientation</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Auto-orient</span><span class="info-val">Prepare &rarr; Smart Auto-orient</span></div>
+      <div class="info-row"><span class="info-key">Orientation score</span><span class="info-val">Higher score = better orientation</span></div>
+      <div class="info-row"><span class="info-key">Hollow access</span><span class="info-val">Prepare &rarr; Hollow</span></div>
+      <div class="info-row"><span class="info-key">Hollow wall thickness</span><span class="info-val">Set in mm, add drain holes</span></div>
+      <div class="info-row"><span class="info-key">Cut model</span><span class="info-val">Split for multi-plate printing</span></div>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>Lychee shows a numeric orientation score — keep adjusting until you get the highest possible score for your model.</div>
+    <div class="box box-warn"><div class="box-label">Warning</div>Always add drain holes when hollowing — trapped liquid resin inside can crack the model post-cure.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Visual analysis shows overhangs in orange/red — these areas need support coverage.</div>
+  </div>
+
+  <!-- TAB 3: Smart Supports -->
+  <div class="tab-panel" id="tab-supports">
+    <div class="panel-heading">Smart Supports</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Generate smart supports</span><span class="info-val">Support stage &rarr; Smart Support &rarr; Generate</span></div>
+      <div class="info-row"><span class="info-key">Support density</span><span class="info-val">Adjustable slider</span></div>
+      <div class="info-row"><span class="info-key">Support types</span><span class="info-val">Normal / Heavy / Light / Lattice</span></div>
+      <div class="info-row"><span class="info-key">Island detection</span><span class="info-val">Shows floating/unsupported areas</span></div>
+      <div class="info-row"><span class="info-key">Add individual support</span><span class="info-val">Click in 3D view (Support stage)</span></div>
+      <div class="info-row"><span class="info-key">Remove individual support</span><span class="info-val">Click existing support to delete</span></div>
+      <div class="info-row"><span class="info-key">Raft shape options</span><span class="info-val">Rectangle / Convex Hull / Perimeter</span></div>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>Lattice supports are excellent for miniatures — strong but easy to remove without scarring fine details.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Support preview updates live in 3D as you add or remove supports.</div>
+  </div>
+
+  <!-- TAB 4: Exposure & Slice Settings -->
+  <div class="tab-panel" id="tab-exposure">
+    <div class="panel-heading">Exposure &amp; Slice Settings</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Standard layer height</span><span class="info-val">0.05mm</span></div>
+      <div class="info-row"><span class="info-key">Ultra-detail layer height</span><span class="info-val">0.025mm</span></div>
+      <div class="info-row"><span class="info-key">Bottom layers</span><span class="info-val">4–6 layers</span></div>
+      <div class="info-row"><span class="info-key">Bottom exposure</span><span class="info-val">25–50 seconds</span></div>
+      <div class="info-row"><span class="info-key">Anti-aliasing</span><span class="info-val">4x or 8x for smooth edges</span></div>
+      <div class="info-row"><span class="info-key">Resin library</span><span class="info-val">500+ pre-tuned profiles</span></div>
+      <div class="info-row"><span class="info-key">Resin library search</span><span class="info-val">Select printer + brand &rarr; auto-fills exposure</span></div>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>Use the built-in exposure calibration matrix print to dial in your exact resin without guessing.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Lift speed: slow for detailed prints, faster for simple geometry — balance speed vs. suction forces.</div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div class="tab-panel" id="tab-shortcuts">
+    <div class="panel-heading">All Shortcuts</div>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><kbd>Ctrl + Z</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><kbd>Ctrl + Shift + Z</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><kbd>Ctrl + S</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><kbd>Ctrl + D</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete</span><kbd>Delete</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><kbd>Ctrl + A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Deselect</span><kbd>Escape</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add support manually</span><kbd>A (Support stage)</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Slice</span><kbd>G</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reset view</span><kbd>Home</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Solid view</span><kbd>Toolbar icon</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Transparent view</span><kbd>Toolbar icon</kbd></div>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div class="tab-panel" id="tab-workflow">
+    <div class="panel-heading">Workflow — Detailed Miniature</div>
+    <div class="workflow-steps">
+      <ol>
+        <li>Import miniature STL. Set scale — miniatures are typically 28mm or 75mm height.</li>
+        <li>Auto-orient using Smart Orient — aim for the highest possible score.</li>
+        <li>Hollow if large body (saves resin). Add 2mm drain holes at lowest back point.</li>
+        <li>Generate Smart Supports. Manually add supports to any red island areas.</li>
+        <li>Select your printer + resin from the library — exposure settings auto-fill.</li>
+        <li>Slice &rarr; Export to USB/SD in correct format for your printer.</li>
+        <li>Print, wash in IPA (magnetic washer ideal), UV cure 5–10 minutes.</li>
+      </ol>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>For miniatures, use 0.025–0.05mm layers and Light supports — the detail payoff is worth the extra time.</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    e.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+</body>
+</html>

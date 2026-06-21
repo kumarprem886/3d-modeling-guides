@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houdini — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .top-nav { position: sticky; top: 0; z-index: 100; background: #4a3000; display: flex; align-items: center; padding: 0 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .nav-back { font-size: 0.9rem; color: #f0c060; white-space: nowrap; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+  .nav-title { flex: 1; text-align: center; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-spacer { width: 100px; }
+
+  .progress-bar { background: #1a1a24; border-bottom: 1px solid #2a2a3a; padding: 0.75rem 1.5rem; display: flex; align-items: center; }
+  .prog-level { flex: 1; text-align: center; font-size: 0.72rem; font-weight: 600; padding: 0.35rem 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .prog-beginner { background: linear-gradient(135deg, #1a4a1a, #1e5a1e); color: #6fcf6f; border-radius: 4px 0 0 4px; }
+  .prog-intermediate { background: linear-gradient(135deg, #4a3a00, #5a4a00); color: #f0c040; }
+  .prog-advanced { background: linear-gradient(135deg, #4a1a00, #5a2a00); color: #f08040; }
+  .prog-expert { background: linear-gradient(135deg, #3a0a4a, #4a1a5a); color: #c080f0; border-radius: 0 4px 4px 0; }
+
+  .tabs-wrap { background: #14141e; border-bottom: 1px solid #2a2a3a; padding: 0 1rem; display: flex; gap: 0.25rem; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: #888; font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.85rem 1.1rem; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #f0a020; border-bottom-color: #4a3000; }
+
+  .tab-content { display: none; padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .section-title { font-size: 1.3rem; font-weight: 700; color: #f0a020; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #4a3000; }
+
+  .card { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #f0a020; margin-bottom: 0.85rem; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #222230; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { font-size: 0.9rem; color: #ccc; flex: 1; }
+  .shortcut-keys { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+  kbd { background: #252535; border: 1px solid #3a3a50; border-bottom: 3px solid #3a3a50; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.78rem; font-family: inherit; color: #e0e0e0; white-space: nowrap; }
+
+  .tip-box { border-radius: 6px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; border-left: 4px solid; }
+  .tip-box.tip { background: #0d2a0d; border-color: #2ea82e; color: #8de88d; }
+  .tip-box.warning { background: #2a2000; border-color: #c8a000; color: #f0d060; }
+  .tip-box.danger { background: #2a0800; border-color: #c83000; color: #f08060; }
+  .tip-box.info { background: #0a1a2a; border-color: #1a6ab0; color: #60a8e0; }
+  .tip-box strong { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  .workflow-steps { list-style: none; }
+  .workflow-step { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #1e1e2a; }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #4a3000; color: #f0a020; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 0.9rem; color: #ccc; line-height: 1.6; padding-top: 0.3rem; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+  code { background: #252535; padding: 0.1rem 0.35rem; border-radius: 3px; font-size: 0.85em; color: #f0c080; font-family: 'Courier New', monospace; }
+
+  @media (max-width: 600px) {
+    .top-nav { padding: 0 1rem; }
+    .nav-title { font-size: 0.9rem; }
+    .tab-content { padding: 1.25rem 1rem; }
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .shortcut-keys { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <div class="nav-title">Houdini — Complete Guide</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="progress-bar">
+  <div class="prog-level prog-beginner">Beginner</div>
+  <div class="prog-level prog-intermediate">Intermediate</div>
+  <div class="prog-level prog-advanced">Advanced</div>
+  <div class="prog-level prog-expert">Expert</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="showTab('nav',this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('nodes',this)">Node Paradigm</button>
+  <button class="tab-btn" onclick="showTab('sops',this)">SOP Nodes</button>
+  <button class="tab-btn" onclick="showTab('vex',this)">VEX &amp; Python</button>
+  <button class="tab-btn" onclick="showTab('dynamics',this)">Dynamics</button>
+  <button class="tab-btn" onclick="showTab('shortcuts',this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('workflow',this)">Workflow</button>
+</div>
+
+<!-- TAB 1: NAVIGATION -->
+<div id="tab-nav" class="tab-content active">
+  <h2 class="section-title">Viewport Navigation</h2>
+  <div class="tip-box info"><strong>Info</strong>Houdini uses Alt + mouse button for navigation, similar to Maya. The key difference: Alt+RMB is dolly (zoom), not a menu.</div>
+  <div class="card">
+    <div class="card-title">Core Navigation</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Tumble / orbit viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Track / pan viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Dolly / zoom viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>RMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit all in view</span><span class="shortcut-keys"><kbd>H</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit selected in view</span><span class="shortcut-keys"><kbd>G</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Frame selection</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Viewport &amp; Network</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Add node (search menu)</span><span class="shortcut-keys"><kbd>Tab</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Display options panel</span><span class="shortcut-keys"><kbd>D</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Stop cooking / simulation</span><span class="shortcut-keys"><kbd>Escape</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Go up one level in network</span><span class="shortcut-keys"><kbd>U</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Display mode 1-5</span><span class="shortcut-keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><kbd>5</kbd></span></div>
+  </div>
+</div>
+
+<!-- TAB 2: NODES -->
+<div id="tab-nodes" class="tab-content">
+  <h2 class="section-title">The Node-Based Paradigm</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Everything in Houdini is nodes. Geometry, animation, rendering, dynamics — all are node graphs. This is what makes Houdini infinitely procedural and repeatable.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Network Contexts</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Object level (scene root)</span><span class="shortcut-keys"><kbd>OBJ Level</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Geometry nodes (inside object)</span><span class="shortcut-keys"><kbd>SOP Level</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Simulation nodes</span><span class="shortcut-keys"><kbd>DOP Network</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Shader nodes</span><span class="shortcut-keys"><kbd>VOP Level</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render output nodes</span><span class="shortcut-keys"><kbd>out/ context</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Node Flags</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Display flag (what you see)</span><span class="shortcut-keys"><kbd>Eye icon</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render flag (what renders)</span><span class="shortcut-keys"><kbd>Star icon</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Template (reference geometry)</span><span class="shortcut-keys"><kbd>Footprint icon</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bypass node (skip it)</span><span class="shortcut-keys"><kbd>B</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Network Navigation</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Enter geometry node (SOP level)</span><span class="shortcut-keys"><kbd>Double-click</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Go up one level</span><span class="shortcut-keys"><kbd>U</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Connect nodes</span><span class="shortcut-keys"><kbd>Drag output → input</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Search and add any node</span><span class="shortcut-keys"><kbd>Tab</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>Think of each SOP node as a function that receives geometry in, transforms it, and passes the result out. The Display flag shows the result of that specific node in the viewport.</div>
+</div>
+
+<!-- TAB 3: SOPs -->
+<div id="tab-sops" class="tab-content">
+  <h2 class="section-title">SOP Nodes — Geometry Operations</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Core SOPs</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Move, rotate, scale geometry</span><span class="shortcut-keys"><kbd>Transform SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Combine geometry streams</span><span class="shortcut-keys"><kbd>Merge SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Union / subtract / intersect</span><span class="shortcut-keys"><kbd>Boolean SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Instance geo at every point</span><span class="shortcut-keys"><kbd>Copy to Points SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Distribute points on surface</span><span class="shortcut-keys"><kbd>Scatter SOP</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Deformation &amp; Noise</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add noise / displacement</span><span class="shortcut-keys"><kbd>Mountain SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reduce polygon count</span><span class="shortcut-keys"><kbd>PolyReduce SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Remesh for uniform topology</span><span class="shortcut-keys"><kbd>Remesh SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Iterate ops over geometry</span><span class="shortcut-keys"><kbd>For-Each Loop</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Attribute Nodes</div>
+      <div class="shortcut-row"><span class="shortcut-desc">VEX code on geometry</span><span class="shortcut-keys"><kbd>Attribute Wrangle SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Node-based attribute editing</span><span class="shortcut-keys"><kbd>VOP SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Promote/transfer attributes</span><span class="shortcut-keys"><kbd>Attribute Promote SOP</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>The Attribute Wrangle + Copy to Points combo is one of the most powerful patterns in Houdini. Scatter points, set custom attributes on them (scale, rotation, color) with VEX, then Copy to Points to instance geometry with per-instance variation.</div>
+</div>
+
+<!-- TAB 4: VEX -->
+<div id="tab-vex" class="tab-content">
+  <h2 class="section-title">VEX &amp; Python Basics</h2>
+  <div class="tip-box info"><strong>Info</strong>VEX (Vector Expression Language) is Houdini's geometry/shader language. It runs per-point/edge/primitive in an Attribute Wrangle node. It's fast and parallelized.</div>
+  <div class="card">
+    <div class="card-title">Key VEX Attributes</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Point position (vec3)</span><span class="shortcut-keys"><code>@P</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Point normal (vec3)</span><span class="shortcut-keys"><code>@N</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Point color RGB (vec3)</span><span class="shortcut-keys"><code>@Cd</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Point ID number (int)</span><span class="shortcut-keys"><code>@id</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Point number (int)</span><span class="shortcut-keys"><code>@ptnum</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Total point count (int)</span><span class="shortcut-keys"><code>@numpt</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Current time (float)</span><span class="shortcut-keys"><code>@Time</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Current frame (float)</span><span class="shortcut-keys"><code>@Frame</code></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">VEX Code Examples</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Add noise to Y position</span><span class="shortcut-keys"><code>@P.y += noise(@P*2)*0.5;</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Color by height</span><span class="shortcut-keys"><code>@Cd = set(@P.y, 0, 0);</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Create custom attribute</span><span class="shortcut-keys"><code>f@myattr = 1.0;</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Read slider from node</span><span class="shortcut-keys"><code>ch("parm_name")</code></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">HScript Expressions (Parameters)</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Current frame number</span><span class="shortcut-keys"><code>$F</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Current time in seconds</span><span class="shortcut-keys"><code>$T</code></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Read another node's parameter</span><span class="shortcut-keys"><code>ch("../node/parm")</code></span></div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>Use <code>i@</code> prefix for integer attributes, <code>f@</code> for float, <code>v@</code> for vector, <code>s@</code> for string in VEX wrangles. Attribute type prefixes prevent confusion and improve performance.</div>
+</div>
+
+<!-- TAB 5: DYNAMICS -->
+<div id="tab-dynamics" class="tab-content">
+  <h2 class="section-title">Dynamics &amp; Simulations</h2>
+  <div class="tip-box warning"><strong>Warning</strong>Always cache simulations to disk using File Cache SOP or DOP I/O before rendering. Simulations recook from frame 1 every time, which is unbearably slow without caching.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">DOP Solvers</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rigid body collisions</span><span class="shortcut-keys"><kbd>RBD Solver</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Liquid (FLIP fluid)</span><span class="shortcut-keys"><kbd>FLIP Solver</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fire and smoke volumes</span><span class="shortcut-keys"><kbd>Pyro Solver</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cloth simulation</span><span class="shortcut-keys"><kbd>Cloth Solver</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Ropes and cables</span><span class="shortcut-keys"><kbd>Wire Solver</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fast rigid bodies</span><span class="shortcut-keys"><kbd>Bullet Solver</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Vellum (Unified Solver)</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fast cloth simulation</span><span class="shortcut-keys"><kbd>Vellum Cloth</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hair dynamics</span><span class="shortcut-keys"><kbd>Vellum Hair</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Soft body deformation</span><span class="shortcut-keys"><kbd>Vellum Softbody</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sand / grain simulation</span><span class="shortcut-keys"><kbd>Vellum Grains</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Caching</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cache simulation to disk</span><span class="shortcut-keys"><kbd>File Cache SOP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cache inside DOP network</span><span class="shortcut-keys"><kbd>DOP I/O node</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Load cached simulation</span><span class="shortcut-keys"><kbd>File SOP (read mode)</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>Use Vellum for cloth and hair instead of the older cloth/wire solvers — it's faster, more stable, and supports interaction between different sim types (hair colliding with cloth).</div>
+</div>
+
+<!-- TAB 6: SHORTCUTS -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2 class="section-title">All Shortcuts Reference</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">General</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save as copy</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Network Editor</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add node (tab menu)</span><span class="shortcut-keys"><kbd>Tab</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all nodes</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Group selected nodes</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Auto-layout nodes</span><span class="shortcut-keys"><kbd>L</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete selected nodes</span><span class="shortcut-keys"><kbd>Delete</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Sub-Object Selection</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Point selection mode</span><span class="shortcut-keys"><kbd>1</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Edge selection mode</span><span class="shortcut-keys"><kbd>2</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Primitive selection mode</span><span class="shortcut-keys"><kbd>3</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Vertex selection mode</span><span class="shortcut-keys"><kbd>4</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Rendering</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render all (from ROP)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>F5</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Set output path</span><span class="shortcut-keys"><kbd>ROP node → Output file</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mantra (CPU render)</span><span class="shortcut-keys"><kbd>Mantra ROP</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Karma (USD/GPU render)</span><span class="shortcut-keys"><kbd>Karma ROP</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 7: WORKFLOW -->
+<div id="tab-workflow" class="tab-content">
+  <h2 class="section-title">Procedural VFX Pipeline — Step by Step</h2>
+  <div class="tip-box info"><strong>Info</strong>This workflow covers a typical Houdini VFX shot from geometry build to final render composite.</div>
+  <ul class="workflow-steps">
+    <li class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Geometry at OBJ Level:</strong> Create a Geometry node at object level. Double-click to enter SOP level. Start with simple primitives (box SOP) and build procedurally: every operation is a new SOP node in sequence.</div></li>
+    <li class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Build Geometry Network:</strong> Chain SOPs: box → scatter → copy_to_points. Use <kbd>Tab</kbd> to search and add nodes. Connect outputs to inputs by dragging. The Display flag (eye icon) shows the current result of any node you click.</div></li>
+    <li class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Add Attributes with VEX:</strong> Insert an Attribute Wrangle SOP. Write VEX to modify point positions, colors, or custom attributes. Example: <code>f@pscale = rand(@ptnum) * 2;</code> gives each point a random scale value for Copy to Points.</div></li>
+    <li class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Set Up Simulation (DOP Network):</strong> Create a DOP Network node. Inside, set up solvers (Pyro, FLIP, Vellum) referencing your SOP geometry as the initial state. Adjust substeps and collision geometry.</div></li>
+    <li class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Cache to Disk:</strong> Essential step. Add a File Cache SOP referencing your DOP output. Set an output path (<code>$HIP/cache/sim.$F4.bgeo.sc</code>). Click Save to Disk to cook and cache. Now you can scrub the timeline without recooking.</div></li>
+    <li class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Lighting &amp; Materials (Karma/Mantra):</strong> Create a Karma XPU or Mantra ROP in the out/ context. Set up MaterialX materials for Karma or mantra:surface shaders for Mantra. Place lights in the /obj level (area, HDRI dome).</div></li>
+    <li class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>Render &amp; Composite:</strong> Set render frame range in the ROP. Output to EXR image sequence with multiple render passes (beauty, diffuse, specular, shadow, depth). Import passes into Nuke or After Effects for final composite.</div></li>
+  </ul>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

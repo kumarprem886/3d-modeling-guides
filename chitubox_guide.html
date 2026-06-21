@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChiTuBox — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #222; }
+
+  /* NAV */
+  nav { background: #1a004a; color: #fff; display: flex; align-items: center; padding: 0 24px; height: 56px; gap: 20px; }
+  nav a { color: #c4aff0; text-decoration: none; font-size: 0.9rem; white-space: nowrap; }
+  nav a:hover { color: #fff; }
+  .nav-title { font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-subtitle { font-size: 0.8rem; color: #c4aff0; margin-top: 1px; }
+  .nav-text { display: flex; flex-direction: column; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 4px; background: #1a004a; width: 100%; }
+
+  /* TABS */
+  .tabs { display: flex; flex-wrap: wrap; background: #fff; border-bottom: 1px solid #ddd; padding: 0 16px; gap: 2px; }
+  .tab-btn { background: none; border: none; padding: 14px 18px; cursor: pointer; font-size: 0.88rem; font-family: inherit; color: #555; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; white-space: nowrap; }
+  .tab-btn:hover { color: #1a004a; }
+  .tab-btn.active { color: #1a004a; border-bottom-color: #1a004a; font-weight: 600; }
+
+  /* CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  h2 { font-size: 1.25rem; color: #1a004a; margin-bottom: 18px; font-weight: 700; }
+
+  /* SHORTCUT ROWS */
+  .shortcut-list { background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-bottom: 1px solid #f0f0f0; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-row:nth-child(even) { background: #fafafa; }
+  .shortcut-desc { font-size: 0.9rem; color: #333; }
+  kbd { display: inline-block; background: #f0f0f0; border: 1px solid #ccc; border-bottom: 2px solid #bbb; border-radius: 4px; padding: 2px 8px; font-size: 0.8rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; white-space: nowrap; }
+
+  /* TIP BOXES */
+  .box { border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.88rem; line-height: 1.55; border-left: 4px solid; }
+  .box-tip    { background: #edfbf3; border-color: #27ae60; color: #1a5c35; }
+  .box-warn   { background: #fffbea; border-color: #f0ad00; color: #6b4c00; }
+  .box-danger { background: #fff0f0; border-color: #e03131; color: #7a1515; }
+  .box-info   { background: #eef4ff; border-color: #3b82f6; color: #1e3a6e; }
+  .box strong { font-weight: 700; }
+
+  /* STEPS */
+  ol.steps { padding-left: 0; list-style: none; counter-reset: steps; margin-bottom: 20px; }
+  ol.steps li { counter-increment: steps; display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; background: #fff; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; line-height: 1.5; }
+  ol.steps li::before { content: counter(steps); background: #1a004a; color: #fff; font-weight: 700; font-size: 0.8rem; min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">← Back to Hub</a>
+  <div class="nav-text">
+    <span class="nav-title">ChiTuBox — Complete Guide</span>
+    <span class="nav-subtitle">Resin 3D Printing Slicer for MSLA/DLP Printers</span>
+  </div>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('nav')">Navigation &amp; Interface</button>
+  <button class="tab-btn" onclick="showTab('orient')">Orientation &amp; Hollowing</button>
+  <button class="tab-btn" onclick="showTab('support')">Support Settings</button>
+  <button class="tab-btn" onclick="showTab('exposure')">Exposure Settings (Critical)</button>
+  <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('workflow')">Workflow — Resin Print</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation & Interface -->
+  <div id="tab-nav" class="tab-panel active">
+    <h2>Navigation &amp; Interface</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><kbd>RMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan</span><kbd>MMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit/reset view</span><kbd>F or Home</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><kbd>Ctrl+Z</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><kbd>Ctrl+Y</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><kbd>Ctrl+S</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Open</span><kbd>Ctrl+O</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><kbd>Ctrl+A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete</span><kbd>Delete</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><kbd>Ctrl+D</kbd></div>
+    </div>
+    <div class="box box-info">Build plate grid represents your actual print area — keep models within it.</div>
+    <div class="box box-info">Left toolbar: move, scale, rotate, copy, support, and hollow tools.</div>
+  </div>
+
+  <!-- TAB 2: Orientation & Hollowing -->
+  <div id="tab-orient" class="tab-panel">
+    <h2>Orientation &amp; Hollowing</h2>
+    <div class="box box-danger"><strong>Danger:</strong> Orientation is CRITICAL for resin — wrong angle causes large suction forces and print failure.</div>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Recommended tilt angle</span><kbd>15–45°</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hollow wall thickness</span><kbd>2–3mm recommended</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Drain holes when hollow</span><kbd>2 holes at lowest point</kbd></div>
+    </div>
+    <div class="box box-tip"><strong>Tip:</strong> Rotate so fine details face up (away from build plate) for highest quality surface finish.</div>
+    <div class="box box-warn"><strong>Warning:</strong> Always add drain holes when hollowing — trapped resin inside can cause pressure buildup and cracking.</div>
+    <div class="box box-info">Shell/hollow mode reduces resin cost significantly — expensive resin adds up fast on large prints.</div>
+  </div>
+
+  <!-- TAB 3: Support Settings -->
+  <div id="tab-support" class="tab-panel">
+    <h2>Support Settings</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Auto support access</span><kbd>Analysis → Auto Support</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Support density</span><kbd>0.5–1.5 per cm²</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Support types</span><kbd>Light / Medium / Heavy</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Support top radius</span><kbd>0.2–0.3mm (smaller = easier removal)</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Support bottom radius</span><kbd>0.5–1mm (stability)</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Raft thickness</span><kbd>5–8mm (always use for resin)</kbd></div>
+    </div>
+    <div class="box box-warn"><strong>Warning:</strong> Island detection: Analysis → Islands. Red areas = unsupported floating geometry — must add supports there.</div>
+    <div class="box box-tip"><strong>Tip:</strong> After auto-support, always run island detection and manually add supports to any remaining red areas.</div>
+    <div class="box box-danger"><strong>Danger:</strong> Never skip the raft for resin prints — without it the model cannot adhere to the build plate.</div>
+  </div>
+
+  <!-- TAB 4: Exposure Settings -->
+  <div id="tab-exposure" class="tab-panel">
+    <h2>Exposure Settings (Critical)</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Layer height — detailed</span><kbd>0.025–0.05mm</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Layer height — fast draft</span><kbd>0.1mm</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bottom layers</span><kbd>4–8 layers</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bottom exposure time</span><kbd>30–60 seconds</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Normal exposure time</span><kbd>2–5 seconds per layer</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lift speed — standard</span><kbd>1–3mm/s</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lift speed — large flat areas</span><kbd>0.5mm/s</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lift height</span><kbd>5–7mm</kbd></div>
+    </div>
+    <div class="box box-danger"><strong>Danger:</strong> Exposure too high = overexposure (lost fine detail). Too low = failed/delaminating layers.</div>
+    <div class="box box-warn"><strong>Warning:</strong> Always start with your resin brand's recommended exposure settings — they're tested for your UV power.</div>
+    <div class="box box-tip"><strong>Tip:</strong> Enable anti-aliasing for smoother curves and edges on detailed models.</div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div id="tab-shortcuts" class="tab-panel">
+    <h2>All Shortcuts</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><kbd>Ctrl+Z</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><kbd>Ctrl+Y</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><kbd>Ctrl+S</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Open</span><kbd>Ctrl+O</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><kbd>Ctrl+A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete</span><kbd>Delete</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><kbd>Ctrl+D</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><kbd>RMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Island analysis</span><kbd>Analysis menu → Islands</kbd></div>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div id="tab-workflow" class="tab-panel">
+    <h2>Workflow — Resin Print</h2>
+    <ol class="steps">
+      <li>Import model (STL/OBJ). Check scale — resin printers have smaller build volumes than FDM.</li>
+      <li>Orient model: tilt 15–45°. Minimize large flat surfaces parallel to build plate.</li>
+      <li>Hollow if large solid model (saves resin). Add 2 drain holes at lowest point.</li>
+      <li>Run Auto Support. Add manual supports to any red-highlighted islands.</li>
+      <li>Set layer height (0.05mm standard). Check exposure settings for your resin brand.</li>
+      <li>Slice → save CTB/photon/cbddlp file to USB.</li>
+      <li>Print. Post-process: IPA wash 60–90 seconds, then UV cure 2–5 minutes.</li>
+    </ol>
+    <div class="box box-danger"><strong>Danger:</strong> Always wear nitrile gloves when handling uncured resin — it is a skin sensitizer and can cause allergic reactions with repeated exposure.</div>
+    <div class="box box-tip"><strong>Tip:</strong> Use a magnetic wash station with IPA for faster, cleaner post-processing of resin prints.</div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('tab-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+</body>
+</html>

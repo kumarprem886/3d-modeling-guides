@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrusaSlicer — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; min-height: 100vh; }
+
+  /* NAV */
+  nav { background: #7a1a00; color: #fff; display: flex; align-items: center; padding: 0 20px; height: 54px; gap: 16px; position: sticky; top: 0; z-index: 100; }
+  nav a.back { color: #ffcfbf; text-decoration: none; font-size: 0.9rem; white-space: nowrap; flex-shrink: 0; }
+  nav a.back:hover { color: #fff; text-decoration: underline; }
+  nav .nav-title { font-size: 1rem; font-weight: 600; color: #fff; flex: 1; text-align: center; padding-right: 80px; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 4px; background: #c23b00; width: 100%; }
+
+  /* HERO */
+  .hero { background: #7a1a00; color: #fff; padding: 28px 24px 24px; }
+  .hero h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 0.95rem; opacity: 0.85; }
+
+  /* TABS */
+  .tab-bar { background: #5e1400; display: flex; gap: 2px; padding: 0 16px; overflow-x: auto; flex-wrap: nowrap; }
+  .tab-btn { background: transparent; border: none; color: #ffcfbf; padding: 12px 16px; cursor: pointer; font-size: 0.85rem; font-family: inherit; white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .tab-btn:hover { color: #fff; }
+  .tab-btn.active { color: #fff; border-bottom-color: #ff8c66; font-weight: 600; }
+
+  /* CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title { font-size: 1.1rem; font-weight: 700; color: #7a1a00; margin: 0 0 14px; border-bottom: 2px solid #e0c0b8; padding-bottom: 6px; }
+
+  /* SHORTCUT / INFO ROWS */
+  .row-list { list-style: none; margin-bottom: 20px; border: 1px solid #e0d0cc; border-radius: 8px; overflow: hidden; }
+  .row-list li { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #fff; border-bottom: 1px solid #f0e8e5; gap: 12px; }
+  .row-list li:last-child { border-bottom: none; }
+  .row-list li:nth-child(even) { background: #fdf8f7; }
+  .row-desc { font-size: 0.9rem; color: #333; flex: 1; }
+  kbd { display: inline-block; background: #f2ede9; border: 1px solid #c8b8b2; border-bottom: 3px solid #b0a09a; border-radius: 5px; padding: 2px 8px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.8rem; color: #5a2000; white-space: nowrap; }
+  .row-val { font-size: 0.85rem; color: #7a1a00; font-weight: 600; white-space: nowrap; }
+
+  /* TIP BOXES */
+  .box { border-radius: 7px; padding: 12px 16px; margin-bottom: 14px; font-size: 0.88rem; line-height: 1.5; border-left: 4px solid; }
+  .box strong { display: block; margin-bottom: 3px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .box-tip { background: #f0faf0; border-color: #2d8a2d; color: #1a4d1a; }
+  .box-tip strong { color: #2d8a2d; }
+  .box-warn { background: #fffbea; border-color: #c8960a; color: #4d3800; }
+  .box-warn strong { color: #a07800; }
+  .box-danger { background: #fff0f0; border-color: #c82d2d; color: #4d0000; }
+  .box-danger strong { color: #c82d2d; }
+  .box-info { background: #eef4ff; border-color: #2d6abf; color: #0a2d5c; }
+  .box-info strong { color: #2d6abf; }
+
+  /* NUMBERED STEPS */
+  .steps { padding-left: 0; list-style: none; margin-bottom: 20px; counter-reset: step-counter; }
+  .steps li { counter-increment: step-counter; display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; background: #fff; border: 1px solid #e0d0cc; border-bottom: none; font-size: 0.9rem; line-height: 1.5; }
+  .steps li:first-child { border-radius: 8px 8px 0 0; }
+  .steps li:last-child { border-bottom: 1px solid #e0d0cc; border-radius: 0 0 8px 8px; }
+  .steps li::before { content: counter(step-counter); background: #7a1a00; color: #fff; font-weight: 700; font-size: 0.8rem; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  /* SPACER */
+  .gap { margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back" href="index.html">&#8592; Back to Hub</a>
+  <span class="nav-title">PrusaSlicer — Complete Guide</span>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="hero">
+  <h1>PrusaSlicer — Complete Guide</h1>
+  <p>Open-Source Slicer for FDM &amp; SLA 3D Printing</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(event,'tab1')">Interface &amp; Navigation</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab2')">Print Settings</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab3')">Support Painting &amp; Modifiers</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab4')">Multi-Material &amp; Advanced</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab5')">All Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab6')">Workflow — First FDM Print</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1 -->
+  <div id="tab1" class="tab-panel active">
+    <p class="section-title">Interface &amp; Navigation Shortcuts</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Orbit 3D view</span><kbd>MMB drag</kbd></li>
+      <li><span class="row-desc">Pan view</span><kbd>Shift+MMB</kbd></li>
+      <li><span class="row-desc">Zoom</span><kbd>Scroll wheel</kbd></li>
+      <li><span class="row-desc">Fit all models in view</span><kbd>F</kbd></li>
+      <li><span class="row-desc">Reset camera home</span><kbd>Z</kbd></li>
+      <li><span class="row-desc">Add model</span><kbd>A</kbd></li>
+      <li><span class="row-desc">Delete selected</span><kbd>Del</kbd></li>
+      <li><span class="row-desc">Undo</span><kbd>Ctrl+Z</kbd></li>
+      <li><span class="row-desc">Redo</span><kbd>Ctrl+Y</kbd></li>
+      <li><span class="row-desc">Toggle 3D/2D plate view</span><kbd>Tab</kbd></li>
+    </ul>
+    <div class="box box-info"><strong>Info</strong>Left sidebar = object list/model tree. Right sidebar = print settings, filament, printer selection.</div>
+    <div class="box box-info"><strong>Info</strong>Plate view (Tab key) shows 2D flat layout mode for arranging models.</div>
+  </div>
+
+  <!-- TAB 2 -->
+  <div id="tab2" class="tab-panel">
+    <p class="section-title">Print Settings</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Layer height — detail</span><span class="row-val">0.1mm</span></li>
+      <li><span class="row-desc">Layer height — standard</span><span class="row-val">0.2mm</span></li>
+      <li><span class="row-desc">Layer height — fast draft</span><span class="row-val">0.3mm</span></li>
+      <li><span class="row-desc">Perimeters for decorative</span><span class="row-val">2–3</span></li>
+      <li><span class="row-desc">Perimeters for functional</span><span class="row-val">4+</span></li>
+      <li><span class="row-desc">Infill — display models</span><span class="row-val">10–15%</span></li>
+      <li><span class="row-desc">Infill — functional parts</span><span class="row-val">20–40%</span></li>
+      <li><span class="row-desc">Recommended infill pattern</span><span class="row-val">Gyroid or Honeycomb</span></li>
+      <li><span class="row-desc">Seam position (hidden)</span><span class="row-val">Rear</span></li>
+      <li><span class="row-desc">Seam position (clean)</span><span class="row-val">Aligned</span></li>
+    </ul>
+    <div class="box box-tip"><strong>Tip</strong>Use Variable Layer Height: right-click object → Variable layer height. Reduces print time while keeping detail where needed.</div>
+    <div class="box box-warn"><strong>Warning</strong>Brim 5–10mm recommended for parts with small footprint or ABS/ASA — prevents warping.</div>
+    <div class="box box-info"><strong>Info</strong>Raft is an alternative to brim — full base layer. Slower but stronger adhesion.</div>
+  </div>
+
+  <!-- TAB 3 -->
+  <div id="tab3" class="tab-panel">
+    <p class="section-title">Support Painting &amp; Modifiers</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Support Painting access</span><span class="row-val">Right-click → Support Painting</span></li>
+      <li><span class="row-desc">Enforce support (paint)</span><span class="row-val">Green brush</span></li>
+      <li><span class="row-desc">Block support (paint)</span><span class="row-val">Red brush</span></li>
+      <li><span class="row-desc">Seam Painting</span><span class="row-val">Paint exact seam on model</span></li>
+      <li><span class="row-desc">Fuzzy Skin modifier</span><span class="row-val">Modifier → Fuzzy Skin</span></li>
+      <li><span class="row-desc">Top/bottom layers</span><span class="row-val">3–5 for smooth/watertight</span></li>
+    </ul>
+    <div class="box box-tip"><strong>Tip</strong>Modifier mesh: add a cube/sphere as modifier to change settings in a specific zone of the model.</div>
+    <div class="box box-info"><strong>Info</strong>Height range modifier: change settings between specific Z heights.</div>
+    <div class="box box-info"><strong>Info</strong>Bridge settings: detect and reinforce horizontal overhangs automatically.</div>
+  </div>
+
+  <!-- TAB 4 -->
+  <div id="tab4" class="tab-panel">
+    <p class="section-title">Multi-Material &amp; Advanced</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Multi-Material setup</span><span class="row-val">MMU in printer settings</span></li>
+      <li><span class="row-desc">Color painting access</span><span class="row-val">Paint-on supports → color regions</span></li>
+      <li><span class="row-desc">Split object to parts</span><span class="row-val">Right-click → Split to Parts</span></li>
+      <li><span class="row-desc">Wipe tower purpose</span><span class="row-val">Purge filament between color changes</span></li>
+      <li><span class="row-desc">Extrusion width default</span><span class="row-val">0.4mm (nozzle size)</span></li>
+      <li><span class="row-desc">Extrusion width range</span><span class="row-val">0.3–0.6mm</span></li>
+    </ul>
+    <div class="box box-tip"><strong>Tip</strong>Elephant foot compensation: fixes first layer expansion — find in Advanced print settings.</div>
+    <div class="box box-info"><strong>Info</strong>Input Shaper: set resonance frequency for high-speed printing (Klipper printers).</div>
+    <div class="box box-info"><strong>Info</strong>G-code preview: use the layer slider to preview layer by layer before printing.</div>
+  </div>
+
+  <!-- TAB 5 -->
+  <div id="tab5" class="tab-panel">
+    <p class="section-title">All Shortcuts</p>
+    <ul class="row-list">
+      <li><span class="row-desc">Undo</span><kbd>Ctrl+Z</kbd></li>
+      <li><span class="row-desc">Redo</span><kbd>Ctrl+Y</kbd></li>
+      <li><span class="row-desc">Save project</span><kbd>Ctrl+S</kbd></li>
+      <li><span class="row-desc">Save as</span><kbd>Ctrl+Shift+S</kbd></li>
+      <li><span class="row-desc">Add model</span><kbd>A</kbd></li>
+      <li><span class="row-desc">Delete selected</span><kbd>Del</kbd></li>
+      <li><span class="row-desc">Copy model</span><kbd>Ctrl+C</kbd></li>
+      <li><span class="row-desc">Paste model</span><kbd>Ctrl+V</kbd></li>
+      <li><span class="row-desc">Duplicate</span><kbd>Ctrl+D</kbd></li>
+      <li><span class="row-desc">Place on ground</span><kbd>G</kbd></li>
+      <li><span class="row-desc">Fit view</span><kbd>F</kbd></li>
+      <li><span class="row-desc">Home/reset view</span><kbd>Z</kbd></li>
+      <li><span class="row-desc">Layer view</span><kbd>L</kbd></li>
+      <li><span class="row-desc">Export G-code</span><kbd>E</kbd></li>
+      <li><span class="row-desc">Export STL</span><kbd>Ctrl+Shift+E</kbd></li>
+      <li><span class="row-desc">Toggle 3D/2D plate view</span><kbd>Tab</kbd></li>
+      <li><span class="row-desc">Select all</span><kbd>Ctrl+A</kbd></li>
+      <li><span class="row-desc">Deselect</span><kbd>Escape</kbd></li>
+      <li><span class="row-desc">Right-click context menu</span><kbd>RMB on object</kbd></li>
+    </ul>
+  </div>
+
+  <!-- TAB 6 -->
+  <div id="tab6" class="tab-panel">
+    <p class="section-title">Workflow — First FDM Print</p>
+    <ol class="steps">
+      <li>Open PrusaSlicer. Select your printer profile (Prusa i3, MK4, Mini, or generic FDM).</li>
+      <li>Add model: drag STL onto plate or press Ctrl+I to import.</li>
+      <li>Orient model: rotate so flat face is on bed. Minimize overhangs.</li>
+      <li>Set layer height (0.2mm standard), Infill (15–20%), Perimeters (3).</li>
+      <li>Enable support if model has overhangs over 45°.</li>
+      <li>Slice (right side → Slice Now). Check preview layer by layer.</li>
+      <li>Export G-code to SD card/USB. Print!</li>
+    </ol>
+    <div class="box box-tip"><strong>Tip</strong>Always preview with the layer slider before exporting — catch problems before wasting filament.</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    e.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+</body>
+</html>

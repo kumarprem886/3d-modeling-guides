@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrcaSlicer — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; min-height: 100vh; }
+
+  /* NAV */
+  nav { background: #003a4a; color: #fff; display: flex; align-items: center; gap: 1.5rem; padding: 0 1.5rem; height: 52px; position: sticky; top: 0; z-index: 100; }
+  nav a { color: #a8d4de; text-decoration: none; font-size: 0.875rem; white-space: nowrap; }
+  nav a:hover { color: #fff; }
+  .nav-title { font-size: 1rem; font-weight: 600; color: #fff; }
+  .nav-subtitle { font-size: 0.78rem; color: #7bbfcc; margin-top: 1px; }
+  .nav-text { display: flex; flex-direction: column; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 4px; background: #003a4a; width: 100%; }
+
+  /* TABS */
+  .tab-bar { background: #fff; border-bottom: 1px solid #e0e0e5; display: flex; overflow-x: auto; padding: 0 1.5rem; gap: 0; }
+  .tab-bar::-webkit-scrollbar { height: 0; }
+  .tab-btn { padding: 0.75rem 1.1rem; font-size: 0.85rem; font-weight: 500; color: #555; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+  .tab-btn:hover { color: #003a4a; }
+  .tab-btn.active { color: #003a4a; border-bottom-color: #003a4a; font-weight: 600; }
+
+  /* CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .panel-heading { font-size: 1.25rem; font-weight: 700; color: #003a4a; margin-bottom: 1.25rem; }
+
+  /* SHORTCUT ROWS */
+  .shortcut-list { display: flex; flex-direction: column; gap: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem; background: #fff; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid #ececec; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-row:nth-child(even) { background: #f3f8fa; }
+  .shortcut-desc { font-size: 0.9rem; color: #333; }
+  kbd { background: #e6f2f5; border: 1px solid #7bbfcc; border-bottom-width: 2px; border-radius: 5px; padding: 0.18rem 0.55rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 0.8rem; color: #003a4a; white-space: nowrap; font-weight: 600; }
+
+  /* INFO ROWS */
+  .info-list { display: flex; flex-direction: column; gap: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem; background: #fff; }
+  .info-row { display: flex; align-items: flex-start; justify-content: space-between; padding: 0.6rem 1rem; border-bottom: 1px solid #ececec; gap: 1rem; }
+  .info-row:last-child { border-bottom: none; }
+  .info-row:nth-child(even) { background: #f3f8fa; }
+  .info-key { font-size: 0.9rem; color: #333; flex-shrink: 0; }
+  .info-val { font-size: 0.85rem; color: #555; text-align: right; }
+
+  /* TIP BOXES */
+  .box { border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.55; }
+  .box-label { font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+  .box-tip { border-color: #2d8a4e; background: #edf7f1; color: #1a5c33; }
+  .box-tip .box-label { color: #2d8a4e; }
+  .box-warn { border-color: #b8860b; background: #fffbea; color: #6b4c00; }
+  .box-warn .box-label { color: #b8860b; }
+  .box-danger { border-color: #c0392b; background: #fdf0ee; color: #7b1a13; }
+  .box-danger .box-label { color: #c0392b; }
+  .box-info { border-color: #1a6fa8; background: #edf4fb; color: #0d3d63; }
+  .box-info .box-label { color: #1a6fa8; }
+
+  /* WORKFLOW STEPS */
+  .workflow-steps { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1rem 1.25rem 1rem 1.5rem; margin-bottom: 1.25rem; }
+  .workflow-steps ol { padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0; }
+  .workflow-steps li { font-size: 0.9rem; color: #333; padding: 0.55rem 0; border-bottom: 1px solid #ececec; line-height: 1.5; }
+  .workflow-steps li:last-child { border-bottom: none; }
+  .workflow-steps li::marker { color: #003a4a; font-weight: 700; }
+
+  /* SECTION LABEL */
+  .section-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #003a4a; margin-bottom: 0.5rem; margin-top: 1.25rem; }
+  .section-label:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">&#8592; Back to Hub</a>
+  <div class="nav-text">
+    <span class="nav-title">OrcaSlicer — Complete Guide</span>
+    <span class="nav-subtitle">Advanced Open-Source Slicer with Built-In Calibration</span>
+  </div>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(event,'tab-navigation')">Navigation &amp; Overview</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-calibration')">Calibration Tools</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-settings')">Print Settings</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-printers')">Multi-Printer Profiles</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-shortcuts')">All Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab(event,'tab-workflow')">Workflow — Calibrate New Filament</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation & Overview -->
+  <div class="tab-panel active" id="tab-navigation">
+    <div class="panel-heading">Navigation &amp; Overview</div>
+    <div class="section-label">Viewport Controls</div>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><kbd>RMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan</span><kbd>MMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit all in view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Slice</span><kbd>G</kbd></div>
+    </div>
+    <div class="box box-info"><div class="box-label">Info</div>Based on Bambu Studio fork — familiar UI if you've used Bambu Studio.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Three tabs: Prepare, Preview, Calibration. The Calibration tab is OrcaSlicer's unique differentiator.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Supports all FDM printers: Bambu, Prusa, Creality, Voron, and custom printer configs.</div>
+  </div>
+
+  <!-- TAB 2: Calibration Tools -->
+  <div class="tab-panel" id="tab-calibration">
+    <div class="panel-heading">Calibration Tools (Unique Feature)</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Flow rate calibration</span><span class="info-val">Prints test cubes &rarr; dial in extrusion multiplier</span></div>
+      <div class="info-row"><span class="info-key">Pressure / Linear advance</span><span class="info-val">Cornering quality calibration</span></div>
+      <div class="info-row"><span class="info-key">Temperature tower</span><span class="info-val">Find optimal print temp for any filament</span></div>
+      <div class="info-row"><span class="info-key">Retraction calibration</span><span class="info-val">Find minimum retraction to prevent stringing</span></div>
+      <div class="info-row"><span class="info-key">Max volumetric speed</span><span class="info-val">Test how fast hotend can push filament</span></div>
+      <div class="info-row"><span class="info-key">Tolerance test</span><span class="info-val">Dimensional accuracy and fit tolerance</span></div>
+      <div class="info-row"><span class="info-key">First layer calibration</span><span class="info-val">Accurate Z offset</span></div>
+    </div>
+    <div class="box box-warn"><div class="box-label">Warning</div>Run calibrations in this order: Flow Rate &rarr; Pressure Advance &rarr; Temperature &rarr; Retraction for best results.</div>
+    <div class="box box-tip"><div class="box-label">Tip</div>These built-in calibrations replace the need for external calibration print files — everything is in the Calibration tab.</div>
+  </div>
+
+  <!-- TAB 3: Print Settings -->
+  <div class="tab-panel" id="tab-settings">
+    <div class="panel-heading">Print Settings</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Layer heights available</span><span class="info-val">0.08 / 0.12 / 0.16 / 0.2 / 0.24 / 0.28mm</span></div>
+      <div class="info-row"><span class="info-key">Perimeters</span><span class="info-val">3–4 walls</span></div>
+      <div class="info-row"><span class="info-key">Wall generator</span><span class="info-val">Arachne mode fills narrow areas better</span></div>
+      <div class="info-row"><span class="info-key">Infill for functional parts</span><span class="info-val">Gyroid or Adaptive Cubic</span></div>
+      <div class="info-row"><span class="info-key">Support type</span><span class="info-val">Tree support recommended</span></div>
+      <div class="info-row"><span class="info-key">Seam</span><span class="info-val">Rear aligned or painted seam</span></div>
+      <div class="info-row"><span class="info-key">Ironing</span><span class="info-val">Smooth top surfaces (slower)</span></div>
+      <div class="info-row"><span class="info-key">Fuzzy skin</span><span class="info-val">Organic texture on outer walls</span></div>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>Arachne wall generator is especially good for models with thin walls or fine text — use it by default.</div>
+  </div>
+
+  <!-- TAB 4: Multi-Printer Profiles -->
+  <div class="tab-panel" id="tab-printers">
+    <div class="panel-heading">Multi-Printer Profiles</div>
+    <div class="info-list">
+      <div class="info-row"><span class="info-key">Add printer</span><span class="info-val">Settings &rarr; Printer &rarr; Add Printer</span></div>
+      <div class="info-row"><span class="info-key">Generic FDM setup</span><span class="info-val">Set bed size, nozzle diameter, firmware type</span></div>
+      <div class="info-row"><span class="info-key">Klipper printers</span><span class="info-val">Add input shaper resonance frequency</span></div>
+      <div class="info-row"><span class="info-key">Network printing options</span><span class="info-val">OctoPrint / Klipper / Moonraker / Bambu</span></div>
+      <div class="info-row"><span class="info-key">Filament profiles</span><span class="info-val">Import community profiles from OrcaSlicer GitHub</span></div>
+      <div class="info-row"><span class="info-key">Custom start G-code</span><span class="info-val">Set per printer in printer settings</span></div>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>Community printer and filament profiles on the OrcaSlicer GitHub repo cover most printers — check there before manual setup.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Voron, Ratrig, CoreXY printers: community profiles available in OrcaSlicer's built-in library.</div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div class="tab-panel" id="tab-shortcuts">
+    <div class="panel-heading">All Shortcuts</div>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><kbd>Ctrl + Z</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><kbd>Ctrl + Y</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save project</span><kbd>Ctrl + S</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add model</span><kbd>A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete selected</span><kbd>Delete</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><kbd>Ctrl + A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Slice</span><kbd>G</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><kbd>Ctrl + D</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Arrange all</span><kbd>Right-click plate &rarr; Arrange</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Context menu</span><kbd>RMB on model</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Layer inspection</span><kbd>Preview tab slider</kbd></div>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div class="tab-panel" id="tab-workflow">
+    <div class="panel-heading">Workflow — Calibrate New Filament</div>
+    <div class="workflow-steps">
+      <ol>
+        <li>Install OrcaSlicer. Add your printer (select from list or manual setup).</li>
+        <li>Create filament profile: set name, manufacturer, temperature range.</li>
+        <li>Run Temperature Tower from Calibration tab &rarr; find optimal print temperature.</li>
+        <li>Run Flow Rate calibration &rarr; adjust extrusion multiplier in filament profile.</li>
+        <li>Run Pressure Advance calibration &rarr; set PA value in printer profile.</li>
+        <li>Run Retraction calibration &rarr; set retraction distance in filament profile.</li>
+        <li>Now slice actual models — fully calibrated settings give consistent, high-quality prints.</li>
+      </ol>
+    </div>
+    <div class="box box-tip"><div class="box-label">Tip</div>Save your calibrated filament profile with the brand and color in the name — build a library you can reuse for each spool.</div>
+    <div class="box box-info"><div class="box-label">Info</div>Re-run calibrations when switching to a new batch or color of the same filament — results can vary between batches.</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    e.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+</body>
+</html>

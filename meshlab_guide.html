@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeshLab — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f0;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: #3a3a1a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    height: 56px;
+    gap: 20px;
+  }
+  nav a.back {
+    color: #c8c88a;
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  nav a.back:hover { color: #fff; }
+  .nav-title-block {
+    flex: 1;
+  }
+  .nav-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .nav-subtitle {
+    font-size: 0.75rem;
+    color: #c8c88a;
+    line-height: 1.2;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 4px;
+    background: #3a3a1a;
+    width: 100%;
+  }
+
+  /* TABS */
+  .tabs-wrapper {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    overflow-x: auto;
+  }
+  .tabs {
+    display: flex;
+    list-style: none;
+    padding: 0 16px;
+    min-width: max-content;
+  }
+  .tabs li button {
+    background: none;
+    border: none;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tabs li button:hover { color: #3a3a1a; }
+  .tabs li button.active {
+    color: #3a3a1a;
+    border-bottom-color: #3a3a1a;
+    font-weight: 700;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION TITLE */
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #3a3a1a;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #d4d49a;
+  }
+
+  /* SHORTCUT / INFO ROWS */
+  .shortcut-list {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+  .shortcut-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+  }
+  .shortcut-list li:last-child { border-bottom: none; }
+  .shortcut-desc {
+    color: #333;
+    flex: 1;
+  }
+  kbd {
+    display: inline-block;
+    background: #f0f0e8;
+    border: 1px solid #bbb;
+    border-bottom: 2px solid #999;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    color: #222;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* TIP BOXES */
+  .box {
+    border-left: 4px solid;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  .box.tip   { border-color: #2e7d32; background: #f1f8f1; color: #1b4a1e; }
+  .box.warn  { border-color: #b8860b; background: #fffbf0; color: #5a4000; }
+  .box.danger{ border-color: #c62828; background: #fff5f5; color: #5a1010; }
+  .box.info  { border-color: #1565c0; background: #f0f4ff; color: #0d2b5e; }
+  .box-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .box.tip   .box-label { color: #2e7d32; }
+  .box.warn  .box-label { color: #b8860b; }
+  .box.danger .box-label { color: #c62828; }
+  .box.info  .box-label { color: #1565c0; }
+
+  /* NUMBERED STEPS */
+  ol.steps {
+    padding-left: 0;
+    list-style: none;
+    counter-reset: step-counter;
+    margin-bottom: 24px;
+  }
+  ol.steps li {
+    counter-increment: step-counter;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333;
+  }
+  ol.steps li:last-child { border-bottom: none; }
+  ol.steps li::before {
+    content: counter(step-counter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    background: #3a3a1a;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back" href="index.html">&#8592; Back to Hub</a>
+  <div class="nav-title-block">
+    <div class="nav-title">MeshLab — Complete Guide</div>
+    <div class="nav-subtitle">Free Open-Source Mesh Processing &amp; Repair Tool</div>
+  </div>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="tabs-wrapper">
+  <ul class="tabs" id="tab-list">
+    <li><button class="active" onclick="switchTab(0)">Navigation</button></li>
+    <li><button onclick="switchTab(1)">Import &amp; Basic Repair</button></li>
+    <li><button onclick="switchTab(2)">Mesh Processing</button></li>
+    <li><button onclick="switchTab(3)">Measurement &amp; Analysis</button></li>
+    <li><button onclick="switchTab(4)">All Shortcuts</button></li>
+    <li><button onclick="switchTab(5)">Workflow — Repair</button></li>
+  </ul>
+</div>
+
+<div class="content">
+
+  <!-- TAB 0: Navigation -->
+  <div class="tab-panel active" id="panel-0">
+    <h2>Navigation Shortcuts</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Trackball rotate</span><kbd>Alt+LMB</kbd></li>
+      <li><span class="shortcut-desc">Pan</span><kbd>Ctrl+LMB</kbd></li>
+      <li><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></li>
+      <li><span class="shortcut-desc">Home / reset view</span><kbd>H</kbd></li>
+      <li><span class="shortcut-desc">Fit in view</span><kbd>Ctrl+H</kbd></li>
+      <li><span class="shortcut-desc">Wireframe toggle</span><kbd>W</kbd></li>
+      <li><span class="shortcut-desc">Lighting toggle</span><kbd>L</kbd></li>
+      <li><span class="shortcut-desc">Center rotation on point</span><kbd>Click point on mesh</kbd></li>
+    </ul>
+    <div class="box info"><div class="box-label">Info</div>MeshLab supports: OBJ, STL, PLY, OFF, FBX, 3DS, and many more formats.</div>
+    <div class="box info"><div class="box-label">Info</div>Layers dialog: manage multiple imported meshes — toggle visibility per layer.</div>
+  </div>
+
+  <!-- TAB 1: Import & Basic Repair -->
+  <div class="tab-panel" id="panel-1">
+    <h2>Import &amp; Basic Repair</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Open mesh</span><kbd>File → Import Mesh</kbd></li>
+      <li><span class="shortcut-desc">Geometric measures</span><kbd>Filters → Quality Measure → Compute Geometric Measures</kbd></li>
+      <li><span class="shortcut-desc">Check holes / topology</span><kbd>Filters → Mesh Layer → Compute Topological Measures</kbd></li>
+      <li><span class="shortcut-desc">Fill holes</span><kbd>Filters → Remeshing → Close Holes</kbd></li>
+      <li><span class="shortcut-desc">Remove duplicate vertices</span><kbd>Filters → Cleaning → Remove Duplicate Vertices</kbd></li>
+      <li><span class="shortcut-desc">Remove duplicate faces</span><kbd>Filters → Cleaning → Remove Duplicate Faces</kbd></li>
+      <li><span class="shortcut-desc">Remove zero-area faces</span><kbd>Filters → Cleaning → Remove Zero-Area Faces</kbd></li>
+      <li><span class="shortcut-desc">Remove unreferenced verts</span><kbd>Filters → Cleaning → Remove Unreferenced Vertices</kbd></li>
+      <li><span class="shortcut-desc">Fix normals</span><kbd>Filters → Normals → Reorient All Faces Coherently</kbd></li>
+    </ul>
+    <div class="box tip"><div class="box-label">Tip</div>Run all cleaning filters (duplicates, zero-area, unreferenced) before any other operation — they fix most basic import issues.</div>
+    <div class="box warn"><div class="box-label">Warning</div>After fixing normals, verify the result looks correct in solid view — reorientation can occasionally flip inside-out on complex meshes.</div>
+  </div>
+
+  <!-- TAB 2: Mesh Processing -->
+  <div class="tab-panel" id="panel-2">
+    <h2>Mesh Processing</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Reduce polygon count</span><kbd>Filters → Remeshing → Quadric Edge Collapse Decimation</kbd></li>
+      <li><span class="shortcut-desc">Suggested reduction</span><kbd>50–70% with Preserve Normal checked</kbd></li>
+      <li><span class="shortcut-desc">Subdivide mesh</span><kbd>Filters → Remeshing → Subdivision Surfaces</kbd></li>
+      <li><span class="shortcut-desc">Smooth mesh</span><kbd>Filters → Smoothing → Laplacian Smooth</kbd></li>
+      <li><span class="shortcut-desc">Smooth (preserve volume)</span><kbd>Filters → Smoothing → Taubin Smooth</kbd></li>
+      <li><span class="shortcut-desc">Scale / transform</span><kbd>Filters → Normals → Transform: Scale</kbd></li>
+      <li><span class="shortcut-desc">Merge multiple meshes</span><kbd>File → Import each, then Filters → Mesh Layer → Flatten Visible Layers</kbd></li>
+    </ul>
+    <div class="box tip"><div class="box-label">Tip</div>Use Taubin Smooth instead of plain Laplacian Smooth — it reduces noise while better preserving overall volume.</div>
+    <div class="box info"><div class="box-label">Info</div>Quadric Edge Collapse Decimation: check 'Preserve Normal' and 'Preserve Boundary' for best results.</div>
+  </div>
+
+  <!-- TAB 3: Measurement & Analysis -->
+  <div class="tab-panel" id="panel-3">
+    <h2>Measurement &amp; Analysis</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Distance between points</span><kbd>Ctrl+Click points → View → Show Info Panel</kbd></li>
+      <li><span class="shortcut-desc">Curvature analysis</span><kbd>Filters → Quality Measure → Compute Curvature</kbd></li>
+      <li><span class="shortcut-desc">Cross section slice</span><kbd>Filters → Remeshing → Cross Section</kbd></li>
+      <li><span class="shortcut-desc">Compare two meshes</span><kbd>Filters → Sampling → Hausdorff Distance</kbd></li>
+      <li><span class="shortcut-desc">Bounding box</span><kbd>Shown in Layer dialog</kbd></li>
+      <li><span class="shortcut-desc">Volume and surface area</span><kbd>Filters → Quality Measure → Compute Geometric Measures</kbd></li>
+    </ul>
+    <div class="box info"><div class="box-label">Info</div>Curvature is displayed as color-coded heatmap on the mesh — useful for finding thin or sharp problem areas.</div>
+    <div class="box info"><div class="box-label">Info</div>Hausdorff Distance compares two versions of a mesh — useful for verifying a repair didn't change geometry.</div>
+  </div>
+
+  <!-- TAB 4: All Shortcuts -->
+  <div class="tab-panel" id="panel-4">
+    <h2>All Shortcuts</h2>
+    <ul class="shortcut-list">
+      <li><span class="shortcut-desc">Undo</span><kbd>Ctrl+Z</kbd></li>
+      <li><span class="shortcut-desc">Save project / mesh</span><kbd>Ctrl+S</kbd></li>
+      <li><span class="shortcut-desc">Import mesh</span><kbd>File → Import Mesh</kbd></li>
+      <li><span class="shortcut-desc">Export mesh</span><kbd>File → Export Mesh As</kbd></li>
+      <li><span class="shortcut-desc">Rotate view</span><kbd>Alt+LMB</kbd></li>
+      <li><span class="shortcut-desc">Pan view</span><kbd>Ctrl+LMB</kbd></li>
+      <li><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></li>
+      <li><span class="shortcut-desc">Home view</span><kbd>H</kbd></li>
+      <li><span class="shortcut-desc">Fit in view</span><kbd>Ctrl+H</kbd></li>
+      <li><span class="shortcut-desc">Wireframe toggle</span><kbd>W</kbd></li>
+      <li><span class="shortcut-desc">Lighting toggle</span><kbd>L</kbd></li>
+      <li><span class="shortcut-desc">Layer dialog</span><kbd>View → Show Layer Dialog</kbd></li>
+      <li><span class="shortcut-desc">Context menu</span><kbd>RMB at click point</kbd></li>
+    </ul>
+  </div>
+
+  <!-- TAB 5: Workflow -->
+  <div class="tab-panel" id="panel-5">
+    <h2>Workflow — Repair for 3D Printing</h2>
+    <ol class="steps">
+      <li>Import STL with potential issues (File → Import Mesh).</li>
+      <li>Filters → Cleaning → Remove Duplicate Vertices, Faces, and Zero-Area Faces.</li>
+      <li>Filters → Normals → Reorient All Faces Coherently (fix flipped normals).</li>
+      <li>Filters → Remeshing → Close Holes (fill any gaps in the mesh).</li>
+      <li>Check result: Filters → Quality Measure → Compute Topological Measures — should show 0 holes, 1 component.</li>
+      <li>If too many polygons: Filters → Remeshing → Quadric Edge Collapse Decimation (50–70% reduction with Preserve Normal checked).</li>
+      <li>File → Export Mesh As → STL → import into your slicer.</li>
+    </ol>
+    <div class="box tip"><div class="box-label">Tip</div>Step 5's Topological Measures check is your quality gate — only export when it shows 0 holes and 1 connected component.</div>
+    <div class="box info"><div class="box-label">Info</div>MeshLab is non-destructive for inspection — you can always undo or re-import if a filter produces unexpected results.</div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(index) {
+    var buttons = document.querySelectorAll('#tab-list button');
+    var panels = document.querySelectorAll('.tab-panel');
+    buttons.forEach(function(btn, i) {
+      btn.classList.toggle('active', i === index);
+    });
+    panels.forEach(function(panel, i) {
+      panel.classList.toggle('active', i === index);
+    });
+  }
+</script>
+</body>
+</html>

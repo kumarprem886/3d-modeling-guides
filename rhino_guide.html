@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rhino 3D — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+  a.back-link { display: inline-flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 0.85rem; padding: 10px 20px; transition: color 0.2s; }
+  a.back-link:hover { color: #fff; }
+  header { background: #003a5c; padding: 32px 40px 28px; border-bottom: 3px solid #005a8c; }
+  header h1 { font-size: 2rem; font-weight: 700; color: #fff; }
+  header p { color: #80c4e8; margin-top: 6px; font-size: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab-btn { background: #1e1e1e; border: 1px solid #333; color: #bbb; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-family: inherit; transition: all 0.2s; }
+  .tab-btn:hover { background: #2a2a2a; color: #fff; }
+  .tab-btn.active { background: #003a5c; border-color: #005a8c; color: #fff; font-weight: 600; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; color: #60b8e0; margin-bottom: 16px; font-weight: 600; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #222; gap: 16px; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom: 3px solid #555; border-radius: 4px; padding: 3px 8px; font-size: 0.78rem; color: #e0e0e0; font-family: inherit; white-space: nowrap; }
+  .tip-box { border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+  .tip-box.green { background: #0d2a0d; border-left: 4px solid #4a9a4a; color: #a8d8a8; }
+  .tip-box.yellow { background: #2a2200; border-left: 4px solid #a08000; color: #d4c060; }
+  .tip-box.blue { background: #0a1a2a; border-left: 4px solid #2a6aaa; color: #80b8e8; }
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #222; }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before { content: counter(steps); background: #003a5c; color: #60b8e0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  code { background: #252525; border: 1px solid #363636; border-radius: 4px; padding: 2px 6px; font-size: 0.82rem; color: #80c8e8; font-family: 'Consolas', 'Monaco', monospace; }
+  @media (max-width: 600px) { header { padding: 20px; } header h1 { font-size: 1.4rem; } .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; } }
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Hub</a>
+<header>
+  <h1>Rhino 3D (Rhinoceros) — Complete Guide</h1>
+  <p>NURBS Modeling for Industrial Design &amp; Architecture</p>
+</header>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('nav')">Navigation</button>
+    <button class="tab-btn" onclick="showTab('curves')">Curve Tools</button>
+    <button class="tab-btn" onclick="showTab('surfaces')">Surface Tools</button>
+    <button class="tab-btn" onclick="showTab('solids')">Solid Tools</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+    <button class="tab-btn" onclick="showTab('grasshopper')">Grasshopper</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1: Navigation -->
+  <div id="tab-nav" class="tab-content active">
+    <div class="card">
+      <h2>Viewport Navigation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit / rotate view</span><div class="shortcut-keys"><kbd>RMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>RMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><div class="shortcut-keys"><kbd>Scroll wheel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Context menu / confirm (no drag)</span><div class="shortcut-keys"><kbd>RMB click</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Maximize viewport</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>E</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Top view</span><div class="shortcut-keys"><kbd>F1</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Front view</span><div class="shortcut-keys"><kbd>F2</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Right view</span><div class="shortcut-keys"><kbd>F3</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Perspective view</span><div class="shortcut-keys"><kbd>F4</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom to selection</span><div class="shortcut-keys"><kbd>Z</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom extents all views</span><div class="shortcut-keys"><kbd>ZEA</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle 4-view / single viewport</span><div class="shortcut-keys"><kbd>~</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Rhino's <strong>command line</strong> at the top is the fastest way to run commands. Start typing any command name and use autocomplete. RMB click (without dragging) confirms/repeats the last command.</div>
+    <div class="tip-box green">Keep the <strong>Osnap toolbar</strong> (object snap) active with: Mid, End, Near, Int, Cen, Perp for accurate geometry creation.</div>
+  </div>
+
+  <!-- Tab 2: Curve Tools -->
+  <div id="tab-curves" class="tab-content">
+    <div class="card">
+      <h2>Curve Creation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Freeform curve (through points)</span><div class="shortcut-keys"><kbd>InterpCrv</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Line</span><div class="shortcut-keys"><kbd>L</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Polyline</span><div class="shortcut-keys"><kbd>PL</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Circle</span><div class="shortcut-keys"><kbd>Cr</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Arc</span><div class="shortcut-keys"><kbd>Arc</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rectangle</span><div class="shortcut-keys"><kbd>Rec</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">General curve (control points)</span><div class="shortcut-keys"><kbd>Curve</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Curve Editing</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Offset curve by distance</span><div class="shortcut-keys"><kbd>Offset</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Trim curves with other curves</span><div class="shortcut-keys"><kbd>Tr</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extend curve</span><div class="shortcut-keys"><kbd>Extend</kbd> / <kbd>ExtendCrv</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Join touching curves into one</span><div class="shortcut-keys"><kbd>J</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fillet curve corners</span><div class="shortcut-keys"><kbd>FilletCorners</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror selected objects</span><div class="shortcut-keys"><kbd>Mirror</kbd></div></div>
+    </div>
+    <div class="tip-box green">The <strong>command line is KEY</strong> in Rhino. Type the first few letters of any command and autocomplete suggestions appear. This is faster than using menus for experienced users.</div>
+  </div>
+
+  <!-- Tab 3: Surface Tools -->
+  <div id="tab-surfaces" class="tab-content">
+    <div class="card">
+      <h2>Surface Creation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Loft between profile curves</span><div class="shortcut-keys"><kbd>Loft</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sweep along 1 rail curve</span><div class="shortcut-keys"><kbd>Sweep1</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sweep along 2 rail curves</span><div class="shortcut-keys"><kbd>Sweep2</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Revolve profile around axis</span><div class="shortcut-keys"><kbd>Revolve</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude curve to surface</span><div class="shortcut-keys"><kbd>ExtrudeCrv</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit surface through curves/points</span><div class="shortcut-keys"><kbd>Patch</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Surface from 2–4 edge curves</span><div class="shortcut-keys"><kbd>EdgeSrf</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Flat surface from closed curve</span><div class="shortcut-keys"><kbd>PlanarSrf</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Surface from curve network</span><div class="shortcut-keys"><kbd>NetworkSrf</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Surface Editing</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Offset surface inward/outward</span><div class="shortcut-keys"><kbd>OffsetSrf</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cap planar holes in surface</span><div class="shortcut-keys"><kbd>Cap</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Join surfaces to polysurface</span><div class="shortcut-keys"><kbd>J</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Match surface continuity</span><div class="shortcut-keys"><kbd>MatchSrf</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Surface continuity levels: <strong>G0</strong> = position (edges touch), <strong>G1</strong> = tangent (smooth edge), <strong>G2</strong> = curvature (highest quality — required for automotive/industrial design).</div>
+  </div>
+
+  <!-- Tab 4: Solid Tools -->
+  <div id="tab-solids" class="tab-content">
+    <div class="card">
+      <h2>Boolean Operations</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Union — merge solids together</span><div class="shortcut-keys"><kbd>BooleanUnion</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Difference — subtract one from another</span><div class="shortcut-keys"><kbd>BooleanDifference</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Intersection — keep shared volume only</span><div class="shortcut-keys"><kbd>BooleanIntersection</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Solid Editing</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Primitive shapes</span><div class="shortcut-keys"><kbd>Box</kbd><kbd>Sphere</kbd><kbd>Cylinder</kbd><kbd>Cone</kbd><kbd>Torus</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create hollow shell from solid</span><div class="shortcut-keys"><kbd>Shell</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Round solid edges</span><div class="shortcut-keys"><kbd>FilletEdge</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Chamfer solid edges</span><div class="shortcut-keys"><kbd>ChamferEdge</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extract face from polysurface</span><div class="shortcut-keys"><kbd>ExtractSrf</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Simplify polysurface faces</span><div class="shortcut-keys"><kbd>MergeAllFaces</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Turn on solid control points</span><div class="shortcut-keys"><kbd>SolidPtOn</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Check for bad/invalid geometry</span><div class="shortcut-keys"><kbd>Check</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Highlight naked/non-manifold edges</span><div class="shortcut-keys"><kbd>ShowEdges</kbd></div></div>
+    </div>
+    <div class="tip-box yellow"><strong>Pink edges in ShowEdges = problem!</strong> Naked edges mean the surface is not closed (not watertight). This will cause issues in 3D printing and CNC. Fix with Join, Cap, or manual surface patching.</div>
+  </div>
+
+  <!-- Tab 5: All Shortcuts -->
+  <div id="tab-shortcuts" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <h2>General Shortcuts</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save as</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select all</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>A</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete</span><div class="shortcut-keys"><kbd>Delete</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Deselect all</span><div class="shortcut-keys"><kbd>Escape</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle command line focus</span><div class="shortcut-keys"><kbd>Tab</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Toggle Gumball transform widget</span><div class="shortcut-keys"><kbd>G</kbd></div></div>
+      </div>
+      <div class="card">
+        <h2>Command Shortcuts</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Line</span><div class="shortcut-keys"><kbd>L</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Circle</span><div class="shortcut-keys"><kbd>Cr</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Scale</span><div class="shortcut-keys"><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Move</span><div class="shortcut-keys"><kbd>M</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rotate</span><div class="shortcut-keys"><kbd>R</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Explode polysurface</span><div class="shortcut-keys"><kbd>X</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Join curves/surfaces</span><div class="shortcut-keys"><kbd>J</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Freeform deformation</span><div class="shortcut-keys"><kbd>CageEdit</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Clean up NURBS structure</span><div class="shortcut-keys"><kbd>Rebuild</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 6: Grasshopper -->
+  <div id="tab-grasshopper" class="tab-content">
+    <div class="card">
+      <h2>Grasshopper — Visual Programming</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Open Grasshopper</span><div class="shortcut-keys"><kbd>Grasshopper</kbd> (type in command line)</div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Search for nodes</span><div class="shortcut-keys"><kbd>Double-click canvas</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create interactive parameter slider</span><div class="shortcut-keys"><kbd>Number Slider node</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reference Rhino points in GH</span><div class="shortcut-keys"><kbd>Pt Param</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reference Rhino curves in GH</span><div class="shortcut-keys"><kbd>Crv Param</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bring GH geometry into Rhino</span><div class="shortcut-keys"><kbd>Right-click → Bake</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Grasshopper is Rhino's built-in <strong>parametric visual programming</strong> plugin. Wire together nodes to build complex generative geometry driven by sliders and equations — no traditional coding required.</div>
+    <div class="tip-box green"><strong>Data Trees</strong> in Grasshopper = lists of geometry, with branches as groupings. Understanding data trees is the key to unlocking Grasshopper's full power for complex patterns and arrays.</div>
+    <div class="tip-box blue">Grasshopper supports <strong>C# and Python scripting nodes</strong> for custom logic beyond the built-in nodes. This enables full algorithmic design workflows.</div>
+  </div>
+
+  <!-- Tab 7: Workflow -->
+  <div id="tab-workflow" class="tab-content">
+    <div class="card">
+      <h2>Workflow: Industrial Design</h2>
+      <ol class="step-list">
+        <li><span class="step-text">Create concept curves (profiles, rails, cross-sections) by tracing over imported reference images placed as picture frames in the viewport.</span></li>
+        <li><span class="step-text">Build primary surfaces using <strong>Sweep2</strong>, <strong>Loft</strong>, or <strong>NetworkSrf</strong> — choose based on how many rails and profiles define your shape.</span></li>
+        <li><span class="step-text">Match surface continuity with <strong>MatchSrf</strong>: aim for G1 (tangent) minimum, G2 (curvature) for premium products. Check with Zebra or curvature analysis.</span></li>
+        <li><span class="step-text">Cap open surfaces with <strong>Cap</strong>, boolean join into one solid with <strong>BooleanUnion</strong>, then run <strong>Check</strong> to verify geometry is valid and watertight.</span></li>
+        <li><span class="step-text">Apply <strong>FilletEdge</strong> on all hard edges — the radius defines the product's character (tight for tech, large for consumer goods).</span></li>
+        <li><span class="step-text">Export to Keyshot for photorealistic rendering (OBJ or 3DM format), or export as <strong>STEP</strong> to Fusion 360 for manufacturing preparation.</span></li>
+      </ol>
+    </div>
+    <div class="tip-box yellow">Rhino is a <strong>paid software</strong> (one-time purchase, ~$995 educational, ~$995-$2000 commercial). It does not have a free tier, but a 90-day full-featured trial is available.</div>
+    <div class="tip-box green">Rhino is the industry standard for <strong>product design, jewelry, architecture, and marine design</strong> — anywhere complex freeform NURBS surfaces are required.</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

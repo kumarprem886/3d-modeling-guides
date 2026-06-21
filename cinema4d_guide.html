@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinema 4D — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  .top-nav { position: sticky; top: 0; z-index: 100; background: #1a3a6b; display: flex; align-items: center; padding: 0 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .nav-back { font-size: 0.9rem; color: #a8c4f0; white-space: nowrap; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+  .nav-title { flex: 1; text-align: center; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-spacer { width: 100px; }
+
+  /* PROGRESS */
+  .progress-bar { background: #1a1a24; border-bottom: 1px solid #2a2a3a; padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0; }
+  .prog-level { flex: 1; text-align: center; font-size: 0.72rem; font-weight: 600; padding: 0.35rem 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; position: relative; }
+  .prog-level::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 60%; background: #3a3a50; }
+  .prog-level:last-child::after { display: none; }
+  .prog-beginner { background: linear-gradient(135deg, #1a4a1a, #1e5a1e); color: #6fcf6f; border-radius: 4px 0 0 4px; }
+  .prog-intermediate { background: linear-gradient(135deg, #4a3a00, #5a4a00); color: #f0c040; }
+  .prog-advanced { background: linear-gradient(135deg, #4a1a00, #5a2a00); color: #f08040; }
+  .prog-expert { background: linear-gradient(135deg, #3a0a4a, #4a1a5a); color: #c080f0; border-radius: 0 4px 4px 0; }
+
+  /* TABS */
+  .tabs-wrap { background: #14141e; border-bottom: 1px solid #2a2a3a; padding: 0 1rem; display: flex; gap: 0.25rem; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: #888; font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.85rem 1.1rem; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #7aaef0; border-bottom-color: #1a3a6b; }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title { font-size: 1.3rem; font-weight: 700; color: #7aaef0; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #1a3a6b; }
+
+  /* CARDS */
+  .card { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #7aaef0; margin-bottom: 0.85rem; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #222230; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { font-size: 0.9rem; color: #ccc; flex: 1; }
+  .shortcut-keys { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+  kbd { background: #252535; border: 1px solid #3a3a50; border-bottom: 3px solid #3a3a50; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.78rem; font-family: inherit; color: #e0e0e0; white-space: nowrap; }
+
+  /* TIP BOXES */
+  .tip-box { border-radius: 6px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; border-left: 4px solid; }
+  .tip-box.tip { background: #0d2a0d; border-color: #2ea82e; color: #8de88d; }
+  .tip-box.warning { background: #2a2000; border-color: #c8a000; color: #f0d060; }
+  .tip-box.danger { background: #2a0800; border-color: #c83000; color: #f08060; }
+  .tip-box.info { background: #0a1a2a; border-color: #1a6ab0; color: #60a8e0; }
+  .tip-box strong { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  /* WORKFLOW */
+  .workflow-steps { list-style: none; counter-reset: steps; }
+  .workflow-step { counter-increment: steps; display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #1e1e2a; }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #1a3a6b; color: #7aaef0; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 0.9rem; color: #ccc; line-height: 1.6; padding-top: 0.3rem; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .top-nav { padding: 0 1rem; }
+    .nav-title { font-size: 0.9rem; }
+    .tab-content { padding: 1.25rem 1rem; }
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .shortcut-keys { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <div class="nav-title">Cinema 4D — Complete Guide</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="progress-bar">
+  <div class="prog-level prog-beginner">Beginner</div>
+  <div class="prog-level prog-intermediate">Intermediate</div>
+  <div class="prog-level prog-advanced">Advanced</div>
+  <div class="prog-level prog-expert">Expert</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="showTab('nav',this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('modeling',this)">Modeling</button>
+  <button class="tab-btn" onclick="showTab('mograph',this)">MoGraph</button>
+  <button class="tab-btn" onclick="showTab('materials',this)">Materials &amp; Render</button>
+  <button class="tab-btn" onclick="showTab('shortcuts',this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('dynamics',this)">XPresso &amp; Dynamics</button>
+  <button class="tab-btn" onclick="showTab('workflow',this)">Workflow</button>
+</div>
+
+<!-- TAB 1: NAVIGATION -->
+<div id="tab-nav" class="tab-content active">
+  <h2 class="section-title">Viewport Navigation</h2>
+  <div class="tip-box info"><strong>Info</strong>Cinema 4D supports both Alt-key and middle-mouse navigation styles. Middle mouse is the fastest for production work.</div>
+  <div class="card">
+    <div class="card-title">Viewport Controls</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit / Tumble viewport</span><span class="shortcut-keys"><kbd>MMB</kbd><span style="color:#666">drag</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan viewport</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom in/out</span><span class="shortcut-keys"><kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit (alternate method)</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan (alternate method)</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>MMB</kbd></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">View Presets</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit all objects in view</span><span class="shortcut-keys"><kbd>H</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Fit selection in view</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Perspective viewport</span><span class="shortcut-keys"><kbd>F1</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Top viewport</span><span class="shortcut-keys"><kbd>F2</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Right viewport</span><span class="shortcut-keys"><kbd>F3</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Front viewport</span><span class="shortcut-keys"><kbd>F4</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">All 4 viewports</span><span class="shortcut-keys"><kbd>F5</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle render view in viewport</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>R</kbd></span></div>
+  </div>
+</div>
+
+<!-- TAB 2: MODELING -->
+<div id="tab-modeling" class="tab-content">
+  <h2 class="section-title">Object Manager &amp; Modeling</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Press C to convert any parametric object (cube, sphere, etc.) to an editable polygon mesh before using mesh editing tools.</div>
+  <div class="tip-box warning"><strong>Warning</strong>M-key shortcuts only work when you are in polygon edit mode with an editable mesh selected.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">M-Key Modeling Shortcuts</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude</span><span class="shortcut-keys"><kbd>M</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Inner Extrude</span><span class="shortcut-keys"><kbd>M</kbd><kbd>B</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create Polygon</span><span class="shortcut-keys"><kbd>M</kbd><kbd>C</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Matrix Extrude</span><span class="shortcut-keys"><kbd>M</kbd><kbd>T</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Knife &amp; Cut Tools</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Knife tool</span><span class="shortcut-keys"><kbd>K</kbd><kbd>K</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Line cut</span><span class="shortcut-keys"><kbd>K</kbd><kbd>L</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Iron (flatten polygons)</span><span class="shortcut-keys"><kbd>K</kbd><kbd>I</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude face via drag</span><span class="shortcut-keys"><kbd>Ctrl</kbd><span style="color:#666">+drag</span></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Selection &amp; Utility</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Optimize (remove doubles)</span><span class="shortcut-keys"><kbd>U</kbd><kbd>O</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select connected</span><span class="shortcut-keys"><kbd>U</kbd><kbd>L</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Move gizmo</span><span class="shortcut-keys"><kbd>W</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale gizmo</span><span class="shortcut-keys"><kbd>E</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate gizmo</span><span class="shortcut-keys"><kbd>R</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Object Management</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Make editable (parametric → poly)</span><span class="shortcut-keys"><kbd>C</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Group objects</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Explode group</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Viewport settings</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>V</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>Subdivision Surface (SDS): Add an SDS object from the Modeling menu, then drag your mesh object as a child of it. Adjust subdivision level in SDS properties.</div>
+</div>
+
+<!-- TAB 3: MOGRAPH -->
+<div id="tab-mograph" class="tab-content">
+  <h2 class="section-title">MoGraph — Cinema 4D's Killer Feature</h2>
+  <div class="tip-box tip"><strong>Tip</strong>MoGraph is what makes Cinema 4D the industry standard for motion graphics. Master the Cloner + Effector workflow and you can create complex animations in minutes.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Cloner Object</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Linear array (line of copies)</span><span class="shortcut-keys"><kbd>Linear Mode</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Grid array (3D grid of copies)</span><span class="shortcut-keys"><kbd>Grid Mode</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Radial / circular pattern</span><span class="shortcut-keys"><kbd>Radial Mode</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Distribute on surface/spline</span><span class="shortcut-keys"><kbd>Object Mode</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Effectors</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Random variation in position/scale/rotation</span><span class="shortcut-keys"><kbd>Random</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Uniform transform over clones</span><span class="shortcut-keys"><kbd>Plain</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Drive animation with texture/image</span><span class="shortcut-keys"><kbd>Shader</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Drive animation with audio</span><span class="shortcut-keys"><kbd>Sound</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sequential step-based offset</span><span class="shortcut-keys"><kbd>Step</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">MoGraph Objects</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Matrix (instance array without geometry)</span><span class="shortcut-keys"><kbd>Matrix Object</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Break apart objects procedurally</span><span class="shortcut-keys"><kbd>Fracture</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Draw motion trails from clones</span><span class="shortcut-keys"><kbd>Tracer</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Procedural animated splines</span><span class="shortcut-keys"><kbd>MoSpline</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Fields (R20+)</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Control effector influence with shapes</span><span class="shortcut-keys"><kbd>Fields Layer</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sphere field for radial influence</span><span class="shortcut-keys"><kbd>Sphere Field</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Box field for cuboid region</span><span class="shortcut-keys"><kbd>Box Field</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Noise field for organic variation</span><span class="shortcut-keys"><kbd>Noise Field</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: MATERIALS -->
+<div id="tab-materials" class="tab-content">
+  <h2 class="section-title">Materials &amp; Rendering</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Material Creation</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create new material</span><span class="shortcut-keys"><kbd>Double-click</kbd><span style="color:#666">material panel</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Open Render Settings</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>B</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render to Picture Viewer</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render region (drag area)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>R</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">PBR Material Setup</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reflectance channel shader</span><span class="shortcut-keys"><kbd>GGX</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add roughness texture</span><span class="shortcut-keys"><kbd>Roughness Layer</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add normal map</span><span class="shortcut-keys"><kbd>Normal Layer</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">HDRI environment</span><span class="shortcut-keys"><kbd>Sky Object</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>For HDRI lighting: Create a Sky object (Create menu), create a new material, enable only the Luminance channel, load your HDRI in the Luminance texture slot, then assign the material to the Sky object.</div>
+  <div class="tip-box tip"><strong>Tip</strong>Physical renderer gives realistic camera-based rendering with depth of field and motion blur. For production speed, Redshift (now bundled) is GPU-accelerated and significantly faster.</div>
+  <div class="tip-box warning"><strong>Warning</strong>Team Render requires all machines to have the same version of Cinema 4D and the same plugins installed.</div>
+</div>
+
+<!-- TAB 5: SHORTCUTS -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2 class="section-title">All Shortcuts Reference</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">General</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save As</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Project Settings</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>D</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Selection Tools</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Live selection tool</span><span class="shortcut-keys"><kbd>9</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Box / rectangle select</span><span class="shortcut-keys"><kbd>0</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Invert selection</span><span class="shortcut-keys"><kbd>U</kbd><kbd>I</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Viewport Display</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Gouraud shading</span><span class="shortcut-keys"><kbd>N</kbd><kbd>A</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Quick shading</span><span class="shortcut-keys"><kbd>N</kbd><kbd>B</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lines / wireframe</span><span class="shortcut-keys"><kbd>N</kbd><kbd>Q</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Timeline &amp; Animation</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Open Timeline window</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>F9</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Record keyframe</span><span class="shortcut-keys"><kbd>F9</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete key in timeline</span><span class="shortcut-keys"><kbd>Ctrl</kbd><span style="color:#666">+click key</span></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Rigging</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add joint to chain</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Alt</kbd><span style="color:#666">+drag</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Weight painting tool</span><span class="shortcut-keys"><kbd>Mesh → Character → Weight</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: DYNAMICS -->
+<div id="tab-dynamics" class="tab-content">
+  <h2 class="section-title">XPresso &amp; Dynamics</h2>
+  <div class="tip-box info"><strong>Info</strong>XPresso is Cinema 4D's node-based expression system. Right-click any object in the Object Manager → Cinema 4D Tags → XPresso to add an XPresso tag.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Dynamics Tags</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rigid body (collides, falls)</span><span class="shortcut-keys"><kbd>Simulation Tags → Rigid Body</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Soft body deformation</span><span class="shortcut-keys"><kbd>Soft Body Tag</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Cloth simulation</span><span class="shortcut-keys"><kbd>Cloth Tag</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Spline dynamics</span><span class="shortcut-keys"><kbd>Spline Dynamics Tag</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Link object behavior</span><span class="shortcut-keys"><kbd>Constraint Tag</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Particle &amp; FX Systems</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Advanced particle system</span><span class="shortcut-keys"><kbd>Thinking Particles</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Volumetric fire &amp; smoke</span><span class="shortcut-keys"><kbd>PyroCluster</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hair and fur simulation</span><span class="shortcut-keys"><kbd>Hair Object</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>For XPresso: Drag parameters into the XPresso editor by Ctrl+dragging the parameter name from the Attribute Manager. This creates an input or output node automatically.</div>
+</div>
+
+<!-- TAB 7: WORKFLOW -->
+<div id="tab-workflow" class="tab-content">
+  <h2 class="section-title">Motion Graphics Pipeline — Step by Step</h2>
+  <div class="tip-box info"><strong>Info</strong>This workflow covers a typical Cinema 4D motion graphics project from setup to delivery in After Effects.</div>
+  <ul class="workflow-steps">
+    <li class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Project Setup:</strong> Create project, set FPS and resolution in Project Settings (<kbd>Ctrl+D</kbd>). Choose 25fps for Europe/broadcast, 24fps for film, 30fps for web/US.</div></li>
+    <li class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Model or Import Geometry:</strong> Build base geometry. Press <kbd>C</kbd> on any parametric shape to make it editable. Use Subdivision Surface (SDS) as a parent for smooth, organic curves without adding geometry manually.</div></li>
+    <li class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Set Up MoGraph Cloner:</strong> Add a Cloner from the MoGraph menu. Set mode to Grid, Radial, or Linear. Place your geometry as a child of the Cloner. Adjust count and spacing.</div></li>
+    <li class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Apply Effectors:</strong> Add a Random effector for organic variation in position/rotation/scale. Use a Sound effector to drive animation from music (load audio file in the effector's Sound tab).</div></li>
+    <li class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Materials &amp; Lighting:</strong> Create PBR materials in the Material Manager (<kbd>Ctrl+B</kbd> for render settings). Set up a Physical Sky for outdoor lighting or a Sky object with HDRI for studio environments. Add area lights for key/fill.</div></li>
+    <li class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Animate:</strong> Use keyframes with <kbd>F9</kbd> to record, or set up XPresso expressions for procedural animation. Use the Timeline and F-Curve editor to refine easing.</div></li>
+    <li class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>Render &amp; Export:</strong> Render to Picture Viewer (<kbd>Shift+R</kbd>). Output as PNG or EXR image sequence (never video direct from C4D). Import sequence into After Effects for final composite, color grade, and sound.</div></li>
+  </ul>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

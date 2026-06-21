@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenSCAD — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+  a.back-link { display: inline-flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 0.85rem; padding: 10px 20px; transition: color 0.2s; }
+  a.back-link:hover { color: #fff; }
+  header { background: #1a1a4a; padding: 32px 40px 28px; border-bottom: 3px solid #2a2a7a; }
+  header h1 { font-size: 2rem; font-weight: 700; color: #fff; }
+  header p { color: #a0a0e8; margin-top: 6px; font-size: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab-btn { background: #1e1e1e; border: 1px solid #333; color: #bbb; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-family: inherit; transition: all 0.2s; }
+  .tab-btn:hover { background: #2a2a2a; color: #fff; }
+  .tab-btn.active { background: #1a1a4a; border-color: #2a2a7a; color: #fff; font-weight: 600; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; color: #8888e0; margin-bottom: 16px; font-weight: 600; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #222; gap: 16px; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom: 3px solid #555; border-radius: 4px; padding: 3px 8px; font-size: 0.78rem; color: #e0e0e0; font-family: inherit; white-space: nowrap; }
+  .tip-box { border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+  .tip-box.green { background: #0d2a0d; border-left: 4px solid #4a9a4a; color: #a8d8a8; }
+  .tip-box.yellow { background: #2a2200; border-left: 4px solid #a08000; color: #d4c060; }
+  .tip-box.blue { background: #0a1a2a; border-left: 4px solid #2a6aaa; color: #80b8e8; }
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #222; }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before { content: counter(steps); background: #1a1a4a; color: #8888e0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  pre { background: #141428; border: 1px solid #2a2a5a; border-radius: 8px; padding: 16px; overflow-x: auto; margin: 10px 0; }
+  pre code { background: none; border: none; padding: 0; color: #c0c0f0; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem; line-height: 1.6; }
+  .cmt { color: #5a5a8a; }
+  .kw { color: #8080d8; }
+  .fn { color: #70b0e8; }
+  .num { color: #c8a060; }
+  code { background: #252525; border: 1px solid #363636; border-radius: 4px; padding: 2px 6px; font-size: 0.82rem; color: #a0a0e8; font-family: 'Consolas', 'Monaco', monospace; }
+  @media (max-width: 600px) { header { padding: 20px; } header h1 { font-size: 1.4rem; } .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; } }
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Hub</a>
+<header>
+  <h1>OpenSCAD — Complete Guide</h1>
+  <p>Code-Based Parametric 3D Modeling</p>
+</header>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('intro')">Introduction</button>
+    <button class="tab-btn" onclick="showTab('shapes')">Basic Shapes</button>
+    <button class="tab-btn" onclick="showTab('booleans')">Booleans &amp; Transforms</button>
+    <button class="tab-btn" onclick="showTab('modules')">Modules &amp; Parameters</button>
+    <button class="tab-btn" onclick="showTab('2d')">2D &amp; Text</button>
+    <button class="tab-btn" onclick="showTab('shortcuts')">Shortcuts &amp; Tips</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1: Introduction -->
+  <div id="tab-intro" class="tab-content active">
+    <div class="tip-box blue"><strong>OpenSCAD is different:</strong> you WRITE CODE to make 3D models, not draw them. Every shape, position, and dimension is defined in a text script — making it the ultimate parametric tool.</div>
+    <div class="card">
+      <h2>Navigation &amp; Interface</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Fast preview render (shows design)</span><div class="shortcut-keys"><kbd>F5</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Full render (required before export)</span><div class="shortcut-keys"><kbd>F6</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit / rotate view</span><div class="shortcut-keys"><kbd>MMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="shortcut-keys"><kbd>RMB drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><div class="shortcut-keys"><kbd>Scroll wheel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Show reference axes</span><div class="shortcut-keys"><kbd>View → Axes</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Auto reload and preview on save</span><div class="shortcut-keys"><kbd>Design → Automatic Reload and Preview</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle wireframe vs surfaces</span><div class="shortcut-keys"><kbd>View → Wireframe / Surfaces</kbd></div></div>
+    </div>
+    <div class="tip-box green">There is no transform gizmo in OpenSCAD — all positioning is done through code using <code>translate()</code>, <code>rotate()</code>, and <code>scale()</code>. This gives you exact, reproducible control.</div>
+    <div class="tip-box yellow">OpenSCAD has <strong>no undo history</strong> for geometry changes — use your code editor's undo (Ctrl+Z) and save frequently. Consider using version control (Git) for complex projects.</div>
+  </div>
+
+  <!-- Tab 2: Basic Shapes -->
+  <div id="tab-shapes" class="tab-content">
+    <div class="card">
+      <h2>3D Primitives</h2>
+      <pre><code><span class="fn">cube</span>([x, y, z]);          <span class="cmt">// rectangular box</span>
+<span class="fn">sphere</span>(r=<span class="num">5</span>);              <span class="cmt">// sphere</span>
+<span class="fn">cylinder</span>(h=<span class="num">10</span>, r=<span class="num">5</span>);      <span class="cmt">// cylinder</span>
+<span class="fn">cylinder</span>(h=<span class="num">10</span>, r1=<span class="num">5</span>, r2=<span class="num">0</span>); <span class="cmt">// cone</span>
+<span class="fn">polyhedron</span>(points=[], faces=[]); <span class="cmt">// custom mesh</span>
+
+<span class="cmt">// center=true places shape at origin</span>
+<span class="fn">cube</span>([<span class="num">10</span>,<span class="num">10</span>,<span class="num">10</span>], center=<span class="kw">true</span>);</code></pre>
+    </div>
+    <div class="card">
+      <h2>Smoothness Control ($fn)</h2>
+      <pre><code><span class="cmt">// $fn controls curve resolution</span>
+<span class="fn">sphere</span>(r=<span class="num">5</span>, $fn=<span class="num">16</span>);  <span class="cmt">// fast draft quality</span>
+<span class="fn">sphere</span>(r=<span class="num">5</span>, $fn=<span class="num">64</span>);  <span class="cmt">// good balance</span>
+<span class="fn">sphere</span>(r=<span class="num">5</span>, $fn=<span class="num">128</span>); <span class="cmt">// smooth, slow render</span>
+
+<span class="cmt">// Set globally at top of file:</span>
+$fn = <span class="num">64</span>; <span class="cmt">// applies to all curves</span></code></pre>
+    </div>
+    <div class="tip-box yellow">Use <strong>$fn=16</strong> while designing for fast previews. Change to <strong>$fn=128</strong> only for the final F6 render before export — high $fn makes rendering very slow.</div>
+  </div>
+
+  <!-- Tab 3: Booleans & Transforms -->
+  <div id="tab-booleans" class="tab-content">
+    <div class="card">
+      <h2>Boolean Operations</h2>
+      <pre><code><span class="fn">union</span>() {          <span class="cmt">// combine shapes together</span>
+  <span class="fn">cube</span>(<span class="num">10</span>);
+  <span class="fn">sphere</span>(<span class="num">7</span>);
+}
+
+<span class="fn">difference</span>() {     <span class="cmt">// first shape minus the rest</span>
+  <span class="fn">cube</span>(<span class="num">10</span>);
+  <span class="fn">cylinder</span>(h=<span class="num">15</span>, r=<span class="num">3</span>);
+}
+
+<span class="fn">intersection</span>() {   <span class="cmt">// keep only shared volume</span>
+  <span class="fn">cube</span>(<span class="num">10</span>);
+  <span class="fn">sphere</span>(<span class="num">7</span>);
+}</code></pre>
+    </div>
+    <div class="card">
+      <h2>Transforms</h2>
+      <pre><code><span class="fn">translate</span>([x,y,z]) <span class="fn">shape</span>;   <span class="cmt">// move</span>
+<span class="fn">rotate</span>([x,y,z]) <span class="fn">shape</span>;      <span class="cmt">// rotate degrees</span>
+<span class="fn">scale</span>([x,y,z]) <span class="fn">shape</span>;       <span class="cmt">// scale</span>
+<span class="fn">mirror</span>([<span class="num">1</span>,<span class="num">0</span>,<span class="num">0</span>]) <span class="fn">shape</span>;     <span class="cmt">// flip on X axis</span>
+
+<span class="fn">linear_extrude</span>(height=<span class="num">10</span>) <span class="fn">circle</span>(<span class="num">5</span>); <span class="cmt">// 2D → 3D</span>
+<span class="fn">rotate_extrude</span>() <span class="fn">polygon</span>;  <span class="cmt">// revolve 2D profile</span>
+
+<span class="fn">hull</span>() { <span class="fn">shapes</span> }           <span class="cmt">// convex hull</span>
+<span class="fn">minkowski</span>() { <span class="fn">shapes</span> }     <span class="cmt">// rounded shapes trick</span></code></pre>
+    </div>
+    <div class="tip-box blue"><strong>Minkowski trick for rounded boxes:</strong> <code>minkowski() { cube([8,8,8]); sphere(r=2); }</code> — creates a box with rounded corners without complex math.</div>
+  </div>
+
+  <!-- Tab 4: Modules & Parameters -->
+  <div id="tab-modules" class="tab-content">
+    <div class="card">
+      <h2>Variables &amp; Modules</h2>
+      <pre><code><span class="cmt">// Variables — parametric design</span>
+wall = <span class="num">3</span>;
+height = <span class="num">20</span>;
+diameter = <span class="num">15</span>;
+<span class="fn">cylinder</span>(h=height, r=diameter/<span class="num">2</span>);
+
+<span class="cmt">// Modules — reusable functions</span>
+<span class="kw">module</span> <span class="fn">roundedBox</span>(size, radius) {
+  <span class="fn">minkowski</span>() {
+    <span class="fn">cube</span>(size);
+    <span class="fn">sphere</span>(r=radius);
+  }
+}
+<span class="fn">roundedBox</span>([<span class="num">10</span>,<span class="num">10</span>,<span class="num">10</span>], <span class="num">1</span>);</code></pre>
+    </div>
+    <div class="card">
+      <h2>Loops &amp; Conditionals</h2>
+      <pre><code><span class="cmt">// For loop — repeat geometry</span>
+<span class="kw">for</span>(i = [<span class="num">0</span>:<span class="num">5</span>]) {
+  <span class="fn">translate</span>([i*<span class="num">15</span>, <span class="num">0</span>, <span class="num">0</span>]) <span class="fn">sphere</span>(<span class="num">5</span>);
+}
+
+<span class="cmt">// Conditional logic</span>
+<span class="kw">if</span> (wall > <span class="num">2</span>) {
+  <span class="fn">cube</span>(<span class="num">10</span>);
+} <span class="kw">else</span> {
+  <span class="fn">sphere</span>(<span class="num">5</span>);
+}
+
+<span class="cmt">// Include external files</span>
+<span class="kw">include</span> &lt;helpers.scad&gt;
+<span class="kw">use</span> &lt;library.scad&gt;</code></pre>
+    </div>
+    <div class="tip-box green">Define all design variables at the <strong>top of your file</strong>. This makes your design parametric — change one number to update the entire model instantly on F5 preview.</div>
+  </div>
+
+  <!-- Tab 5: 2D & Text -->
+  <div id="tab-2d" class="tab-content">
+    <div class="card">
+      <h2>2D Primitives</h2>
+      <pre><code><span class="fn">square</span>([x,y]);       <span class="cmt">// 2D rectangle</span>
+<span class="fn">circle</span>(r=<span class="num">5</span>);         <span class="cmt">// 2D circle</span>
+<span class="fn">polygon</span>(points=[[<span class="num">0</span>,<span class="num">0</span>],[<span class="num">10</span>,<span class="num">0</span>],[<span class="num">5</span>,<span class="num">10</span>]]); <span class="cmt">// triangle</span>
+
+<span class="cmt">// Offset 2D shape (expand / contract)</span>
+<span class="fn">offset</span>(r=<span class="num">2</span>) <span class="fn">square</span>(<span class="num">10</span>);  <span class="cmt">// rounded corners</span>
+<span class="fn">offset</span>(delta=-<span class="num">1</span>) <span class="fn">circle</span>(<span class="num">10</span>); <span class="cmt">// shrink</span></code></pre>
+    </div>
+    <div class="card">
+      <h2>Text &amp; Import</h2>
+      <pre><code><span class="cmt">// 3D text (use linear_extrude to make solid)</span>
+<span class="fn">linear_extrude</span>(<span class="num">3</span>)
+  <span class="fn">text</span>("Hello", size=<span class="num">10</span>, font="Arial");
+
+<span class="cmt">// Import SVG as flat 2D shape</span>
+<span class="fn">linear_extrude</span>(<span class="num">2</span>) <span class="fn">import</span>("logo.svg");
+
+<span class="cmt">// Import DXF</span>
+<span class="fn">import</span>("drawing.dxf");</code></pre>
+    </div>
+    <div class="tip-box blue">2D shapes in OpenSCAD are used as profiles for <code>linear_extrude()</code> and <code>rotate_extrude()</code>. Draw complex 2D profiles in Inkscape, export as SVG, then import and extrude in OpenSCAD.</div>
+  </div>
+
+  <!-- Tab 6: Shortcuts & Tips -->
+  <div id="tab-shortcuts" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <h2>Keyboard Shortcuts</h2>
+        <div class="shortcut-row"><span class="shortcut-desc">Fast preview render</span><div class="shortcut-keys"><kbd>F5</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Full render (before export)</span><div class="shortcut-keys"><kbd>F6</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Export STL (after F6)</span><div class="shortcut-keys"><kbd>F7</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save file</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></div></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Auto-indent / format code</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>I</kbd></div></div>
+      </div>
+      <div class="card">
+        <h2>Coding Tips</h2>
+        <div class="tip-box green">Use <code>echo(wall=wall);</code> to print variable values to the console for debugging — essential for tracking down calculation errors.</div>
+        <div class="tip-box blue">Add <code>/* [Group Name] */</code> comments above variables to create interactive <strong>Customizer UI sliders</strong> (Design → Customizer). Great for sharing parametric models.</div>
+        <div class="tip-box yellow">Comments: <code>// single line</code> or <code>/* multi-line */</code>. Use comments liberally to document what each variable and module does.</div>
+        <div class="tip-box green">Use the <strong>OpenSCAD Web IDE</strong> at openscad.cloud for quick experiments without installing anything.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 7: Workflow -->
+  <div id="tab-workflow" class="tab-content">
+    <div class="card">
+      <h2>Workflow: Parametric 3D Printing</h2>
+      <ol class="step-list">
+        <li><span class="step-text">Define all design variables at the top of your <code>.scad</code> file: wall thickness, height, diameter, tolerance, etc. These become your parametric controls.</span></li>
+        <li><span class="step-text">Build basic shapes using primitives and boolean operations. Start with the outer envelope, then subtract holes and internal features using <code>difference()</code>.</span></li>
+        <li><span class="step-text">Create <code>module</code> definitions for repeated elements (mounting legs, bolt holes, snap clips). Call them with <code>for</code> loops for arrays.</span></li>
+        <li><span class="step-text">Test with <strong>F5 preview</strong>. Adjust variables at the top and re-preview to see live changes. Use <code>echo()</code> to verify computed values.</span></li>
+        <li><span class="step-text">Once satisfied, press <strong>F6</strong> for a full render (may take minutes for complex designs with high $fn values). Wait for "Rendering done" in status bar.</span></li>
+        <li><span class="step-text">Export: <strong>File → Export → Export as STL</strong> (or press F7). The STL is now ready for your slicer.</span></li>
+        <li><span class="step-text">Import the STL into your slicer (PrusaSlicer, Cura, Bambu Studio) → configure print settings → slice → send to printer.</span></li>
+      </ol>
+    </div>
+    <div class="tip-box green">OpenSCAD is completely free and open-source, runs on Windows, macOS, and Linux. It's the favorite tool of programmers who want <strong>precise, reproducible, version-controllable</strong> 3D designs.</div>
+    <div class="tip-box blue">Share your parametric designs on <strong>Thingiverse</strong> or <strong>Printables</strong> — OpenSCAD files let other users customize dimensions for their own needs using the Customizer.</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

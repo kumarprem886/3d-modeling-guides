@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autodesk Maya — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f13; color: #e0e0e0; min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  .top-nav { position: sticky; top: 0; z-index: 100; background: #2a1a4a; display: flex; align-items: center; padding: 0 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .nav-back { font-size: 0.9rem; color: #b8a0e0; white-space: nowrap; transition: color 0.2s; }
+  .nav-back:hover { color: #fff; }
+  .nav-title { flex: 1; text-align: center; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-spacer { width: 100px; }
+
+  .progress-bar { background: #1a1a24; border-bottom: 1px solid #2a2a3a; padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0; }
+  .prog-level { flex: 1; text-align: center; font-size: 0.72rem; font-weight: 600; padding: 0.35rem 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .prog-beginner { background: linear-gradient(135deg, #1a4a1a, #1e5a1e); color: #6fcf6f; border-radius: 4px 0 0 4px; }
+  .prog-intermediate { background: linear-gradient(135deg, #4a3a00, #5a4a00); color: #f0c040; }
+  .prog-advanced { background: linear-gradient(135deg, #4a1a00, #5a2a00); color: #f08040; }
+  .prog-expert { background: linear-gradient(135deg, #3a0a4a, #4a1a5a); color: #c080f0; border-radius: 0 4px 4px 0; }
+
+  .tabs-wrap { background: #14141e; border-bottom: 1px solid #2a2a3a; padding: 0 1rem; display: flex; gap: 0.25rem; overflow-x: auto; }
+  .tab-btn { background: none; border: none; color: #888; font-family: inherit; font-size: 0.85rem; font-weight: 500; padding: 0.85rem 1.1rem; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn:hover { color: #ccc; }
+  .tab-btn.active { color: #b08ae0; border-bottom-color: #2a1a4a; }
+
+  .tab-content { display: none; padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .section-title { font-size: 1.3rem; font-weight: 700; color: #b08ae0; margin-bottom: 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #2a1a4a; }
+
+  .card { background: #1a1a24; border: 1px solid #2a2a3a; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .card-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #b08ae0; margin-bottom: 0.85rem; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #222230; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { font-size: 0.9rem; color: #ccc; flex: 1; }
+  .shortcut-keys { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; flex-shrink: 0; }
+  kbd { background: #252535; border: 1px solid #3a3a50; border-bottom: 3px solid #3a3a50; border-radius: 4px; padding: 0.15rem 0.45rem; font-size: 0.78rem; font-family: inherit; color: #e0e0e0; white-space: nowrap; }
+
+  .tip-box { border-radius: 6px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; line-height: 1.6; border-left: 4px solid; }
+  .tip-box.tip { background: #0d2a0d; border-color: #2ea82e; color: #8de88d; }
+  .tip-box.warning { background: #2a2000; border-color: #c8a000; color: #f0d060; }
+  .tip-box.danger { background: #2a0800; border-color: #c83000; color: #f08060; }
+  .tip-box.info { background: #0a1a2a; border-color: #1a6ab0; color: #60a8e0; }
+  .tip-box strong { display: block; margin-bottom: 0.25rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.8; }
+
+  .workflow-steps { list-style: none; counter-reset: steps; }
+  .workflow-step { counter-increment: steps; display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #1e1e2a; }
+  .workflow-step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #2a1a4a; color: #b08ae0; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-text { font-size: 0.9rem; color: #ccc; line-height: 1.6; padding-top: 0.3rem; }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
+
+  @media (max-width: 600px) {
+    .top-nav { padding: 0 1rem; }
+    .nav-title { font-size: 0.9rem; }
+    .tab-content { padding: 1.25rem 1rem; }
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .shortcut-keys { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <div class="nav-title">Autodesk Maya — Complete Guide</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<div class="progress-bar">
+  <div class="prog-level prog-beginner">Beginner</div>
+  <div class="prog-level prog-intermediate">Intermediate</div>
+  <div class="prog-level prog-advanced">Advanced</div>
+  <div class="prog-level prog-expert">Expert</div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" onclick="showTab('nav',this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('modeling',this)">Modeling</button>
+  <button class="tab-btn" onclick="showTab('rigging',this)">Rigging &amp; Skinning</button>
+  <button class="tab-btn" onclick="showTab('animation',this)">Animation</button>
+  <button class="tab-btn" onclick="showTab('shortcuts',this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('rendering',this)">Rendering (Arnold)</button>
+  <button class="tab-btn" onclick="showTab('workflow',this)">Workflow</button>
+</div>
+
+<!-- TAB 1: NAVIGATION -->
+<div id="tab-nav" class="tab-content active">
+  <h2 class="section-title">Viewport Navigation</h2>
+  <div class="tip-box info"><strong>Info</strong>Maya uses Alt + mouse button for all navigation. This frees up the mouse buttons for selection and tools in the viewport.</div>
+  <div class="card">
+    <div class="card-title">Core Navigation</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Orbit / tumble viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>LMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Pan / track viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>MMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom / dolly viewport</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>RMB</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Zoom with scroll wheel</span><span class="shortcut-keys"><kbd>Scroll</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Frame selected object</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Frame all objects</span><span class="shortcut-keys"><kbd>A</kbd></span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Viewport Layout &amp; Display</div>
+    <div class="shortcut-row"><span class="shortcut-desc">Hotbox (all menus radial)</span><span class="shortcut-keys"><kbd>Space</kbd><span style="color:#666">tap</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Toggle 4-view layout</span><span class="shortcut-keys"><kbd>Space</kbd><span style="color:#666">hold</span></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Wireframe display</span><span class="shortcut-keys"><kbd>4</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Shaded display</span><span class="shortcut-keys"><kbd>5</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Shaded + textured</span><span class="shortcut-keys"><kbd>6</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Lighting view</span><span class="shortcut-keys"><kbd>7</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Maximize viewport</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Space</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Undo view change</span><span class="shortcut-keys"><kbd>[</kbd></span></div>
+    <div class="shortcut-row"><span class="shortcut-desc">Redo view change</span><span class="shortcut-keys"><kbd>]</kbd></span></div>
+  </div>
+</div>
+
+<!-- TAB 2: MODELING -->
+<div id="tab-modeling" class="tab-content">
+  <h2 class="section-title">Polygon Modeling</h2>
+  <div class="tip-box tip"><strong>Tip</strong>Shift+RMB opens the marking menu — the most efficient way to access mesh operations without leaving the viewport.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Transform Tools</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select tool</span><span class="shortcut-keys"><kbd>Q</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Move tool</span><span class="shortcut-keys"><kbd>W</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Rotate tool</span><span class="shortcut-keys"><kbd>E</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale tool</span><span class="shortcut-keys"><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Marking menu (mesh ops)</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>RMB</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Additional marking menu</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>RMB</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Sub-Object Selection</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Object mode</span><span class="shortcut-keys"><kbd>F8</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Vertex mode</span><span class="shortcut-keys"><kbd>F9</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Edge mode</span><span class="shortcut-keys"><kbd>F10</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Face mode</span><span class="shortcut-keys"><kbd>F11</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Mesh Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Extrude face</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>RMB</kbd><span style="color:#666">→ Extrude</span></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Multi-cut tool</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>X</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bevel edges</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>B</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Bridge (connect loops)</span><span class="shortcut-keys"><kbd>Edit Mesh → Bridge</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Merge vertices</span><span class="shortcut-keys"><kbd>Edit Mesh → Merge</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror geometry</span><span class="shortcut-keys"><kbd>Mesh → Mirror</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Advanced Modeling</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Quad Draw (retopology)</span><span class="shortcut-keys"><kbd>Quad Draw Tool</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sculpt geometry</span><span class="shortcut-keys"><kbd>Sculpt Geometry Tool</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Smooth preview (1/2/3)</span><span class="shortcut-keys"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box info"><strong>Info</strong>Press 1, 2, 3 in Maya to toggle between hull, cage+smooth, and smooth preview modes. This is non-destructive — it doesn't add actual geometry.</div>
+</div>
+
+<!-- TAB 3: RIGGING -->
+<div id="tab-rigging" class="tab-content">
+  <h2 class="section-title">Rigging &amp; Skinning</h2>
+  <div class="tip-box info"><strong>Info</strong>Maya's rigging system is the industry standard for VFX and film character animation. The workflow: joints → IK handles → controls → bind skin → paint weights.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Skeleton &amp; IK</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Create joints</span><span class="shortcut-keys"><kbd>Skeleton → Create Joints</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">IK handle tool</span><span class="shortcut-keys"><kbd>Skeleton → IK Handle Tool</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">HumanIK full body rig</span><span class="shortcut-keys"><kbd>Skeleton → HumanIK</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Skinning &amp; Weights</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Smooth bind skin to skeleton</span><span class="shortcut-keys"><kbd>Skin → Bind Skin → Smooth Bind</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Paint skin weights</span><span class="shortcut-keys"><kbd>Skin → Paint Skin Weights</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Blend shapes (facial anim)</span><span class="shortcut-keys"><kbd>Deform → Blend Shape</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Driven Keys &amp; Expressions</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Set driven key</span><span class="shortcut-keys"><kbd>Key → Set Driven Key</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Node editor (node graph)</span><span class="shortcut-keys"><kbd>Windows → Node Editor</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">nHair dynamics</span><span class="shortcut-keys"><kbd>nHair</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>When painting weights, use Flood with a value of 0 to quickly clear all weights from a joint, then build back up with smooth brush strokes.</div>
+  <div class="tip-box warning"><strong>Warning</strong>Always freeze transforms (Ctrl+Shift+F) and delete history on your mesh before binding. Transforms baked into history cause deformation problems.</div>
+</div>
+
+<!-- TAB 4: ANIMATION -->
+<div id="tab-animation" class="tab-content">
+  <h2 class="section-title">Animation</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Keyframing</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Set keyframe on all channels</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Key translate only</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>W</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Key rotate only</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>E</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Key scale only</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Step forward one frame</span><span class="shortcut-keys"><kbd>K</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Animation Editors</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Graph Editor (F-curves)</span><span class="shortcut-keys"><kbd>Windows → Animation Editors → Graph Editor</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Dope Sheet (timing)</span><span class="shortcut-keys"><kbd>Windows → Animation Editors → Dope Sheet</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Trax Editor (NLE blending)</span><span class="shortcut-keys"><kbd>Windows → Animation Editors → Trax Editor</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Playback</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Play/stop</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>V</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Go to start frame</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>Shift</kbd><kbd>V</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Motion paths</span><span class="shortcut-keys"><kbd>Animate → Motion Paths</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Animation layers</span><span class="shortcut-keys"><kbd>Animate → Create Layer</kbd></span></div>
+    </div>
+  </div>
+  <div class="tip-box tip"><strong>Tip</strong>In the Graph Editor, select all keys and use the Pre/Post Infinity settings to extend animations (cycle, linear, constant) without adding more keyframes.</div>
+</div>
+
+<!-- TAB 5: SHORTCUTS -->
+<div id="tab-shortcuts" class="tab-content">
+  <h2 class="section-title">All Shortcuts Reference</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">General</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save Scene As</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Object Operations</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Isolate select</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>1</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Show all</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>2</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>D</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate Special</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>D</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Group</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>G</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Parent</span><span class="shortcut-keys"><kbd>P</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Unparent</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>P</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cleanup</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete history</span><span class="shortcut-keys"><kbd>Alt</kbd><kbd>Shift</kbd><kbd>D</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Freeze transforms</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>F</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Center pivot</span><span class="shortcut-keys"><kbd>Modify → Center Pivot</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Rendering</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Render current frame</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>R</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Open Render View</span><span class="shortcut-keys"><kbd>Render → Render View</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: RENDERING -->
+<div id="tab-rendering" class="tab-content">
+  <h2 class="section-title">Rendering with Arnold</h2>
+  <div class="tip-box info"><strong>Info</strong>Arnold is Maya's default renderer since Maya 2017. It's a path-tracing renderer used in major VFX productions worldwide.</div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Arnold Shader (aiStandardSurface)</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Main PBR shader</span><span class="shortcut-keys"><kbd>aiStandardSurface</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Base color map slot</span><span class="shortcut-keys"><kbd>Base Color</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Metal control</span><span class="shortcut-keys"><kbd>Metalness</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Surface roughness</span><span class="shortcut-keys"><kbd>Specular Roughness</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Surface detail map</span><span class="shortcut-keys"><kbd>Normal Map</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Lighting</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Soft shadow area light</span><span class="shortcut-keys"><kbd>Arnold → aiAreaLight</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">HDRI environment dome</span><span class="shortcut-keys"><kbd>Arnold → aiSkyDomeLight</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Enable IPR render</span><span class="shortcut-keys"><kbd>Render → IPR Render</kbd></span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Render Passes (AOVs)</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Beauty (final composite)</span><span class="shortcut-keys"><kbd>RGBA</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Diffuse lighting only</span><span class="shortcut-keys"><kbd>diffuse</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Specular highlights only</span><span class="shortcut-keys"><kbd>specular</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Shadow matte pass</span><span class="shortcut-keys"><kbd>shadow_matte</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Enable denoising</span><span class="shortcut-keys"><kbd>Render Settings → Arnold → Denoising</kbd></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 7: WORKFLOW -->
+<div id="tab-workflow" class="tab-content">
+  <h2 class="section-title">VFX / Film Pipeline — Step by Step</h2>
+  <div class="tip-box info"><strong>Info</strong>This workflow follows the standard character animation pipeline used in VFX and animated film production.</div>
+  <ul class="workflow-steps">
+    <li class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Model &amp; UV Unwrap:</strong> Build clean polygon geometry. Keep quads only — avoid triangles and n-gons. Open the UV Editor (UV → UV Editor) to unwrap the mesh so textures apply correctly. Freeze transforms and delete history.</div></li>
+    <li class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Rig with Joints:</strong> Create the skeleton using the Joint Tool (Skeleton → Create Joints). Set up IK handles for the limbs. Create control curves (circles) to act as animatable control objects — constrain joints to controls, not animate joints directly.</div></li>
+    <li class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Skin Binding:</strong> Select the mesh and all joints, then Skin → Bind Skin → Smooth Bind. Use default max influences of 4. The mesh is now deformed by the skeleton.</div></li>
+    <li class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Paint Weights:</strong> Open Skin → Paint Skin Weights. Paint each joint's influence area carefully. Start with Flood at 0 to clear, then build up. Check deformations by posing the rig as you paint.</div></li>
+    <li class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Dynamics (optional):</strong> Add nCloth for fabric, nHair for hair/fur dynamics. Cache simulations to disk for playback performance. Simulations must be cached before rendering.</div></li>
+    <li class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Arnold Materials &amp; Lighting:</strong> Assign aiStandardSurface shaders. Set up a skydome_light with HDRI for environment. Add aiAreaLights for key/fill/rim lighting. Enable IPR for interactive render preview.</div></li>
+    <li class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>Render AOV Passes:</strong> Set up AOV render passes in Render Settings. Render to EXR format for maximum dynamic range. Composite in Nuke or After Effects: beauty + diffuse + specular + shadow passes combined give full control in post.</div></li>
+  </ul>
+</div>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

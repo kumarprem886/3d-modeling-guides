@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tinkercad — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #e8e8e8; min-height: 100vh; }
+  a.back-link { display: inline-flex; align-items: center; gap: 6px; color: #aaa; text-decoration: none; font-size: 0.85rem; padding: 10px 20px; transition: color 0.2s; }
+  a.back-link:hover { color: #fff; }
+  header { background: #1a5c00; padding: 32px 40px 28px; border-bottom: 3px solid #2a8c00; }
+  header h1 { font-size: 2rem; font-weight: 700; color: #fff; }
+  header p { color: #90d870; margin-top: 6px; font-size: 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .tab-btn { background: #1e1e1e; border: 1px solid #333; color: #bbb; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-family: inherit; transition: all 0.2s; }
+  .tab-btn:hover { background: #2a2a2a; color: #fff; }
+  .tab-btn.active { background: #1a5c00; border-color: #2a8c00; color: #fff; font-weight: 600; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 24px; margin-bottom: 20px; }
+  .card h2 { font-size: 1.1rem; color: #70c850; margin-bottom: 16px; font-weight: 600; border-bottom: 1px solid #2a2a2a; padding-bottom: 10px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #222; gap: 16px; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #2a2a2a; border: 1px solid #444; border-bottom: 3px solid #555; border-radius: 4px; padding: 3px 8px; font-size: 0.78rem; color: #e0e0e0; font-family: inherit; white-space: nowrap; }
+  .tip-box { border-radius: 8px; padding: 14px 18px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.5; }
+  .tip-box.green { background: #0d2a0d; border-left: 4px solid #4a9a4a; color: #a8d8a8; }
+  .tip-box.yellow { background: #2a2200; border-left: 4px solid #a08000; color: #d4c060; }
+  .tip-box.blue { background: #0a1a2a; border-left: 4px solid #2a6aaa; color: #80b8e8; }
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li { counter-increment: steps; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid #222; }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before { content: counter(steps); background: #1a5c00; color: #70c850; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+  code { background: #252525; border: 1px solid #363636; border-radius: 4px; padding: 2px 6px; font-size: 0.82rem; color: #80c850; font-family: 'Consolas', 'Monaco', monospace; }
+  @media (max-width: 600px) { header { padding: 20px; } header h1 { font-size: 1.4rem; } .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; } }
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Hub</a>
+<header>
+  <h1>Tinkercad — Complete Guide</h1>
+  <p>Browser-Based 3D Modeling for Beginners &amp; Education</p>
+</header>
+<div class="container">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('interface')">Interface &amp; Nav</button>
+    <button class="tab-btn" onclick="showTab('basic')">Basic Operations</button>
+    <button class="tab-btn" onclick="showTab('holes')">Shapes &amp; Holes</button>
+    <button class="tab-btn" onclick="showTab('import')">Generators &amp; Import</button>
+    <button class="tab-btn" onclick="showTab('tips')">Tips &amp; Tricks</button>
+    <button class="tab-btn" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <!-- Tab 1: Interface -->
+  <div id="tab-interface" class="tab-content active">
+    <div class="tip-box blue">Tinkercad runs entirely in your web browser at <strong>tinkercad.com</strong> — no download or installation required. Free accounts are available for everyone.</div>
+    <div class="card">
+      <h2>Viewport Navigation</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit / rotate view</span><div class="shortcut-keys"><kbd>Right-click drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><div class="shortcut-keys"><kbd>Middle-click drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><div class="shortcut-keys"><kbd>Scroll wheel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit all objects in view</span><div class="shortcut-keys"><kbd>F</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Frame a specific shape</span><div class="shortcut-keys"><kbd>Double-click shape</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Reset to default view</span><div class="shortcut-keys"><kbd>Home button (top-right)</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Preset views (top, front, etc.)</span><div class="shortcut-keys"><kbd>View Cube (top-right)</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Z</kbd></div></div>
+    </div>
+    <div class="tip-box green">Tinkercad is the best starting point for 3D modeling — the interface is clean and designed specifically for beginners, students, and educators.</div>
+  </div>
+
+  <!-- Tab 2: Basic Operations -->
+  <div id="tab-basic" class="tab-content">
+    <div class="card">
+      <h2>Selecting &amp; Moving Shapes</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Add shape to workplane</span><div class="shortcut-keys"><kbd>Drag from right panel</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select a shape</span><div class="shortcut-keys"><kbd>Click</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Move shape on workplane</span><div class="shortcut-keys"><kbd>Click &amp; drag</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Nudge 1mm at a time</span><div class="shortcut-keys"><kbd>Arrow keys</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Nudge 10mm at a time</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>Arrow keys</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lift shape off workplane</span><div class="shortcut-keys"><kbd>Drag black cone handle ↑</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Scaling &amp; Resizing</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale X/Y (drag white square handles)</span><div class="shortcut-keys"><kbd>Drag white square handles</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Scale height</span><div class="shortcut-keys"><kbd>Drag top white dot handle</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Uniform scale (maintain proportions)</span><div class="shortcut-keys"><kbd>Shift</kbd><kbd>+ drag handle</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Set exact dimensions</span><div class="shortcut-keys"><kbd>Ruler tool → click shape</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Snap to grid (precision)</span><div class="shortcut-keys"><kbd>Grid snap: 0.1mm for precision</kbd></div></div>
+    </div>
+    <div class="tip-box blue">Use the <strong>Ruler tool</strong> for precise positioning. Click Ruler in the toolbar, then click a shape to see and edit its exact X, Y, Z position and dimensions numerically.</div>
+  </div>
+
+  <!-- Tab 3: Shapes & Holes -->
+  <div id="tab-holes" class="tab-content">
+    <div class="card">
+      <h2>Solid vs Hole Mode</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Solid shape (colored) — adds material</span><div class="shortcut-keys"><kbd>Solid mode (default)</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hole shape (grey/transparent) — removes material</span><div class="shortcut-keys"><kbd>Inspector panel → Hole</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Group solid + hole → boolean cut</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>G</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Ungroup objects</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>G</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Alignment &amp; Arrangement</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Align multiple shapes</span><div class="shortcut-keys"><kbd>Select all → Align tool → click dots</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mirror a shape</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>M</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate in place</span><div class="shortcut-keys"><kbd>Ctrl</kbd><kbd>D</kbd></div></div>
+    </div>
+    <div class="tip-box green"><strong>How holes work:</strong> Place a Hole shape inside a Solid shape → select both → press Ctrl+G to group. The hole shape is subtracted from the solid, creating a cutout. You can ungroup to edit separately.</div>
+    <div class="tip-box yellow">Always select <strong>all shapes you want in the final object</strong> before grouping. Partial grouping can leave floating geometry that causes print issues.</div>
+  </div>
+
+  <!-- Tab 4: Generators & Import -->
+  <div id="tab-import" class="tab-content">
+    <div class="card">
+      <h2>Shape Library</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Basic shapes panel</span><div class="shortcut-keys"><kbd>Box, Sphere, Cylinder, Cone, Torus, Pyramid, Wedge</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Community parametric shapes</span><div class="shortcut-keys"><kbd>Shape Generators tab</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add 3D text</span><div class="shortcut-keys"><kbd>Drag Text shape → click to edit</kbd></div></div>
+    </div>
+    <div class="card">
+      <h2>Import &amp; Export</h2>
+      <div class="shortcut-row"><span class="shortcut-desc">Import SVG (becomes flat 3D extrusion)</span><div class="shortcut-keys"><kbd>Import → .SVG</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Import existing 3D model</span><div class="shortcut-keys"><kbd>Import → .STL or .OBJ</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export for 3D printing</span><div class="shortcut-keys"><kbd>Export → .STL</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export 3D object</span><div class="shortcut-keys"><kbd>Export → .OBJ</kbd></div></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Export 2D cross-section</span><div class="shortcut-keys"><kbd>Export → .SVG</kbd></div></div>
+    </div>
+    <div class="tip-box blue"><strong>Shape Generators</strong> are community-created parametric shapes: gears, springs, Minecraft characters, architectural elements, and more. Access them in the right-side shapes panel.</div>
+    <div class="tip-box green">Import an SVG logo → Tinkercad automatically extrudes it into a 3D object. Great for creating custom name tags, logos, and badges for printing.</div>
+  </div>
+
+  <!-- Tab 5: Tips & Tricks -->
+  <div id="tab-tips" class="tab-content">
+    <div class="tip-box green"><strong>Tip:</strong> Duplicate with <kbd>Ctrl+D</kbd> then immediately move — this is faster than copy/paste and keeps objects organized on the workplane.</div>
+    <div class="tip-box green"><strong>Tip:</strong> Use the <strong>Align tool</strong> constantly — dragging shapes by eye is never accurate. Select multiple shapes, click Align, then click the alignment dots for pixel-perfect positioning.</div>
+    <div class="tip-box green"><strong>Tip:</strong> Always design at <strong>1:1 real-world scale in mm</strong> from the very start. Tinkercad defaults to mm — don't change it. 1 unit = 1mm.</div>
+    <div class="tip-box yellow"><strong>Warning:</strong> Tinkercad has no undo history beyond approximately 30 steps. Save design versions frequently by duplicating the design in your dashboard before making major changes.</div>
+    <div class="tip-box yellow"><strong>Warning:</strong> Very complex models with many grouped shapes can slow down the browser significantly. Simplify by grouping intermediate stages and breaking complex designs into parts.</div>
+    <div class="tip-box blue"><strong>Info:</strong> Use <strong>Tinkercad Codeblocks</strong> for programming-based design — it uses a Scratch-style visual block interface to generate 3D shapes with loops and variables. Great intro to coding.</div>
+    <div class="tip-box blue"><strong>Info:</strong> <strong>Tinkercad Circuits</strong> is a built-in electronics and Arduino circuit simulator. Design and test circuits before buying hardware — perfect for STEM education.</div>
+    <div class="tip-box blue"><strong>Info:</strong> Group everything into a single object before exporting STL. This ensures you export a single manifold (watertight) solid that slicers can process without errors.</div>
+  </div>
+
+  <!-- Tab 6: Workflow -->
+  <div id="tab-workflow" class="tab-content">
+    <div class="card">
+      <h2>Workflow: First 3D Print</h2>
+      <ol class="step-list">
+        <li><span class="step-text">Sign up for a free account at <strong>tinkercad.com</strong>. From your dashboard, click <strong>"Create new design"</strong> to open the editor.</span></li>
+        <li><span class="step-text">Drag a <strong>Box</strong> shape from the right panel onto the workplane. Click the shape and use the Ruler tool to set exact dimensions: <strong>30mm × 30mm × 5mm</strong>.</span></li>
+        <li><span class="step-text">Drag another Box shape onto the workplane. In the inspector panel (top-right when selected), change it to <strong>Hole</strong> mode. Resize it to 20mm × 20mm × 10mm and position it centered on top of the first box to create a pocket.</span></li>
+        <li><span class="step-text">Select both shapes (click one, then Shift+click the other). Press <strong>Ctrl+G</strong> to group — the hole cuts through the solid, creating a recessed pocket.</span></li>
+        <li><span class="step-text">Add text: drag a <strong>Text</strong> shape onto the workplane, click it to type your name. Resize and position it on the top face of your box. Group with the main shape.</span></li>
+        <li><span class="step-text">Click <strong>Export</strong> (top-right menu) → select <strong>.STL</strong>. Open the STL in <strong>Cura</strong> or <strong>PrusaSlicer</strong> → set your layer height and supports → slice → send to printer!</span></li>
+      </ol>
+    </div>
+    <div class="tip-box green">Tinkercad is <strong>completely free</strong> with no feature limitations for personal use. It's maintained by Autodesk and regularly updated with new features.</div>
+    <div class="tip-box blue">Once you outgrow Tinkercad, the natural next step is <strong>Fusion 360</strong> (also by Autodesk, free for personal use) which offers full parametric CAD capabilities.</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

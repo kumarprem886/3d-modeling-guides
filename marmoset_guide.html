@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marmoset Toolbag — Complete Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; }
+  .nav { position: sticky; top: 0; z-index: 100; background: #1a2a4a; padding: 12px 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+  .back-link { color: #fff; text-decoration: none; font-size: 14px; opacity: 0.85; white-space: nowrap; }
+  .back-link:hover { opacity: 1; text-decoration: underline; }
+  .nav-title { color: #fff; font-size: 18px; font-weight: 700; }
+  .nav-subtitle { color: rgba(255,255,255,0.7); font-size: 13px; }
+  .progress-bar { background: #1a1d26; padding: 10px 20px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #888; border-bottom: 1px solid #2a2d36; }
+  .progress-track { flex: 1; height: 6px; background: #2a2d36; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #1a2a4a, #7ec8e3); border-radius: 3px; width: 100%; }
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 12px 20px; background: #13161f; border-bottom: 1px solid #2a2d36; }
+  .tab-btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; background: #1e2130; color: #aaa; transition: all 0.2s; }
+  .tab-btn:hover { background: #252840; color: #fff; }
+  .tab-btn.active { background: #1a2a4a; color: #fff; font-weight: 600; }
+  .content { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 4px; background: #1a1d26; }
+  .shortcut-row:nth-child(even) { background: #1e2130; }
+  .shortcut-desc { font-size: 14px; color: #c0c0c0; flex: 1; }
+  .shortcut-key { margin-left: 16px; flex-shrink: 0; }
+  kbd { background: #2a2d3e; border: 1px solid #444; border-bottom: 3px solid #333; border-radius: 4px; padding: 3px 8px; font-size: 12px; font-family: monospace; color: #e0e0e0; white-space: nowrap; }
+  .tip-box { background: #1a2a1a; border-left: 4px solid #4caf50; border-radius: 4px; padding: 12px 16px; margin: 16px 0; font-size: 14px; color: #b8e6b8; }
+  .tip-box.blue { background: #1a1f3a; border-color: #4a7fd4; color: #b0c8f0; }
+  .tip-box.orange { background: #2a1f0a; border-color: #f0a030; color: #f0d090; }
+  .tip-box.purple { background: #1f1a2a; border-color: #9c6fd4; color: #d0b8f0; }
+  .step { display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start; }
+  .step-num { background: #1a2a4a; color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .step-text { font-size: 14px; color: #c0c0c0; line-height: 1.6; padding-top: 5px; }
+  h2 { font-size: 18px; font-weight: 700; color: #fff; margin: 24px 0 12px; }
+  h3 { font-size: 15px; font-weight: 600; color: #ddd; margin: 16px 0 8px; }
+  @media (max-width: 600px) {
+    .shortcut-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .shortcut-key { margin-left: 0; }
+    .nav-subtitle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="back-link">&#8592; Back to Hub</a>
+  <div>
+    <div class="nav-title">Marmoset Toolbag</div>
+    <div class="nav-subtitle">Real-Time Rendering, Baking &amp; Portfolio Presentation</div>
+  </div>
+</nav>
+
+<div class="progress-bar">
+  <span>Beginner</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>Expert</span>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('tab1', this)">Navigation</button>
+  <button class="tab-btn" onclick="showTab('tab2', this)">Scene Setup</button>
+  <button class="tab-btn" onclick="showTab('tab3', this)">Material &amp; Shader</button>
+  <button class="tab-btn" onclick="showTab('tab4', this)">Baking</button>
+  <button class="tab-btn" onclick="showTab('tab5', this)">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('tab6', this)">Workflow</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation -->
+  <div id="tab1" class="tab-panel active">
+    <h2>Viewport Navigation</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Orbit around scene</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>LMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Pan viewport</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>MMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Zoom in / out</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>RMB</kbd> or <kbd>Scroll</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Frame selected object</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Frame all objects in scene</span>
+      <span class="shortcut-key"><kbd>Shift</kbd> + <kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fly-through navigation</span>
+      <span class="shortcut-key"><kbd>RMB</kbd> + <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Move camera up / down during fly</span>
+      <span class="shortcut-key"><kbd>RMB</kbd> + <kbd>Q</kbd> / <kbd>E</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle lighting on/off</span>
+      <span class="shortcut-key"><kbd>L</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle wireframe overlay</span>
+      <span class="shortcut-key"><kbd>W</kbd></span>
+    </div>
+    <div class="tip-box">
+      <strong>Tip:</strong> Numpad views are available for standard angles — use them for quick orthographic perspectives when composing your scene.
+    </div>
+  </div>
+
+  <!-- TAB 2: Scene Setup -->
+  <div id="tab2" class="tab-panel">
+    <h2>Scene Setup</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Import mesh (OBJ, FBX, glTF, DAE)</span>
+      <span class="shortcut-key"><kbd>File</kbd> → <kbd>Import</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Auto-assign textures to material</span>
+      <span class="shortcut-key">Drag textures onto mesh</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">View scene hierarchy (meshes, lights, camera)</span>
+      <span class="shortcut-key">Scene panel (left)</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Load HDRI environment into sky light</span>
+      <span class="shortcut-key">Sky light → sky settings</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add Directional / Point / Spot / Area light</span>
+      <span class="shortcut-key"><kbd>Scene</kbd> → <kbd>New Light</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Shadow map resolution (recommended crisp)</span>
+      <span class="shortcut-key">Shadow Map Resolution → 2048</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Enable DOF, Bloom, Vignette, Tone Mapping, SSAO</span>
+      <span class="shortcut-key">Post Effects panel</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Switch render quality</span>
+      <span class="shortcut-key"><kbd>Scene</kbd> → <kbd>Render Quality</kbd> → Draft / Production</span>
+    </div>
+    <div class="tip-box blue">
+      <strong>Tip:</strong> Start every scene by setting up your Sky (HDRI) light first — it provides the most natural ambient lighting and sets the mood of your entire render.
+    </div>
+  </div>
+
+  <!-- TAB 3: Material & Shader -->
+  <div id="tab3" class="tab-panel">
+    <h2>Material &amp; Shader Setup</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Albedo slot — color texture</span>
+      <span class="shortcut-key"><kbd>sRGB</kbd> color space</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Roughness slot</span>
+      <span class="shortcut-key"><kbd>Linear</kbd> color space</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Metalness slot</span>
+      <span class="shortcut-key"><kbd>Linear</kbd> color space</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Normal map slot</span>
+      <span class="shortcut-key"><kbd>Linear</kbd> color space</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Ambient Occlusion slot</span>
+      <span class="shortcut-key"><kbd>Linear</kbd> color space</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Emissive slot — add glow (pair with Bloom)</span>
+      <span class="shortcut-key">Emissive slot</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Enable for leaves, fabric, thin surfaces</span>
+      <span class="shortcut-key">Two-sided → enable</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Blend mode options</span>
+      <span class="shortcut-key">Opaque / Dithered (hair) / Transparency</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Ground contact realism</span>
+      <span class="shortcut-key">Cavity/AO → multiply onto albedo</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Stylized portfolio look</span>
+      <span class="shortcut-key">Turntable material → add matcap</span>
+    </div>
+    <div class="tip-box orange">
+      <strong>Tip:</strong> Always check your texture color space — Albedo is sRGB, everything else is Linear. Wrong color space breaks your shading and can be hard to debug.
+    </div>
+  </div>
+
+  <!-- TAB 4: Baking -->
+  <div id="tab4" class="tab-panel">
+    <h2>Baking (Marmoset Baker)</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Open bake dialog</span>
+      <span class="shortcut-key"><kbd>Scene</kbd> → <kbd>Baker</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add low-poly mesh</span>
+      <span class="shortcut-key">Low group</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Add high-poly mesh</span>
+      <span class="shortcut-key">High group</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake surface detail from high to low</span>
+      <span class="shortcut-key">Normal map</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake ambient occlusion</span>
+      <span class="shortcut-key">AO map</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake edge highlights and cavity</span>
+      <span class="shortcut-key">Curvature map</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake world-space gradient</span>
+      <span class="shortcut-key">Position map</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Bake for subsurface effects</span>
+      <span class="shortcut-key">Thickness map</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">More accurate baking for complex silhouettes</span>
+      <span class="shortcut-key">Cage-based baking</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fix bake errors on close geometry</span>
+      <span class="shortcut-key">Ray distance → adjust</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Reduce distortion on angled surfaces</span>
+      <span class="shortcut-key">Skew mitigation</span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export all baked textures</span>
+      <span class="shortcut-key">Save All Maps</span>
+    </div>
+    <div class="tip-box purple">
+      <strong>Tip:</strong> Baked maps auto-load into the scene — you can apply them directly in Toolbag or take them into Substance Painter for further texturing.
+    </div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div id="tab5" class="tab-panel">
+    <h2>All Shortcuts Reference</h2>
+    <h3>Viewport</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Orbit</span>
+      <span class="shortcut-key"><kbd>Alt</kbd> + <kbd>LMB</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Frame selection</span>
+      <span class="shortcut-key"><kbd>F</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Frame all</span>
+      <span class="shortcut-key"><kbd>Shift</kbd> + <kbd>F</kbd></span>
+    </div>
+    <h3>Edit</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Undo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Z</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Redo</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Y</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Save scene</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>S</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Duplicate object</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>D</kbd></span>
+    </div>
+    <h3>Display</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle grid</span>
+      <span class="shortcut-key"><kbd>G</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Wireframe overlay</span>
+      <span class="shortcut-key"><kbd>W</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle lights</span>
+      <span class="shortcut-key"><kbd>L</kbd></span>
+    </div>
+    <h3>Render &amp; Export</h3>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Render high-quality still image</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Export render</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>E</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Capture turntable animation</span>
+      <span class="shortcut-key"><kbd>Ctrl</kbd> + <kbd>P</kbd></span>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Fly navigation</span>
+      <span class="shortcut-key"><kbd>RMB</kbd> + <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></span>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div id="tab6" class="tab-panel">
+    <h2>Portfolio Render Workflow</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">Import your final low-poly mesh with UVs unwrapped. Then import all PBR texture maps (Albedo, Normal, Roughness, Metalness, AO).</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">Create a new material and assign each texture to its correct slot — Albedo, Normal, Roughness, Metalness. Double-check color spaces (Albedo = sRGB, all others = Linear).</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">Place your HDRI sky light: pick an environment that matches the mood you want (studio grey for clean product shots, outdoor HDRI for naturalistic lighting).</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">Add 2-3 additional fill lights to control shadow darkness and add rim lighting. Use low-intensity directional lights or area lights for subtle bounce fill.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">Set up the camera: adjust FOV (35mm is default, go lower for telephoto compression), and enable DOF if you are doing a close-up detail shot.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-text">Add post effects: enable SSAO for contact shadows, add subtle Bloom if emissive elements are present, and add a gentle Vignette to draw focus inward.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-text">Render high resolution: go to Scene → Render, set your output resolution, then press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to capture the final still.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-text">Export a turntable video: go to Camera → Turntable, set rotation speed and frame count, then Capture to render the animated portfolio video.</div>
+    </div>
+    <div class="tip-box">
+      <strong>Pro tip:</strong> Save your scene before rendering so you can tweak and re-render without losing your lighting setup. Name scenes with descriptive tags (e.g. "sword_studio_v02").
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

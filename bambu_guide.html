@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bambu Studio — Complete Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #222; }
+
+  /* NAV */
+  nav { background: #004a2a; color: #fff; display: flex; align-items: center; padding: 0 24px; height: 56px; gap: 20px; }
+  nav a { color: #a8d8b9; text-decoration: none; font-size: 0.9rem; white-space: nowrap; }
+  nav a:hover { color: #fff; }
+  .nav-title { font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .nav-subtitle { font-size: 0.8rem; color: #a8d8b9; margin-top: 1px; }
+  .nav-text { display: flex; flex-direction: column; }
+
+  /* PROGRESS BAR */
+  .progress-bar { height: 4px; background: #004a2a; width: 100%; }
+
+  /* TABS */
+  .tabs { display: flex; flex-wrap: wrap; background: #fff; border-bottom: 1px solid #ddd; padding: 0 16px; gap: 2px; }
+  .tab-btn { background: none; border: none; padding: 14px 18px; cursor: pointer; font-size: 0.88rem; font-family: inherit; color: #555; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; white-space: nowrap; }
+  .tab-btn:hover { color: #004a2a; }
+  .tab-btn.active { color: #004a2a; border-bottom-color: #004a2a; font-weight: 600; }
+
+  /* CONTENT */
+  .content { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  h2 { font-size: 1.25rem; color: #004a2a; margin-bottom: 18px; font-weight: 700; }
+
+  /* SHORTCUT ROWS */
+  .shortcut-list { background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-bottom: 1px solid #f0f0f0; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-row:nth-child(even) { background: #fafafa; }
+  .shortcut-desc { font-size: 0.9rem; color: #333; }
+  kbd { display: inline-block; background: #f0f0f0; border: 1px solid #ccc; border-bottom: 2px solid #bbb; border-radius: 4px; padding: 2px 8px; font-size: 0.8rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #333; white-space: nowrap; }
+
+  /* TIP BOXES */
+  .box { border-radius: 6px; padding: 12px 16px; margin-bottom: 16px; font-size: 0.88rem; line-height: 1.55; border-left: 4px solid; }
+  .box-tip  { background: #edfbf3; border-color: #27ae60; color: #1a5c35; }
+  .box-warn { background: #fffbea; border-color: #f0ad00; color: #6b4c00; }
+  .box-danger { background: #fff0f0; border-color: #e03131; color: #7a1515; }
+  .box-info { background: #eef4ff; border-color: #3b82f6; color: #1e3a6e; }
+  .box strong { font-weight: 700; }
+
+  /* STEPS */
+  ol.steps { padding-left: 0; list-style: none; counter-reset: steps; margin-bottom: 20px; }
+  ol.steps li { counter-increment: steps; display: flex; gap: 14px; align-items: flex-start; padding: 12px 16px; background: #fff; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; line-height: 1.5; }
+  ol.steps li::before { content: counter(steps); background: #004a2a; color: #fff; font-weight: 700; font-size: 0.8rem; min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">← Back to Hub</a>
+  <div class="nav-text">
+    <span class="nav-title">Bambu Studio — Complete Guide</span>
+    <span class="nav-subtitle">High-Speed Multi-Color Printing with Bambu Lab Printers</span>
+  </div>
+</nav>
+<div class="progress-bar"></div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('nav')">Navigation</button>
+  <button class="tab-btn" onclick="showTab('multicolor')">Multi-Color Workflow (AMS)</button>
+  <button class="tab-btn" onclick="showTab('settings')">Print Settings</button>
+  <button class="tab-btn" onclick="showTab('features')">Bambu-Specific Features</button>
+  <button class="tab-btn" onclick="showTab('shortcuts')">All Shortcuts</button>
+  <button class="tab-btn" onclick="showTab('workflow')">Workflow — Multi-Color Print</button>
+</div>
+
+<div class="content">
+
+  <!-- TAB 1: Navigation -->
+  <div id="tab-nav" class="tab-panel active">
+    <h2>Navigation</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit</span><kbd>RMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan</span><kbd>MMB drag</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><kbd>Scroll wheel</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit all in view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Slice</span><kbd>G</kbd></div>
+    </div>
+    <div class="box box-info">Three main views: <strong>Prepare</strong> (layout), <strong>Preview</strong> (sliced layers), <strong>Device</strong> (printer control).</div>
+    <div class="box box-info">Objects panel (left sidebar) lists all objects and their individual settings.</div>
+    <div class="box box-info">Supports FDM printers: X1, P1, A1 series, and direct cloud printing.</div>
+  </div>
+
+  <!-- TAB 2: Multi-Color Workflow -->
+  <div id="tab-multicolor" class="tab-panel">
+    <h2>Multi-Color Workflow (AMS)</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">AMS filament slots</span><kbd>1–4 (up to 16 with AMS Lite)</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Assign color to object</span><kbd>Click object → Filament → select slot</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Color painting access</span><kbd>Right-click → Color Painting</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Wipe tower purpose</span><kbd>Purge between color changes</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Flush volume (higher)</span><kbd>Less color bleed, more waste</kbd></div>
+    </div>
+    <div class="box box-tip"><strong>Tip:</strong> Color painting tools: Triangle painting, Sphere brush, Fill by part, Fill by island — use <strong>Fill by part</strong> for clean solid regions.</div>
+    <div class="box box-info">Timelapse: enable in Device tab for automatic timelapse generation of your print.</div>
+    <div class="box box-warn"><strong>Warning:</strong> Minimize wipe tower size when possible to reduce filament waste — move it away from models.</div>
+  </div>
+
+  <!-- TAB 3: Print Settings -->
+  <div id="tab-settings" class="tab-panel">
+    <h2>Print Settings</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Super fine quality</span><kbd>0.08mm layers</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fine quality</span><kbd>0.1mm layers</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Standard quality</span><kbd>0.2mm layers</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Draft quality</span><kbd>0.28mm layers</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Wall loops</span><kbd>3–4 for most prints</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sparse infill</span><kbd>15% standard</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Infill pattern</span><kbd>Gyroid or Honeycomb</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">First layer speed</span><kbd>25% (for adhesion)</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Seam default</span><kbd>Rear-aligned</kbd></div>
+    </div>
+    <div class="box box-tip"><strong>Tip:</strong> Use Bambu's stock process profiles first — they are tuned specifically for each printer and filament combination.</div>
+    <div class="box box-info">Tree support recommended for overhangs. Single-sided raft = faster than full raft but strong adhesion.</div>
+  </div>
+
+  <!-- TAB 4: Bambu-Specific Features -->
+  <div id="tab-features" class="tab-panel">
+    <h2>Bambu-Specific Features</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Flow calibration</span><kbd>Device → Calibration → Flow Rate</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pressure advance</span><kbd>Device → Calibration → PA</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Vibration compensation</span><kbd>Built into printer firmware</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lidar scan (X1 series)</span><kbd>Auto-detects spaghetti failures</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">AI monitoring</span><kbd>Cloud camera + auto-pause on failure</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Remote print</span><kbd>Send via WiFi from Bambu Studio</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Handy app</span><kbd>Control and monitor from phone</kbd></div>
+    </div>
+    <div class="box box-tip"><strong>Tip:</strong> Run flow calibration each time you switch to a new filament brand or color for best results.</div>
+    <div class="box box-info">Bambu Cloud stores sliced files, print history, and filament data for reference.</div>
+  </div>
+
+  <!-- TAB 5: All Shortcuts -->
+  <div id="tab-shortcuts" class="tab-panel">
+    <h2>All Shortcuts</h2>
+    <div class="shortcut-list">
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><kbd>Ctrl+Z</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><kbd>Ctrl+Y</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Save project</span><kbd>Ctrl+S</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Add model</span><kbd>A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Delete selected</span><kbd>Delete</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Select all</span><kbd>Ctrl+A</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Deselect</span><kbd>Escape</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Slice</span><kbd>G</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Fit to view</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Copy</span><kbd>Ctrl+C</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Paste</span><kbd>Ctrl+V</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Duplicate</span><kbd>Ctrl+D</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Arrange all</span><kbd>Right-click plate → Arrange</kbd></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Context menu</span><kbd>RMB on model</kbd></div>
+    </div>
+  </div>
+
+  <!-- TAB 6: Workflow -->
+  <div id="tab-workflow" class="tab-panel">
+    <h2>Workflow — Multi-Color Print</h2>
+    <ol class="steps">
+      <li>Import STL. Select your printer (X1C, P1S, A1 Mini, etc.).</li>
+      <li>Right-click model → Color Painting. Paint each region a different filament color.</li>
+      <li>Check wipe tower placement — move it away from the model if needed.</li>
+      <li>Adjust flush volumes: higher = less color bleed, more waste filament.</li>
+      <li>Slice (G). Check Preview tab — verify color changes appear correct on each layer.</li>
+      <li>Send to printer via WiFi or save to SD/USB.</li>
+      <li>Load AMS filament in correct order matching your color assignments.</li>
+    </ol>
+    <div class="box box-tip"><strong>Tip:</strong> Always verify color assignments in the Preview tab before sending to printer — misassigned filaments waste an entire AMS spool.</div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.getElementById('tab-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+</body>
+</html>
