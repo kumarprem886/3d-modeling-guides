@@ -1,0 +1,2460 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Complete 3D Printing Master Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  a { color: #7c6fff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Required CSS ── */
+  kbd {
+    background: #21262d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: monospace;
+    color: #e6edf3;
+  }
+  .shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #21262d;
+    padding: 6px 0;
+  }
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .tip-box {
+    border-left: 4px solid #2daa6b;
+    background: #0d4429;
+    padding: .7rem 1rem;
+    margin: .6rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .tip-box.warning { border-color: #f0a500; background: #3d2c00; }
+  .tip-box.danger  { border-color: #e74c3c; background: #3d0000; }
+  .tip-box.info    { border-color: #7c6fff; background: #1a1040; }
+  .section-heading {
+    color: #7c6fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 1.2rem 0 .5rem;
+  }
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .tab-btn.active { background: #7c6fff; color: #fff; border-color: #7c6fff; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .price-tag {
+    display: inline-block;
+    background: #0d4429;
+    color: #2daa6b;
+    border: 1px solid #2daa6b;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .price-tag.mid  { background: #3d2c00; color: #f0a500; border-color: #f0a500; }
+  .price-tag.high { background: #1a0030; color: #bf7fff; border-color: #bf7fff; }
+  .product-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin: 0.4rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .product-name { font-weight: 600; color: #e6edf3; font-size: 14px; }
+  .product-desc { color: #8b949e; font-size: 12px; margin-top: 2px; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge.beginner     { background: #0d4429; color: #2daa6b; }
+  .badge.intermediate { background: #3d2c00; color: #f0a500; }
+  .badge.expert       { background: #2d0018; color: #f72585; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a1040 50%, #0d1117 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #7c6fff, #bf7fff, #7c6fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.7rem;
+    line-height: 1.2;
+  }
+  .hero-subtitle {
+    color: #8b949e;
+    font-size: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .hero-pill {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid;
+  }
+  .hero-pill.fdm      { background: #0d1a30; color: #58a6ff; border-color: #1f4b8a; }
+  .hero-pill.resin    { background: #1a0030; color: #bf7fff; border-color: #5a2d8a; }
+  .hero-pill.model    { background: #0d2d1a; color: #2daa6b; border-color: #1a5c36; }
+  .hero-pill.paint    { background: #2d1a00; color: #f0a500; border-color: #7a4a00; }
+  .hero-pill.tools    { background: #2d0010; color: #f72585; border-color: #7a0030; }
+  .hero-pill.business { background: #001a2d; color: #39d0d8; border-color: #006080; }
+
+  /* ── Sticky nav ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.5rem;
+    gap: 1rem;
+  }
+  .sticky-nav .back-btn {
+    color: #8b949e;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .sticky-nav .back-btn:hover { color: #e6edf3; }
+  .sticky-nav .nav-center {
+    font-size: 13px;
+    font-weight: 600;
+    color: #7c6fff;
+    white-space: nowrap;
+  }
+  .sticky-nav .nav-right {
+    font-size: 12px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  /* ── Tab bar ── */
+  .tab-bar-wrapper {
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #30363d #0d1117;
+  }
+  .tab-bar {
+    display: flex;
+    gap: 6px;
+    padding: 0.7rem 1.2rem;
+    min-width: max-content;
+  }
+
+  /* ── Main content ── */
+  .main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1.2rem 3rem;
+  }
+
+  /* ── Typography ── */
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e6edf3;
+    margin: 1.5rem 0 0.7rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #21262d;
+  }
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #c9d1d9;
+    margin: 1rem 0 0.4rem;
+  }
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #8b949e;
+    margin: 0.8rem 0 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  p { margin-bottom: 0.6rem; color: #c9d1d9; }
+  ul, ol { padding-left: 1.4rem; margin-bottom: 0.7rem; color: #c9d1d9; }
+  li { margin-bottom: 0.25rem; }
+  strong { color: #e6edf3; }
+
+  /* ── Ecosystem diagram ── */
+  .ecosystem {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.2rem;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    margin: 0.8rem 0 1rem;
+  }
+  .eco-node {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    min-width: 110px;
+  }
+  .eco-node .eco-icon { font-size: 1.4rem; }
+  .eco-node .eco-label { font-size: 12px; font-weight: 600; color: #e6edf3; margin-top: 4px; }
+  .eco-node .eco-sub { font-size: 10px; color: #8b949e; }
+  .eco-arrow { color: #7c6fff; font-size: 1.2rem; font-weight: 700; }
+
+  /* ── Path cards ── */
+  .path-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+  }
+  .path-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+  }
+  .path-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .path-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .path-a { background: #1f4b8a; color: #58a6ff; }
+  .path-b { background: #5a2d8a; color: #bf7fff; }
+  .path-c { background: #7a4a00; color: #f0a500; }
+  .path-d { background: #1a5c36; color: #2daa6b; }
+  .path-title { font-weight: 700; color: #e6edf3; font-size: 13px; }
+  .path-goal { font-size: 12px; color: #8b949e; margin-bottom: 0.5rem; }
+  .path-item { font-size: 12px; color: #c9d1d9; margin-bottom: 2px; }
+  .path-item strong { color: #e6edf3; }
+
+  /* ── Investment table ── */
+  .invest-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+  }
+  .invest-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: #161b22;
+    color: #8b949e;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #30363d;
+  }
+  .invest-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #21262d;
+    font-size: 13px;
+    color: #c9d1d9;
+  }
+  .invest-table tr:last-child td { border-bottom: none; }
+
+  /* ── Filament table ── */
+  .filament-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 12px;
+  }
+  .filament-table th {
+    text-align: left;
+    padding: 7px 10px;
+    background: #161b22;
+    color: #8b949e;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid #30363d;
+  }
+  .filament-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #21262d;
+    color: #c9d1d9;
+    vertical-align: top;
+  }
+  .filament-table tr:hover td { background: #161b22; }
+  .filament-table tr:last-child td { border-bottom: none; }
+  .filament-name { font-weight: 700; color: #e6edf3; }
+
+  /* ── Settings grid ── */
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .setting-item {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+  }
+  .setting-label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.04em; }
+  .setting-value { font-size: 13px; color: #e6edf3; font-weight: 600; margin-top: 2px; }
+  .setting-note { font-size: 11px; color: #8b949e; margin-top: 2px; }
+
+  /* ── Resin workflow steps ── */
+  .workflow-steps { margin: 0.8rem 0; }
+  .workflow-step {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c6fff, #bf7fff);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-text { font-size: 13px; color: #c9d1d9; }
+  .step-text strong { color: #e6edf3; }
+
+  /* ── Software cards ── */
+  .software-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .software-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+  }
+  .software-name { font-weight: 700; color: #e6edf3; font-size: 13px; }
+  .software-price { font-size: 11px; color: #2daa6b; font-weight: 600; }
+  .software-desc { font-size: 12px; color: #8b949e; margin-top: 4px; }
+  .software-use { font-size: 12px; color: #c9d1d9; margin-top: 4px; }
+
+  /* ── Painting steps ── */
+  .paint-step {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.7rem;
+  }
+  .paint-step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .paint-step-num {
+    background: linear-gradient(135deg, #7c6fff, #bf7fff);
+    color: #fff;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .paint-step-title { font-weight: 700; color: #e6edf3; font-size: 14px; }
+
+  /* ── Tools section ── */
+  .tool-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    margin: 1rem 0 0.5rem;
+    border-bottom: 1px solid #30363d;
+  }
+  .tool-section-letter {
+    background: linear-gradient(135deg, #7c6fff, #bf7fff);
+    color: #fff;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .tool-section-title { font-size: 15px; font-weight: 700; color: #e6edf3; }
+
+  .tool-tier {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #7c6fff;
+    margin: 0.8rem 0 0.4rem;
+    padding: 3px 0;
+    border-bottom: 1px solid #21262d;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .main-content { padding: 1rem 0.8rem 2rem; }
+    .sticky-nav { padding: 0.5rem 0.8rem; }
+    .path-grid { grid-template-columns: 1fr; }
+    .filament-table { font-size: 11px; }
+    .filament-table th, .filament-table td { padding: 5px 6px; }
+    .ecosystem { gap: 0.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ HERO -->
+<section class="hero">
+  <h1>🖨️ The Complete 3D Printing Master Guide</h1>
+  <p class="hero-subtitle">From first printer to selling prints — everything you need to know</p>
+  <div class="hero-pills">
+    <span class="hero-pill fdm">FDM Printing</span>
+    <span class="hero-pill resin">Resin Printing</span>
+    <span class="hero-pill model">3D Modeling</span>
+    <span class="hero-pill paint">Painting &amp; Finishing</span>
+    <span class="hero-pill tools">Tools &amp; Products</span>
+    <span class="hero-pill business">Selling &amp; Business</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ STICKY NAV -->
+<nav class="sticky-nav">
+  <span class="back-btn">← Back to Hub</span>
+  <span class="nav-center">📚 12 Chapters</span>
+  <span class="nav-right">Beginner → Expert</span>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ TAB BAR -->
+<div class="tab-bar-wrapper">
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" onclick="switchTab(1)">1. The Big Picture</button>
+    <button class="tab-btn" onclick="switchTab(2)">2. FDM Mastery</button>
+    <button class="tab-btn" onclick="switchTab(3)">3. Resin Mastery</button>
+    <button class="tab-btn" onclick="switchTab(4)">4. 3D Modeling</button>
+    <button class="tab-btn" onclick="switchTab(5)">5. Painting &amp; Finishing</button>
+    <button class="tab-btn" onclick="switchTab(6)">6. Tools &amp; Products</button>
+    <button class="tab-btn" onclick="switchTab(7)">7. Selling on Etsy</button>
+    <button class="tab-btn" onclick="switchTab(8)">8. Pricing &amp; Profit</button>
+    <button class="tab-btn" onclick="switchTab(9)">9. Photography</button>
+    <button class="tab-btn" onclick="switchTab(10)">10. Shipping</button>
+    <button class="tab-btn" onclick="switchTab(11)">11. Business Setup</button>
+    <button class="tab-btn" onclick="switchTab(12)">12. Advanced Techniques</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ MAIN CONTENT -->
+<div class="main-content">
+
+<!-- ══════════════════════════════════════════ TAB 1 -->
+<div class="tab-panel active" id="tab1">
+
+  <h2>Your Complete Journey — The Big Picture</h2>
+
+  <h3>The 3D Printing Ecosystem (Visual Overview)</h3>
+  <div class="ecosystem">
+    <div class="eco-node">
+      <div class="eco-icon">🖥️</div>
+      <div class="eco-label">Design</div>
+      <div class="eco-sub">Blender / Fusion / Tinkercad</div>
+    </div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-node">
+      <div class="eco-icon">⚙️</div>
+      <div class="eco-label">Slice</div>
+      <div class="eco-sub">Bambu / PrusaSlicer / Lychee</div>
+    </div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-node">
+      <div class="eco-icon">🖨️</div>
+      <div class="eco-label">Print</div>
+      <div class="eco-sub">FDM or Resin</div>
+    </div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-node">
+      <div class="eco-icon">🎨</div>
+      <div class="eco-label">Finish</div>
+      <div class="eco-sub">Sand · Prime · Paint · Seal</div>
+    </div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-node">
+      <div class="eco-icon">💼</div>
+      <div class="eco-label">Use or Sell</div>
+      <div class="eco-sub">Display · Etsy · Printables</div>
+    </div>
+  </div>
+
+  <p style="color:#8b949e;font-size:12px;text-align:center;margin-top:-0.4rem;margin-bottom:1rem;">Everything connects: Design → Print → Finish → Use or Sell</p>
+
+  <h2>Choosing Your Path</h2>
+  <div class="path-grid">
+
+    <div class="path-card">
+      <div class="path-card-header">
+        <div class="path-letter path-a">A</div>
+        <div class="path-title">The Maker / Hobbyist</div>
+      </div>
+      <div class="path-goal">Goal: print useful objects, gadgets, replacement parts, gifts</div>
+      <div class="path-item"><strong>Start with:</strong> FDM printer (Bambu A1 Mini or Creality Ender 3)</div>
+      <div class="path-item"><strong>Budget:</strong> $200–400 (printer) + $50 filament + free slicer</div>
+      <div class="path-item"><strong>First print:</strong> Same day</div>
+      <div class="path-item"><strong>Long-term:</strong> Expand materials, upgrade printer, learn basic modeling</div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header">
+        <div class="path-letter path-b">B</div>
+        <div class="path-title">The Miniature Painter / Tabletop Gamer</div>
+      </div>
+      <div class="path-goal">Goal: D&amp;D miniatures, Warhammer figures, terrain, props</div>
+      <div class="path-item"><strong>Start with:</strong> Resin printer (Elegoo Mars 4 or Saturn 3)</div>
+      <div class="path-item"><strong>Budget:</strong> $200–350 (printer) + $30 resin + safety gear</div>
+      <div class="path-item"><strong>First print:</strong> Same day</div>
+      <div class="path-item"><strong>Long-term:</strong> Painting skills, sculpting, selling custom minis</div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header">
+        <div class="path-letter path-c">C</div>
+        <div class="path-title">The Artist / Creator</div>
+      </div>
+      <div class="path-goal">Goal: sculptures, art pieces, cosplay props, jewelry</div>
+      <div class="path-item"><strong>Start with:</strong> FDM for large props, Resin for detail pieces</div>
+      <div class="path-item"><strong>Budget:</strong> $300–600 (both printers eventually)</div>
+      <div class="path-item"><strong>First print:</strong> Same day</div>
+      <div class="path-item"><strong>Long-term:</strong> Blender sculpting, multi-material, painting, display</div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header">
+        <div class="path-letter path-d">D</div>
+        <div class="path-title">The Entrepreneur / Seller</div>
+      </div>
+      <div class="path-goal">Goal: sell printed products online (Etsy, Printables, local)</div>
+      <div class="path-item"><strong>Start with:</strong> Reliable FDM (Bambu P1S or Prusa MK4)</div>
+      <div class="path-item"><strong>Budget:</strong> $700–1200 (quality printer for reliability)</div>
+      <div class="path-item"><strong>First print:</strong> Same day</div>
+      <div class="path-item"><strong>Long-term:</strong> Multiple printers, automated workflows, branded store</div>
+    </div>
+
+  </div>
+
+  <h2>What You'll Learn in This Guide</h2>
+  <div class="card">
+    <ol>
+      <li><strong>FDM printing</strong> — settings, materials, troubleshooting</li>
+      <li><strong>Resin printing</strong> — exposure, supports, safety, post-processing</li>
+      <li><strong>3D modeling</strong> — designing your own models to print</li>
+      <li><strong>Painting &amp; finishing</strong> — primer, paint, airbrush, weathering</li>
+      <li><strong>Tools &amp; products</strong> — what to buy at each stage (budget → pro)</li>
+      <li><strong>Selling</strong> — pricing, platforms, photography, shipping, business setup</li>
+    </ol>
+  </div>
+
+  <h2>Total Investment Guide (Realistic)</h2>
+  <table class="invest-table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Who It's For</th>
+        <th>Budget Range</th>
+        <th>Includes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge beginner">Beginner</span></td>
+        <td>Just starting</td>
+        <td><span class="price-tag">$300–500</span></td>
+        <td>Printer + basic supplies</td>
+      </tr>
+      <tr>
+        <td><span class="badge intermediate">Intermediate</span></td>
+        <td>Serious hobbyist</td>
+        <td><span class="price-tag mid">$800–1,500</span></td>
+        <td>Better printer + painting + software</td>
+      </tr>
+      <tr>
+        <td><span class="badge expert">Advanced</span></td>
+        <td>Semi-pro</td>
+        <td><span class="price-tag high">$2,000–4,000</span></td>
+        <td>Multi-printer + airbrush + full setup</td>
+      </tr>
+      <tr>
+        <td><span class="badge expert">Professional</span></td>
+        <td>Selling full-time</td>
+        <td><span class="price-tag high">$5,000–15,000</span></td>
+        <td>Printer farm + business infrastructure</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Learning Time Estimates</h2>
+  <div class="card">
+    <div class="shortcut-row">
+      <span>First successful FDM print</span>
+      <span style="color:#2daa6b;font-weight:600;">Day 1</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Consistent quality FDM prints</span>
+      <span style="color:#2daa6b;font-weight:600;">2–4 weeks</span>
+    </div>
+    <div class="shortcut-row">
+      <span>First resin print</span>
+      <span style="color:#2daa6b;font-weight:600;">Day 1 (with tutorial)</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Safe confident resin workflow</span>
+      <span style="color:#f0a500;font-weight:600;">1–2 months</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Basic 3D modeling (functional parts)</span>
+      <span style="color:#f0a500;font-weight:600;">1–3 months</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Intermediate 3D modeling (artistic)</span>
+      <span style="color:#f0a500;font-weight:600;">3–6 months</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Decent miniature painting</span>
+      <span style="color:#f0a500;font-weight:600;">1–2 months of regular practice</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Airbrush proficiency</span>
+      <span style="color:#bf7fff;font-weight:600;">3–6 months</span>
+    </div>
+    <div class="shortcut-row" style="border-bottom:none;">
+      <span>First Etsy sale</span>
+      <span style="color:#bf7fff;font-weight:600;">1–3 months after listing</span>
+    </div>
+  </div>
+
+</div><!-- /tab1 -->
+
+
+<!-- ══════════════════════════════════════════ TAB 2 -->
+<div class="tab-panel" id="tab2">
+
+  <h2>FDM Printing — Complete Mastery</h2>
+
+  <div class="tip-box info">
+    <strong>What is FDM?</strong> Fused Deposition Modeling = melting plastic filament through a hot nozzle, depositing it layer by layer to build a 3D object. The most common and accessible type of 3D printing.
+  </div>
+
+  <h2>Best FDM Printers by Budget</h2>
+
+  <div class="section-heading">Budget — Under $300</div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Bambu A1 Mini <span style="color:#2daa6b;font-size:11px;margin-left:6px;">★ RECOMMENDED #1</span></div>
+      <div class="product-desc">Best beginner printer — fast, reliable, AMS optional. Plug-and-play experience.</div>
+    </div>
+    <span class="price-tag">~$299</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Creality Ender 3 V3 SE</div>
+      <div class="product-desc">Budget workhorse — huge community, very upgradeable, great learning machine.</div>
+    </div>
+    <span class="price-tag">~$149</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Anycubic Kobra 2 Neo</div>
+      <div class="product-desc">Good auto-leveling, decent quality for the price.</div>
+    </div>
+    <span class="price-tag">~$149</span>
+  </div>
+
+  <div class="section-heading">Mid-Range — $300–$700</div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Bambu P1P</div>
+      <div class="product-desc">Open CoreXY, very fast, great quality, AMS compatible.</div>
+    </div>
+    <span class="price-tag mid">~$599</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Prusa MK4</div>
+      <div class="product-desc">Legendary reliability, excellent community, fully open source.</div>
+    </div>
+    <span class="price-tag mid">~$799</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Creality K1 Max</div>
+      <div class="product-desc">Large 300mm volume, fast print speeds, enclosed chamber.</div>
+    </div>
+    <span class="price-tag mid">~$400</span>
+  </div>
+
+  <div class="section-heading">High-End — $700+</div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Bambu P1S</div>
+      <div class="product-desc">Enclosed P1P — perfect for ABS, ASA, Nylon engineering filaments.</div>
+    </div>
+    <span class="price-tag high">~$699</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Bambu X1C <span style="color:#bf7fff;font-size:11px;margin-left:6px;">★ Best Overall</span></div>
+      <div class="product-desc">Flagship — AI camera, lidar calibration, best overall print quality.</div>
+    </div>
+    <span class="price-tag high">~$1,199</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Voron 2.4</div>
+      <div class="product-desc">DIY kit, fully customizable, massive community support. Build it yourself.</div>
+    </div>
+    <span class="price-tag high">$600–1,200</span>
+  </div>
+
+  <h2>Filament Guide — Complete</h2>
+  <table class="filament-table">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Nozzle °C</th>
+        <th>Bed °C</th>
+        <th>Fan</th>
+        <th>Properties</th>
+        <th>Best For</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="filament-name">PLA</span></td>
+        <td>200–220</td>
+        <td>60</td>
+        <td>100%</td>
+        <td>Easy, rigid, good detail</td>
+        <td>Beginners, display models, prototypes</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">PLA+</span></td>
+        <td>205–225</td>
+        <td>60</td>
+        <td>100%</td>
+        <td>Tougher than PLA, easy to print</td>
+        <td>Functional parts, better durability</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">PETG</span></td>
+        <td>230–250</td>
+        <td>70–85</td>
+        <td>30–50%</td>
+        <td>Strong, flexible, chemical resistant</td>
+        <td>Functional parts, outdoor, food-contact</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">ABS</span></td>
+        <td>230–250</td>
+        <td>100–115</td>
+        <td>0%</td>
+        <td>Strong, heat resistant, machinable — needs enclosure</td>
+        <td>Automotive, electronics, acetone-smoothable</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">ASA</span></td>
+        <td>240–260</td>
+        <td>90–110</td>
+        <td>minimal</td>
+        <td>UV + weather resistant</td>
+        <td>Outdoor use, garden items</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">TPU</span></td>
+        <td>220–240</td>
+        <td>40–60</td>
+        <td>50%</td>
+        <td>Flexible, rubber-like — print slow (25–40mm/s)</td>
+        <td>Phone cases, gaskets, grips</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">PLA-CF / PETG-CF</span></td>
+        <td>220–250</td>
+        <td>60–85</td>
+        <td>varies</td>
+        <td>Carbon fiber filled — very stiff and strong</td>
+        <td>Rigid structural parts — needs hardened nozzle</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">PA (Nylon)</span></td>
+        <td>240–280</td>
+        <td>70–90</td>
+        <td>minimal</td>
+        <td>Very strong, abrasion resistant — must dry before use</td>
+        <td>Gears, hinges, functional parts</td>
+      </tr>
+      <tr>
+        <td><span class="filament-name">PC</span></td>
+        <td>260–310</td>
+        <td>90–120</td>
+        <td>0%</td>
+        <td>Strongest, most heat resistant — all-metal hotend + enclosure required</td>
+        <td>Engineering, high-temperature applications</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box warning">
+    <strong>Moisture warning:</strong> PETG, PA (Nylon), TPU, and PC absorb moisture from the air. Dry these filaments in a filament dryer before every print session. Wet filament = stringing, bubbles, weak parts.
+  </div>
+
+  <h2>Critical Settings Quick Reference</h2>
+  <div class="settings-grid">
+    <div class="setting-item">
+      <div class="setting-label">Layer Height</div>
+      <div class="setting-value">0.1 / 0.2 / 0.3 mm</div>
+      <div class="setting-note">Ultra detail / Standard / Draft</div>
+    </div>
+    <div class="setting-item">
+      <div class="setting-label">Walls / Perimeters</div>
+      <div class="setting-value">2 / 3 / 4+</div>
+      <div class="setting-note">Minimal / Standard / Strong</div>
+    </div>
+    <div class="setting-item">
+      <div class="setting-label">Infill Density</div>
+      <div class="setting-value">15 / 25 / 40%+</div>
+      <div class="setting-note">Display / Functional / Structural</div>
+    </div>
+    <div class="setting-item">
+      <div class="setting-label">Support Threshold</div>
+      <div class="setting-value">45°</div>
+      <div class="setting-note">Tree (organic) / Normal (flat)</div>
+    </div>
+    <div class="setting-item">
+      <div class="setting-label">First Layer</div>
+      <div class="setting-value">0.2mm, 20–30mm/s</div>
+      <div class="setting-note">Always — critical for adhesion</div>
+    </div>
+  </div>
+
+  <h2>Key Quality Tips</h2>
+  <div class="card">
+    <ul>
+      <li>Apply <strong>Pressure Advance calibration</strong> for each new filament spool</li>
+      <li>Run <strong>flow calibration</strong> before any critical or functional print</li>
+      <li>Use <strong>Arachne wall generator</strong> — better thin wall handling than classic mode</li>
+      <li>Enable <strong>"avoid crossing perimeters"</strong> to reduce stringing</li>
+      <li>Print <strong>outer walls slower</strong> than inner walls (quality vs. speed trade-off)</li>
+      <li>Use <strong>ironing</strong> for glass-smooth top surfaces on display models</li>
+      <li>Dry moisture-sensitive filaments (PETG, PA, TPU) before every use in a <kbd>filament dryer</kbd></li>
+    </ul>
+  </div>
+
+  <div class="tip-box">
+    <strong>Pro tip:</strong> Calibrate your printer in this order: <kbd>Z offset</kbd> → <kbd>First layer</kbd> → <kbd>Pressure advance</kbd> → <kbd>Flow rate</kbd>. Do this once per major filament brand and you'll have consistent results every time.
+  </div>
+
+</div><!-- /tab2 -->
+
+
+<!-- ══════════════════════════════════════════ TAB 3 -->
+<div class="tab-panel" id="tab3">
+
+  <h2>Resin Printing — Complete Mastery</h2>
+
+  <div class="tip-box info">
+    <strong>What is MSLA/LCD resin printing?</strong> UV light cures liquid photopolymer through an LCD screen, one layer at a time. The build plate lifts UP — models print inverted. Result: extraordinary detail impossible with FDM.
+  </div>
+
+  <h2>Best Resin Printers by Use Case</h2>
+
+  <div class="section-heading">Small / Miniatures (High Detail)</div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Elegoo Mars 4 Ultra</div>
+      <div class="product-desc">9K resolution — exceptional detail for miniatures and small figurines.</div>
+    </div>
+    <span class="price-tag">~$180</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Anycubic Photon M3 Plus</div>
+      <div class="product-desc">6K resolution, solid reliability, good track record.</div>
+    </div>
+    <span class="price-tag">~$200</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Phrozen Sonic Mini 8K</div>
+      <div class="product-desc">8K resolution — exceptional fine detail, great for display minis.</div>
+    </div>
+    <span class="price-tag">~$250</span>
+  </div>
+
+  <div class="section-heading">Medium (Miniatures + Medium Props)</div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Elegoo Saturn 3 Ultra <span style="color:#2daa6b;font-size:11px;margin-left:6px;">★ RECOMMENDED</span></div>
+      <div class="product-desc">12K resolution — 218×123×260mm build volume. Best value all-rounder.</div>
+    </div>
+    <span class="price-tag mid">~$350</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Anycubic Photon M5S Pro</div>
+      <div class="product-desc">12K resolution, solid build quality, good community support.</div>
+    </div>
+    <span class="price-tag mid">~$350</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Phrozen Sonic Mega 8K</div>
+      <div class="product-desc">Massive volume with detail — great for terrain sets and larger props.</div>
+    </div>
+    <span class="price-tag mid">~$600</span>
+  </div>
+
+  <div class="section-heading">Large (Terrain, Props, Costumes)</div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Elegoo Jupiter SE</div>
+      <div class="product-desc">6K — 277×156×300mm volume. Large terrain pieces and cosplay parts.</div>
+    </div>
+    <span class="price-tag high">~$500</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Phrozen Transform</div>
+      <div class="product-desc">Enormous 292×163×400mm — for serious large-format resin printing.</div>
+    </div>
+    <span class="price-tag high">~$800</span>
+  </div>
+
+  <h2>Resin Workflow — Step by Step</h2>
+  <div class="workflow-steps">
+    <div class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Import STL</strong> → Lychee Slicer or Chitubox (both excellent — Lychee recommended)</div></div>
+    <div class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Orient model</strong> — 45° tilt works for most objects; minimizes flat suction surfaces</div></div>
+    <div class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Add supports</strong> — use Smart Support in Lychee; manually check critical areas</div></div>
+    <div class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Hollow large models</strong> + add drain holes (2–4mm, positioned at lowest point)</div></div>
+    <div class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Slice</strong> → export <kbd>.ctb</kbd> (Chitubox) or <kbd>.pwmx</kbd> (Anycubic) file</div></div>
+    <div class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Copy to USB</strong> → insert into printer → start print</div></div>
+    <div class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>WEAR GLOVES</strong> — remove from build plate with plastic scraper (never metal on FEP)</div></div>
+    <div class="workflow-step"><div class="step-num">8</div><div class="step-text"><strong>Wash:</strong> 3 min IPA agitation — two-bucket method (dirty wash → clean rinse)</div></div>
+    <div class="workflow-step"><div class="step-num">9</div><div class="step-text"><strong>Dry completely</strong> — 5–10 min air dry before curing (wet resin won't cure evenly)</div></div>
+    <div class="workflow-step"><div class="step-num">10</div><div class="step-text"><strong>Cure:</strong> UV cure station — 3–6 min per side (do NOT over-cure, it becomes brittle)</div></div>
+    <div class="workflow-step"><div class="step-num">11</div><div class="step-text"><strong>Remove supports</strong> with flush cutters — easier before final cure on complex minis</div></div>
+    <div class="workflow-step"><div class="step-num">12</div><div class="step-text"><strong>Sand, prime, paint</strong> — see Tab 5 for complete painting guide</div></div>
+  </div>
+
+  <h2>Resin Safety — Non-Negotiable Rules</h2>
+  <div class="tip-box danger">
+    <strong>DANGER:</strong> Uncured resin is a skin sensitizer and potential allergen. Repeated exposure without protection can cause permanent sensitization — you may become unable to work with resin at all. Take safety seriously from day one.
+  </div>
+  <div class="card">
+    <ul>
+      <li><strong>Nitrile gloves EVERY TIME</strong> you handle uncured resin — no exceptions</li>
+      <li>Work in a <strong>ventilated space</strong> or use activated carbon air filtration</li>
+      <li><strong>Never pour liquid resin down the drain</strong> — cure it with UV first, then dispose as solid waste</li>
+      <li>Keep resin <strong>away from children and pets</strong> at all times</li>
+      <li><strong>IPA disposal:</strong> let settle → pour off clean IPA to reuse → cure remaining residue solid → bin</li>
+      <li><strong>Wash gloves before removing</strong> — avoid skin contact on glove removal (the inside gets contaminated too)</li>
+      <li><strong>Eye protection</strong> when handling resin or UV lamp</li>
+    </ul>
+  </div>
+
+  <h2>Exposure Calibration Guide</h2>
+  <div class="card">
+    <p>Always run a <strong>RERF (Resin Exposure Range Finder)</strong> test for each new resin — it prints the same object at multiple exposures in one print, so you can identify optimal settings quickly.</p>
+    <div class="shortcut-row">
+      <span>Signs of <strong>over-exposure</strong></span>
+      <span style="color:#e74c3c;">Loss of fine detail, blobs, bloated look</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Signs of <strong>under-exposure</strong></span>
+      <span style="color:#f0a500;">Failed layers, brittle print, delamination</span>
+    </div>
+    <div class="shortcut-row" style="border-bottom:none;">
+      <span><strong>Ideal print temperature</strong></span>
+      <span style="color:#2daa6b;">22–26°C — cold resin = failures</span>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>Cold-weather tip:</strong> If your printing space is under 20°C, warm the resin bottle in warm water (not hot) for 10 minutes before printing. Cold resin is more viscous and dramatically increases print failures.
+  </div>
+
+</div><!-- /tab3 -->
+
+
+<!-- ══════════════════════════════════════════ TAB 4 -->
+<div class="tab-panel" id="tab4">
+
+  <h2>3D Modeling for Print</h2>
+
+  <h3>Why Learn 3D Modeling?</h3>
+  <div class="card">
+    <ul>
+      <li>Create <strong>unique products</strong> nobody else can sell</li>
+      <li>Customize models for customers (personalized gifts, custom orders)</li>
+      <li>Fix broken commercial models or adapt free models</li>
+      <li>Design <strong>functional replacement parts</strong> for anything</li>
+      <li>Build a model library that earns <strong>passive income</strong> on Printables / Patreon</li>
+    </ul>
+  </div>
+
+  <h2>Software Guide by Skill and Use Case</h2>
+
+  <div class="section-heading">For Beginners</div>
+  <div class="software-grid">
+    <div class="software-card">
+      <div class="software-name">Tinkercad</div>
+      <div class="software-price">Free — browser-based</div>
+      <div class="software-desc">Drag-and-drop shape creation. Perfect first step into 3D modeling.</div>
+      <div class="software-use"><strong>Best for:</strong> Simple functional objects, nameplates, basic customization</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">Plasticity</div>
+      <div class="software-price">Free trial / $149 perpetual</div>
+      <div class="software-desc">Modern CAD feel, great for hard-surface and mechanical objects.</div>
+      <div class="software-use"><strong>Best for:</strong> Mechanical-looking models, product design, clean surfaces</div>
+    </div>
+  </div>
+
+  <div class="section-heading">For Functional / Engineering Parts</div>
+  <div class="software-grid">
+    <div class="software-card">
+      <div class="software-name">Fusion 360</div>
+      <div class="software-price">Free for personal use</div>
+      <div class="software-desc">Industry-standard parametric CAD. Edit dimensions with a table, full assembly tools.</div>
+      <div class="software-use"><strong>Best for:</strong> Mechanical parts, assemblies, precise dimensions</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">FreeCAD</div>
+      <div class="software-price">Free — open source</div>
+      <div class="software-desc">Good Fusion alternative, steeper learning curve but fully free forever.</div>
+      <div class="software-use"><strong>Best for:</strong> Parametric parts, no subscription concerns</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">Onshape</div>
+      <div class="software-price">Free tier (public files)</div>
+      <div class="software-desc">Browser-based parametric CAD. Great for collaboration and revision history.</div>
+      <div class="software-use"><strong>Best for:</strong> Team projects, version-controlled designs</div>
+    </div>
+  </div>
+
+  <div class="section-heading">For Artistic / Organic Models</div>
+  <div class="software-grid">
+    <div class="software-card">
+      <div class="software-name">Blender</div>
+      <div class="software-price">Free — open source</div>
+      <div class="software-desc">The ultimate tool for artistic models — sculpting, hard-surface modeling, texturing, rendering. Steep initial curve, huge payoff.</div>
+      <div class="software-use"><strong>Best for:</strong> Characters, miniatures, organic shapes, artistic models</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">ZBrush</div>
+      <div class="software-price">$40/month or $895 perpetual</div>
+      <div class="software-desc">Professional sculpting. Industry standard for character art and miniature design studios.</div>
+      <div class="software-use"><strong>Best for:</strong> High-detail character sculpts, professional miniatures</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">Nomad Sculpt</div>
+      <div class="software-price">$15 — iPad only</div>
+      <div class="software-desc">Excellent mobile sculpting with Apple Pencil. Surprisingly capable for miniature design.</div>
+      <div class="software-use"><strong>Best for:</strong> On-the-go sculpting, concept work, beginner organic modeling</div>
+    </div>
+  </div>
+
+  <div class="section-heading">For Quick Customization &amp; Repair</div>
+  <div class="software-grid">
+    <div class="software-card">
+      <div class="software-name">Meshmixer</div>
+      <div class="software-price">Free</div>
+      <div class="software-desc">Modify existing STLs — hollow, add drain holes, repair non-manifold geometry.</div>
+      <div class="software-use"><strong>Best for:</strong> Resin prep, hollowing, STL repair</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">Microsoft 3D Builder</div>
+      <div class="software-price">Free — Windows built-in</div>
+      <div class="software-desc">Quick and easy STL fixes, merging, and simple edits.</div>
+      <div class="software-use"><strong>Best for:</strong> Quick fixes before printing</div>
+    </div>
+    <div class="software-card">
+      <div class="software-name">PrusaSlicer Editor</div>
+      <div class="software-price">Free</div>
+      <div class="software-desc">Built-in cut, scale, text emboss tools. No separate software needed for simple mods.</div>
+      <div class="software-use"><strong>Best for:</strong> Text on models, splitting, basic editing in slicer</div>
+    </div>
+  </div>
+
+  <h2>Design Rules for FDM Printing</h2>
+  <div class="card">
+    <div class="shortcut-row">
+      <span>Minimum wall thickness</span>
+      <span style="color:#e6edf3;">1.2mm (3 perimeters at 0.4mm nozzle)</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Overhang limit (no support needed)</span>
+      <span style="color:#2daa6b;">&lt;45° from vertical</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Hole compensation (shrinkage)</span>
+      <span style="color:#e6edf3;">+0.2mm oversized</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Max bridge span (no support)</span>
+      <span style="color:#f0a500;">&lt;50mm</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Weakest print direction</span>
+      <span style="color:#e74c3c;">Z axis (layer lines)</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Bottom edge treatment</span>
+      <span style="color:#e6edf3;">Chamfer at 45° (avoid elephant foot)</span>
+    </div>
+    <div class="shortcut-row" style="border-bottom:none;">
+      <span>Internal corners</span>
+      <span style="color:#e6edf3;">Fillet for strength (reduces stress concentration)</span>
+    </div>
+  </div>
+
+  <h2>Design Rules for Resin Printing</h2>
+  <div class="card">
+    <div class="shortcut-row">
+      <span>Minimum feature (detail)</span>
+      <span style="color:#2daa6b;">0.3mm</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Minimum feature (structural)</span>
+      <span style="color:#f0a500;">0.5mm</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Hollow large models</span>
+      <span style="color:#e6edf3;">Any model &gt;50mm — saves resin, prevents warping</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Drain holes (hollow models)</span>
+      <span style="color:#e6edf3;">2–4mm at lowest points</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Flat horizontal faces</span>
+      <span style="color:#f0a500;">Avoid — causes suction problems — add slight taper</span>
+    </div>
+    <div class="shortcut-row">
+      <span>Tolerance (moving parts)</span>
+      <span style="color:#e6edf3;">0.3–0.5mm gap</span>
+    </div>
+    <div class="shortcut-row" style="border-bottom:none;">
+      <span>Support scarring</span>
+      <span style="color:#e6edf3;">Design orientation with clean surfaces facing up/inward</span>
+    </div>
+  </div>
+
+  <h2>Modeling Workflow for Selling</h2>
+  <div class="workflow-steps">
+    <div class="workflow-step"><div class="step-num">1</div><div class="step-text"><strong>Research:</strong> What's selling? Check Etsy, Printables trends, Patreon top performers</div></div>
+    <div class="workflow-step"><div class="step-num">2</div><div class="step-text"><strong>Reference:</strong> Gather images, measurements, inspiration before you open modeling software</div></div>
+    <div class="workflow-step"><div class="step-num">3</div><div class="step-text"><strong>Blockout:</strong> Rough shape first — get proportions right before adding any detail (Blender: <kbd>Ctrl+Alt+Q</kbd> for 4-view)</div></div>
+    <div class="workflow-step"><div class="step-num">4</div><div class="step-text"><strong>Refine:</strong> Add detail progressively — work from large forms to small surface detail</div></div>
+    <div class="workflow-step"><div class="step-num">5</div><div class="step-text"><strong>Test print:</strong> Print at 50% scale first to check proportions and catch major problems cheaply</div></div>
+    <div class="workflow-step"><div class="step-num">6</div><div class="step-text"><strong>Fix:</strong> Adjust model based on test print findings before committing to full print</div></div>
+    <div class="workflow-step"><div class="step-num">7</div><div class="step-text"><strong>Final print:</strong> Full-scale print for photography and listing images</div></div>
+    <div class="workflow-step"><div class="step-num">8</div><div class="step-text"><strong>Prepare for sale:</strong> Export multiple formats — STL (universal) + 3MF (settings preserved)</div></div>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Modeling for passive income:</strong> The best-selling model types on Printables and MyMiniFactory are: <strong>functional organizers</strong> (cable management, desk tools), <strong>tabletop terrain</strong> (Dungeons &amp; Dragons, Warhammer), <strong>fan art (careful with IP)</strong>, and <strong>customizable items</strong> (nameplates, keychains, phone stands with parametric sizing).
+  </div>
+
+</div><!-- /tab4 -->
+
+
+<!-- ══════════════════════════════════════════ TAB 5 -->
+<div class="tab-panel" id="tab5">
+
+  <h2>Painting &amp; Finishing — Complete Guide</h2>
+
+  <div class="tip-box info">
+    <strong>The Painting Workflow:</strong> Support removal → Sanding → Priming → Base coat → Shading → Highlighting → Details → Sealing. Follow this order — each step prepares the surface for the next.
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 1</span>
+      <span class="paint-step-title">Surface Preparation</span>
+    </div>
+    <h4>FDM Prints</h4>
+    <ul>
+      <li>Remove supports with flush cutters and X-Acto knife</li>
+      <li>Sand layer lines progressively: <strong>120 grit</strong> (rough) → <strong>220</strong> (medium) → <strong>400</strong> (smooth) → <strong>800</strong> (fine) → <strong>1500–2000</strong> (pre-paint)</li>
+      <li>Fill gaps: spot putty (Tamiya White Putty), UV resin, body filler for large gaps</li>
+      <li><strong>ABS only:</strong> acetone brush smoothing or vapor smoothing to completely eliminate layer lines</li>
+    </ul>
+    <h4>Resin Prints</h4>
+    <ul>
+      <li>Remove supports with flush cutters — easier <em>before</em> final cure on complex miniatures</li>
+      <li>Sand support scars: <strong>400 → 800 → 2000 grit</strong> wet sanding for seamless surface</li>
+      <li>Check for uncured resin: if still tacky, additional UV curing is needed</li>
+    </ul>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 2</span>
+      <span class="paint-step-title">Priming — Critical, Do Not Skip</span>
+    </div>
+    <div class="tip-box warning">
+      <strong>Never skip primer.</strong> Primer creates paint adhesion, reveals surface defects, and gives a uniform base color. Paint applied directly to plastic will chip and peel.
+    </div>
+    <ul>
+      <li><strong>Spray primer (recommended):</strong> Vallejo Surface Primer, Tamiya Surface Primer, Army Painter Colour Primer</li>
+      <li><strong>Brush primer:</strong> Vallejo Surface Primer thinned with water — good for touch-ups</li>
+      <li><strong>Grey primer</strong> — neutral base for any color scheme</li>
+      <li><strong>Black primer</strong> — pre-shading, dark models, dramatic contrast painting</li>
+      <li><strong>White primer</strong> — bright colors, pastels, maximum vibrancy</li>
+      <li>Application: light coats at 30cm distance — multiple thin coats always better than one thick</li>
+      <li>Dry time: 15–30 min between coats, 2–4 hours before painting</li>
+    </ul>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 3</span>
+      <span class="paint-step-title">Base Coating</span>
+    </div>
+    <p>Goal: solid, even base color covering the entire model before any shading or highlighting.</p>
+    <ul>
+      <li><strong>Brush:</strong> thin paint 1:1 with water, multiple thin coats — never paint thick</li>
+      <li><strong>Spray can:</strong> quick and even coverage, less control. Army Painter, Rustoleum, Krylon.</li>
+      <li><strong>Airbrush:</strong> best control, smoothest coverage, professional results — see Tools tab for airbrush setup</li>
+    </ul>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 4</span>
+      <span class="paint-step-title">Shading (Washes / Inks)</span>
+    </div>
+    <p>A <strong>wash</strong> is thinned ink that flows into recesses and creates instant shadow and depth.</p>
+    <p><strong>Products:</strong> Citadel Contrast/Shade paints, Army Painter Quickshade, Vallejo Washes</p>
+    <p><strong>Application:</strong> apply liberally over entire model, let flow into recesses naturally, remove excess from flat surfaces with a clean dry brush</p>
+    <div class="card" style="margin-top:0.6rem;">
+      <h4>Most Used Washes</h4>
+      <div class="shortcut-row">
+        <span><strong>Nuln Oil</strong> (black)</span>
+        <span style="color:#8b949e;">Metal, dark areas, black ink substitute</span>
+      </div>
+      <div class="shortcut-row">
+        <span><strong>Agrax Earthshade</strong> (brown)</span>
+        <span style="color:#8b949e;">Universal — works on almost everything</span>
+      </div>
+      <div class="shortcut-row">
+        <span><strong>Druchii Violet</strong> (purple)</span>
+        <span style="color:#8b949e;">Cloth, shadows, magical effects</span>
+      </div>
+      <div class="shortcut-row" style="border-bottom:none;">
+        <span><strong>Reikland Fleshshade</strong> (warm)</span>
+        <span style="color:#8b949e;">Skin tones, wood, leather</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 5</span>
+      <span class="paint-step-title">Drybrushing</span>
+    </div>
+    <p>Load brush with paint, wipe almost all off on paper, then lightly brush raised surface areas.</p>
+    <ul>
+      <li><strong>Result:</strong> highlights on edges, scales, texture — no brushstroke marks</li>
+      <li><strong>Progression:</strong> dark → mid-tone → light (3 drybrushed layers)</li>
+      <li><strong>Best for:</strong> texture (fur, stone, bark, scales, rough armor, terrain)</li>
+      <li><strong>Practice on:</strong> terrain rocks and wood before attempting character faces</li>
+    </ul>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 6</span>
+      <span class="paint-step-title">Layering &amp; Highlighting</span>
+    </div>
+    <ul>
+      <li>Add progressively lighter versions of base color to raised areas</li>
+      <li><strong>Edge highlighting:</strong> fine brush on sharp edges only — very light final highlight (near-white for high contrast)</li>
+      <li><strong>OSL (Object Source Lighting):</strong> simulate glow from fire, magic, screens — lighten areas closest to light source, darken far side</li>
+    </ul>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 7</span>
+      <span class="paint-step-title">Detail Work</span>
+    </div>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-label">Eyes</div>
+        <div class="setting-value">White → Color → Pupil → Highlight</div>
+        <div class="setting-note">Dot of white, iris color, black pupil, tiny white reflection dot</div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Metals</div>
+        <div class="setting-value">Dark base → Shade → Layer → Edge</div>
+        <div class="setting-note">Leadbelcher → Nuln Oil → Ironbreaker → Stormhost Silver</div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Leather</div>
+        <div class="setting-value">Brown → Shade → Highlight</div>
+        <div class="setting-note">Brown base → Agrax → Brown layer → Tan edge</div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-label">Skin</div>
+        <div class="setting-value">Base → Shade → Layer → Highlight</div>
+        <div class="setting-note">Skin tone → Reikland → Base layer → +50% lighter on cheeks/nose/forehead</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paint-step">
+    <div class="paint-step-header">
+      <span class="paint-step-num">STEP 8</span>
+      <span class="paint-step-title">Sealing &amp; Varnishing</span>
+    </div>
+    <div class="tip-box warning">
+      <strong>Apply varnish in DRY weather only.</strong> Humidity above 70% causes spray varnish to go cloudy (frosting effect). This can ruin a finished model and is very difficult to reverse.
+    </div>
+    <ul>
+      <li><strong>Matte varnish</strong> — standard for miniatures. Vallejo Matte Varnish, Army Painter Anti-Shine.</li>
+      <li><strong>Satin varnish</strong> — slight sheen, good for leather and skin areas</li>
+      <li><strong>Gloss varnish</strong> — shiny surfaces (gems, glass, eyes, wet areas) — apply with small brush to specific areas only</li>
+      <li><strong>Best spray varnish:</strong> Testors Dullcote (best matte), Krylon Matte, Army Painter Matt Varnish</li>
+    </ul>
+  </div>
+
+</div><!-- /tab5 -->
+
+
+<!-- ══════════════════════════════════════════ TAB 6 -->
+<div class="tab-panel" id="tab6">
+
+  <h2>Tools &amp; Products — Complete Buying Guide</h2>
+  <p style="color:#8b949e;">Organized by category. Budget tier listed for each item. Buy in order — don't over-invest until you know you need it.</p>
+
+  <!-- SECTION A -->
+  <div class="tool-section-header">
+    <span class="tool-section-letter">A</span>
+    <span class="tool-section-title">FDM Printing Tools</span>
+  </div>
+
+  <div class="tool-tier">ESSENTIAL — Buy Day 1</div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Digital Calipers — TACKLIFE 6"</div>
+      <div class="product-desc">Verify print dimensions, check first layer height, measure filament diameter</div>
+    </div>
+    <span class="price-tag">~$15</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Flexible Metal Spatula / Scraper</div>
+      <div class="product-desc">Remove prints from bed cleanly — any flexible metal scraper works</div>
+    </div>
+    <span class="price-tag">~$8</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Flush Cutters — Xuron 170-II</div>
+      <div class="product-desc">Remove supports, trim filament ends cleanly, cut purge lines</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">IPA 91%+ (Isopropyl Alcohol)</div>
+      <div class="product-desc">Clean print bed before prints to ensure adhesion — hardware store</div>
+    </div>
+    <span class="price-tag">~$5/qt</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Elmer's Purple Glue Stick</div>
+      <div class="product-desc">Bed adhesion for PLA on glass. Purple dries clear — shows coverage.</div>
+    </div>
+    <span class="price-tag">~$2</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">PEI Spring Steel Sheet — BuildTak</div>
+      <div class="product-desc">Far better than glass for most filaments. Prints pop off when cooled.</div>
+    </div>
+    <span class="price-tag">~$25</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Filament Dryer — SUNLU S1</div>
+      <div class="product-desc">Critical for PETG, Nylon, TPU. Keep filament dry during long prints.</div>
+    </div>
+    <span class="price-tag">~$25</span>
+  </div>
+
+  <div class="tool-tier">UPGRADE TOOLS — Buy After 1–2 Months</div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Nozzle Kit — E3D V6 Assorted</div>
+      <div class="product-desc">Brass 0.4mm + 0.6mm + hardened steel 0.4mm for abrasive filaments</div>
+    </div>
+    <span class="price-tag mid">~$20</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">PTFE Tube — Capricorn XS</div>
+      <div class="product-desc">Better than stock Bowden tube — less friction, tighter tolerance, lower temp limit</div>
+    </div>
+    <span class="price-tag mid">~$15</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Feeler Gauges</div>
+      <div class="product-desc">Precise Z offset setting — much more accurate than paper method</div>
+    </div>
+    <span class="price-tag">~$8</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Heat Gun</div>
+      <div class="product-desc">Remove stubborn prints, post-form PLA, heat-set inserts without soldering iron</div>
+    </div>
+    <span class="price-tag">~$20</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Heat-Set Thread Inserts (M2/M3 assorted)</div>
+      <div class="product-desc">Heat-set into prints for proper metal threads. Essential for functional assemblies.</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+
+  <!-- SECTION B -->
+  <div class="tool-section-header">
+    <span class="tool-section-letter">B</span>
+    <span class="tool-section-title">Resin Printing Tools</span>
+  </div>
+
+  <div class="tool-tier">ESSENTIAL — Buy BEFORE Your First Resin Print</div>
+
+  <div class="tip-box danger">
+    <strong>Buy safety gear before you buy resin.</strong> Nitrile gloves and eye protection are non-negotiable. Have them in hand before the printer arrives.
+  </div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Nitrile Gloves (100-pack) — Large Purple Nitrile</div>
+      <div class="product-desc">MANDATORY. Buy before resin arrives. Uncured resin causes skin sensitization.</div>
+    </div>
+    <span class="price-tag">~$12</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Safety Glasses — Clear</div>
+      <div class="product-desc">Protect eyes from UV and resin splash during handling and washing</div>
+    </div>
+    <span class="price-tag">~$5</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Wash &amp; Cure Station — Elegoo Mercury Plus 2-in-1</div>
+      <div class="product-desc">Best value combo — handles washing and UV curing in one unit</div>
+    </div>
+    <span class="price-tag mid">~$80</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">IPA 91%+ — 1 Gallon</div>
+      <div class="product-desc">Primary wash medium. Or Mean Green cleaner (~$15) — safer, water-based alternative</div>
+    </div>
+    <span class="price-tag">~$20</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Silicone Spatula</div>
+      <div class="product-desc">Remove prints from build plate without scratching or damaging FEP film</div>
+    </div>
+    <span class="price-tag">~$8</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Plastic Scraper</div>
+      <div class="product-desc">Gentle scraping of FEP surface to remove cured residue</div>
+    </div>
+    <span class="price-tag">~$5</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">UV Torch — 405nm</div>
+      <div class="product-desc">Cure waste resin before disposal, touch-up spot curing, check for uncured areas</div>
+    </div>
+    <span class="price-tag">~$15</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Resin Filter Funnels (200-pack)</div>
+      <div class="product-desc">Filter uncured resin back into bottle after printing — critical for reuse and storage</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Activated Carbon Air Filter</div>
+      <div class="product-desc">If printing in enclosed space. Removes resin VOCs from breathing air.</div>
+    </div>
+    <span class="price-tag mid">~$25–40</span>
+  </div>
+
+  <div class="tool-tier">POST-PROCESSING RESIN TOOLS</div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Flush Cutters — Tamiya 74123</div>
+      <div class="product-desc">Dedicated resin cutters — best for support removal on fine models without damage</div>
+    </div>
+    <span class="price-tag mid">~$20</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Dental Picks Set</div>
+      <div class="product-desc">Essential for reaching tight areas, removing supports from deep recesses</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Soft Brushes (pack of 10)</div>
+      <div class="product-desc">Clean uncured resin from crevices during wash stage — dedicated to resin use only</div>
+    </div>
+    <span class="price-tag">~$8</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Wet/Dry Sandpaper Kit — 400–2000 grit</div>
+      <div class="product-desc">Support scar removal and surface prep before priming resin prints</div>
+    </div>
+    <span class="price-tag">~$12</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Needle Files Set</div>
+      <div class="product-desc">Fine detail filing on tight spots, support scar cleanup in narrow gaps</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+
+  <!-- SECTION C -->
+  <div class="tool-section-header">
+    <span class="tool-section-letter">C</span>
+    <span class="tool-section-title">Painting Tools</span>
+  </div>
+
+  <div class="tool-tier">STARTER PAINTING KIT — ~$80 Total</div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Brush Set — Army Painter Starter Set</div>
+      <div class="product-desc">Basecoat brush, drybrush, detail brush — everything needed to start</div>
+    </div>
+    <span class="price-tag">~$20</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Paints — Army Painter Warpaints Starter Set</div>
+      <div class="product-desc">10 colors + 1 wash. Good starter range covering most common colors.</div>
+    </div>
+    <span class="price-tag">~$30</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Primer — Army Painter Grey Primer Spray</div>
+      <div class="product-desc">Neutral grey base — works for any color scheme, spray can</div>
+    </div>
+    <span class="price-tag">~$15</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Varnish — Army Painter Anti-Shine Matt Varnish</div>
+      <div class="product-desc">Protects finished work, matte finish standard for miniatures</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Wet Palette — Masterson Sta-Wet Palette</div>
+      <div class="product-desc">Keeps paint from drying during your session — game-changer for brush painting</div>
+    </div>
+    <span class="price-tag">~$12</span>
+  </div>
+
+  <div class="tool-tier">INTERMEDIATE PAINTING KIT — Add After 1–2 Months (~$100)</div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Citadel Contrast Paints (5-pack)</div>
+      <div class="product-desc">Game-changing speed painting — one coat creates shading and base coat simultaneously</div>
+    </div>
+    <span class="price-tag mid">~$45</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Vallejo Game Color Set (16 colors)</div>
+      <div class="product-desc">Higher quality dropper-bottle paints — better consistency than starter paints</div>
+    </div>
+    <span class="price-tag mid">~$35</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Raphael 8404 Kolinsky Sable — Size 1 &amp; 0</div>
+      <div class="product-desc">Best detail brushes available. Kolinsky sable holds a perfect point indefinitely.</div>
+    </div>
+    <span class="price-tag mid">~$25 each</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Magnifying Headband</div>
+      <div class="product-desc">Essential for detail painting — you can't paint what you can't see clearly</div>
+    </div>
+    <span class="price-tag">~$15</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Painting Handle</div>
+      <div class="product-desc">Holds model while painting — no fingerprints, no dried-on oils from skin</div>
+    </div>
+    <span class="price-tag">~$15</span>
+  </div>
+
+  <div class="tool-tier">AIRBRUSH SETUP — ~$150–300 Complete</div>
+
+  <div class="product-card">
+    <div>
+      <div class="product-name">Airbrush (Starter) — Iwata Neo CN</div>
+      <div class="product-desc">Excellent entry-level airbrush — gravity feed, 0.35mm needle, reliable</div>
+    </div>
+    <span class="price-tag mid">~$50</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Airbrush (Step-Up) — Badger Patriot 105</div>
+      <div class="product-desc">Professional-grade, dual-action, 0.5mm needle — great all-rounder</div>
+    </div>
+    <span class="price-tag mid">~$80</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Air Compressor — Master Airbrush TC-20</div>
+      <div class="product-desc">Quiet, oil-free, has air tank for steady pressure — essential for smooth results</div>
+    </div>
+    <span class="price-tag mid">~$80</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Airbrush Cleaner — Medea Airbrush Cleaner</div>
+      <div class="product-desc">Clean between colors and after sessions — extends airbrush life significantly</div>
+    </div>
+    <span class="price-tag">~$10</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Thinning Medium — Vallejo Airbrush Thinner</div>
+      <div class="product-desc">Thin paints to correct airbrush consistency without losing pigment binding</div>
+    </div>
+    <span class="price-tag">~$8</span>
+  </div>
+  <div class="product-card">
+    <div>
+      <div class="product-name">Accessories Pack — Cleaning pot + hose + moisture trap</div>
+      <div class="product-desc">Moisture trap prevents water droplets in air line. All needed to operate safely.</div>
+    </div>
+    <span class="price-tag">~$35 combined</span>
+  </div>
+
+  <div class="tip-box">
+    <strong>Buying order for airbrush:</strong> Compressor first (TC-20), then airbrush (Neo CN to learn), then upgrade the airbrush after 3–6 months when you know what you need. A good compressor lasts decades — don't buy cheap here.
+  </div>
+
+</div><!-- /tab6 -->
+
+
+<!-- Tabs 7–12 panels (empty shells — content in Part B) -->
+<div class="tab-panel" id="tab7"></div>
+<div class="tab-panel" id="tab8"></div>
+<div class="tab-panel" id="tab9"></div>
+<div class="tab-panel" id="tab10"></div>
+<div class="tab-panel" id="tab11"></div>
+<div class="tab-panel" id="tab12"></div>
+
+</div><!-- /main-content -->
+
+<script>
+  function switchTab(n) {
+    document.querySelectorAll('.tab-panel').forEach(function(p) {
+      p.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    var panel = document.getElementById('tab' + n);
+    if (panel) panel.classList.add('active');
+    var btns = document.querySelectorAll('.tab-btn');
+    if (btns[n - 1]) btns[n - 1].classList.add('active');
+    // Scroll tab into view
+    if (btns[n - 1]) {
+      btns[n - 1].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }
+</script>
+
+<!-- TAB 7: Selling Your 3D Prints -->
+<div class="tab-panel" id="tab7">
+  <h2 class="section-heading">Selling Your 3D Prints — Complete Business Guide</h2>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Where to Sell</h3>
+
+    <h4 style="color:#7c6fff;">1. Etsy <span class="badge beginner">Best for Physical Prints</span></h4>
+    <p>33 million buyers, established marketplace, excellent for gifts, decor, and art.</p>
+    <ul>
+      <li><strong>Fees:</strong> $0.20 listing fee + 6.5% transaction fee + ~3% payment processing</li>
+      <li><strong>What sells best:</strong> personalized items (name signs, wedding favors), home decor, planters, phone stands, miniatures, cosplay props, pet memorial items</li>
+      <li><strong>Setup:</strong> professional photos, keyword-rich titles, clear shipping policies</li>
+      <li><strong>Pricing:</strong> must cover material cost + printer time + electricity + your time + fees + profit</li>
+      <li><strong>Shipping:</strong> USPS Priority Mail for US; bubble mailers + boxes; learn box sizing for rates</li>
+    </ul>
+
+    <h4 style="color:#7c6fff;">2. Digital STL Marketplaces <span class="badge intermediate">Passive Income</span></h4>
+    <p>Sell digital STL files — no physical printing or shipping required.</p>
+    <ul>
+      <li><strong>Printables.com (Prusa):</strong> free to upload, earn Prusameters (redeem for filament) + donations</li>
+      <li><strong>Gumroad (free tier):</strong> sell STL bundles, set your own price</li>
+      <li><strong>MyMiniFactory:</strong> miniature-focused, 30% commission on paid models</li>
+      <li><strong>Cults3D:</strong> 20% commission, large European audience</li>
+      <li><strong>Patreon:</strong> monthly subscription for exclusive models ($3–10/month tier) — best long-term income</li>
+    </ul>
+
+    <h4 style="color:#7c6fff;">3. Local Selling</h4>
+    <ul>
+      <li><strong>Facebook Marketplace:</strong> local pickup, great for large items</li>
+      <li><strong>Craft fairs / maker faires:</strong> direct customer contact, immediate cash</li>
+      <li><strong>Local businesses:</strong> custom printing (office supplies, retail fixtures, promotional items)</li>
+      <li><strong>Schools/universities:</strong> custom parts, educational models, replacement components</li>
+      <li><strong>Local board game shops:</strong> terrain, tokens, accessories</li>
+    </ul>
+
+    <h4 style="color:#7c6fff;">4. Fiverr / Freelance</h4>
+    <ul>
+      <li>Offer custom 3D design + print service</li>
+      <li>File repair service (fix broken STLs)</li>
+      <li>Modeling on demand</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Pricing Your Prints — The Formula</h3>
+    <h4>Cost Calculation</h4>
+    <div class="shortcut-row"><span>Material cost</span><span>(print weight g ÷ spool weight g) × spool price</span></div>
+    <div class="shortcut-row"><span>Example</span><span>50g print, 1kg PLA $20 → (50/1000) × $20 = <strong>$1.00</strong></span></div>
+    <div class="shortcut-row"><span>Electricity</span><span>~$0.10–$0.25 per hour of printing</span></div>
+    <div class="shortcut-row"><span>Printer depreciation</span><span>Printer cost ÷ expected print hours (e.g. $500 ÷ 2000hr = $0.25/hr)</span></div>
+    <div class="shortcut-row"><span>Your time</span><span>$15–$25/hr for prep, post-processing, packaging, shipping</span></div>
+    <div class="shortcut-row"><span>Overhead</span><span>Supplies, packaging, platform fees (~15–25% of price)</span></div>
+
+    <div class="tip-box info" style="margin-top:1rem;">
+      <strong>Pricing Formula:</strong><br>
+      Minimum price = (Material + Electricity + Depreciation) × 3 to 4<br>
+      This gives you margin for time, fees, and profit.
+    </div>
+
+    <h4>Real Pricing Examples</h4>
+    <div class="shortcut-row"><span>Small figurine (20g resin, 3hr)</span><span>$0.80 resin + $0.30 elec + 1hr post ($15) → <strong>$25–$35</strong></span></div>
+    <div class="shortcut-row"><span>Phone stand (80g PLA, 2hr)</span><span>$1.60 mat + $0.20 elec + 30min ($7.50) → <strong>$18–$25</strong></span></div>
+    <div class="shortcut-row"><span>Name sign (100g PLA, 3hr)</span><span>$2.00 + $0.30 + 45min ($11) → <strong>$20–$30</strong></span></div>
+    <div class="shortcut-row"><span>D&amp;D mini set (5 minis, resin)</span><span>$4 resin + $0.50 elec + 2hr ($30) → <strong>$50–$65</strong></span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">What Sells Best on Etsy (2024)</h3>
+    <div class="shortcut-row"><span>1. Personalized name signs &amp; plaques</span><span>⭐⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>2. Planter pots (self-watering, geometric)</span><span>⭐⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>3. Phone stands &amp; desk organizers</span><span>⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>4. Wedding favors &amp; cake toppers (seasonal spikes)</span><span>⭐⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>5. D&amp;D miniatures &amp; terrain</span><span>⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>6. Cosplay props &amp; accessories</span><span>⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>7. Pet memorial items (paw print frames)</span><span>⭐⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>8. Fidget toys &amp; sensory items</span><span>⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>9. Holiday decorations (Christmas/Halloween — massive seasonal)</span><span>⭐⭐⭐⭐⭐</span></div>
+    <div class="shortcut-row"><span>10. Replacement parts (appliance knobs, brackets)</span><span>⭐⭐⭐</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Product Photography (Makes or Breaks Sales)</h3>
+    <ul>
+      <li>Use natural window light — no harsh flash</li>
+      <li>White or clean background (foam board ~$2)</li>
+      <li>Show scale: hand holding item, or common object beside it</li>
+      <li>Show multiple angles — minimum 5 photos per listing</li>
+      <li>Lifestyle shot: item in use (phone stand with actual phone, planter with plant)</li>
+      <li>Mockup editor: Canva or remove.bg for clean background removal</li>
+      <li>Camera: modern smartphone is fine. Macro lens attachment ~$15 for detail shots.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Etsy SEO Tips</h3>
+    <div class="tip-box info">
+      <strong>Title:</strong> Include exact search terms. Example: "Personalized Name Sign | 3D Printed LED Stand | Custom Bedroom Decor"
+    </div>
+    <ul>
+      <li><strong>Tags (13):</strong> Use all 13. Mix broad and specific — "3D printed decor", "custom name sign", "personalized gift", "bedroom decor"</li>
+      <li><strong>Description:</strong> First 3 lines are critical (shown before "Read more"). Answer: What is it? What size? What's it made of? How long to ship?</li>
+      <li><strong>Reviews:</strong> Follow up with buyers — great reviews boost algorithm ranking</li>
+      <li><strong>Renew listings:</strong> Etsy boosts freshly renewed listings (costs $0.20, often worth it)</li>
+      <li><strong>Free shipping:</strong> Etsy's algorithm boosts free-shipping listings — build shipping cost into your price</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Shipping Guide</h3>
+    <div class="shortcut-row"><span>USPS First Class</span><span>Under 1 lb, cheapest, 2–5 days. Usually under $5.</span></div>
+    <div class="shortcut-row"><span>USPS Priority Mail</span><span>1–3 days, $8–$20, good for heavier items</span></div>
+    <div class="shortcut-row"><span>Packaging</span><span>Bubble mailers ($0.50), small boxes ($0.80–$2.00), packing peanuts or paper</span></div>
+    <div class="shortcut-row"><span>Fragile prints</span><span>Double-box with padding all sides + "FRAGILE" label</span></div>
+    <div class="shortcut-row"><span>International</span><span>Add $15–$25 shipping, customs forms required, 2–6 week delivery</span></div>
+    <div class="shortcut-row"><span>Pirate Ship</span><span>Discounted USPS/UPS rates — save 10–40% vs. post office</span></div>
+  </div>
+</div>
+
+<!-- TAB 8: Building a 3D Print Business -->
+<div class="tab-panel" id="tab8">
+  <h2 class="section-heading">Building a 3D Print Business</h2>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Business Setup</h3>
+    <div class="shortcut-row"><span>Etsy seller account</span><span>Free — just need email and bank account</span></div>
+    <div class="shortcut-row"><span>PayPal Business</span><span>Free — accept payments</span></div>
+    <div class="shortcut-row"><span>LLC formation</span><span>Recommended at $1000+/month (~$50–$150 one-time in most US states)</span></div>
+    <div class="shortcut-row"><span>Business bank account</span><span>Separate personal + business finances (required for proper accounting)</span></div>
+    <div class="shortcut-row"><span>Accounting software</span><span>Wave (free) or QuickBooks ($15/month)</span></div>
+    <div class="tip-box info">Track everything: material costs, platform fees, shipping costs, supply costs — all are tax deductible.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Scaling Your Operation</h3>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Phase 1 — Solo <span class="price-tag">0–$500/month</span></h4>
+      <ul style="margin:0;">
+        <li>1 printer, print everything yourself, manual post-processing</li>
+        <li>1–2 Etsy listings, focus on learning what sells</li>
+        <li>Time commitment: 5–10 hours/week</li>
+      </ul>
+    </div>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Phase 2 — Growing <span class="price-tag mid">$500–$2000/month</span></h4>
+      <ul style="margin:0;">
+        <li>2–4 printers, automate where possible (OctoEverywhere, Obico)</li>
+        <li>Create a production batch system — print same item multiple plates</li>
+        <li>Outsource packaging or streamline with label printers</li>
+        <li>Expand listings to 20–50 products</li>
+      </ul>
+    </div>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Phase 3 — Serious Business <span class="price-tag high">$2000+/month</span></h4>
+      <ul style="margin:0;">
+        <li>5+ printers, dedicated print space (spare room, garage)</li>
+        <li>Part-time help for post-processing and shipping</li>
+        <li>Brand identity: consistent naming, branded packaging</li>
+        <li>Multiple platforms: Etsy + own website + local wholesale</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Print Farm Tools</h3>
+    <div class="shortcut-row"><span>OctoEverywhere / Obico</span><span>Remote monitoring, spaghetti detection, multi-printer dashboard</span></div>
+    <div class="shortcut-row"><span>Repetier Server</span><span>Manage multiple FDM printers from one interface</span></div>
+    <div class="shortcut-row"><span>Raspberry Pi + OctoPrint</span><span>Add remote control to any FDM printer (~$35 hardware)</span></div>
+    <div class="shortcut-row"><span>Bambu Cloud</span><span>Official fleet management for Bambu printers</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Production Efficiency Tips</h3>
+    <ul>
+      <li><strong>Batch printing:</strong> fill every plate to maximum. A 256×256mm plate of 20 small items = 20× more efficient than 1 item per plate.</li>
+      <li><strong>Serial printing:</strong> one object at a time (each finishes before next starts) for cleaner results on small objects</li>
+      <li><strong>Design for production:</strong> models that need minimal support removal, flat bases, snap together without tools</li>
+      <li><strong>Color organization:</strong> print all items of one color before switching filament</li>
+      <li><strong>Print overnight:</strong> set up prints before bed, collect in morning (8hr = free production time)</li>
+      <li><strong>Quality check:</strong> quick visual check before packaging (shake, press, check for delamination)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Customer Service</h3>
+    <ul>
+      <li>Respond to messages within 24 hours (Etsy rewards fast response rate)</li>
+      <li>Offer: custom color options, size variations, personalization</li>
+      <li><strong>Refund policy:</strong> clear policy. Most successful shops offer free replacement on damaged items (shipping damage is your responsibility to fight with carrier)</li>
+      <li><strong>Photos for claims:</strong> always photograph items before shipping for insurance/damage claims</li>
+      <li><strong>Repeat customers:</strong> note their preferences, offer discounts for return buyers</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TAB 9: Advanced Techniques -->
+<div class="tab-panel" id="tab9">
+  <h2 class="section-heading">Advanced Techniques</h2>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Multi-Material &amp; Multi-Color FDM <span class="badge expert">Expert</span></h3>
+    <div class="shortcut-row"><span>AMS (Bambu)</span><span>Up to 16 filaments, automatic switching — best consumer multi-material system</span></div>
+    <div class="shortcut-row"><span>Palette 3 (Mosaic)</span><span>Works with any printer, splices filaments together — $699</span></div>
+    <div class="shortcut-row"><span>Manual filament change</span><span><kbd>M600</kbd> G-code command pauses print for manual swap — free</span></div>
+    <div class="shortcut-row"><span>Color painting (single extruder)</span><span>OrcaSlicer/Bambu Studio "paint" colors on faces → inserts pauses at correct layer heights</span></div>
+    <div class="shortcut-row"><span>Two-tone models</span><span>Design with two STL bodies (base + accent), assign different filaments in slicer</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Resin Tinting &amp; Special Effects</h3>
+    <ul>
+      <li><strong>Resin pigments:</strong> add UV-compatible pigments to clear resin. Mix up to 5% by volume.</li>
+      <li><strong>Glow-in-the-dark:</strong> glow pigment powder + clear resin. Charge under UV/sunlight.</li>
+      <li><strong>Translucent effects:</strong> print in translucent resin, backlight with LED for stained-glass effect.</li>
+      <li><strong>Metallic resin:</strong> silver/gold pigment in clear resin = metallic look without painting.</li>
+      <li><strong>Dual resin pour:</strong> pour one color, let partially cure, add second color for two-tone effect (requires careful timing).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Surface Finishing — Advanced</h3>
+    <div class="shortcut-row"><span>XTC-3D (Smooth-On)</span><span>Brush-on epoxy coating for FDM. Self-levels, fills layer lines. ~$25/kit.</span></div>
+    <div class="shortcut-row"><span>UV resin coating</span><span>Thin coat of resin on FDM parts cured under UV = glossy hard coating</span></div>
+    <div class="shortcut-row"><span>Acetone vapor smoothing</span><span>ABS only — sealed container + acetone paper towel, 5–30 min = mirror smooth</span></div>
+    <div class="shortcut-row"><span>Bondo spot putty / auto primer</span><span>Larger surface preparation on props and costume pieces</span></div>
+    <div class="shortcut-row"><span>Powder coating effect</span><span>Spray metallic enamel on FDM + heat gun = near-metal finish</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Advanced Painting Techniques <span class="badge expert">Expert</span></h3>
+    <ul>
+      <li><strong>Non-Metallic Metal (NMM):</strong> paint the illusion of metal using light/dark transitions. Hardest technique, incredible results.</li>
+      <li><strong>Object Source Lighting (OSL):</strong> paint as if a light source (fire, magic) is illuminating the model. Warm light side, cool shadow side.</li>
+      <li><strong>Wet blending:</strong> blend two colors together while paint is still wet. Works best with slow-drying medium added.</li>
+      <li><strong>Zenithal priming:</strong> black primer first, then white from directly above → instant shadow/highlight map.</li>
+      <li><strong>Salt weathering:</strong> apply salt to wet paint, paint over, remove salt = chipped/weathered texture underneath.</li>
+      <li><strong>Hairspray technique:</strong> hairspray between paint layers → chip top layer with water = realistic paint chipping.</li>
+      <li><strong>Panel lining (gunpla style):</strong> dark enamel wash into panel lines, wipe flat surfaces clean = defined edges on mechanical models.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Mold Making &amp; Casting <span class="badge expert">Next Level</span></h3>
+    <p>Create a mold of your 3D print to cast multiples in resin or metal.</p>
+    <div class="shortcut-row"><span>Smooth-On OOMOO 25 (silicone mold)</span><span>~$30 per kit</span></div>
+    <div class="shortcut-row"><span>Smooth-Cast 300 (casting resin)</span><span>~$25 per kit</span></div>
+    <div class="tip-box info">
+      <strong>Process:</strong> build mold box → pour silicone around model → cure 6 hours → remove model → pour casting resin → demold → repeat
+    </div>
+    <ul>
+      <li><strong>Applications:</strong> jewelry (metal casting), production multiples of detailed pieces, resin art</li>
+      <li><strong>Metal casting:</strong> lost PLA casting (melt out PLA in kiln) or have local jeweler cast castable resin designs</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Cosplay Prop Techniques</h3>
+    <ul>
+      <li><strong>Large prints:</strong> print in sections, join with threaded rod/dowel + epoxy + Bondo</li>
+      <li><strong>Light-up effects:</strong> embed LED strips in hollow prints (print with channels for wire routing)</li>
+      <li><strong>Wearable armor:</strong> FDM in PETG (flexible, tough), heat-form to body curves with heat gun</li>
+      <li><strong>Weathering:</strong> dry-brush silver on edges (battle-worn metal), black wash in recesses, hairspray chipping for aged paint</li>
+      <li><strong>Fabric integration:</strong> design prints with slots/rings to attach fabric, LED diffusers for light effects</li>
+      <li><strong>EVA foam hybrid:</strong> 3D print detailed sections (buckles, emblems, tech details), EVA foam for large body coverage</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TAB 10: Master Troubleshooting Guide -->
+<div class="tab-panel" id="tab10">
+  <h2 class="section-heading">Master Troubleshooting Guide</h2>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">FDM Troubleshooting</h3>
+
+    <div class="tip-box warning">
+      <strong>Print not sticking to bed</strong><br>
+      <em>Cause:</em> Z offset too high, dirty bed, wrong temperature, wrong bed surface<br>
+      <em>Fix:</em> Re-level, wipe bed with IPA, verify temp matches slicer, use appropriate surface (PEI for PLA, glue stick for PETG)
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Stringing between parts</strong><br>
+      <em>Cause:</em> Too hot, insufficient retraction, high humidity filament<br>
+      <em>Fix:</em> Lower temp 5°C, run retraction calibration in slicer, dry filament 4–6hrs
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Layer separation / weak layers</strong><br>
+      <em>Cause:</em> Temp too low, speed too fast, layer height too large for nozzle<br>
+      <em>Fix:</em> Raise temp 5°C, slow outer walls, verify layer height ≤80% of nozzle diameter
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Warping / lifting corners</strong><br>
+      <em>Cause:</em> Thermal contraction, poor adhesion, no enclosure (ABS/ASA)<br>
+      <em>Fix:</em> Increase bed temp, add brim (5–10mm), enclose printer, apply glue stick
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Under-extrusion (gaps in layers, weak walls)</strong><br>
+      <em>Cause:</em> Partial clog, flow rate wrong, temp too low, speed too high, worn PTFE<br>
+      <em>Fix:</em> Cold pull to clean nozzle, run flow calibration, increase temp, reduce max speed, check bowden tube
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Ghosting / ringing (echo artifact)</strong><br>
+      <em>Cause:</em> Printer resonance, too fast, loose belts<br>
+      <em>Fix:</em> Tighten X/Y belts, reduce speed, enable input shaping if available
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Z-banding (horizontal lines at regular intervals)</strong><br>
+      <em>Cause:</em> Z screw not aligned, lead screw binding, loose Z coupling<br>
+      <em>Fix:</em> Check and tighten Z coupler, check screw alignment, lubricate Z lead screw
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Elephant foot (wider base)</strong><br>
+      <em>Cause:</em> First layer over-extruded, Z too close, bottom exposure too long (resin)<br>
+      <em>Fix:</em> Add elephant foot compensation in slicer, adjust Z offset, reduce bottom exposure
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Resin Troubleshooting</h3>
+
+    <div class="tip-box danger">
+      <strong>Print doesn't stick to plate (falls into tank)</strong><br>
+      <em>Cause:</em> Z offset wrong, bottom exposure too short, plate contaminated<br>
+      <em>Fix:</em> Re-level and re-zero, increase bottom exposure by 10–15s, clean plate with IPA and light sanding
+    </div>
+
+    <div class="tip-box danger">
+      <strong>Print stuck to FEP (won't peel)</strong><br>
+      <em>Cause:</em> Exposure too long, FEP cloudy, resin too viscous (cold)<br>
+      <em>Fix:</em> Reduce exposure, warm resin to 25°C, replace FEP if cloudy
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Support failures (supports snap mid-print)</strong><br>
+      <em>Cause:</em> Supports too thin, tip too small, suction force on large flat areas<br>
+      <em>Fix:</em> Use heavy supports, increase contact point to 0.5mm, tilt model more to reduce flat cross-sections
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Cloudy/frosty surface after wash</strong><br>
+      <em>Cause:</em> Over-washed in IPA, IPA too contaminated<br>
+      <em>Fix:</em> Reduce wash time to 2–3 min, replace IPA when more than ~20% resin
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Sticky surface after curing</strong><br>
+      <em>Cause:</em> Under-cured, oxygen inhibition on surface<br>
+      <em>Fix:</em> Extend cure time, cure while submerged in water (eliminates surface oxygen inhibition)
+    </div>
+
+    <div class="tip-box danger">
+      <strong>Islands in print (floating disconnected pieces)</strong><br>
+      <em>Cause:</em> Insufficient supports, print failure on one layer<br>
+      <em>Fix:</em> Always run island detection in Lychee/Chitubox before printing, add supports to any detected islands
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Painting Troubleshooting</h3>
+
+    <div class="tip-box warning">
+      <strong>Paint not adhering, rubbing off</strong><br>
+      <em>Cause:</em> No primer, oily surface, paint too thick<br>
+      <em>Fix:</em> Always prime, clean with IPA before priming, thin paint properly
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Primer frosting (white chalky look)</strong><br>
+      <em>Cause:</em> Sprayed in humid weather, too far away, too much at once<br>
+      <em>Fix:</em> Spray in &lt;60% humidity, 25–30cm distance, light thin coats
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Brush strokes visible</strong><br>
+      <em>Cause:</em> Paint too thick, not enough thinning<br>
+      <em>Fix:</em> Thin paint to milk consistency, multiple thin coats, wet blend or stipple for large areas
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Varnish frosting (matte varnish goes milky)</strong><br>
+      <em>Cause:</em> Humidity, cold temperature, wrong spray technique<br>
+      <em>Fix:</em> Spray in warm dry conditions, light coats, never spray below 15°C
+    </div>
+
+    <div class="tip-box warning">
+      <strong>Airbrush spattering/spitting</strong><br>
+      <em>Cause:</em> Paint too thick, needle dirty, pressure too low<br>
+      <em>Fix:</em> Thin more (airbrush consistency = skim milk), clean needle, increase PSI to 20–25
+    </div>
+  </div>
+</div>
+
+<!-- TAB 11: Complete Products & Shopping Guide -->
+<div class="tab-panel" id="tab11">
+  <h2 class="section-heading">Complete Products &amp; Shopping Guide</h2>
+
+  <h3 style="color:#7c6fff;">Starter Kits by Budget</h3>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+
+    <div class="product-card">
+      <div class="product-name">Beginner FDM Starter Kit <span class="price-tag">~$360</span></div>
+      <div class="badge beginner">Beginner</div>
+      <div class="product-desc">
+        <div class="shortcut-row"><span>Bambu A1 Mini</span><span>$299</span></div>
+        <div class="shortcut-row"><span>1kg PLA filament</span><span>$20</span></div>
+        <div class="shortcut-row"><span>Scraper</span><span>$8</span></div>
+        <div class="shortcut-row"><span>Digital calipers</span><span>$15</span></div>
+        <div class="shortcut-row"><span>Flush cutters</span><span>$10</span></div>
+        <div class="shortcut-row"><span>IPA + glue stick</span><span>$8</span></div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Beginner Resin Starter Kit <span class="price-tag">~$333</span></div>
+      <div class="badge beginner">Beginner</div>
+      <div class="product-desc">
+        <div class="shortcut-row"><span>Elegoo Mars 4 Ultra</span><span>$180</span></div>
+        <div class="shortcut-row"><span>Elegoo ABS-Like resin 500ml</span><span>$20</span></div>
+        <div class="shortcut-row"><span>Elegoo Mercury Plus Wash &amp; Cure</span><span>$80</span></div>
+        <div class="shortcut-row"><span>Nitrile gloves 100pk</span><span>$12</span></div>
+        <div class="shortcut-row"><span>Safety glasses</span><span>$5</span></div>
+        <div class="shortcut-row"><span>IPA 1qt</span><span>$8</span></div>
+        <div class="shortcut-row"><span>Flush cutters + silicone spatula</span><span>$18</span></div>
+        <div class="shortcut-row"><span>Shop paper towels</span><span>$10</span></div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Beginner Painting Starter <span class="price-tag">~$87</span></div>
+      <div class="badge beginner">Beginner</div>
+      <div class="product-desc">
+        <div class="shortcut-row"><span>Army Painter Starter Set (10 paints + wash)</span><span>$30</span></div>
+        <div class="shortcut-row"><span>Brush set</span><span>$20</span></div>
+        <div class="shortcut-row"><span>Grey primer spray</span><span>$15</span></div>
+        <div class="shortcut-row"><span>Matte varnish</span><span>$10</span></div>
+        <div class="shortcut-row"><span>Wet palette</span><span>$12</span></div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Intermediate Upgrade Kit <span class="price-tag mid">~$280</span></div>
+      <div class="badge intermediate">Intermediate</div>
+      <div class="product-desc">
+        <div class="shortcut-row"><span>SUNLU S1 filament dryer</span><span>$25</span></div>
+        <div class="shortcut-row"><span>Assorted nozzle pack</span><span>$20</span></div>
+        <div class="shortcut-row"><span>Iwata Neo + TC-20 compressor</span><span>$130</span></div>
+        <div class="shortcut-row"><span>Citadel Contrast paints (5)</span><span>$45</span></div>
+        <div class="shortcut-row"><span>Vallejo paints set</span><span>$35</span></div>
+        <div class="shortcut-row"><span>Raphael 8404 detail brush</span><span>$25</span></div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Advanced / Pro Setup <span class="price-tag high">~$895</span></div>
+      <div class="badge expert">Expert</div>
+      <div class="product-desc">
+        <div class="shortcut-row"><span>Elegoo Saturn 3 (resin)</span><span>$350</span></div>
+        <div class="shortcut-row"><span>Ultrasonic cleaner</span><span>$50</span></div>
+        <div class="shortcut-row"><span>Iwata Eclipse airbrush</span><span>$150</span></div>
+        <div class="shortcut-row"><span>Daylight Slimline painting lamp</span><span>$60</span></div>
+        <div class="shortcut-row"><span>Magnifier + LED headband</span><span>$25</span></div>
+        <div class="shortcut-row"><span>OOMOO + Smooth-Cast mold kit</span><span>$60</span></div>
+        <div class="shortcut-row"><span>Printer enclosure (soundproofing)</span><span>$100</span></div>
+        <div class="shortcut-row"><span>Label printer (Dymo/Rollo)</span><span>$100</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Recommended Brands by Category</h3>
+    <div class="shortcut-row"><span>Filament</span><span>Bambu (premium), Polymaker (great quality/value), Hatchbox (budget/reliable), eSUN (budget)</span></div>
+    <div class="shortcut-row"><span>Resin</span><span>Elegoo (great value), Siraya Tech (engineering grade), Phrozen (premium detail)</span></div>
+    <div class="shortcut-row"><span>Paints</span><span>Citadel (best range, pricey), Vallejo (excellent, affordable), Army Painter (great value)</span></div>
+    <div class="shortcut-row"><span>Brushes</span><span>Raphael 8404 (best detail, French made), Citadel (reliable), Army Painter (good value starter)</span></div>
+    <div class="shortcut-row"><span>Primers</span><span>Tamiya Fine Surface Primer (best adhesion), Army Painter (convenient spray), Vallejo (brush-on)</span></div>
+    <div class="shortcut-row"><span>Varnishes</span><span>Testors Dullcote (best matte), Vallejo (brush-on control), Army Painter (affordable spray)</span></div>
+    <div class="shortcut-row"><span>Adhesives</span><span>Loctite super glue (assembly), JB Weld (strong bonds), Gorilla Glue (foam-safe variant)</span></div>
+    <div class="shortcut-row"><span>Magnets</span><span>Amazon neodymium assorted pack — magnetic bases, removable parts, snap-fit accessories</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Online Stores</h3>
+    <div class="shortcut-row"><span>Amazon</span><span>Convenience, good for tools and basic supplies</span></div>
+    <div class="shortcut-row"><span>Printables.com shop</span><span>Prusa-curated filament and supplies</span></div>
+    <div class="shortcut-row"><span>MatterHackers</span><span>Excellent US-based 3D print supplier</span></div>
+    <div class="shortcut-row"><span>Filastruder</span><span>Filament specialist, good deals on bulk orders</span></div>
+    <div class="shortcut-row"><span>Hobby Lobby / Michael's</span><span>Paints, brushes, base materials for painting</span></div>
+    <div class="shortcut-row"><span>The Army Painter website</span><span>Direct purchase, sometimes bundles</span></div>
+    <div class="shortcut-row"><span>Smooth-On.com</span><span>Mold making and casting supplies</span></div>
+    <div class="shortcut-row"><span>Elegoo official store</span><span>Direct purchase, often cheaper than Amazon</span></div>
+  </div>
+</div>
+
+<!-- TAB 12: Expert Path, Specializations & Next Steps -->
+<div class="tab-panel" id="tab12">
+  <h2 class="section-heading">Expert Path, Specializations &amp; Next Steps</h2>
+
+  <h3 style="color:#7c6fff;">Choose Your Specialization</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;margin-bottom:1.5rem;">
+
+    <div class="product-card">
+      <div class="product-name">Path 1 — Miniature Production &amp; Painting</div>
+      <div class="badge intermediate">Intermediate → Expert</div>
+      <div class="product-desc">
+        <p><strong>Skills:</strong> Resin printing mastery, painting, sculpting basics</p>
+        <p><strong>Tools:</strong> Elegoo Saturn 3, Lychee Slicer, quality brushes, airbrush, Citadel paints</p>
+        <p><strong>Income:</strong> Painted minis $20–$200 each, STL Patreon ($3–$10/subscriber), custom commissions</p>
+        <p><strong>Community:</strong> r/PrintedMinis, MyMiniFactory, Kickstarter campaigns</p>
+        <p><strong>Learn:</strong> Squidmar Miniatures, Miniac, Black Magic Craft (YouTube)</p>
+        <p><strong>Timeline:</strong> 3–6 months to sellable quality, 6–12 months to consistent income</p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Path 2 — Functional Product Seller</div>
+      <div class="badge beginner">Accessible</div>
+      <div class="product-desc">
+        <p><strong>Skills:</strong> FDM mastery, basic modeling (Fusion 360/Tinkercad), Etsy business skills</p>
+        <p><strong>Tools:</strong> Bambu P1S (reliability), multiple printers, label printer</p>
+        <p><strong>Income:</strong> Etsy store, custom orders, wholesale to local shops</p>
+        <p><strong>Hot niches:</strong> plant accessories, desk organization, personalized gifts, replacement parts</p>
+        <p><strong>Learn:</strong> Tomb of 3D Printed Horrors, product photography tutorials (YouTube)</p>
+        <p><strong>Timeline:</strong> 1–3 months to first sale, 6 months to $500/month consistently</p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Path 3 — Prop Maker / Cosplayer</div>
+      <div class="badge intermediate">Intermediate</div>
+      <div class="product-desc">
+        <p><strong>Skills:</strong> Large-format FDM, surface finishing, painting, electronics integration</p>
+        <p><strong>Tools:</strong> Bambu X1C or Creality K1 Max, heat gun, Bondo, airbrush</p>
+        <p><strong>Income:</strong> Commission props $100–$5000, costume rentals, convention vendor table</p>
+        <p><strong>Community:</strong> r/cosplay, RPF (The Replica Prop Forum), 3DKitBash</p>
+        <p><strong>Timeline:</strong> 3–6 months for solid props, 1–2 years for professional commissions</p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Path 4 — Model Designer / Sculptor</div>
+      <div class="badge expert">Expert</div>
+      <div class="product-desc">
+        <p><strong>Skills:</strong> ZBrush or Blender, anatomy (characters), CAD (mechanical), pre-supporting models</p>
+        <p><strong>Tools:</strong> ZBrush ($40/month), Bambu X1C + Elegoo Saturn 3 for test printing</p>
+        <p><strong>Income:</strong> Patreon releases, MyMiniFactory Tribes, custom commissions, game publisher licensing</p>
+        <p><strong>Learn:</strong> Follygon (Blender), FlippedNormals (paid courses), Danny Mac 3D (YouTube)</p>
+        <p><strong>Timeline:</strong> 1–2 years to professional quality (highly skill-dependent)</p>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-name">Path 5 — Print Farm Operator</div>
+      <div class="badge expert">Business Focus</div>
+      <div class="product-desc">
+        <p><strong>Skills:</strong> FDM mastery, business operations, automation, quality control</p>
+        <p><strong>Tools:</strong> 5–20 Bambu printers, OctoEverywhere, ERP/inventory software</p>
+        <p><strong>Income:</strong> Etsy at scale ($5,000–$20,000/month), wholesale, custom B2B printing</p>
+        <p><strong>Requirements:</strong> Dedicated space, reliable filament supply chain, packaging workflow</p>
+        <p><strong>Timeline:</strong> 6–12 months to profitability with 5+ printers</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">The Complete Learning Roadmap</h3>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1.2rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Month 1 — Foundation</h4>
+      <ul style="margin:0;">
+        <li>Get first printer (FDM or Resin)</li>
+        <li>Print 5 calibration models (benchy, calibration cube, temperature tower)</li>
+        <li>Learn your slicer (OrcaSlicer or Bambu Studio)</li>
+        <li>Print 10 useful models from Printables</li>
+        <li>Join: r/3Dprinting, r/PrintedMinis, r/3Ddesign</li>
+      </ul>
+    </div>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1.2rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Month 2–3 — Building Skills</h4>
+      <ul style="margin:0;">
+        <li>Run all calibration tests (PA, flow, temperature)</li>
+        <li>Learn basic Tinkercad: design your first custom object</li>
+        <li>Start painting: complete 3 painted models (even basic)</li>
+        <li>Watch 20+ YouTube tutorials on your areas of interest</li>
+        <li>Print your first hollow resin model</li>
+      </ul>
+    </div>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1.2rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Month 4–6 — Intermediate</h4>
+      <ul style="margin:0;">
+        <li>Learn Blender or Fusion 360 basics</li>
+        <li>Design and print your first completely original model</li>
+        <li>Paint 5 models with full 5-step process (prime, base, shade, highlight, seal)</li>
+        <li>Post your work: Reddit, Instagram, Printables profile</li>
+        <li>List your first Etsy product (even just to learn the process)</li>
+      </ul>
+    </div>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1.2rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Month 7–12 — Specialization</h4>
+      <ul style="margin:0;">
+        <li>Pick your specialization path (see above)</li>
+        <li>Invest in better tools for your chosen path</li>
+        <li>Build a portfolio of 10–20 pieces</li>
+        <li>Launch serious Etsy store OR Patreon OR both</li>
+        <li>Join paid communities or Discord servers in your niche</li>
+      </ul>
+    </div>
+
+    <div style="border-left:3px solid #7c6fff;padding-left:1rem;margin-bottom:1.2rem;">
+      <h4 style="margin:0 0 0.5rem;color:#7c6fff;">Year 2+ — Professional</h4>
+      <ul style="margin:0;">
+        <li>Multiple revenue streams active</li>
+        <li>Teaching others (YouTube, Twitch, local workshops)</li>
+        <li>Regular income from printing/design</li>
+        <li>Upgrade to professional equipment</li>
+        <li>Potential full-time transition</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">YouTube Channels to Follow</h3>
+    <div class="shortcut-row"><span>3D Printing</span><span>The Edge of Tech, Makers Muse, CHEP (Filament Friday), Thomas Sanladerer</span></div>
+    <div class="shortcut-row"><span>Resin</span><span>Tomb of 3D Printed Horrors, 3D Printing Pro, Uncle Jessy</span></div>
+    <div class="shortcut-row"><span>Painting</span><span>Squidmar Miniatures, Miniac, Goobertown Hobbies, Vince Venturella</span></div>
+    <div class="shortcut-row"><span>Blender</span><span>Blender Guru, Ian Hubert, Grant Abbitt, FlippedNormals</span></div>
+    <div class="shortcut-row"><span>Business</span><span>How to Sell on Etsy (multiple channels), Printables Creator channel</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#7c6fff;margin-top:0;">Communities to Join</h3>
+    <div class="shortcut-row"><span>r/3Dprinting</span><span>General printing, troubleshooting, showcases</span></div>
+    <div class="shortcut-row"><span>r/PrintedMinis</span><span>Miniature printing and painting</span></div>
+    <div class="shortcut-row"><span>r/blender</span><span>Blender help and showcases</span></div>
+    <div class="shortcut-row"><span>r/HeroForgeMinis</span><span>Custom miniature design community</span></div>
+    <div class="shortcut-row"><span>Bambu Lab Facebook Group</span><span>Bambu-specific tips and support</span></div>
+    <div class="shortcut-row"><span>Printables.com</span><span>Model sharing, contests, community</span></div>
+    <div class="shortcut-row"><span>Cults3D Discord</span><span>Designer community</span></div>
+    <div class="shortcut-row"><span>MyMiniFactory Creator Network</span><span>Miniature design business community</span></div>
+  </div>
+
+  <div class="card" style="border-color:#7c6fff;">
+    <h3 style="color:#7c6fff;margin-top:0;">Final Expert Tips</h3>
+    <div class="tip-box info">
+      <strong>Progress over Perfection:</strong> Print more, paint more. Skills compound with repetition.
+    </div>
+    <div class="tip-box info">
+      <strong>Document everything:</strong> Photo your prints, your settings, your calibrations. You WILL forget.
+    </div>
+    <div class="tip-box info">
+      <strong>Community is the cheat code:</strong> Every question you have has been answered in r/3Dprinting or a Discord. Ask freely.
+    </div>
+    <div class="tip-box info">
+      <strong>The first 50 prints teach more than any guide:</strong> Just print. Failed prints are lessons, not waste.
+    </div>
+    <div class="tip-box info">
+      <strong>Build a "sample box":</strong> Keep one of every type of print, filament swatch, and painted model as a reference.
+    </div>
+    <div class="tip-box info">
+      <strong>Stay current:</strong> This hobby moves fast. Printers that cost $800 in 2022 now cost $300. Check new releases yearly.
+    </div>
+  </div>
+</div><!-- /tab12 -->
+
+</div><!-- /content-wrap --></body></html>
