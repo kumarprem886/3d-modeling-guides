@@ -1,0 +1,1566 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete 3D Printing Guide for Indians</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+  a { color: #ff9933; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  h1, h2, h3, h4 { line-height: 1.3; }
+
+  /* ── Required CSS ── */
+  kbd { background: #21262d; border: 1px solid #444; border-radius: 5px; padding: 2px 7px; font-family: monospace; color: #e6edf3; }
+  .shortcut-row { display: flex; justify-content: space-between; border-bottom: 1px solid #21262d; padding: 6px 0; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; }
+  .tip-box { border-left: 4px solid #2daa6b; background: #0d4429; padding: .7rem 1rem; margin: .6rem 0; border-radius: 0 6px 6px 0; }
+  .tip-box.warning { border-color: #f0a500; background: #3d2c00; }
+  .tip-box.danger { border-color: #e74c3c; background: #3d0000; }
+  .tip-box.info { border-color: #ff9933; background: #2d1500; }
+  .section-heading { color: #ff9933; font-size: 16px; font-weight: 600; margin: 1.2rem 0 .5rem; }
+  .tab-btn { background: #161b22; border: 1px solid #30363d; color: #8b949e; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; white-space: nowrap; }
+  .tab-btn.active { background: #ff9933; color: #000; border-color: #ff9933; }
+  .tab-panel { display: none; } .tab-panel.active { display: block; }
+  .price-tag { display: inline-block; background: #0d4429; color: #2daa6b; border: 1px solid #2daa6b; border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+  .price-tag.mid { background: #3d2c00; color: #f0a500; border-color: #f0a500; }
+  .price-tag.high { background: #1a0030; color: #bf7fff; border-color: #bf7fff; }
+  .product-card { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 0.8rem 1rem; margin: 0.4rem 0; }
+  .product-name { font-weight: 600; color: #e6edf3; font-size: 14px; }
+  .product-desc { color: #8b949e; font-size: 12px; margin-top: 2px; }
+  .inr { color: #ff9933; font-weight: 700; }
+
+  /* ── Layout ── */
+  .sticky-nav { position: sticky; top: 0; z-index: 100; background: #0d1117; border-bottom: 1px solid #30363d; padding: 10px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .sticky-nav .nav-back { background: #161b22; border: 1px solid #30363d; color: #e6edf3; padding: 6px 14px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+  .sticky-nav .nav-back:hover { border-color: #ff9933; color: #ff9933; }
+  .nav-pill { background: #161b22; border: 1px solid #30363d; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #8b949e; }
+
+  /* ── Hero ── */
+  .hero { text-align: center; padding: 3rem 1.5rem 2rem; background: linear-gradient(180deg, #161b22 0%, #0d1117 100%); border-bottom: 1px solid #30363d; }
+  .hero-title { font-size: clamp(22px, 4vw, 36px); font-weight: 700; color: #e6edf3; margin-bottom: 0.6rem; }
+  .hero-subtitle { color: #8b949e; font-size: clamp(13px, 2vw, 16px); margin-bottom: 1.4rem; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .hero-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .hero-pill { border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; border: 1px solid; }
+  .hp1 { background: #0d4429; color: #2daa6b; border-color: #2daa6b; }
+  .hp2 { background: #2d1500; color: #ff9933; border-color: #ff9933; }
+  .hp3 { background: #1a0030; color: #bf7fff; border-color: #bf7fff; }
+  .hp4 { background: #001a30; color: #58a6ff; border-color: #58a6ff; }
+  .hp5 { background: #3d2c00; color: #f0a500; border-color: #f0a500; }
+  .hp6 { background: #3d0000; color: #e74c3c; border-color: #e74c3c; }
+
+  /* ── Tab Bar ── */
+  .tab-bar-wrap { background: #0d1117; border-bottom: 1px solid #30363d; padding: 12px 20px; overflow-x: auto; }
+  .tab-bar { display: flex; gap: 8px; min-width: max-content; }
+
+  /* ── Content ── */
+  .content-wrap { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.2rem 3rem; }
+
+  /* ── Typography helpers ── */
+  .text-muted { color: #8b949e; }
+  .text-accent { color: #ff9933; }
+  .text-green { color: #2daa6b; }
+  ul.guide-list { padding-left: 1.4rem; margin: 0.5rem 0; }
+  ul.guide-list li { margin-bottom: 4px; color: #c9d1d9; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .divider { border: none; border-top: 1px solid #30363d; margin: 1.2rem 0; }
+  table.guide-table { width: 100%; border-collapse: collapse; margin: 0.6rem 0; }
+  table.guide-table th { background: #161b22; color: #ff9933; padding: 8px 10px; text-align: left; border: 1px solid #30363d; font-size: 13px; }
+  table.guide-table td { padding: 7px 10px; border: 1px solid #30363d; color: #c9d1d9; font-size: 13px; vertical-align: top; }
+  table.guide-table tr:nth-child(even) td { background: #0d1117; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 6px; }
+  .badge-rec { background: #ff9933; color: #000; }
+  .badge-pop { background: #2daa6b; color: #000; }
+  .badge-new { background: #58a6ff; color: #000; }
+  .path-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
+  .path-title { color: #ff9933; font-weight: 700; font-size: 15px; margin-bottom: 0.4rem; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: #ff9933; color: #000; border-radius: 50%; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+  .step-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .step-text { flex: 1; color: #c9d1d9; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     STICKY NAV
+══════════════════════════════════════════ -->
+<nav class="sticky-nav">
+  <a href="index.html" class="nav-back">← Back to Hub</a>
+  <span class="nav-pill">📖 12 Chapters</span>
+  <span class="nav-pill">🎯 Beginner → Expert</span>
+  <span class="nav-pill" style="color:#ff9933;border-color:#ff9933;">🇮🇳 India Edition</span>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-title">🇮🇳 Complete 3D Printing Guide for Indians</div>
+  <div class="hero-subtitle">हिंदी में नहीं, पर आपके लिए — Printers, Resin, Painting, Selling in India</div>
+  <div class="hero-pills">
+    <span class="hero-pill hp1">FDM Printing</span>
+    <span class="hero-pill hp2">Resin Printing</span>
+    <span class="hero-pill hp3">3D Modeling</span>
+    <span class="hero-pill hp4">Painting</span>
+    <span class="hero-pill hp5">Tools in India</span>
+    <span class="hero-pill hp6">Selling in India</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     TAB BAR (12 tabs)
+══════════════════════════════════════════ -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(1)">1. Your Journey</button>
+    <button class="tab-btn" onclick="switchTab(2)">2. FDM Printers</button>
+    <button class="tab-btn" onclick="switchTab(3)">3. Resin Printing</button>
+    <button class="tab-btn" onclick="switchTab(4)">4. 3D Modeling</button>
+    <button class="tab-btn" onclick="switchTab(5)">5. Painting</button>
+    <button class="tab-btn" onclick="switchTab(6)">6. Buying Guide ₹</button>
+    <button class="tab-btn" onclick="switchTab(7)">7. Slicer Settings</button>
+    <button class="tab-btn" onclick="switchTab(8)">8. Troubleshooting</button>
+    <button class="tab-btn" onclick="switchTab(9)">9. Selling Online</button>
+    <button class="tab-btn" onclick="switchTab(10)">10. Advanced Materials</button>
+    <button class="tab-btn" onclick="switchTab(11)">11. Community</button>
+    <button class="tab-btn" onclick="switchTab(12)">12. Business Setup</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CONTENT
+══════════════════════════════════════════ -->
+<div class="content-wrap">
+
+<!-- ─────────────────────────────────────────
+     TAB 1 — Your 3D Printing Journey
+───────────────────────────────────────── -->
+<div id="tab-panel-1" class="tab-panel active">
+
+  <div class="card">
+    <h2 style="color:#e6edf3;font-size:20px;margin-bottom:0.3rem;">Your 3D Printing Journey — India Edition</h2>
+    <p class="text-muted">Everything you need to know before spending a single rupee.</p>
+  </div>
+
+  <!-- THE INDIAN SCENE -->
+  <div class="section-heading">🏙️ The Indian 3D Printing Scene</div>
+  <div class="card">
+    <p style="color:#c9d1d9;margin-bottom:0.8rem;">India's maker community is booming. Cities like <strong>Bengaluru, Hyderabad, Pune, Mumbai, Chennai, Delhi</strong> have active maker spaces, colleges with FabLabs, and growing communities.</p>
+    <div class="two-col">
+      <div>
+        <div class="section-heading" style="font-size:13px;margin-top:0;">Active Communities</div>
+        <ul class="guide-list">
+          <li>3D Printing India Facebook group (50,000+ members)</li>
+          <li>Reddit r/3Dprinting — global, very active</li>
+          <li>Telegram groups per city (search your city)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-heading" style="font-size:13px;margin-top:0;">Maker Spaces</div>
+        <ul class="guide-list">
+          <li>Workbench Projects (Bengaluru)</li>
+          <li>Maker's Asylum (Mumbai / Delhi)</li>
+          <li>FabLab BITS, College FabLabs</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box info" style="margin-top:0.8rem;">
+      <strong>Where to buy:</strong> Amazon India, Flipkart, Robocraze.com, Robokits.co.in, Fabstore.in, and local distributors in major cities.
+    </div>
+  </div>
+
+  <!-- PATHS -->
+  <div class="section-heading">🛤️ Choose Your Path (India Edition)</div>
+
+  <div class="path-card">
+    <div class="path-title">Path A — The Student / College Maker</div>
+    <ul class="guide-list">
+      <li><strong>Goal:</strong> Class projects, prototypes, impressing faculty, college fests, startup MVPs</li>
+      <li><strong>Start with:</strong> Creality Ender 3 V3 SE — <span class="inr">₹12,000–15,000</span> — most popular in Indian colleges</li>
+      <li><strong>Budget:</strong> <span class="inr">₹15,000–25,000</span> total to start printing well</li>
+      <li><strong>Opportunity:</strong> 3D printing services on campus, sell printed goods at college festivals</li>
+    </ul>
+  </div>
+
+  <div class="path-card">
+    <div class="path-title">Path B — The Miniature / Hobbyist Painter</div>
+    <ul class="guide-list">
+      <li><strong>Goal:</strong> D&amp;D minis, wargaming (Warhammer), custom figurines, cosplay accessories</li>
+      <li><strong>Start with:</strong> Elegoo Mars 4 Ultra — <span class="inr">₹15,000–18,000</span> — resin printer</li>
+      <li><strong>Budget:</strong> <span class="inr">₹20,000–30,000</span> (printer + resin + safety gear + wash/cure station)</li>
+    </ul>
+    <div class="tip-box warning">
+      <strong>Note:</strong> Resin is imported and costs more in India — factor in <span class="inr">₹2,000–4,000</span>/500ml vs ₹1,500–2,000 on Amazon.com
+    </div>
+  </div>
+
+  <div class="path-card">
+    <div class="path-title">Path C — The Entrepreneur / Seller</div>
+    <ul class="guide-list">
+      <li><strong>Goal:</strong> Sell on Etsy International, Amazon India, local exhibitions, Instagram</li>
+      <li><strong>Start with:</strong> Bambu A1 Mini (<span class="inr">₹25,000–28,000</span>) or Prusa Mini+ (<span class="inr">₹30,000</span>)</li>
+      <li><strong>Budget:</strong> <span class="inr">₹35,000–60,000</span> for a serious start</li>
+      <li><strong>Revenue potential:</strong> <span class="inr">₹20,000–2,00,000/month</span> depending on scale and products</li>
+    </ul>
+  </div>
+
+  <div class="path-card">
+    <div class="path-title">Path D — The Service Provider</div>
+    <ul class="guide-list">
+      <li><strong>Goal:</strong> Offer printing services to local businesses, architects, jewelers, hospitals</li>
+      <li><strong>Target customers:</strong> Jewelry designers (prototype rings), architects (building models), dental labs, product designers</li>
+      <li><strong>Start with:</strong> Quality resin printer + FDM printer combo</li>
+      <li><strong>Budget:</strong> <span class="inr">₹60,000–1,50,000</span> for professional setup</li>
+    </ul>
+  </div>
+
+  <!-- BUYING IN INDIA -->
+  <div class="section-heading">🛒 Buying in India — Where and How</div>
+  <div class="card">
+    <table class="guide-table">
+      <thead>
+        <tr><th>Store</th><th>Best For</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Amazon India</strong> (amazon.in)</td><td>Most purchases</td><td>Wide range, easy returns, Prime delivery</td></tr>
+        <tr><td><strong>Flipkart</strong></td><td>Electronics</td><td>Sometimes cheaper than Amazon on printers</td></tr>
+        <tr><td><strong>Robocraze.com</strong></td><td>3D printing specialist</td><td>Better tech support, good filament range</td></tr>
+        <tr><td><strong>Robokits.co.in</strong></td><td>Electronics + 3D</td><td>Bengaluru-based, good service</td></tr>
+        <tr><td><strong>Fabstore.in</strong></td><td>Resins, advanced materials</td><td>3D printing focused</td></tr>
+        <tr><td><strong>Creality / Elegoo India</strong></td><td>Warranty support</td><td>Official distributors in some cities</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- IMPORTING -->
+  <div class="section-heading">📦 Importing Considerations</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li>Many printers ship from China via Amazon Global Store or AliExpress</li>
+      <li>Import duty: <strong>~18–28%</strong> on most 3D printing equipment (varies by HSN code)</li>
+      <li>Amazon Global: duty calculated at checkout — no surprises</li>
+      <li>AliExpress: cheaper but customs can add 18–42% duty — risky for expensive items</li>
+    </ul>
+    <div class="tip-box info" style="margin-top:0.8rem;">
+      <strong>Best practice:</strong> Buy from Amazon.in Indian warehouse listings for clear pricing + warranty.
+    </div>
+  </div>
+
+  <!-- POWER SUPPLY -->
+  <div class="section-heading">⚡ Power Supply (India-Specific)</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li>India uses <strong>230V / 50Hz</strong> — same as most Chinese-made printers. No converter needed.</li>
+      <li>All major printers (Bambu, Elegoo, Creality) work on Indian power directly</li>
+      <li><strong>UPS recommended:</strong> <span class="inr">₹3,000–5,000</span> APC/Luminous UPS for power cuts — common in many cities/towns</li>
+      <li><strong>Voltage stabilizer:</strong> <span class="inr">₹1,500–2,500</span> if your area has voltage fluctuations — protects heated bed</li>
+    </ul>
+    <div class="tip-box warning">
+      A power cut mid-print = wasted filament, failed model, possible bed/nozzle damage. A UPS pays for itself after 2–3 prevented failures.
+    </div>
+  </div>
+
+  <!-- MONSOON WARNING -->
+  <div class="section-heading">🌧️ Monsoon &amp; Humidity — Critical India Warning</div>
+  <div class="card">
+    <div class="tip-box danger">
+      <strong>DANGER — Monsoon Season (June–September):</strong> HIGH HUMIDITY destroys filament. PETG, Nylon, TPU will absorb moisture within HOURS during monsoon.
+    </div>
+    <ul class="guide-list" style="margin-top:0.8rem;">
+      <li><strong>Symptoms:</strong> Popping sounds during print, foamy/weak layers, severe stringing</li>
+      <li><strong>Solution:</strong> Store filament in airtight containers with silica gel (rechargeable desiccant packs)</li>
+      <li><strong>Filament dryer:</strong> ESSENTIAL in India — SUNLU S1 (<span class="inr">₹2,000–2,500</span>) or PrintDry (<span class="inr">₹3,500</span>)</li>
+      <li><strong>Resin:</strong> Humidity affects cure times. Print during early morning (lower humidity) in monsoon season.</li>
+    </ul>
+    <div class="tip-box info" style="margin-top:0.8rem;">
+      <strong>Budget tip:</strong> Airtight "dabbas" (kitchen containers) + rechargeable silica gel packs = same result as expensive filament storage boxes at 1/5th the cost.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-1 -->
+
+<!-- ─────────────────────────────────────────
+     TAB 2 — FDM Printers India Buying Guide
+───────────────────────────────────────── -->
+<div id="tab-panel-2" class="tab-panel">
+
+  <div class="card">
+    <h2 style="color:#e6edf3;font-size:20px;margin-bottom:0.3rem;">FDM Printers — India Buying Guide</h2>
+    <p class="text-muted">All prices in Indian Rupees (₹) at time of writing. Check current prices on Amazon.in / Flipkart.</p>
+  </div>
+
+  <!-- BUDGET -->
+  <div class="section-heading">💚 Budget Range — <span class="price-tag">₹10,000–20,000</span></div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Creality Ender 3 V3 SE <span class="badge badge-pop">MOST POPULAR</span></div>
+      <span class="price-tag">₹12,000–15,000</span>
+    </div>
+    <div class="product-desc">Auto-leveling, 220×220×250mm build volume, huge India community, easy spare parts.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Great for:</strong> College projects, basic functional prints, learning 3D printing.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Where to buy:</strong> Amazon India, Robocraze, Creality India authorized dealers.</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Creality Ender 3 V3</div>
+      <span class="price-tag mid">₹18,000–22,000</span>
+    </div>
+    <div class="product-desc">Upgraded version, CoreXY kinematics, faster and better quality than SE. Recommended if budget allows.</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Anycubic Kobra 2 Neo</div>
+      <span class="price-tag">₹12,000–16,000</span>
+    </div>
+    <div class="product-desc">Good auto-leveling, simple to use, decent quality. Solid alternative if Ender is unavailable.</div>
+  </div>
+
+  <!-- MID-RANGE -->
+  <div class="section-heading">🟡 Mid-Range — <span class="price-tag mid">₹20,000–50,000</span></div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Bambu Lab A1 Mini <span class="badge badge-rec">RECOMMENDED</span></div>
+      <span class="price-tag mid">₹25,000–28,000 | With AMS Lite: ₹33,000–38,000</span>
+    </div>
+    <div class="product-desc">BEST VALUE in this range. Extremely fast, reliable, multi-color capable. Build volume: 180×180×180mm.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Great for:</strong> Entrepreneurs, serious hobbyists, anyone wanting reliability over tinkering.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Where to buy:</strong> Amazon India, Bambu Lab India official website.</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Bambu Lab A1 <span class="badge badge-rec">BEST ALL-ROUNDER</span></div>
+      <span class="price-tag mid">₹32,000–38,000</span>
+    </div>
+    <div class="product-desc">Full size (256×256×256mm), bed slinger, AMS Lite compatible. Best all-rounder for Indian market at this price.</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Prusa MK4</div>
+      <span class="price-tag mid">₹55,000–65,000 (imported)</span>
+    </div>
+    <div class="product-desc">Legendary reliability, open source, massive global community. More expensive but worth it for serious production use. Check warranty terms before importing.</div>
+  </div>
+
+  <!-- HIGH-END -->
+  <div class="section-heading">🟣 High-End — <span class="price-tag high">₹60,000+</span></div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Bambu Lab P1S</div>
+      <span class="price-tag high">₹65,000–75,000</span>
+    </div>
+    <div class="product-desc">Enclosed, fast, perfect for ABS/ASA/engineering materials. Best for: businesses, print farms, materials requiring enclosure.</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Bambu Lab X1 Carbon</div>
+      <span class="price-tag high">₹1,00,000–1,10,000</span>
+    </div>
+    <div class="product-desc">Flagship model. AI camera, lidar bed leveling, fastest speeds. For serious businesses and professionals only.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FILAMENT IN INDIA -->
+  <div class="section-heading">🧵 Filament in India — Where to Buy &amp; ₹ Prices</div>
+
+  <div class="card">
+    <div class="section-heading" style="font-size:13px;margin-top:0;">Where to Buy Filament</div>
+    <ul class="guide-list">
+      <li><strong>Amazon India:</strong> Wide range — eSUN, Polymaker, Bambu all available</li>
+      <li><strong>Robocraze:</strong> Often cheaper than Amazon, good stock availability</li>
+      <li><strong>Filament India</strong> (filamentindia.in): India-specific brand, decent quality, affordable</li>
+      <li><strong>Bambu filament:</strong> Official India shipping available via Bambu Lab website</li>
+    </ul>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr>
+          <th>Filament Type</th>
+          <th>eSUN (₹/1kg)</th>
+          <th>Bambu (₹/1kg)</th>
+          <th>Polymaker (₹/1kg)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>PLA</td><td class="inr">₹1,200–1,500</td><td class="inr">₹1,800–2,200</td><td class="inr">₹2,000–2,500</td></tr>
+        <tr><td>PETG</td><td class="inr">₹1,400–1,800</td><td class="inr">₹2,000–2,500</td><td class="inr">₹2,000–2,800</td></tr>
+        <tr><td>ABS</td><td class="inr">₹1,300–1,600</td><td>—</td><td class="inr">₹1,800–2,200</td></tr>
+        <tr><td>ASA</td><td>—</td><td>—</td><td class="inr">₹2,500–3,000 (PolyASA)</td></tr>
+        <tr><td>TPU</td><td class="inr">₹1,500–2,000</td><td class="inr">₹2,000–2,500</td><td>—</td></tr>
+        <tr><td>PLA-CF (Carbon)</td><td>—</td><td class="inr">₹3,500–4,500</td><td class="inr">₹3,000–4,000</td></tr>
+        <tr><td>Silk PLA</td><td class="inr">₹1,500–2,000</td><td class="inr">₹2,000–2,500</td><td class="inr">₹2,000–2,500</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-box warning" style="margin-top:0.8rem;">
+    <strong>PLA-CF note:</strong> Carbon fibre filaments require a <strong>hardened steel nozzle</strong> — standard brass nozzles wear out very quickly. Budget ₹300–600 extra for the nozzle upgrade.
+  </div>
+
+  <div class="section-heading" style="font-size:13px;">India-Specific Filament Tips</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>eSUN brand:</strong> Best value, widely available, very reliable for beginners</li>
+      <li><strong>Monsoon storage:</strong> Store ALL filament with silica gel during June–September — CRITICAL</li>
+      <li><strong>Bulk buying:</strong> Order 3–5 spools at a time during non-monsoon for better economics</li>
+      <li><strong>Color pricing:</strong> White/grey/black are cheapest — silk, gradient, special colors cost <span class="inr">₹500–1,000</span> more per spool</li>
+      <li><strong>Filament dryer:</strong> SUNLU S1 dryer is the most popular in India — <span class="inr">₹2,000–2,500</span> on Amazon.in</li>
+    </ul>
+  </div>
+
+</div><!-- /tab-panel-2 -->
+
+<!-- ─────────────────────────────────────────
+     TAB 3 — Resin Printing India Edition
+───────────────────────────────────────── -->
+<div id="tab-panel-3" class="tab-panel">
+
+  <div class="card">
+    <h2 style="color:#e6edf3;font-size:20px;margin-bottom:0.3rem;">Resin Printing — India Edition</h2>
+    <p class="text-muted">MSLA/LCD resin printers for miniatures, jewelry, dental, and high-detail work.</p>
+  </div>
+
+  <div class="tip-box danger">
+    <strong>READ FIRST:</strong> Resin is a chemical — read the safety section (Tab 6 / Resin Essentials) before you buy. Never skip gloves and ventilation.
+  </div>
+
+  <!-- BUDGET RESIN -->
+  <div class="section-heading">💚 Budget Resin Printers — <span class="price-tag">₹12,000–20,000</span></div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Elegoo Mars 4 Ultra <span class="badge badge-rec">TOP PICK</span></div>
+      <span class="price-tag">₹14,000–18,000</span>
+    </div>
+    <div class="product-desc">9K resolution — excellent for miniatures and detailed models. Best budget resin option in India.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Available:</strong> Amazon India (sometimes from Global Store with duty — check carefully at checkout)</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Anycubic Photon M3</div>
+      <span class="price-tag">₹12,000–16,000</span>
+    </div>
+    <div class="product-desc">Good alternative if Elegoo is unavailable. 6K resolution, reliable. Available on Amazon.in and Flipkart.</div>
+  </div>
+
+  <!-- MID-RANGE RESIN -->
+  <div class="section-heading">🟡 Mid-Range Resin — <span class="price-tag mid">₹20,000–40,000</span></div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Elegoo Saturn 3 Ultra <span class="badge badge-rec">RECOMMENDED</span></div>
+      <span class="price-tag mid">₹28,000–35,000</span>
+    </div>
+    <div class="product-desc">12K resolution, large build volume — excellent for terrain, larger minis, and bulk production. RECOMMENDED for serious resin printing in India.</div>
+  </div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Phrozen Sonic Mini 8K</div>
+      <span class="price-tag mid">₹20,000–25,000</span>
+    </div>
+    <div class="product-desc">Great detail, 8K resolution, smaller build volume. Good choice for pure miniature printing.</div>
+  </div>
+
+  <!-- HIGH-END RESIN -->
+  <div class="section-heading">🟣 High-End Resin — <span class="price-tag high">₹40,000+</span></div>
+
+  <div class="product-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
+      <div class="product-name">Elegoo Jupiter SE</div>
+      <span class="price-tag high">₹45,000–55,000</span>
+    </div>
+    <div class="product-desc">Massive build volume — great for large props, cosplay pieces, and terrain boards. Import-heavy — verify duty at checkout before ordering.</div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- RESIN PRICES -->
+  <div class="section-heading">🧪 Resin in India — ₹ Prices</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Resin</th><th>Size</th><th>Price (₹)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Elegoo ABS-Like</td><td>500ml</td><td class="inr">₹1,800–2,500</td><td>Standard, good for most uses</td></tr>
+        <tr><td>Elegoo Water Washable</td><td>500ml</td><td class="inr">₹2,000–2,800</td><td>No IPA needed, good for India</td></tr>
+        <tr><td>Anycubic Standard</td><td>500ml</td><td class="inr">₹1,500–2,000</td><td>Budget option, decent results</td></tr>
+        <tr><td>Siraya Tech</td><td>500ml</td><td class="inr">₹2,500–3,500</td><td>Imported, worth it for engineering</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INDIA RESIN TIPS -->
+  <div class="section-heading">🌡️ India-Specific Resin Tips</div>
+  <div class="card">
+    <div class="tip-box warning">
+      <strong>Summer Heat (35–45°C in many cities):</strong> Resin gets too warm → cures too fast. Reduce exposure time by 0.3–0.5 seconds from the default profile.
+    </div>
+    <ul class="guide-list" style="margin-top:0.8rem;">
+      <li><strong>Storage:</strong> Cool, dark place — a closet works well. Avoid direct sunlight (which cures resin in the bottle).</li>
+      <li><strong>Monsoon:</strong> Humidity not as critical for resin as FDM, but affects cure slightly. Print in morning for lower humidity.</li>
+      <li><strong>IPA 99% purity:</strong> Available at medical supply stores and Amazon India — <span class="inr">₹200–400/litre</span></li>
+      <li><strong>Alternative to IPA:</strong> Methylated Spirit or Isopropyl from pharmacies — ensure 90%+ purity</li>
+      <li><strong>Wash &amp; Cure Station</strong> (Elegoo Mercury Plus): <span class="inr">₹5,000–7,000</span> on Amazon India</li>
+      <li><strong>DIY Cure:</strong> India has abundant sunlight — cure failed supports and waste resin in direct sun before disposal</li>
+    </ul>
+  </div>
+
+  <!-- SAFETY INDIA -->
+  <div class="section-heading">🛡️ Resin Safety in India</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Nitrile gloves:</strong> Amazon India and medical supply shops — 100-pack <span class="inr">₹300–500</span></li>
+      <li><strong>Ventilation:</strong> India's warm climate means open windows work well most of the year. Exhaust fan + open window = adequate for most setups.</li>
+      <li><strong>Monsoon ventilation:</strong> Close windows but use exhaust fan — don't print resin in fully closed, humid rooms</li>
+      <li><strong>Waste disposal:</strong> Cure liquid waste under direct sunlight (India's best free resource!), then dispose in regular trash</li>
+      <li><strong>AC rooms:</strong> If printing in an air-conditioned room, ensure there is still fresh air exchange — don't just recirculate</li>
+    </ul>
+    <div class="tip-box danger">
+      Uncured resin is a skin sensitizer. If you get resin on skin: wash immediately with soap and water. Prolonged exposure can cause allergic reactions that worsen over time.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-3 -->
+
+<!-- ─────────────────────────────────────────
+     TAB 4 — 3D Modeling Software
+───────────────────────────────────────── -->
+<div id="tab-panel-4" class="tab-panel">
+
+  <div class="card">
+    <h2 style="color:#e6edf3;font-size:20px;margin-bottom:0.3rem;">3D Modeling Software — Free Options for India</h2>
+    <p class="text-muted">Prioritized for Indian students and budget-conscious makers. Most options are completely free.</p>
+  </div>
+
+  <!-- FREE OPTIONS -->
+  <div class="section-heading">🆓 Best Free Options</div>
+
+  <div class="product-card">
+    <div class="product-name">Tinkercad <span class="badge badge-pop">BEGINNER PICK</span></div>
+    <div class="product-desc" style="margin-top:6px;"><strong style="color:#c9d1d9;">Platform:</strong> Browser-based, completely free, no installation required. Works on any laptop or computer.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Best for:</strong> Students, beginners, basic functional parts</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#2daa6b;">Indian use cases:</strong> College project components, replacement parts for home appliances, custom nameplates in English and regional scripts.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Blender <span class="badge badge-rec">PROFESSIONAL FREE</span></div>
+    <div class="product-desc" style="margin-top:6px;"><strong style="color:#c9d1d9;">Platform:</strong> Windows / Mac / Linux — 100% free and open source, forever.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Used in:</strong> Bollywood VFX, global game studios, product visualization, 3D printing worldwide.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Best for:</strong> Artistic models, character sculpting, organic shapes, miniatures.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#2daa6b;">Indian community:</strong> BlenderArtists.org has active Indian members. Blender India Facebook group for local help.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Fusion 360 <span class="badge" style="background:#58a6ff;color:#000;">FREE FOR MOST INDIANS</span></div>
+    <div class="product-desc" style="margin-top:6px;"><strong style="color:#c9d1d9;">Free for:</strong> Students (with .edu email) + personal/startup use under $100K annual revenue.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#c9d1d9;">Best for:</strong> Engineering, product design, mechanical parts, parametric CAD.</div>
+    <div class="product-desc" style="margin-top:4px;"><strong style="color:#2daa6b;">Tip:</strong> Available with student email at most Indian colleges — check with your institution before paying anything.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">FreeCAD</div>
+    <div class="product-desc" style="margin-top:6px;"><strong style="color:#c9d1d9;">Platform:</strong> 100% free and open source — good alternative to Fusion 360 for pure CAD work.</div>
+    <div class="product-desc" style="margin-top:4px;">Steeper learning curve than Fusion 360, but powerful and has no usage restrictions whatsoever.</div>
+  </div>
+
+  <!-- PAID -->
+  <div class="section-heading">💰 Paid (But Affordable in India)</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Nomad Sculpt</strong> (iPad): <span class="inr">₹1,200</span> one-time — excellent mobile sculpting, very popular for minis</li>
+      <li><strong>ZBrush:</strong> <span class="inr">₹3,500/month</span> — industry standard sculpting software, worth it for serious sculptors</li>
+      <li><strong>SolidWorks:</strong> Very expensive — use your college license if available (many engineering colleges have it)</li>
+    </ul>
+  </div>
+
+  <!-- INDIAN MARKET PRODUCTS -->
+  <div class="section-heading">🇮🇳 Modeling Ideas for Indian Market Products</div>
+  <div class="card">
+    <p class="text-muted" style="margin-bottom:0.8rem;">These product ideas sell well in India — model them yourself for maximum profit margin.</p>
+    <div class="two-col">
+      <div>
+        <div class="section-heading" style="font-size:13px;margin-top:0;color:#2daa6b;">High Demand Items</div>
+        <ul class="guide-list">
+          <li>Diya / lamp holders — easy geometry, great Diwali seller</li>
+          <li>Rakhi accessories — personalized, high margin, seasonal</li>
+          <li>Name plates in Hindi / regional scripts — premium product</li>
+          <li>Cricket themed items — stumps, bat wall mounts, trophy stands</li>
+          <li>Office desk organizers — huge corporate gifting market</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-heading" style="font-size:13px;margin-top:0;color:#f0a500;">Notes &amp; Considerations</div>
+        <ul class="guide-list">
+          <li>Ganesha / deity figurines — very popular but make original designs (avoid copyright)</li>
+          <li>Regional handicraft replicas — research your local market opportunity</li>
+          <li>Personalized items command 2–3× premium over generic products</li>
+          <li>Corporate gifting: approach offices, especially around Diwali season</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box info" style="margin-top:0.8rem;">
+      <strong>Tip:</strong> Learn to type and extrude Hindi / Devanagari text in Blender or Fusion 360. Personalized Hindi name plates sell for <span class="inr">₹300–800</span> each and cost pennies in filament.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-4 -->
+
+<!-- ─────────────────────────────────────────
+     TAB 5 — Painting & Finishing India
+───────────────────────────────────────── -->
+<div id="tab-panel-5" class="tab-panel">
+
+  <div class="card">
+    <h2 style="color:#e6edf3;font-size:20px;margin-bottom:0.3rem;">Painting &amp; Finishing — India Edition</h2>
+    <p class="text-muted">Everything from budget Camel acrylics to professional miniature paints — all with India ₹ prices.</p>
+  </div>
+
+  <!-- PAINTS -->
+  <div class="section-heading">🎨 Paints Available in India</div>
+
+  <div class="section-heading" style="font-size:13px;color:#2daa6b;">Budget Options (Widely Available)</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Camel Artist Acrylic Paints:</strong> <span class="inr">₹50–150</span> per tube — available at every art store in India</li>
+      <li><strong>Fevicryl Acrylic:</strong> <span class="inr">₹50–100</span> — at every stationery shop, reliable for basic painting</li>
+      <li><strong>Camlin / Kokuyo Artist Colors:</strong> Available at art supply shops across India</li>
+    </ul>
+    <div class="tip-box info" style="margin-top:0.8rem;">
+      Camel and Fevicryl acrylics work great for larger FDM prints and terrain. For small miniatures under 32mm, upgrade to Vallejo or Army Painter for better control.
+    </div>
+  </div>
+
+  <div class="section-heading" style="font-size:13px;color:#ff9933;">3D Printing Specific (Better Quality)</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Brand</th><th>Price per pot (₹)</th><th>Availability</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Army Painter Warpaints</td><td class="inr">₹200–300</td><td>Amazon India</td></tr>
+        <tr><td>Vallejo Model Color</td><td class="inr">₹250–350</td><td>Amazon India</td></tr>
+        <tr><td>Citadel (Games Workshop)</td><td class="inr">₹350–450</td><td>Limited — FLGS stores, some Amazon sellers</td></tr>
+        <tr><td>Scale75</td><td class="inr">₹400–600</td><td>Imported — Amazon India global sellers</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PRIMERS -->
+  <div class="section-heading">🫙 Primer Options in India</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Rustoleum Spray Primer:</strong> <span class="inr">₹450–600</span> — at hardware stores (Croma, local hardware shops) — excellent quality</li>
+      <li><strong>Army Painter Primer:</strong> <span class="inr">₹800–1,000</span> — via Amazon India, colored primers available</li>
+      <li><strong>DIY Brush Primer:</strong> Fevicryl Gesso (white/black) <span class="inr">₹100–200</span> — works well on FDM, not ideal for fine resin detail</li>
+      <li><strong>Automotive Spray Primer:</strong> <span class="inr">₹300–500</span> at auto parts stores — works great for larger FDM prints</li>
+    </ul>
+    <div class="tip-box info">
+      <strong>Tip:</strong> Automotive spray primer from your local auto parts shop is the best value primer in India — same adhesion as branded miniature primers at half the cost.
+    </div>
+  </div>
+
+  <!-- INDIA TIPS -->
+  <div class="section-heading">🌡️ India-Specific Painting Tips</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Summer (March–June):</strong> Paint dries VERY fast — work in smaller sections, use a wet palette, keep paints thinned more than usual</li>
+      <li><strong>Monsoon:</strong> High humidity slows drying. Spray varnish can "frost" (go cloudy) — AVOID spray varnishing in monsoon</li>
+      <li><strong>Best painting weather:</strong> October–February — dry, moderate temperatures, ideal for all techniques</li>
+    </ul>
+    <div class="tip-box warning" style="margin-top:0.8rem;">
+      <strong>Wet Palette — DIY India Version:</strong> Airtight container + wet kitchen sponge + parchment/butter paper = <span class="inr">₹50</span> DIY vs <span class="inr">₹800–1,200</span> for commercial wet palettes. Identical performance.
+    </div>
+  </div>
+
+  <!-- 8-STEP PROCESS -->
+  <div class="section-heading">📋 Complete 8-Step Painting Process</div>
+  <div class="card">
+    <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Support Removal</strong> — Flush cutters (<span class="inr">₹200–400</span> at Amazon / local hardware). Cut supports flush, don't rip.</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Sanding</strong> — Wet/dry sandpaper sheets from hardware store: <span class="inr">₹10–30/sheet</span>. Progress: 400 → 800 → 1500 grit for smooth finish.</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Priming</strong> — Spray primer (outdoors) or brush-on Fevicryl Gesso. Primer is non-negotiable — paint won't stick properly without it.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Base Coat</strong> — Camel acrylics for budget, Vallejo for quality. Apply thin coats (2 thin &gt; 1 thick). Let dry completely between coats.</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-text"><strong>Shading / Wash</strong> — Mix dark color very thin (1:10 paint-to-water ratio) and flow into recessed areas. Or buy pre-made washes (Army Painter Quickshade Ink).</div></div>
+    <div class="step-row"><div class="step-num">6</div><div class="step-text"><strong>Drybrushing</strong> — Load brush, wipe almost all paint off on tissue, then lightly brush raised edges. Instantly adds depth and texture.</div></div>
+    <div class="step-row"><div class="step-num">7</div><div class="step-text"><strong>Highlights</strong> — Apply a lighter version of your base color to the highest raised edges and focal points. Creates a "lit from above" look.</div></div>
+    <div class="step-row"><div class="step-num">8</div><div class="step-text"><strong>Sealing</strong> — Matte varnish spray OUTDOORS in dry weather. <span style="color:#e74c3c;font-weight:600;">Never spray varnish in monsoon</span> — it will frost and ruin your model.</div></div>
+  </div>
+
+  <!-- VARNISH -->
+  <div class="section-heading">🔒 Varnish Alternatives Available in India</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Minwax Polycrylic</strong> (water-based): <span class="inr">₹600–800</span> from hardware stores — excellent brush-on satin/matte sealer</li>
+      <li><strong>Rustoleum Matte Clear:</strong> <span class="inr">₹450–600</span> at hardware stores — reliable spray varnish</li>
+      <li><strong>Fevicryl Varnish</strong> (Matte/Gloss): <span class="inr">₹100–150</span> at art stores — adequate for non-critical display models</li>
+    </ul>
+    <div class="tip-box info">
+      Minwax Polycrylic brush-on is the best "all-weather" sealer in India — it works during monsoon season when spray varnishes fail. Apply with a soft flat brush.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-5 -->
+
+<!-- ─────────────────────────────────────────
+     TAB 6 — Complete India Buying Guide
+───────────────────────────────────────── -->
+<div id="tab-panel-6" class="tab-panel">
+
+  <div class="card">
+    <h2 style="color:#e6edf3;font-size:20px;margin-bottom:0.3rem;">Complete India Buying Guide — Everything with ₹ Prices</h2>
+    <p class="text-muted">Your complete shopping reference. Section A: FDM | Section B: Resin | Section C: Painting | Budget Summary</p>
+  </div>
+
+  <!-- SECTION A -->
+  <div class="section-heading" style="font-size:18px;">Section A — FDM Printing Essentials</div>
+
+  <div class="section-heading" style="font-size:13px;color:#2daa6b;">Must Buy First (Before or With Your Printer)</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Item</th><th>Price (₹)</th><th>Where to Buy</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Digital Vernier Calipers (Mitutoyo type)</td><td class="inr">₹300–600</td><td>Flipkart / Amazon</td><td style="color:#e74c3c;font-weight:600;">ESSENTIAL</td></tr>
+        <tr><td>Metal scraper / spatula</td><td class="inr">₹150–300</td><td>Hardware store / Amazon</td><td style="color:#e74c3c;font-weight:600;">ESSENTIAL</td></tr>
+        <tr><td>Flush cutters</td><td class="inr">₹200–500</td><td>Amazon.in</td><td style="color:#e74c3c;font-weight:600;">ESSENTIAL</td></tr>
+        <tr><td>IPA 99% (500ml)</td><td class="inr">₹200–400</td><td>Amazon India / medical supply</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+        <tr><td>UPS (Power backup) — APC/Luminous</td><td class="inr">₹3,000–5,000</td><td>Amazon / local electronics</td><td style="color:#e74c3c;font-weight:600;">INDIA ESSENTIAL</td></tr>
+        <tr><td>Filament Dryer — SUNLU S1</td><td class="inr">₹2,000–2,500</td><td>Amazon.in</td><td style="color:#e74c3c;font-weight:600;">INDIA ESSENTIAL</td></tr>
+        <tr><td>Silica gel desiccant packs (rechargeable, 10-pack)</td><td class="inr">₹300–500</td><td>Amazon India</td><td style="color:#e74c3c;font-weight:600;">INDIA ESSENTIAL</td></tr>
+        <tr><td>Airtight storage bins for filament</td><td class="inr">₹200–400 each</td><td>Amazon / kitchen store</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-box info">
+    <strong>India Hack:</strong> Reuse airtight kitchen "dabbas" (stainless or plastic) for filament storage — same performance as dedicated filament boxes at a fraction of the cost.
+  </div>
+
+  <div class="section-heading" style="font-size:13px;color:#f0a500;">Upgrade Tools (After 1–2 Months of Printing)</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Item</th><th>Price (₹)</th><th>Where to Buy</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Nozzle set (0.4mm brass + hardened steel)</td><td class="inr">₹300–800</td><td>Amazon.in</td></tr>
+        <tr><td>Capricorn PTFE tube (1m)</td><td class="inr">₹400–600</td><td>Amazon.in / Robocraze</td></tr>
+        <tr><td>Kapton tape</td><td class="inr">₹150–250</td><td>Amazon.in</td></tr>
+        <tr><td>Heat gun</td><td class="inr">₹800–1,500</td><td>Local hardware / Amazon</td></tr>
+        <tr><td>Threaded inserts M2/M3 (heat-set, assorted pack)</td><td class="inr">₹300–500</td><td>Amazon.in</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION B -->
+  <div class="section-heading" style="font-size:18px;margin-top:1.5rem;">Section B — Resin Printing Essentials</div>
+
+  <div class="tip-box danger">
+    <strong>BUY SAFETY GEAR BEFORE YOU BUY RESIN.</strong> Nitrile gloves and safety glasses are non-negotiable. Do not handle resin without them.
+  </div>
+
+  <div class="section-heading" style="font-size:13px;color:#e74c3c;">Before Your First Resin Print</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Item</th><th>Price (₹)</th><th>Where to Buy</th><th>Priority</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Nitrile gloves 100-pack</td><td class="inr">₹300–500</td><td>Amazon / medical supply</td><td style="color:#e74c3c;font-weight:600;">BEFORE RESIN</td></tr>
+        <tr><td>Safety glasses</td><td class="inr">₹100–200</td><td>Amazon / hardware store</td><td style="color:#e74c3c;font-weight:600;">BEFORE RESIN</td></tr>
+        <tr><td>Wash &amp; Cure Station (Elegoo Mercury Plus)</td><td class="inr">₹5,000–7,000</td><td>Amazon India</td><td style="color:#e74c3c;font-weight:600;">ESSENTIAL</td></tr>
+        <tr><td>IPA 99% (1 litre)</td><td class="inr">₹400–700</td><td>Amazon India / pharmacy</td><td style="color:#e74c3c;font-weight:600;">ESSENTIAL</td></tr>
+        <tr><td>Silicone spatula</td><td class="inr">₹200–400</td><td>Amazon.in</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+        <tr><td>Plastic scraper</td><td class="inr">₹100–200</td><td>Amazon / kitchen store</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+        <tr><td>UV torch (405nm)</td><td class="inr">₹300–600</td><td>Amazon India</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+        <tr><td>Paper shop towels / kitchen tissue rolls</td><td class="inr">₹100–200</td><td>Supermarket / Amazon</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+        <tr><td>Resin filter funnels (100-pack)</td><td class="inr">₹200–350</td><td>Amazon.in</td><td style="color:#f0a500;font-weight:600;">HIGH</td></tr>
+        <tr><td>Activated carbon air filter (for indoor use)</td><td class="inr">₹1,500–3,000</td><td>Amazon.in</td><td style="color:#8b949e;">IF INDOOR</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Budget DIY Option:</strong> Instead of Mercury Plus, use a container + 1L IPA (<span class="inr">₹200</span>) for washing, and a UV nail lamp (<span class="inr">₹500</span>) for curing. Total: <span class="inr">~₹700</span> vs <span class="inr">₹5,000+</span>.
+  </div>
+
+  <div class="section-heading" style="font-size:13px;color:#f0a500;">Post-Processing Resin</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Item</th><th>Price (₹)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Flush cutters (Tamiya quality)</td><td class="inr">₹400–800</td><td>Better than basic — cleaner cuts on fine resin</td></tr>
+        <tr><td>Dental picks set</td><td class="inr">₹200–400</td><td>Amazon.in — for detail work</td></tr>
+        <tr><td>Soft brushes (old toothbrushes work perfectly)</td><td class="inr">Free – ₹50</td><td>Scrub resin during IPA wash</td></tr>
+        <tr><td>Wet/dry sandpaper assortment (400–2000 grit)</td><td class="inr">₹300 assortment</td><td>Hardware store — ₹10–30 per sheet</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION C -->
+  <div class="section-heading" style="font-size:18px;margin-top:1.5rem;">Section C — Painting Essentials</div>
+
+  <div class="section-heading" style="font-size:13px;color:#2daa6b;">Starter Painting Kit India (~₹2,000–3,000 total)</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Item</th><th>Price (₹)</th><th>Where to Buy</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Paint set — Camel Acrylic 12-color</td><td class="inr">₹300–500</td><td>Art stores, Amazon</td></tr>
+        <tr><td>OR Army Painter 10-pot starter set</td><td class="inr">₹1,500–2,000</td><td>Amazon India</td></tr>
+        <tr><td>Brush set (3 sizes: large, medium, detail)</td><td class="inr">₹200–500</td><td>Art store</td></tr>
+        <tr><td>Spray primer (Rustoleum / Army Painter)</td><td class="inr">₹450–800</td><td>Hardware store / Amazon</td></tr>
+        <tr><td>Wet palette — DIY (container + sponge + parchment)</td><td class="inr">₹50</td><td>Kitchen / stationery</td></tr>
+        <tr><td>Matte varnish (Minwax Polycrylic or Rustoleum)</td><td class="inr">₹500–700</td><td>Hardware store</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-heading" style="font-size:13px;color:#f0a500;">Upgrade Painting Kit (~₹5,000–8,000 additional)</div>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="guide-table" style="margin:0;">
+      <thead>
+        <tr><th>Item</th><th>Price (₹)</th><th>Where to Buy</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Vallejo Model Color set (16 colors)</td><td class="inr">₹3,000–4,000</td><td>Amazon India</td></tr>
+        <tr><td>Citadel Contrast paints (5 pots)</td><td class="inr">₹1,500–2,000</td><td>FLGS / Amazon India</td></tr>
+        <tr><td>Good detail brush (Raphael or Rosemary)</td><td class="inr">₹500–1,500</td><td>Imported — Amazon India</td></tr>
+        <tr><td>Magnifying headband</td><td class="inr">₹300–600</td><td>Amazon India</td></tr>
+        <tr><td>Painting handle / grip</td><td class="inr">₹300–600</td><td>Amazon India</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BUDGET SUMMARY -->
+  <div class="section-heading" style="font-size:18px;margin-top:1.5rem;">💰 Total Starter Budget Summary</div>
+  <div class="card">
+    <div class="product-card" style="margin-bottom:0.6rem;">
+      <div class="product-name">FDM Only</div>
+      <div class="product-desc"><span class="inr">₹15,000–18,000</span> (printer) + <span class="inr">₹5,000</span> (tools/supplies) = <span class="inr" style="font-size:15px;">₹20,000–23,000 total</span></div>
+    </div>
+    <div class="product-card" style="margin-bottom:0.6rem;">
+      <div class="product-name">Resin Only</div>
+      <div class="product-desc"><span class="inr">₹15,000–18,000</span> (printer) + <span class="inr">₹8,000–10,000</span> (safety + station + supplies) = <span class="inr" style="font-size:15px;">₹23,000–28,000 total</span></div>
+    </div>
+    <div class="product-card" style="margin-bottom:0.6rem;">
+      <div class="product-name">FDM + Painting</div>
+      <div class="product-desc"><span class="inr">₹20,000–23,000</span> + <span class="inr">₹3,000</span> (painting) = <span class="inr" style="font-size:15px;">₹23,000–26,000 total</span></div>
+    </div>
+    <div class="product-card">
+      <div class="product-name">Full Setup — FDM + Resin + Painting</div>
+      <div class="product-desc"><span class="inr" style="font-size:16px;">₹50,000–70,000 total</span> — serious hobbyist / small business setup</div>
+    </div>
+    <div class="tip-box info" style="margin-top:0.8rem;">
+      <strong>Start small:</strong> Buy a printer + minimal tools first. Add equipment only when you've confirmed you enjoy the hobby and understand what you actually need. Many people over-buy at the start.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-6 -->
+
+</div><!-- /content-wrap -->
+
+<script>
+function switchTab(n) {
+  var panels = document.querySelectorAll('.tab-panel');
+  var buttons = document.querySelectorAll('.tab-btn');
+  panels.forEach(function(p) { p.classList.remove('active'); });
+  buttons.forEach(function(b) { b.classList.remove('active'); });
+  var panel = document.getElementById('tab-panel-' + n);
+  if (panel) { panel.classList.add('active'); }
+  buttons.forEach(function(b, i) {
+    if (i === n - 1) { b.classList.add('active'); }
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+
+
+
+
+<!-- TAB 7: Selling 3D Prints in India -->
+<div class="tab-panel" id="tab-panel-7">
+  <h2 class="section-heading">Selling 3D Prints in India — Complete Guide</h2>
+
+  <h3 style="color:#ff9933;margin-top:1.5rem;">Where to Sell</h3>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.1rem;">1. Etsy — Best for International Income (USD/EUR)</div>
+    <div class="product-desc" style="margin-top:0.6rem;">
+      Indian sellers <strong>CAN</strong> sell on Etsy. Payments received in INR via Payoneer or bank transfer.
+    </div>
+    <ul style="margin:0.7rem 0 0.5rem 1.2rem;line-height:1.9;">
+      <li><strong>GST:</strong> Required only if Etsy turnover exceeds <span class="inr">₹20 lakh/year</span>. Below that — no GST needed.</li>
+      <li><strong>Currency advantage:</strong> 1 USD = <span class="inr">₹83–84</span>. A ₹500 product sold for $12–15 USD = <span class="inr">₹1,000–1,250</span> effective — massive margin vs local selling.</li>
+      <li><strong>Top Indian categories on Etsy:</strong> personalized nameplates, Hindu/spiritual figurines (original designs), Indian-inspired jewelry, Diwali decor, architectural models.</li>
+      <li><strong>Setup:</strong> Open a free Payoneer account → receive USD → transfer to Indian bank account.</li>
+    </ul>
+    <div class="tip-box tip-success" style="margin-top:0.6rem;">Every dollar earned = <span class="inr">₹83+</span> in your pocket. This is the biggest leverage Indian sellers have.</div>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.1rem;">2. Amazon India (amazon.in)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Sell as Amazon seller — Fulfilled by Merchant or FBA</li>
+      <li><strong>GST registration REQUIRED</strong> for Amazon India sellers</li>
+      <li>Best categories: home decor, office supplies, toys/games, personalized gifts</li>
+      <li>Fees: referral fee 5–15% by category + <span class="inr">₹500–1,000/month</span> for professional plan</li>
+      <li>Advantage: huge Indian customer base, trusted platform</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.1rem;">3. Flipkart</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Similar to Amazon India — GST required</li>
+      <li>Slightly lower fees in some categories</li>
+      <li>Good for regional reach across India</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.1rem;">4. Instagram / Facebook Shops</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>FREE</strong> to set up — no platform fees</li>
+      <li>Best for custom order business: show work, DM for orders</li>
+      <li>WhatsApp Business integration — take orders on WhatsApp, payment via UPI</li>
+      <li>Instagram: post a reel of print in progress → viral potential → orders flood in</li>
+      <li>Facebook: "3D Printing India" group allows marketplace posts</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="font-size:1.1rem;">5. Meesho — Best for Indian Local Buyers ⭐</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>0% commission</strong> model (Meesho earns from delivery)</li>
+      <li>Easy onboarding — no GST required for most categories below <span class="inr">₹20L</span> turnover</li>
+      <li>Best for: affordable functional items, home decor, small unique items</li>
+      <li>Huge reach into Tier 2 and Tier 3 cities</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.1rem;">6. IndiaMart / JustDial — B2B (Businesses as Customers)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>List as a "3D Printing Service" provider</li>
+      <li>Customers: architects, jewelers, dental labs, product designers, manufacturers</li>
+      <li>Rates: <span class="inr">₹500–5,000</span> per project — much higher margins than consumer</li>
+      <li>Best B2B products: architectural scale models, jewelry prototypes, dental models, industrial parts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.1rem;">7. Local Selling Options</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>Exhibitions / Craft Fairs:</strong> local craft fairs, maker faires, college fests</li>
+      <li><strong>Numaish / Trade Fairs:</strong> register as exhibitor, sell directly</li>
+      <li><strong>Local boutiques:</strong> supply personalized items to gift shops</li>
+      <li><strong>Corporate gifting:</strong> customized desk items, company logo prints for Diwali</li>
+      <li><strong>WhatsApp Groups:</strong> local residential society groups, school parent groups — post your products</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Pricing in the Indian Context</h3>
+  <div class="card">
+    <div class="product-name">Material Cost Calculation</div>
+    <div class="shortcut-row"><span>PLA cost per gram</span><kbd>₹1,500 ÷ 1,000g = ₹1.50/g</kbd></div>
+    <div class="shortcut-row"><span>50g print material cost</span><kbd>₹75</kbd></div>
+    <div class="shortcut-row"><span>Electricity per hour</span><kbd>₹5–15/hr (₹7–10 typical)</kbd></div>
+    <div class="shortcut-row"><span>Your time</span><kbd>₹150–500/hr (by skill & location)</kbd></div>
+    <div class="tip-box tip-warning" style="margin-top:0.8rem;">
+      <strong>Pricing Formula (India):</strong><br>
+      Minimum price = (Material + Electricity + Time) × <strong>3 to 4</strong>
+    </div>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">What Sells Well in India</h3>
+  <div class="card">
+    <table style="width:100%;border-collapse:collapse;font-size:0.93rem;">
+      <thead>
+        <tr style="background:#ff993322;">
+          <th style="text-align:left;padding:0.5rem 0.6rem;border-bottom:1px solid #ff993355;">Product</th>
+          <th style="text-align:left;padding:0.5rem 0.6rem;border-bottom:1px solid #ff993355;">Demand</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:0.45rem 0.6rem;">Personalized name signs / nameplates (Hindi + English)</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐⭐</td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.45rem 0.6rem;">Diwali diyas, lamp holders, decorative pieces (Oct–Nov SPIKE)</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐⭐</td></tr>
+        <tr><td style="padding:0.45rem 0.6rem;">Raksha Bandhan accessories with 3D elements (Jul–Aug spike)</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐⭐</td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.45rem 0.6rem;">Ganesh Chaturthi figurines — original designs only</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐⭐</td></tr>
+        <tr><td style="padding:0.45rem 0.6rem;">Desk organizers, pen holders — corporate buyers</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐</td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.45rem 0.6rem;">Phone stands, cable organizers, cable clips</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐</td></tr>
+        <tr><td style="padding:0.45rem 0.6rem;">Wedding favors, mehendi/haldi party accessories</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐</td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.45rem 0.6rem;">Architectural models (real estate / students)</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐</td></tr>
+        <tr><td style="padding:0.45rem 0.6rem;">Pet memorial items (paw print, photo frames)</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐⭐</td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.45rem 0.6rem;">Keychains with custom text/designs</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐⭐</td></tr>
+        <tr><td style="padding:0.45rem 0.6rem;">Custom miniatures (growing D&amp;D/wargaming community)</td><td style="padding:0.45rem 0.6rem;color:#ff9933;">⭐⭐⭐</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Seasonal Calendar (India)</h3>
+  <div class="card">
+    <div class="shortcut-row"><span>January</span><kbd>Pongal/Makar Sankranti decor, Republic Day items</kbd></div>
+    <div class="shortcut-row"><span>February</span><kbd>Valentine's Day gifts (heart designs, name items)</kbd></div>
+    <div class="shortcut-row"><span>March–April</span><kbd>Holi, Ram Navami items</kbd></div>
+    <div class="shortcut-row"><span>July–August</span><kbd>Rakshabandhan — HUGE for personalized items</kbd></div>
+    <div class="shortcut-row" style="background:#ff993322;border-radius:6px;"><span style="color:#ff9933;font-weight:700;">October–November</span><kbd style="background:#ff9933;color:#fff;">DIWALI — BIGGEST SEASON (start 2 months early!)</kbd></div>
+    <div class="shortcut-row"><span>December</span><kbd>Christmas + New Year items</kbd></div>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Product Photography for Indian Platforms</h3>
+  <div class="card">
+    <ul style="margin:0 0 0 1.2rem;line-height:1.9;">
+      <li>Natural morning light (6–9am before harsh sun) works best</li>
+      <li>White background: foam sheet from stationery store <span class="inr">₹20–30</span></li>
+      <li>Include Indian context: diyas next to your lamp print, a hand with mehendi holding your item</li>
+      <li>Hindi text in listing description helps for local platforms</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Shipping in India</h3>
+  <div class="card">
+    <div class="shortcut-row"><span>Delhivery / DTDC / Shiprocket</span><kbd>Compare rates — Shiprocket aggregates cheapest</kbd></div>
+    <div class="shortcut-row"><span>India Post</span><kbd>Cheapest but slowest — good for non-urgent orders</kbd></div>
+    <div class="shortcut-row"><span>Blue Dart</span><kbd>Premium &amp; reliable — slightly expensive</kbd></div>
+    <div class="shortcut-row"><span>Bubble wrap</span><kbd>₹200–400/roll</kbd></div>
+    <div class="shortcut-row"><span>Small boxes (local paper shops)</span><kbd>₹20–50 each</kbd></div>
+    <div class="tip-box tip-warning" style="margin-top:0.8rem;">
+      <strong>COD (Cash on Delivery):</strong> MUST offer on Indian platforms (Meesho, Amazon). Expect 20–30% return rate on COD orders. Encourage prepaid with a small discount to protect margins.
+    </div>
+  </div>
+</div>
+
+<!-- TAB 8: Business Setup in India -->
+<div class="tab-panel" id="tab-panel-8">
+  <h2 class="section-heading">Business Setup in India — GST, Legal, Banking</h2>
+
+  <h3 style="color:#ff9933;margin-top:1.5rem;">Business Registration Options</h3>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">1. Sole Proprietorship — Simplest, Recommended to Start</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>No registration needed to start selling</li>
+      <li>GST registration needed only if turnover exceeds <span class="inr">₹20 lakh/year</span> (<span class="inr">₹10 lakh</span> in some states)</li>
+      <li>Open a current account at any bank with basic KYC</li>
+      <li>Best for: starting out, testing market, annual income under <span class="inr">₹20L</span></li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="font-size:1.05rem;">2. MSME Registration (Udyam Registration) — Do This First!</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>FREE</strong> — done online at <strong>udyamregistration.gov.in</strong></li>
+      <li>Just need Aadhaar + PAN</li>
+      <li>Benefits: bank loans at lower interest, government tenders, CGTMSE guarantee scheme</li>
+      <li>Even if starting small — register as Micro enterprise. No cost, easy, opens many doors.</li>
+    </ul>
+    <div class="tip-box tip-success" style="margin-top:0.6rem;">Register on Udyam portal the same day you buy your printer. It is free and takes 10 minutes.</div>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">3. GST Registration</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Required when turnover crosses <span class="inr">₹20 lakh</span> (<span class="inr">₹10 lakh</span> in special category states)</li>
+      <li><strong>Cost: FREE</strong> — done at gst.gov.in</li>
+      <li>Needed for: Amazon India, Flipkart selling, B2B clients who want a GST invoice</li>
+      <li>GST rate on 3D printed goods: <strong>18%</strong> on most manufactured goods, 12% on some</li>
+      <li>Input Tax Credit: claim GST paid on printer, filament, electricity against GST collected</li>
+      <li>Filing: monthly/quarterly returns — use Cleartax or similar platform</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Payment Collection</h3>
+  <div class="card">
+    <div class="shortcut-row"><span>UPI (PhonePe, GPay, Paytm)</span><kbd>FREE, instant — for local customers</kbd></div>
+    <div class="shortcut-row"><span>Razorpay</span><kbd>2% fee — website/Instagram shop, WhatsApp Pay</kbd></div>
+    <div class="shortcut-row"><span>Instamojo</span><kbd>Good for digital STL file sales, easy onboarding</kbd></div>
+    <div class="shortcut-row"><span>PayPal</span><kbd>International USD clients</kbd></div>
+    <div class="shortcut-row"><span>Payoneer</span><kbd>Etsy + international platform payouts</kbd></div>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Bank Account</h3>
+  <div class="card">
+    <ul style="margin:0 0 0 1.2rem;line-height:1.9;">
+      <li>Current account at any major bank (HDFC, ICICI, SBI) — needed for business transactions</li>
+      <li>Some banks offer free current accounts for MSME-registered businesses</li>
+      <li>Link to Razorpay or Instamojo for online payment acceptance</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Scaling Your India Operation</h3>
+
+  <div class="card" style="border-left:4px solid #4caf50;">
+    <div class="product-name" style="color:#4caf50;">Phase 1 — Testing (<span class="inr">0–₹20,000/month</span>)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>1 printer, sell via Instagram/WhatsApp</li>
+      <li>No GST registration needed yet</li>
+      <li>5–10 hours/week commitment</li>
+      <li>Focus: find what sells in your local market</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="color:#ff9933;">Phase 2 — Growing (<span class="inr">₹20,000–1,00,000/month</span>)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>2–3 printers</li>
+      <li>Sell on Etsy + Meesho + local</li>
+      <li>MSME registration, possibly GST</li>
+      <li>Hire part-time help for packaging/delivery</li>
+      <li>Target: corporate gifting contracts (Diwali orders from companies)</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #2196f3;">
+    <div class="product-name" style="color:#2196f3;">Phase 3 — Business (<span class="inr">₹1,00,000+/month</span>)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>5+ printers (consider Bambu print farm)</li>
+      <li>Full GST registration, proper accounting</li>
+      <li>Staff for operations, packaging, delivery</li>
+      <li>Export via Etsy/Amazon Global = USD income</li>
+      <li>Look at MSME loans for expansion capital</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TAB 9: Advanced Techniques -->
+<div class="tab-panel" id="tab-panel-9">
+  <h2 class="section-heading">Advanced Techniques — India Opportunities</h2>
+
+  <h3 style="color:#ff9933;margin-top:1.5rem;">Unique India-Specific Products to Create</h3>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="font-size:1.05rem;">Jewelry Prototyping — B2B Goldmine</div>
+    <div class="product-desc" style="margin-top:0.5rem;">India is the world's 2nd largest jewelry market — a <strong>₹5 lakh crore industry</strong>.</div>
+    <ul style="margin:0.7rem 0 0 1.2rem;line-height:1.9;">
+      <li>Jewelers in Surat, Jaipur, Mumbai need wax/castable resin prototypes</li>
+      <li>Resin castable prints → send to jeweler for gold/silver casting → pay <span class="inr">₹500–3,000</span> per model</li>
+      <li>How to approach: visit local jewelry market, show samples, offer prototype service</li>
+      <li>Required: Elegoo Saturn 3 + castable resin (Elegoo Castable or Ameralabs: <span class="inr">₹3,000–4,000/500ml</span>)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Architecture Models — B2B Opportunity</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Real estate developers, architecture colleges, interior designers need scale models</li>
+      <li>A building model: 20–30 hrs printing + 5–10 hrs assembly → charge <span class="inr">₹5,000–25,000</span></li>
+      <li>Approach: local architectural firms, real estate offices, college architecture departments</li>
+      <li>Required: large FDM printer (Bambu A1 or Creality K1 Max), white PLA, basic painting</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Dental Models — B2B High-Value</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Dental labs need study models, surgical guides, retainer models</li>
+      <li>Required: biocompatible dental resin + high-resolution resin printer</li>
+      <li>Price per dental model: <span class="inr">₹200–800</span> (vs traditional lab cost of <span class="inr">₹500–2,000</span>)</li>
+      <li>Market size: growing rapidly with dental awareness in India</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="font-size:1.05rem;">Corporate Gifting — Seasonal Goldmine</div>
+    <div class="product-desc" style="margin-top:0.5rem;">Diwali gifting alone is a <strong>₹50,000 crore market</strong> in India.</div>
+    <ul style="margin:0.7rem 0 0 1.2rem;line-height:1.9;">
+      <li>Companies order: logo items, executive desk sets, themed gifts</li>
+      <li>Approach: local HR departments, corporate event companies, Diwali gift companies</li>
+      <li>Minimum order: 50–500 pieces (build print farm capacity first)</li>
+      <li>Profit margins: very high on bulk orders</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Education Sector</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>3D models for science teaching: human anatomy, solar system, molecular models</li>
+      <li>Colleges with biology/chemistry departments are strong customers</li>
+      <li>School science fairs: supply printed educational models</li>
+      <li>Price: <span class="inr">₹500–5,000</span> per model set</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Multi-Color Techniques for Indian Designs</h3>
+  <div class="card">
+    <ul style="margin:0 0 0 1.2rem;line-height:1.9;">
+      <li>Saffron + White + Green flag-colored items for Independence Day, Republic Day</li>
+      <li>Rangoli-inspired geometric patterns: perfect for multi-color FDM (Bambu AMS)</li>
+      <li>Mandala designs: intricate geometric, high visual appeal, strong Etsy seller</li>
+      <li>Regional art-inspired: Warli, Madhubani, Kalamkari geometric interpretations in 3D</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Mold Making for India</h3>
+  <div class="card">
+    <div class="product-desc">Create silicone molds of your designs → cast with plaster, concrete, chocolate, soap.</div>
+    <div class="shortcut-row" style="margin-top:0.7rem;"><span>Plaster casting</span><kbd>₹50/kg plaster → ₹5–10/cast → sell ₹150–500 each</kbd></div>
+    <div class="shortcut-row"><span>Chocolate molds</span><kbd>Sell to sweets shops for Diwali mithai custom shapes</kbd></div>
+    <div class="shortcut-row"><span>Soap molds</span><kbd>Popular in handmade soap market — sell molds to soap makers</kbd></div>
+  </div>
+</div>
+
+<!-- TAB 10: Troubleshooting India-Specific -->
+<div class="tab-panel" id="tab-panel-10">
+  <h2 class="section-heading">Troubleshooting — India-Specific Problems</h2>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Power Cut During Print</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>FDM:</strong> most modern printers (Bambu, Creality V3) have "resume after power loss" — enable in printer settings before long prints</li>
+      <li><strong>UPS backup:</strong> best solution — gives 15–30 min buffer on most models</li>
+      <li><strong>Resin:</strong> power cuts during resin print usually ruin it (partial cure at cut layer) — UPS is essential for resin</li>
+    </ul>
+    <div class="tip-box tip-warning" style="margin-top:0.6rem;">A 600VA UPS (<span class="inr">₹3,000–3,500</span>) is not optional in India. It is mandatory.</div>
+  </div>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="font-size:1.05rem;">Filament Moisture in Monsoon — Most Common India Problem</div>
+    <div class="product-desc" style="margin-top:0.5rem;"><strong>Symptoms:</strong> clicking/popping sounds, foamy prints, excessive stringing, weak layers, dark streaks.</div>
+    <ul style="margin:0.7rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>Fix:</strong> dry filament in SUNLU dryer at 50°C (PLA) or 65°C (PETG/Nylon) for 4–8 hours</li>
+      <li><strong>Prevention:</strong> store in airtight containers with desiccant during monsoon</li>
+      <li><strong>Emergency:</strong> oven at lowest setting (50–60°C) for 4–6 hours — monitor, do not leave unattended</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Heat Affecting Prints — Summer (April–June)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>Problem:</strong> PLA softens at 60°C. In hot rooms (40–45°C), PLA prints can warp over time</li>
+      <li><strong>Fix:</strong> store finished PLA prints away from direct sunlight and hot rooms</li>
+      <li><strong>Solution:</strong> use PETG (80°C heat resistance) for functional parts in hot environments</li>
+      <li><strong>Bed adhesion in summer:</strong> beds heat up faster, cool down slower — wait for proper temperatures</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Voltage Fluctuation Damage</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>Symptom:</strong> printer randomly stops, display glitches, heating issues</li>
+      <li><strong>Fix:</strong> voltage stabilizer (<span class="inr">₹1,500–2,500</span>), UPS</li>
+      <li><strong>Long-term:</strong> if your area has unstable power, invest in stabilizer before buying printer</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Dust and Grit in Prints</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>India (especially North India) has significant dust issues — dust settles on wet resin or FDM prints</li>
+      <li><strong>FDM:</strong> cover print with light cloth if leaving overnight in dusty area</li>
+      <li><strong>Resin:</strong> keep printer in low-dust area, cover tank when not printing</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Counterfeit Products</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Fake filament sold as branded — especially from unauthorized resellers</li>
+      <li>Always buy from official Amazon.in listings or authorized dealers</li>
+      <li>Fake filament: inconsistent diameter, wrong specs, poor adhesion, excessive stringing</li>
+      <li>RFID verify: Bambu filament auto-detected as genuine by Bambu printers</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Customs / Import Delays</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>International orders (AliExpress, Amazon Global): 2–6 week delivery typical</li>
+      <li>Customs hold: happens randomly, can add 1–3 weeks</li>
+      <li><strong>Solution:</strong> buy from Amazon.in warehouse stock whenever possible (ships from India)</li>
+      <li>Track at India Post / DTDC tracking portals</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Spare Parts Availability</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Nozzles, beds, PTFE tubes: well available on Amazon India for popular printers (Ender 3, Bambu)</li>
+      <li>Less popular printers: may need to import from AliExpress (2–4 week wait)</li>
+      <li><strong>Recommendation:</strong> when buying a printer, confirm spare parts are available locally before purchasing</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TAB 11: India Shopping Lists -->
+<div class="tab-panel" id="tab-panel-11">
+  <h2 class="section-heading">India-Specific Shopping Lists — Complete ₹ Guide</h2>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Starter Kit Option 1 — Budget FDM</div>
+    <div class="price-tag price-budget" style="margin:0.5rem 0 0.8rem;">Total: <span class="inr">₹19,380–24,380</span></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">
+      <thead>
+        <tr style="background:#ff993322;">
+          <th style="text-align:left;padding:0.45rem 0.6rem;border-bottom:1px solid #ff993344;">Item</th>
+          <th style="text-align:right;padding:0.45rem 0.6rem;border-bottom:1px solid #ff993344;">Price (INR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:0.4rem 0.6rem;">Creality Ender 3 V3 SE</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹12,000–15,000</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">1kg PLA filament (eSUN)</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹1,200–1,500</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Digital calipers</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹300–500</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">Metal scraper</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹150–200</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Flush cutters</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹200–350</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">IPA 500ml</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹200–300</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">SUNLU filament dryer</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹2,000–2,500</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">UPS 600VA</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹3,000–3,500</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Airtight container + silica gel</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹300–500</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">Glue stick (Fevistik)</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹30</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Starter Kit Option 2 — Serious FDM</div>
+    <div class="price-tag price-mid" style="margin:0.5rem 0 0.8rem;">Total: <span class="inr">₹38,300–45,700</span></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">
+      <thead>
+        <tr style="background:#ff993322;">
+          <th style="text-align:left;padding:0.45rem 0.6rem;border-bottom:1px solid #ff993344;">Item</th>
+          <th style="text-align:right;padding:0.45rem 0.6rem;border-bottom:1px solid #ff993344;">Price (INR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:0.4rem 0.6rem;">Bambu A1 Mini</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹25,000–28,000</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">2kg PLA filament (Bambu/Polymaker)</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹3,500–5,000</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">1kg PETG</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹1,500–2,000</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">Full tools kit (calipers + scraper + cutters + IPA)</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹1,000–1,500</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">SUNLU filament dryer</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹2,000–2,500</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">UPS 1000VA</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹4,500–5,500</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Paint starter (Camel acrylics + brush + primer)</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹800–1,200</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="font-size:1.05rem;">Starter Kit Option 3 — Resin</div>
+    <div class="price-tag price-mid" style="margin:0.5rem 0 0.8rem;">Total: <span class="inr">₹27,450–36,600</span></div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.92rem;">
+      <thead>
+        <tr style="background:#ff993322;">
+          <th style="text-align:left;padding:0.45rem 0.6rem;border-bottom:1px solid #ff993344;">Item</th>
+          <th style="text-align:right;padding:0.45rem 0.6rem;border-bottom:1px solid #ff993344;">Price (INR)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:0.4rem 0.6rem;">Elegoo Mars 4 Ultra</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹14,000–18,000</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">2× Elegoo ABS-Like resin 500ml</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹3,500–5,000</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Elegoo Mercury Plus Wash &amp; Cure</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹5,000–7,000</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">Nitrile gloves 100pk</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹300–500</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Safety glasses</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹100–200</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">IPA 1 litre</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹400–600</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Silicone spatula</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹200–300</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">Flush cutters</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹300–500</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">UV torch</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹300–500</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">Tissue rolls (2 packs)</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹150–200</span></td></tr>
+        <tr><td style="padding:0.4rem 0.6rem;">Resin funnels 100pk</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹200–300</span></td></tr>
+        <tr style="background:#ffffff08;"><td style="padding:0.4rem 0.6rem;">UPS 600VA</td><td style="text-align:right;padding:0.4rem 0.6rem;"><span class="inr">₹3,000–3,500</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">India Online Shopping Guide</h3>
+  <div class="card">
+    <div class="shortcut-row"><span>Amazon India (amazon.in)</span><kbd>Best for all supplies — fast delivery, easy returns</kbd></div>
+    <div class="shortcut-row"><span>Flipkart</span><kbd>Good for printers — compare prices with Amazon</kbd></div>
+    <div class="shortcut-row"><span>Robocraze (robocraze.com)</span><kbd>Specialized store — good filament, technical queries</kbd></div>
+    <div class="shortcut-row"><span>Robokits (robokits.co.in)</span><kbd>Electronics + 3D — Bengaluru-based</kbd></div>
+    <div class="shortcut-row"><span>Fabstore (fabstore.in)</span><kbd>3D printing focused store</kbd></div>
+    <div class="shortcut-row"><span>Local art shops</span><kbd>Camel/Fevicryl paints, brushes, gesso — cheaper than Amazon</kbd></div>
+    <div class="shortcut-row"><span>Local hardware shops</span><kbd>Sandpaper, scraper, basic tools — much cheaper than online</kbd></div>
+    <div class="shortcut-row"><span>Medical supply stores</span><kbd>Nitrile gloves, IPA — often cheaper than Amazon</kbd></div>
+    <div class="shortcut-row"><span>Auto parts stores</span><kbd>Rustoleum primer, basic spray paints</kbd></div>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Community Resources in India</h3>
+  <div class="card">
+    <div class="shortcut-row"><span>Facebook Groups</span><kbd>"3D Printing India" (50,000+ members), "Maker India", city groups</kbd></div>
+    <div class="shortcut-row"><span>Telegram</span><kbd>Search "3D Printing India" for active groups</kbd></div>
+    <div class="shortcut-row"><span>Reddit</span><kbd>r/3Dprinting (global, Indians very active), r/india</kbd></div>
+    <div class="shortcut-row"><span>YouTube</span><kbd>"Maker's Muse" + growing Indian creators in Hindi/English</kbd></div>
+    <div class="shortcut-row"><span>Maker Spaces</span><kbd>Workbench Projects Bengaluru, Maker's Asylum Mumbai/Delhi, Anthill Bengaluru</kbd></div>
+    <div class="shortcut-row"><span>College Labs</span><kbd>BITS FabLab, IIT FabLabs — some have open access programs</kbd></div>
+  </div>
+</div>
+
+<!-- TAB 12: Your India 3D Printing Roadmap -->
+<div class="tab-panel" id="tab-panel-12">
+  <h2 class="section-heading">Your India 3D Printing Roadmap</h2>
+
+  <h3 style="color:#ff9933;margin-top:1.5rem;">5 Career Paths for Indians</h3>
+
+  <div class="card" style="border-left:4px solid #4caf50;">
+    <div class="product-name" style="font-size:1.05rem;color:#4caf50;">Path 1 — Campus Entrepreneur (Students)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Target: sell to fellow students, college fests, campus events</li>
+      <li>Start: <span class="inr">₹15,000</span> (borrow from family or education loan)</li>
+      <li>Products: phone stands, nameplates, mini trophies, fun gadgets, college-themed items</li>
+      <li>Sales: college WhatsApp groups, Instagram, college marketplace/store</li>
+      <li>Month 1 goal: recover printer cost</li>
+      <li>Month 3 goal: <span class="inr">₹5,000–10,000/month</span> profit</li>
+      <li>Tip: approach college fest organizers for bulk trophy/stand orders</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #ff9933;">
+    <div class="product-name" style="font-size:1.05rem;color:#ff9933;">Path 2 — Festival Seller (Seasonal Business)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Peak seasons: Diwali, Rakshabandhan, Valentine's Day, Christmas</li>
+      <li>Products: seasonal decor, personalized gifts, festival-specific items</li>
+      <li>Start 2 months before each festival: ramp up production, stock inventory</li>
+      <li>Off-season: custom orders only — use time to create new designs and perfect skills</li>
+      <li>Annual income potential: <span class="inr">₹50,000–3,00,000</span> depending on scale</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #2196f3;">
+    <div class="product-name" style="font-size:1.05rem;color:#2196f3;">Path 3 — B2B Service Provider (Professional)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Target customers: jewelers, architects, dental labs, product designers, manufacturers</li>
+      <li>Location advantage: Mumbai/Surat for jewelry, Pune/Chennai/Bengaluru for manufacturing</li>
+      <li>Investment: <span class="inr">₹60,000–1,50,000</span> for professional printer setup</li>
+      <li>Income per project: <span class="inr">₹500–25,000</span></li>
+      <li>Monthly potential after 6 months: <span class="inr">₹50,000–2,00,000</span></li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #9c27b0;">
+    <div class="product-name" style="font-size:1.05rem;color:#9c27b0;">Path 4 — International Seller (Etsy + Digital)</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Products: STL files + physical shipped items</li>
+      <li>USD income = massive INR advantage (<span class="inr">₹83+</span>/dollar)</li>
+      <li>Platform: Etsy (physical), Gumroad/Printables (digital STL)</li>
+      <li>Investment: same as any path + free Payoneer account</li>
+      <li>Best designs: Indian-inspired unique globally, miniatures, personalized items</li>
+      <li>Monthly potential: <span class="inr">₹30,000–3,00,000+</span> (scales with designs and reviews)</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid #e91e63;">
+    <div class="product-name" style="font-size:1.05rem;color:#e91e63;">Path 5 — Maker / Educator</div>
+    <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.9;">
+      <li>Teach 3D printing workshops at schools, colleges, maker spaces</li>
+      <li>YouTube content in Hindi/regional languages (huge underserved audience)</li>
+      <li>Conduct workshops: <span class="inr">₹500–2,000</span> per student per day session</li>
+      <li>Online courses: Udemy Hindi 3D printing courses earn passively</li>
+      <li>Combination: workshops + YouTube + Etsy = multiple income streams</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:2rem;">12-Month India Roadmap</h3>
+
+  <div class="card">
+    <div class="product-name" style="color:#4caf50;">Month 1–2 — Foundation</div>
+    <div style="margin-top:0.6rem;line-height:2;">
+      <div>&#9989; Buy printer + essential tools (within budget)</div>
+      <div>&#9989; Print 10+ models from Printables — learn your slicer</div>
+      <div>&#9989; Join "3D Printing India" Facebook group — ask questions freely</div>
+      <div>&#9989; Run calibration tests, dial in your settings</div>
+      <div>&#9989; Register MSME on Udyam portal (FREE — do it now)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="color:#ff9933;">Month 3–4 — First Sales</div>
+    <div style="margin-top:0.6rem;line-height:2;">
+      <div>&#9989; Create Instagram page for your 3D printing work</div>
+      <div>&#9989; List 3–5 products on Meesho (easiest Indian platform)</div>
+      <div>&#9989; Post in local WhatsApp groups</div>
+      <div>&#9989; Sell first 5 items (at any price — reviews/feedback matter more now)</div>
+      <div>&#9989; Start learning Tinkercad — design your first original product</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="color:#2196f3;">Month 5–6 — Growing</div>
+    <div style="margin-top:0.6rem;line-height:2;">
+      <div>&#9989; Open Etsy account + Payoneer account</div>
+      <div>&#9989; List 3 products on Etsy targeting international buyers</div>
+      <div>&#9989; Attend one local craft fair / exhibition</div>
+      <div>&#9989; Approach 2–3 local businesses with samples</div>
+      <div>&#9989; Learn basic Blender or Fusion 360</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="color:#9c27b0;">Month 7–9 — Scaling</div>
+    <div style="margin-top:0.6rem;line-height:2;">
+      <div>&#9989; Etsy getting first reviews — optimize listings</div>
+      <div>&#9989; Corporate gifting pitch before Diwali season (approach in August)</div>
+      <div>&#9989; Consider GST registration if approaching <span class="inr">₹20L</span> turnover</div>
+      <div>&#9989; Reinvest profits into second printer or better equipment</div>
+      <div>&#9989; Create first original design that ONLY you sell</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="product-name" style="color:#e91e63;">Month 10–12 — Establishing</div>
+    <div style="margin-top:0.6rem;line-height:2;">
+      <div>&#9989; Have 20+ Etsy listings</div>
+      <div>&#9989; Regular monthly income from 3+ platforms</div>
+      <div>&#9989; Build a portfolio/lookbook for B2B clients</div>
+      <div>&#9989; Teach a basic workshop locally</div>
+      <div>&#9989; Set income and expansion goals for Year 2</div>
+    </div>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">India 3D Printing Inspiration — Real Examples</h3>
+  <div class="card">
+    <ul style="margin:0 0 0 1.2rem;line-height:2;">
+      <li>Several Indian sellers earn <span class="inr">₹50,000–2,00,000/month</span> on Etsy selling personalized items</li>
+      <li>Bengaluru-based print service providers charge <span class="inr">₹500–5,000/print</span> for B2B clients</li>
+      <li>Student entrepreneurs at IIT/BITS running campus printing services profitably</li>
+      <li>Jewelers in Surat using 3D printed prototypes have cut prototype costs by 70%</li>
+      <li>Dental labs in metros adopting resin printing to compete with expensive imports</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#ff9933;margin-top:1.8rem;">Final Tips for the Indian Market</h3>
+  <div class="card">
+    <div class="tip-box tip-success" style="margin-bottom:0.7rem;">
+      <strong>Personal relationship matters:</strong> Indian customers trust people, not just brands. Show your face, tell your story.
+    </div>
+    <div class="tip-box tip-success" style="margin-bottom:0.7rem;">
+      <strong>WhatsApp is everything:</strong> most business in India runs on WhatsApp. WhatsApp Business is free and essential.
+    </div>
+    <div class="tip-box tip-warning" style="margin-bottom:0.7rem;">
+      <strong>COD management:</strong> offer COD but build prepaid incentives. High COD returns are the #1 margin killer.
+    </div>
+    <div class="tip-box tip-warning" style="margin-bottom:0.7rem;">
+      <strong>Festival inventory:</strong> prepare 2 months in advance for Diwali/Rakshabandhan. Print stock — do not print-to-order during peak.
+    </div>
+    <div class="tip-box tip-success" style="margin-bottom:0.7rem;">
+      <strong>Pricing psychology:</strong> <span class="inr">₹499</span> sells much better than <span class="inr">₹500</span>. Use Indian pricing conventions.
+    </div>
+    <div class="tip-box tip-success" style="margin-bottom:0.7rem;">
+      <strong>Local advantage:</strong> big Etsy/Amazon sellers cannot do hyperlocal. You can deliver same-day in your city — use it.
+    </div>
+    <div class="tip-box tip-success">
+      <strong>Language:</strong> Hindi/regional language product descriptions dramatically improve conversion on local platforms.
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:2.5rem 1rem 1rem;opacity:0.6;font-size:0.9rem;">
+    The Complete 3D Printing Guide for Indians &mdash; Tabs 7–12 &mdash; Part B
+  </div>
+</div><!-- /content-wrap --></body></html>
