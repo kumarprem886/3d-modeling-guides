@@ -1,0 +1,1890 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bambu Studio — Ultimate Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 12px;
+  }
+  .nav-left a {
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color .2s;
+  }
+  .nav-left a:hover { color: #00c800; }
+  .nav-center {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e6edf3;
+    text-align: center;
+    flex: 1;
+  }
+  .nav-center span { color: #00c800; }
+  .nav-right {
+    font-size: 12px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  /* PROGRESS PILLS */
+  .progress-pills {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .4px;
+  }
+  .pill-beginner     { background: #00c80022; color: #00c800; border: 1px solid #00c800; }
+  .pill-intermediate { background: #f0a50022; color: #f0a500; border: 1px solid #f0a500; }
+  .pill-advanced     { background: #e8730022; color: #e87300; border: 1px solid #e87300; }
+  .pill-expert       { background: #e74c3c22; color: #e74c3c; border: 1px solid #e74c3c; }
+
+  /* TAB BUTTONS */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px 20px 0;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 8px 14px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background .15s, color .15s, border-color .15s;
+    border-bottom: none;
+    position: relative;
+    bottom: -1px;
+  }
+  .tab-btn:hover { color: #e6edf3; border-color: #00c800; }
+  .tab-btn.active {
+    background: #00c800;
+    color: #000;
+    border-color: #00c800;
+    font-weight: 700;
+  }
+
+  /* CONTENT AREA */
+  .content-area {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card h3 {
+    color: #e6edf3;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: .6rem;
+  }
+
+  /* SECTION HEADINGS */
+  .section-heading {
+    color: #00c800;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 1.2rem 0 .5rem;
+  }
+
+  /* TAB TITLE */
+  .tab-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e6edf3;
+    margin-bottom: 6px;
+  }
+  .tab-subtitle {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 1.4rem;
+  }
+
+  /* TIP BOXES */
+  .tip-box {
+    border-left: 4px solid #2daa6b;
+    background: #0d4429;
+    padding: .7rem 1rem;
+    margin: .6rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+  }
+  .tip-box strong { color: #2daa6b; }
+  .tip-box.warning { border-color: #f0a500; background: #3d2c00; }
+  .tip-box.warning strong { color: #f0a500; }
+  .tip-box.danger { border-color: #e74c3c; background: #3d0000; }
+  .tip-box.danger strong { color: #e74c3c; }
+  .tip-box.info { border-color: #00c800; background: #001d00; }
+  .tip-box.info strong { color: #00c800; }
+
+  /* KBD */
+  kbd {
+    background: #21262d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: #e6edf3;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* SHORTCUT ROWS */
+  .shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #21262d;
+    padding: 6px 0;
+    align-items: center;
+    gap: 8px;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #c9d1d9; font-size: 13px; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; }
+
+  /* TABLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: .6rem 0;
+  }
+  .data-table th {
+    background: #21262d;
+    color: #00c800;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid #30363d;
+  }
+  .data-table td {
+    padding: 7px 10px;
+    border: 1px solid #21262d;
+    color: #c9d1d9;
+    vertical-align: top;
+  }
+  .data-table tr:nth-child(even) td { background: #0d1117; }
+
+  /* ORDERED / UNORDERED LISTS */
+  .guide-list {
+    padding-left: 1.4rem;
+    margin: .4rem 0;
+  }
+  .guide-list li { margin-bottom: .35rem; color: #c9d1d9; font-size: 13px; }
+  .guide-list li strong { color: #e6edf3; }
+
+  /* TWO-COL GRID */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* THREE-COL GRID */
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 900px) { .three-col { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .three-col { grid-template-columns: 1fr; } }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+  .badge-green  { background: #00c80022; color: #00c800; border: 1px solid #00c80066; }
+  .badge-yellow { background: #f0a50022; color: #f0a500; border: 1px solid #f0a50066; }
+  .badge-orange { background: #e8730022; color: #e87300; border: 1px solid #e8730066; }
+  .badge-red    { background: #e74c3c22; color: #e74c3c; border: 1px solid #e74c3c66; }
+  .badge-blue   { background: #388bfd22; color: #388bfd; border: 1px solid #388bfd66; }
+
+  /* STEP NUMBER */
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #00c800;
+    color: #000;
+    font-weight: 700;
+    font-size: 12px;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: .6rem;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { color: #e6edf3; }
+
+  /* CODE INLINE */
+  code {
+    background: #21262d;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    color: #79c0ff;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 1.2rem 0;
+  }
+
+  /* PRINTER CARD */
+  .printer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: .8rem 0;
+  }
+  .printer-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+  .printer-card h4 {
+    color: #00c800;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+  .printer-card .spec-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 3px 0;
+    border-bottom: 1px solid #21262d;
+    color: #8b949e;
+  }
+  .printer-card .spec-row:last-child { border-bottom: none; }
+  .printer-card .spec-val { color: #c9d1d9; }
+
+  /* FLUSH TABLE CELLS */
+  .flush-dark  { color: #e74c3c; font-weight: 600; }
+  .flush-light { color: #00c800; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="top-nav">
+  <div class="nav-left"><a href="index.html">← Back to Hub</a></div>
+  <div class="nav-center">🐼 Bambu Studio — <span>Ultimate Guide</span></div>
+  <div class="nav-right">Beginner to Expert</div>
+</nav>
+
+<!-- PROGRESS PILLS -->
+<div class="progress-pills">
+  <span class="pill pill-beginner">● Beginner</span>
+  <span class="pill pill-intermediate">● Intermediate</span>
+  <span class="pill pill-advanced">● Advanced</span>
+  <span class="pill pill-expert">● Expert</span>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active"  onclick="switchTab(1)">1 · Studio &amp; Printers</button>
+  <button class="tab-btn"         onclick="switchTab(2)">2 · AMS System</button>
+  <button class="tab-btn"         onclick="switchTab(3)">3 · Quality &amp; Strength</button>
+  <button class="tab-btn"         onclick="switchTab(4)">4 · Supports &amp; Adhesion</button>
+  <button class="tab-btn"         onclick="switchTab(5)">5 · Bambu Features</button>
+  <button class="tab-btn"         onclick="switchTab(6)">6 · Interface &amp; Shortcuts</button>
+  <button class="tab-btn"         onclick="switchTab(7)">7 · Materials</button>
+  <button class="tab-btn"         onclick="switchTab(8)">8 · Calibration</button>
+  <button class="tab-btn"         onclick="switchTab(9)">9 · Troubleshooting</button>
+  <button class="tab-btn"         onclick="switchTab(10)">10 · Advanced Slicing</button>
+  <button class="tab-btn"         onclick="switchTab(11)">11 · Workflow Tips</button>
+  <button class="tab-btn"         onclick="switchTab(12)">12 · Quick Reference</button>
+</div>
+
+<!-- CONTENT AREA -->
+<div class="content-area">
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 1 -->
+<div class="tab-panel active" id="tab1">
+  <div class="tab-title">Understanding Bambu Studio &amp; Bambu Lab Printers</div>
+  <div class="tab-subtitle">What the ecosystem is, which printer is which, and how to get started fast</div>
+
+  <div class="section-heading">What is Bambu Studio?</div>
+  <div class="card">
+    <p style="color:#c9d1d9;font-size:13px;margin-bottom:.7rem;">
+      Bambu Studio is the <strong>official slicer</strong> for all Bambu Lab printers. It is based on the
+      PrusaSlicer / OrcaSlicer open-source codebase but heavily customized and optimized for the Bambu
+      ecosystem — cloud integration, AMS management, AI features, and one-click send-to-printer workflows.
+    </p>
+    <div class="two-col">
+      <div>
+        <div class="tip-box info"><strong>Bambu Studio:</strong> Official, tight Bambu integration, cloud slicing, simpler UI. Best if you only own Bambu printers.</div>
+      </div>
+      <div>
+        <div class="tip-box"><strong>OrcaSlicer:</strong> Community fork with more calibration tools, supports all brands, more advanced settings. Great for power users.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Bambu Lab Printer Lineup</div>
+  <div class="printer-grid">
+    <div class="printer-card">
+      <h4>A1 Mini <span class="badge badge-green">Entry</span></h4>
+      <div class="spec-row"><span>Build Volume</span><span class="spec-val">180 × 180 × 180 mm</span></div>
+      <div class="spec-row"><span>Motion System</span><span class="spec-val">Bed Slinger</span></div>
+      <div class="spec-row"><span>Enclosure</span><span class="spec-val">Open</span></div>
+      <div class="spec-row"><span>AMS</span><span class="spec-val">AMS Lite (4 colors)</span></div>
+      <div class="spec-row"><span>Leveling</span><span class="spec-val">Vibration auto-level</span></div>
+    </div>
+    <div class="printer-card">
+      <h4>A1 <span class="badge badge-green">Budget Full-Size</span></h4>
+      <div class="spec-row"><span>Build Volume</span><span class="spec-val">256 × 256 × 256 mm</span></div>
+      <div class="spec-row"><span>Motion System</span><span class="spec-val">Bed Slinger</span></div>
+      <div class="spec-row"><span>Enclosure</span><span class="spec-val">Open</span></div>
+      <div class="spec-row"><span>AMS</span><span class="spec-val">AMS Lite (4 colors)</span></div>
+      <div class="spec-row"><span>Leveling</span><span class="spec-val">Vibration auto-level</span></div>
+    </div>
+    <div class="printer-card">
+      <h4>P1P <span class="badge badge-yellow">Mid-Range</span></h4>
+      <div class="spec-row"><span>Build Volume</span><span class="spec-val">256 × 256 × 256 mm</span></div>
+      <div class="spec-row"><span>Motion System</span><span class="spec-val">CoreXY</span></div>
+      <div class="spec-row"><span>Enclosure</span><span class="spec-val">Open Frame</span></div>
+      <div class="spec-row"><span>AMS</span><span class="spec-val">AMS support (16 colors)</span></div>
+      <div class="spec-row"><span>Leveling</span><span class="spec-val">Vibration auto-level</span></div>
+    </div>
+    <div class="printer-card">
+      <h4>P1S <span class="badge badge-yellow">Mid Enclosed</span></h4>
+      <div class="spec-row"><span>Build Volume</span><span class="spec-val">256 × 256 × 256 mm</span></div>
+      <div class="spec-row"><span>Motion System</span><span class="spec-val">CoreXY</span></div>
+      <div class="spec-row"><span>Enclosure</span><span class="spec-val">Fully Enclosed</span></div>
+      <div class="spec-row"><span>AMS</span><span class="spec-val">AMS support (16 colors)</span></div>
+      <div class="spec-row"><span>Special</span><span class="spec-val">Quiet mode, engineering filaments</span></div>
+    </div>
+    <div class="printer-card">
+      <h4>X1C <span class="badge badge-orange">Flagship</span></h4>
+      <div class="spec-row"><span>Build Volume</span><span class="spec-val">256 × 256 × 256 mm</span></div>
+      <div class="spec-row"><span>Motion System</span><span class="spec-val">CoreXY</span></div>
+      <div class="spec-row"><span>Enclosure</span><span class="spec-val">Fully Enclosed</span></div>
+      <div class="spec-row"><span>AMS</span><span class="spec-val">AMS support (16 colors)</span></div>
+      <div class="spec-row"><span>Special</span><span class="spec-val">Lidar bed leveling, AI camera</span></div>
+    </div>
+    <div class="printer-card">
+      <h4>X1E <span class="badge badge-red">Pro / Dry Box</span></h4>
+      <div class="spec-row"><span>Build Volume</span><span class="spec-val">256 × 256 × 256 mm</span></div>
+      <div class="spec-row"><span>Motion System</span><span class="spec-val">CoreXY</span></div>
+      <div class="spec-row"><span>Enclosure</span><span class="spec-val">Fully Enclosed</span></div>
+      <div class="spec-row"><span>AMS</span><span class="spec-val">External dry-box filament system</span></div>
+      <div class="spec-row"><span>Special</span><span class="spec-val">0.2 mm nozzle option, X1C features +</span></div>
+    </div>
+  </div>
+
+  <div class="section-heading">What Makes Bambu Special</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Auto Bed Leveling:</strong> Lidar scan on X1C, vibration compensation on P1/A1 series — fully automatic before every print</li>
+      <li><strong>First Layer AI Inspection:</strong> X1C camera watches the first layer and alerts on adhesion failures</li>
+      <li><strong>Auto Flow Calibration:</strong> Printer measures and adjusts flow rate for each filament automatically</li>
+      <li><strong>AMS Multi-Material:</strong> Up to 16 colors/materials without manual swaps</li>
+      <li><strong>Extreme Speed:</strong> 500 mm/s travel, 20,000 mm/s² acceleration — prints that took 5 hrs elsewhere take 1-2 hrs</li>
+      <li><strong>Cloud Slicing:</strong> Slice on Bambu's cloud servers, access anywhere, no local CPU needed</li>
+      <li><strong>Makerworld Integration:</strong> Bambu's model library built directly into the Studio sidebar</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">Bambu Studio Interface Areas</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Area</th><th>What It Does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Top Toolbar</strong></td><td>Transform tools (Move/Scale/Rotate), Color Paint, Support Paint, Slice button, Send button</td></tr>
+        <tr><td><strong>Project Panel (Left)</strong></td><td>Plate manager, imported model list, visibility controls</td></tr>
+        <tr><td><strong>3D Canvas (Center)</strong></td><td>Visual model placement, rotation, multi-object layout</td></tr>
+        <tr><td><strong>Property Panel (Right)</strong></td><td>Objects, Filament, Process, Printer settings tabs</td></tr>
+        <tr><td><strong>Bottom Status</strong></td><td>Printer connection, slice progress, estimated time/weight</td></tr>
+        <tr><td><strong>Preview Mode</strong></td><td>Layer-by-layer visualization after slicing (layer slider on right)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-heading">Mobile App — Bambu Handy</div>
+  <div class="card">
+    <p style="color:#c9d1d9;font-size:13px;margin-bottom:.6rem;">Available for iOS and Android. Connects via Bambu Cloud account.</p>
+    <ul class="guide-list">
+      <li>Real-time camera feed from printer</li>
+      <li>Start / pause / stop prints remotely</li>
+      <li>Layer progress bar and time remaining</li>
+      <li>Temperature monitoring (nozzle + bed + chamber)</li>
+      <li>Filament remaining display (via AMS RFID)</li>
+      <li>Push notifications: print done, filament runout, error states</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">5 Things To Do First (New Bambu Owner)</div>
+  <div class="card">
+    <div class="step-row"><span class="step-num">1</span><div class="step-content"><strong>Update firmware</strong> — Settings → Firmware Update. Do printer, then AMS, then toolhead in sequence.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content"><strong>Calibrate first layer</strong> — Run the built-in first layer calibration, adjust Live Z until lines squish perfectly with no gaps or over-squish.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content"><strong>Run filament calibration</strong> — Use Bambu-branded filament first, let the printer auto-calibrate flow and PA values.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content"><strong>Explore Makerworld</strong> — Browse models in the Bambu Studio sidebar. Print a sample that showcases AMS or speed.</div></div>
+    <div class="step-row"><span class="step-num">5</span><div class="step-content"><strong>Try AMS with 2 colors</strong> — Load two filaments in AMS slots 1 and 2, find a simple two-color model, and run your first multi-color print.</div></div>
+  </div>
+
+  <div class="tip-box info"><strong>Key FDM concepts apply here too:</strong> layers, infill, walls, supports, and bed adhesion work the same as any FDM slicer — Bambu just automates many of the calibration steps that used to be manual.</div>
+</div>
+<!-- END TAB 1 -->
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 2 -->
+<div class="tab-panel" id="tab2">
+  <div class="tab-title">AMS — Automatic Material System (Complete Guide)</div>
+  <div class="tab-subtitle">Everything you need to know about multi-color and multi-material printing with Bambu's AMS</div>
+
+  <div class="section-heading">AMS System Overview</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p style="color:#c9d1d9;font-size:13px;margin-bottom:.6rem;">The AMS (Automatic Material System) holds 4 spools and handles automatic loading, unloading, and switching between filaments during a print. No manual swaps needed.</p>
+        <ul class="guide-list">
+          <li><strong>AMS (Standard):</strong> Works with X1C, P1S, P1P — connects via PTFE tube to toolhead, sits on top of/beside printer</li>
+          <li><strong>AMS Lite:</strong> A1/A1 Mini variant — external, 4-spool, simplified mechanism</li>
+          <li><strong>AMS Hub:</strong> Connects up to 4 AMS units = <strong>16 filaments</strong> total simultaneously</li>
+        </ul>
+      </div>
+      <div>
+        <div class="tip-box info"><strong>RFID Tags:</strong> Bambu-branded filaments have RFID chips — brand, color, material type, and remaining length auto-detected. Third-party spools = enter manually or use generic profiles.</div>
+        <div class="tip-box warning" style="margin-top:.5rem;"><strong>Humidity:</strong> AMS has a built-in humidity sensor. If reading is above 45% RH, add desiccant or run the AMS dehumidify mode to protect filament quality.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Multi-Color Workflow (Step by Step)</div>
+  <div class="card">
+    <div class="step-row"><span class="step-num">1</span><div class="step-content"><strong>Import your model</strong> — Use a multi-body STL, 3MF with pre-assigned colors, or a single-color model you'll paint manually.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content"><strong>Assign filament slots</strong> — In the right panel (Filament tab), drag filament slots to each object/part, or use the dropdown to assign which AMS slot prints which part.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content"><strong>Review the Wipe Tower</strong> — Auto-generated to purge filament between color changes. Reposition it on the plate, adjust size if needed. Larger = cleaner transitions but more waste.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content"><strong>Set Flush Volumes</strong> — Controls how much filament purges per color switch. Critical for clean color changes (see table below).</div></div>
+    <div class="step-row"><span class="step-num">5</span><div class="step-content"><strong>Optional: Flush into Infill</strong> — Enable this to purge waste filament into the model's infill rather than the wipe tower. Saves material but adds print time.</div></div>
+    <div class="step-row"><span class="step-num">6</span><div class="step-content"><strong>Slice and Send</strong> — Slice normally, preview color changes in layer view, then send to printer.</div></div>
+
+    <hr class="divider">
+    <div class="section-heading" style="margin-top:.3rem;">Flush Volume Reference</div>
+    <table class="data-table">
+      <thead><tr><th>Transition Type</th><th>Flush Volume</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="flush-dark">Dark → Light</td><td><strong>200–500 mm³</strong></td><td>Dark pigment stains strongly — needs aggressive purging</td></tr>
+        <tr><td>Dark → Dark</td><td><strong>100–200 mm³</strong></td><td>Moderate — different dark colors still bleed</td></tr>
+        <tr><td>Light → Light</td><td><strong>50–100 mm³</strong></td><td>Minimal — light colors mix less visibly</td></tr>
+        <tr><td class="flush-light">Light → Dark</td><td><strong>50–100 mm³</strong></td><td>Dark covers light — least purging needed</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box warning"><strong>Pro tip:</strong> Order your color changes so you go light → dark where possible to minimize wipe tower waste. Bambu Studio can auto-optimize color order.</div>
+  </div>
+
+  <div class="section-heading">Color Painting Workflow</div>
+  <div class="card">
+    <p style="color:#c9d1d9;font-size:13px;margin-bottom:.8rem;">Paint colors directly onto any single-color model in Bambu Studio without needing a pre-split or multi-body file.</p>
+    <div class="step-row"><span class="step-num">1</span><div class="step-content">Import a single-color model.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content">Click the <strong>Color Painting</strong> button in the top toolbar (paintbrush icon).</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content">Select which <strong>filament slot</strong> to paint with (shown in color circles at top).</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content">Choose your painting mode and apply:</div></div>
+
+    <table class="data-table" style="margin-top:.4rem;">
+      <thead><tr><th>Mode</th><th>How It Works</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Brush</strong></td><td>Click and drag to paint faces</td><td>General freehand painting</td></tr>
+        <tr><td><strong>Smooth</strong></td><td>Flood-fills connected faces within an angle threshold</td><td>Painting flat/curved surfaces quickly</td></tr>
+        <tr><td><strong>Smart Fill</strong></td><td>Auto-fills an enclosed region</td><td>Logos, recessed text, cavity fills</td></tr>
+        <tr><td><strong>Triangle</strong></td><td>Paint individual mesh triangles</td><td>Ultra-precise boundary control</td></tr>
+      </tbody>
+    </table>
+    <div class="step-row" style="margin-top:.8rem;"><span class="step-num">5</span><div class="step-content">Each painted region is assigned to a filament slot → preview in 3D view to confirm colors look correct before slicing.</div></div>
+    <div class="tip-box info"><strong>Tip:</strong> Use Smart Fill on recessed text or logos — it detects the enclosed cavity and fills it in one click. Pair with a contrasting color for sharp results.</div>
+  </div>
+
+  <div class="section-heading">AMS Loading &amp; Calibration</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Loading Filament</p>
+        <ol class="guide-list">
+          <li>Open AMS cover, place spool in slot</li>
+          <li>Feed filament end into the AMS inlet until it catches</li>
+          <li>On printer screen: <strong>Settings → AMS → Load</strong></li>
+          <li>Tap the slot, then tap Load — printer feeds filament to toolhead</li>
+          <li>Wait for confirmation on screen</li>
+        </ol>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Unloading Filament</p>
+        <ol class="guide-list">
+          <li>On printer screen: tap the AMS slot you want to unload</li>
+          <li>Tap <strong>Unload</strong></li>
+          <li>Wait for retraction — filament pulls back into AMS</li>
+          <li>Remove spool when retraction is complete</li>
+        </ol>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Filament Cutting (X1C / P1 Series)</p>
+        <ul class="guide-list">
+          <li>X1C and P1 series have a <strong>built-in cutter</strong> at the toolhead</li>
+          <li>Cuts filament clean during swaps — no ooze, no drag-out artifacts</li>
+          <li>A1 / AMS Lite uses retraction + tip-forming instead of cutting</li>
+          <li>Cutter blade can wear — inspect periodically, replaceable</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">AMS Hub (Multi-AMS Setup)</p>
+        <ul class="guide-list">
+          <li>Daisy-chain up to 4 AMS units via hub connector</li>
+          <li>Each AMS adds 4 slots = 16 total filaments</li>
+          <li>Update firmware on every AMS unit individually</li>
+          <li>Assign slots 1–16 in Bambu Studio filament panel</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">AMS Troubleshooting</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Filament jam in AMS</strong></td><td>Bent filament tip, kinked PTFE tube, debris</td><td>Check buffer region, straighten filament path, inspect and replace PTFE tubes if kinked</td></tr>
+        <tr><td><strong>Color bleeding / not clean</strong></td><td>Flush volume too low</td><td>Increase flush volume for that color pair — especially dark-to-light transitions</td></tr>
+        <tr><td><strong>AMS won't load</strong></td><td>Bad filament tip (curled/blobbed)</td><td>Cut a clean 45° or straight tip, re-try load. Check sensor gate isn't blocked.</td></tr>
+        <tr><td><strong>RFID not detected</strong></td><td>Dirty contacts, wrong slot position</td><td>Clean RFID contacts with isopropyl alcohol, try a different slot, use manual filament entry as fallback</td></tr>
+        <tr><td><strong>Wrong filament used</strong></td><td>Slot assignment mismatch in Studio</td><td>Check right panel filament tab — confirm slot numbers match physical AMS positions</td></tr>
+        <tr><td><strong>High humidity warning</strong></td><td>Moisture in AMS bay</td><td>Add fresh desiccant packets, run dehumidify mode, store filament in sealed bags when not in use</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- END TAB 2 -->
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 3 -->
+<div class="tab-panel" id="tab3">
+  <div class="tab-title">Print Settings — Quality &amp; Strength</div>
+  <div class="tab-subtitle">Layer heights, walls, infill, and top/bottom settings for every use case</div>
+
+  <div class="section-heading">Layer Height</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Layer Height</th><th>Quality</th><th>Speed</th><th>Best Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>0.05 mm</strong></td><td>Ultra Fine</td><td>Very Slow</td><td>Jewelry, miniatures, ultra-detail display pieces</td></tr>
+        <tr><td><strong>0.10 mm</strong></td><td>High Quality</td><td>Slow</td><td>Detailed models, visible surface finish</td></tr>
+        <tr><td><strong>0.15 mm</strong></td><td>Fine</td><td>Moderate</td><td>Good quality functional parts, moderate detail</td></tr>
+        <tr><td><strong>0.20 mm</strong> ⭐</td><td>Standard</td><td>Good</td><td><strong>Recommended default</strong> — best balance</td></tr>
+        <tr><td><strong>0.25 mm</strong></td><td>Draft</td><td>Fast</td><td>Quick functional prototypes</td></tr>
+        <tr><td><strong>0.30 mm</strong></td><td>Coarse Draft</td><td>Fastest</td><td>Rough prototypes, large structural parts</td></tr>
+      </tbody>
+    </table>
+    <div class="two-col" style="margin-top:.8rem;">
+      <div class="tip-box info"><strong>Adaptive Layer Height:</strong> Enable for curved/organic surfaces — Bambu Studio automatically varies layer height to minimize stair-stepping on curved geometry.</div>
+      <div class="tip-box"><strong>First Layer:</strong> Always 0.2 mm regardless of your chosen layer height. Thicker first layer = better adhesion and leveling tolerance.</div>
+    </div>
+  </div>
+
+  <div class="section-heading">Wall / Perimeter Settings</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Wall Loop Count</p>
+        <table class="data-table">
+          <thead><tr><th>Walls</th><th>Use Case</th></tr></thead>
+          <tbody>
+            <tr><td><strong>2</strong></td><td>Minimal — display models only</td></tr>
+            <tr><td><strong>3</strong> ⭐</td><td>Standard — most prints</td></tr>
+            <tr><td><strong>4</strong></td><td>Strong / watertight parts</td></tr>
+            <tr><td><strong>5+</strong></td><td>Structural / pressure-bearing</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Wall Generator</p>
+        <ul class="guide-list">
+          <li><strong>Classic:</strong> Traditional fixed-width perimeters. Predictable.</li>
+          <li><strong>Arachne ⭐ (Recommended):</strong> Variable-width perimeters that adapt to thin geometry. Better thin-wall handling, fewer gaps.</li>
+        </ul>
+        <div class="tip-box info" style="margin-top:.5rem;"><strong>Seam Position:</strong> "Back" hides the seam at the rear of the model. "Aligned" bunches seam in one line (visible but predictable). "Random" scatters it (least visible on textured surfaces).</div>
+      </div>
+    </div>
+    <hr class="divider">
+    <p class="section-heading" style="font-size:14px;margin-top:0;">Bambu Wall Speeds</p>
+    <table class="data-table">
+      <thead><tr><th>Wall Type</th><th>X1C Speed</th><th>P1 Series Speed</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Outer Wall</td><td>100–150 mm/s</td><td>80–120 mm/s</td><td>Slower = better surface quality</td></tr>
+        <tr><td>Inner Wall</td><td>up to 500 mm/s</td><td>up to 300 mm/s</td><td>Doesn't affect visible surface</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box warning"><strong>Note:</strong> Even these speeds are dramatically faster than traditional printers. A "slow" Bambu outer wall at 100 mm/s is still 2–3× faster than most budget printers at full speed.</div>
+  </div>
+
+  <div class="section-heading">Infill Patterns &amp; Density</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Pattern Selection</p>
+        <table class="data-table">
+          <thead><tr><th>Pattern</th><th>Strength</th><th>Speed</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gyroid ⭐</strong></td><td>Excellent (all axes)</td><td>Good</td><td>All-around best — functional parts</td></tr>
+            <tr><td><strong>Grid</strong></td><td>Good</td><td>Fast</td><td>Simple functional parts</td></tr>
+            <tr><td><strong>Honeycomb</strong></td><td>Good (vertical)</td><td>Moderate</td><td>Vertical load-bearing</td></tr>
+            <tr><td><strong>Lightning</strong></td><td>Minimal</td><td>Fastest</td><td>Display models, weight saving only</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Density Guide</p>
+        <ul class="guide-list">
+          <li><strong>5–10%:</strong> Display models, minimum material</li>
+          <li><strong>15% ⭐:</strong> Standard — most decorative/light-duty prints</li>
+          <li><strong>25%:</strong> Functional parts, some stress</li>
+          <li><strong>40%+:</strong> Structural, high-stress, mechanical</li>
+          <li><strong>80–100%:</strong> Maximum strength (rarely needed — walls are more efficient)</li>
+        </ul>
+        <div class="tip-box info"><strong>Wall vs Infill strength:</strong> For strong parts, add more wall loops before increasing infill. 4 walls + 15% infill &gt; 2 walls + 50% infill.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Top / Bottom Settings</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Shell Count</p>
+        <ul class="guide-list">
+          <li><strong>3 layers:</strong> Minimum functional (may show infill pattern)</li>
+          <li><strong>4 layers ⭐:</strong> Standard — solid top/bottom surface</li>
+          <li><strong>6 layers:</strong> Strong / watertight / dimensional accuracy critical</li>
+        </ul>
+        <p class="section-heading" style="font-size:14px;">Top Fill Pattern</p>
+        <ul class="guide-list">
+          <li><strong>Monotonic ⭐:</strong> Lines always in same direction — smoothest visual result</li>
+          <li><strong>Concentric:</strong> Spiral outward — interesting look, less smooth</li>
+          <li><strong>Grid:</strong> Cross-hatch — fastest but shows lines more</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Ironing</p>
+        <div class="tip-box info"><strong>Ironing ON:</strong> After printing top surface, nozzle does a second slow pass re-melting the top layer to glass-smooth finish. Adds time but excellent for lids, nameplates, anything on display. Enable per-object in Bambu Studio.</div>
+        <p class="section-heading" style="font-size:14px;">Detect Thin Walls</p>
+        <div class="tip-box"><strong>Enable this</strong> for models with fine features thinner than your nozzle diameter. Without it, thin features may be skipped entirely by the slicer.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Strength Tips Specific to Bambu</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Trust the stock profiles:</strong> Bambu's built-in presets (0.20mm Standard, etc.) are well-tuned by Bambu Lab engineers — don't over-tweak if prints look good already.</li>
+      <li><strong>Strength priority:</strong> Wall count &gt; Infill density &gt; Layer height. Add walls first.</li>
+      <li><strong>Best functional part recipe:</strong> 4 walls + 25% Gyroid + 0.20mm + 4 top/bottom shells</li>
+      <li><strong>Weak layer bonding:</strong> Lower print speed or raise nozzle temperature by 5°C to improve layer adhesion for structural parts.</li>
+      <li><strong>Orientation matters most:</strong> Z-axis (layer stacking direction) is always weakest. Orient parts so stress runs along X/Y, not pulling layers apart.</li>
+    </ul>
+    <div class="tip-box danger"><strong>Don't do this:</strong> 2 walls + 50% grid infill. It sounds "strong" from high infill but walls carry most structural load. This combo is weaker AND slower than 4 walls + 25% gyroid.</div>
+  </div>
+</div>
+<!-- END TAB 3 -->
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 4 -->
+<div class="tab-panel" id="tab4">
+  <div class="tab-title">Supports &amp; Bed Adhesion</div>
+  <div class="tab-subtitle">When and how to use supports, brim/raft, and getting that perfect first layer</div>
+
+  <div class="section-heading">Support Types</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Tree Supports ⭐ (Recommended)</p>
+        <ul class="guide-list">
+          <li>Branches grow up from bed to contact points only</li>
+          <li>Less material used overall</li>
+          <li>Much easier to remove — snap off cleanly</li>
+          <li>Better overhang surface quality</li>
+          <li>Best for: organic shapes, figures, curved overhangs</li>
+          <li>Slows slicer computation for complex models</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Normal Supports</p>
+        <ul class="guide-list">
+          <li>Solid column grid under all overhangs</li>
+          <li>Faster to slice</li>
+          <li>Better for large flat overhangs and wide bridge spans</li>
+          <li>More material waste</li>
+          <li>Can be harder to remove from tight spaces</li>
+          <li>Best for: mechanical parts, flat overhangs, holes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Key Support Settings</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Setting</th><th>Recommended Value</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Overhang Threshold</strong></td><td>45°</td><td>Auto-generates support for anything steeper than 45° from vertical</td></tr>
+        <tr><td><strong>Top Z Distance</strong></td><td>0.2 mm</td><td>Gap between support top and part underside — smaller = better surface, harder removal</td></tr>
+        <tr><td><strong>Bottom Z Distance</strong></td><td>0.2 mm</td><td>Gap between bed/part and where support starts growing</td></tr>
+        <tr><td><strong>Interface Layers</strong></td><td>2–4 layers</td><td>Smooth layers at top of support — dramatically improves overhang surface quality</td></tr>
+        <tr><td><strong>Interface Pattern</strong></td><td>Grid or Concentric</td><td>Grid = stronger interface, Concentric = often easier removal</td></tr>
+        <tr><td><strong>Support Wall Loops</strong></td><td>0 (easy removal) or 1–2 (strong)</td><td>0 = breaks away easily, 1–2 = more structural support column</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info"><strong>Interface Layers tip:</strong> Setting 2–4 interface layers with a 0.2mm Z gap gives a noticeably smoother underside surface compared to no interface — always use this for visible overhangs.</div>
+  </div>
+
+  <div class="section-heading">Support Painting</div>
+  <div class="card">
+    <p style="color:#c9d1d9;font-size:13px;margin-bottom:.7rem;">Manually control exactly where supports are generated using the Support Painting tool in the top toolbar.</p>
+    <div class="two-col">
+      <div>
+        <div class="tip-box info"><strong style="color:#388bfd;">Blue paint:</strong> Enforce support — force support generation on this face even if angle doesn't require it.</div>
+        <div class="tip-box danger" style="margin-top:.5rem;"><strong>Red paint:</strong> Block support — prevent support on this face even if auto-detection would add it.</div>
+      </div>
+      <div>
+        <ul class="guide-list">
+          <li>Brush size is adjustable for precision</li>
+          <li>Use red blocking to prevent supports inside tunnels or cavities that don't need them</li>
+          <li>Use blue enforcement for tricky low-angle overhangs that auto-detect misses</li>
+          <li>Works the same as OrcaSlicer's support painting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Support Removal Tips</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Needle-nose pliers:</strong> Grip support column base and twist/rock to snap free — most effective technique</li>
+      <li><strong>Flush cutters:</strong> Snip support columns close to the model surface, then peel remaining nubs</li>
+      <li><strong>Dental pick / hobby knife:</strong> Work out embedded supports from tight cavities and internal spaces</li>
+      <li><strong>Cool the print first:</strong> Supports release much more easily when the print has fully cooled to room temperature</li>
+      <li><strong>Bambu Support W:</strong> Water-soluble support material for PLA — dissolves in water, no manual removal needed</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">Bed Adhesion Methods</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Method</th><th>When to Use</th><th>Width / Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>None</strong></td><td>Small flat models with large contact area and good bed surface adhesion (PLA on PEI)</td><td>—</td></tr>
+        <tr><td><strong>Skirt</strong></td><td>Prime nozzle only — no adhesion benefit. Good for multi-material to prime each filament at start.</td><td>1–3 loops, no gap</td></tr>
+        <tr><td><strong>Brim (Outer) ⭐</strong></td><td>Best general adhesion boost — small, tall, or warpy prints</td><td>5 mm standard, 8–10 mm for ABS/Nylon</td></tr>
+        <tr><td><strong>Brim (Inner)</strong></td><td>Hollow or vase-mode models — extends inside cavity</td><td>Same width as outer brim</td></tr>
+        <tr><td><strong>Raft</strong></td><td>Very small contact area, flexible filaments (TPU), first layer adhesion struggles</td><td>Full platform — adds material + removal step</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box warning"><strong>ABS / Nylon / PC:</strong> Always use an enclosure (P1S or X1C) AND a brim of 8–10 mm. These materials warp badly on open printers without proper chamber temperature.</div>
+  </div>
+
+  <div class="section-heading">First Layer — The Most Important Layer</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Live Z Adjustment</p>
+        <ul class="guide-list">
+          <li>During the first layer, tap <strong>+0.05 mm</strong> to raise nozzle (less squish)</li>
+          <li>Tap <strong>−0.05 mm</strong> to lower nozzle (more squish)</li>
+          <li>Adjust in real-time until first layer looks right</li>
+          <li>Saved as Baby Step Z offset — persists for future prints</li>
+        </ul>
+        <p class="section-heading" style="font-size:14px;">Ideal First Layer Appearance</p>
+        <ul class="guide-list">
+          <li>Lines are <strong>slightly squished</strong> — visible flattening</li>
+          <li>No gaps between adjacent lines</li>
+          <li>No lifting at corners or edges</li>
+          <li>Not so squished that nozzle drags through material</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Bambu Auto-Leveling</p>
+        <div class="tip-box info"><strong>X1C Lidar:</strong> Scans the entire bed surface with lidar before every print to create a compensation mesh — handles warped PEI sheets automatically.</div>
+        <div class="tip-box info" style="margin-top:.5rem;"><strong>AI First Layer Inspection (X1C):</strong> Camera watches the first layer in real-time. If it detects adhesion failure, under-extrusion, or lifting, it pauses and alerts you via Bambu Handy app.</div>
+        <div class="tip-box" style="margin-top:.5rem;"><strong>P1 / A1:</strong> Vibration-based auto bed leveling — slower but still very effective. Probes a grid of points and compensates mesh.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END TAB 4 -->
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 5 -->
+<div class="tab-panel" id="tab5">
+  <div class="tab-title">Bambu-Specific Features</div>
+  <div class="tab-subtitle">AI features, cloud integration, Handy app, firmware, and Bambu materials</div>
+
+  <div class="section-heading">Auto Calibration (X1C / P1 Series)</div>
+  <div class="card">
+    <div class="three-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">First Layer Lidar (X1C)</p>
+        <ul class="guide-list">
+          <li>Scans bed surface before every print</li>
+          <li>Creates compensation mesh for warp</li>
+          <li>Runs automatically — no user input</li>
+          <li>Effective on all print surfaces</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Vibration Calibration</p>
+        <ul class="guide-list">
+          <li>Auto-tunes input shaping values</li>
+          <li>Compensates for resonance at speed</li>
+          <li>Run monthly for best results</li>
+          <li>Available on X1C and P1 series</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Flow Dynamics (PA Cal)</p>
+        <ul class="guide-list">
+          <li>Pressure Advance auto-calibration</li>
+          <li>Run when changing to new filament type</li>
+          <li>X1C fully automatic — prints test pattern</li>
+          <li>Eliminates corner bulging artifacts</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box info"><strong>Micro Lidar (X1C):</strong> During print, the lidar monitors for spaghetti (catastrophic failure). If print detaches and creates a noodle mess, it auto-pauses to prevent damage.</div>
+  </div>
+
+  <div class="section-heading">AI Features (X1C)</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Feature</th><th>What It Does</th><th>Action Taken</th></tr></thead>
+      <tbody>
+        <tr><td><strong>First Layer Inspection</strong></td><td>AI camera watches first layer for adhesion failures, gaps, lifting</td><td>Pauses print, sends alert to Bambu Handy app</td></tr>
+        <tr><td><strong>Spaghetti Detection</strong></td><td>Detects print failure / detached model creating filament mess</td><td>Auto-pauses print to prevent damage</td></tr>
+        <tr><td><strong>Heat Deformation</strong></td><td>Detects if print is warping badly mid-print</td><td>Alert sent, optional auto-pause</td></tr>
+        <tr><td><strong>Flow Rate Monitoring</strong></td><td>AI estimates actual flow rate from camera, detects under/over-extrusion</td><td>Can auto-compensate or alert user</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box warning"><strong>P1 / A1 series:</strong> Don't have the same AI camera features as X1C. Basic webcam available for manual monitoring via Bambu Handy, but no automatic AI detection.</div>
+  </div>
+
+  <div class="section-heading">Bambu Cloud &amp; Makerworld</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Send to Printer Options</p>
+        <ul class="guide-list">
+          <li><strong>LAN Mode:</strong> Direct send over local network — fast, no cloud required. Uses Bambu LAN protocol. Best for daily use.</li>
+          <li><strong>Cloud Send:</strong> Routes through Bambu Cloud — works from anywhere, including remotely outside home network.</li>
+          <li><strong>Cloud Slicing:</strong> Send model to Bambu's servers for slicing — saves local CPU, result sent directly to printer.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Makerworld</p>
+        <ul class="guide-list">
+          <li>Bambu's model marketplace at makerworld.com</li>
+          <li>Built directly into Bambu Studio sidebar</li>
+          <li>Many models include pre-tuned Bambu print profiles</li>
+          <li>One-click download and slice from Studio</li>
+          <li>Earn Bambu points for uploads and downloads</li>
+        </ul>
+        <div class="tip-box info"><strong>Print History:</strong> All prints logged with thumbnails, time elapsed, material used, and filament consumed — access via Bambu Cloud dashboard or Handy app.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Bambu Handy App (Mobile)</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <ul class="guide-list">
+          <li>Real-time camera feed from printer</li>
+          <li>Start / pause / stop prints remotely</li>
+          <li>Layer progress bar and time remaining</li>
+          <li>Nozzle, bed, and chamber temperature monitoring</li>
+        </ul>
+      </div>
+      <div>
+        <ul class="guide-list">
+          <li>Filament remaining display (via AMS RFID)</li>
+          <li>Push notifications: print complete, runout, errors</li>
+          <li>Print history with thumbnails</li>
+          <li>Available iOS and Android — free with Bambu account</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Firmware Updates</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">How to Update</p>
+        <ol class="guide-list">
+          <li>In Bambu Studio: <strong>Settings → Firmware Update</strong></li>
+          <li>Or on printer screen: <strong>Settings → About → Firmware</strong></li>
+          <li>Update sequence: <strong>Printer first → AMS → Toolhead</strong></li>
+          <li>Wait for each step to complete before proceeding</li>
+          <li>Printer restarts automatically after update</li>
+        </ol>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Update Best Practices</p>
+        <div class="tip-box info"><strong>Auto-update ON:</strong> Recommended for most users — Bambu releases frequent improvements including speed optimizations, new material profiles, and bug fixes.</div>
+        <div class="tip-box warning" style="margin-top:.5rem;"><strong>Production workflow:</strong> Read release notes before updating. Occasionally an update changes default calibration values. Schedule updates during downtime, not mid-project.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Bambu-Specific Materials</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Material</th><th>Special Notes</th><th>Printer</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bambu PLA Basic</strong></td><td>Excellent quality, RFID tagged, auto-calibrated profiles. Best starting point.</td><td>All</td></tr>
+        <tr><td><strong>Bambu PLA Matte</strong></td><td>Matte finish, slightly different temp (225°C vs 220°C). Beautiful surface.</td><td>All</td></tr>
+        <tr><td><strong>Bambu PETG HF</strong></td><td>High Flow formula — engineered for very high speed printing on X1C/P1.</td><td>X1C, P1</td></tr>
+        <tr><td><strong>Bambu ABS</strong></td><td>Pre-tuned profiles for enclosed printers. Needs enclosure.</td><td>X1C, P1S</td></tr>
+        <tr><td><strong>Bambu PA-CF / PET-CF / PLA-CF</strong></td><td>Carbon fiber reinforced variants — high stiffness, abrasive (hardened nozzle required).</td><td>X1C, P1S</td></tr>
+        <tr><td><strong>Bambu TPU</strong></td><td>Flexible — unusual ability to work with AMS (most flexible filaments don't).</td><td>All (AMS compatible)</td></tr>
+        <tr><td><strong>Bambu Support W</strong></td><td>Water-soluble PVA-type support material for PLA prints — dissolve in water, no manual removal.</td><td>All with AMS</td></tr>
+        <tr><td><strong>3rd Party Filament</strong></td><td>Works fine. Use generic or community-contributed profiles. RFID won't auto-detect — enter material manually.</td><td>All</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box danger"><strong>Carbon Fiber warning:</strong> PA-CF, PET-CF, PLA-CF are highly abrasive. Using them with a standard brass nozzle will wear the nozzle rapidly. Always use a hardened steel nozzle (0.4mm HS or larger) for CF materials.</div>
+  </div>
+</div>
+<!-- END TAB 5 -->
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 6 -->
+<div class="tab-panel" id="tab6">
+  <div class="tab-title">Interface &amp; All Shortcuts</div>
+  <div class="tab-subtitle">Complete keyboard shortcuts, navigation controls, preview features, and panel guide</div>
+
+  <div class="section-heading">Toolbar Shortcuts</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Transform &amp; Selection</p>
+        <div class="shortcut-row"><span class="shortcut-desc">Move tool</span><span class="shortcut-keys"><kbd>M</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Scale tool</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Rotate tool</span><span class="shortcut-keys"><kbd>R</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select All</span><span class="shortcut-keys"><kbd>A</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Delete selected</span><span class="shortcut-keys"><kbd>Del</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Z</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Y</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Duplicate object</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>D</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Copy</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>C</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Paste</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>V</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Fit view / frame selected</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Project &amp; Plate Actions</p>
+        <div class="shortcut-row"><span class="shortcut-desc">Slice &amp; Send to printer</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>P</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save project (.3mf)</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>S</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Save As</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>S</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Export plate as STL/3MF</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>E</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Auto-arrange objects on plate</span><span class="shortcut-keys"><kbd>G</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add modifier mesh</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>M</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Fill plate with copies</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>F</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Add new plate</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>T</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Multi-select objects</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Click</kbd></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Viewport Navigation</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <div class="shortcut-row"><span class="shortcut-desc">Orbit / Rotate view</span><span class="shortcut-keys"><kbd>MMB drag</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><span class="shortcut-keys"><kbd>Shift</kbd><kbd>MMB drag</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Zoom in / out</span><span class="shortcut-keys"><kbd>Scroll wheel</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Context menu</span><span class="shortcut-keys"><kbd>Right-click</kbd></span></div>
+      </div>
+      <div>
+        <div class="shortcut-row"><span class="shortcut-desc">Select object + per-object settings</span><span class="shortcut-keys"><kbd>Double-click</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Multi-select</span><span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Click</kbd></span></div>
+        <div class="shortcut-row"><span class="shortcut-desc">Frame selected / reset view</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Preview Mode</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Layer Navigation</p>
+        <ul class="guide-list">
+          <li><strong>Layer slider (right side):</strong> Drag to any layer for inspection</li>
+          <li><strong>Scroll in preview:</strong> Layer up / down one at a time</li>
+          <li><strong>Click layer number:</strong> Jump to typed layer</li>
+        </ul>
+        <p class="section-heading" style="font-size:14px;">Preview Toggles</p>
+        <ul class="guide-list">
+          <li>Show / hide wipe tower</li>
+          <li>Show / hide supports</li>
+          <li>Show / hide brim</li>
+          <li>All in the preview toolbar at top</li>
+        </ul>
+      </div>
+      <div>
+        <p class="section-heading" style="font-size:14px;margin-top:0;">Color By Mode</p>
+        <table class="data-table">
+          <thead><tr><th>Mode</th><th>What You See</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Feature Type</strong></td><td>Different move types color-coded</td></tr>
+            <tr><td><strong>Speed</strong></td><td>Blue=slow, Red=fast gradient</td></tr>
+            <tr><td><strong>Filament</strong></td><td>Each filament slot its own color</td></tr>
+            <tr><td><strong>Layer Height</strong></td><td>Adaptive layer height visualization</td></tr>
+            <tr><td><strong>Volumetric Flow</strong></td><td>mm³/s heat map</td></tr>
+          </tbody>
+        </table>
+        <p class="section-heading" style="font-size:14px;">Feature Type Colors</p>
+        <ul class="guide-list" style="font-size:12px;">
+          <li>Outer wall = <span style="color:#00c800;">Green</span></li>
+          <li>Inner wall = <span style="color:#00bcd4;">Cyan</span></li>
+          <li>Infill = <span style="color:#e74c3c;">Red</span></li>
+          <li>Support = <span style="color:#f0a500;">Yellow/Orange</span></li>
+          <li>Top surface = <span style="color:#388bfd;">Blue</span></li>
+          <li>Bridge = <span style="color:#9c27b0;">Purple</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">Plates (Multi-Plate Workflow)</div>
+  <div class="card">
+    <ul class="guide-list">
+      <li><strong>Add new plate:</strong> <kbd>Ctrl</kbd><kbd>T</kbd> or click the + tab at the top of the canvas</li>
+      <li><strong>Drag between plates:</strong> Drag any object from one plate tab to another directly in the canvas</li>
+      <li><strong>Rename plate:</strong> Double-click the plate name tab to rename it</li>
+      <li><strong>Per-plate settings:</strong> Each plate can have its own printer, filament set, and process profile — useful for mixed-material or mixed-quality batch jobs</li>
+      <li><strong>Export all plates:</strong> File → Export → Export all plates as separate G-code files or as a single batch</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">Right Panel Guide</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Panel Tab</th><th>What's Inside</th><th>When to Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Objects</strong></td><td>All objects in scene, visibility toggle, lock, per-object overrides</td><td>Managing complex multi-part models, hiding objects for inspection</td></tr>
+        <tr><td><strong>Filament</strong></td><td>Filament slots, color/material assignment, AMS slot mapping</td><td>Every multi-color print — assigning which spool prints what</td></tr>
+        <tr><td><strong>Process</strong></td><td>Quick settings: quality preset, layer height, infill density/pattern, supports toggle</td><td>Fast adjustments without entering full settings dialog</td></tr>
+        <tr><td><strong>Printer</strong></td><td>Machine settings — nozzle size, build volume, machine limits</td><td>Rarely changed per-print; mainly for initial setup or special nozzle sizes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-heading">Built-in Process Presets (Bambu)</div>
+  <div class="card">
+    <table class="data-table">
+      <thead><tr><th>Preset Name</th><th>Layer Height</th><th>Typical Use</th></tr></thead>
+      <tbody>
+        <tr><td><strong>0.08mm Extra Fine</strong></td><td>0.08 mm</td><td>Jewelry, ultra-detailed miniatures</td></tr>
+        <tr><td><strong>0.10mm High Quality</strong></td><td>0.10 mm</td><td>Display models, smooth visible surfaces</td></tr>
+        <tr><td><strong>0.15mm Fine</strong></td><td>0.15 mm</td><td>Good quality functional parts</td></tr>
+        <tr><td><strong>0.20mm Standard ⭐</strong></td><td>0.20 mm</td><td>Default recommendation — best speed/quality balance</td></tr>
+        <tr><td><strong>0.25mm Draft</strong></td><td>0.25 mm</td><td>Quick functional prototypes</td></tr>
+        <tr><td><strong>0.30mm Draft</strong></td><td>0.30 mm</td><td>Fast rough parts, large structural prints</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info"><strong>Preset behavior:</strong> Each preset doesn't just change layer height — it also adjusts speeds, wall counts, infill density, and cooling appropriately for that resolution. The whole profile is tuned together.</div>
+  </div>
+</div>
+<!-- END TAB 6 -->
+
+</div><!-- end content-area -->
+
+<script>
+  function switchTab(n) {
+    // Remove active from all tab buttons
+    var buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(function(btn) { btn.classList.remove('active'); });
+
+    // Set clicked button active (buttons are in order 1-12)
+    buttons[n - 1].classList.add('active');
+
+    // Remove active from all tab panels
+    var panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(function(p) { p.classList.remove('active'); });
+
+    // Show the target panel if it exists in this part
+    var target = document.getElementById('tab' + n);
+    if (target) {
+      target.classList.add('active');
+    }
+  }
+</script>
+
+<div class="tab-panel" id="tab7">
+  <h2 class="section-heading">Filament Guide for Bambu Printers</h2>
+
+  <div class="card">
+    <h3>PLA (All Bambu Printers)</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Filament</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Nozzle</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Bed</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Fan</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">Bambu PLA Basic</td>
+          <td style="padding:8px;">220°C</td>
+          <td style="padding:8px;">55°C</td>
+          <td style="padding:8px;">100%</td>
+          <td style="padding:8px;">Auto-calibrated with RFID</td>
+        </tr>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">PLA Matte</td>
+          <td style="padding:8px;">225°C</td>
+          <td style="padding:8px;">55°C</td>
+          <td style="padding:8px;">100%</td>
+          <td style="padding:8px;">Less shiny, hides layer lines better</td>
+        </tr>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">PLA-CF (Carbon Fiber)</td>
+          <td style="padding:8px;">230°C</td>
+          <td style="padding:8px;">55°C</td>
+          <td style="padding:8px;">70%</td>
+          <td style="padding:8px;">Very stiff, matte. Hardened nozzle on X1C recommended</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;">Silk PLA</td>
+          <td style="padding:8px;">220–230°C</td>
+          <td style="padding:8px;">55°C</td>
+          <td style="padding:8px;">100%</td>
+          <td style="padding:8px;">Shiny, metallic look. Can clog AMS buffer — use direct from external spool</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box info" style="margin-top:12px;">
+      <strong>Drying PLA:</strong> 4–6 hours at 45°C if you hear clicking or bubbling during print. Store in sealed bags with desiccant.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>PETG (X1C/P1 Best; Possible on A1)</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Filament</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Nozzle</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Bed</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Fan</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">Bambu PETG Basic</td>
+          <td style="padding:8px;">245°C</td>
+          <td style="padding:8px;">70°C</td>
+          <td style="padding:8px;">50%</td>
+          <td style="padding:8px;">Standard settings</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;">PETG HF (High Flow)</td>
+          <td style="padding:8px;">250–265°C</td>
+          <td style="padding:8px;">70°C</td>
+          <td style="padding:8px;">50%</td>
+          <td style="padding:8px;">Formulated for high speed. Use on X1C/P1</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box warning" style="margin-top:12px;">
+      <strong>Bed Adhesion:</strong> PETG sticks to PEI too aggressively — use a cool plate or apply a glue stick on textured PEI to enable clean removal.
+    </div>
+    <div class="tip-box info" style="margin-top:8px;">
+      <strong>AMS:</strong> Compatible. Avoid mixing PETG and PLA in the same AMS unit (different operating temperatures).
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>ABS / ASA (X1C and P1S Enclosed Only)</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Filament</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Nozzle</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Bed</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Fan</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">ABS</td>
+          <td style="padding:8px;">255°C</td>
+          <td style="padding:8px;">90°C</td>
+          <td style="padding:8px;">0%</td>
+          <td style="padding:8px;">Enclosure required (X1C / P1S)</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;">ASA</td>
+          <td style="padding:8px;">260°C</td>
+          <td style="padding:8px;">90°C</td>
+          <td style="padding:8px;">Minimal</td>
+          <td style="padding:8px;">UV resistant, suitable for outdoor use</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box danger" style="margin-top:12px;">
+      <strong>Enclosure Required:</strong> Door closed, top panel on. Auxiliary fan OFF during print. ABS/ASA will warp or delaminate in open-frame printers.
+    </div>
+    <div class="tip-box warning" style="margin-top:8px;">
+      <strong>Off-Gassing:</strong> Use activated carbon filter in enclosure for extended ABS/ASA sessions. Ensure adequate room ventilation.
+    </div>
+    <div class="tip-box info" style="margin-top:8px;">
+      <strong>Warping Prevention:</strong> 10mm brim + glue stick on PEI smooth plate.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>PA / Nylon (X1C / P1S)</h3>
+    <ul style="line-height:2;">
+      <li><strong>PA6-CF, PA12-CF:</strong> 280°C nozzle, 90°C bed, 0% fan</li>
+      <li>Engineering nozzle (0.4mm hardened steel) required</li>
+      <li>Must dry <strong>12–16 hours at 70°C</strong> before printing</li>
+      <li>Print from a dry box if possible — PA absorbs moisture from air during printing</li>
+    </ul>
+    <div class="tip-box danger" style="margin-top:8px;">
+      PA is highly hygroscopic. Wet filament will cause bubbling, poor layer adhesion, and failed prints. Never skip drying.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>PC — Polycarbonate (X1C with Hardened Nozzle)</h3>
+    <ul style="line-height:2;">
+      <li>280–310°C nozzle, 100–120°C bed, 0% fan</li>
+      <li>All-metal hotend required</li>
+      <li>Engineering plate recommended</li>
+      <li>Hardest material to print reliably</li>
+    </ul>
+    <div class="tip-box info" style="margin-top:8px;">
+      Start with a PC-ABS blend for a more forgiving introduction to polycarbonate printing.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>TPU (All Bambu; AMS on X1C/P1 Only)</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Setting</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Nozzle Temp</td><td style="padding:8px;">230–240°C</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Bed Temp</td><td style="padding:8px;">40°C</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Fan</td><td style="padding:8px;">50%</td></tr>
+        <tr><td style="padding:8px;">Max Speed (3rd party)</td><td style="padding:8px;">50mm/s</td></tr>
+      </tbody>
+    </table>
+    <ul style="margin-top:12px;line-height:2;">
+      <li><strong>Bambu TPU:</strong> specially formulated for AMS compatibility</li>
+      <li><strong>3rd party TPU:</strong> use external spool, not AMS</li>
+      <li><strong>Shore 95A:</strong> standard flexible &nbsp;|&nbsp; <strong>Shore 75–85A:</strong> very soft/stretchy</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Build Plate Guide</h3>
+    <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Plate</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Compatible Filaments</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">Bambu Cool Plate</td>
+          <td style="padding:8px;">PLA, PLA+, PETG</td>
+          <td style="padding:8px;">Remove after cooling — pops off easily</td>
+        </tr>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">Bambu High Temp Plate</td>
+          <td style="padding:8px;">ABS, ASA, PA, PC</td>
+          <td style="padding:8px;">Keep hot for removal</td>
+        </tr>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">Textured PEI</td>
+          <td style="padding:8px;">PLA, PETG, TPU</td>
+          <td style="padding:8px;">Textured bottom on prints. Excellent adhesion.</td>
+        </tr>
+        <tr style="border-bottom:1px solid #2a2a2a;">
+          <td style="padding:8px;">Smooth PEI</td>
+          <td style="padding:8px;">PLA, PETG</td>
+          <td style="padding:8px;">Glass-like smooth bottom finish</td>
+        </tr>
+        <tr>
+          <td style="padding:8px;">Engineering Plate</td>
+          <td style="padding:8px;">PA, PC, fiber-filled</td>
+          <td style="padding:8px;">High-temp special coating</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box warning" style="margin-top:12px;">
+      <strong>Plate Care:</strong> Clean with IPA before every print. Never touch the print surface with bare hands — skin oils degrade adhesion. Replace plates when adhesion noticeably drops.
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab8">
+  <h2 class="section-heading">Speed Optimization for Bambu</h2>
+
+  <div class="card">
+    <h3>Bambu Speed Architecture</h3>
+    <div class="tip-box info">
+      Bambu printers are engineered for high speed by default. Avoid slowing everything down unnecessarily — the hardware and firmware are tuned to handle fast motion safely.
+    </div>
+    <table style="width:100%;border-collapse:collapse;margin-top:12px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Setting</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">X1C / P1S</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">A1 / A1 Mini</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Outer Wall</td><td style="padding:8px;">150 mm/s</td><td style="padding:8px;">100 mm/s</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Inner Wall</td><td style="padding:8px;">500 mm/s</td><td style="padding:8px;">350 mm/s</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Infill</td><td style="padding:8px;">500 mm/s</td><td style="padding:8px;">350 mm/s</td></tr>
+        <tr><td style="padding:8px;">Travel</td><td style="padding:8px;">700 mm/s</td><td style="padding:8px;">500 mm/s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Built-In Speed Profiles</h3>
+    <div class="shortcut-row"><kbd>Silent</kbd><span>~50 mm/s outer wall — quieter, ideal for overnight prints</span></div>
+    <div class="shortcut-row"><kbd>Normal</kbd><span>~100 mm/s outer wall — balanced quality and speed</span></div>
+    <div class="shortcut-row"><kbd>Sport</kbd><span>~150 mm/s outer wall — fast with acceptable quality</span></div>
+    <div class="shortcut-row"><kbd>Ludicrous</kbd><span>~200–250 mm/s outer wall — draft use only, decreased quality</span></div>
+  </div>
+
+  <div class="card">
+    <h3>What Affects Speed Choice</h3>
+    <ul style="line-height:2.2;">
+      <li><strong>Outer wall speed</strong> — most visible quality impact. Do not exceed 150 mm/s for standard quality output.</li>
+      <li><strong>Infill speed</strong> — hidden inside, can be maximized (300–500 mm/s safely).</li>
+      <li><strong>Layer cooling</strong> — at very high speeds, layers may not cool before the next is deposited. Increase fan speed or reduce print speed.</li>
+      <li><strong>Tall thin prints</strong> — reduce speed by 50% to prevent resonance oscillation knocking the print off the bed.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Input Shaping (Built into Bambu Firmware)</h3>
+    <ul style="line-height:2.2;">
+      <li>Factory calibrated and also supports user recalibration</li>
+      <li>Eliminates ringing and ghosting artifacts at high speeds</li>
+      <li>Bambu's implementation is one of the best in consumer FDM — key competitive advantage</li>
+      <li><strong>Recalibrate:</strong> Monthly, or when significant weight is added to the toolhead</li>
+    </ul>
+    <div class="shortcut-row"><kbd>Settings</kbd><span>→ Machine Calibration → Vibration Compensation</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Volumetric Flow Limits per Filament</h3>
+    <p style="color:#aaa;margin-bottom:10px;">Exceeding the flow limit causes under-extrusion at high speeds. Use OrcaSlicer's max flow test to find exact limits for your spools.</p>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Filament</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Max Flow</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">PLA Basic</td><td style="padding:8px;">24 mm³/s</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">PLA HF</td><td style="padding:8px;">30 mm³/s</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">PETG HF</td><td style="padding:8px;">28 mm³/s</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">ABS</td><td style="padding:8px;">20 mm³/s</td></tr>
+        <tr><td style="padding:8px;">PA-CF</td><td style="padding:8px;">18 mm³/s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Quality vs Speed Trade-offs</h3>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Change</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Speed Impact</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Quality Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Layer height 0.1mm → 0.2mm</td><td style="padding:8px;color:#00c800;">+50% faster</td><td style="padding:8px;color:#f0a000;">Slightly lower detail</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Outer wall 80 → 150 mm/s</td><td style="padding:8px;color:#00c800;">+50% faster</td><td style="padding:8px;color:#f0a000;">Slight vibration / ringing</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Ironing OFF → ON</td><td style="padding:8px;color:#e05050;">+10–20 min</td><td style="padding:8px;color:#00c800;">Glass-smooth top surface</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Tree supports → Normal supports</td><td style="padding:8px;color:#00c800;">−30% faster</td><td style="padding:8px;color:#e05050;">Harder to remove</td></tr>
+        <tr><td style="padding:8px;">Infill 15% → 25%</td><td style="padding:8px;color:#e05050;">+5% slower</td><td style="padding:8px;color:#00c800;">+30% stronger</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab9">
+  <h2 class="section-heading">Troubleshooting Bambu-Specific Issues</h2>
+
+  <div class="card">
+    <h3>AMS Jam</h3>
+    <ul style="line-height:2.2;">
+      <li><strong>Dirty tip cut:</strong> Trim the filament tip at 45° with flush cutters before loading into AMS</li>
+      <li><strong>Humidity jam:</strong> Brittle filament that snaps in the AMS is wet — dry it before use</li>
+      <li><strong>Buffer backup:</strong> Check that the AMS buffer tube near the hub isn't kinked</li>
+      <li><strong>Reload cycle:</strong> Tap the AMS slot in the app → Load to re-trigger the loading sequence</li>
+      <li><strong>Manual bypass:</strong> Turn off AMS in settings, load direct from external spool to extruder</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>First Layer Fail (with Lidar / AI Inspection)</h3>
+    <ul style="line-height:2.2;">
+      <li>"Abnormal first layer" alert on X1C means the camera detected an adhesion issue</li>
+      <li>Check: Z offset (live adjust ±0.05mm), clean build plate, correct plate type for filament</li>
+    </ul>
+    <div class="tip-box info">
+      <strong>Disable AI Check:</strong> Settings → Print → Disable First Layer Inspection. Use this for textured or dark-colored filaments that confuse the AI camera.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Nozzle Clog</h3>
+    <div class="shortcut-row"><span style="color:#aaa;">Symptoms</span><span>Under-extrusion, clicking extruder, no filament flow, grinding marks on filament</span></div>
+    <ul style="margin-top:12px;line-height:2.2;">
+      <li><strong>Quick purge:</strong> Maintenance → Extrude/Retract 50–100mm to diagnose flow</li>
+      <li><strong>Cold pull:</strong> Heat to print temp, retract slowly, cool to 90°C, pull fast and firm</li>
+      <li><strong>Nozzle swap:</strong> Bambu nozzles are hot-swap. Preheat to 200°C, spin off with wrench, spin new one on.</li>
+    </ul>
+    <table style="width:100%;border-collapse:collapse;margin-top:12px;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Nozzle</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">0.4mm Brass</td><td style="padding:8px;">Standard — PLA, PETG, ABS</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">0.4mm Hardened Steel</td><td style="padding:8px;">Abrasive filaments — CF, PA, PC</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">0.2mm Brass</td><td style="padding:8px;">Fine detail prints</td></tr>
+        <tr><td style="padding:8px;">0.6mm / 0.8mm Brass</td><td style="padding:8px;">Fast/draft prints, large models</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Print Quality Issues</h3>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Problem</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Zits / blobs</td><td style="padding:8px;">Reduce pressure advance slightly; increase retraction by 0.2mm</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Stringing (PLA)</td><td style="padding:8px;">Lower temp 5°C, increase retraction, dry filament</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Delamination at high speed</td><td style="padding:8px;">Reduce max speed, increase nozzle temp 5°C</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Warping (ABS/ASA)</td><td style="padding:8px;">Door closed, top on, 90°C bed, 10mm brim, glue stick</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Elephant foot</td><td style="padding:8px;">Increase first layer Z offset slightly; add elephant foot compensation −0.1mm</td></tr>
+        <tr><td style="padding:8px;">Rough surface at high speed</td><td style="padding:8px;">Enable input shaping calibration; reduce outer wall speed</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Bambu App / Cloud Issues</h3>
+    <ul style="line-height:2.2;">
+      <li><strong>Printer offline in app:</strong> Check WiFi, confirm same network as printer, restart printer</li>
+      <li><strong>Send to printer fails:</strong> Check LAN cable if wired; switch to LAN mode instead of cloud mode</li>
+      <li><strong>Cloud print not starting:</strong> Verify Bambu account login; check for any service status issues</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Noise Troubleshooting</h3>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Sound</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Likely Cause &amp; Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Loud rattle</td><td style="padding:8px;">Check all motion system screws, build plate, lid — look for loose items inside</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Clicking extruder</td><td style="padding:8px;">Clog or wrong temperature — perform cold pull</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Grinding</td><td style="padding:8px;">Filament slipping in extruder teeth — check for jam or obstruction</td></tr>
+        <tr><td style="padding:8px;">Squeaking</td><td style="padding:8px;">Lubricate rails with Bambu-recommended grease (Bambu sells maintenance kit)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Maintenance Schedule</h3>
+    <div class="shortcut-row"><kbd>Every 200 hrs</kbd><span>Clean nozzle, check belt tension, lubricate X/Y rails</span></div>
+    <div class="shortcut-row"><kbd>Every 500 hrs</kbd><span>Check/replace nozzle, lubricate Z rod, inspect all fans</span></div>
+    <div class="shortcut-row"><kbd>Monthly</kbd><span>Thorough build plate clean, check PTFE tube condition, wipe exterior</span></div>
+    <div class="shortcut-row"><kbd>As needed</kbd><span>Replace toolhead PTFE when grinding or clogging becomes frequent</span></div>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab10">
+  <h2 class="section-heading">Advanced Workflows</h2>
+
+  <div class="card">
+    <h3>Sequential Printing (By Object)</h3>
+    <p style="color:#aaa;margin-bottom:10px;">Prints objects one at a time — completes each fully before moving to the next.</p>
+    <ul style="line-height:2.2;">
+      <li><strong>Advantage:</strong> No stringing between objects; easy to cancel mid-plate without losing completed parts</li>
+      <li><strong>Requirement:</strong> Objects must be shorter than the toolhead clearance height</li>
+      <li><strong>Objects must have clearance between them</strong> (slicer checks automatically)</li>
+    </ul>
+    <div class="shortcut-row"><kbd>Process</kbd><span>→ Others → Print Sequence → By Object</span></div>
+  </div>
+
+  <div class="card">
+    <h3>Support Painting Workflow</h3>
+    <ol style="line-height:2.4;">
+      <li>Import model and enable auto-supports first as a baseline</li>
+      <li>Click <strong>Support Painting</strong> in the toolbar</li>
+      <li>Red-brush: remove auto-supports from cosmetic/visible faces</li>
+      <li>Blue-brush: add support only on critical overhang faces</li>
+      <li>Tune: adjust angle threshold per painted region</li>
+      <li>Result: much cleaner final print with minimal removal work</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Modifier Mesh Workflow</h3>
+    <ol style="line-height:2.4;">
+      <li>Right-click object in list → <strong>Add Modifier</strong> → Box / Cylinder / Sphere</li>
+      <li>Resize modifier to cover the area needing different settings</li>
+      <li>In modifier settings: override infill %, wall count, or layer height</li>
+      <li><strong>Use case:</strong> Boss holes at 80% infill; surrounding area at 15%</li>
+      <li>Modifier meshes are saved inside <strong>.3mf</strong> project files</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Combining Objects and Assemblies</h3>
+    <ul style="line-height:2.2;">
+      <li>Import multiple STLs — position relative to each other on the plate</li>
+      <li><strong>Assemble mode:</strong> lock relative positions of objects</li>
+      <li>Save as <strong>.3mf</strong> to preserve positions, settings, and filament assignments</li>
+      <li>Good for interlocking parts and assemblies that print together</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Hollow Models with Drain Holes</h3>
+    <div class="shortcut-row"><kbd>Process</kbd><span>→ Others → Enable Hollow → set wall thickness</span></div>
+    <ul style="margin-top:10px;line-height:2.2;">
+      <li>Add drain holes: click "Add hole" → position on model surface</li>
+      <li>Useful for reducing weight on large decorative FDM prints</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Per-Object Settings Workflow</h3>
+    <ol style="line-height:2.4;">
+      <li>Select object in viewport or object list</li>
+      <li>Right-click → <strong>Object Settings</strong></li>
+      <li>Override: layer height, infill pattern, or wall count for this object only</li>
+      <li>Ideal for multi-object plates where one part needs a different quality level</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Text Embossing / Engraving</h3>
+    <div class="shortcut-row"><kbd>T</kbd><span>Text tool — click on a model face to place text</span></div>
+    <ul style="margin-top:10px;line-height:2.2;">
+      <li>Set font, size, and depth: positive value = emboss, negative = engrave</li>
+      <li><strong>FDM emboss minimum:</strong> 0.5mm height, 1.5mm minimum feature size</li>
+      <li><strong>FDM engrave minimum:</strong> 0.3mm deep, 0.5mm wide</li>
+    </ul>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab11">
+  <h2 class="section-heading">Practice Projects for Bambu Printers</h2>
+
+  <div class="card">
+    <h3>Project 1 — Multicolor Nameplate (AMS / Filament Swap)</h3>
+    <p style="color:#aaa;margin-bottom:10px;"><strong>Skills:</strong> AMS workflow, color assignment, text embossing</p>
+    <ol style="line-height:2.4;">
+      <li>Create a rectangular base (100×40×5mm) in Tinkercad or download a flat name sign STL</li>
+      <li>Import into Bambu Studio</li>
+      <li>Use the Text tool: emboss your name on the surface (3mm height, sans-serif font)</li>
+      <li><strong>With AMS:</strong> assign base to filament 1, raised letters to filament 2 (split by height automatically)</li>
+      <li><strong>Single extruder:</strong> add a color change pause at the layer where letters begin</li>
+      <li>Assign dark color to base, bright contrasting color to letters</li>
+      <li>Settings: 0.1mm layers, 4 walls, 15% infill, ironing ON for base surface</li>
+      <li>Slice and verify color split in preview before printing</li>
+      <li>AMS: fully automatic. Single extruder: pause at color change layer, swap filament, resume.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Project 2 — Lithophane (Photo Print)</h3>
+    <p style="color:#aaa;margin-bottom:10px;"><strong>Skills:</strong> Model import, translucent filament, fine detail settings</p>
+    <ol style="line-height:2.4;">
+      <li>Go to <strong>lithophanemaker.com</strong> or <strong>itslitho.com</strong></li>
+      <li>Upload photo, generate STL lithophane (flat or curved option)</li>
+      <li>Import into Bambu Studio</li>
+      <li>Material: white PLA — natural/translucent works best for light transmission</li>
+      <li>Settings: 0.1mm layers, 3 walls, <strong>100% infill</strong>, no top/bottom shells (infill IS the surface)</li>
+      <li><strong>Orientation:</strong> vertical (standing up) for best detail; horizontal is faster but less sharp</li>
+      <li>No supports needed when printing vertically</li>
+      <li>Print time: 2–5 hours depending on size</li>
+      <li>Hold finished print up to a light source to reveal the photo</li>
+      <li>Optional: print a simple frame STL in a contrasting color</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Project 3 — Functional Enclosure Print (ABS / ASA)</h3>
+    <p style="color:#aaa;margin-bottom:10px;"><strong>Skills:</strong> Enclosed printer use, engineering material settings, warping prevention</p>
+    <ol style="line-height:2.4;">
+      <li>Download an electronics enclosure STL (Raspberry Pi case or similar)</li>
+      <li>Material: ASA (outdoor / heat-resistant) or ABS</li>
+      <li><strong>Printer required:</strong> X1C or P1S (must be enclosed)</li>
+      <li>Settings: 0.2mm layers, 4 walls, 25% gyroid infill, 3 top/bottom shells</li>
+      <li>Close all doors and top panel; warm the enclosure before starting</li>
+      <li>Bed: high-temp plate, 90°C, glue stick applied</li>
+      <li><strong>Fan: 0%</strong> — critical for ABS/ASA (fan causes warping and layer splitting)</li>
+      <li>Brim: 5mm</li>
+      <li>Monitor first layer: should adhere fully with no lifting corners</li>
+      <li>After print: let cool in closed enclosure for 30 minutes before removing (no drafts)</li>
+    </ol>
+    <div class="tip-box danger">
+      Never open the enclosure during an ABS/ASA print. Sudden temperature drop will cause the part to warp or crack.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Project 4 — Rapid Prototype Phone Case (TPU)</h3>
+    <p style="color:#aaa;margin-bottom:10px;"><strong>Skills:</strong> High speed printing, TPU flexible material</p>
+    <ol style="line-height:2.4;">
+      <li>Download phone case STL for your model (Printables has thousands of options)</li>
+      <li>Material: Bambu TPU 95A or 3rd party TPU (use external spool)</li>
+      <li>Settings: 0.2mm layers, 3 walls, 15% gyroid infill</li>
+      <li><strong>Speed: max 50mm/s outer wall, 100mm/s inner</strong> — do NOT use Bambu's normal high-speed presets with TPU</li>
+      <li>Temperature: 230°C nozzle, 40°C bed</li>
+      <li>Supports: usually not needed for phone case geometry</li>
+      <li><strong>Retraction: 0.5mm</strong> (direct drive Bambu) — too much retraction jams TPU</li>
+      <li>Fan: 50%</li>
+      <li>Disable AMS; load TPU directly from external spool</li>
+      <li>Result: flexible, functional phone case in 1–2 hours</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Project 5 — Speed Benchmark (Benchy at Ludicrous Speed)</h3>
+    <p style="color:#aaa;margin-bottom:10px;"><strong>Skills:</strong> High-speed mode, quality trade-offs, printer capability testing</p>
+    <ol style="line-height:2.4;">
+      <li>Download 3DBenchy (standard FDM test model — benchie.org)</li>
+      <li>Import at standard size — do not scale (60×31×48mm)</li>
+      <li>Settings: Ludicrous preset, or manually set outer wall 200mm/s, inner/infill 500mm/s</li>
+      <li>0.2mm layers, standard settings otherwise</li>
+      <li>Print — expect 10–20 minutes depending on printer model</li>
+      <li>Examine: chimney (overhangs), cabin windows (detail), hull (stringing), lettering</li>
+      <li>Print a second Benchy at Normal mode for direct comparison</li>
+      <li>Photograph both side by side — documents actual quality/speed trade-off for your printer</li>
+      <li>Find your optimal speed — usually between Normal and Ludicrous for daily-use prints</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Project 6 — Assembly Print (Multi-Part with AMS)</h3>
+    <p style="color:#aaa;margin-bottom:10px;"><strong>Skills:</strong> Multi-file project, AMS multi-color, assembly management, tolerances</p>
+    <ol style="line-height:2.4;">
+      <li>Download a multi-part model (mechanical pencil, fidget cube, or similar from Makerworld/Printables)</li>
+      <li>Import ALL parts into Bambu Studio as separate objects</li>
+      <li>Assign different filament colors to different parts via the right panel</li>
+      <li>Arrange on plate: flat faces down, check all orientations</li>
+      <li>Add supports where needed using support painting</li>
+      <li>Settings: 0.2mm standard, 3 walls, 20% infill</li>
+      <li>After printing: remove supports and assemble — should click or slide together as designed</li>
+      <li><strong>Fit too tight:</strong> scale specific part to 100.5% and reprint</li>
+      <li><strong>Fit too loose:</strong> scale to 99.5% and reprint</li>
+      <li>Note: FDM tolerances are typically ±0.2mm — choose or design models that account for this</li>
+    </ol>
+  </div>
+</div>
+
+<div class="tab-panel" id="tab12">
+  <h2 class="section-heading">Expert Tips &amp; Bambu Ecosystem</h2>
+
+  <div class="card">
+    <h3>Expert Shortcuts &amp; Hidden Features</h3>
+    <div class="shortcut-row"><kbd>Right-click setting</kbd><span>→ "Set as default" to save personal preference permanently</span></div>
+    <div class="shortcut-row"><kbd>Ctrl + click setting</kbd><span>Resets that setting to profile default</span></div>
+    <div class="shortcut-row"><kbd>Drag from Makerworld sidebar</kbd><span>Drop model directly onto build plate</span></div>
+    <div class="shortcut-row"><kbd>Ctrl + T</kbd><span>Add new plate — organize complex projects by plate per assembly</span></div>
+    <div class="shortcut-row"><kbd>.3mf save</kbd><span>Preserves model, supports, settings, filament assignments, and plate positions</span></div>
+    <div class="shortcut-row"><kbd>Right-click layer in slider</kbd><span>→ "Jump to layer" — type exact layer number</span></div>
+    <div class="tip-box info" style="margin-top:12px;">
+      Exporting G-code with thumbnail enabled causes the printer screen to show a preview image of the print before it starts.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Bambu-Specific G-code Extras</h3>
+    <div class="shortcut-row"><kbd>M991</kbd><span>End of current layer sync (used for multi-material coordination)</span></div>
+    <div class="shortcut-row"><kbd>M1002</kbd><span>Lidar calibration trigger</span></div>
+    <div class="tip-box warning" style="margin-top:10px;">
+      Default start G-code already includes homing, bed leveling mesh, and purge routine — avoid over-customizing it. If you add custom start code, include <code style="background:#1a1a1a;padding:2px 6px;border-radius:3px;">M190 S[bed_temperature_initial_layer]</code> to ensure the bed is fully heated before the leveling sequence begins.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Makerworld Tips</h3>
+    <ul style="line-height:2.2;">
+      <li>Filter search by printer model to find directly compatible files</li>
+      <li>"Liked" models sync across all your devices</li>
+      <li>Many models include the full print profile — download model and profile together for best results</li>
+      <li>Popular tags: <kbd>#functional</kbd> <kbd>#print-in-place</kbd> <kbd>#voronoi</kbd> <kbd>#lithophane</kbd> <kbd>#cosplay</kbd></li>
+      <li>Share your prints: upload result photos and settings to contribute to the community</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Bambu Studio vs OrcaSlicer for Bambu Owners</h3>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Use Bambu Studio for…</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Use OrcaSlicer for…</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Makerworld integration</td><td style="padding:8px;">Advanced filament calibration</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Cloud printing</td><td style="padding:8px;">Non-Bambu profile testing</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">AMS management</td><td style="padding:8px;">More granular slicer control</td></tr>
+        <tr><td style="padding:8px;">Simple daily workflow</td><td style="padding:8px;">Pressure advance (PA) calibration tools</td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box info" style="margin-top:12px;">
+      Many experienced Bambu users run both: OrcaSlicer for calibrating new filaments, Bambu Studio for all daily printing.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Community &amp; Resources</h3>
+    <ul style="line-height:2.4;">
+      <li><strong>r/BambuLab</strong> — largest community forum: tips, troubleshooting, showcases</li>
+      <li><strong>Makerworld.com</strong> — official model library, print profiles, contests</li>
+      <li><strong>wiki.bambulab.com</strong> — official documentation and setup guides</li>
+      <li><strong>YouTube:</strong> "The Edge of Tech", "Sanjay Mortimer", "Maker's Muse" — excellent Bambu content</li>
+      <li><strong>Bambu Lab Discord</strong> — official server for community support</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Upgrades &amp; Accessories</h3>
+    <table style="width:100%;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#1a1a1a;color:#00c800;">
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">Accessory</th>
+          <th style="padding:8px;text-align:left;border-bottom:1px solid #333;">What it Does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">AMS (P1/X1)</td><td style="padding:8px;">Multi-material with up to 4 spools. Essential for multi-color.</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Enclosure panels (P1P → P1S)</td><td style="padding:8px;">Convert open frame to enclosed for ABS/ASA printing</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Hardened steel nozzle</td><td style="padding:8px;">Required for CF, PA, PC filaments. Included in Engineering bundle.</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">Bambu Hub</td><td style="padding:8px;">Connect up to 4 AMS units (16 filaments total)</td></tr>
+        <tr style="border-bottom:1px solid #2a2a2a;"><td style="padding:8px;">External spool holder</td><td style="padding:8px;">For TPU and other flexible filaments that don't run through AMS</td></tr>
+        <tr><td style="padding:8px;">Dry box with PTFE to AMS</td><td style="padding:8px;">Keep hygroscopic filaments (PA, PC) dry while actively printing</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Long-Term Printer Care</h3>
+    <div class="shortcut-row"><kbd>X/Y Rails</kbd><span>Lubricate every 200 hours with Bambu grease or Super Lube 21030, or when squeaking</span></div>
+    <div class="shortcut-row"><kbd>Z Screw</kbd><span>Apply PTFE dry lubricant or light machine oil periodically</span></div>
+    <div class="shortcut-row"><kbd>Belt Tension</kbd><span>Pluck X/Y belts — should sound like a low guitar string. Not slack, not overly tight.</span></div>
+    <div class="shortcut-row"><kbd>Camera Lens</kbd><span>Clean monthly with microfiber cloth — dust degrades AI inspection accuracy</span></div>
+    <div class="tip-box info" style="margin-top:12px;">
+      Keep a spare hotend replacement kit stocked: extra nozzles (brass + hardened steel), PTFE tube, and thermistor. These are the parts most likely to need replacement during extended printing.
+    </div>
+    <div class="tip-box warning" style="margin-top:8px;">
+      <strong>Hotend PTFE tube:</strong> Replace when grinding or clogging becomes frequent. A degraded PTFE tube is a common hidden cause of persistent jams.
+    </div>
+  </div>
+</div><!-- /content-wrap --></body></html>

@@ -1,0 +1,1673 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrcaSlicer — Ultimate Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  a { color: #00b4d8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* NAV */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    gap: 12px;
+  }
+  .nav-left a {
+    color: #8b949e;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .nav-left a:hover { color: #e6edf3; text-decoration: none; }
+  .nav-center {
+    font-size: 17px;
+    font-weight: 700;
+    color: #e6edf3;
+    text-align: center;
+    flex: 1;
+  }
+  .nav-center span { color: #00b4d8; }
+  .nav-right {
+    font-size: 12px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  /* PROGRESS PILLS */
+  .progress-bar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 14px 24px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .pill-beginner     { background: #0d4429; color: #2daa6b; border: 1px solid #2daa6b; }
+  .pill-intermediate { background: #3d2c00; color: #f0a500; border: 1px solid #f0a500; }
+  .pill-advanced     { background: #3d1800; color: #ff6b35; border: 1px solid #ff6b35; }
+  .pill-expert       { background: #3d0000; color: #e74c3c; border: 1px solid #e74c3c; }
+
+  /* TAB ROW */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px 24px;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+  }
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { background: #21262d; color: #e6edf3; }
+  .tab-btn.active { background: #00b4d8; color: #fff; border-color: #00b4d8; }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* MAIN CONTENT */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 24px 60px;
+  }
+
+  /* CARD */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* HEADINGS */
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e6edf3;
+    margin-bottom: 6px;
+  }
+  h2 .tab-icon { font-size: 24px; margin-right: 8px; }
+  .tab-subtitle {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .section-heading {
+    color: #00b4d8;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 1.2rem 0 .5rem;
+  }
+
+  h4 {
+    color: #e6edf3;
+    font-size: 13px;
+    font-weight: 600;
+    margin: .8rem 0 .3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* TIP BOXES */
+  .tip-box {
+    border-left: 4px solid #2daa6b;
+    background: #0d4429;
+    padding: .7rem 1rem;
+    margin: .6rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+  }
+  .tip-box.warning  { border-color: #f0a500; background: #3d2c00; }
+  .tip-box.danger   { border-color: #e74c3c; background: #3d0000; }
+  .tip-box.info     { border-color: #00b4d8; background: #001d3d; }
+  .tip-box strong   { display: block; margin-bottom: 2px; }
+
+  /* KBD & SHORTCUTS */
+  kbd {
+    background: #21262d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: monospace;
+    color: #e6edf3;
+    font-size: 12px;
+  }
+  .shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #21262d;
+    padding: 6px 0;
+    font-size: 13px;
+    gap: 12px;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #8b949e; }
+
+  /* LISTS */
+  ul, ol {
+    padding-left: 1.4rem;
+    margin: .4rem 0;
+  }
+  li { margin: .25rem 0; font-size: 13px; }
+  li strong { color: #e6edf3; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: .6rem 0;
+  }
+  th {
+    background: #21262d;
+    color: #00b4d8;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid #30363d;
+  }
+  td {
+    padding: 7px 12px;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #161b22; }
+  tr:nth-child(odd) td  { background: #0d1117; }
+
+  /* TWO-COL GRID */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 620px) {
+    .two-col { grid-template-columns: 1fr; }
+    .site-nav { flex-wrap: wrap; }
+    .nav-center { font-size: 14px; }
+  }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-green  { background: #0d4429; color: #2daa6b; }
+  .badge-yellow { background: #3d2c00; color: #f0a500; }
+  .badge-orange { background: #3d1800; color: #ff6b35; }
+  .badge-red    { background: #3d0000; color: #e74c3c; }
+  .badge-blue   { background: #001d3d; color: #00b4d8; }
+
+  /* STEP BLOCK */
+  .step-block {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: .5rem 0;
+  }
+  .step-num {
+    background: #00b4d8;
+    color: #0d1117;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; font-size: 13px; }
+  .step-content strong { color: #e6edf3; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 1.2rem 0;
+  }
+
+  /* INLINE CODE */
+  code {
+    background: #21262d;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #e6edf3;
+  }
+
+  /* VALUE TAG */
+  .val {
+    background: #001d3d;
+    color: #00b4d8;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: monospace;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="site-nav">
+  <div class="nav-left"><a href="index.html">&#8592; Back to Hub</a></div>
+  <div class="nav-center">&#x1F9AD; <span>OrcaSlicer</span> &mdash; Ultimate Guide</div>
+  <div class="nav-right">Beginner to Expert</div>
+</nav>
+
+<!-- PROGRESS PILLS -->
+<div class="progress-bar">
+  <span class="pill pill-beginner">&#9632; Beginner</span>
+  <span class="pill pill-intermediate">&#9632; Intermediate</span>
+  <span class="pill pill-advanced">&#9632; Advanced</span>
+  <span class="pill pill-expert">&#9632; Expert</span>
+</div>
+
+<!-- TAB BUTTONS -->
+<div class="tab-bar">
+  <button class="tab-btn active"  onclick="switchTab(1)">1. Understanding OrcaSlicer</button>
+  <button class="tab-btn"         onclick="switchTab(2)">2. Interface &amp; Navigation</button>
+  <button class="tab-btn"         onclick="switchTab(3)">3. Print Quality Settings</button>
+  <button class="tab-btn"         onclick="switchTab(4)">4. Strength &amp; Infill</button>
+  <button class="tab-btn"         onclick="switchTab(5)">5. Support Structures</button>
+  <button class="tab-btn"         onclick="switchTab(6)">6. Calibration</button>
+  <button class="tab-btn"         onclick="switchTab(7)">7. Filaments &amp; Materials</button>
+  <button class="tab-btn"         onclick="switchTab(8)">8. Speed &amp; Acceleration</button>
+  <button class="tab-btn"         onclick="switchTab(9)">9. Multi-Material</button>
+  <button class="tab-btn"         onclick="switchTab(10)">10. Profiles &amp; Presets</button>
+  <button class="tab-btn"         onclick="switchTab(11)">11. Troubleshooting</button>
+  <button class="tab-btn"         onclick="switchTab(12)">12. Advanced &amp; Pro Tips</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TAB 1 — Understanding OrcaSlicer
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="tab-panel active" id="tab1">
+    <h2><span class="tab-icon">&#x1F9AD;</span>Understanding OrcaSlicer</h2>
+    <p class="tab-subtitle">What it is, why it matters, and how to think about slicing <span class="badge badge-green">Beginner</span></p>
+
+    <div class="card">
+      <div class="section-heading">What is OrcaSlicer?</div>
+      <p>OrcaSlicer is a free, open-source slicer for FDM and resin 3D printers. It was forked from <strong>Bambu Studio</strong> (which itself forked from <strong>PrusaSlicer</strong>), combining the best of both with its own powerful additions — especially its built-in calibration suite.</p>
+      <div class="tip-box info" style="margin-top:.8rem">
+        <strong>Bottom line:</strong> OrcaSlicer is widely considered the best <em>free</em> slicer for advanced users who want granular control, excellent calibration tools, and compatibility with virtually any printer.
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="section-heading">Why Choose OrcaSlicer?</div>
+        <ul>
+          <li><strong>Built-in calibration tools</strong> — pressure advance, flow rate, temperature tower, retraction, VFA tests all in one menu</li>
+          <li><strong>Advanced multi-material</strong> support with purge tower control</li>
+          <li><strong>Pressure Advance / Linear Advance</strong> tuning per-filament</li>
+          <li><strong>Flow calibration</strong> wizard for every new spool</li>
+          <li><strong>Better bridging algorithms</strong> than Cura in most scenarios</li>
+          <li><strong>Arachne wall generator</strong> for variable-width perimeters</li>
+          <li><strong>Active development</strong> — frequent releases, large community</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="section-heading">Supported Printer Brands</div>
+        <ul>
+          <li><strong>Bambu Lab</strong> — native profiles (X1, P1, A1 series)</li>
+          <li><strong>Prusa</strong> — MK3S+, MK4, Mini, XL</li>
+          <li><strong>Creality</strong> — Ender 3/5, CR-10, K1, Ender-6</li>
+          <li><strong>Voron</strong> — 0, 2.4, Trident, Switchwire</li>
+          <li><strong>Ratrig</strong> — V-Core, V-Minion</li>
+          <li><strong>Any custom printer</strong> — configure from scratch via printer wizard</li>
+          <li>Resin printers (MSLA/DLP) — basic support</li>
+        </ul>
+        <div class="tip-box" style="margin-top:.6rem">If your printer isn't listed, import a Klipper config or start from a generic profile and customize it.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Interface Areas at a Glance</div>
+      <table>
+        <thead><tr><th>Area</th><th>Location</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Top Toolbar</strong></td><td>Top edge</td><td>New, Open, Save, Slice, Print, Undo/Redo, View modes</td></tr>
+          <tr><td><strong>Left Panel</strong></td><td>Left side</td><td>Object list — visibility, lock, per-object settings</td></tr>
+          <tr><td><strong>3D Viewport</strong></td><td>Center</td><td>Main work area — place, orient, and inspect models</td></tr>
+          <tr><td><strong>Right Panel</strong></td><td>Right side</td><td>Print settings — Quality, Strength, Support, Filament, Printer</td></tr>
+          <tr><td><strong>Bottom Status Bar</strong></td><td>Bottom</td><td>Print time estimate, filament usage, slice progress</td></tr>
+          <tr><td><strong>Preview Mode</strong></td><td>After slicing</td><td>Layer-by-layer inspection, color by feature/speed/flow</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Key Slicing Concepts</div>
+      <div class="two-col">
+        <div>
+          <h4>Core Settings</h4>
+          <ul>
+            <li><strong>Layer Height</strong> — vertical resolution of each printed layer. Smaller = finer detail, slower print.</li>
+            <li><strong>Infill</strong> — internal structure of the part. Pattern and density control strength and material use.</li>
+            <li><strong>Supports</strong> — temporary structures for overhangs that cannot print in mid-air.</li>
+            <li><strong>Brim / Raft</strong> — extra material around/under the first layer to improve bed adhesion.</li>
+            <li><strong>Perimeters / Walls</strong> — outer shell loops that define the part's exterior shape.</li>
+            <li><strong>Top/Bottom Layers</strong> — solid layers that close the shell above and below infill.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>The Print Quality Triangle</h4>
+          <div class="tip-box warning">
+            <strong>Speed vs Quality vs Strength</strong>
+            Increasing one always trades off another. You cannot maximise all three simultaneously. Most prints live in the middle — the skill is knowing which to sacrifice for your use case.
+          </div>
+          <ul>
+            <li><strong>Speed up</strong> → reduce quality, may reduce layer bonding</li>
+            <li><strong>Slow down</strong> → better quality, longer print times</li>
+            <li><strong>More walls/infill</strong> → stronger, heavier, uses more filament</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Supported File Types</div>
+      <table>
+        <thead><tr><th>Format</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>STL</strong></td><td>Most common. Geometry only, no colour or settings embedded.</td></tr>
+          <tr><td><strong>3MF</strong></td><td>Preferred — stores geometry + all slicer settings. Share projects as 3MF.</td></tr>
+          <tr><td><strong>OBJ</strong></td><td>Supports UV/colour, used by designers.</td></tr>
+          <tr><td><strong>STEP</strong></td><td>CAD-native, best for mechanical parts (parametric geometry).</td></tr>
+          <tr><td><strong>AMF</strong></td><td>Older XML-based format with colour support.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Workflow Overview</div>
+      <div class="step-block"><div class="step-num">1</div><div class="step-content"><strong>Import</strong> — drag STL/3MF onto the build plate or use File &gt; Import</div></div>
+      <div class="step-block"><div class="step-num">2</div><div class="step-content"><strong>Orient</strong> — rotate to optimal printing orientation (strongest face down, fewest overhangs)</div></div>
+      <div class="step-block"><div class="step-num">3</div><div class="step-content"><strong>Configure</strong> — set layer height, walls, infill, supports in the right panel</div></div>
+      <div class="step-block"><div class="step-num">4</div><div class="step-content"><strong>Slice</strong> — click Slice / <kbd>Ctrl</kbd>+<kbd>P</kbd> — OrcaSlicer generates the toolpath</div></div>
+      <div class="step-block"><div class="step-num">5</div><div class="step-content"><strong>Preview</strong> — inspect every layer, check supports and top surfaces look correct</div></div>
+      <div class="step-block"><div class="step-num">6</div><div class="step-content"><strong>Print</strong> — send via USB / SD card / LAN (Bambu/Klipper) / cloud</div></div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Calibration Philosophy</div>
+      <p>OrcaSlicer's biggest competitive advantage is its <strong>Calibration menu</strong>. Unlike Cura or PrusaSlicer, it includes guided tests for every major variable. The philosophy is: <em>tune the machine, then tune the filament, then print</em>.</p>
+      <div class="tip-box" style="margin-top:.7rem">Run calibrations <strong>every time you switch filament brand or colour</strong>. Even same-brand different-colour spools can have measurably different flow rates.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">5 Things to Do First</div>
+      <div class="step-block"><div class="step-num">1</div><div class="step-content"><strong>Install your printer profile</strong> — Printer menu &gt; Add Printer. Use an official profile if available.</div></div>
+      <div class="step-block"><div class="step-num">2</div><div class="step-content"><strong>Set your filament brand and type</strong> — use a matching preset as the starting point, then customise temperatures.</div></div>
+      <div class="step-block"><div class="step-num">3</div><div class="step-content"><strong>Run Flow Rate Calibration</strong> — Calibration menu &gt; Flow Rate. Measure and enter the value.</div></div>
+      <div class="step-block"><div class="step-num">4</div><div class="step-content"><strong>Run Pressure Advance (PA) Calibration</strong> — find the value where corners are sharpest and cleanest.</div></div>
+      <div class="step-block"><div class="step-num">5</div><div class="step-content"><strong>Do a Temperature Tower</strong> — find the ideal print temperature for your specific spool.</div></div>
+    </div>
+  </div><!-- /tab1 -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TAB 2 — Interface & Navigation
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab2">
+    <h2><span class="tab-icon">&#x1F5A5;</span>Interface &amp; Navigation</h2>
+    <p class="tab-subtitle">Viewport controls, keyboard shortcuts, and every UI panel explained <span class="badge badge-green">Beginner</span></p>
+
+    <div class="card">
+      <div class="section-heading">3D Viewport Navigation</div>
+      <table>
+        <thead><tr><th>Input</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>LMB</kbd> click</td><td>Select object</td></tr>
+          <tr><td><kbd>RMB</kbd> click</td><td>Context menu (cut, split, add support enforcer/blocker…)</td></tr>
+          <tr><td><kbd>MMB</kbd> drag</td><td>Orbit / rotate view</td></tr>
+          <tr><td><kbd>Shift</kbd> + <kbd>MMB</kbd> drag</td><td>Pan view</td></tr>
+          <tr><td>Scroll wheel</td><td>Zoom in / out</td></tr>
+          <tr><td><kbd>F</kbd></td><td>Fit selection to view / frame all objects</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Left Toolbar — Manipulation Tools</div>
+      <table>
+        <thead><tr><th>Tool</th><th>Shortcut</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Move</strong></td><td><kbd>M</kbd></td><td>Drag handles to reposition on build plate. Type values for exact XYZ placement.</td></tr>
+          <tr><td><strong>Scale</strong></td><td><kbd>S</kbd></td><td>Resize uniformly or per-axis. Lock aspect ratio toggle.</td></tr>
+          <tr><td><strong>Rotate</strong></td><td><kbd>R</kbd></td><td>Rotate around X/Y/Z. Type exact degrees. "Place on face" auto-orients.</td></tr>
+          <tr><td><strong>Cut</strong></td><td>—</td><td>Slice object at a plane — split into two separate parts for printing flat.</td></tr>
+          <tr><td><strong>Support Painting</strong></td><td>—</td><td>Paint enforce (blue) or block (red) supports directly on the model surface.</td></tr>
+          <tr><td><strong>Seam Painting</strong></td><td>—</td><td>Force or block seam placement on specific faces.</td></tr>
+          <tr><td><strong>Fuzzy Skin Painting</strong></td><td>—</td><td>Apply fuzzy skin texture to selected faces only.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Complete Keyboard Shortcut Reference</div>
+      <div class="two-col">
+        <div>
+          <h4>Object Operations</h4>
+          <div class="shortcut-row"><span><kbd>A</kbd></span><span class="shortcut-desc">Select all objects</span></div>
+          <div class="shortcut-row"><span><kbd>Del</kbd></span><span class="shortcut-desc">Delete selected object(s)</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Z</kbd></span><span class="shortcut-desc">Undo</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Y</kbd></span><span class="shortcut-desc">Redo</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>A</kbd></span><span class="shortcut-desc">Select all objects</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>D</kbd></span><span class="shortcut-desc">Duplicate selected object</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>C</kbd></span><span class="shortcut-desc">Copy selected object</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>V</kbd></span><span class="shortcut-desc">Paste object</span></div>
+          <div class="shortcut-row"><span><kbd>G</kbd></span><span class="shortcut-desc">Auto-arrange all objects on plate</span></div>
+          <h4 style="margin-top:.8rem">Tools</h4>
+          <div class="shortcut-row"><span><kbd>M</kbd></span><span class="shortcut-desc">Move tool</span></div>
+          <div class="shortcut-row"><span><kbd>S</kbd></span><span class="shortcut-desc">Scale tool</span></div>
+          <div class="shortcut-row"><span><kbd>R</kbd></span><span class="shortcut-desc">Rotate tool</span></div>
+        </div>
+        <div>
+          <h4>View &amp; Preview</h4>
+          <div class="shortcut-row"><span><kbd>F</kbd></span><span class="shortcut-desc">Fit / frame selected to viewport</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>1</kbd></span><span class="shortcut-desc">Solid view</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>2</kbd></span><span class="shortcut-desc">Wireframe view</span></div>
+          <div class="shortcut-row"><span><kbd>[</kbd></span><span class="shortcut-desc">Previous layer (preview mode)</span></div>
+          <div class="shortcut-row"><span><kbd>]</kbd></span><span class="shortcut-desc">Next layer (preview mode)</span></div>
+          <div class="shortcut-row"><span><kbd>Shift</kbd>+click</span><span class="shortcut-desc">Add to multi-selection</span></div>
+          <h4 style="margin-top:.8rem">File &amp; Print</h4>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>P</kbd></span><span class="shortcut-desc">Slice / send to print</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>E</kbd></span><span class="shortcut-desc">Export plate as 3MF</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>S</kbd></span><span class="shortcut-desc">Save project</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="section-heading">Object List (Left Panel)</div>
+        <ul>
+          <li><strong>Eye icon</strong> — toggle visibility of object in viewport</li>
+          <li><strong>Lock icon</strong> — lock object position/scale (prevents accidental edits)</li>
+          <li><strong>Trash icon</strong> — delete object from plate</li>
+          <li><strong>Right-click object</strong> — access per-object settings override (layer height, infill, walls independent of global settings)</li>
+          <li><strong>Drag to reorder</strong> — set print order for multi-object plates</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="section-heading">Print Settings Panel (Right)</div>
+        <ul>
+          <li><strong>Quality</strong> tab — layer height, walls, top/bottom, seam, ironing</li>
+          <li><strong>Strength</strong> tab — infill pattern, density, wall loops</li>
+          <li><strong>Support</strong> tab — support type, interface, thresholds</li>
+          <li><strong>Others</strong> tab — brim, raft, avoid crossing perimeters, special modes</li>
+          <li><strong>Filament</strong> tab — temperatures, cooling, flow rate, PA value</li>
+          <li><strong>Printer</strong> tab — machine limits, nozzle diameter, bed size</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Preview Mode — Layer Inspector</div>
+      <p>After slicing, click <strong>Preview</strong> tab at top. Use the vertical slider on the right to scrub through layers, or press <kbd>[</kbd> / <kbd>]</kbd>.</p>
+      <hr class="divider">
+      <h4>Color-by Options</h4>
+      <ul>
+        <li><strong>Feature type</strong> — walls (blue), infill (yellow), supports (red), top surfaces (green) — most useful for diagnosing issues</li>
+        <li><strong>Speed</strong> — gradient showing where the printer slows/speeds up — identify speed inconsistencies</li>
+        <li><strong>Filament</strong> — shows multi-material segments by colour</li>
+        <li><strong>Flow rate</strong> — identify over/under-extrusion zones in the toolpath</li>
+      </ul>
+      <div class="tip-box info" style="margin-top:.7rem"><strong>Pro tip:</strong> Always inspect top surfaces and overhangs in preview before printing. Catching a support issue here costs 0 minutes vs. a failed 6-hour print.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Transform Gizmo</div>
+      <p>When Move, Scale, or Rotate tool is active, coloured handles appear on the selected object:</p>
+      <ul>
+        <li><strong>Red handle</strong> — X axis</li>
+        <li><strong>Green handle</strong> — Y axis</li>
+        <li><strong>Blue handle</strong> — Z axis</li>
+        <li><strong>Click and drag</strong> a handle to transform along that axis only</li>
+        <li><strong>Type a value</strong> in the input fields at the bottom toolbar for precise numeric input</li>
+        <li><strong>Scale uniformly</strong> — lock the chain icon to maintain aspect ratio</li>
+      </ul>
+    </div>
+  </div><!-- /tab2 -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TAB 3 — Print Quality Settings
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab3">
+    <h2><span class="tab-icon">&#x1F3AF;</span>Print Quality Settings — Complete</h2>
+    <p class="tab-subtitle">Layer height, walls, top/bottom surfaces, ironing, and quality tweaks <span class="badge badge-yellow">Intermediate</span></p>
+
+    <!-- LAYER HEIGHT -->
+    <div class="card">
+      <div class="section-heading">Layer Height</div>
+      <table>
+        <thead><tr><th>Height</th><th>Use Case</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><span class="val">0.05–0.1mm</span></td><td>High detail / miniatures</td><td>Very slow, excellent surface finish. Requires well-tuned printer.</td></tr>
+          <tr><td><span class="val">0.15–0.2mm</span></td><td>Standard / general purpose</td><td>Best balance of quality and speed. 0.2mm is the universal default.</td></tr>
+          <tr><td><span class="val">0.25–0.3mm</span></td><td>Draft / fast prototyping</td><td>Noticeably layered appearance. Good for fit-tests and functional drafts.</td></tr>
+          <tr><td><span class="val">0.35–0.4mm</span></td><td>Maximum (0.4mm nozzle)</td><td>Rule: max layer height = nozzle diameter. Faster but visible layers.</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box warning" style="margin-top:.7rem"><strong>First Layer Height:</strong> Set to <span class="val">0.2mm</span> regardless of layer height. A slightly taller first layer improves adhesion on any nozzle size.</div>
+
+      <hr class="divider">
+      <h4>Variable Layer Height</h4>
+      <p>Right-click a model → <strong>Variable Layer Height</strong>. Drag the curve to reduce height on curved/detailed areas and increase on flat vertical sections. Reduces print time while keeping detail where it counts.</p>
+
+      <hr class="divider">
+      <h4>Adaptive Layer Height</h4>
+      <p>Automatically adjusts layer height based on surface angle — thinner layers on shallow angles (smooth curves), thicker on steep vertical walls. Enable in Quality tab. Set <strong>Quality factor</strong> (lower = more adaptive, more layers).</p>
+    </div>
+
+    <!-- WALLS -->
+    <div class="card">
+      <div class="section-heading">Walls / Perimeters</div>
+      <div class="two-col">
+        <div>
+          <h4>Wall Count Guide</h4>
+          <ul>
+            <li><span class="val">2 walls</span> — weak shell, decorative models only</li>
+            <li><span class="val">3 walls</span> — standard, good for most prints</li>
+            <li><span class="val">4–5 walls</span> — strong functional parts, recommended for mechanical use</li>
+            <li><span class="val">6+ walls</span> — maximum strength, approaching solid shell</li>
+          </ul>
+          <div class="tip-box" style="margin-top:.6rem">Wall count increases strength more efficiently than infill density for most load cases.</div>
+        </div>
+        <div>
+          <h4>Wall Generator</h4>
+          <ul>
+            <li><strong>Classic</strong> — fixed-width concentric loops. Simple, predictable.</li>
+            <li><strong>Arachne</strong> (recommended) — variable-width walls that adapt to narrow features. Fills gaps that classic mode would leave unfilled. Better surface quality on organic shapes.</li>
+          </ul>
+          <h4 style="margin-top:.8rem">Detect Thin Walls</h4>
+          <p style="font-size:13px">Enable to print features thinner than one nozzle width. Slows slicing slightly. Essential for fine models.</p>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <h4>Seam Placement</h4>
+      <table>
+        <thead><tr><th>Option</th><th>Behaviour</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nearest</strong></td><td>Shortest travel to seam — random position each layer</td><td>Fast prints, seam visibility is acceptable</td></tr>
+          <tr><td><strong>Aligned</strong></td><td>All seams stack on the same XY position — creates a vertical line</td><td>When you want a predictable seam you can sand</td></tr>
+          <tr><td><strong>Rear</strong></td><td>Forces seam to back of print</td><td>Visual models seen from front only</td></tr>
+          <tr><td><strong>Contour</strong></td><td>Follows object outline — seam follows sharp corners/edges</td><td>Models with natural edge lines to hide seam in</td></tr>
+        </tbody>
+      </table>
+      <hr class="divider">
+      <h4>Wall Speeds</h4>
+      <ul>
+        <li><strong>Outer wall:</strong> keep slow — <span class="val">30–60 mm/s</span> for best surface quality. This is the visible face.</li>
+        <li><strong>Inner walls:</strong> can be 2–3× faster than outer — quality doesn't affect appearance directly.</li>
+      </ul>
+    </div>
+
+    <!-- TOP / BOTTOM -->
+    <div class="card">
+      <div class="section-heading">Top &amp; Bottom Surfaces</div>
+      <div class="two-col">
+        <div>
+          <h4>Shell Layer Counts</h4>
+          <ul>
+            <li><strong>Top shell layers:</strong> <span class="val">4–6</span> — fewer layers risks infill showing through the top surface. Increase if you see a bumpy/open top.</li>
+            <li><strong>Bottom shell layers:</strong> <span class="val">3–4</span> — less stress from below; can be slightly fewer than top.</li>
+          </ul>
+          <h4 style="margin-top:.8rem">Top/Bottom Patterns</h4>
+          <ul>
+            <li><strong>Monotonic</strong> (recommended) — all lines same direction, fewer visible seams</li>
+            <li><strong>Hilbert Curve</strong> — space-filling curve, very strong, shorter travel moves</li>
+            <li><strong>Concentric</strong> — loops inward from perimeter, flexible appearance, good for flexible filaments</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ironing</h4>
+          <p style="font-size:13px">After printing the top layer normally, ironing makes an extra slow pass at low flow rate to flatten surface imperfections — producing a glass-smooth finish.</p>
+          <ul>
+            <li><strong>Enable:</strong> Quality tab &gt; Ironing</li>
+            <li><strong>Ironing type:</strong> All top surfaces <em>or</em> Topmost surface only</li>
+            <li><strong>Speed:</strong> <span class="val">15–25 mm/s</span></li>
+            <li><strong>Flow rate:</strong> <span class="val">10–15%</span></li>
+          </ul>
+          <div class="tip-box warning" style="margin-top:.5rem"><strong>Note:</strong> Ironing adds significant print time on large flat surfaces. Use selectively on display/visible faces.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUALITY TWEAKS -->
+    <div class="card">
+      <div class="section-heading">Quality Tweaks &amp; Fine-Tuning</div>
+      <table>
+        <thead><tr><th>Setting</th><th>Recommended Value</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Avoid crossing perimeters</strong></td><td>ON</td><td>Routes travel moves inside the part to reduce stringing on outer walls</td></tr>
+          <tr><td><strong>Fuzzy skin</strong></td><td>Thickness <span class="val">0.3mm</span>, Point distance <span class="val">0.8mm</span></td><td>Adds randomised surface texture — grip, aesthetics, hide layer lines</td></tr>
+          <tr><td><strong>XY hole compensation</strong></td><td><span class="val">+0.1 to +0.2mm</span></td><td>Corrects for filament shrinkage causing holes to print undersized</td></tr>
+          <tr><td><strong>Elephant foot compensation</strong></td><td><span class="val">−0.1mm</span></td><td>Reduces first layer spreading outward beyond model boundary</td></tr>
+          <tr><td><strong>Seam gap</strong></td><td><span class="val">10–15%</span></td><td>Reduces blob at seam by slightly under-extruding at loop close point</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box info" style="margin-top:.7rem"><strong>XY compensation workflow:</strong> Print a calibration hole. Measure actual diameter with calipers. If target was 10mm and result is 9.8mm, add +0.1mm XY compensation. Re-test.</div>
+    </div>
+  </div><!-- /tab3 -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TAB 4 — Strength & Infill
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab4">
+    <h2><span class="tab-icon">&#x1F9B4;</span>Strength &amp; Infill Settings</h2>
+    <p class="tab-subtitle">Infill patterns, density recommendations, structural tips, and modifier meshes <span class="badge badge-yellow">Intermediate</span></p>
+
+    <div class="card">
+      <div class="section-heading">Infill Patterns — Comparison</div>
+      <table>
+        <thead><tr><th>Pattern</th><th>Strength</th><th>Speed</th><th>Best Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Grid</strong></td><td>Medium</td><td>Fast</td><td>General purpose, quick prototypes</td></tr>
+          <tr><td><strong>Gyroid</strong></td><td>Excellent</td><td>Medium</td><td>Flexible parts, chemical containers (no straight channels), best strength-to-weight</td></tr>
+          <tr><td><strong>Honeycomb</strong></td><td>High</td><td>Medium</td><td>Vertical loads, wall panels</td></tr>
+          <tr><td><strong>3D Honeycomb</strong></td><td>High (Z)</td><td>Medium-slow</td><td>Strong in all directions including Z</td></tr>
+          <tr><td><strong>Lightning</strong></td><td>Minimal</td><td>Fastest</td><td>Interior support only — decorative models, no structural role</td></tr>
+          <tr><td><strong>Rectilinear / Lines</strong></td><td>Low</td><td>Fastest</td><td>Draft / test prints, minimum material</td></tr>
+          <tr><td><strong>Adaptive Cubic</strong></td><td>Good</td><td>Fast</td><td>Smart balance — denser near surfaces, sparse in center</td></tr>
+          <tr><td><strong>Concentric</strong></td><td>Low (rigid)</td><td>Medium</td><td>Flexible / elastic parts — layers compress evenly</td></tr>
+          <tr><td><strong>Triangles</strong></td><td>High shear</td><td>Medium</td><td>High shear resistance (gears, brackets)</td></tr>
+          <tr><td><strong>Zig-Zag</strong></td><td>Medium</td><td>Fast</td><td>General, balanced, slightly faster than grid</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box info" style="margin-top:.7rem"><strong>Best overall recommendation:</strong> Gyroid at 15–20% for most functional prints. It has the best strength-to-weight ratio and resists multi-directional stress better than rectilinear patterns.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Infill Density Guide</div>
+      <table>
+        <thead><tr><th>Density</th><th>Category</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><span class="val">0–10%</span></td><td>Visual / decorative</td><td>Figurines, vases, display models — no load bearing</td></tr>
+          <tr><td><span class="val">15–20%</span></td><td>Standard</td><td>Most everyday prints — good balance of material, time, strength</td></tr>
+          <tr><td><span class="val">30–40%</span></td><td>Functional</td><td>Parts under moderate stress — brackets, tools, clips</td></tr>
+          <tr><td><span class="val">50–70%</span></td><td>High strength</td><td>Mechanical parts under significant load — gears, hinges, structural</td></tr>
+          <tr><td><span class="val">80–100%</span></td><td>Near-solid</td><td>Maximum strength — use sparingly, heavy and slow. 60% Gyroid often outperforms 80% Rectilinear.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Structural Strength Tips</div>
+      <div class="two-col">
+        <div>
+          <h4>Walls vs Infill for Strength</h4>
+          <div class="tip-box warning">
+            <strong>Key insight:</strong> 4 walls + 20% infill is almost always stronger than 2 walls + 50% infill for impact and bending loads. Walls carry load; infill provides internal support for top/bottom surfaces.
+          </div>
+          <ul>
+            <li>Add walls before increasing infill for structural applications</li>
+            <li>4 walls at any reasonable infill density is the sweet spot for functional parts</li>
+          </ul>
+          <h4 style="margin-top:.8rem">Print Orientation</h4>
+          <ul>
+            <li>Inter-layer Z bonds are the weakest point in any FDM print</li>
+            <li>Orient so the primary load direction is in the XY plane, not Z</li>
+            <li>A vertical bar printed upright will snap at layer lines; printed lying flat it resists the same load far better</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Interface &amp; Overlap Settings</h4>
+          <ul>
+            <li><strong>Interface layers</strong> — solid layers between infill and walls improve top surface quality</li>
+            <li><strong>Infill/wall overlap:</strong> <span class="val">25–30%</span> — ensures infill bonds to walls; too low = gaps, too high = over-extrusion at junctions</li>
+            <li><strong>Infill anchor length</strong> — how far infill extends into walls — longer = better bonding</li>
+          </ul>
+          <h4 style="margin-top:.8rem">Top Surface Strength</h4>
+          <ul>
+            <li>If top surface shows infill pattern through it (pillowing), increase top shell layers or lower layer height</li>
+            <li>Top solid layers require at least <span class="val">4 layers</span> at 0.2mm to fully close over standard infill</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Modifier Meshes — Zone-Based Settings</div>
+      <p>Modifier meshes let you apply <strong>different settings to specific regions</strong> of your model without changing global settings.</p>
+      <hr class="divider">
+      <h4>How to Use</h4>
+      <div class="step-block"><div class="step-num">1</div><div class="step-content">Right-click object in viewport → <strong>Add Modifier</strong> → choose a primitive (box, sphere, cylinder) or import an STL</div></div>
+      <div class="step-block"><div class="step-num">2</div><div class="step-content">Position and resize the modifier mesh to cover the region you want to modify (e.g., around a screw hole)</div></div>
+      <div class="step-block"><div class="step-num">3</div><div class="step-content">In the modifier's settings, override: infill density, wall count, top/bottom layers as needed</div></div>
+      <div class="step-block"><div class="step-num">4</div><div class="step-content">Slice — the region inside the modifier uses the override, rest of model uses global settings</div></div>
+      <hr class="divider">
+      <h4>Common Use Cases</h4>
+      <ul>
+        <li><strong>Screw holes / inserts</strong> — high infill (60–80%) around fastener zone, 15% elsewhere</li>
+        <li><strong>Stress concentration zones</strong> — extra walls in a narrow bridge or cantilevered section</li>
+        <li><strong>Display face</strong> — ironing only on the visible top face without ironing the entire model</li>
+        <li><strong>Weight reduction</strong> — low infill in a large bulk section, full density at load-bearing edges</li>
+      </ul>
+      <div class="tip-box" style="margin-top:.7rem">Modifier meshes are one of OrcaSlicer's most powerful features for optimising functional prints. Learn them — they eliminate the need to split models in CAD.</div>
+    </div>
+  </div><!-- /tab4 -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TAB 5 — Support Structures
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab5">
+    <h2><span class="tab-icon">&#x1F333;</span>Support Structures — Complete</h2>
+    <p class="tab-subtitle">Support types, distances, interface layers, painting, and bridging <span class="badge badge-yellow">Intermediate</span></p>
+
+    <div class="card">
+      <div class="section-heading">Support Types</div>
+      <table>
+        <thead><tr><th>Type</th><th>Description</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Normal (auto)</strong></td><td>Grid/pillar supports generated everywhere overhangs exceed threshold</td><td>Simple geometries, fast setup</td></tr>
+          <tr><td><strong>Tree</strong></td><td>Branches grow up from build plate to contact only the necessary points — minimal footprint</td><td>Organic shapes, figurines, complex parts where support removal matters</td></tr>
+          <tr><td><strong>Snug</strong></td><td>Tightly follows part contour — dense but minimal XY gap</td><td>Precision parts where overhang quality is critical</td></tr>
+          <tr><td><strong>No supports</strong></td><td>Print without any — relies on part geometry being printable</td><td>Overhangs under 45°, bridges under 50mm on tuned printers</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box info" style="margin-top:.7rem"><strong>Tree supports</strong> are almost always preferable to normal supports for organic/curved models — less material, cleaner removal, less scarring on the model surface.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Support Settings — Key Parameters</div>
+      <table>
+        <thead><tr><th>Setting</th><th>Recommended</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Overhang angle threshold</strong></td><td><span class="val">45°</span> standard</td><td>Angle beyond which supports are generated. Lower value = more supports. Test your printer's actual capability (many can do 50–55° cleanly).</td></tr>
+          <tr><td><strong>Support Z distance</strong></td><td><span class="val">0.2mm</span> easy removal<br><span class="val">0.1mm</span> better surface</td><td>Gap between support top and underside of model. Smaller gap = better overhang quality, harder removal.</td></tr>
+          <tr><td><strong>Support XY distance</strong></td><td><span class="val">0.5–0.8mm</span></td><td>Horizontal clearance from model. Smaller = better overhang quality. Larger = easier removal.</td></tr>
+          <tr><td><strong>Support interface layers</strong></td><td><span class="val">2–4 layers</span></td><td>Solid layers on top of support before the model. Dramatically improves surface quality on supported overhangs.</td></tr>
+          <tr><td><strong>Interface pattern</strong></td><td>Concentric or Rectilinear</td><td>Concentric = easier peeling off. Rectilinear = faster. Grid = strongest (hardest to remove).</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top:.7rem"><strong>Support interface layers</strong> are the single biggest quality improvement for supported surfaces. Always use 3–4 interface layers for any visible overhang.</div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="section-heading">Support Painting</div>
+        <p>Paint supports directly onto the model surface instead of relying on auto-generation everywhere.</p>
+        <ul>
+          <li><strong>Blue brush</strong> — enforce support here (adds support where the auto algorithm wouldn't place it)</li>
+          <li><strong>Red brush</strong> — block support here (removes auto-generated support from that area)</li>
+          <li><strong>Brush size</strong> — adjust with scroll wheel or slider for precision</li>
+        </ul>
+        <div class="tip-box" style="margin-top:.6rem">
+          <strong>Use case:</strong> Auto-generates supports on a decorative face you want clean — paint red to block them. A critical overhang isn't getting support — paint blue to force it.
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-heading">Support Enforcers &amp; Blockers</div>
+        <p>Primitive shape approach (vs. paint approach) for support control:</p>
+        <ul>
+          <li>Right-click model in viewport → <strong>Add support enforcer</strong> or <strong>Add support blocker</strong></li>
+          <li>Choose shape: cube, sphere, cylinder</li>
+          <li>Resize and position over the area to control</li>
+          <li>Enforcers appear <strong>green</strong>, blockers appear <strong>red</strong> as translucent overlays</li>
+        </ul>
+        <div class="tip-box info" style="margin-top:.6rem">Blockers are faster than paint for large flat areas. Paint is better for irregular contoured surfaces.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Bridging — Printing Horizontal Spans Without Support</div>
+      <p>A <strong>bridge</strong> is a horizontal span between two supported points. With a well-tuned printer, bridges can span significant distances without support.</p>
+      <div class="two-col" style="margin-top:.7rem">
+        <div>
+          <h4>Bridge Capabilities</h4>
+          <ul>
+            <li>Typical tuned printer: <span class="val">50–60mm</span> clean bridge</li>
+            <li>Well-tuned with good cooling: up to <span class="val">80–100mm</span></li>
+            <li>Test with a bridge torture test file before relying on it</li>
+          </ul>
+          <h4 style="margin-top:.8rem">Bridge Settings</h4>
+          <ul>
+            <li><strong>Bridge speed:</strong> slow down to <span class="val">20–30 mm/s</span> — gives filament time to solidify mid-air</li>
+            <li><strong>Bridge flow:</strong> reduce to <span class="val">0.90–0.95</span> — slight under-extrusion reduces sag</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Cooling for Bridges</h4>
+          <ul>
+            <li>Set <strong>fan speed during bridging to 100%</strong> — maximum airflow solidifies the filament before it sags</li>
+            <li>Bridging direction: OrcaSlicer automatically orients bridge lines in the optimal direction (perpendicular to the span)</li>
+          </ul>
+          <div class="tip-box warning" style="margin-top:.6rem"><strong>PLA bridges well.</strong> PETG sags more. ABS/ASA bridge poorly without enclosure. TPU barely bridges. Adjust bridge speed and flow per material.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Soluble Supports (Multi-Material)</div>
+      <ul>
+        <li><strong>PVA</strong> — dissolves in water. Works with PLA. Brittle, humidity-sensitive, expensive.</li>
+        <li><strong>BVOH</strong> — dissolves in water. Easier to print than PVA, better layer adhesion, less brittle.</li>
+        <li><strong>HIPS</strong> — dissolves in limonene. Pair with ABS for enclosed printer setups.</li>
+      </ul>
+      <div class="tip-box info" style="margin-top:.7rem">In OrcaSlicer multi-material settings, assign the support material to Extruder 2 and enable <strong>Soluble support interface</strong> — only the interface layers use the expensive soluble filament, bulk support uses cheap PLA.</div>
+    </div>
+  </div><!-- /tab5 -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       TAB 6 — Calibration
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab6">
+    <h2><span class="tab-icon">&#x1F9EA;</span>Calibration — OrcaSlicer's Superpower</h2>
+    <p class="tab-subtitle">Every built-in calibration test explained with target values and interpretation <span class="badge badge-orange">Advanced</span></p>
+
+    <div class="tip-box info" style="margin-bottom:1rem">
+      <strong>Access all calibration tests:</strong> Top menu bar &gt; <strong>Calibration</strong>. Run these in order on every new filament: Temperature Tower → Flow Rate → Pressure Advance → Retraction. Then set Max Volumetric Speed for high-speed printing.
+    </div>
+
+    <!-- TEMPERATURE TOWER -->
+    <div class="card">
+      <div class="section-heading">1. Temperature Tower</div>
+      <p>Prints a tower that automatically changes printing temperature at set height intervals. Each band represents a different temperature. Find the band with the best combination of: no stringing, clean bridging, and good layer adhesion.</p>
+      <div class="two-col" style="margin-top:.8rem">
+        <div>
+          <h4>Typical Ranges by Material</h4>
+          <table>
+            <thead><tr><th>Material</th><th>Range</th><th>Start Temp</th></tr></thead>
+            <tbody>
+              <tr><td>PLA</td><td>190–230°C</td><td>220°C, −5°C/section</td></tr>
+              <tr><td>PETG</td><td>220–250°C</td><td>245°C, −5°C/section</td></tr>
+              <tr><td>ABS</td><td>220–250°C</td><td>245°C, −5°C/section</td></tr>
+              <tr><td>TPU</td><td>210–240°C</td><td>230°C, −5°C/section</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>What to Look For</h4>
+          <ul>
+            <li><strong>Too hot:</strong> stringing between towers, blobbing, oozing at corners, drooping bridges</li>
+            <li><strong>Too cold:</strong> poor layer bonding, brittle result, rough surface texture, under-extrusion, white stress lines</li>
+            <li><strong>Just right:</strong> clean bridges, minimal stringing, smooth surface, sharp corners, good layer fusion</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:.7rem">Save the winning temperature in your filament profile. Repeat for each new spool — even same brand/colour batches can vary by ±5°C.</div>
+    </div>
+
+    <!-- FLOW RATE -->
+    <div class="card">
+      <div class="section-heading">2. Flow Rate Calibration</div>
+      <p>Ensures your printer extrudes exactly the right amount of plastic. Incorrect flow is the root cause of most surface quality issues — over-extrusion causes bumpy tops; under-extrusion causes gaps and weak layers.</p>
+      <hr class="divider">
+      <h4>Method: OrcaSlicer Two-Step Flow Calibration</h4>
+      <div class="step-block"><div class="step-num">1</div><div class="step-content"><strong>Volumetric Flow (Step 1):</strong> Print the single-wall cube from the calibration menu. Measure the wall thickness with calipers. Compare to expected (nozzle diameter). Calculate: <code>new_flow = (target_width / measured_width) × current_flow_ratio</code></div></div>
+      <div class="step-block"><div class="step-num">2</div><div class="step-content"><strong>Fine Flow (Step 2):</strong> OrcaSlicer prints a set of reference cubes with incrementally varying flow. Inspect visually — find the cube with the flattest, most uniform top surface. Enter that value in the dialog.</div></div>
+      <div class="step-block"><div class="step-num">3</div><div class="step-content"><strong>Save</strong> the new flow ratio in your filament profile. Label the profile with brand, colour, and date.</div></div>
+      <div class="tip-box warning" style="margin-top:.7rem"><strong>Do this for every new filament spool and brand.</strong> Flow ratios typically range from 0.92 to 1.05 — cheap filaments often need more correction than quality brands.</div>
+    </div>
+
+    <!-- PRESSURE ADVANCE -->
+    <div class="card">
+      <div class="section-heading">3. Pressure Advance (PA) / Linear Advance</div>
+      <p>Pressure Advance compensates for the pressure buildup in the nozzle during acceleration and deceleration. Without it, corners have blobs (too much pressure at slow speeds) or rounding (not enough pressure to fill corners at high speed).</p>
+      <div class="two-col" style="margin-top:.8rem">
+        <div>
+          <h4>Typical PA Values</h4>
+          <table>
+            <thead><tr><th>Material</th><th>Direct Drive</th><th>Bowden</th></tr></thead>
+            <tbody>
+              <tr><td>PLA</td><td>0.02–0.06</td><td>0.4–0.8</td></tr>
+              <tr><td>PETG</td><td>0.05–0.15</td><td>0.8–1.5</td></tr>
+              <tr><td>ABS</td><td>0.03–0.08</td><td>0.5–1.0</td></tr>
+              <tr><td>TPU</td><td>0.1–0.5</td><td>N/A (not recommended)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>OrcaSlicer PA Tower Method</h4>
+          <ul>
+            <li>Calibration menu &gt; <strong>Pressure Advance</strong></li>
+            <li>Prints a tall tower with varying PA value each section (shown on side)</li>
+            <li>Find the section where corners are <em>sharpest and cleanest</em> — no blobs, no rounding</li>
+            <li>Enter that value in your filament profile under <strong>Pressure Advance</strong></li>
+          </ul>
+          <div class="tip-box" style="margin-top:.5rem">Direct drive printers need much lower PA values than Bowden setups — the shorter filament path means less pressure builds up.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RETRACTION -->
+    <div class="card">
+      <div class="section-heading">4. Retraction Calibration</div>
+      <p>Retraction pulls filament back when the nozzle travels between points — preventing strings/blobs of ooze. Too little = stringing. Too much = gaps, grinding of filament, clogs.</p>
+      <div class="two-col" style="margin-top:.8rem">
+        <div>
+          <h4>Target Values</h4>
+          <table>
+            <thead><tr><th>Extruder Type</th><th>Distance</th><th>Speed</th></tr></thead>
+            <tbody>
+              <tr><td>Direct Drive</td><td>0.5–1.5mm</td><td>25–45 mm/s</td></tr>
+              <tr><td>Bowden (PTFE)</td><td>3–7mm</td><td>40–60 mm/s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>Calibration Method</h4>
+          <p style="font-size:13px">Calibration menu &gt; <strong>Retraction</strong>. Prints a stringing test tower with increasing retraction distance each section. Find the lowest distance that eliminates stringing — using the minimum necessary reduces wear on filament and prevents grinding.</p>
+          <div class="tip-box warning" style="margin-top:.5rem"><strong>PETG:</strong> needs very little retraction (0.5–1mm direct) — over-retracting causes stringing due to oozy nature. Use more wipe distance instead.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAX VOLUMETRIC SPEED -->
+    <div class="card">
+      <div class="section-heading">5. Max Volumetric Speed Test</div>
+      <p>Determines the maximum rate your hotend can melt and push filament. This is the hard ceiling for all speed settings — go faster and you get under-extrusion. Especially critical for high-speed printers (150mm/s+).</p>
+      <div class="two-col" style="margin-top:.8rem">
+        <div>
+          <h4>How It Works</h4>
+          <ul>
+            <li>Prints a column increasing speed continuously</li>
+            <li>Find the height where under-extrusion first appears (gaps, rough surface, clicking extruder)</li>
+            <li>Set that volumetric value (mm³/s) in your filament profile</li>
+            <li>OrcaSlicer uses this to cap all speed settings automatically</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Typical Values (mm³/s)</h4>
+          <table>
+            <thead><tr><th>Hotend</th><th>PLA</th><th>PETG</th></tr></thead>
+            <tbody>
+              <tr><td>Stock E3D V6</td><td>10–14</td><td>8–11</td></tr>
+              <tr><td>Bambu stock</td><td>18–24</td><td>14–18</td></tr>
+              <tr><td>Dragon HF / Rapido</td><td>25–35</td><td>18–25</td></tr>
+              <tr><td>Volcano</td><td>20–30</td><td>15–22</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIRST LAYER -->
+    <div class="card">
+      <div class="section-heading">6. First Layer Calibration</div>
+      <p>The foundation of every print. Correct first layer = parts that stick and release cleanly with good dimensional accuracy.</p>
+      <div class="two-col" style="margin-top:.8rem">
+        <div>
+          <h4>Live Z Offset</h4>
+          <ul>
+            <li>Use OrcaSlicer's built-in <strong>squish pattern</strong> (Calibration &gt; First Layer)</li>
+            <li>Adjust Z offset in real-time while printing: turn negative = closer to bed (more squish), positive = farther</li>
+            <li><strong>Correct:</strong> lines slightly squished together, no gaps, no ridges between lines</li>
+            <li><strong>Too close:</strong> nozzle drags, plastic squirts sideways, nozzle may clog</li>
+            <li><strong>Too far:</strong> lines round on top, gaps between lines, poor adhesion</li>
+          </ul>
+        </div>
+        <div>
+          <h4>First Layer Visual Reference</h4>
+          <div class="tip-box">Lines should look like they have been gently pressed — slightly wider than the nozzle diameter, with adjacent lines just barely touching. A slight sheen from compression is correct.</div>
+          <div class="tip-box warning" style="margin-top:.5rem">Re-run first layer calibration after: nozzle change, hotend rebuild, bed surface replacement, significant temperature change in the room.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VFA -->
+    <div class="card">
+      <div class="section-heading">7. VFA — Vertical Fine Artifacts Test</div>
+      <p><strong>VFAs (Vertical Fine Artifacts)</strong> are periodic ripples or bands on the vertical walls of prints caused by resonance at specific speeds — typically motor step frequencies or motion system resonance frequencies.</p>
+      <div class="two-col" style="margin-top:.7rem">
+        <div>
+          <h4>How to Run</h4>
+          <ul>
+            <li>Calibration menu &gt; <strong>VFA</strong></li>
+            <li>Prints a smooth-walled cylinder at incrementally increasing speeds per band</li>
+            <li>Identify bands with rippling — note the speed range</li>
+            <li>Set outer wall speed to avoid those ranges in your profiles</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Common Causes &amp; Fixes</h4>
+          <ul>
+            <li><strong>Belt resonance</strong> — retension belts to the same pitch (~110 Hz on Bambu, ~100 Hz on CoreXY)</li>
+            <li><strong>Motor frequency</strong> — avoid printing outer walls at the resonant speed (typically 50–80 mm/s on many printers)</li>
+            <li><strong>Input shaper</strong> (Klipper) — run resonance compensation to eliminate VFAs altogether</li>
+          </ul>
+          <div class="tip-box info" style="margin-top:.5rem">VFAs are purely cosmetic but very visible on smooth-walled models. If you see regular banding at consistent spacing, VFA speed is the culprit.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">Calibration Sequence — Quick Reference</div>
+      <table>
+        <thead><tr><th>Order</th><th>Test</th><th>When to Run</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>First Layer Z Offset</td><td>Every bed removal / nozzle change</td><td>5 min</td></tr>
+          <tr><td>2</td><td>Temperature Tower</td><td>New filament brand/type</td><td>45–90 min</td></tr>
+          <tr><td>3</td><td>Flow Rate (Step 1 + 2)</td><td>Every new spool</td><td>30 min</td></tr>
+          <tr><td>4</td><td>Pressure Advance</td><td>Every new filament type</td><td>20–30 min</td></tr>
+          <tr><td>5</td><td>Retraction</td><td>New filament or new extruder</td><td>20 min</td></tr>
+          <tr><td>6</td><td>Max Volumetric Speed</td><td>High-speed profile setup</td><td>15 min</td></tr>
+          <tr><td>7</td><td>VFA</td><td>Once per printer, re-check after belt changes</td><td>30 min</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- /tab6 -->
+
+</div><!-- /content -->
+
+<script>
+  function switchTab(n) {
+    // Hide all panels
+    var panels = document.querySelectorAll('.tab-panel');
+    panels.forEach(function(p) { p.classList.remove('active'); });
+
+    // Deactivate all buttons
+    var buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(function(b) { b.classList.remove('active'); });
+
+    // Show target panel if it exists
+    var target = document.getElementById('tab' + n);
+    if (target) { target.classList.add('active'); }
+
+    // Activate corresponding button (buttons are indexed 1-based in DOM order)
+    if (buttons[n - 1]) { buttons[n - 1].classList.add('active'); }
+
+    // Scroll to top of content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+<!-- TAB 7: Filament Profiles & Multi-Material -->
+<div class="tab-panel" id="tab7">
+  <h2 class="section-heading">Filament Profiles &amp; Multi-Material</h2>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">PLA (Polylactic Acid)</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>190–220°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>55–65°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>100%</span></div>
+    <div class="shortcut-row"><span>Enclosure</span><span>Not required</span></div>
+    <div class="tip-box info">Easy to print, low warp, brittle, not heat resistant — softens at ~60°C. Best for prototypes, display models, and non-functional parts.</div>
+    <p><strong>Bed surfaces:</strong> PEI textured (excellent adhesion), glass, BuildTak.</p>
+    <p><strong>Drying:</strong> Not critical but dry 4 hr at 45°C if you notice clicking sounds or bubbles (moisture symptoms).</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">PLA+ / PLA Pro</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>205–230°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>60–70°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>100%</span></div>
+    <div class="tip-box info">Tougher than standard PLA, slightly more flexible, better layer adhesion. Otherwise uses the same easy workflow as PLA.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">PETG (Polyethylene Terephthalate Glycol)</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>230–250°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>70–85°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>30–50%</span></div>
+    <div class="shortcut-row"><span>Enclosure</span><span>Not required</span></div>
+    <div class="tip-box warning">PETG sticks extremely well to PEI — use a glue stick or let the bed cool fully before attempting removal to avoid damaging the surface.</div>
+    <p><strong>Strengths:</strong> Strong, flexible, chemical resistant, food-safe (with appropriate settings), heat resistant to ~80°C.</p>
+    <p><strong>Stringing:</strong> Prone to stringing — lower temp, enable good retraction, and tune Pressure Advance.</p>
+    <p><strong>Drying:</strong> Moisture sensitive — dry 6 hr at 65°C before printing.</p>
+    <p><strong>Best for:</strong> Functional parts, containers, outdoor use.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">ABS (Acrylonitrile Butadiene Styrene)</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>230–250°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>100–115°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>0% (or minimal)</span></div>
+    <div class="shortcut-row"><span>Enclosure</span><span>REQUIRED</span></div>
+    <div class="tip-box danger">ABS emits fumes — always print in a well-ventilated area or use a HEPA/activated carbon filter. An enclosure is mandatory to prevent warping and layer cracking.</div>
+    <p><strong>Strengths:</strong> Strong, machinable (drill, tap, sand, acetone-smooth), heat resistant to ~100°C.</p>
+    <p><strong>Bed:</strong> PEI smooth at 80°C, or ABS slurry (dissolve ABS scraps in acetone and brush onto bed).</p>
+    <p><strong>Drying:</strong> Dry if you notice moisture symptoms.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">ASA (Acrylonitrile Styrene Acrylate)</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>240–260°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>90–110°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>Minimal</span></div>
+    <div class="shortcut-row"><span>Enclosure</span><span>REQUIRED</span></div>
+    <div class="tip-box info">UV-resistant and weather-resistant — the best choice for outdoor prints. Behavior is similar to ABS but with superior UV stability.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">TPU — Flexible (Thermoplastic Polyurethane)</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>220–240°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>40–60°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>50%</span></div>
+    <div class="shortcut-row"><span>Max Print Speed</span><span>20–35 mm/s</span></div>
+    <div class="tip-box warning">Direct drive extruder strongly recommended. Bowden setups cause TPU to buckle inside the tube. Use no retraction or minimal retraction (0.5mm direct drive).</div>
+    <p><strong>Properties:</strong> Flexible, rubber-like, chemical resistant. Shore hardness ranges from 85A (very soft) to 98A (semi-rigid).</p>
+    <p><strong>Best for:</strong> Phone cases, gaskets, handles, flexible hinges.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">PA / Nylon</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>240–280°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>70–90°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>20–40%</span></div>
+    <div class="tip-box danger">Nylon is extremely hygroscopic. It MUST be dried 12 hr at 70°C and printed directly from a sealed dry box. Wet nylon prints very poorly.</div>
+    <p><strong>Strengths:</strong> Strong, abrasion resistant, slightly flexible. Excellent for gears and mechanical parts.</p>
+    <p><strong>Warping:</strong> Warps on large prints — use an enclosure, high bed temp, and a brim.</p>
+    <p><strong>Nozzle:</strong> Abrasive — use a hardened steel nozzle.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">PC (Polycarbonate)</h3>
+    <div class="shortcut-row"><span>Print Temp</span><span>260–310°C</span></div>
+    <div class="shortcut-row"><span>Bed Temp</span><span>90–120°C</span></div>
+    <div class="shortcut-row"><span>Fan Speed</span><span>0–20%</span></div>
+    <div class="shortcut-row"><span>Enclosure</span><span>REQUIRED</span></div>
+    <div class="tip-box danger">PTFE-lined hotends are not rated above 260°C — an all-metal hotend is required for PC. Warping is severe; use glue stick with a 120°C bed.</div>
+    <p><strong>Strengths:</strong> Strongest common filament. Impact resistant. Heat resistant to ~130°C.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Carbon Fiber Filled (CF-PLA, CF-PETG, CF-Nylon)</h3>
+    <div class="tip-box danger">CF filaments are highly abrasive and will destroy a brass nozzle within a few hours. A hardened steel nozzle is mandatory.</div>
+    <p><strong>Benefits:</strong> Higher strength, lower weight, very stiff, matte surface finish.</p>
+    <p><strong>Settings:</strong> Follow the base material settings (PLA, PETG, or Nylon) — only the nozzle requirement differs.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Multi-Material Printing (AMS / MMU)</h3>
+    <p><strong>Flush volumes:</strong> The amount of filament purged when switching colors. Higher = cleaner transition, more waste. Tune per color combination.</p>
+    <p><strong>Wipe tower:</strong> Purges old color between tool changes. Size should match your flush volume setting.</p>
+    <p><strong>Avoid flush (purge into infill):</strong> Reduces waste and time but slows the print slightly.</p>
+    <p><strong>Color order tip:</strong> Print light colors before dark within the same object to minimize contamination.</p>
+    <div class="shortcut-row"><span>PLA + PLA</span><span>Easy — compatible temps</span></div>
+    <div class="shortcut-row"><span>PLA + PETG</span><span>Tricky — different temps</span></div>
+    <div class="shortcut-row"><span>PLA + TPU</span><span>Very difficult</span></div>
+    <div class="tip-box info">Support interface trick: use PETG as the interface material when printing PLA parts. PETG won't bond to PLA, so supports release cleanly with no surface damage.</div>
+  </div>
+</div>
+
+<!-- TAB 8: Speed & Performance Tuning -->
+<div class="tab-panel" id="tab8">
+  <h2 class="section-heading">Speed &amp; Performance Tuning</h2>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Speed Settings Hierarchy</h3>
+    <p>Outer settings cap inner ones. Set from slowest (quality-critical) to fastest (hidden):</p>
+    <div class="shortcut-row"><span>Outer wall</span><span>30–60 mm/s — quality critical, keep slow</span></div>
+    <div class="shortcut-row"><span>Inner wall</span><span>100–200 mm/s — hidden, can be fast</span></div>
+    <div class="shortcut-row"><span>Infill</span><span>150–300 mm/s — hidden, max speed</span></div>
+    <div class="shortcut-row"><span>Top surface</span><span>80–120 mm/s — visible, moderate</span></div>
+    <div class="shortcut-row"><span>First layer</span><span>20–30 mm/s — critical for adhesion</span></div>
+    <div class="shortcut-row"><span>Small perimeters</span><span>50% of outer wall speed</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Acceleration Settings</h3>
+    <div class="shortcut-row"><span>Normal printing</span><span>3,000–5,000 mm/s²</span></div>
+    <div class="shortcut-row"><span>First layer</span><span>500–1,000 mm/s²</span></div>
+    <div class="shortcut-row"><span>Outer wall</span><span>3,000–5,000 mm/s²</span></div>
+    <div class="shortcut-row"><span>Infill</span><span>8,000–15,000 mm/s²</span></div>
+    <div class="shortcut-row"><span>Travel</span><span>10,000–20,000 mm/s²</span></div>
+    <div class="shortcut-row"><span>Jerk</span><span>5–10 mm/s (quality) / 20+ mm/s (speed)</span></div>
+    <p style="margin-top:0.75rem;">Lower jerk = smoother direction changes but slower overall movement. Tune based on your quality vs. speed priority.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Input Shaping / Resonance Compensation</h3>
+    <p>Reduces ringing and ghosting artifacts that appear at high print speeds. Requires an accelerometer or manual frequency testing to find your printer's resonant frequencies.</p>
+    <div class="shortcut-row"><span>MZV</span><span>Low vibration — good all-rounder</span></div>
+    <div class="shortcut-row"><span>EI</span><span>High speed tolerance</span></div>
+    <div class="shortcut-row"><span>2HUMP_EI</span><span>Very aggressive — maximum speed</span></div>
+    <div class="tip-box info">In OrcaSlicer, enter the X and Y resonance frequencies found from your calibration run. Each algorithm handles the frequency differently — start with MZV.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Pressure Advance &amp; Speed Interaction</h3>
+    <div class="tip-box warning">Higher print speeds require higher PA values. Always calibrate Pressure Advance at the actual target print speed — a PA calibrated at 50 mm/s will be wrong at 200 mm/s.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">High-Speed Printing Checklist</h3>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Run the Max Volumetric Speed test — never exceed your hotend's capability</li>
+      <li>Calibrate Pressure Advance at your target print speed</li>
+      <li>Enable Input Shaping if your printer/firmware supports it</li>
+      <li>Use Arachne wall generator (handles high speeds better than Classic)</li>
+      <li>Increase fan speed — better cooling is needed at higher speeds</li>
+      <li>Verify first layer adhesion — high acceleration can dislodge prints mid-run</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Print Profile Presets</h3>
+    <div class="shortcut-row"><span>Draft</span><span>0.3mm layers · 300 mm/s · minimal quality</span></div>
+    <div class="shortcut-row"><span>Standard</span><span>0.2mm layers · 150 mm/s · good balance</span></div>
+    <div class="shortcut-row"><span>Quality</span><span>0.15mm layers · 80 mm/s · excellent detail</span></div>
+    <div class="shortcut-row"><span>Fine</span><span>0.1mm layers · 50 mm/s · maximum resolution</span></div>
+  </div>
+</div>
+
+<!-- TAB 9: Advanced Features -->
+<div class="tab-panel" id="tab9">
+  <h2 class="section-heading">Advanced Features</h2>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Variable Layer Height</h3>
+    <p>Right-click an object → <strong>Variable Layer Height</strong>. A height map appears along the model.</p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li><strong>Drag down</strong> on curved or detailed areas → thinner layers, more detail</li>
+      <li><strong>Drag up</strong> on flat areas → thicker layers, faster printing</li>
+      <li><strong>Adaptive mode:</strong> OrcaSlicer auto-suggests layer heights based on surface angle</li>
+    </ul>
+    <div class="tip-box info">Variable layer height can significantly cut print time on models with both flat and complex surfaces while maintaining detail only where needed.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Modifier Meshes</h3>
+    <p>Add → Modifier Mesh → choose Box, Cylinder, Sphere, or load a custom STL. The modifier region can have completely different settings from the rest of the model.</p>
+    <p><strong>Use cases:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Reinforce a screw boss area with 80% infill while the rest of the model uses 15%</li>
+      <li>Print a logo area at 0.1mm layers for detail while the rest prints at 0.2mm</li>
+      <li>Raise temperature in a region with poor layer adhesion</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Seam Control</h3>
+    <div class="shortcut-row"><span>Manual seam painting</span><span>Paint seam position directly on model surface</span></div>
+    <div class="shortcut-row"><span>Seam alignment options</span><span>Contour / Rear / Aligned / Nearest / Random</span></div>
+    <div class="tip-box info">Hidden seam trick: place the seam at a sharp corner or edge of the model — it blends into the geometry and becomes nearly invisible.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Support Painting (Detail)</h3>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li><strong>Blue brush (Enforce):</strong> Force supports in a painted region</li>
+      <li><strong>Red brush (Block):</strong> Prevent supports in a painted region</li>
+      <li>Adjust brush size and per-region angle threshold</li>
+      <li>Combine with auto-generated supports for a hybrid approach</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Color / Filament Painting (Single Extruder)</h3>
+    <p>Paint → Filament Painting. Assign different colors to faces by painting directly on the model. OrcaSlicer automatically inserts filament-change pauses at the correct layer heights.</p>
+    <div class="tip-box info">Works with single-extruder printers using manual filament swaps — no AMS or MMU required for simple 2–3 color prints.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Object Arrangement</h3>
+    <div class="shortcut-row"><kbd>G</kbd><span>Auto-arrange all objects on the plate</span></div>
+    <p><strong>Wipe tower:</strong> Drag it to a preferred position (usually the rear corner, away from the print).</p>
+    <p><strong>Sequential printing:</strong> Print objects one at a time — reduces stringing between objects. Set clearance height to match the tallest object the printhead must clear.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Custom G-Code</h3>
+    <div class="shortcut-row"><span>Start G-code</span><span>Preheat, prime line, home axes</span></div>
+    <div class="shortcut-row"><span>End G-code</span><span>Fan off, motors off, present print (move Z up)</span></div>
+    <div class="shortcut-row"><span>Before layer G-code</span><span>Custom action executed every layer</span></div>
+    <div class="shortcut-row"><span>After layer G-code</span><span>Pause, filament change, lighting trigger</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Pause at Layer</h3>
+    <p>Two methods to insert a pause:</p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Add → Height Range Modifier</li>
+      <li>Right-click the layer slider in the preview → Add Pause</li>
+    </ul>
+    <p><strong>Use cases:</strong> Embedding magnets or nuts, inserting threaded heat-set inserts, performing a mid-print color change.</p>
+  </div>
+</div>
+
+<!-- TAB 10: Troubleshooting Complete Guide -->
+<div class="tab-panel" id="tab10">
+  <h2 class="section-heading">Troubleshooting Complete Guide</h2>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Stringing</h3>
+    <p><strong>Causes:</strong> Temperature too high, insufficient retraction, low travel speed, moisture in filament.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Lower nozzle temp 5°C at a time until stringing stops</li>
+      <li>Increase retraction distance (run the Retraction calibration tool)</li>
+      <li>Enable "Avoid Crossing Perimeters"</li>
+      <li>Increase travel speed</li>
+      <li>Dry your filament if the problem persists</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Layer Separation / Delamination</h3>
+    <p><strong>Causes:</strong> Temperature too low, layer height too large, printing too fast, excessive cooling on ABS/ASA/Nylon.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Raise nozzle temperature 5–10°C</li>
+      <li>Reduce layer height (stay within 75% of nozzle diameter max)</li>
+      <li>Slow down print speed</li>
+      <li>Reduce fan speed for engineering materials (ABS/ASA/Nylon need minimal cooling)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Warping / Lifting Corners</h3>
+    <p><strong>Causes:</strong> Thermal contraction, poor bed adhesion, insufficient brim.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Increase bed temperature</li>
+      <li>Add a brim (5–10mm works well for most warping issues)</li>
+      <li>Use an enclosure for ABS / ASA / Nylon</li>
+      <li>Apply a glue stick to the bed surface</li>
+      <li>Clean the bed with IPA before every print</li>
+      <li>Verify Z offset — first layer must be properly squished</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Under Extrusion (Gaps, Weak Layers, Thin Walls)</h3>
+    <p><strong>Causes:</strong> Clogged nozzle, speed too high, flow rate too low, temperature too low, worn PTFE, moisture in filament.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Run Flow Rate calibration</li>
+      <li>Perform a cold pull / atomic pull to clean the nozzle</li>
+      <li>Reduce print speed</li>
+      <li>Increase nozzle temperature</li>
+      <li>Inspect Bowden tube for gaps at the hotend connection</li>
+      <li>Dry filament if moisture is suspected</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Over Extrusion (Blobby Surfaces, Elephant Foot, Thick Lines)</h3>
+    <p><strong>Causes:</strong> Flow rate too high, Pressure Advance too low.</p>
+    <p><strong>Fixes:</strong> Reduce the flow ratio, calibrate Pressure Advance, increase retraction slightly.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Z Banding (Horizontal Lines Repeating at Regular Intervals)</h3>
+    <p><strong>Causes:</strong> Bent or misaligned Z lead screw, Z rod binding, Z backlash, loose Z coupling.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Check the Z coupling — a loose coupling causes vibration at each revolution</li>
+      <li>Check lead screw alignment (should be perfectly vertical)</li>
+      <li>Lubricate the lead screw with PTFE/super-lube grease</li>
+      <li>Check for any binding along the Z travel</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Ghosting / Ringing (Echo of Features on Surface)</h3>
+    <p><strong>Causes:</strong> Printer resonating at the current print speed — vibrations echo through the frame.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul style="line-height:1.8;padding-left:1.25rem;">
+      <li>Reduce outer wall print speed</li>
+      <li>Tighten all frame bolts to increase rigidity</li>
+      <li>Enable Input Shaping / Resonance Compensation</li>
+      <li>Change speeds to avoid the printer's resonant frequency</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Poor Overhang Quality</h3>
+    <p><strong>Causes:</strong> Insufficient cooling, speed too high, overhang angle too steep (&gt;45–50°).</p>
+    <p><strong>Fixes:</strong> Run fans at maximum on overhang regions, slow outer wall speed, add supports, or redesign the model to keep overhangs under 45°.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">First Layer Issues</h3>
+    <div class="shortcut-row"><span>Not sticking (too high)</span><span>Lower Z offset (more negative) · slow first layer</span></div>
+    <div class="shortcut-row"><span>Nozzle scraping (too low)</span><span>Raise Z offset</span></div>
+    <div class="shortcut-row"><span>Inconsistent / wavy</span><span>Run mesh bed leveling · check for bed debris</span></div>
+    <div class="shortcut-row"><span>Round/flared edges (elephant foot)</span><span>Add elephant foot compensation (–0.1mm)</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Clogged Nozzle</h3>
+    <p><strong>Cold pull (atomic pull):</strong> Heat to print temp, push filament through, cool to 90°C (PLA) or 120°C (PETG), then pull firmly. The plug brings debris out with it. Repeat until the plug comes out clean.</p>
+    <p><strong>Needle cleaning:</strong> Use a 0.3mm acupuncture needle to clear the nozzle tip while hot.</p>
+    <p><strong>Flush method:</strong> Heat to 260°C and push fresh filament through to flush out degraded material.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Blob on Print Start</h3>
+    <p><strong>Causes:</strong> Filament oozes during heatup and drops onto the first layer when the Z hop releases.</p>
+    <p><strong>Fixes:</strong> Add a prime / purge line in your start G-code, use a wipe-on-purge-block move, or enable wipe-before-print in OrcaSlicer.</p>
+  </div>
+</div>
+
+<!-- TAB 11: Practice Projects -->
+<div class="tab-panel" id="tab11">
+  <h2 class="section-heading">Practice Projects — 6 Calibration-to-Print Challenges</h2>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Project 1 — Your First Print: Calibration Cube</h3>
+    <p><em>Goal: Learn the full workflow and verify printer calibration.</em></p>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Download the XYZ Calibration Cube (free on Printables / Thingiverse — 20×20×20mm)</li>
+      <li>Import into OrcaSlicer and center on the plate</li>
+      <li>Settings: 0.2mm layers · 3 walls · 15% grid infill · 60°C bed · 210°C PLA</li>
+      <li>Slice and step through all layers in the preview — check for issues before printing</li>
+      <li>Export to printer and print</li>
+      <li>Measure result with calipers: X, Y, and Z should each be within ±0.3mm of 20mm</li>
+      <li>If X/Y is off: check steps/mm calibration in firmware</li>
+      <li>If Z is off: check Z steps or layer height setting</li>
+      <li>If walls have gaps: flow rate too low — run flow calibration</li>
+      <li>If walls overlap: flow rate too high — reduce and re-calibrate</li>
+    </ol>
+    <div class="tip-box info"><strong>Skills learned:</strong> Import, basic settings, slice, preview, export, print, measure with calipers.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Project 2 — Retraction &amp; Stringing Test</h3>
+    <p><em>Goal: Dial in perfect retraction for your filament and setup.</em></p>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Download a retraction test tower (multi-spire model, different temperatures per section)</li>
+      <li>Import · set 0.2mm layers · no supports · 2 walls</li>
+      <li>Set temperature range in filament settings or use a temperature tower script</li>
+      <li>Print and examine: find the section with least stringing and good layer quality</li>
+      <li>Set that temperature as your filament's default</li>
+      <li>Run OrcaSlicer's built-in Retraction calibration (Calibration menu → Retraction)</li>
+      <li>Set retraction distance to the best-performing value</li>
+      <li>Print again to verify — spires should have minimal stringing</li>
+    </ol>
+    <div class="tip-box info"><strong>Skills learned:</strong> Retraction tuning, temperature effect on stringing, calibration tools.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Project 3 — Functional Phone Stand</h3>
+    <p><em>Goal: Print a useful object with proper orientation and structural strength.</em></p>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Download a phone stand STL from Printables (search "adjustable phone stand")</li>
+      <li>Import and check orientation — base must be flat on bed with no unnecessary overhangs</li>
+      <li>Settings: 0.2mm layers · 4 walls · 25% gyroid infill · 3 top/bottom layers</li>
+      <li>Check for supports: if the device slot angle exceeds 45°, use Support Painting there only</li>
+      <li>Add a 5mm brim for better adhesion on tall, thin parts</li>
+      <li>Slice and check the preview layer by layer for any issues</li>
+      <li>Note the estimated print time and material weight before printing</li>
+      <li>Print, remove supports, and test with your phone</li>
+      <li>If layers split: temperature too low — increase 5°C and reprint</li>
+    </ol>
+    <div class="tip-box info"><strong>Skills learned:</strong> Support painting, brim, strength-focused settings, functional part workflow.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Project 4 — Multicolor Print (Single Extruder Color Change)</h3>
+    <p><em>Goal: Print a 2-color logo or text sign without AMS/MMU.</em></p>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Design or download a 2-layer text/logo model (base layer + raised letters = 2 separate heights)</li>
+      <li>Import into OrcaSlicer</li>
+      <li>Right-click the layer slider in preview → <strong>Add Color Change</strong> at the layer where the letters begin</li>
+      <li>Slice and preview — the color change marker should be visible in the layer slider</li>
+      <li>Export and print</li>
+      <li>When the printer pauses: retract old filament, insert new color, purge until new color appears solid</li>
+      <li>Resume the print</li>
+    </ol>
+    <div class="tip-box info"><strong>Skills learned:</strong> Filament change at layer, color planning, proper purging technique.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Project 5 — Functional Bracket (Strength-Focused)</h3>
+    <p><em>Goal: Print a wall-mount bracket that can hold 2 kg.</em></p>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Design or download an L-bracket or shelf bracket (100×100×30mm, ~5mm thick)</li>
+      <li>Orient correctly: vertical wall of the bracket flat on the bed — this maximizes layer-to-layer bond strength in the load direction</li>
+      <li>Settings: 0.2mm layers · <strong>5 walls</strong> (critical for strength) · 40% gyroid infill · 4 top/bottom layers</li>
+      <li>No supports needed with correct orientation</li>
+      <li>Slice and verify: switch to the wall preview mode and confirm 5 perimeter lines are visible</li>
+      <li>Run Flow calibration before printing — accurate flow is critical for structural parts</li>
+      <li>Print in PETG (stronger and more flexible than PLA under mechanical load)</li>
+      <li>After printing: perform a load test — hang progressively heavier items to verify</li>
+    </ol>
+    <div class="tip-box info"><strong>Skills learned:</strong> Orientation for strength, PETG settings, wall count importance, flow calibration for structural parts.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Project 6 — Miniature / Detail Print</h3>
+    <p><em>Goal: Maximum quality print for fine detail — miniature figure or decorative model.</em></p>
+    <ol style="line-height:1.9;padding-left:1.25rem;">
+      <li>Download a detailed miniature STL (gaming miniature or decorative figure — standard size: 28–32mm tall)</li>
+      <li>Import and scale if needed</li>
+      <li>Settings: 0.1mm layer height · 3 walls (Arachne) · 20% infill · Variable Layer Height ON</li>
+      <li>Supports: Tree supports · 0.2mm Z distance · 2 interface layers · 30° angle threshold</li>
+      <li>Speeds: outer wall 25 mm/s · inner wall 60 mm/s · infill 100 mm/s</li>
+      <li>Temperature: 1–2°C lower than your normal setting (reduces stringing on tiny features)</li>
+      <li>Fan: 100% (best detail quality and bridging)</li>
+      <li>Print and examine under magnification — assess detail capture quality</li>
+      <li>If stringing on fine features: lower temp 2°C more and reduce support Z gap slightly</li>
+    </ol>
+    <div class="tip-box info"><strong>Skills learned:</strong> Variable layer height, tree supports, quality-focused settings, fine detail printing workflow.</div>
+  </div>
+</div>
+
+<!-- TAB 12: Expert Tips & Workflow -->
+<div class="tab-panel" id="tab12">
+  <h2 class="section-heading">Expert Tips &amp; Workflow</h2>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Pro Shortcuts Cheat Card</h3>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>M</kbd><span>Add modifier mesh</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>F</kbd><span>Fill bed with copies</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd><span>Group objects</span></div>
+    <div class="shortcut-row"><kbd>F5</kbd><span>Reload model from disk</span></div>
+    <div class="shortcut-row"><kbd>G</kbd><span>Auto-arrange all objects</span></div>
+    <div class="shortcut-row"><span>Right-click layer slider</span><span>Add pause or custom G-code at that layer</span></div>
+    <div class="shortcut-row"><span>Double-click object in list</span><span>Rename the object</span></div>
+    <div class="shortcut-row"><kbd>Shift</kbd>+<kbd>Scroll</kbd> in preview<span>Scrub through layers quickly</span></div>
+    <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Click</kbd> on a setting<span>Reset that setting to default</span></div>
+    <div class="shortcut-row"><span>Hover over any setting</span><span>Tooltip shows what it does + recommended range</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Expert Settings Hidden in OrcaSlicer</h3>
+    <div class="shortcut-row"><span>Precise Wall</span><span>ON — improves dimensional accuracy (small speed cost)</span></div>
+    <div class="shortcut-row"><span>Filter Out Tiny Gaps</span><span>Fills micro-gaps that would otherwise cause print artifacts</span></div>
+    <div class="shortcut-row"><span>Avoid Crossing Perimeters</span><span>Routes travel over infill — reduces stringing (small speed cost)</span></div>
+    <div class="shortcut-row"><span>Smooth Speed Transition</span><span>Reduces abrupt speed changes between feature types</span></div>
+    <div class="shortcut-row"><span>Gap Fill Speed</span><span>Separate speed control for gap-fill moves</span></div>
+    <div class="shortcut-row"><span>Enable Arc Fitting</span><span>Converts short line segments to true arcs — smoother curves, smaller G-code file</span></div>
+    <div class="shortcut-row"><span>Spiral Vase Mode</span><span>Prints hollow single-wall vases with continuous Z lift — no layer seam</span></div>
+    <div class="shortcut-row"><span>Time-Lapse</span><span>Triggers camera at each layer change (requires OctoEverywhere / Obico)</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Printer &amp; Filament Profile Advice</h3>
+    <ul style="line-height:1.9;padding-left:1.25rem;">
+      <li>Always calibrate a new printer profile in order: temp tower → flow rate → Pressure Advance</li>
+      <li>Save filament profiles per brand + color + spool — the same brand PLA can vary noticeably between colors</li>
+      <li>Export all profiles as <code>.json</code> files for backup before any OrcaSlicer update</li>
+      <li>Community profiles: OrcaSlicer's GitHub repository has community-contributed printer and filament profiles</li>
+    </ul>
+    <div class="tip-box info">Keep a calibration log: note date, filament brand/color/spool, and the calibrated values (temp, flow, PA). Invaluable when you return to a filament months later.</div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Print Farm &amp; Project Workflow Tips</h3>
+    <ul style="line-height:1.9;padding-left:1.25rem;">
+      <li>Use <strong>3MF project files</strong> to save everything together: model geometry + settings + filament profiles</li>
+      <li><strong>Plate notes:</strong> Add text annotations to plates via File → Add Plate Text</li>
+      <li><strong>Multiple plates:</strong> Add plates within a single project for different parts of an assembly — keeps everything organized</li>
+      <li><strong>Batch export:</strong> Export all plates as separate G-code files in one operation</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Slicer Comparison — When to Use What</h3>
+    <div class="shortcut-row"><span>OrcaSlicer</span><span>Best calibration tools, multi-material, advanced users, all printers</span></div>
+    <div class="shortcut-row"><span>Bambu Studio</span><span>Best for Bambu Lab printers, simpler UI, AMS integration, cloud printing</span></div>
+    <div class="shortcut-row"><span>PrusaSlicer</span><span>Excellent for Prusa printers, strong community, reliable defaults</span></div>
+    <div class="shortcut-row"><span>Cura</span><span>Widest plugin ecosystem, good for beginners, supports all printers</span></div>
+    <div class="shortcut-row"><span>SuperSlicer</span><span>PrusaSlicer fork with extra quality settings — predecessor to OrcaSlicer</span></div>
+    <div class="shortcut-row"><span>IdeaMaker</span><span>Raise3D printers, excellent surface quality controls</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#00b4d8;margin-top:0;">Keeping OrcaSlicer Updated</h3>
+    <ul style="line-height:1.9;padding-left:1.25rem;">
+      <li>Check GitHub releases regularly: <strong>github.com/SoftFever/OrcaSlicer/releases</strong></li>
+      <li>New releases frequently add printer profiles, calibration tools, and performance improvements</li>
+      <li>Always export and back up your profiles before installing an update</li>
+    </ul>
+    <div class="tip-box warning">After a major update, re-verify your key calibration values (flow rate, PA) — internal calculation changes can occasionally shift optimal values.</div>
+  </div>
+</div>
+
+</div><!-- /content-wrap --></body></html>
