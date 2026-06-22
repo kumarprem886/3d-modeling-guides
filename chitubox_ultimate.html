@@ -1,0 +1,1910 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chitubox Ultimate Resin Guide — Complete Reference</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* --- NAV --- */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .nav-back {
+    color: #8b949e;
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .nav-back:hover { color: #e6edf3; }
+  .nav-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e6edf3;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .nav-subtitle {
+    font-size: 12px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  /* --- PROGRESS PILLS --- */
+  .progress-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    flex-wrap: wrap;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .pill.beginner    { background: #0d4429; color: #2daa6b; border: 1px solid #2daa6b; }
+  .pill.intermediate{ background: #3d2c00; color: #f0a500; border: 1px solid #f0a500; }
+  .pill.advanced    { background: #3d1a00; color: #e07030; border: 1px solid #e07030; }
+  .pill.expert      { background: #3d0000; color: #e63946; border: 1px solid #e63946; }
+
+  /* --- TAB BUTTONS --- */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 20px;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+  }
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { background: #21262d; color: #e6edf3; }
+  .tab-btn.active { background: #e63946; color: #fff; border-color: #e63946; }
+
+  /* --- TAB PANELS --- */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .tab-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+  }
+
+  /* --- TYPOGRAPHY --- */
+  h1 { font-size: 22px; font-weight: 700; color: #e6edf3; margin-bottom: 6px; }
+  h2 { font-size: 18px; font-weight: 700; color: #e6edf3; margin: 1.5rem 0 0.6rem; }
+  h3 { font-size: 15px; font-weight: 600; color: #c9d1d9; margin: 1rem 0 0.4rem; }
+  p  { color: #c9d1d9; margin-bottom: 0.6rem; }
+  ul, ol { color: #c9d1d9; padding-left: 1.4rem; margin-bottom: 0.7rem; }
+  li { margin-bottom: 0.25rem; }
+  strong { color: #e6edf3; }
+  code {
+    background: #21262d;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: 'Cascadia Code', 'Consolas', monospace;
+    font-size: 12px;
+    color: #79c0ff;
+  }
+
+  /* --- REQUIRED CSS --- */
+  kbd {
+    background: #21262d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: monospace;
+    color: #e6edf3;
+    font-size: 12px;
+  }
+  .shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #21262d;
+    padding: 6px 0;
+    color: #c9d1d9;
+    font-size: 13px;
+    align-items: center;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .tip-box {
+    border-left: 4px solid #2daa6b;
+    background: #0d4429;
+    padding: .7rem 1rem;
+    margin: .6rem 0;
+    border-radius: 0 6px 6px 0;
+    color: #c9d1d9;
+    font-size: 13px;
+  }
+  .tip-box.warning { border-color: #f0a500; background: #3d2c00; }
+  .tip-box.danger  { border-color: #e74c3c; background: #3d0000; }
+  .tip-box.info    { border-color: #e63946; background: #2d0007; }
+  .section-heading {
+    color: #e63946;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 1.2rem 0 .5rem;
+  }
+
+  /* --- TABLE --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 13px;
+  }
+  th {
+    background: #21262d;
+    color: #e6edf3;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid #30363d;
+  }
+  td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #21262d;
+    color: #c9d1d9;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #161b22; }
+
+  /* --- WORKFLOW STEPS --- */
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: steps;
+  }
+  .steps-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 0.5rem;
+    align-items: flex-start;
+  }
+  .steps-list li::before {
+    content: counter(steps);
+    background: #e63946;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* --- TAB HEADER STRIP --- */
+  .tab-header {
+    border-bottom: 2px solid #e63946;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .tab-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-beginner     { background: #0d4429; color: #2daa6b; }
+  .badge-intermediate { background: #3d2c00; color: #f0a500; }
+  .badge-advanced     { background: #3d1a00; color: #e07030; }
+  .badge-expert       { background: #3d0000; color: #e63946; }
+
+  /* --- GRID --- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* --- PRINTER TABLE HIGHLIGHT --- */
+  .highlight-row td:first-child { color: #e63946; font-weight: 600; }
+</style>
+
+<script>
+function switchTab(n) {
+  // Hide all panels
+  var panels = document.querySelectorAll('.tab-panel');
+  for (var i = 0; i < panels.length; i++) {
+    panels[i].classList.remove('active');
+  }
+  // Deactivate all buttons
+  var btns = document.querySelectorAll('.tab-btn');
+  for (var j = 0; j < btns.length; j++) {
+    btns[j].classList.remove('active');
+  }
+  // Show target panel
+  var target = document.getElementById('tab' + n);
+  if (target) { target.classList.add('active'); }
+  // Activate button
+  var activeBtn = document.getElementById('tabBtn' + n);
+  if (activeBtn) { activeBtn.classList.add('active'); }
+  // Scroll to top of content
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', function() {
+  switchTab(1);
+});
+</script>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <a href="index.html" class="nav-back">&#8592; Back to Hub</a>
+  <span class="nav-title">&#128308; Chitubox &mdash; Ultimate Resin Guide</span>
+  <span class="nav-subtitle">Beginner to Expert</span>
+</nav>
+
+<!-- PROGRESS PILLS -->
+<div class="progress-bar">
+  <span class="pill beginner">&#9679; Beginner</span>
+  <span class="pill intermediate">&#9679; Intermediate</span>
+  <span class="pill advanced">&#9679; Advanced</span>
+  <span class="pill expert">&#9679; Expert</span>
+</div>
+
+<!-- TAB BUTTONS -->
+<div class="tab-bar">
+  <button class="tab-btn" id="tabBtn1"  onclick="switchTab(1)">1. Resin &amp; Chitubox Basics</button>
+  <button class="tab-btn" id="tabBtn2"  onclick="switchTab(2)">2. Interface &amp; Navigation</button>
+  <button class="tab-btn" id="tabBtn3"  onclick="switchTab(3)">3. Exposure &amp; Layers</button>
+  <button class="tab-btn" id="tabBtn4"  onclick="switchTab(4)">4. Supports — Mastery</button>
+  <button class="tab-btn" id="tabBtn5"  onclick="switchTab(5)">5. Hollowing &amp; Drain Holes</button>
+  <button class="tab-btn" id="tabBtn6"  onclick="switchTab(6)">6. Orientation</button>
+  <button class="tab-btn" id="tabBtn7"  onclick="switchTab(7)">7. Resin Profiles</button>
+  <button class="tab-btn" id="tabBtn8"  onclick="switchTab(8)">8. Troubleshooting</button>
+  <button class="tab-btn" id="tabBtn9"  onclick="switchTab(9)">9. Wash &amp; Cure</button>
+  <button class="tab-btn" id="tabBtn10" onclick="switchTab(10)">10. Advanced Settings</button>
+  <button class="tab-btn" id="tabBtn11" onclick="switchTab(11)">11. Workflow Checklists</button>
+  <button class="tab-btn" id="tabBtn12" onclick="switchTab(12)">12. Quick Reference</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 1 — Understanding Resin 3D Printing & Chitubox          -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab1">
+<div class="tab-content">
+
+  <div class="tab-header">
+    <div class="tab-badge badge-beginner">Beginner</div>
+    <h1>Understanding Resin 3D Printing &amp; Chitubox</h1>
+    <p>How MSLA printing works, the Elegoo lineup, safety essentials, and the complete workflow from STL to finished print.</p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-heading">How MSLA / LCD Resin Printing Works</div>
+  <div class="card">
+    <p><strong>MSLA (Masked Stereolithography)</strong> uses an LCD screen as a photomask. A UV light source behind the screen shines through transparent pixels, curing liquid photopolymer resin in the shape of each layer.</p>
+    <ul>
+      <li>The build plate is at the <strong>top</strong> and lifts <strong>upward</strong> — the print hangs inverted</li>
+      <li>Liquid resin sits in a tank with a transparent <strong>FEP film</strong> at the bottom</li>
+      <li>Each layer: UV fires through FEP → cures resin → plate lifts → layer peels from FEP → new resin floods in → repeat</li>
+      <li>Resolution is determined by: <code>screen pixels ÷ print area = XY accuracy (µm per pixel)</code></li>
+    </ul>
+    <div class="tip-box info">
+      <strong>Key insight:</strong> In the Chitubox viewport, what looks like the "bottom" of your model actually prints FIRST and sticks to the build plate. The "top" finishes last, hanging in mid-air.
+    </div>
+  </div>
+
+  <!-- ELEGOO PRINTER LINEUP -->
+  <div class="section-heading">Elegoo Printer Lineup</div>
+  <div class="card">
+    <table>
+      <tr>
+        <th>Printer</th>
+        <th>Resolution</th>
+        <th>Build Volume</th>
+        <th>Best For</th>
+      </tr>
+      <tr class="highlight-row">
+        <td>Mars 4 Ultra</td>
+        <td>12K (9331 × 5200)</td>
+        <td>153 × 77 × 165mm</td>
+        <td>Miniatures, jewelry, high detail</td>
+      </tr>
+      <tr>
+        <td>Mars 4 9K</td>
+        <td>9K (8520 × 4320)</td>
+        <td>153 × 77 × 165mm</td>
+        <td>Miniatures, general use</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>Saturn 3 Ultra</td>
+        <td>12K (11520 × 5120)</td>
+        <td>218 × 123 × 260mm</td>
+        <td>Medium-large models, busts</td>
+      </tr>
+      <tr>
+        <td>Saturn 4 Ultra</td>
+        <td>16K (14976 × 7168)</td>
+        <td>218 × 123 × 220mm</td>
+        <td>Highest detail, dental, professional</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>Jupiter SE</td>
+        <td>6K (5448 × 3072)</td>
+        <td>277 × 156 × 300mm</td>
+        <td>Large prints, terrain, scale models</td>
+      </tr>
+    </table>
+    <div class="tip-box">
+      Higher K = more pixels on screen = finer XY detail. The Saturn 4 Ultra's 16K screen produces pixel pitch around 19µm — finer than most human hair.
+    </div>
+  </div>
+
+  <!-- CHITUBOX VERSIONS -->
+  <div class="section-heading">Chitubox Versions: Free vs Pro</div>
+  <div class="two-col">
+    <div class="card">
+      <h3 style="color:#2daa6b;">Chitubox Free</h3>
+      <ul>
+        <li>Basic slicing — all core functions</li>
+        <li>Manual and auto-supports</li>
+        <li>Basic hollow tool</li>
+        <li>Ad-supported on launch</li>
+        <li>Limited resin profiles</li>
+        <li><strong>Cost: Free</strong></li>
+      </ul>
+      <div class="tip-box">Good starting point. Most hobbyists use Free successfully.</div>
+    </div>
+    <div class="card">
+      <h3 style="color:#f0a500;">Chitubox Pro</h3>
+      <ul>
+        <li>Everything in Free plus:</li>
+        <li>Advanced hollow with infill lattice</li>
+        <li>Model analysis &amp; repair tools</li>
+        <li>Better auto-support algorithms</li>
+        <li>Two-stage lift control (TSMC)</li>
+        <li>Resin volume calculator</li>
+        <li><strong>Cost: ~$170/year</strong></li>
+      </ul>
+      <div class="tip-box warning">Worth it if you print frequently or commercially. Casual users can skip.</div>
+    </div>
+  </div>
+
+  <!-- FDM vs RESIN -->
+  <div class="section-heading">Key Differences from FDM Printing</div>
+  <div class="card">
+    <table>
+      <tr><th>FDM</th><th>Resin (MSLA)</th></tr>
+      <tr><td>Nozzle extrudes melted plastic</td><td>UV light cures liquid resin</td></tr>
+      <tr><td>Temperature control critical</td><td>No temperatures (ambient matters slightly)</td></tr>
+      <tr><td>Infill % controls strength</td><td>No infill — solid or hollow</td></tr>
+      <tr><td>Layer lines visible horizontally</td><td>Layer lines visible vertically</td></tr>
+      <tr><td>Failed prints = spaghetti</td><td>Failed prints = resin blob in tank</td></tr>
+      <tr><td>PLA/ABS/PETG filament</td><td>Photopolymer resin (toxic uncured)</td></tr>
+      <tr><td>Print-ready after cooling</td><td>Must wash + cure after printing</td></tr>
+    </table>
+  </div>
+
+  <!-- KEY CONCEPTS -->
+  <div class="section-heading">Key Resin Printing Concepts</div>
+  <div class="card">
+    <ol>
+      <li><strong>Exposure time:</strong> How long UV light fires per layer. Over-expose = brittle, blurry, elephant foot. Under-expose = failed/crumbly print.</li>
+      <li><strong>Bottom layers:</strong> First 4–10 layers receive much longer exposure (30–80s) to bond firmly to the build plate.</li>
+      <li><strong>Suction forces:</strong> Closed-bottom models create a vacuum cup on the FEP during peel. This tears supports or rips the layer entirely.</li>
+      <li><strong>FEP film:</strong> Clear membrane at tank bottom. Wears out and becomes cloudy. Replace every 3–6 months or when scratched/cloudy.</li>
+      <li><strong>Support contact point:</strong> Tiny tip that touches your model. Too thick = noticeable scar. Too thin = support snaps mid-print = failure.</li>
+      <li><strong>Z offset:</strong> How close the build plate is to the FEP at layer zero. Critical: too far = no adhesion. Too close = FEP damage.</li>
+      <li><strong>Anti-aliasing:</strong> Softens the jagged pixel-grid edges on curves for smoother surface quality.</li>
+      <li><strong>Lift speed:</strong> How fast the plate rises after each layer. Too fast = FEP stress, torn layers, failed prints.</li>
+    </ol>
+  </div>
+
+  <!-- RESIN SAFETY -->
+  <div class="section-heading">&#9888; Resin Safety — CRITICAL</div>
+  <div class="card">
+    <div class="tip-box danger">
+      <strong>Uncured resin is toxic and a skin/eye irritant. Do NOT handle with bare hands. Do NOT breathe vapors.</strong>
+    </div>
+    <ul>
+      <li><strong>Always wear nitrile gloves</strong> — not latex (latex degrades with resin solvents)</li>
+      <li><strong>Eye protection</strong> when decanting or washing</li>
+      <li><strong>Ventilate your space:</strong> open window, use exhaust fan, or activated carbon air filtration</li>
+      <li><strong>Waste resin disposal:</strong> cure all liquid resin waste with sunlight or UV lamp until solid, then dispose as solid waste. NEVER pour liquid resin down the drain.</li>
+      <li><strong>IPA wash waste:</strong> let IPA evaporate (outdoors) or cure the resin out with UV then filter and reuse</li>
+      <li><strong>Skin contact:</strong> wash immediately with soap and water. Avoid alcohol — it increases absorption. Seek medical attention for eye contact.</li>
+      <li>Keep resin away from children and pets. Store in dark bottles away from UV.</li>
+    </ul>
+    <div class="tip-box warning">
+      Some resins (especially water-washable) have stronger odors. Always ventilate regardless of resin type.
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="section-heading">Complete Print Workflow — STL to Finished Model</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li><strong>Design / Download STL</strong> — Create in CAD (Fusion 360, Blender) or download from Thingiverse, Printables, MyMiniFactory</li>
+      <li><strong>Import to Chitubox</strong> — File → Open or drag-and-drop .STL/.OBJ/.3MF file</li>
+      <li><strong>Orient the model</strong> — Tilt 15–45° to minimize flat suction areas and place cosmetic faces away from supports</li>
+      <li><strong>Add Supports</strong> — Auto-support first, then manually fix gaps. Check for unsupported islands.</li>
+      <li><strong>Hollow (optional)</strong> — For large models: hollow with 2mm walls + add 2 drain holes to save resin</li>
+      <li><strong>Set Print Settings</strong> — Configure exposure, layer height, lift speed for your printer + resin combination</li>
+      <li><strong>Slice</strong> — Click Slice. Review the layer-by-layer preview for islands or gaps.</li>
+      <li><strong>Export .ctb file</strong> — Save to USB drive or send to printer via network/app</li>
+      <li><strong>Level build plate</strong> — Only needed periodically or after moving printer</li>
+      <li><strong>Print</strong> — Monitor first few layers, check printer display for layer previews</li>
+      <li><strong>Wash</strong> — IPA (isopropyl alcohol) or dedicated wash solution (Elegoo Wash &amp; Cure). 3–5 minutes agitation.</li>
+      <li><strong>Cure</strong> — UV curing station (Elegoo Mercury Plus or similar). 2–5 min per side depending on resin.</li>
+      <li><strong>Post-process</strong> — Remove supports, sand if needed, prime and paint</li>
+    </ol>
+  </div>
+
+</div>
+</div><!-- end tab1 -->
+
+<!-- ============================================================ -->
+<!-- TAB 2 — Interface & Navigation                               -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab2">
+<div class="tab-content">
+
+  <div class="tab-header">
+    <div class="tab-badge badge-beginner">Beginner</div>
+    <h1>Interface &amp; Navigation</h1>
+    <p>Every panel, tool, and keyboard shortcut in Chitubox — fully documented.</p>
+  </div>
+
+  <!-- MAIN AREAS -->
+  <div class="section-heading">Main Interface Areas</div>
+  <div class="card">
+    <table>
+      <tr><th>Area</th><th>Location</th><th>What It Does</th></tr>
+      <tr><td><strong>Top Menu Bar</strong></td><td>Very top</td><td>File, Edit, View, Help menus — open/save/import/preferences</td></tr>
+      <tr><td><strong>Left Toolbar</strong></td><td>Left edge</td><td>Transform tools: Move, Rotate, Scale, Mirror, Clone, Merge, Hollow, Support, Repair</td></tr>
+      <tr><td><strong>Center 3D Viewport</strong></td><td>Main area</td><td>3D model view — orbit, pan, zoom, select models</td></tr>
+      <tr><td><strong>Right Panel</strong></td><td>Right side</td><td>Print Settings, Resin profile, Machine config tabs</td></tr>
+      <tr><td><strong>Bottom Status Bar</strong></td><td>Very bottom</td><td>X/Y/Z position, model dimensions, layer count, print time, resin volume</td></tr>
+    </table>
+  </div>
+
+  <!-- KEYBOARD SHORTCUTS -->
+  <div class="section-heading">Complete Keyboard Shortcuts</div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>File Operations</h3>
+      <div class="shortcut-row"><span>Open project</span><kbd>Ctrl</kbd>+<kbd>O</kbd></div>
+      <div class="shortcut-row"><span>Save project</span><kbd>Ctrl</kbd>+<kbd>S</kbd></div>
+      <div class="shortcut-row"><span>Save As</span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></div>
+      <div class="shortcut-row"><span>Import model</span><kbd>Ctrl</kbd>+<kbd>I</kbd></div>
+    </div>
+    <div class="card">
+      <h3>Edit Operations</h3>
+      <div class="shortcut-row"><span>Undo</span><kbd>Ctrl</kbd>+<kbd>Z</kbd></div>
+      <div class="shortcut-row"><span>Redo</span><kbd>Ctrl</kbd>+<kbd>Y</kbd></div>
+      <div class="shortcut-row"><span>Select All</span><kbd>Ctrl</kbd>+<kbd>A</kbd></div>
+      <div class="shortcut-row"><span>Delete selected</span><kbd>Delete</kbd></div>
+      <div class="shortcut-row"><span>Duplicate</span><kbd>Ctrl</kbd>+<kbd>D</kbd></div>
+      <div class="shortcut-row"><span>Copy</span><kbd>Ctrl</kbd>+<kbd>C</kbd></div>
+      <div class="shortcut-row"><span>Paste</span><kbd>Ctrl</kbd>+<kbd>V</kbd></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Transform Tools</h3>
+      <div class="shortcut-row"><span>Move tool</span><kbd>W</kbd></div>
+      <div class="shortcut-row"><span>Rotate tool</span><kbd>E</kbd></div>
+      <div class="shortcut-row"><span>Scale tool</span><kbd>R</kbd></div>
+    </div>
+    <div class="card">
+      <h3>View &amp; Layout</h3>
+      <div class="shortcut-row"><span>Fit all to view / frame</span><kbd>F</kbd></div>
+      <div class="shortcut-row"><span>Center model on plate</span><kbd>Space</kbd></div>
+      <div class="shortcut-row"><span>Auto-layout all models</span><kbd>G</kbd></div>
+      <div class="shortcut-row"><span>Multi-select box</span><kbd>Shift</kbd>+drag</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Mouse Navigation</h3>
+    <div class="shortcut-row"><span>Zoom in / out</span><span>Mouse wheel</span></div>
+    <div class="shortcut-row"><span>Orbit / rotate view</span><span>Middle mouse button (MMB) drag</span></div>
+    <div class="shortcut-row"><span>Pan view</span><span><kbd>Shift</kbd> + MMB drag</span></div>
+    <div class="shortcut-row"><span>Context menu</span><span>Right-click</span></div>
+  </div>
+
+  <!-- LEFT TOOLBAR -->
+  <div class="section-heading">Left Toolbar — Tool Reference</div>
+  <div class="card">
+    <table>
+      <tr><th>Tool</th><th>Shortcut</th><th>What It Does</th></tr>
+      <tr><td><strong>Move</strong></td><td><kbd>W</kbd></td><td>Drag model in X/Y/Z or type exact position coordinates</td></tr>
+      <tr><td><strong>Rotate</strong></td><td><kbd>E</kbd></td><td>Rotate model. Click axis ring to constrain. Type exact degrees.</td></tr>
+      <tr><td><strong>Scale</strong></td><td><kbd>R</kbd></td><td>Scale uniformly or per-axis. Type % or mm value.</td></tr>
+      <tr><td><strong>Mirror</strong></td><td>—</td><td>Flip model along X, Y, or Z axis (creates mirrored copy or flips in place)</td></tr>
+      <tr><td><strong>Clone</strong></td><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Duplicate selected model(s)</td></tr>
+      <tr><td><strong>Merge</strong></td><td>—</td><td>Boolean merge of overlapping models into single mesh</td></tr>
+      <tr><td><strong>Hollow</strong></td><td>—</td><td>Shell the model, set wall thickness, add infill pattern</td></tr>
+      <tr><td><strong>Support</strong></td><td>—</td><td>Switch to support editing mode — add/remove/auto-generate supports</td></tr>
+      <tr><td><strong>Repair</strong></td><td>—</td><td>Fix non-manifold geometry, holes, inverted normals in mesh</td></tr>
+    </table>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="section-heading">Right Panel — Settings Tabs</div>
+  <div class="two-col">
+    <div class="card">
+      <h3>Print Settings Tab</h3>
+      <ul>
+        <li>Normal exposure time</li>
+        <li>Bottom exposure time &amp; layer count</li>
+        <li>Layer thickness</li>
+        <li>Lift distance &amp; speed</li>
+        <li>Retract speed</li>
+        <li>Transition layers</li>
+        <li>Anti-aliasing level</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Resin &amp; Machine Tabs</h3>
+      <ul>
+        <li><strong>Resin tab:</strong> Select resin material profile. Load manufacturer settings. Adjust density for volume calculation.</li>
+        <li><strong>Machine tab:</strong> Select printer model. Sets build volume, screen resolution, and UV wavelength.</li>
+      </ul>
+      <div class="tip-box warning">Always set the correct machine first — it affects all slice output dimensions.</div>
+    </div>
+  </div>
+
+  <!-- VIEW MODES -->
+  <div class="section-heading">View Modes</div>
+  <div class="card">
+    <div class="shortcut-row"><span><strong>Solid view</strong></span><span>Standard opaque render of model</span></div>
+    <div class="shortcut-row"><span><strong>Wireframe</strong></span><span>See mesh topology and triangle edges</span></div>
+    <div class="shortcut-row"><span><strong>X-ray</strong></span><span>See-through mode — essential for checking hollow cavities and drain holes</span></div>
+    <div class="shortcut-row"><span><strong>Slice preview</strong></span><span>After slicing: drag the layer slider to inspect each cross-section as it will print</span></div>
+  </div>
+
+  <!-- SLICE PREVIEW -->
+  <div class="section-heading">Slice Preview — How to Use It</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li>Click the <strong>Slice</strong> button (bottom right)</li>
+      <li>Wait for processing (seconds to minutes depending on model complexity)</li>
+      <li>Drag the <strong>layer slider</strong> from bottom (layer 1) to top</li>
+      <li>Look for <strong>islands</strong> — floating white blobs not connected to rest of the cross-section. These will fail.</li>
+      <li>Check that supports connect to all isolated areas</li>
+      <li>Verify drain holes appear as gaps in hollow sections</li>
+      <li>Review the bottom layers (1–8) for consistent plate-area coverage</li>
+    </ol>
+    <div class="tip-box danger">
+      <strong>Islands in the layer preview = guaranteed print failure.</strong> Add supports to any island before printing.
+    </div>
+  </div>
+
+  <!-- BOTTOM STATUS BAR -->
+  <div class="section-heading">Bottom Status Bar Readouts</div>
+  <div class="card">
+    <div class="shortcut-row"><span>X / Y / Z position</span><span>Model origin coordinates on build plate (mm)</span></div>
+    <div class="shortcut-row"><span>Dimensions</span><span>Bounding box size of selected model (W × D × H mm)</span></div>
+    <div class="shortcut-row"><span>Layer count</span><span>Total layers that will be printed</span></div>
+    <div class="shortcut-row"><span>Print time estimate</span><span>Calculated from layer count × (exposure + lift + wait times)</span></div>
+    <div class="shortcut-row"><span>Resin volume</span><span>Estimated ml of resin needed (requires resin density set in Resin tab)</span></div>
+  </div>
+
+</div>
+</div><!-- end tab2 -->
+
+<!-- ============================================================ -->
+<!-- TAB 3 — Print Settings: Exposure & Layers                   -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab3">
+<div class="tab-content">
+
+  <div class="tab-header">
+    <div class="tab-badge badge-intermediate">Intermediate</div>
+    <h1>Print Settings — Exposure &amp; Layers</h1>
+    <p>The most critical settings in resin printing. Dial these in and 90% of print failures disappear.</p>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Golden Rule:</strong> Always test a new resin with a calibration print (Ameralabs Town, Cones of Calibration, or RERF test) before printing expensive models. One 20-minute test saves hours of failed prints.
+  </div>
+
+  <!-- EXPOSURE SETTINGS -->
+  <div class="section-heading">Exposure Settings — Most Critical</div>
+  <div class="card">
+    <h3>Normal Exposure Time (per layer)</h3>
+    <p>How long the UV light fires for each normal layer. This is your primary tuning knob.</p>
+    <table>
+      <tr><th>Resin Type</th><th>Typical Range</th><th>Notes</th></tr>
+      <tr><td>Standard PLA-like</td><td>2.0 – 4.0 s</td><td>Start at 2.5s, test up/down</td></tr>
+      <tr><td>ABS-like / tough</td><td>2.5 – 4.0 s</td><td>Harder to cure, needs slightly more</td></tr>
+      <tr><td>Water-washable</td><td>2.0 – 3.0 s</td><td>Often more sensitive, start low</td></tr>
+      <tr><td>Flexible / elastic</td><td>3.0 – 5.0 s</td><td>Needs longer cure for flex properties</td></tr>
+      <tr><td>High-speed resins</td><td>1.0 – 2.0 s</td><td>Optimized for fast printing</td></tr>
+    </table>
+    <div class="tip-box warning">
+      <strong>8K/12K/16K screens</strong> have lower per-pixel light intensity than older 2K/4K screens. You may need slightly longer exposure times (+0.5–1s) than older community recommendations suggest.
+    </div>
+    <div class="tip-box danger">
+      <strong>Over-exposed:</strong> Loss of fine detail, blurry edges, elephant foot, brittle prints, parts fused together.<br>
+      <strong>Under-exposed:</strong> Layers delaminate, soft/tacky surface, print fails mid-way, parts peel off plate.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Bottom Exposure Time</h3>
+    <p>The first N layers (defined by Bottom Layer Count) use this longer exposure to ensure strong adhesion to the build plate.</p>
+    <table>
+      <tr><th>Resin Type</th><th>Typical Range</th></tr>
+      <tr><td>Standard resins</td><td>30 – 60 seconds</td></tr>
+      <tr><td>Water-washable</td><td>40 – 80 seconds</td></tr>
+      <tr><td>ABS-like</td><td>35 – 65 seconds</td></tr>
+    </table>
+    <div class="tip-box">
+      Too short = plate adhesion failure (print falls mid-print). Too long = severe elephant foot and very difficult plate removal.
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Bottom Layer Count</h3>
+      <p>How many layers use the bottom exposure time.</p>
+      <ul>
+        <li><strong>4 layers:</strong> Minimum, faster start, less elephant foot</li>
+        <li><strong>6 layers:</strong> Standard — good balance</li>
+        <li><strong>8–10 layers:</strong> Maximum plate grip, harder removal</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Transition Layers</h3>
+      <p>Gradual step-down from bottom exposure to normal exposure. Reduces elephant foot significantly.</p>
+      <ul>
+        <li><strong>0:</strong> Abrupt change (older setting)</li>
+        <li><strong>4–8:</strong> Recommended — smooth transition</li>
+        <li><strong>10+:</strong> Very gentle, minimal elephant foot</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TIMING SETTINGS -->
+  <div class="section-heading">Timing &amp; Delay Settings</div>
+  <div class="card">
+    <table>
+      <tr><th>Setting</th><th>What It Does</th><th>Typical Value</th></tr>
+      <tr>
+        <td><strong>Light-off delay</strong><br><small>(Rest time before lift)</small></td>
+        <td>Pause after UV turns off, before the plate starts lifting. Allows resin to solidify and settle.</td>
+        <td>0 – 2 seconds<br><small>0s for modern printers, 1–2s helps some resins</small></td>
+      </tr>
+      <tr>
+        <td><strong>Wait before exposure</strong><br><small>(Rest time after lift)</small></td>
+        <td>After the plate descends to next layer position, waits for fresh resin to flow in before UV fires.</td>
+        <td>0.5 – 1.5 seconds</td>
+      </tr>
+      <tr>
+        <td><strong>Bottom light-off delay</strong></td>
+        <td>Same as above but for the first N layers. Often set slightly longer for reliability.</td>
+        <td>0.5 – 2 seconds</td>
+      </tr>
+    </table>
+    <div class="tip-box">
+      Longer wait times = longer print times but better reliability, especially with viscous resins or cold environments (&lt;20°C).
+    </div>
+  </div>
+
+  <!-- LIFT SETTINGS -->
+  <div class="section-heading">Lift Settings</div>
+  <div class="card">
+    <table>
+      <tr><th>Setting</th><th>Description</th><th>Recommended</th></tr>
+      <tr>
+        <td><strong>Lift Distance</strong></td>
+        <td>How far the build plate rises after each layer to peel from FEP</td>
+        <td>5 – 8 mm standard<br>8 – 10 mm for bottom layers</td>
+      </tr>
+      <tr>
+        <td><strong>Lift Speed</strong></td>
+        <td>How fast the plate rises. SLOW = less peel force = fewer failures. Fast = faster print but stress on FEP and supports.</td>
+        <td>2 – 4 mm/s<br>(3–6 mm/s for well-supported hollow models)</td>
+      </tr>
+      <tr>
+        <td><strong>Retract Speed</strong></td>
+        <td>Speed of plate coming back DOWN. Safe to go faster — no peel stress going down.</td>
+        <td>3 – 6 mm/s</td>
+      </tr>
+      <tr>
+        <td><strong>Bottom Lift Speed</strong></td>
+        <td>Speed for first N layers. Slower recommended — more resin area on plate.</td>
+        <td>1.5 – 2.5 mm/s</td>
+      </tr>
+    </table>
+    <div class="tip-box info">
+      <strong>Two-Stage Lift (TSMC — Chitubox Pro):</strong> Lift slowly for first 2mm (break suction seal), then fast for remaining distance. Best of both: reliable separation + fast print times.
+    </div>
+    <div class="tip-box warning">
+      If you hear a loud "crack" or "pop" on each layer, your lift speed is too fast or lift distance too short. Slow it down.
+    </div>
+  </div>
+
+  <!-- LAYER THICKNESS -->
+  <div class="section-heading">Layer Thickness Reference</div>
+  <div class="card">
+    <table>
+      <tr><th>Thickness</th><th>Speed</th><th>Detail</th><th>Best Use</th></tr>
+      <tr><td><strong>0.02mm (20µm)</strong></td><td>Very slow</td><td>Ultra fine</td><td>Jewelry, dental, extreme detail miniatures</td></tr>
+      <tr><td><strong>0.03mm (30µm)</strong></td><td>Slow</td><td>High</td><td>Fine miniatures, detailed figurines, complex geometry</td></tr>
+      <tr><td><strong>0.05mm (50µm)</strong></td><td>Standard</td><td>Good</td><td>General use — 90% of prints. Best balance of speed/quality.</td></tr>
+      <tr><td><strong>0.1mm (100µm)</strong></td><td>Fast</td><td>Low</td><td>Draft prints, large structural parts, prototypes</td></tr>
+    </table>
+    <div class="tip-box">
+      Thinner layers = more layers = longer print time. A 50mm tall model at 0.05mm = 1,000 layers. At 0.03mm = 1,667 layers — 67% longer print time.
+    </div>
+  </div>
+
+  <!-- ANTI-ALIASING -->
+  <div class="section-heading">Anti-Aliasing &amp; Image Processing</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <h3>Anti-Aliasing Level</h3>
+        <p>Smooths the jagged pixel-grid steps on curved and diagonal surfaces.</p>
+        <ul>
+          <li><strong>Off:</strong> Raw pixels — visible stepping on curves</li>
+          <li><strong>2x:</strong> Recommended — noticeable improvement</li>
+          <li><strong>4x:</strong> Better, slight performance cost</li>
+          <li><strong>8x:</strong> Diminishing returns on most resins</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Grey Level &amp; Image Blur</h3>
+        <p><strong>Grey level:</strong> Edge pixels are partially cured (not full white, not black) for smoother transitions at layer boundaries.</p>
+        <p><strong>Image blur:</strong> Applies a slight blur to slice images — reduces visible layer lines. Level 1–2 recommended. Too much = loss of fine detail.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEPHANT FOOT -->
+  <div class="section-heading">Elephant Foot Compensation</div>
+  <div class="card">
+    <p><strong>Elephant foot</strong> is the flared, spread-out base that occurs when bottom layers are over-exposed. UV bleeds outward at the first layers, making the base wider than the rest of the model.</p>
+    <div class="two-col">
+      <div>
+        <h3>Causes</h3>
+        <ul>
+          <li>Bottom exposure time too long</li>
+          <li>Bottom layer count too high</li>
+          <li>No transition layers</li>
+          <li>Model printed flat on plate (no raft)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Fixes</h3>
+        <ul>
+          <li>Elephant foot compensation: <strong>+0.1 to +0.2mm</strong> (shrinks bottom layers)</li>
+          <li>Add 4–8 transition layers</li>
+          <li>Reduce bottom exposure by 5–10s</li>
+          <li>Tilt model off plate (use supports)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box">
+      Elephant foot compensation in Chitubox shrinks each bottom layer by the specified amount to pre-compensate for UV bleed. Start at +0.15mm and adjust.
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab3 -->
+
+<!-- ============================================================ -->
+<!-- TAB 4 — Supports: Complete Mastery                          -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab4">
+<div class="tab-content">
+
+  <div class="tab-header">
+    <div class="tab-badge badge-intermediate">Intermediate</div>
+    <h1>Supports — Complete Mastery</h1>
+    <p>Supports are the single most common cause of print success or failure. Master this and your success rate jumps dramatically.</p>
+  </div>
+
+  <div class="tip-box danger">
+    <strong>Why this matters more in resin than FDM:</strong> Every single layer must successfully peel from the FEP. An unsupported area experiences full peel forces with nothing holding it in place. Result: the layer tears, the print fails catastrophically, and you have a blob of partially cured resin floating in your tank.
+  </div>
+
+  <!-- SUPPORT TYPES -->
+  <div class="section-heading">Support Types</div>
+  <div class="card">
+    <table>
+      <tr><th>Type</th><th>Tip Diameter</th><th>Column Width</th><th>Best For</th><th>Scar Level</th></tr>
+      <tr><td><strong>Light</strong></td><td>0.2 – 0.3mm</td><td>Thin</td><td>Delicate surfaces, small details, faces</td><td>Minimal</td></tr>
+      <tr><td><strong>Medium</strong></td><td>0.3 – 0.4mm</td><td>Mid</td><td>General use — most supports</td><td>Moderate</td></tr>
+      <tr><td><strong>Heavy</strong></td><td>0.4 – 0.6mm</td><td>Thick</td><td>Large flat areas, high-suction zones, heavy parts</td><td>Noticeable</td></tr>
+      <tr><td><strong>Tree</strong></td><td>Variable</td><td>Branching trunk</td><td>Dense areas, uses less resin</td><td>Variable</td></tr>
+    </table>
+    <div class="tip-box warning">
+      Smaller tip = less scar but higher risk of support failure. Larger tip = more reliable but leaves a visible mark. Match support type to the importance of the surface.
+    </div>
+  </div>
+
+  <!-- SUPPORT PARAMETERS -->
+  <div class="section-heading">Key Support Parameters — Explained</div>
+  <div class="card">
+    <table>
+      <tr><th>Parameter</th><th>Description</th><th>Recommended Values</th></tr>
+      <tr>
+        <td><strong>Contact Diameter (tip)</strong></td>
+        <td>The tiny point that touches your model surface. Smaller = less scar, higher failure risk.</td>
+        <td>Light: 0.3mm | Medium: 0.4mm | Heavy: 0.5mm</td>
+      </tr>
+      <tr>
+        <td><strong>Contact Depth</strong></td>
+        <td>How deep the tip penetrates into the model surface. Deeper = stronger grip, more scar.</td>
+        <td>0.2 – 0.3mm typical</td>
+      </tr>
+      <tr>
+        <td><strong>Upper Diameter</strong></td>
+        <td>Width of the support column just below the contact point. Wider = more rigid support.</td>
+        <td>1.5 – 2.0mm</td>
+      </tr>
+      <tr>
+        <td><strong>Lower Diameter</strong></td>
+        <td>Base width of the support column where it meets the raft/plate. Wider = more stable.</td>
+        <td>2.0 – 3.0mm</td>
+      </tr>
+      <tr>
+        <td><strong>Support Density</strong></td>
+        <td>For auto-supports: how close together placements are. Higher density = more supports = more reliable but more cleanup.</td>
+        <td>Start at Medium, increase for large flat overhangs</td>
+      </tr>
+      <tr>
+        <td><strong>Top Connection Angle</strong></td>
+        <td>Surface angle threshold below which supports are automatically added. 45° = standard. Lower = more aggressive support.</td>
+        <td>45° default (adjust to 40° for tricky models)</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- AUTO-SUPPORT WORKFLOW -->
+  <div class="section-heading">Auto-Support Workflow — Step by Step</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li><strong>Orient the model first.</strong> Supports are placed relative to orientation. Always orient BEFORE adding supports.</li>
+      <li>Click <strong>Support</strong> in the left toolbar to enter support mode</li>
+      <li>Click <strong>Auto-Support</strong> — choose density (start with Medium)</li>
+      <li><strong>Preview the result:</strong> Red-highlighted areas = still needs support. Grey/green = supported.</li>
+      <li>Switch to <strong>"+" mode</strong> to manually add supports — click on any unsupported face</li>
+      <li>Switch to <strong>"-" mode</strong> to remove any auto-placed supports that hit cosmetic surfaces you care about</li>
+      <li><strong>Rotate the model 360°</strong> in the viewport to inspect from all angles. No large unsupported spans.</li>
+      <li><strong>Key rule:</strong> No more than 5mm of unsupported overhang in any horizontal direction</li>
+    </ol>
+    <div class="tip-box">
+      After auto-support, always manually inspect and adjust. Auto-support is a starting point, not a final answer. 5 minutes of manual cleanup prevents most failures.
+    </div>
+  </div>
+
+  <!-- CRITICAL AREAS -->
+  <div class="section-heading">Critical Areas — Always Check These</div>
+  <div class="card">
+    <ul>
+      <li><strong>Lowest point of each feature:</strong> The first layer any feature appears needs support underneath it</li>
+      <li><strong>Horizontal "ceiling" faces:</strong> Fully horizontal overhangs (0° from flat) are the hardest to print — need heavy support</li>
+      <li><strong>Large flat areas parallel to FEP:</strong> Act like suction cups — need heavy supports AND consider tilting the model</li>
+      <li><strong>Thin protrusions:</strong> Arms, fingers, antennae, horns — support the tips, not just the base</li>
+      <li><strong>Islands in slice preview:</strong> Any layer cross-section that floats disconnected = guaranteed failure point</li>
+      <li><strong>Hollow cavity openings:</strong> Edges around drain holes need support from below</li>
+    </ul>
+    <div class="tip-box danger">
+      After auto-support, <strong>slice the model and drag through the layer preview</strong>. Look for any yellow-highlighted islands. Every island needs a support added.
+    </div>
+  </div>
+
+  <!-- RAFT -->
+  <div class="section-heading">Raft / Base Settings</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <h3>What a Raft Does</h3>
+        <ul>
+          <li>Creates a flat platform across all support bases</li>
+          <li>Improves plate adhesion — all supports connect via raft to plate</li>
+          <li>Makes removal from build plate easier (pry under raft)</li>
+          <li>Distributes peel forces across larger area</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Raft Settings</h3>
+        <ul>
+          <li><strong>Thickness:</strong> 1–2mm. Thicker = stronger but harder to remove.</li>
+          <li><strong>Area:</strong> Auto-set to cover all support footprints. Extend slightly if needed.</li>
+          <li><strong>Taper:</strong> Some rafts have tapered edges for easier removal.</li>
+        </ul>
+        <div class="tip-box">Always use a raft. The minor resin cost is worth the major reliability improvement.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPPORT REMOVAL TIPS -->
+  <div class="section-heading">Removing Supports — Best Practices</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li><strong>Remove supports BEFORE UV curing</strong> if possible — supports snap off cleanly when resin is in a semi-cured "green state"</li>
+      <li>Use flush cutters to clip at the base of each support column</li>
+      <li>Grip the support near the model contact point to avoid tearing the surface</li>
+      <li>For stubborn supports: use a dental pick or hobby knife to pry tip from surface</li>
+      <li>Sand scar marks with 400–800 grit wet/dry sandpaper, then prime</li>
+    </ol>
+    <div class="tip-box warning">
+      Removing supports AFTER full UV cure is much harder — they become brittle and the contact point is strongly bonded. The preferred order is: print → wash → remove supports → cure.
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab4 -->
+
+<!-- ============================================================ -->
+<!-- TAB 5 — Hollowing & Drain Holes                             -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab5">
+<div class="tab-content">
+
+  <div class="tab-header">
+    <div class="tab-badge badge-intermediate">Intermediate</div>
+    <h1>Hollowing &amp; Drain Holes</h1>
+    <p>Save 60–80% of your resin costs with proper hollowing. But skip the drain holes and your print explodes during curing.</p>
+  </div>
+
+  <!-- WHY HOLLOW -->
+  <div class="section-heading">Why Hollow Your Prints</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <h3>Resin Savings</h3>
+        <ul>
+          <li>100mm figurine solid: <strong>100–300ml resin</strong></li>
+          <li>Same figurine hollowed (2mm walls): <strong>20–50ml resin</strong></li>
+          <li>Savings: <strong>60–80%</strong> of resin cost</li>
+          <li>Faster print time (fewer solid layers to cure)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Other Benefits</h3>
+        <ul>
+          <li>Lighter finished model</li>
+          <li>Less suction force from the model body</li>
+          <li>Reduced warping stress during cure</li>
+          <li>Easier to cure all the way through (thick solid = interior may stay uncured)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box warning">
+      <strong>Critical caveat:</strong> Hollow models REQUIRE drain holes. Without them, trapped liquid resin expands during UV curing and cracks or shatters your print. No exceptions.
+    </div>
+  </div>
+
+  <!-- HOLLOWING IN CHITUBOX -->
+  <div class="section-heading">Hollowing in Chitubox — Step by Step</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li>Select your model in the viewport</li>
+      <li>Click <strong>Hollow</strong> in the left toolbar (or Edit menu → Hollow)</li>
+      <li>Set <strong>Wall Thickness:</strong> 1.5mm thin / 2.0mm standard / 3.0mm strong</li>
+      <li>Set <strong>Infill Type:</strong> None (display models) / Grid / Triangle (structural models)</li>
+      <li>Check <strong>"Close inner holes"</strong> if your model has surface openings you want sealed</li>
+      <li>Switch to <strong>X-ray view</strong> to preview the hollow cavity inside</li>
+      <li>Click <strong>"Hollow"</strong> (or Apply) to execute. Model updates in viewport.</li>
+    </ol>
+    <div class="tip-box">
+      After hollowing, check the X-ray view carefully. Thin wall sections (where geometry is complex) may have gaps — these create weak points. Increase wall thickness if you see thin spots.
+    </div>
+  </div>
+
+  <!-- WALL THICKNESS GUIDE -->
+  <div class="section-heading">Wall Thickness Guide by Use Case</div>
+  <div class="card">
+    <table>
+      <tr><th>Thickness</th><th>Use Case</th><th>Notes</th></tr>
+      <tr><td><strong>1.5mm</strong></td><td>Small figurines, display items handled gently</td><td>Fragile — handle carefully. Keep under 80mm tall.</td></tr>
+      <tr><td><strong>2.0mm</strong></td><td>Standard figurines and models under 100mm</td><td>Most common choice. Good balance of savings and strength.</td></tr>
+      <tr><td><strong>2.5mm</strong></td><td>Larger models, items that get regular handling</td><td>Noticeably more robust. Good for models over 100mm.</td></tr>
+      <tr><td><strong>3.0mm</strong></td><td>Functional parts, models over 150mm, mechanical stress</td><td>Near-solid strength in most areas. Modest resin savings.</td></tr>
+      <tr><td><strong>Solid (no hollow)</strong></td><td>Models under 30mm, jewelry, connectors, load-bearing parts</td><td>Skip hollowing entirely — resin cost is low and strength is maximized.</td></tr>
+    </table>
+  </div>
+
+  <!-- DRAIN HOLES -->
+  <div class="section-heading">&#9888; Drain Holes — Non-Negotiable</div>
+  <div class="card">
+    <div class="tip-box danger">
+      <strong>NEVER print a hollow model without drain holes.</strong> Trapped liquid resin creates hydrostatic pressure during UV curing as it expands. Result: cracks, delamination, or catastrophic print failure. Always add at least 2 drain holes.
+    </div>
+
+    <h3>Why Two Holes?</h3>
+    <p>Think of tipping a water bottle with your finger over the opening — it barely drains. Two holes: one lets resin out, one lets air in. Same principle.</p>
+    <ul>
+      <li><strong>Drain hole:</strong> Place at the lowest point of the hollow cavity in print orientation — liquid resin pools here and needs to exit during washing</li>
+      <li><strong>Air vent hole:</strong> Place at the highest point or opposite side — allows air to enter as resin drains out, preventing vacuum lock</li>
+    </ul>
+
+    <h3>Drain Hole Sizing</h3>
+    <table>
+      <tr><th>Model Size</th><th>Hole Diameter</th><th>Notes</th></tr>
+      <tr><td>Small (&lt;50mm)</td><td>2.5 – 3.0mm</td><td>Minimum to allow resin flow + IPA to wash inside</td></tr>
+      <tr><td>Medium (50–100mm)</td><td>3.0 – 4.0mm</td><td>Standard. Allows cleaning brush or syringe access.</td></tr>
+      <tr><td>Large (&gt;100mm)</td><td>4.0 – 6.0mm</td><td>Larger cavity needs larger holes for complete drainage</td></tr>
+    </table>
+
+    <h3>Adding Drain Holes in Chitubox</h3>
+    <ol class="steps-list">
+      <li>Select your (already-hollowed) model</li>
+      <li>Click the <strong>Hole</strong> tool in the left toolbar</li>
+      <li>Click on the model surface where you want the first hole (lowest print point)</li>
+      <li>Set <strong>diameter</strong> (3–5mm) and <strong>depth</strong> (must be greater than wall thickness)</li>
+      <li>Confirm placement — hole appears as a circular marker</li>
+      <li>Repeat for the second hole at the highest/opposite point</li>
+      <li>Switch to <strong>X-ray view</strong> to verify holes penetrate completely through the shell</li>
+    </ol>
+    <div class="tip-box warning">
+      Verify drain holes in the <strong>layer preview slider</strong> too — the hole should appear as a gap in the cross-section at those layer heights. If you see closed layers where holes should be, they didn't penetrate fully.
+    </div>
+  </div>
+
+  <!-- COMPLETE HOLLOW WORKFLOW -->
+  <div class="section-heading">Complete Hollowing Workflow</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li><strong>Import and orient</strong> the model correctly first</li>
+      <li><strong>Add supports</strong> (hollowing can shift geometry, so support after orientating but you can hollow before or after — just re-check supports)</li>
+      <li><strong>Hollow</strong> with appropriate wall thickness (2mm for most models)</li>
+      <li><strong>Set infill:</strong> None for display models, Grid for structural</li>
+      <li><strong>Add 2+ drain holes</strong> — lowest point and air vent at top</li>
+      <li><strong>X-ray check:</strong> Verify cavity, wall consistency, hole penetration</li>
+      <li><strong>Slice</strong> and check layer preview for any closed-off hollow sections</li>
+      <li>Print — after washing, resin should drain freely from both holes</li>
+    </ol>
+    <div class="tip-box info">
+      <strong>Post-print hollow care:</strong> After washing, shake the model to confirm no trapped liquid. Shine a UV flashlight through the drain holes to cure any residual resin inside the cavity before final curing.
+    </div>
+  </div>
+
+  <!-- INFILL OPTIONS -->
+  <div class="section-heading">Infill Options</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <h3>None (Fully Hollow)</h3>
+        <ul>
+          <li>Maximum resin savings</li>
+          <li>Lightest result</li>
+          <li>Good for display models, figurines, busts</li>
+          <li>Wall thickness must be adequate (2mm+)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Grid / Triangle Lattice</h3>
+        <ul>
+          <li>Internal scaffolding structure</li>
+          <li>Adds rigidity to hollow shell</li>
+          <li>Uses more resin than hollow but less than solid</li>
+          <li>Good for larger structural parts or models that will be handled heavily</li>
+          <li>Note: makes drain holes less effective — ensure lattice cells connect to drain locations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab5 -->
+
+<!-- ============================================================ -->
+<!-- TAB 6 — Orientation: The Most Overlooked Skill              -->
+<!-- ============================================================ -->
+<div class="tab-panel" id="tab6">
+<div class="tab-content">
+
+  <div class="tab-header">
+    <div class="tab-badge badge-advanced">Advanced</div>
+    <h1>Orientation — The Most Overlooked Skill</h1>
+    <p>Perfect settings can't save a badly oriented print. Master orientation and you'll solve most print failures before they happen.</p>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Remember:</strong> In MSLA printing, the build plate is at the TOP. The print hangs INVERTED. What appears as the "bottom" in Chitubox is what prints first and adheres to the build plate. The "top" in Chitubox is actually the last thing that prints, hanging farthest from the plate.
+  </div>
+
+  <!-- CORE PRINCIPLES -->
+  <div class="section-heading">Core Orientation Principles</div>
+  <div class="card">
+    <ol class="steps-list">
+      <li><strong>Tilt the model 15–45°</strong> to avoid large flat areas parallel to the FEP. This distributes the peel force across fewer pixels per layer rather than the entire face at once.</li>
+      <li><strong>Orient cosmetically important surfaces AWAY from where supports will attach.</strong> Supports leave scars — put those scars on the back, bottom, or hidden surfaces.</li>
+      <li><strong>No "suction cup" faces:</strong> Large flat surfaces parallel to the FEP create enormous vacuum forces during each layer peel. This tears supports and distorts the print. Tilt to break the seal.</li>
+      <li><strong>Long thin elements</strong> (arms, legs, horns): angle 45° to reduce the unsupported span length of each thin section.</li>
+      <li><strong>Critical features print more crisply in Z (vertical):</strong> Holes, threads, cylinders — orient so these features are aligned with the Z axis for cleanest results.</li>
+    </ol>
+  </div>
+
+  <!-- COMMON MISTAKES -->
+  <div class="section-heading">Common Orientation Mistakes</div>
+  <div class="card">
+    <table>
+      <tr><th>Mistake</th><th>What Goes Wrong</th><th>Fix</th></tr>
+      <tr>
+        <td><strong>Flat on plate (0° tilt)</strong></td>
+        <td>Maximum suction force on every layer, severe elephant foot, complete loss of bottom-face detail, very difficult to remove from plate</td>
+        <td>Tilt 30–45°. Use supports and raft instead of direct plate contact.</td>
+      </tr>
+      <tr>
+        <td><strong>Perfectly vertical (90°)</strong></td>
+        <td>Maximum print height = maximum print time. Tallest Z = most potential for layer shift. Though good for some geometries (cylinders, columns).</td>
+        <td>Tilt 15–30° off vertical for most organic shapes. Keep vertical for true cylindrical forms.</td>
+      </tr>
+      <tr>
+        <td><strong>Cosmetic face toward FEP</strong></td>
+        <td>Face is the first thing printed — supports attach here. Face is covered in support scars. Ruined detail on the most important surface.</td>
+        <td>Rotate 180°. Face should point away from the build plate (toward where you're looking in the viewport's "top view").</td>
+      </tr>
+      <tr>
+        <td><strong>Hollow area opening facing down</strong></td>
+        <td>Resin pools inside hollow cavity. Drain holes don't drain effectively. Trapped resin causes post-cure cracking.</td>
+        <td>Orient hollow opening / drain holes at true bottom of print orientation.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- OPTIMAL ORIENTATIONS -->
+  <div class="section-heading">Optimal Orientations by Model Type</div>
+  <div class="card">
+    <table>
+      <tr><th>Model Type</th><th>Recommended Orientation</th><th>Reason</th></tr>
+      <tr>
+        <td><strong>Humanoid figures</strong></td>
+        <td>30–45° tilt on both X and Y axes, face pointing away from supports</td>
+        <td>Distributes limb overhangs, protects facial detail</td>
+      </tr>
+      <tr>
+        <td><strong>Rings / jewelry</strong></td>
+        <td>45° angle, stone face up, band angled</td>
+        <td>Stone surface protected from supports, band overhang manageable at angle</td>
+      </tr>
+      <tr>
+        <td><strong>Miniatures (D&amp;D scale)</strong></td>
+        <td>45° tilt toward the back, face and front detail up and unsupported</td>
+        <td>Preserves facial detail, weapon/shield details on front remain clean</td>
+      </tr>
+      <tr>
+        <td><strong>Flat panels / signs</strong></td>
+        <td>45° angle (NEVER flat on plate)</td>
+        <td>Flat = maximum suction. 45° breaks suction, dramatically reduces support count.</td>
+      </tr>
+      <tr>
+        <td><strong>Mechanical / functional parts</strong></td>
+        <td>Orient so hole axes are vertical (along Z)</td>
+        <td>Circular holes print cleanest in Z direction — XY holes show pixel stepping</td>
+      </tr>
+      <tr>
+        <td><strong>Cups / vessels / bowls</strong></td>
+        <td>Upside down (opening faces toward build plate, at top of slicer view)</td>
+        <td>Avoids interior supports, eliminates suction trap, resin drains naturally during print</td>
+      </tr>
+      <tr>
+        <td><strong>Busts</strong></td>
+        <td>Slight backward tilt (5–15°), facing slightly upward</td>
+        <td>Nose and chin less likely to need supports, back of head takes supports instead</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ORIENTATION TOOLS -->
+  <div class="section-heading">Orientation Tools in Chitubox</div>
+  <div class="card">
+    <div class="shortcut-row">
+      <span><strong>Auto-Orient</strong></span>
+      <span>Analyze menu → Auto Orientation. Algorithms suggest lowest-support orientation. Not always perfect but saves time as a starting point.</span>
+    </div>
+    <div class="shortcut-row">
+      <span><strong>Manual Rotate</strong></span>
+      <span>Press <kbd>E</kbd> → drag axis rings OR click the axis field and type exact degree value (e.g., X: 45, Y: 15, Z: 0)</span>
+    </div>
+    <div class="shortcut-row">
+      <span><strong>Lay Flat</strong></span>
+      <span>Select a face → "Lay Flat" button — snaps that face to be parallel to the build plate. Useful for getting a baseline orientation.</span>
+    </div>
+    <div class="shortcut-row">
+      <span><strong>Platform Normal</strong></span>
+      <span>Orient a selected face to be perpendicular to the build plate (pointing straight up). Useful for aligning specific features.</span>
+    </div>
+    <div class="shortcut-row">
+      <span><strong>Visual support preview</strong></span>
+      <span>After rotating, run auto-support preview to quickly see how many supports are needed in various orientations. Fewer supports = better orientation.</span>
+    </div>
+
+    <div class="tip-box">
+      <strong>Orientation workflow tip:</strong> Try 3–4 different orientations with quick auto-support previews. Count the supports and note which surfaces they attach to. Pick the orientation with fewest supports on cosmetic surfaces — not necessarily fewest supports overall.
+    </div>
+  </div>
+
+  <!-- SUCTION FORCE EXPLAINED -->
+  <div class="section-heading">Understanding Suction Force</div>
+  <div class="card">
+    <p>When a large flat surface is parallel to the FEP, the cured resin layer acts like a suction cup during the lift phase. The force required to peel it grows with the area of the flat surface.</p>
+    <ul>
+      <li>A 50mm × 50mm flat base (2,500mm²) at 1 layer peel can require <strong>5–15kg of force</strong> to separate from FEP</li>
+      <li>Your supports are only rated for a fraction of that — they snap</li>
+      <li>Or the FEP stretches, the layer deforms, and you get a warped, failed print</li>
+    </ul>
+    <p>Tilting 45° reduces the effective flat area per layer to a thin diagonal strip — peel force drops by 80–90%.</p>
+    <div class="tip-box warning">
+      Large flat-bottomed models (terrain, bases, flat signs) MUST be tilted. This is the #1 cause of mysterious "everything seemed right but it failed" prints.
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="section-heading">Orientation Quick Reference</div>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <h3 style="color:#2daa6b;">Do This</h3>
+        <ul>
+          <li>Tilt most models 30–45°</li>
+          <li>Protect cosmetic faces from supports</li>
+          <li>Orient holes along Z axis</li>
+          <li>Point cup/bowl openings down (toward plate = up in slicer)</li>
+          <li>Angle thin protrusions to minimize span</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:#e63946;">Avoid This</h3>
+        <ul>
+          <li>Flat on plate (no tilt)</li>
+          <li>Cosmetic face toward FEP</li>
+          <li>Large flat areas parallel to FEP</li>
+          <li>Hollow openings facing away from drain path</li>
+          <li>Long overhangs without 45° angle reduction</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab6 -->
+
+<!-- TAB 7: Resin Types & Material Guide -->
+        <div class="tab-panel" id="tab7">
+          <h2>Resin Types &amp; Material Guide</h2>
+
+          <div class="section-block">
+            <h3>Standard Resin Types</h3>
+            <div class="card-grid">
+              <div class="info-card">
+                <h4>ABS-Like Resin</h4>
+                <p>Most common type. Tough, slightly flexible, excellent detail. Brands: Elegoo ABS-Like, Anycubic Standard. Ideal temp: 20–28°C.</p>
+              </div>
+              <div class="info-card">
+                <h4>Water-Washable Resin</h4>
+                <p>Clean up with water instead of IPA. Convenient but slightly more brittle and requires slower exposure. Brand: Elegoo Water Washable.</p>
+              </div>
+              <div class="info-card">
+                <h4>Plant-Based / Eco Resin</h4>
+                <p>Reduced VOCs, water cleanup variants available. Brands: Phrozen Aqua, Elegoo Plant-Based.</p>
+              </div>
+              <div class="info-card">
+                <h4>Tough / Engineering Resin</h4>
+                <p>Impact resistant with ABS-like mechanical properties. Brands: Siraya Tech Blu, Elegoo ABS-Like Pro.</p>
+              </div>
+              <div class="info-card">
+                <h4>Flexible / Rubber-Like</h4>
+                <p>Brands: Siraya Tech Tenacious, Elegoo Flexible. Mix with standard resin at varying ratios to control shore hardness.</p>
+              </div>
+              <div class="info-card">
+                <h4>Castable Resin</h4>
+                <p>Burns out cleanly in jewelry investment casting kilns. Brands: Ameralabs, Siraya Castable.</p>
+              </div>
+              <div class="info-card">
+                <h4>Dental / Medical Resin</h4>
+                <p>Biocompatible (certified). Used for dental models and surgical guides. Higher price point.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Exposure Settings by Resin Type</h3>
+            <p style="margin-bottom:12px;opacity:0.8;">Reference values for 4K screens at 0.05mm layer height:</p>
+            <table class="settings-table">
+              <thead>
+                <tr>
+                  <th>Resin Type</th>
+                  <th>Bottom Exposure</th>
+                  <th>Normal Exposure</th>
+                  <th>Bottom Layers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Standard ABS-Like</td>
+                  <td>40–50s</td>
+                  <td>2–3s</td>
+                  <td>5</td>
+                </tr>
+                <tr>
+                  <td>Water-Washable</td>
+                  <td>50–60s</td>
+                  <td>2.5–3.5s</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td>Tough / Engineering</td>
+                  <td>50–70s</td>
+                  <td>3–5s</td>
+                  <td>6</td>
+                </tr>
+                <tr>
+                  <td>Flexible</td>
+                  <td>60–80s</td>
+                  <td>4–6s</td>
+                  <td>8</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="tip-box" style="margin-top:16px;">
+              <strong>Screen Adjustments:</strong> 8K screens — add ~0.3–0.5s to normal exposure. 12K screens — add ~0.5–1s (lower light power per pixel).
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Exposure Tuning — RERF Test</h3>
+            <div class="steps-list">
+              <div class="step-item">
+                <span class="step-num">1</span>
+                <div>In Chitubox, locate the built-in <strong>RERF (Resin Exposure Range Finder)</strong> test file.</div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">2</span>
+                <div>The test prints multiple sections at different exposure times in a single print job.</div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">3</span>
+                <div>After washing and curing, find the section with: sharpest lettering, cleanest thin feature separation, no over-cure blobs.</div>
+              </div>
+              <div class="step-item">
+                <span class="step-num">4</span>
+                <div>Use that exposure value as your starting Normal Exposure setting.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Resin Mixing Tips</h3>
+            <ul class="bullet-list">
+              <li>Always shake or stir the resin bottle before pouring — pigment settles over hours.</li>
+              <li>Gently stir resin in the tank with a silicone spatula before every print, especially after sitting overnight.</li>
+              <li>Temperature matters: below 20°C causes slower cure and more failures. Use a resin heater or warm room.</li>
+              <li>Mixing resins: Tenacious (flexible) + ABS-Like = tougher blend. Start at 10% Tenacious, increase for more flex.</li>
+              <li>Old resin: check for cloudiness or gel chunks. Strain through a paint strainer before use.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Resin Storage &amp; Disposal</h3>
+            <ul class="bullet-list">
+              <li>Store in the original opaque bottle, away from sunlight and UV sources.</li>
+              <li>Shelf life: 12 months sealed, 3–6 months opened.</li>
+              <li>Never pour used resin back without straining — it may contain cured particles.</li>
+              <li><strong>Disposal:</strong> Cure fully (sunlight or UV lamp) then dispose as solid waste. Never pour liquid resin down the drain.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Elegoo Resin Lineup</h3>
+            <table class="settings-table">
+              <thead>
+                <tr><th>Product</th><th>Key Characteristic</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ABS-Like 2.0</td><td>Upgraded formula, good toughness, minimal odor</td></tr>
+                <tr><td>Water Washable</td><td>Convenient cleanup, slightly more brittle</td></tr>
+                <tr><td>Plant-Based UV Resin</td><td>Low odor, eco-friendly formulation</td></tr>
+                <tr><td>ABS-Like Pro</td><td>Engineering grade, better impact resistance</td></tr>
+                <tr><td>Flexible TPU-Like</td><td>Rubberized finish, good for grip parts</td></tr>
+                <tr><td>8K Resin</td><td>Fine pigment for 8K+ screens, tighter exposure window</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 8: Wash & Cure -->
+        <div class="tab-panel" id="tab8">
+          <h2>Wash &amp; Cure — Post-Processing Complete</h2>
+
+          <div class="warning-box">
+            <strong>Golden Rule:</strong> Never touch uncured resin with bare skin. Always wear gloves until UV curing is fully complete.
+          </div>
+
+          <div class="section-block">
+            <h3>Washing</h3>
+            <p style="margin-bottom:12px;opacity:0.8;">Purpose: remove uncured liquid resin from the print surface.</p>
+
+            <h4 style="color:#e63946;margin-bottom:10px;">Method 1 — IPA (Isopropyl Alcohol 95%+)</h4>
+            <ul class="bullet-list">
+              <li><strong>Two-bucket method:</strong> Bucket 1 = dirty IPA (rough wash, agitate 1–2 min). Bucket 2 = clean IPA (final rinse, 30s–1 min).</li>
+              <li>Or use a dedicated wash station: Elegoo Mercury Plus, Anycubic Wash &amp; Cure.</li>
+              <li><strong>Time:</strong> 2–3 minutes total. Over-washing causes white frost and weakened parts (IPA swells resin).</li>
+              <li><strong>Water-washable resin:</strong> warm water, 2–3 min agitation. No IPA needed (though IPA also works).</li>
+              <li>After wash: blow off excess liquid, let dry fully before curing.</li>
+            </ul>
+
+            <h4 style="color:#e63946;margin:16px 0 10px;">Method 2 — Dedicated Resin Cleaner</h4>
+            <ul class="bullet-list">
+              <li>Options: Resinaway, Mean Green (water-based, safer than IPA).</li>
+              <li>Less flammable, longer usable life than IPA.</li>
+            </ul>
+
+            <div class="tip-box" style="margin-top:16px;">
+              <strong>Drying before cure:</strong> 5–10 minutes air dry, or use a hair dryer on cool setting. Do NOT cure while wet — IPA interferes with surface cure, causing a white chalky surface.
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Curing</h3>
+            <p style="margin-bottom:12px;opacity:0.8;">Purpose: complete the UV crosslinking reaction to achieve full hardness and mechanical properties.</p>
+            <ul class="bullet-list">
+              <li><strong>UV wavelength:</strong> 405nm (standard for most MSLA resins).</li>
+              <li><strong>Curing time:</strong> 2–6 min per side for small prints; 6–10 min for large pieces.</li>
+              <li><strong>Cure in water:</strong> submerging during cure improves surface quality — water excludes oxygen which inhibits cure.</li>
+              <li><strong>Temperature:</strong> warm curing (~40°C) improves final hardness. Some stations include a warming function.</li>
+              <li><strong>Over-curing:</strong> causes yellowing and brittleness. Find the minimum time for full hardness.</li>
+              <li><strong>Under-curing:</strong> sticky surface, weaker properties. If still tacky after full time, increase cure duration or check UV lamp power.</li>
+            </ul>
+            <div class="tip-box" style="margin-top:12px;">
+              <strong>Cure both sides:</strong> rotate print halfway through cure time to ensure all surfaces receive UV exposure.
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Elegoo Mercury Plus Workflow</h3>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>Place print in wash basket, fill with IPA to the fill line, close lid.</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Set wash time: 3 min (small prints), 5 min (large prints).</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>After wash: remove basket, let drip and air dry for 5 minutes.</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Move to cure platform, set timer (3–5 min), close lid, start.</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>Flip print, cure other side (2–3 min).</div></div>
+              <div class="step-item"><span class="step-num">6</span><div>Done: print should be hard, non-tacky, and ready for support removal.</div></div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Support Removal</h3>
+            <ul class="bullet-list">
+              <li><strong>Remove supports before final cure</strong> = easier (print remains slightly flexible).</li>
+              <li>Or remove after curing: use flush cutters, dental picks, needle-nose pliers.</li>
+              <li><strong>Support scars:</strong> sand with 400 → 800 → 2000 grit wet sandpaper for a smooth surface.</li>
+              <li><strong>Cleanup tools:</strong> dental picks, flush cutters, craft knife, fine files.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TAB 9: Troubleshooting -->
+        <div class="tab-panel" id="tab9">
+          <h2>Troubleshooting — Every Resin Problem</h2>
+
+          <div class="section-block">
+            <h3>Print Failure (detaches from plate, stays on FEP, or falls)</h3>
+            <table class="settings-table">
+              <thead><tr><th>Cause</th><th>Fix</th></tr></thead>
+              <tbody>
+                <tr><td>Z offset wrong (plate not close enough to FEP)</td><td>Re-level and reset Z=0</td></tr>
+                <tr><td>Bottom exposure too short</td><td>Increase bottom exposure by 10s at a time</td></tr>
+                <tr><td>Plate surface contaminated</td><td>Clean with IPA, lightly sand with 400 grit</td></tr>
+                <tr><td>Supports too light or thin</td><td>Use medium or heavy supports, add more contact points</td></tr>
+                <tr><td>Large suction-cup surface on model</td><td>Re-orient and tilt 45°</td></tr>
+                <tr><td>FEP damaged or cloudy</td><td>Replace FEP film</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section-block">
+            <h3>Layer Separation</h3>
+            <p>Cause: exposure too low, lift speed too high (tearing layers before cure completes).</p>
+            <p><strong>Fix:</strong> increase normal exposure by 0.5s, reduce lift speed to 2mm/s, reduce retract speed.</p>
+          </div>
+
+          <div class="section-block">
+            <h3>Elephant Foot (first layers wider than model)</h3>
+            <p>Cause: bottom exposure too long, Z offset too close, no elephant foot compensation active.</p>
+            <p><strong>Fix:</strong> reduce bottom exposure by 10s, set elephant foot compensation +0.1mm in Chitubox.</p>
+          </div>
+
+          <div class="section-block">
+            <h3>Support Failures</h3>
+            <p>Cause: supports too thin, contact point too small.</p>
+            <p><strong>Fix:</strong> change to medium/heavy supports, increase contact tip diameter to 0.4mm or larger.</p>
+          </div>
+
+          <div class="section-block">
+            <h3>Suction Cupping (loud crack, FEP distortion)</h3>
+            <p>Cause: sealed hollow area or flat surface creating vacuum during peel.</p>
+            <p><strong>Fix:</strong> add drain holes to hollow models, tilt flat surfaces 45°, add vent holes.</p>
+          </div>
+
+          <div class="section-block">
+            <h3>Cloudy / Frosty Surface</h3>
+            <table class="settings-table">
+              <thead><tr><th>Cause</th><th>Fix</th></tr></thead>
+              <tbody>
+                <tr><td>Over-washed in IPA</td><td>Reduce wash time</td></tr>
+                <tr><td>IPA contaminated (&gt;30% resin saturation)</td><td>Replace IPA</td></tr>
+                <tr><td>Cured while still wet with IPA</td><td>Dry completely before curing</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section-block">
+            <h3>Sticky Surface After Curing</h3>
+            <table class="settings-table">
+              <thead><tr><th>Cause</th><th>Fix</th></tr></thead>
+              <tbody>
+                <tr><td>Under-cured</td><td>Extend cure time or check UV lamp power</td></tr>
+                <tr><td>Oxygen inhibition</td><td>Cure submerged in water for better surface result</td></tr>
+                <tr><td>Resin formula quirk</td><td>Try longer cure time — some resins need 10+ minutes</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section-block">
+            <h3>Print Sticking to FEP (won't release during print)</h3>
+            <p>Cause: FEP too tight or cloudy, lift speed too slow, resin too viscous (cold room).</p>
+            <p><strong>Fix:</strong> replace FEP if cloudy, increase lift speed slightly, warm resin to 25–30°C, consider FEP release spray.</p>
+          </div>
+
+          <div class="section-block">
+            <h3>Z-Banding / Visible Layer Lines</h3>
+            <p>Cause: Z axis lead screw binding, under-lubrication, or vibration.</p>
+            <p><strong>Fix:</strong> lubricate Z screw with PTFE grease, tighten Z rail eccentric nuts, reduce lift/retract speed.</p>
+          </div>
+
+          <div class="section-block">
+            <h3>Resin Smell / Fumes</h3>
+            <ul class="bullet-list">
+              <li>Use an activated carbon air purifier or place printer in a ventilated enclosure.</li>
+              <li>Elegoo Mercury enclosure includes a built-in activated carbon filter.</li>
+              <li>Keep the room ventilated during and after printing sessions.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>FEP Replacement Guide</h3>
+            <ul class="bullet-list">
+              <li><strong>When to replace:</strong> FEP appears cloudy or scratched, or print success rate drops despite correct settings.</li>
+              <li><strong>How often:</strong> every 3–6 months with regular use, or approximately every 1–2L of resin printed.</li>
+              <li><strong>Tightening:</strong> tighten evenly by alternating corners — like tightening lug nuts on a car wheel.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TAB 10: Advanced Chitubox Features -->
+        <div class="tab-panel" id="tab10">
+          <h2>Advanced Chitubox Features</h2>
+
+          <div class="section-block">
+            <h3>Chitubox Pro Exclusive Features</h3>
+            <div class="card-grid">
+              <div class="info-card">
+                <h4>Lattice Support</h4>
+                <p>Internal lattice structure instead of columns. Stronger, uses less resin.</p>
+              </div>
+              <div class="info-card">
+                <h4>Support Analysis</h4>
+                <p>Color-coded risk map highlighting areas likely to fail during printing.</p>
+              </div>
+              <div class="info-card">
+                <h4>2-Stage Motion Control</h4>
+                <p>Slow peel then fast lift per layer for better FEP separation and reduced failure.</p>
+              </div>
+              <div class="info-card">
+                <h4>Variable Exposure</h4>
+                <p>Assign different exposure times to different regions within the same layer.</p>
+              </div>
+              <div class="info-card">
+                <h4>Slice Repair</h4>
+                <p>Auto-fix non-manifold geometry issues before slicing begins.</p>
+              </div>
+              <div class="info-card">
+                <h4>Batch Processing</h4>
+                <p>Queue multiple models and slice them together. Tag management for organizing profiles.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Repair Tool (Free Version)</h3>
+            <p><strong>Path:</strong> Tools → Repair Model</p>
+            <p>Fixes: non-manifold edges, inverted normals, holes in mesh, self-intersections.</p>
+            <div class="tip-box" style="margin-top:12px;">
+              For heavily broken STLs: use Meshmixer or Microsoft 3D Builder for more powerful repair options.
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Island Detection</h3>
+            <ul class="bullet-list">
+              <li>After slicing: go to <strong>Analysis → Islands</strong>.</li>
+              <li>Red dots in layer preview = isolated islands (floating pixels not connected to rest of print).</li>
+              <li><strong>Solution:</strong> add support to flagged areas, re-slice, re-check.</li>
+              <li>Pro version: automated island detection with support addition.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Merge, Mirror &amp; Clone</h3>
+            <table class="settings-table">
+              <thead><tr><th>Feature</th><th>How to Use</th><th>Best For</th></tr></thead>
+              <tbody>
+                <tr><td>Merge Models</td><td>Select all → Edit → Merge</td><td>Assemblies that print together; unified support generation</td></tr>
+                <tr><td>Mirror</td><td>Select model → Mirror → X/Y/Z axis</td><td>Paired prints (left/right hands, shoes, earrings)</td></tr>
+                <tr><td>Clone</td><td>Edit → Clone</td><td>Multiply selected model on the plate</td></tr>
+                <tr><td>Auto-Arrange</td><td>Edit → Auto-Arrange</td><td>Efficiently pack all models on the build plate</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section-block">
+            <h3>Layer Slider Analysis</h3>
+            <ul class="bullet-list">
+              <li>Drag through the layer preview before printing.</li>
+              <li>Look for: islands (disconnected areas), thin unsupported bridges, support gaps.</li>
+              <li>Pro version: heatmap showing mechanical stress on supports at each layer.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Export Formats</h3>
+            <table class="settings-table">
+              <thead><tr><th>Format</th><th>Compatible Printers</th></tr></thead>
+              <tbody>
+                <tr><td>.ctb</td><td>Standard for most Elegoo and Anycubic printers</td></tr>
+                <tr><td>.photon</td><td>Original Anycubic Photon (older format)</td></tr>
+                <tr><td>.pw0 / .pwmx</td><td>Anycubic Photon Mono series</td></tr>
+              </tbody>
+            </table>
+            <p style="margin-top:10px;opacity:0.8;">Chitubox auto-selects the correct format based on the loaded printer profile.</p>
+          </div>
+        </div>
+
+        <!-- TAB 11: Practice Projects -->
+        <div class="tab-panel" id="tab11">
+          <h2>Practice Projects — 6 Resin Challenges</h2>
+
+          <div class="section-block">
+            <h3>Project 1 — RERF Calibration Test <span style="color:#e63946;font-size:0.85em;">(Start Here)</span></h3>
+            <p style="margin-bottom:12px;opacity:0.8;"><strong>Goal:</strong> Dial in correct exposure for your resin + printer combination.</p>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>In Chitubox: File → RERF. If not visible, locate it in Chitubox community resources.</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Use manufacturer's recommended settings as a starting point for your specific resin.</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>Bottom: 50s / 6 layers. Normal: try a range (e.g. 2s, 2.5s, 3s, 3.5s across sections).</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Print, wash, cure. Examine: find the section with cleanest letter definition, sharpest thin features, no over-cure blobs. White/ashy sections = over-exposed.</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>Enter the winning exposure time in Normal Exposure setting. Print again to verify.</div></div>
+            </div>
+            <div class="tip-box" style="margin-top:12px;"><strong>Skills:</strong> Exposure calibration, understanding over/under exposure</div>
+          </div>
+
+          <div class="section-block">
+            <h3>Project 2 — Small Detailed Figurine</h3>
+            <p style="margin-bottom:12px;opacity:0.8;"><strong>Goal:</strong> Print a detailed character figure with proper support and orientation.</p>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>Download a miniature/figurine STL (Thingiverse, Printables, MyMiniFactory).</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Orient: rotate 30–45° on both X and Y axes, face pointing up and away from supports.</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>Auto-support: medium density. Add manual supports under arms, ears, protruding details.</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Hollow if over 50mm tall: 2mm walls, 2 drain holes at lowest orientation point.</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>Settings: 0.05mm layers, normal exposure for your resin, medium lift speed.</div></div>
+              <div class="step-item"><span class="step-num">6</span><div>Slice → check layer preview for islands → fix any found.</div></div>
+              <div class="step-item"><span class="step-num">7</span><div>Print, wash 3 min IPA, dry 5 min, cure 4 min each side.</div></div>
+              <div class="step-item"><span class="step-num">8</span><div>Remove supports with flush cutters, sand scars with 800→2000 grit. Optional: prime and paint.</div></div>
+            </div>
+            <div class="tip-box" style="margin-top:12px;"><strong>Skills:</strong> Orientation, supports, hollowing, post-processing</div>
+          </div>
+
+          <div class="section-block">
+            <h3>Project 3 — Jewelry: Ring or Pendant</h3>
+            <p style="margin-bottom:12px;opacity:0.8;"><strong>Goal:</strong> High-detail jewelry print with minimal support scars on wearable surfaces.</p>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>Download a ring or pendant STL. Measure ring size first for correct scaling.</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Orient: ring at 45° so band spans diagonally, stone/face pointing UP away from plate.</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>Light supports only on inner band (hidden area). Zero supports on outer visible face.</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Do NOT hollow — jewelry needs to be solid for strength (unless using castable resin).</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>Layer height: 0.03mm (30 micron) for maximum detail.</div></div>
+              <div class="step-item"><span class="step-num">6</span><div>Exposure: may need slight increase vs standard (thinner layers = less UV per layer).</div></div>
+              <div class="step-item"><span class="step-num">7</span><div>Wash carefully with soft brush on ring band interior. Cure, then sand and polish: 400→800→1200→2000→micro mesh pads.</div></div>
+            </div>
+            <div class="tip-box" style="margin-top:12px;"><strong>Skills:</strong> 30µm printing, light supports, jewelry orientation, polishing</div>
+          </div>
+
+          <div class="section-block">
+            <h3>Project 4 — Dental / Display Model</h3>
+            <p style="margin-bottom:12px;opacity:0.8;"><strong>Goal:</strong> Understand high-accuracy printing for technical models.</p>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>Download a dental arch model or precision technical part STL.</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Scale to exact real-world dimensions — verify in Chitubox dimensions panel.</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>Orient: flat base down for dental models, or tilt 15° to reduce suction on flat base.</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Light supports around perimeter only — keep internal surfaces clean.</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>Settings: 0.05mm layer, lift speed 2mm/s, anti-aliasing 4x, grey level ON.</div></div>
+              <div class="step-item"><span class="step-num">6</span><div>No hollowing — accuracy requires full solid print.</div></div>
+              <div class="step-item"><span class="step-num">7</span><div>Print, wash, cure 6 min minimum. Verify dimensions with calipers — target ±0.1mm.</div></div>
+            </div>
+            <div class="tip-box" style="margin-top:12px;"><strong>Skills:</strong> Accuracy printing, anti-aliasing importance, measurement verification</div>
+          </div>
+
+          <div class="section-block">
+            <h3>Project 5 — Large Hollow Display Piece</h3>
+            <p style="margin-bottom:12px;opacity:0.8;"><strong>Goal:</strong> Print a large (100mm+) decorative item efficiently with hollowing.</p>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>Download a large decorative STL (skull, dragon, bust, vase — 100–150mm range).</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Orient: facing up and forward (hero face orientation away from supports).</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>Supports: heavy on base and back/hidden areas, medium on sides.</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Hollow: 2mm walls, Grid infill for rigidity, close inner holes.</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>Drain holes: 2× 4mm holes at lowest orientation point + 1 vent hole at top.</div></div>
+              <div class="step-item"><span class="step-num">6</span><div>Verify in X-ray view: cavity is clear and drain holes connect through the shell.</div></div>
+              <div class="step-item"><span class="step-num">7</span><div>Layer height: 0.05mm, lift speed 2–3mm/s (large models need slower peel).</div></div>
+              <div class="step-item"><span class="step-num">8</span><div>Check Chitubox resin estimate — should be 60–80% less than solid. Print time: 6–12 hours.</div></div>
+              <div class="step-item"><span class="step-num">9</span><div>After print: hold upside down over tray — liquid resin drains from holes during washing.</div></div>
+            </div>
+            <div class="tip-box" style="margin-top:12px;"><strong>Skills:</strong> Hollowing large models, drain holes, large print management</div>
+          </div>
+
+          <div class="section-block">
+            <h3>Project 6 — Assembly: Print-in-Place Hinge</h3>
+            <p style="margin-bottom:12px;opacity:0.8;"><strong>Goal:</strong> Understand tolerance and part interaction for assemblies.</p>
+            <div class="steps-list">
+              <div class="step-item"><span class="step-num">1</span><div>Download a print-in-place hinge or articulated model. Note designer's recommended clearance (usually 0.3–0.5mm gap).</div></div>
+              <div class="step-item"><span class="step-num">2</span><div>Orient: hinge gap must be parallel to the build plate (not along Z axis).</div></div>
+              <div class="step-item"><span class="step-num">3</span><div>Supports: carefully placed — none inside the hinge gap.</div></div>
+              <div class="step-item"><span class="step-num">4</span><div>Settings: standard exposure. Do NOT over-expose (causes gaps to fuse). Anti-aliasing ON.</div></div>
+              <div class="step-item"><span class="step-num">5</span><div>After printing and washing: test movement BEFORE curing.</div></div>
+              <div class="step-item"><span class="step-num">6</span><div>If fused: soak hinges in IPA for 5 min, carefully work a blade into the gap to separate.</div></div>
+              <div class="step-item"><span class="step-num">7</span><div>Cure only after confirming movement works.</div></div>
+            </div>
+            <div class="tip-box" style="margin-top:12px;"><strong>Skills:</strong> Tolerances, assembly printing, exposure precision, mechanical resin printing</div>
+          </div>
+        </div>
+
+        <!-- TAB 12: Expert Tips & Resin Mastery -->
+        <div class="tab-panel" id="tab12">
+          <h2>Expert Tips &amp; Resin Mastery</h2>
+
+          <div class="section-block">
+            <h3>Workflow Speed Tips</h3>
+            <ul class="bullet-list">
+              <li><strong>Pre-arrange:</strong> set up multiple prints on one plate — overlapping support structures is acceptable, overlapping models is not.</li>
+              <li><strong>Save .chitubox project files</strong> — reopens with all settings, orientation, and supports intact.</li>
+              <li><strong>Printer profiles:</strong> set up and save dedicated profiles per printer + resin combination.</li>
+              <li><strong>Batch profiles:</strong> different profiles for miniatures vs display vs functional parts.</li>
+              <li><strong>Queue overnight:</strong> load multiple files and slice them while you sleep.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Resin Maintenance</h3>
+            <ul class="bullet-list">
+              <li><strong>After every session:</strong> pour resin back through a strainer into the bottle. Don't leave resin in the tank more than 3–5 days (cloudy resin = failed prints).</li>
+              <li><strong>FEP care:</strong> never use a metal spatula on FEP. Use only silicone or soft plastic tools.</li>
+              <li><strong>Tank cleaning:</strong> pour out resin, wipe with IPA, cure any remaining resin with a UV torch and peel it off.</li>
+              <li><strong>Build plate cleaning:</strong> IPA wipe before every print. Ensure no old resin chunks are stuck. Always remove failed prints from FEP before starting a new print.</li>
+              <li><strong>Quarterly:</strong> check all screws, check Z rail for play, lubricate the Z lead screw.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Environmental Tips</h3>
+            <ul class="bullet-list">
+              <li><strong>Temperature:</strong> keep resin at 20–25°C. Cold environments cause failures. Use a small space heater near the printer in winter.</li>
+              <li><strong>Humidity:</strong> high humidity slightly affects cure times, but is not critical (unlike FDM moisture sensitivity).</li>
+              <li><strong>UV from windows:</strong> close blinds during printing. Sunlight partially cures resin in the tank.</li>
+              <li><strong>Resin odor:</strong> use an activated carbon filter in enclosed spaces. Elegoo makes printer enclosures with built-in filtration.</li>
+            </ul>
+          </div>
+
+          <div class="section-block">
+            <h3>Expert Settings (Often Overlooked)</h3>
+            <table class="settings-table">
+              <thead><tr><th>Setting</th><th>What It Does</th></tr></thead>
+              <tbody>
+                <tr><td>Lift sequence (slow-fast two-stage)</td><td>Configurable even in free version on newer Chitubox builds — reduces FEP stress</td></tr>
+                <tr><td>Backlight compensation</td><td>Corrects center-to-edge intensity falloff in some printer profiles</td></tr>
+                <tr><td>Resin fill detect (Pro)</td><td>Pauses printing if resin level drops below a safe amount</td></tr>
+                <tr><td>Print statistics</td><td>Track resin usage, print time, and success rates over time</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section-block">
+            <h3>Chitubox vs Lychee Slicer</h3>
+            <table class="settings-table">
+              <thead><tr><th>Slicer</th><th>Strengths</th><th>Weaknesses</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Chitubox</strong></td>
+                  <td>Simpler UI, native .ctb format, official Elegoo support, RERF built-in</td>
+                  <td>Auto-supports less refined than Lychee</td>
+                </tr>
+                <tr>
+                  <td><strong>Lychee Slicer</strong></td>
+                  <td>Better auto-supports, more calibration tools, better support editing</td>
+                  <td>Subscription model, steeper learning curve</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="tip-box" style="margin-top:12px;">
+              Many advanced users slice in Lychee but export via Chitubox for .ctb compatibility. <strong>Recommendation:</strong> learn Chitubox first (simpler), then graduate to Lychee for production workflows.
+            </div>
+          </div>
+
+          <div class="section-block">
+            <h3>Resin Printing Economics</h3>
+            <table class="settings-table">
+              <thead><tr><th>Item</th><th>Cost Estimate</th></tr></thead>
+              <tbody>
+                <tr><td>Resin (500ml)</td><td>$20–40</td></tr>
+                <tr><td>Small figurine (5–15ml resin)</td><td>~$0.20–1.50 per print</td></tr>
+                <tr><td>Large hollow display (30–60ml resin)</td><td>~$2–5 per print</td></tr>
+                <tr><td>IPA consumption</td><td>~500ml IPA per 500ml resin printed (two-container method)</td></tr>
+              </tbody>
+            </table>
+            <div class="tip-box" style="margin-top:12px;">
+              <strong>Save on IPA:</strong> let dirty IPA sit in direct sunlight or under a UV lamp — cured particles sink to the bottom. Pour off clean IPA from the top for reuse.
+            </div>
+          </div>
+
+          <div class="section-block" style="text-align:center;padding:32px 20px;border:2px solid #e63946;border-radius:10px;background:rgba(230,57,70,0.05);">
+            <h3 style="color:#e63946;margin-bottom:12px;">You've Completed the Chitubox Ultimate Guide</h3>
+            <p style="opacity:0.85;max-width:560px;margin:0 auto;">From setup to expert mastery — you now have everything needed to run a successful resin printing workflow. Dial in your settings, maintain your machine, and enjoy the detail that only MSLA resin printing can deliver.</p>
+          </div>
+        </div>
+
+      </div><!-- /content-wrap --></body></html>

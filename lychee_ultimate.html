@@ -1,0 +1,1572 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lychee Slicer — Ultimate Resin Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-back {
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .nav-back:hover { color: #f72585; }
+  .nav-title {
+    color: #f72585;
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    flex: 1;
+  }
+  .nav-badge {
+    color: #8b949e;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* PROGRESS PILLS */
+  .progress-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+    flex-wrap: wrap;
+  }
+  .pill {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pill-beginner    { background: #0d4429; color: #2daa6b; border: 1px solid #2daa6b; }
+  .pill-intermediate{ background: #3d2c00; color: #f0a500; border: 1px solid #f0a500; }
+  .pill-advanced    { background: #3d1500; color: #ff7b00; border: 1px solid #ff7b00; }
+  .pill-expert      { background: #3d0000; color: #e74c3c; border: 1px solid #e74c3c; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px 20px 0;
+    background: #0d1117;
+    border-bottom: 1px solid #30363d;
+  }
+  .tab-btn {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+    margin-bottom: 8px;
+  }
+  .tab-btn:hover { border-color: #f72585; color: #f72585; }
+  .tab-btn.active { background: #f72585; color: #fff; border-color: #f72585; }
+
+  /* CONTENT */
+  .content-area {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 40px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* CARDS & COMPONENTS */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .tip-box {
+    border-left: 4px solid #2daa6b;
+    background: #0d4429;
+    padding: .7rem 1rem;
+    margin: .6rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .tip-box.warning { border-color: #f0a500; background: #3d2c00; }
+  .tip-box.danger  { border-color: #e74c3c; background: #3d0000; }
+  .tip-box.info    { border-color: #f72585; background: #2d0018; }
+
+  .section-heading {
+    color: #f72585;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 1.2rem 0 .5rem;
+  }
+  .sub-heading {
+    color: #e6edf3;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 1rem 0 .4rem;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 4px;
+  }
+
+  kbd {
+    background: #21262d;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 2px 7px;
+    font-family: monospace;
+    color: #e6edf3;
+    font-size: 12px;
+  }
+  .shortcut-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #21262d;
+    padding: 6px 0;
+    gap: 12px;
+    align-items: center;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #8b949e; font-size: 13px; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: .6rem 0;
+  }
+  th {
+    background: #21262d;
+    color: #f72585;
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #30363d;
+  }
+  td {
+    padding: 7px 12px;
+    border: 1px solid #30363d;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #161b22; }
+  tr:nth-child(odd) td  { background: #0d1117; }
+
+  /* WORKFLOW STEPS */
+  .workflow {
+    counter-reset: step;
+    padding: 0;
+    list-style: none;
+  }
+  .workflow li {
+    counter-increment: step;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .workflow li::before {
+    content: counter(step);
+    background: #f72585;
+    color: #fff;
+    border-radius: 50%;
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  ul.feature-list {
+    padding-left: 0;
+    list-style: none;
+  }
+  ul.feature-list li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    color: #c9d1d9;
+    font-size: 13px;
+  }
+  ul.feature-list li::before {
+    content: "▸";
+    color: #f72585;
+    position: absolute;
+    left: 0;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .badge-free  { background: #0d4429; color: #2daa6b; }
+  .badge-maker { background: #3d2c00; color: #f0a500; }
+  .badge-pro   { background: #2d0018; color: #f72585; }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f72585;
+    margin-bottom: 4px;
+  }
+  .page-subtitle {
+    color: #8b949e;
+    font-size: 13px;
+    margin-bottom: 1.4rem;
+  }
+
+  .shortcut-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+  @media (max-width: 580px) { .shortcut-grid { grid-template-columns: 1fr; } }
+
+  .accent { color: #f72585; }
+  .muted  { color: #8b949e; }
+  .value  { color: #79c0ff; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="top-nav">
+  <a class="nav-back" href="index.html">&#8592; Back to Hub</a>
+  <div class="nav-title">&#127826; Lychee Slicer &mdash; Ultimate Resin Guide</div>
+  <div class="nav-badge">Beginner to Expert</div>
+</nav>
+
+<!-- PROGRESS PILLS -->
+<div class="progress-bar">
+  <span class="pill pill-beginner">&#9679; Beginner</span>
+  <span class="pill pill-intermediate">&#9679; Intermediate</span>
+  <span class="pill pill-advanced">&#9679; Advanced</span>
+  <span class="pill pill-expert">&#9679; Expert</span>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(1)">1. Understanding Lychee</button>
+  <button class="tab-btn" onclick="switchTab(2)">2. Interface &amp; Shortcuts</button>
+  <button class="tab-btn" onclick="switchTab(3)">3. Exposure &amp; Layers</button>
+  <button class="tab-btn" onclick="switchTab(4)">4. Supports</button>
+  <button class="tab-btn" onclick="switchTab(5)">5. Hollow, Drain &amp; Scenes</button>
+  <button class="tab-btn" onclick="switchTab(6)">6. Settings Deep Dive</button>
+  <button class="tab-btn" onclick="switchTab(7)">7. Calibration</button>
+  <button class="tab-btn" onclick="switchTab(8)">8. Troubleshooting</button>
+  <button class="tab-btn" onclick="switchTab(9)">9. Resin Profiles</button>
+  <button class="tab-btn" onclick="switchTab(10)">10. Advanced Techniques</button>
+  <button class="tab-btn" onclick="switchTab(11)">11. Workflow Tips</button>
+  <button class="tab-btn" onclick="switchTab(12)">12. Quick Reference</button>
+</div>
+
+<!-- CONTENT AREA -->
+<div class="content-area">
+
+  <!-- ═══════════════════════════════════════════════════════════ TAB 1 -->
+  <div class="tab-panel active" id="tab1">
+    <div class="page-title">Understanding Lychee Slicer</div>
+    <div class="page-subtitle">What it is, why it matters, and how to get started — the essentials before you slice a single layer.</div>
+
+    <div class="section-heading">What Is Lychee Slicer?</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;">Lychee Slicer is a premium resin 3D printing slicer developed by <strong>Mango3D</strong>. It supports all major MSLA, DLP, and SLA resin printers and is widely regarded as having the <span class="accent">best automatic support generation</span> of any slicer on the market. It combines an intuitive UI with powerful features like island detection, scene management, and a community profile ecosystem (Lychee Island).</p>
+      <div class="tip-box info">
+        <strong>Key Identity:</strong> Lychee = premium resin slicer with the best auto-supports, a subscription model, and a strong community around shared print profiles.
+      </div>
+    </div>
+
+    <div class="section-heading">Pricing Tiers</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>Tier</th>
+          <th>Price</th>
+          <th>Key Features</th>
+        </tr>
+        <tr>
+          <td><span class="badge badge-free">FREE</span></td>
+          <td><span class="value">$0</span></td>
+          <td>Basic slicing, limited auto-support (Classic only), community profile download, island detection, unlimited personal use</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-maker">MAKER</span></td>
+          <td><span class="value">$8/mo</span> or <span class="value">$70/yr</span></td>
+          <td>Full Smart Support (AI), unlimited export, advanced AA settings, all printer profiles, priority community features</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-pro">PRO</span></td>
+          <td><span class="value">$15/mo</span></td>
+          <td>Everything in Maker + team/multi-seat, priority support, per-island exposure (advanced DLP masking), analytics</td>
+        </tr>
+      </table>
+      <div class="tip-box" style="margin-top:.8rem;">
+        <strong>Best value for hobbyists:</strong> The Maker annual plan ($70/yr = ~$5.83/mo) gives you Smart Supports and all the features most users ever need.
+      </div>
+    </div>
+
+    <div class="section-heading">Why Choose Lychee Over Chitubox?</div>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <div class="sub-heading">Lychee Advantages</div>
+          <ul class="feature-list">
+            <li>Superior auto-support algorithm (fewer failures)</li>
+            <li>Island detection built-in on all tiers</li>
+            <li>Cleaner, more modern UI</li>
+            <li>Scene management (multiple plates, one project)</li>
+            <li>Lychee Island community profiles</li>
+            <li>Regular, active development updates</li>
+            <li>200+ supported printers with official profiles</li>
+            <li>Better anti-aliasing controls</li>
+          </ul>
+        </div>
+        <div>
+          <div class="sub-heading">Chitubox Advantages</div>
+          <ul class="feature-list">
+            <li>Free basic version is more capable</li>
+            <li>Some users prefer the workflow</li>
+            <li>Wider name recognition / tutorials online</li>
+            <li>No subscription required for full use (Basic)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box info" style="margin-top:.8rem;">
+        <strong>Bottom line:</strong> Lychee's smart supports alone prevent enough print failures to pay for the subscription many times over in saved resin.
+      </div>
+    </div>
+
+    <div class="section-heading">Supported Printers</div>
+    <div class="card">
+      <p class="muted" style="margin-bottom:.6rem;">Lychee supports 200+ printers across all major brands:</p>
+      <div class="grid-2">
+        <ul class="feature-list">
+          <li><strong>Elegoo</strong> — All Mars, Saturn, Jupiter series</li>
+          <li><strong>Anycubic</strong> — Photon Mono, M3, M5 series</li>
+          <li><strong>Phrozen</strong> — Sonic Mini, Mega series</li>
+          <li><strong>Creality</strong> — Halot series</li>
+        </ul>
+        <ul class="feature-list">
+          <li><strong>Peopoly</strong> — Phenom, Moai series</li>
+          <li><strong>Formlabs</strong> — Form 2, 3 series</li>
+          <li><strong>Uniformation</strong>, <strong>EPAX</strong>, <strong>Longer</strong></li>
+          <li>And many more — check Lychee Island for your printer</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-heading">The Lychee Workflow</div>
+    <div class="card">
+      <ol class="workflow">
+        <li><strong>Import</strong> — drag STL/OBJ/3MF file into the viewport or use <kbd>Ctrl+I</kbd></li>
+        <li><strong>Orient</strong> — rotate model to minimize supports and flat suction surfaces</li>
+        <li><strong>Repair</strong> (if needed) — Tools → Repair to fix mesh errors before slicing</li>
+        <li><strong>Hollow</strong> (optional) — reduce resin use for large solid models</li>
+        <li><strong>Add Drain Holes</strong> — if hollowed, always add at least 2 holes</li>
+        <li><strong>Supports</strong> — run Smart Support or auto-support, then analyze for islands</li>
+        <li><strong>Slice</strong> — click the Slice button; Lychee processes each layer</li>
+        <li><strong>Preview</strong> — scrub through layers; check critical layers for islands</li>
+        <li><strong>Export</strong> — save to USB or send via WiFi to printer</li>
+      </ol>
+    </div>
+
+    <div class="section-heading">Interface Layout Overview</div>
+    <div class="card">
+      <table>
+        <tr><th>Area</th><th>Contents</th></tr>
+        <tr><td><strong>Top Toolbar</strong></td><td>File operations, slice button, export, view mode toggles</td></tr>
+        <tr><td><strong>Left Toolbar</strong></td><td>Transform tools: Move, Rotate, Scale, Mirror, Hollow, Support, Repair, Label, Cut</td></tr>
+        <tr><td><strong>Center Viewport</strong></td><td>3D view of the build plate and all models — drag, orbit, zoom here</td></tr>
+        <tr><td><strong>Right Panel</strong></td><td>Scene list, Properties, Print settings, Machine config, Resin profile</td></tr>
+        <tr><td><strong>Bottom Status</strong></td><td>Layer count, print time estimate, resin volume estimate, machine status</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Lychee Island — Community Hub</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;">Lychee Island is an in-app community ecosystem where users share and download:</p>
+      <ul class="feature-list">
+        <li><strong>Printer + Resin profiles</strong> — exposure times tuned by real users for specific resin+printer combos</li>
+        <li><strong>Pre-supported model files</strong> — ready-to-slice files with supports already placed</li>
+        <li><strong>Calibration tests</strong> — exposure matrices, XY calibration prints, Z accuracy tests</li>
+        <li><strong>Print guides</strong> — community tips and recommended settings</li>
+      </ul>
+      <div class="tip-box">
+        <strong>Pro tip:</strong> Before printing any new resin, search Lychee Island for your printer + resin brand. A community-verified profile saves hours of calibration.
+      </div>
+    </div>
+
+    <div class="section-heading">5 Things to Configure Before Your First Print</div>
+    <div class="card">
+      <ol class="workflow">
+        <li><strong>Set your printer</strong> — Add Machine → search your model → download the official or community profile from Lychee Island</li>
+        <li><strong>Set your resin profile</strong> — Add Resin → search your resin brand and type → import community profile if available</li>
+        <li><strong>Run exposure calibration</strong> — use Lychee's built-in exposure matrix test (equivalent to RERF/AmeraLabs) to dial in your exposure time</li>
+        <li><strong>Enable island detection</strong> — Settings → make sure Island Detection is active; this catches floating layers that will cause failures</li>
+        <li><strong>Download community profiles</strong> — open Lychee Island, search for your printer, download the top-rated profile as your baseline</li>
+      </ol>
+    </div>
+  </div><!-- /tab1 -->
+
+  <!-- ═══════════════════════════════════════════════════════════ TAB 2 -->
+  <div class="tab-panel" id="tab2">
+    <div class="page-title">Interface, Navigation &amp; Shortcuts</div>
+    <div class="page-subtitle">Master the viewport, left toolbar, right panel, and every keyboard shortcut — your fastest path to efficiency.</div>
+
+    <div class="section-heading">Viewport Navigation</div>
+    <div class="card">
+      <div class="shortcut-grid">
+        <div>
+          <div class="shortcut-row"><span><kbd>MMB Drag</kbd></span><span class="shortcut-desc">Orbit / rotate view</span></div>
+          <div class="shortcut-row"><span><kbd>Shift</kbd> + <kbd>MMB</kbd></span><span class="shortcut-desc">Pan view</span></div>
+          <div class="shortcut-row"><span><kbd>Scroll Wheel</kbd></span><span class="shortcut-desc">Zoom in / out</span></div>
+          <div class="shortcut-row"><span><kbd>Right-click</kbd></span><span class="shortcut-desc">Context menu</span></div>
+        </div>
+        <div>
+          <div class="shortcut-row"><span><kbd>LMB</kbd></span><span class="shortcut-desc">Select object</span></div>
+          <div class="shortcut-row"><span><kbd>Double-click</kbd></span><span class="shortcut-desc">Select + open properties</span></div>
+          <div class="shortcut-row"><span><kbd>F</kbd></span><span class="shortcut-desc">Fit / frame selected to view</span></div>
+          <div class="shortcut-row"><span><kbd>Numpad 5</kbd></span><span class="shortcut-desc">Toggle Perspective / Orthographic</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">Transform Shortcuts</div>
+    <div class="card">
+      <div class="shortcut-grid">
+        <div>
+          <div class="shortcut-row"><span><kbd>W</kbd></span><span class="shortcut-desc">Move tool</span></div>
+          <div class="shortcut-row"><span><kbd>E</kbd></span><span class="shortcut-desc">Rotate tool</span></div>
+          <div class="shortcut-row"><span><kbd>R</kbd></span><span class="shortcut-desc">Scale tool</span></div>
+          <div class="shortcut-row"><span><kbd>M</kbd></span><span class="shortcut-desc">Mirror</span></div>
+          <div class="shortcut-row"><span><kbd>H</kbd></span><span class="shortcut-desc">Hollow tool</span></div>
+          <div class="shortcut-row"><span><kbd>T</kbd></span><span class="shortcut-desc">Support tool</span></div>
+        </div>
+        <div>
+          <div class="shortcut-row"><span><kbd>G</kbd></span><span class="shortcut-desc">Auto-arrange / Grid layout</span></div>
+          <div class="shortcut-row"><span><kbd>Space</kbd></span><span class="shortcut-desc">Center selected on plate</span></div>
+          <div class="shortcut-row"><span><kbd>1</kbd></span><span class="shortcut-desc">Front view</span></div>
+          <div class="shortcut-row"><span><kbd>2</kbd></span><span class="shortcut-desc">Right view</span></div>
+          <div class="shortcut-row"><span><kbd>3</kbd></span><span class="shortcut-desc">Top view</span></div>
+          <div class="shortcut-row"><span><kbd>F</kbd></span><span class="shortcut-desc">Fit / Frame view</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">File &amp; Edit Shortcuts</div>
+    <div class="card">
+      <div class="shortcut-grid">
+        <div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Z</kbd></span><span class="shortcut-desc">Undo</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Y</kbd></span><span class="shortcut-desc">Redo</span></div>
+          <div class="shortcut-row"><span><kbd>Delete</kbd></span><span class="shortcut-desc">Delete selected</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>D</kbd></span><span class="shortcut-desc">Duplicate selected</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>A</kbd></span><span class="shortcut-desc">Select all</span></div>
+        </div>
+        <div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>I</kbd></span><span class="shortcut-desc">Import model</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>S</kbd></span><span class="shortcut-desc">Save project (.lys)</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></span><span class="shortcut-desc">Save As</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>T</kbd></span><span class="shortcut-desc">New scene / plate</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">Support &amp; Analysis Shortcuts</div>
+    <div class="card">
+      <div class="shortcut-grid">
+        <div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd></span><span class="shortcut-desc">Auto-support selected model</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd></span><span class="shortcut-desc">Analyze (island detection)</span></div>
+        </div>
+        <div>
+          <div class="shortcut-row"><span><kbd>[</kbd> / <kbd>]</kbd></span><span class="shortcut-desc">Step through layers in preview</span></div>
+          <div class="shortcut-row"><span><kbd>Ctrl</kbd>+<kbd>X</kbd></span><span class="shortcut-desc">Toggle X-ray / section view</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">Left Toolbar — Tool Reference</div>
+    <div class="card">
+      <table>
+        <tr><th>Tool</th><th>Shortcut</th><th>What It Does</th></tr>
+        <tr><td><strong>Move</strong></td><td><kbd>W</kbd></td><td>Translate model on X/Y/Z axes; snap to plate bottom</td></tr>
+        <tr><td><strong>Rotate</strong></td><td><kbd>E</kbd></td><td>Rotate model; enter exact angles in properties panel</td></tr>
+        <tr><td><strong>Scale</strong></td><td><kbd>R</kbd></td><td>Uniform or non-uniform scaling; percentage or mm input</td></tr>
+        <tr><td><strong>Mirror</strong></td><td><kbd>M</kbd></td><td>Mirror on X, Y, or Z axis — useful for left/right pairs</td></tr>
+        <tr><td><strong>Duplicate</strong></td><td><kbd>Ctrl+D</kbd></td><td>Copy selected; places copy adjacent to original</td></tr>
+        <tr><td><strong>Hollow</strong></td><td><kbd>H</kbd></td><td>Shell model with adjustable wall thickness; choose infill type</td></tr>
+        <tr><td><strong>Support</strong></td><td><kbd>T</kbd></td><td>Manual + auto support placement; Smart Support (paid)</td></tr>
+        <tr><td><strong>Repair</strong></td><td>&mdash;</td><td>Detect and fix mesh errors (normals, holes, intersections)</td></tr>
+        <tr><td><strong>Label</strong></td><td>&mdash;</td><td>Emboss or deboss text directly onto model surface</td></tr>
+        <tr><td><strong>Cut</strong></td><td>&mdash;</td><td>Slice model into parts for separate printing or to fit build volume</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Right Panel — Sections Reference</div>
+    <div class="card">
+      <table>
+        <tr><th>Panel Section</th><th>Contents</th></tr>
+        <tr><td><strong>Scene</strong></td><td>List of all objects in current plate; toggle visibility (eye icon); rename; reorder</td></tr>
+        <tr><td><strong>Properties</strong></td><td>Selected model: exact dimensions (mm), scale %, rotation angles — all editable</td></tr>
+        <tr><td><strong>Print Settings</strong></td><td>Exposure, bottom exposure, layer height, lift speed/height, AA — the core slicing parameters</td></tr>
+        <tr><td><strong>Machine</strong></td><td>Active printer configuration; switch between saved machine profiles</td></tr>
+        <tr><td><strong>Resin</strong></td><td>Active resin profile; material properties; launch exposure calibration from here</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Scene Management — A Lychee Advantage</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;">Lychee lets you manage multiple print plates inside a single saved project file (<strong>.lys</strong>). Each "Scene" is an independent plate with its own printer, resin, and exposure settings.</p>
+      <div class="grid-2">
+        <div>
+          <div class="sub-heading">Creating &amp; Using Scenes</div>
+          <ul class="feature-list">
+            <li>Add new scene: <kbd>Ctrl+T</kbd> or the + button in Scene panel</li>
+            <li>Copy objects between scenes: right-click → Copy to Scene</li>
+            <li>Each scene holds its own exposure, lift, and layer settings</li>
+            <li>Save entire multi-scene project as one .lys file</li>
+          </ul>
+        </div>
+        <div>
+          <div class="sub-heading">Use Cases</div>
+          <ul class="feature-list">
+            <li>Same model, two different resins / exposure settings</li>
+            <li>Multi-plate assemblies (Scene 1 = body, Scene 2 = arms)</li>
+            <li>Calibration scene + production scene in one project</li>
+            <li>Test print scene alongside final print scene</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tab2 -->
+
+  <!-- ═══════════════════════════════════════════════════════════ TAB 3 -->
+  <div class="tab-panel" id="tab3">
+    <div class="page-title">Print Settings — Exposure &amp; Layer Configuration</div>
+    <div class="page-subtitle">Every knob that controls how your resin cures — and exactly what to set each one to.</div>
+
+    <div class="section-heading">Exposure Settings</div>
+    <div class="card">
+      <table>
+        <tr><th>Setting</th><th>Typical Range</th><th>Notes</th></tr>
+        <tr><td><strong>Bottom (Initial) Exposure</strong></td><td><span class="value">35 – 60 s</span></td><td>First N layers cure much longer to bond to FEP/plate. Too short = plate adhesion failure. Too long = elephant foot.</td></tr>
+        <tr><td><strong>Normal Exposure</strong></td><td><span class="value">2 – 4 s</span> (4K) / <span class="value">2.5 – 5 s</span> (8K/12K)</td><td>Main layer cure time. Higher resolution screens need slightly more exposure. Calibrate with matrix test.</td></tr>
+        <tr><td><strong>Bottom Layer Count</strong></td><td><span class="value">4 – 8 layers</span></td><td>How many layers receive bottom exposure time. 6 is a safe default.</td></tr>
+        <tr><td><strong>Transition Layers</strong></td><td><span class="value">4 – 6 layers</span></td><td>Gradual exposure ramp-down from bottom to normal. Prevents delamination at the transition zone.</td></tr>
+        <tr><td><strong>Light-off Delay</strong></td><td><span class="value">0 – 2 s</span></td><td>Wait time after UV before lift begins. Allows resin to fully cure before peel force.</td></tr>
+        <tr><td><strong>Rest After Retract</strong></td><td><span class="value">0 – 2 s</span></td><td>Wait after platform descends before UV fires. Allows resin to settle and fill layer gap.</td></tr>
+        <tr><td><strong>Rest After Lift</strong></td><td><span class="value">0 – 2 s</span></td><td>Pause at top of lift before descending. Helps resin flow under platform.</td></tr>
+      </table>
+      <div class="tip-box warning" style="margin-top:.8rem;">
+        <strong>Overexposure symptoms:</strong> Elephant foot (base flares out), loss of fine detail, supports fused to model, stuck to FEP. Reduce normal exposure by 0.2-0.5s increments.
+      </div>
+      <div class="tip-box danger">
+        <strong>Underexposure symptoms:</strong> Layers not adhering, print falls off mid-way, cloudy/soft surfaces, supports break. Increase exposure by 0.3-0.5s increments.
+      </div>
+    </div>
+
+    <div class="section-heading">Lift &amp; Retract Settings</div>
+    <div class="card">
+      <table>
+        <tr><th>Setting</th><th>Standard</th><th>Notes</th></tr>
+        <tr><td><strong>Lift Height</strong></td><td><span class="value">6 – 8 mm</span></td><td>How high the platform rises after each layer. More = better FEP peel, slower print.</td></tr>
+        <tr><td><strong>Bottom Lift Height</strong></td><td><span class="value">8 – 10 mm</span></td><td>Extra peel distance for initial layers. First layers have strongest suction.</td></tr>
+        <tr><td><strong>Lift Speed (up)</strong></td><td><span class="value">2 – 4 mm/s</span></td><td>Slower = less peel stress, less FEP wear. For large flat areas: 1–2 mm/s.</td></tr>
+        <tr><td><strong>Retract Speed (down)</strong></td><td><span class="value">3 – 6 mm/s</span></td><td>Platform descending. Can be faster than lift since no peel happening.</td></tr>
+      </table>
+
+      <div class="sub-heading" style="margin-top:1rem;">Two-Stage Lift (Highly Recommended)</div>
+      <p style="margin-bottom:.6rem;color:#c9d1d9;font-size:13px;">Two-stage lift uses a slow initial movement to break FEP adhesion gently, then moves quickly for the rest of the lift. This dramatically reduces suction cup forces and FEP wear.</p>
+      <table>
+        <tr><th>Phase</th><th>Distance</th><th>Speed</th></tr>
+        <tr><td>Bottom Phase 1 (slow peel)</td><td><span class="value">1 – 2 mm</span></td><td><span class="value">1 mm/s</span></td></tr>
+        <tr><td>Bottom Phase 2 (fast lift)</td><td><span class="value">Remaining</span></td><td><span class="value">4 mm/s</span></td></tr>
+        <tr><td>Normal Phase 1 (slow peel)</td><td><span class="value">1 – 2 mm</span></td><td><span class="value">1 – 2 mm/s</span></td></tr>
+        <tr><td>Normal Phase 2 (fast lift)</td><td><span class="value">Remaining</span></td><td><span class="value">3 – 5 mm/s</span></td></tr>
+      </table>
+      <div class="tip-box">
+        <strong>FEP life tip:</strong> Two-stage lift is the single biggest factor in FEP longevity. A single-speed fast lift creates suction pop that stretches and clouds the FEP membrane much faster.
+      </div>
+    </div>
+
+    <div class="section-heading">Layer Height Selection</div>
+    <div class="card">
+      <table>
+        <tr><th>Layer Height</th><th>Best For</th><th>Print Speed</th><th>Detail Level</th></tr>
+        <tr><td><span class="value">0.02 mm (20µm)</span></td><td>Dental, jewelry, extreme detail</td><td>Very slow</td><td>Maximum</td></tr>
+        <tr><td><span class="value">0.03 mm (30µm)</span></td><td>Fine detail miniatures, scale models</td><td>Slow</td><td>Excellent</td></tr>
+        <tr><td><span class="value">0.05 mm (50µm)</span></td><td><strong>Standard — recommended default</strong></td><td>Medium</td><td>Very good</td></tr>
+        <tr><td><span class="value">0.08 mm (80µm)</span></td><td>Faster functional parts, less visible surfaces</td><td>Fast</td><td>Good</td></tr>
+        <tr><td><span class="value">0.10 mm (100µm)</span></td><td>Draft prints, rapid prototyping</td><td>Fastest</td><td>Acceptable</td></tr>
+      </table>
+      <div class="tip-box info">
+        <strong>Start at 50µm.</strong> It's the sweet spot between print time and quality for 95% of hobby and professional prints.
+      </div>
+    </div>
+
+    <div class="section-heading">Lychee Built-In Calibration Tool</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;color:#c9d1d9;font-size:13px;">Lychee includes an exposure matrix calibration test equivalent to RERF (Resin Exposure Range Finder). Access it from: <strong>Tools → Exposure Calibration</strong> or from the Resin Profile panel.</p>
+      <ol class="workflow">
+        <li>Set your starting exposure estimate (from community profile or resin bottle)</li>
+        <li>Configure the matrix: number of steps and exposure increment per step (e.g., 0.2s steps, 8 steps)</li>
+        <li>Lychee generates a test grid of small objects at each exposure value</li>
+        <li>Slice and print the calibration file</li>
+        <li>Examine results: find the exposure value that shows crisp detail without elephant foot or blurring</li>
+        <li>Enter that value as your confirmed normal exposure in the resin profile</li>
+      </ol>
+      <div class="tip-box">
+        <strong>Community tests:</strong> Lychee Island also hosts community-made calibration files (AmeraLabs Town, XY calibration squares, etc.) that are more comprehensive than the built-in test.
+      </div>
+    </div>
+
+    <div class="section-heading">Anti-Aliasing Settings</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;color:#c9d1d9;font-size:13px;">Anti-aliasing in resin slicers smooths the jagged pixel edges that result from the LCD screen's fixed pixel grid. Lychee offers both AA level and grey-level control.</p>
+      <table>
+        <tr><th>Setting</th><th>Options</th><th>Effect</th></tr>
+        <tr><td><strong>AA Level</strong></td><td>Off / 2x / 4x / 8x</td><td>Higher = smoother curved edges, slightly softer very fine detail</td></tr>
+        <tr><td><strong>Grey Level</strong></td><td>0 / 1 / 2 / 3</td><td>Partial pixel exposure on edges; 0 = binary (on/off), 3 = maximum softening</td></tr>
+      </table>
+      <div class="grid-2" style="margin-top:.8rem;">
+        <div class="tip-box">
+          <strong>Figurines / organic:</strong> 4x AA + Grey Level 2 — smooth curves and natural surfaces look best
+        </div>
+        <div class="tip-box warning">
+          <strong>Technical parts:</strong> 2x AA + Grey Level 1 — preserve sharp corners and avoid over-softening tight tolerances
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">Advanced Quality Settings</div>
+    <div class="card">
+      <table>
+        <tr><th>Setting</th><th>Description</th></tr>
+        <tr><td><strong>Overexposure Compensation</strong></td><td>Negative values reduce light bleed / blooming on fine details. Use -0.05 to -0.15 for very fine features. Requires careful calibration.</td></tr>
+        <tr><td><strong>Edge Hardening Exposure</strong></td><td>Slightly increases UV dose on perimeter pixels to strengthen outer walls. Useful for thin-walled structural parts.</td></tr>
+        <tr><td><strong>Lift Sequence</strong></td><td>Single-stage (all one speed) vs Two-stage (slow peel + fast lift). Always choose two-stage for better results and FEP longevity.</td></tr>
+      </table>
+    </div>
+  </div><!-- /tab3 -->
+
+  <!-- ═══════════════════════════════════════════════════════════ TAB 4 -->
+  <div class="tab-panel" id="tab4">
+    <div class="page-title">Supports — Lychee's Best Feature</div>
+    <div class="page-subtitle">Physics-aware automatic support placement that prevents failed prints — the main reason to choose Lychee.</div>
+
+    <div class="section-heading">Why Lychee Supports Are Superior</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;">Lychee's Smart Support algorithm uses a physics-based approach that considers: peel forces per layer cross-section, model geometry overhang angles, island risk scores, and FEP adhesion characteristics. The result is supports placed where they are genuinely needed — not a uniform grid.</p>
+      <div class="grid-2">
+        <div class="tip-box">
+          <strong>vs Chitubox auto-support:</strong> Lychee typically generates 40–60% fewer supports while achieving similar or better success rates. Less supports = less cleanup, better surface finish.
+        </div>
+        <div class="tip-box info">
+          <strong>Island detection:</strong> Unlike Chitubox (paid feature), Lychee includes island detection on all tiers — it highlights unsupported floating pixels that will cause mid-print failures.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">Support Modes</div>
+    <div class="card">
+      <table>
+        <tr><th>Mode</th><th>Tier</th><th>Description</th></tr>
+        <tr><td><strong>Lychee Smart Support</strong></td><td><span class="badge badge-maker">MAKER</span></td><td>AI-driven full-geometry analysis. Considers peel forces, geometry, cross-sections. Best results.</td></tr>
+        <tr><td><strong>Classic Auto Support</strong></td><td><span class="badge badge-free">FREE</span></td><td>Grid-based density control. Reliable but places more supports than needed.</td></tr>
+        <tr><td><strong>Manual Support</strong></td><td><span class="badge badge-free">FREE</span></td><td>Click-to-place individual supports. Full control. Use to add/fix after auto-support.</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Support Parameter Reference</div>
+    <div class="card">
+      <table>
+        <tr><th>Parameter</th><th>Light</th><th>Medium</th><th>Heavy</th></tr>
+        <tr><td><strong>Tip Diameter</strong></td><td><span class="value">0.2 mm</span></td><td><span class="value">0.3 mm</span></td><td><span class="value">0.4 mm</span></td></tr>
+        <tr><td><strong>Tip Height</strong></td><td colspan="3" style="color:#8b949e;">0.5 – 0.8 mm across all types</td></tr>
+        <tr><td><strong>Upper Contact Width</strong></td><td><span class="value">0.8 mm</span></td><td><span class="value">1.0 mm</span></td><td><span class="value">1.5 mm</span></td></tr>
+        <tr><td><strong>Middle (Pillar) Width</strong></td><td><span class="value">1.0 mm</span></td><td><span class="value">1.2 mm</span></td><td><span class="value">1.5 mm</span></td></tr>
+        <tr><td><strong>Base Diameter</strong></td><td><span class="value">2.0 mm</span></td><td><span class="value">2.5 mm</span></td><td><span class="value">3.0 mm</span></td></tr>
+        <tr><td><strong>Base Height</strong></td><td><span class="value">2.0 mm</span></td><td><span class="value">2.5 mm</span></td><td><span class="value">3.0 mm</span></td></tr>
+      </table>
+      <p style="margin-top:.7rem;font-size:13px;color:#8b949e;"><strong>Density (Classic Auto-Support):</strong> Light / Medium / Heavy / Very Heavy — controls how close together supports are spaced. Medium is safe default; Heavy for large flat horizontal surfaces.</p>
+    </div>
+
+    <div class="section-heading">Support Types in Lychee</div>
+    <div class="card">
+      <table>
+        <tr><th>Type</th><th>Shape</th><th>Best Use</th></tr>
+        <tr><td><strong>Column</strong></td><td>Straight vertical pillar</td><td>Maximum strength; underneath heavy overhangs; bottom-up geometry</td></tr>
+        <tr><td><strong>Angled</strong></td><td>Leans toward model</td><td>Awkward geometry where vertical pillar would hit the model</td></tr>
+        <tr><td><strong>Tree</strong></td><td>Branches from single trunk</td><td>Minimal resin, less plate contact; best for organic models and figurines</td></tr>
+        <tr><td><strong>Mixed</strong></td><td>Auto-selects per point</td><td>Smart Support default — Lychee chooses best type per support location</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Island Detection Workflow</div>
+    <div class="card">
+      <ol class="workflow">
+        <li>Add supports (Smart Support or Classic Auto)</li>
+        <li>Click <strong>Analyze</strong> → <strong>Check Islands</strong> (<kbd>Ctrl+Shift+R</kbd>)</li>
+        <li>Islands appear highlighted in <span style="color:#ff7b00;"><strong>orange</strong></span> in the layer preview view</li>
+        <li>Click each orange island — Lychee shows which layer number and exact position</li>
+        <li>Right-click island → "Add Support Here" or switch to Support tool and click manually</li>
+        <li>Re-run Analyze after adding — repeat until island count = <span class="accent">0</span></li>
+      </ol>
+      <div class="tip-box danger">
+        <strong>Never skip island check.</strong> A single unsupported island floating in mid-air will detach, float in the resin vat, and potentially cure against the FEP — ruining subsequent layers and your FEP membrane.
+      </div>
+    </div>
+
+    <div class="section-heading">Smart Support Workflow (Paid — Step by Step)</div>
+    <div class="card">
+      <ol class="workflow">
+        <li>Import model and orient it for minimal flat horizontal overhangs (tilt 25–45°)</li>
+        <li>Click the <strong>Smart Support</strong> button in the left toolbar</li>
+        <li>Lychee analyzes full 3D geometry — takes 5–30 seconds depending on model complexity</li>
+        <li>Review the placed supports visually — Smart Support avoids visible surfaces where possible</li>
+        <li>Switch to Layer Preview (<kbd>[</kbd>/<kbd>]</kbd>) and check every 5–10 layers for orange islands</li>
+        <li>Add manual supports for any remaining islands</li>
+        <li>Compare to Chitubox on the same model — typically 40–60% fewer supports, same print success</li>
+      </ol>
+    </div>
+
+    <div class="section-heading">Manual Support Tips &amp; Tricks</div>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <div class="sub-heading">Mouse Controls in Support Mode</div>
+          <ul class="feature-list">
+            <li><kbd>Middle-click</kbd> on model surface = add one support at that point</li>
+            <li><kbd>Ctrl</kbd> + click on support = remove that support</li>
+            <li>Paint mode: brush adds/removes many supports by painting over surface area</li>
+            <li>Layer mode: switch to a specific layer in preview and click to place support exactly at that height</li>
+          </ul>
+        </div>
+        <div>
+          <div class="sub-heading">Anti-Suction Tips</div>
+          <ul class="feature-list">
+            <li>Large flat horizontal overhangs: add very dense support grid (every 3–5 mm)</li>
+            <li>Orient model to tilt flat areas away from FEP plate</li>
+            <li>Lychee shows suction risk warning for sealed hollow cavities</li>
+            <li>When warned about suction: add drain holes + ensure orientation allows resin flow</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tab4 -->
+
+  <!-- ═══════════════════════════════════════════════════════════ TAB 5 -->
+  <div class="tab-panel" id="tab5">
+    <div class="page-title">Hollowing, Drain Holes &amp; Scene Management</div>
+    <div class="page-subtitle">Reduce resin cost, prevent suction cup failures, and manage complex multi-plate projects efficiently.</div>
+
+    <div class="section-heading">Hollowing in Lychee</div>
+    <div class="card">
+      <ol class="workflow">
+        <li>Select model, then press <kbd>H</kbd> or click the <strong>Hollow</strong> tool in the left toolbar</li>
+        <li>The hollow settings panel opens on the right</li>
+        <li>Set <strong>Wall Thickness</strong>: <span class="value">1.5 – 3 mm</span> (1.5mm for decorative, 2–3mm for structural)</li>
+        <li>Choose <strong>Infill</strong> type: None / Grid / Gyroid / Lattice (None = fully empty interior)</li>
+        <li>Set <strong>Infill Density</strong>: 10–30% if using infill (adds internal structure without full solid mass)</li>
+        <li>Check <strong>Seal top/bottom</strong> if model has open ends that need closing</li>
+        <li>Click Apply, then verify with X-ray view (<kbd>Ctrl+X</kbd>) — you should see the hollow shell clearly</li>
+      </ol>
+      <div class="tip-box warning">
+        <strong>After hollowing, always add drain holes.</strong> Uncured liquid resin trapped inside a sealed hollow will continue to off-gas and may crack your print days later.
+      </div>
+    </div>
+
+    <div class="section-heading">Drain Hole Placement</div>
+    <div class="card">
+      <ol class="workflow">
+        <li>With hollow model selected: go to <strong>Tools → Drain Holes</strong> or click the hole icon in the Hollow panel</li>
+        <li>Click on the model surface to place holes (enter placement mode first)</li>
+        <li>Settings: <strong>Diameter 3–5 mm</strong>, depth set to "through wall" (must penetrate completely)</li>
+        <li>Lychee can <strong>auto-suggest drain hole positions</strong> based on the hollow cavity and current orientation — use this as a starting point</li>
+        <li>Manually ensure: 1 hole at the <strong>lowest point</strong> of the model (resin drain out) + 1 hole at the <strong>highest point</strong> (air vent in)</li>
+        <li>Switch to X-ray view — confirm each hole visibly penetrates through the shell wall entirely</li>
+      </ol>
+      <div class="grid-2">
+        <div class="tip-box">
+          <strong>Minimum holes:</strong> At least 2 holes — one low (drain), one high (vent). More holes = faster draining and less trapped resin.
+        </div>
+        <div class="tip-box info">
+          <strong>Wash step:</strong> After printing, shake the model in IPA with holes facing down to flush uncured resin completely out of the interior.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading">Scene Management — Lychee's Unique Advantage</div>
+    <div class="card">
+      <p style="margin-bottom:.7rem;color:#c9d1d9;font-size:13px;">A <strong>Scene</strong> is a single build plate with its own printer profile, resin profile, and exposure settings. A <strong>Project</strong> (.lys file) contains one or more scenes. This is a uniquely powerful Lychee feature with no equivalent in Chitubox.</p>
+      <table>
+        <tr><th>Concept</th><th>Description</th></tr>
+        <tr><td><strong>Scene</strong></td><td>One print plate — models, supports, orientation, and ALL settings (printer + resin + exposure)</td></tr>
+        <tr><td><strong>Project (.lys)</strong></td><td>Saved file containing all scenes — one file = entire multi-plate print job</td></tr>
+        <tr><td><strong>Add Scene</strong></td><td><kbd>Ctrl+T</kbd> or click + in the Scene panel</td></tr>
+        <tr><td><strong>Copy Between Scenes</strong></td><td>Right-click object → Copy to Scene → choose target scene</td></tr>
+      </table>
+      <div class="sub-heading" style="margin-top:1rem;">Scene Use Cases</div>
+      <ul class="feature-list">
+        <li>Same model, two different resins: Scene 1 = standard resin (fast), Scene 2 = ABS-like (tough) — different exposures</li>
+        <li>Multi-plate assembly: Scene 1 = torso, Scene 2 = arms, Scene 3 = base — all in one .lys file</li>
+        <li>Test + production: Scene 1 = calibration matrix, Scene 2 = final production plate</li>
+        <li>Batch printing: multiple plates of the same model, ready to slice and export sequentially</li>
+      </ul>
+    </div>
+
+    <div class="section-heading">Lychee Island — Downloading Community Profiles</div>
+    <div class="card">
+      <ol class="workflow">
+        <li>Inside Lychee: click the <strong>Lychee Island</strong> tab (cloud icon)</li>
+        <li>Search: enter your printer model (e.g., "Saturn 3 Ultra") + resin brand (e.g., "Elegoo ABS-Like")</li>
+        <li>Browse results — look for high download count and recent date</li>
+        <li>Click a profile → Preview the settings (exposure, lift, AA all visible)</li>
+        <li>Click <strong>Download</strong> → profile imports directly into your Lychee resin library</li>
+        <li>Apply to your current scene and use as starting point — may still need minor personal calibration</li>
+      </ol>
+      <div class="tip-box">
+        <strong>Most popular printers</strong> (Elegoo Mars 4, Saturn 3, Anycubic Photon Mono M3) have 50+ community profiles covering all major resin brands. You'll rarely need to start from scratch.
+      </div>
+      <div class="tip-box info">
+        <strong>Give back:</strong> After successful prints and fine-tuning, share your profile on Lychee Island. The community grows stronger with every contribution.
+      </div>
+    </div>
+
+    <div class="section-heading">Repair Tools</div>
+    <div class="card">
+      <p style="margin-bottom:.6rem;color:#c9d1d9;font-size:13px;">Lychee includes automatic mesh repair for common STL problems. Access via: <strong>Tools → Repair Model</strong></p>
+      <table>
+        <tr><th>Issue Fixed</th><th>Severity</th></tr>
+        <tr><td>Non-manifold edges (edges shared by more than 2 faces)</td><td>Yellow / Red</td></tr>
+        <tr><td>Flipped normals (faces pointing inward instead of outward)</td><td>Yellow</td></tr>
+        <tr><td>Holes in mesh (missing faces creating open surfaces)</td><td>Red</td></tr>
+        <tr><td>Self-intersections (geometry passing through itself)</td><td>Red</td></tr>
+        <tr><td>Degenerate faces (zero-area or needle-thin triangles)</td><td>Green / Yellow</td></tr>
+      </table>
+      <div class="tip-box warning" style="margin-top:.8rem;">
+        <strong>Severity indicator:</strong> Green = minor (safe to print), Yellow = moderate (repair recommended), Red = major (must repair before printing — likely print failure otherwise).
+      </div>
+      <div class="tip-box danger">
+        <strong>Severely broken models:</strong> If Lychee repair cannot fix major errors, use <strong>Meshmixer</strong> (free) → Analysis → Inspector → Auto-Repair, or <strong>Materialise Magics</strong> for professional-grade repair.
+      </div>
+    </div>
+  </div><!-- /tab5 -->
+
+  <!-- ═══════════════════════════════════════════════════════════ TAB 6 -->
+  <div class="tab-panel" id="tab6">
+    <div class="page-title">Lychee Print Settings Deep Dive</div>
+    <div class="page-subtitle">Machine profiles, resin configurations, advanced slice settings, and the complete export-to-print pipeline.</div>
+
+    <div class="section-heading">Setting Up Machine Profiles</div>
+    <div class="card">
+      <ol class="workflow">
+        <li>Open <strong>Machine</strong> panel → click <strong>Add Machine</strong></li>
+        <li>Search your printer model (e.g., "Elegoo Mars 4 Ultra", "Anycubic Photon Mono M5s")</li>
+        <li>Lychee auto-fills: X/Y screen resolution (pixels), build volume (mm), UV wavelength (nm), lift range</li>
+        <li>Optionally download community machine profile from Lychee Island for more accurate settings</li>
+        <li>Set as active machine profile for the current scene</li>
+      </ol>
+      <div class="tip-box info">
+        <strong>Resolution matters:</strong> Your machine profile's pixel resolution must exactly match your printer's actual LCD. Wrong resolution = wrong scale prints (stretched/compressed X/Y dimensions).
+      </div>
+    </div>
+
+    <div class="section-heading">Resin Profile Configuration</div>
+    <div class="card">
+      <table>
+        <tr><th>Action</th><th>How To</th></tr>
+        <tr><td>Find existing profile</td><td>Add Resin → search brand + type (e.g., "Elegoo ABS-Like 2.0", "Siraya Blu", "Anycubic Aqua")</td></tr>
+        <tr><td>Import community profile</td><td>Lychee Island → search printer + resin → Download → auto-imports to library</td></tr>
+        <tr><td>Create custom profile</td><td>Add Resin → click + → enter name, exposure times, lift settings manually</td></tr>
+        <tr><td>Calibrate from profile</td><td>Open resin → "Launch Calibration" → runs exposure matrix test at profile's starting values</td></tr>
+        <tr><td>Profile parameters</td><td>Normal exposure, bottom exposure, bottom layer count, lift height/speed, light-off delay — all stored per resin</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Advanced Slice Settings</div>
+    <div class="card">
+      <table>
+        <tr><th>Setting</th><th>Tier</th><th>Description</th></tr>
+        <tr><td><strong>Per-Island Exposure</strong></td><td><span class="badge badge-pro">PRO</span></td><td>Different exposure time zones within a single slice layer. Useful for mixed-detail DLP prints.</td></tr>
+        <tr><td><strong>LED Mask File</strong></td><td><span class="badge badge-maker">MAKER</span></td><td>Import custom mask for DLP printers with uneven illumination — compensates for hotspots and dark corners.</td></tr>
+        <tr><td><strong>Calibration Tower</strong></td><td><span class="badge badge-free">FREE</span></td><td>Built-in test models for Z accuracy verification — confirms actual layer height matches setting.</td></tr>
+        <tr><td><strong>Support Relief</strong></td><td><span class="badge badge-maker">MAKER</span></td><td>Automatically reduces contact tip depth on cosmetically visible model surfaces — easier support removal.</td></tr>
+        <tr><td><strong>Anti-aliasing</strong></td><td><span class="badge badge-free">FREE</span></td><td>Per-layer edge smoothing — 2x/4x/8x levels + grey level 0–3 (see Tab 3 for guidance)</td></tr>
+      </table>
+    </div>
+
+    <div class="section-heading">Export &amp; Transfer to Printer</div>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <div class="sub-heading">Export Process</div>
+          <ol class="workflow">
+            <li>Click the <strong>Export</strong> button (top toolbar)</li>
+            <li>Choose output folder on your computer</li>
+            <li>Lychee auto-selects the correct format (.ctb, .photon, .pwmx, .pm3, etc.) based on active machine profile</li>
+            <li>File saves — check file size is reasonable (not 0 KB or unexpectedly tiny)</li>
+          </ol>
+        </div>
+        <div>
+          <div class="sub-heading">Transfer Methods</div>
+          <ul class="feature-list">
+            <li><strong>USB stick</strong> — copy file, plug into printer, select from touchscreen menu (universal)</li>
+            <li><strong>WiFi direct</strong> — send from Lychee to printer on same network (printer must support)</li>
+            <li><strong>Elegoo Cloud</strong> — send via Elegoo mobile app (requires account setup)</li>
+            <li><strong>SD card</strong> — some older printers use SD instead of USB</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box danger" style="margin-top:.8rem;">
+        <strong>Always preview before exporting:</strong> Run island check → scrub through layer preview → pay special attention to the first 20 layers and any critical bridging layers. Catching issues now costs seconds; catching them mid-print costs hours and resin.
+      </div>
+    </div>
+
+    <div class="section-heading">Complete Keyboard Shortcut Master Table</div>
+    <div class="card">
+      <table>
+        <tr>
+          <th>Key</th><th>Action</th>
+          <th>Key</th><th>Action</th>
+        </tr>
+        <tr><td><kbd>W</kbd></td><td>Move</td><td><kbd>Ctrl+Z</kbd></td><td>Undo</td></tr>
+        <tr><td><kbd>E</kbd></td><td>Rotate</td><td><kbd>Ctrl+Y</kbd></td><td>Redo</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Scale</td><td><kbd>Delete</kbd></td><td>Delete selected</td></tr>
+        <tr><td><kbd>M</kbd></td><td>Mirror</td><td><kbd>Ctrl+D</kbd></td><td>Duplicate</td></tr>
+        <tr><td><kbd>H</kbd></td><td>Hollow</td><td><kbd>Ctrl+A</kbd></td><td>Select all</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Support</td><td><kbd>Ctrl+I</kbd></td><td>Import model</td></tr>
+        <tr><td><kbd>F</kbd></td><td>Frame view</td><td><kbd>Ctrl+S</kbd></td><td>Save project</td></tr>
+        <tr><td><kbd>G</kbd></td><td>Auto-arrange</td><td><kbd>Ctrl+Shift+A</kbd></td><td>Auto-support selected</td></tr>
+        <tr><td><kbd>Space</kbd></td><td>Center on plate</td><td><kbd>Ctrl+Shift+R</kbd></td><td>Analyze islands</td></tr>
+        <tr><td><kbd>1</kbd></td><td>Front view</td><td><kbd>[</kbd> / <kbd>]</kbd></td><td>Step through layers</td></tr>
+        <tr><td><kbd>2</kbd></td><td>Right view</td><td><kbd>Ctrl+T</kbd></td><td>New scene</td></tr>
+        <tr><td><kbd>3</kbd></td><td>Top view</td><td><kbd>Ctrl+X</kbd></td><td>X-ray / section view</td></tr>
+        <tr><td><kbd>Numpad 5</kbd></td><td>Ortho toggle</td><td><kbd>Ctrl+Shift+S</kbd></td><td>Save As</td></tr>
+      </table>
+    </div>
+  </div><!-- /tab6 -->
+
+</div><!-- /content-area -->
+
+<script>
+function switchTab(n) {
+  // Hide all panels and deactivate all buttons
+  var panels = document.querySelectorAll('.tab-panel');
+  var buttons = document.querySelectorAll('.tab-btn');
+  for (var i = 0; i < panels.length; i++) {
+    panels[i].classList.remove('active');
+  }
+  for (var j = 0; j < buttons.length; j++) {
+    buttons[j].classList.remove('active');
+  }
+
+  // Show target panel if it exists in Part A (tabs 1-6)
+  var target = document.getElementById('tab' + n);
+  if (target) {
+    target.classList.add('active');
+  } else {
+    // Tabs 7-12 not yet loaded — show a placeholder message
+    var placeholder = document.getElementById('tab-placeholder');
+    if (!placeholder) {
+      placeholder = document.createElement('div');
+      placeholder.id = 'tab-placeholder';
+      placeholder.className = 'tab-panel active';
+      placeholder.style.padding = '2rem 0';
+      placeholder.innerHTML = '<div class="card"><div class="section-heading">Content Loading...</div><div class="tip-box info">This section is in Part B of the guide. Ensure <code>lychee_ultimate_B.html</code> content has been appended to complete the full guide.</div></div>';
+      document.querySelector('.content-area').appendChild(placeholder);
+    } else {
+      placeholder.classList.add('active');
+    }
+  }
+
+  // Activate the clicked button
+  buttons[n - 1].classList.add('active');
+}
+</script>
+
+<!-- TAB 7: Resin Guide -->
+        <div class="tab-panel" id="tab7">
+          <h2 class="section-heading">Resin Guide for Elegoo &amp; All Brands</h2>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Elegoo Resin Complete Guide</h3>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Elegoo ABS-Like v2.0</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>2 – 2.5 s</kbd></div>
+            <div class="shortcut-row"><span>Bottom Exposure</span><kbd>45 s</kbd></div>
+            <div class="shortcut-row"><span>Bottom Layers</span><kbd>6</kbd></div>
+            <div class="shortcut-row"><span>Lift Speed (up / retract)</span><kbd>3 mm/s / 4 mm/s</kbd></div>
+            <div class="shortcut-row"><span>Lift Height</span><kbd>6 mm</kbd></div>
+            <p style="margin:0.7rem 0 0.3rem;"><strong>Characteristics:</strong> Tough, low warp, slight flex, good detail retention, minimal odor.</p>
+            <p style="margin:0 0 0.3rem;"><strong>Best for:</strong> Figurines, display models, functional parts.</p>
+            <div class="tip-box info">Room temp 22–25 °C ideal. Shake well before use.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Elegoo Water Washable</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>2.5 – 3 s</kbd></div>
+            <div class="shortcut-row"><span>Bottom Exposure</span><kbd>50 s</kbd></div>
+            <div class="shortcut-row"><span>Bottom Layers</span><kbd>6</kbd></div>
+            <div class="shortcut-row"><span>Lift Speed (up / retract)</span><kbd>2.5 mm/s / 3 mm/s</kbd></div>
+            <p style="margin:0.7rem 0 0.3rem;"><strong>Characteristics:</strong> Clean up with warm water (no IPA). Slightly more brittle than ABS-Like.</p>
+            <p style="margin:0 0 0.3rem;"><strong>Best for:</strong> Beginners, models without fine features, quick turnaround.</p>
+            <div class="tip-box warning">Rinse in two stages of water (like IPA two-bucket method). Dry completely before curing. Avoid over-washing — causes whitening.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Elegoo Plant-Based</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>2 – 2.5 s</kbd></div>
+            <div class="shortcut-row"><span>Bottom Exposure</span><kbd>45 s</kbd></div>
+            <p style="margin:0.7rem 0 0.3rem;"><strong>Characteristics:</strong> Lower VOCs, similar mechanical properties to ABS-Like.</p>
+            <p style="margin:0;"><strong>Best for:</strong> Sensitive users, low-odor environments.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Elegoo ABS-Like Pro</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>3 – 4 s</kbd></div>
+            <div class="shortcut-row"><span>Bottom Exposure</span><kbd>60 s</kbd></div>
+            <p style="margin:0.7rem 0 0.3rem;"><strong>Characteristics:</strong> Higher impact resistance, better for mechanical parts under stress.</p>
+            <p style="margin:0;"><strong>Best for:</strong> Snap-fits, hinges, clips, phone cases.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Elegoo Rapid Resin (new)</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>1 – 1.5 s</kbd></div>
+            <p style="margin:0.7rem 0 0.3rem;"><strong>Characteristics:</strong> Extremely fast cure, designed for high-speed printers.</p>
+            <p style="margin:0;"><strong>Best for:</strong> Large batches, fast prototyping.</p>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:2rem;">Non-Elegoo Resins (Popular for Elegoo Printers)</h3>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Siraya Tech Blu (ABS-Like Engineering)</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>2.5 – 3.5 s</kbd></div>
+            <p style="margin:0.7rem 0 0;"><strong>Very tough.</strong> Excellent for mechanical parts. One of the strongest resins available. Mix with Tenacious for extra toughness.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Siraya Tech Tenacious (Flexible)</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>3 – 5 s</kbd></div>
+            <p style="margin:0.7rem 0 0;">Highly elastic, doesn't snap. Mix at 10–30 % with rigid resin for a toughened blend.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Phrozen Aqua Series</h4>
+            <p style="margin:0 0 0.3rem;">High detail, specifically formulated for high-res screens (8K+).</p>
+            <div class="shortcut-row"><span>Grey Aqua 8K — Normal Exposure</span><kbd>2 s</kbd></div>
+            <p style="margin:0.4rem 0 0;">Excellent miniature detail.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Monocure Rapid</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>1 – 2 s</kbd></div>
+            <p style="margin:0.7rem 0 0;">Designed for speed. Good for large prints; less detail than standard resins.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.6rem;">Siraya Tech Fast</h4>
+            <div class="shortcut-row"><span>Normal Exposure</span><kbd>1.5 – 2.5 s</kbd></div>
+            <p style="margin:0.7rem 0 0;">Balanced speed + detail. Good all-around alternative to Elegoo for experienced users.</p>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:2rem;">Resin Temperature Management</h3>
+          <div class="card">
+            <div class="tip-box danger"><strong>Cold resin (&lt;18 °C):</strong> Significantly slower cure, layer separation, failed prints. Solution: heat resin bottle in a warm water bath (NOT boiling), use a resin heater mat, or print in a warm room.</div>
+            <div class="tip-box warning" style="margin-top:0.8rem;"><strong>Hot resin (&gt;30 °C):</strong> May cure too fast. Reduce exposure by 0.2–0.5 s.</div>
+            <div class="tip-box info" style="margin-top:0.8rem;"><strong>Ideal range:</strong> 22–26 °C for most resins.</div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:2rem;">Resin Mixing &amp; Custom Formulas</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Toughened blend</span><kbd>80 % ABS-Like + 20 % Tenacious</kbd></div>
+            <div class="shortcut-row"><span>Flexible-rigid blend</span><kbd>70 / 30 for semi-flexible parts</kbd></div>
+            <p style="margin:0.8rem 0 0.3rem;"><strong>Color mixing:</strong> Use UV-compatible resin pigments only — do <em>not</em> use FDM pigments.</p>
+            <div class="tip-box warning">Always re-calibrate exposure when mixing resins. The combined cure rate differs from either component alone.</div>
+          </div>
+        </div><!-- /tab7 -->
+
+        <!-- TAB 8: Advanced Lychee Features -->
+        <div class="tab-panel" id="tab8">
+          <h2 class="section-heading">Advanced Lychee Features</h2>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Lychee Island Integration</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Profile rating system</span><span>Community rates profiles by success rate, quality &amp; speed</span></div>
+            <div class="shortcut-row"><span>Sort by</span><span>Printer model · Resin brand · Rating · Date</span></div>
+            <div class="shortcut-row"><span>Download bundle</span><span>Includes exposure + support + machine settings</span></div>
+            <div class="shortcut-row"><span>Profile conflicts</span><span>More recently downloaded profile wins</span></div>
+            <div class="shortcut-row"><span>Export profile</span><span>Share your calibrated profile to Lychee Island community</span></div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Advanced Support Editing</h3>
+          <div class="card">
+            <ul style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li><strong>Support groups:</strong> Select multiple supports, edit properties as a group.</li>
+              <li><strong>Support visibility:</strong> Hide / show all supports for a cleaner view.</li>
+              <li><strong>Support export:</strong> Export support geometry as a separate STL (for reference).</li>
+              <li><strong>Copy supports:</strong> If two identical models exist, copy the support layout between them.</li>
+              <li><strong>Support statistics:</strong> Lychee shows total resin volume for supports vs. the model.</li>
+            </ul>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Mesh Analysis Tools</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Wall thickness analysis</span><span>Color map of thin areas that may not print</span></div>
+            <div class="shortcut-row"><span>Overhang analysis</span><span>All overhang angles color-coded</span></div>
+            <div class="shortcut-row"><span>Suction risk</span><span>Highlights closed areas that create vacuum during peel</span></div>
+            <div class="shortcut-row"><span>Island preview</span><span>Layer-by-layer walkthrough highlighting all islands</span></div>
+            <div class="shortcut-row"><span>Volume report</span><span>Exact resin volume, surface area, bounding box</span></div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Lychee Label Tool</h3>
+          <div class="card">
+            <ul style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Add text directly to model surface — embossed or debossed.</li>
+              <li>Font selection, size, and depth controls.</li>
+              <li>Wraps text around curved surfaces.</li>
+              <li><strong>Use for:</strong> Serial numbers, names, logos, version numbers.</li>
+            </ul>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Cut Tool (Advanced)</h3>
+          <div class="card">
+            <ul style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Cut model into multiple parts for printing larger than the build volume.</li>
+              <li>Cut plane: position and angle set manually.</li>
+              <li>Connector pins: add registration pins to cut surfaces for alignment during gluing.</li>
+              <li>Export each part separately with correct orientation.</li>
+              <li><strong>Use for:</strong> Large busts, full-body figures, architectural models.</li>
+            </ul>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Batch Export</h3>
+          <div class="card">
+            <p style="margin:0 0 0.5rem;"><strong>File → Export All Scenes</strong> — Lychee generates one file per scene, correctly named for your machine format. Time estimate shown per scene before export. Review all scenes in the list before exporting.</p>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Lychee Pro Features</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Team projects</span><span>Multiple users edit the same .lys file</span></div>
+            <div class="shortcut-row"><span>Print analytics</span><span>Success rate tracking, failure analysis</span></div>
+            <div class="shortcut-row"><span>Priority render</span><span>Faster cloud-based slice for very complex models</span></div>
+            <div class="shortcut-row"><span>Custom machine profiles</span><span>Enterprise printer support</span></div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Pro Keyboard Workflow</h3>
+          <div class="card">
+            <ol style="margin:0;padding-left:1.3rem;line-height:2;">
+              <li>Import <kbd>Ctrl+I</kbd> → auto-orient suggestion pops up → accept or reject.</li>
+              <li>Press <kbd>H</kbd> → hollow immediately with last settings (no dialog if settings unchanged).</li>
+              <li><kbd>Ctrl+Shift+A</kbd> → Smart Support runs.</li>
+              <li><kbd>Ctrl+Shift+R</kbd> → analyze → fix any islands.</li>
+              <li>Preview mode → <kbd>[</kbd> key to walk through all layers.</li>
+              <li>Export <kbd>Ctrl+E</kbd> → done.</li>
+            </ol>
+          </div>
+        </div><!-- /tab8 -->
+
+        <!-- TAB 9: Orientation Mastery -->
+        <div class="tab-panel" id="tab9">
+          <h2 class="section-heading">Orientation Mastery for Resin</h2>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">The Physics of Resin Orientation</h3>
+          <div class="card">
+            <p style="margin:0 0 0.6rem;">Each layer must peel away from the FEP film before lifting. The force required = <strong>cross-sectional area × suction pressure</strong>.</p>
+            <div class="tip-box danger">Large cross-section at any single layer = HIGH peel force = risk of support failure or print separation from plate.<br><strong>Goal: minimize the largest cross-section at any one layer.</strong></div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">The 45° Rule</h3>
+          <div class="card">
+            <p style="margin:0 0 0.6rem;">Tilt almost everything 45° (or more). This achieves four things simultaneously:</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Spreads the cross-section over multiple layers — reduces max force per layer.</li>
+              <li>Eliminates flat horizontal surfaces — main cause of suction.</li>
+              <li>Reduces support count — overhangs are shorter spans.</li>
+              <li>Better surface quality on curved areas — stepping is less visible at an angle.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.8rem;"><strong>Exception:</strong> Some flat technical parts must remain flat where dimensional accuracy takes priority over peel force.</div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Orientation by Model Type</h3>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Humanoid Figures / Characters</h4>
+            <p style="margin:0 0 0.3rem;">45° back tilt + 30° side tilt. Face and chest face toward viewer. Supports land on back and base — hidden areas.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Miniatures (D&amp;D / Warhammer Scale)</h4>
+            <ul style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>45° back + 20° side for typical heroic pose.</li>
+              <li>Sword / weapon tips: must be supported — add manual support at tip.</li>
+              <li>Base of miniature: build-plate side — add raft.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Rings / Jewelry</h4>
+            <ul style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>45° angle through the band's diameter.</li>
+              <li>Stone / gem face UP (away from supports — no scars on display surface).</li>
+              <li>Inner band accepts support scars — hidden area.</li>
+              <li>Use light supports only on inner band surface.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Flat / Coin-Like Objects (Medallions, Tokens)</h4>
+            <div class="tip-box danger" style="margin-bottom:0.6rem;">NEVER flat on plate — suction disaster + elephant foot on display face.</div>
+            <p style="margin:0;">Stand on edge at 45°. Supports along bottom edge only.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Dental / Denture Models</h4>
+            <p style="margin:0;">15–20° tilt only (accuracy needed). Supports along perimeter. Keep occlusal (bite) surface clean of support scars.</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Large Rectangular Objects (Enclosures, Brackets)</h4>
+            <p style="margin:0;">45° diagonal tilt on both X and Y. Dramatically reduces any single-layer cross-section. Can also reduce print time (shorter actual Z height when tilted).</p>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Hollow Vessels (Cups, Bowls)</h4>
+            <p style="margin:0;">Opening facing DOWN in print orientation. Liquid resin drains out instead of being trapped. Interior wall supports are hidden by the vessel interior.</p>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Lychee Auto-Orient</h3>
+          <div class="card">
+            <p style="margin:0 0 0.5rem;"><strong>Select model → Analyze → Auto-Orient.</strong> Lychee evaluates 500+ orientations and picks the lowest support count + lowest max cross-section.</p>
+            <div class="tip-box warning">Auto-Orient optimizes for structure, not cosmetics. It may support visible surfaces. Use it as a starting point, then manually adjust for display quality.</div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Cross-Section Check Workflow</h3>
+          <div class="card">
+            <ol style="margin:0;padding-left:1.3rem;line-height:2;">
+              <li>After orienting: switch to Layer Preview.</li>
+              <li>Scrub through layers with <kbd>[</kbd> <kbd>]</kbd> keys.</li>
+              <li>Note the largest (widest) layer cross-section — this is your highest-risk layer.</li>
+              <li>If very large: add more supports at that height, or re-orient the model.</li>
+              <li>Check for islands at every major cross-section change.</li>
+            </ol>
+          </div>
+        </div><!-- /tab9 -->
+
+        <!-- TAB 10: Troubleshooting -->
+        <div class="tab-panel" id="tab10">
+          <h2 class="section-heading">Troubleshooting Resin Prints in Lychee</h2>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Export Format Wrong</h4>
+            <p style="margin:0 0 0.3rem;"><strong>Symptom:</strong> Printer shows "file error" or won't read the file.</p>
+            <p style="margin:0 0 0.3rem;"><strong>Fix:</strong> Verify your machine profile is set to your exact printer model. Lychee uses the wrong format if the machine profile is incorrect.</p>
+            <div class="tip-box info">Check the file extension: <kbd>.ctb</kbd> for most Elegoo printers, <kbd>.photon</kbd> for the original Photon, etc.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Community Profile Issues</h4>
+            <div class="shortcut-row"><span>Profile too aggressive (failures)</span><span>Different resin batch — add +0.5 s to exposure</span></div>
+            <div class="shortcut-row"><span>Profile too conservative (over-exposure)</span><span>Reduce normal exposure by 0.3–0.5 s</span></div>
+            <div class="tip-box warning" style="margin-top:0.6rem;">Old profiles for earlier firmware may not apply correctly to new firmware. Download a newer profile or create your own from a calibration print.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Island Detection False Positives</h4>
+            <p style="margin:0 0 0.3rem;">Lychee may flag "islands" that are actually connected at a layer below.</p>
+            <p style="margin:0 0 0.3rem;"><strong>Verify:</strong> Look at the layer immediately BELOW the flagged island. If connected, it is a false positive.</p>
+            <div class="tip-box info">A <strong>true island</strong> = completely isolated pixels on one layer, not connected to anything within 1–2 layers above or below.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Smart Support Over-Supporting</h4>
+            <p style="margin:0 0 0.3rem;">Lychee sometimes adds too many supports on clearly self-supported areas.</p>
+            <p style="margin:0 0 0.3rem;"><strong>Fix:</strong> After Smart Support, enter remove mode — <kbd>Ctrl+Click</kbd> a support to delete it.</p>
+            <ul style="margin:0.4rem 0 0;padding-left:1.3rem;line-height:1.8;">
+              <li><strong>Safe to remove:</strong> Supports on flat surfaces with a slope &gt;45° that would self-support.</li>
+              <li><strong>Never remove:</strong> Supports in areas with &lt;30° overhang or on isolated islands.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Lychee Performance (Slow on Complex Models)</h4>
+            <p style="margin:0 0 0.3rem;"><strong>Symptom:</strong> Large STLs (over 10 MB) cause slow auto-support or slow slice preview.</p>
+            <p style="margin:0 0 0.3rem;"><strong>Fix:</strong> Decimate the mesh in Blender or Meshmixer first — reduce polygon count without losing visible detail.</p>
+            <div class="tip-box info">Alternatively: use a lower AA setting while setting up the scene, then increase AA to maximum before final export.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Hollow Model Issues</h4>
+            <div class="shortcut-row"><span>Hollow doesn't apply to all parts</span><span>Model has disconnected shells — repair mesh first</span></div>
+            <div class="shortcut-row"><span>Drain hole not cutting through</span><span>Increase depth so it exceeds wall thickness</span></div>
+            <div class="shortcut-row"><span>X-ray shows cavity not fully closed</span><span>Enable "seal inner holes" in hollow settings</span></div>
+          </div>
+        </div><!-- /tab10 -->
+
+        <!-- TAB 11: Practice Projects -->
+        <div class="tab-panel" id="tab11">
+          <h2 class="section-heading">Practice Projects — 6 Lychee-Specific Challenges</h2>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Project 1 — Lychee Calibration Square Test</h4>
+            <p style="margin:0 0 0.5rem;"><strong>Goal:</strong> Find optimal exposure using Lychee's built-in calibration system.</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Open Lychee → <strong>File → New → Calibration Test</strong> (or import from Lychee Island).</li>
+              <li>Set starting exposure: community profile suggestion minus 0.5 s.</li>
+              <li>Lychee calibration test prints 4–5 sections at +0.5 s increments.</li>
+              <li>Print, wash, cure, examine.</li>
+              <li>Look for: sharpest thin pins, clean lettering separation, no surface blobs.</li>
+              <li>Enter winning exposure into your resin profile in Lychee.</li>
+              <li>Save profile with a descriptive name: <em>"Elegoo Saturn3 + ABS-Like2.0 @ 2.2s"</em></li>
+              <li>Upload to Lychee Island to help others with the same setup.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.6rem;"><strong>Skills:</strong> Lychee calibration system, profile creation, community sharing.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Project 2 — Miniature Figure (Smart Support Showcase)</h4>
+            <p style="margin:0 0 0.5rem;"><strong>Goal:</strong> Print a 32mm scale miniature with minimal support scars on detail surfaces.</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Download a 32mm miniature STL (MyMiniFactory, Lychee Island, Printables). Scale to 32mm height if needed.</li>
+              <li>Orient: 45° back tilt, 20° side tilt. Face pointing toward viewer.</li>
+              <li><kbd>Ctrl+Shift+A</kbd> → Smart Support (wait for analysis).</li>
+              <li>Review in layer mode → fix any islands.</li>
+              <li>Manually <em>add</em> support to: sword / weapon tips, small protrusions, ear tips.</li>
+              <li>Manually <em>remove</em> supports from: face, chest, visible equipment surfaces.</li>
+              <li>Hollow if &gt;40mm: 1.5mm wall, no infill, 2× 3mm drain holes at lowest points.</li>
+              <li>Layer height: <kbd>0.03 mm</kbd> (30µm) for best miniature detail.</li>
+              <li>Print, wash gently with soft brush in IPA, cure 5 minutes each side.</li>
+              <li>Remove supports. Examine detail vs. support scars.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.6rem;"><strong>Skills:</strong> Smart Support, manual support editing, miniature-specific orientation.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Project 3 — Articulated Print (Print-in-Place Assembly)</h4>
+            <p style="margin:0 0 0.5rem;"><strong>Goal:</strong> Print a print-in-place dragon or snake with articulated joints in a single run.</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Download a print-in-place articulated dragon / fish / lizard from Printables or Lychee Island. These models have gaps between segments (~0.3mm tolerance).</li>
+              <li>Orient: flat orientation often works (joints parallel to plate).</li>
+              <li>Supports: <strong>none</strong> under gaps / joints — supports in joints = fused joints. Only support outer extremities (head, tail tip) if needed.</li>
+              <li>Layer height: <kbd>0.05 mm</kbd>. Exposure: normal (not over — over-exposure fuses joints).</li>
+              <li>Island check: each joint ring / segment should appear connected even with gaps.</li>
+              <li>Print. Wash holding upside down so IPA flows through joints.</li>
+              <li><strong>Before curing:</strong> flex the model gently to break any surface tension between joints.</li>
+              <li>Cure: hang from tail so all surfaces receive UV.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.6rem;"><strong>Skills:</strong> Tolerance printing, joint design, pre-cure part manipulation.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Project 4 — Pre-Supported Commercial File</h4>
+            <p style="margin:0 0 0.5rem;"><strong>Goal:</strong> Learn to use designer-provided pre-supported files and analyze professional support strategies.</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Purchase or download a pre-supported resin STL from Lychee Island, MyMiniFactory, or Patreon.</li>
+              <li>Import into Lychee — the file arrives with supports already modeled into the STL.</li>
+              <li>Do <strong>NOT</strong> auto-orient — already set for the intended orientation.</li>
+              <li>Do <strong>NOT</strong> add your own supports — duplicates the designer's work.</li>
+              <li>Set your calibrated exposure profile for your resin.</li>
+              <li>Slice → preview → check for islands (should be none — the designer handled them).</li>
+              <li>Export and print.</li>
+              <li>Evaluate support removal ease vs. auto-supports.</li>
+              <li>Analyze the designer's choices: why those support positions?</li>
+              <li>Apply the lessons to your own unsupported model orientations.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.6rem;"><strong>Skills:</strong> Pre-supported files, learning from professionals, critical evaluation.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Project 5 — Large Terrain Piece / Diorama Base</h4>
+            <p style="margin:0 0 0.5rem;"><strong>Goal:</strong> Print a large scenic base with efficient hollowing and drainage planning.</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Download a terrain base or diorama scene (~150×100mm, complex surface).</li>
+              <li>Orient: slight 15° tilt to avoid suction on the flat base.</li>
+              <li>Hollow: 2mm walls, Gyroid infill at 15% for rigidity without solid fill.</li>
+              <li>Drain holes: 3–4 holes across the base + 2 vent holes (resin can pool in cavities).</li>
+              <li>Supports: dense support grid on the underside — large prints need solid anchoring.</li>
+              <li>Verify cross-section: walk through layers — each should be a manageable area.</li>
+              <li>Lift speed: slow (1.5–2mm/s) — large cross-sections need slow peel.</li>
+              <li>Print time: likely 8–16 hours — run overnight.</li>
+              <li>After print: drain resin from holes while still over the resin tray.</li>
+              <li>Wash in ultrasonic cleaner or agitate IPA to reach all crevices.</li>
+              <li>Cure in sections with UV torch if the piece doesn't fit the curing station.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.6rem;"><strong>Skills:</strong> Large print management, complex hollowing, drainage planning.</div>
+          </div>
+
+          <div class="card">
+            <h4 style="color:#f72585;margin:0 0 0.5rem;">Project 6 — Lychee Island Collaboration (Advanced)</h4>
+            <p style="margin:0 0 0.5rem;"><strong>Goal:</strong> Contribute to and use the Lychee community ecosystem.</p>
+            <ol style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Find a printer + resin combination on Lychee Island with few or poor profiles.</li>
+              <li>Run a calibration test (Project 1 workflow) and document results carefully.</li>
+              <li>Print 3–4 test models to verify the profile is reliable.</li>
+              <li>In Lychee: export your profile.</li>
+              <li>Upload to Lychee Island: add description, exposure settings, and notes on resin behavior.</li>
+              <li>After 2 weeks: check if others used your profile and left feedback.</li>
+              <li>Iterate: if feedback shows failures, adjust and update the profile.</li>
+              <li>Browse Lychee Island for models: filter by "pre-supported" and download 5 different model types.</li>
+              <li>Compare pre-supported approaches across different designers.</li>
+              <li>Build your library: organize downloaded profiles, models, and calibration records.</li>
+            </ol>
+            <div class="tip-box info" style="margin-top:0.6rem;"><strong>Skills:</strong> Community engagement, profile management, giving back to the maker community.</div>
+          </div>
+        </div><!-- /tab11 -->
+
+        <!-- TAB 12: Expert Tips -->
+        <div class="tab-panel" id="tab12">
+          <h2 class="section-heading">Expert Tips &amp; Mastering Resin Printing</h2>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Pro Workflow Tips</h3>
+          <div class="card">
+            <ul style="margin:0;padding-left:1.3rem;line-height:1.9;">
+              <li>Save projects as <kbd>.lys</kbd> (Lychee native) — preserves everything including support placement and scene settings.</li>
+              <li>Use version naming: <em>dragon_v1_unsupported.lys → dragon_v2_supported.lys → dragon_v3_printed.lys</em></li>
+              <li>Template scenes: create a <em>template.lys</em> with your calibrated machine + resin settings pre-loaded — import new models into the template.</li>
+              <li>Batch similar models: fill the plate with similar-sized models using the same settings rather than printing individually.</li>
+              <li>Resin estimation: Lychee shows exact mL needed — plan pours accordingly. Never pour a full bottle into the tank.</li>
+            </ul>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Hidden Lychee Settings</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Force solid base</span><span>Solid layer under all supports at specified height — improves adhesion for complex support forests</span></div>
+            <div class="shortcut-row"><span>Support connection optimization</span><span>Auto-connects nearby support bases to reduce plate contact points</span></div>
+            <div class="shortcut-row"><span>Layer time visualization</span><span>Color preview of estimated time per layer (red = slow, blue = fast)</span></div>
+            <div class="shortcut-row"><span>Minimum exposure pixels</span><span>Sets minimum feature size below which features aren't printed — removes micro-artifacts</span></div>
+            <div class="shortcut-row"><span>Platform adhesion offset</span><span>Slight shift of entire model from plate for easier removal</span></div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Resin Printing Ecosystem</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Printers</span><span>Elegoo Mars (small) · Saturn (medium) · Jupiter (large)</span></div>
+            <div class="shortcut-row"><span>Resins</span><span>2–3 types: standard, tough, flexible</span></div>
+            <div class="shortcut-row"><span>Wash station</span><span>Elegoo Mercury Plus or IPA + container</span></div>
+            <div class="shortcut-row"><span>Cure station</span><span>UV curing box — Elegoo Mercury Plus Wash&amp;Cure 2-in-1</span></div>
+            <div class="shortcut-row"><span>PPE</span><span>Nitrile gloves (50-pack), safety glasses, respirator for extended sessions</span></div>
+            <div class="shortcut-row"><span>Tools</span><span>Silicone spatula, plastic scraper, flush cutters, dental picks, soft brushes</span></div>
+            <div class="shortcut-row"><span>Storage</span><span>UV-blocking resin bottles, IPA recycling container, paper towels</span></div>
+            <div class="shortcut-row"><span>Disposal</span><span>UV torch for curing waste resin, dedicated waste container</span></div>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Lychee vs Chitubox Comparison</h3>
+          <div class="card" style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+              <thead>
+                <tr style="border-bottom:2px solid #f72585;">
+                  <th style="text-align:left;padding:0.5rem 0.8rem;">Feature</th>
+                  <th style="text-align:left;padding:0.5rem 0.8rem;color:#f72585;">Lychee</th>
+                  <th style="text-align:left;padding:0.5rem 0.8rem;">Chitubox</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Auto-support quality</td>
+                  <td style="padding:0.5rem 0.8rem;color:#f72585;">⭐⭐⭐⭐⭐ Best</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐⭐ Good</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Island detection</td>
+                  <td style="padding:0.5rem 0.8rem;color:#f72585;">⭐⭐⭐⭐⭐ Built-in</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐⭐ Basic</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">UI simplicity</td>
+                  <td style="padding:0.5rem 0.8rem;color:#f72585;">⭐⭐⭐⭐ Clean</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐⭐⭐ Simple</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Community profiles</td>
+                  <td style="padding:0.5rem 0.8rem;color:#f72585;">⭐⭐⭐⭐⭐ Lychee Island</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐⭐ Limited</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Price</td>
+                  <td style="padding:0.5rem 0.8rem;">Free / $8/mo paid</td>
+                  <td style="padding:0.5rem 0.8rem;">Free / $170/yr Pro</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Printer support</td>
+                  <td style="padding:0.5rem 0.8rem;">200+ brands</td>
+                  <td style="padding:0.5rem 0.8rem;">100+ brands</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Native format</td>
+                  <td style="padding:0.5rem 0.8rem;">Uses official .ctb</td>
+                  <td style="padding:0.5rem 0.8rem;">.ctb native</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+                  <td style="padding:0.5rem 0.8rem;">Scene management</td>
+                  <td style="padding:0.5rem 0.8rem;color:#f72585;">⭐⭐⭐⭐⭐ Multi-plate</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐ Single plate</td>
+                </tr>
+                <tr>
+                  <td style="padding:0.5rem 0.8rem;">Calibration tools</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐⭐⭐ Strong</td>
+                  <td style="padding:0.5rem 0.8rem;">⭐⭐⭐⭐ RERF built-in</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="section-heading" style="font-size:1.15rem;margin-top:1.5rem;">Resin Printing Learning Path</h3>
+          <div class="card">
+            <div class="shortcut-row"><span>Week 1</span><span>Set up printer + Lychee. Download community profiles. Print calibration test. Print 3 small figurines.</span></div>
+            <div class="shortcut-row"><span>Week 2</span><span>Practice hollowing on 5+ models. Master drain hole placement. Try a pre-supported file.</span></div>
+            <div class="shortcut-row"><span>Week 3</span><span>Learn orientation principles. Orient 10 models from scratch without auto-orient. Compare results.</span></div>
+            <div class="shortcut-row"><span>Week 4</span><span>Multi-model plates — fill a plate with 6–8 small models efficiently. Master Smart Support workflow.</span></div>
+            <div class="shortcut-row"><span>Month 2</span><span>Try different resin types (tough, flexible, castable). Mix resins. Calibrate each fully.</span></div>
+            <div class="shortcut-row"><span>Month 3</span><span>Attempt large prints (Saturn / Jupiter scale). Master slow peel, drainage, wash logistics.</span></div>
+            <div class="shortcut-row"><span>Month 4+</span><span>Specialize — jewelry (30µm, light supports), dental (accuracy focus), miniature production (batch workflow), or diorama / terrain (large scale + painting).</span></div>
+          </div>
+
+          <div class="tip-box" style="margin-top:1.5rem;text-align:center;font-size:1rem;letter-spacing:0.03em;">
+            You now have the complete Lychee Slicer knowledge base — from first import to community contribution. Print something amazing.
+          </div>
+        </div><!-- /tab12 -->
+
+      </div><!-- /content-wrap --></body></html>
