@@ -1,0 +1,1844 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EzCad Ultimate Guide — Fiber Laser Software Mastery</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#c9d1d9;font-family:'Segoe UI',Arial,sans-serif;font-size:15px;line-height:1.7}
+a{color:#ff6b35;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#161b22 0%,#0d1117 60%,#1a0a00 100%);border-bottom:2px solid #ff6b35;padding:48px 24px 36px;text-align:center}
+.hero h1{font-size:2.6rem;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:10px}
+.hero h1 span{color:#ff6b35}
+.hero .subtitle{font-size:1.1rem;color:#8b949e;max-width:680px;margin:0 auto 22px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.pill{background:#21262d;border:1px solid #30363d;border-radius:20px;padding:5px 14px;font-size:0.82rem;color:#e6edf3;font-weight:600}
+.pill:nth-child(1){border-color:#ff6b35;color:#ff6b35}
+
+/* TABS */
+.tab-bar{background:#161b22;border-bottom:1px solid #21262d;overflow-x:auto;white-space:nowrap;padding:0 12px;position:sticky;top:0;z-index:100}
+.tab-btn{display:inline-block;padding:13px 16px;cursor:pointer;font-size:0.83rem;font-weight:600;color:#8b949e;border:none;background:none;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+.tab-btn:hover{color:#e6edf3}
+.tab-btn.active{color:#ff6b35;border-bottom-color:#ff6b35}
+
+/* PANELS */
+.tab-panel{display:none;padding:32px 24px;max-width:960px;margin:0 auto}
+.tab-panel.active{display:block}
+
+/* TYPOGRAPHY */
+.section-heading{font-size:1.4rem;font-weight:700;color:#fff;margin:32px 0 12px;padding-bottom:8px;border-bottom:2px solid #21262d;display:flex;align-items:center;gap:10px}
+.section-heading .icon{font-size:1.2rem}
+h3{font-size:1.1rem;font-weight:700;color:#e6edf3;margin:22px 0 8px}
+h4{font-size:0.95rem;font-weight:700;color:#ff6b35;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+p{margin-bottom:12px;color:#c9d1d9}
+ul,ol{padding-left:22px;margin-bottom:14px}
+li{margin-bottom:5px;color:#c9d1d9}
+strong{color:#e6edf3}
+
+/* CARDS */
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:20px 22px;margin-bottom:18px}
+.card-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px}
+
+/* TIP BOXES */
+.tip-box{border-radius:8px;padding:14px 18px;margin:16px 0;border-left:4px solid}
+.tip-box{background:#161b22;border-color:#ff6b35;color:#c9d1d9}
+.tip-box.warning{background:#1a1500;border-color:#e3b341;color:#e3b341}
+.tip-box.danger{background:#1a0a0a;border-color:#f85149;color:#f85149}
+.tip-box.info{background:#0c1a2e;border-color:#388bfd;color:#79c0ff}
+.tip-box strong{color:inherit}
+
+/* KBD */
+kbd{display:inline-block;background:#21262d;border:1px solid #484f58;border-radius:5px;padding:2px 8px;font-family:'Courier New',monospace;font-size:0.82rem;color:#e6edf3;margin:1px}
+
+/* SHORTCUT ROWS */
+.shortcut-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #21262d}
+.shortcut-row:last-child{border-bottom:none}
+.shortcut-key{min-width:120px}
+.shortcut-desc{color:#8b949e;font-size:0.9rem}
+
+/* PRICE TAGS */
+.price-tag{display:inline-block;border-radius:5px;padding:3px 10px;font-size:0.8rem;font-weight:700;background:#21262d;color:#e6edf3;border:1px solid #30363d}
+.price-tag.mid{background:#1a2a1a;border-color:#3fb950;color:#3fb950}
+.price-tag.high{background:#2a1a1a;border-color:#f85149;color:#f85149}
+
+/* TABLE */
+.guide-table{width:100%;border-collapse:collapse;margin:16px 0}
+.guide-table th{background:#21262d;color:#e6edf3;padding:10px 14px;text-align:left;font-size:0.85rem;font-weight:700;border:1px solid #30363d}
+.guide-table td{padding:9px 14px;border:1px solid #30363d;font-size:0.88rem;color:#c9d1d9;vertical-align:top}
+.guide-table tr:nth-child(even) td{background:#0f1318}
+.guide-table tr:hover td{background:#1c2128}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+@media(max-width:640px){.two-col{grid-template-columns:1fr}}
+
+/* STEPS */
+.step-row{display:flex;gap:16px;margin-bottom:18px;align-items:flex-start}
+.step-num{background:#ff6b35;color:#fff;font-weight:800;font-size:0.9rem;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-content{flex:1}
+.step-content strong{display:block;color:#e6edf3;margin-bottom:4px}
+
+/* PARAM BOX */
+.param-box{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:16px 20px;margin:12px 0}
+.param-name{font-size:1rem;font-weight:800;color:#ff6b35;margin-bottom:4px}
+.param-unit{font-size:0.78rem;color:#8b949e;margin-left:6px;font-weight:400}
+.param-desc{color:#c9d1d9;font-size:0.9rem}
+.param-range{background:#21262d;border-radius:4px;padding:4px 10px;font-size:0.82rem;color:#e3b341;display:inline-block;margin-top:6px;font-family:'Courier New',monospace}
+
+/* BADGE */
+.badge{display:inline-block;border-radius:4px;padding:2px 8px;font-size:0.75rem;font-weight:700;margin-left:6px}
+.badge-new{background:#1a3a1a;color:#3fb950}
+.badge-old{background:#2a2a1a;color:#e3b341}
+.badge-warn{background:#2a1a1a;color:#f85149}
+
+/* COMPARISON */
+.vs-table{width:100%;border-collapse:collapse;margin:16px 0}
+.vs-table th{padding:10px 16px;text-align:center;font-size:0.9rem;font-weight:700;border:1px solid #30363d}
+.vs-table th:nth-child(1){background:#21262d;color:#8b949e;text-align:left}
+.vs-table th:nth-child(2){background:#1a2a3a;color:#79c0ff}
+.vs-table th:nth-child(3){background:#1a2a1a;color:#3fb950}
+.vs-table td{padding:9px 16px;border:1px solid #30363d;font-size:0.87rem}
+.vs-table td:nth-child(1){color:#8b949e;font-weight:600;background:#0f1318}
+.vs-table tr:nth-child(even) td:not(:nth-child(1)){background:#0c1015}
+.check{color:#3fb950;font-weight:700}
+.cross{color:#f85149;font-weight:700}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{background:#21262d;border:1px solid #30363d;border-radius:4px;padding:3px 10px;font-size:0.8rem;color:#c9d1d9}
+
+code{font-family:'Courier New',monospace;background:#21262d;border-radius:3px;padding:1px 6px;font-size:0.85rem;color:#ff6b35}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>⚡ EzCad <span>Ultimate Guide</span></h1>
+  <p class="subtitle">Master the free fiber laser software that comes with your machine — from setup to stamp plate production</p>
+  <div class="pills">
+    <span class="pill">Free with Machine</span>
+    <span class="pill">Fiber Laser Only</span>
+    <span class="pill">SS304 Settings</span>
+    <span class="pill">Stamp Plate Pro</span>
+    <span class="pill">India Setup</span>
+    <span class="pill">EzCad2 + EzCad3</span>
+  </div>
+</div>
+
+<!-- TAB BAR (all 12) -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(1)">1. Understanding EzCad</button>
+  <button class="tab-btn" onclick="switchTab(2)">2. Setup &amp; Installation</button>
+  <button class="tab-btn" onclick="switchTab(3)">3. Interface &amp; Tools</button>
+  <button class="tab-btn" onclick="switchTab(4)">4. Importing Files</button>
+  <button class="tab-btn" onclick="switchTab(5)">5. Marking Parameters</button>
+  <button class="tab-btn" onclick="switchTab(6)">6. SS304 Stamp Plates</button>
+  <button class="tab-btn" onclick="switchTab(7)">7. Hatch &amp; Fill Modes</button>
+  <button class="tab-btn" onclick="switchTab(8)">8. Array &amp; Step-Repeat</button>
+  <button class="tab-btn" onclick="switchTab(9)">9. Material Settings</button>
+  <button class="tab-btn" onclick="switchTab(10)">10. Troubleshooting</button>
+  <button class="tab-btn" onclick="switchTab(11)">11. Practice Projects</button>
+  <button class="tab-btn" onclick="switchTab(12)">12. Expert Tips</button>
+</div>
+
+<!-- TAB 1 -->
+<div id="tab-panel-1" class="tab-panel active">
+  <div class="section-heading"><span class="icon">🔍</span> What is EzCad?</div>
+  <p>EzCad is the laser control software developed by <strong>JCZ Technology (Beijing Jike Shengong Co.)</strong> and bundled <strong>free of charge</strong> with the vast majority of Chinese fiber laser marking machines. It acts as the complete brain between your PC and the galvo scanner — controlling every laser parameter from pulse width to scan speed.</p>
+  <div class="tip-box info"><strong>India Context:</strong> Almost every fiber laser machine purchased from IndiaMART, Alibaba, or local machine dealers in India (₹40,000–₹1,50,000 range) ships with EzCad2 preloaded on a CD or USB, along with the USB dongle required to run it.</div>
+
+  <div class="section-heading"><span class="icon">⚖️</span> EzCad2 vs EzCad3</div>
+  <table class="vs-table">
+    <tr>
+      <th>Feature</th>
+      <th>EzCad2 <span class="badge badge-old">Older</span></th>
+      <th>EzCad3 <span class="badge badge-new">Newer</span></th>
+    </tr>
+    <tr><td>OS Support</td><td>Windows only</td><td>Windows only</td></tr>
+    <tr><td>Controller Card</td><td>BJJCZ / LMCV4 (legacy)</td><td>BJJCZ Gen3 (newer)</td></tr>
+    <tr><td>UI Style</td><td>Old-school, dense</td><td>Cleaner ribbon-style</td></tr>
+    <tr><td>MOPA Support</td><td><span class="check">✓</span> Yes</td><td><span class="check">✓</span> Yes (better)</td></tr>
+    <tr><td>Market Share</td><td>~90% of machines in field</td><td>Growing, newer machines</td></tr>
+    <tr><td>Community Help</td><td>Massive — most tutorials</td><td>Limited tutorials</td></tr>
+    <tr><td>Cost</td><td>Free (bundled)</td><td>Free (bundled)</td></tr>
+    <tr><td>Dongle Color</td><td>Blue or Red USB dongle</td><td>Different driver/dongle</td></tr>
+    <tr><td>File Format</td><td>.ezd files</td><td>.ez3 files</td></tr>
+  </table>
+  <div class="tip-box"><strong>Which do you have?</strong> Check your USB dongle. EzCad2 dongles are typically a blue or red USB stick with "BJJCZ" or "JCZ" branding. If you're unsure, open EzCad and look at the title bar — it says EzCad2 or EzCad3.</div>
+
+  <div class="section-heading"><span class="icon">🏭</span> What Machines Use EzCad?</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Laser Sources Supported</div>
+      <ul>
+        <li><strong>JPT MOPA</strong> — most popular in India for color marking</li>
+        <li><strong>Raycus</strong> — common, affordable, good quality</li>
+        <li><strong>IPG</strong> — premium, most reliable</li>
+        <li><strong>MAX Photonics</strong> — Chinese brand, budget machines</li>
+        <li><strong>nLight</strong> — less common, US brand</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Machine Types</div>
+      <ul>
+        <li>Desktop fiber laser markers (20W, 30W, 50W)</li>
+        <li>Enclosed cabinet machines</li>
+        <li>Open-frame galvo markers</li>
+        <li>Split-head portable markers</li>
+        <li>Integrated conveyor systems</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading"><span class="icon">🎛️</span> What Does EzCad Control?</div>
+  <p>EzCad communicates with the galvo controller card (typically BJJCZ board) inside your machine and manages:</p>
+  <div class="two-col">
+    <ul>
+      <li><strong>Laser Power %</strong> — fraction of max wattage delivered</li>
+      <li><strong>Frequency (kHz)</strong> — pulses per second</li>
+      <li><strong>Pulse Width (ns)</strong> — MOPA lasers only</li>
+      <li><strong>Scan Speed (mm/s)</strong> — galvo mirror movement speed</li>
+    </ul>
+    <ul>
+      <li><strong>X/Y Galvo Mirrors</strong> — position and path control</li>
+      <li><strong>Red Dot Pointer</strong> — preview beam for positioning</li>
+      <li><strong>Rotary Axis</strong> — if rotary attachment connected</li>
+      <li><strong>I/O Signals</strong> — start trigger, footswitch, automation</li>
+    </ul>
+  </div>
+
+  <div class="section-heading"><span class="icon">⚡</span> EzCad vs Lightburn</div>
+  <table class="guide-table">
+    <tr>
+      <th>Aspect</th>
+      <th>EzCad2/3</th>
+      <th>LightBurn</th>
+    </tr>
+    <tr><td>Cost</td><td><span class="price-tag mid">FREE</span> with machine</td><td><span class="price-tag high">~₹10,000</span> license</td></tr>
+    <tr><td>Laser Type</td><td>Fiber/MOPA only (galvo)</td><td>CO2, diode, some fiber</td></tr>
+    <tr><td>Fiber Laser Support</td><td>Full — all parameters</td><td>Limited (growing)</td></tr>
+    <tr><td>Design Tools</td><td>Basic but functional</td><td>Excellent, Inkscape-like</td></tr>
+    <tr><td>SVG Import</td><td>No (use DXF workaround)</td><td>Yes, native</td></tr>
+    <tr><td>Learning Curve</td><td>Steeper</td><td>Gentler</td></tr>
+    <tr><td>MOPA Pulse Width</td><td><span class="check">✓ Full control</span></td><td><span class="cross">✗ Not supported</span></td></tr>
+    <tr><td>Material Library</td><td>Basic presets</td><td>Community libraries</td></tr>
+    <tr><td>Community in India</td><td>Very active (Facebook groups)</td><td>Smaller fiber community</td></tr>
+    <tr><td>Automation/IO</td><td>Full support</td><td>Limited</td></tr>
+  </table>
+  <div class="tip-box warning"><strong>Verdict for India:</strong> For stamp plates and industrial fiber laser work, EzCad is the right tool. Lightburn is excellent for CO2 lasers and hobbyists. Don't pay ₹10,000 for Lightburn if you only have a fiber laser — EzCad does everything you need.</div>
+
+  <div class="section-heading"><span class="icon">💻</span> System Requirements</div>
+  <div class="card">
+    <ul>
+      <li><strong>OS:</strong> Windows 7, 8, 10, or 11 (32-bit or 64-bit) — no Mac, no Linux</li>
+      <li><strong>RAM:</strong> Minimum 4 GB recommended (2 GB absolute minimum)</li>
+      <li><strong>USB:</strong> At least one free USB-A port for the dongle at all times</li>
+      <li><strong>Display:</strong> 1024×768 minimum — higher resolution recommended</li>
+      <li><strong>Storage:</strong> Under 500 MB for EzCad itself — tiny footprint</li>
+      <li><strong>Internet:</strong> Not required — fully offline software</li>
+    </ul>
+  </div>
+
+  <div class="section-heading"><span class="icon">🔑</span> The USB Dongle — Most Critical Component</div>
+  <div class="tip-box danger"><strong>NEVER lose or damage the USB dongle.</strong> Without it, EzCad will not run at all. It is hardware-locked. Replacement costs ₹3,000–₹8,000 and takes 1–3 weeks to source in India.</div>
+  <ul>
+    <li>The dongle stores your EzCad license — it is both the key and the license</li>
+    <li>Must remain plugged in the entire time EzCad is running</li>
+    <li>Do not plug/unplug rapidly — can confuse Windows driver</li>
+    <li>If dongle is lost: contact your machine supplier or JCZ directly</li>
+    <li>Buy a cheap USB hub and leave the dongle permanently on it if your PC has limited ports</li>
+    <li>Write your machine serial number on the dongle or keep a photo of it</li>
+  </ul>
+
+  <div class="section-heading"><span class="icon">🇮🇳</span> India-Specific Context</div>
+  <div class="card">
+    <p>Most fiber laser machines in India in the <strong>₹40,000–₹80,000</strong> price range come with:</p>
+    <ul>
+      <li>EzCad2 software on CD or USB</li>
+      <li>USB dongle included</li>
+      <li>Galvo correction file (.cor) on CD</li>
+      <li>A basic material parameter sheet (often in Chinese — use the settings in this guide)</li>
+    </ul>
+    <p>Suppliers on IndiaMART selling these machines include dealers from Surat, Mumbai, Delhi, and Coimbatore. The laser source is usually <strong>Raycus</strong> (Chinese, reliable) or <strong>JPT</strong> (Chinese, MOPA capable — better for color and detail work).</p>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div id="tab-panel-2" class="tab-panel">
+  <div class="section-heading"><span class="icon">📦</span> Installation — Step by Step</div>
+
+  <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Get the EzCad installer</strong> Use the CD or USB that came with your machine. If lost, download EzCad2 from <code>jcz.com.cn</code> (the official JCZ website). Make sure the version matches your controller card generation.</div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Run installer WITHOUT dongle plugged in</strong> This is critical. Plug in the dongle only after the software and drivers are fully installed. Plugging in too early causes driver conflicts in many Windows versions.</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Install dongle drivers</strong> The installer should do this automatically. If not, drivers are on the CD in a folder called "Dongle Driver" or "SentinelDriver". Install manually if needed.</div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Plug in the USB dongle</strong> Wait 10–15 seconds for Windows to recognize and install the device. Check Device Manager — it should appear under "USB devices" without a warning triangle.</div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Launch EzCad2</strong> Double-click the desktop icon. If a dongle error appears, reinstall drivers (see troubleshooting below). If EzCad opens but shows a demo watermark, driver issue — dongle not recognized.</div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-content"><strong>Connect the laser machine</strong> Via USB cable (most machines) or PCIe card (some industrial machines). The connection is to the BJJCZ controller board inside the machine, not the laser source directly.</div></div>
+
+  <div class="section-heading"><span class="icon">🔧</span> First-Time Machine Configuration (F4)</div>
+  <p>After installation, press <kbd>F4</kbd> or go to <strong>File &gt; Config</strong> to open the machine configuration dialog. This is the most important setup step.</p>
+
+  <div class="card">
+    <div class="card-title">Key Settings in Config Dialog</div>
+    <table class="guide-table">
+      <tr><th>Setting</th><th>What to Set</th><th>Notes</th></tr>
+      <tr><td>Field Size (mm)</td><td>Match your F-theta lens</td><td>110×110, 150×150, 200×200, or 300×300mm</td></tr>
+      <tr><td>Galvo Correction File</td><td>Load the .cor file from your CD</td><td>Critical for accuracy — without it edges distort</td></tr>
+      <tr><td>Laser Type</td><td>Fiber (for fiber lasers)</td><td>Do NOT set CO2 or UV for a fiber machine</td></tr>
+      <tr><td>Max Power %</td><td>Set per your machine spec</td><td>Leave at 100% initially, reduce in mark params</td></tr>
+      <tr><td>Red Dot Pointer</td><td>Enable if your machine has one</td><td>Diode pointer for positioning — very useful</td></tr>
+      <tr><td>Axis Direction</td><td>Per machine spec sheet</td><td>Wrong axis = mirror/flipped marks</td></tr>
+    </table>
+  </div>
+
+  <div class="section-heading"><span class="icon">📁</span> The Galvo Correction File (.cor)</div>
+  <div class="tip-box warning"><strong>Do not skip this step.</strong> The .cor file is a calibration grid specific to your galvo + lens combination. Without it, marks will be accurate in the center but distorted (pincushion/barrel distortion) toward the edges.</div>
+  <ul>
+    <li>File is on the CD that came with your machine — look for <code>*.cor</code></li>
+    <li>In Config dialog: click the folder icon next to "Correct File" and load the .cor</li>
+    <li>If you lost your .cor file: contact your machine supplier — they can email it</li>
+    <li>A generic .cor exists in EzCad's install folder — usable but not as accurate as your specific one</li>
+    <li>Back up your .cor file to cloud storage immediately</li>
+  </ul>
+
+  <div class="section-heading"><span class="icon">⚠️</span> Dongle Troubleshooting</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">"Dongle Not Found" Error</div>
+      <ol>
+        <li>Unplug dongle, wait 10 sec, re-plug</li>
+        <li>Try a different USB port (use USB 2.0, not USB 3.0 if possible)</li>
+        <li>Try plugging through a USB 2.0 hub</li>
+        <li>Uninstall dongle driver in Device Manager, reinstall</li>
+        <li>Check if another program is using Sentinel drivers</li>
+        <li>Run EzCad as Administrator</li>
+      </ol>
+    </div>
+    <div class="card">
+      <div class="card-title">Blue Screen / Driver Conflict</div>
+      <ol>
+        <li>Boot Windows in Safe Mode</li>
+        <li>Open Device Manager, find the dongle under USB or "Other Devices"</li>
+        <li>Right-click → Uninstall (check "delete driver files")</li>
+        <li>Reboot normally</li>
+        <li>Re-install dongle drivers from CD</li>
+        <li>If persists: try older driver version from JCZ website</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">EzCad Opens but No Laser Connection</div>
+    <ul>
+      <li>Check USB cable from PC to machine controller board (not the laser source)</li>
+      <li>Try a different USB cable — the included cables are often low quality</li>
+      <li>Check Device Manager for the BJJCZ controller card — should appear without errors</li>
+      <li>Ensure machine is powered on before launching EzCad</li>
+      <li>Reinstall the controller card drivers (separate from dongle drivers)</li>
+    </ul>
+  </div>
+
+  <div class="section-heading"><span class="icon">💡</span> Windows Optimization for EzCad</div>
+  <ul>
+    <li><strong>Power Plan:</strong> Set to "High Performance" — Control Panel &gt; Power Options</li>
+    <li><strong>USB Sleep:</strong> Disable in power plan "USB selective suspend setting → Disabled"</li>
+    <li><strong>Screen Saver:</strong> Disable completely — can interrupt long marking jobs</li>
+    <li><strong>Windows Updates:</strong> Pause during production — forced restarts kill live jobs</li>
+    <li><strong>Antivirus:</strong> Add EzCad folder to exclusions — some AV blocks dongle communication</li>
+    <li><strong>Background Apps:</strong> Close Chrome, Teams etc. during marking — they cause micro-freezes</li>
+  </ul>
+
+  <div class="section-heading"><span class="icon">🇮🇳</span> India Power Supply Note</div>
+  <div class="tip-box danger"><strong>Use a voltage stabilizer (servo stabilizer) and UPS.</strong> Indian mains voltage fluctuates ±10–15% in many areas. The BJJCZ controller card is sensitive to power spikes. A ₹3,000–5,000 servo stabilizer protects your ₹60,000+ machine. The UPS gives you 5–10 minutes to finish a job during power cuts.</div>
+
+  <div class="section-heading"><span class="icon">💾</span> Backing Up Your Setup</div>
+  <div class="tip-box"><strong>Do this immediately after setup.</strong> If your PC dies, you lose everything and need to reconfigure from scratch.</div>
+  <ul>
+    <li>Copy the entire EzCad installation folder (usually <code>C:\EzCad2</code> or <code>C:\Program Files\EzCad2</code>)</li>
+    <li>Includes: .cor file, all .ezd template files, material library files</li>
+    <li>Save to: USB drive + Google Drive or OneDrive</li>
+    <li>Also save your best-performing .ezd job files — these contain your tuned parameters</li>
+    <li>Photo the Config dialog (F4) settings on your phone as backup</li>
+  </ul>
+</div>
+
+<!-- TAB 3 -->
+<div id="tab-panel-3" class="tab-panel">
+  <div class="section-heading"><span class="icon">🖥️</span> EzCad2 Interface Overview</div>
+  <div class="card">
+    <div class="card-title">Main UI Zones</div>
+    <table class="guide-table">
+      <tr><th>Zone</th><th>Location</th><th>What's There</th></tr>
+      <tr><td>Menu Bar</td><td>Top</td><td>File, Edit, View, Draw, Modify, Laser, Help</td></tr>
+      <tr><td>Left Toolbar</td><td>Left edge</td><td>All drawing and selection tools</td></tr>
+      <tr><td>Object List (Layers)</td><td>Right panel</td><td>All objects, their layers/colors, visibility, lock</td></tr>
+      <tr><td>Properties Panel</td><td>Right (below list)</td><td>Position (X,Y), Size (W,H), Rotation for selected</td></tr>
+      <tr><td>Work Area</td><td>Center</td><td>Your design canvas — the blue border is your field boundary</td></tr>
+      <tr><td>Status Bar</td><td>Bottom</td><td>Current cursor coordinates, object dimensions</td></tr>
+      <tr><td>Red Cross (+)</td><td>Center of work area</td><td>Origin/home position — (0,0) coordinate</td></tr>
+    </table>
+  </div>
+  <div class="tip-box info"><strong>The Blue Rectangle</strong> is the field boundary — it represents the actual area your galvo can reach. Anything outside this rectangle will NOT be marked. Always keep your design inside it.</div>
+
+  <div class="section-heading"><span class="icon">🛠️</span> Drawing Tools</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Basic Shapes</div>
+      <ul>
+        <li><strong>Select</strong> — <kbd>Esc</kbd> or <kbd>F1</kbd> — click to select objects</li>
+        <li><strong>Rectangle</strong> — <kbd>F2</kbd> — click and drag</li>
+        <li><strong>Ellipse / Circle</strong> — <kbd>F3</kbd> — hold Shift for perfect circle</li>
+        <li><strong>Polygon</strong> — set sides in properties, click and drag</li>
+        <li><strong>Line / Pen</strong> — bezier curve tool for freeform paths</li>
+        <li><strong>Spiral</strong> — for decorative patterns</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Special Tools</div>
+      <ul>
+        <li><strong>Text</strong> — <kbd>T</kbd> — supports all installed TrueType fonts</li>
+        <li><strong>Barcode</strong> — built-in 1D barcode generator (Code39, Code128, etc.)</li>
+        <li><strong>QR Code</strong> — built-in QR code generator — type your URL/text</li>
+        <li><strong>Table/Grid</strong> — for structured layouts</li>
+        <li><strong>Hatch</strong> — fill area with parallel lines (for deep engraving fills)</li>
+        <li><strong>Point</strong> — for drilling single spot marks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading"><span class="icon">⌨️</span> All Keyboard Shortcuts</div>
+  <div class="card">
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>F1</kbd></div><div class="shortcut-desc">Select / Pointer tool</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>F2</kbd></div><div class="shortcut-desc">Rectangle tool</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>F3</kbd></div><div class="shortcut-desc">Ellipse / Circle tool</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>F4</kbd></div><div class="shortcut-desc">Config dialog — machine settings (use constantly!)</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>F5</kbd></div><div class="shortcut-desc">Mark / Start laser <span class="badge badge-warn">FIRES LASER</span></div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Space</kbd></div><div class="shortcut-desc">Red dot preview — traces path with pointer only, does NOT fire laser</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Enter</kbd></div><div class="shortcut-desc">Start marking <span class="badge badge-warn">FIRES LASER</span></div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Esc</kbd></div><div class="shortcut-desc">Stop marking / cancel / return to select tool</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Delete</kbd></div><div class="shortcut-desc">Delete selected object(s)</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Z</kbd></div><div class="shortcut-desc">Undo</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Y</kbd></div><div class="shortcut-desc">Redo</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>A</kbd></div><div class="shortcut-desc">Select all objects</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>C</kbd></div><div class="shortcut-desc">Copy selected</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>V</kbd></div><div class="shortcut-desc">Paste</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>G</kbd></div><div class="shortcut-desc">Group selected objects</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>D</kbd></div><div class="shortcut-desc">Duplicate (copy + paste in one step)</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd></div><div class="shortcut-desc">Fit design to window (zoom to fit)</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl</kbd>+<kbd>Scroll</kbd></div><div class="shortcut-desc">Zoom in/out</div></div>
+    <div class="shortcut-row"><div class="shortcut-key"><kbd>T</kbd></div><div class="shortcut-desc">Text tool — click on canvas and type</div></div>
+  </div>
+  <div class="tip-box danger"><strong>CRITICAL:</strong> <kbd>Enter</kbd> and <kbd>F5</kbd> both fire the laser immediately. If you have your workpiece in place and press Enter thinking you're confirming a dialog — you will start marking. Always be aware of what's in the machine before pressing these keys.</div>
+
+  <div class="section-heading"><span class="icon">📑</span> Object List (Layers)</div>
+  <p>The right-side Object List works like layers in Photoshop or Lightburn's cut layers. Each item in the list has its own mark parameters.</p>
+  <ul>
+    <li>Each object/group appears as a row — click to select it on canvas</li>
+    <li>The colored square on the left = which "pen" (layer) it's on</li>
+    <li>Each pen has its own Speed, Power, Frequency settings</li>
+    <li>Double-click the pen color to open Mark Parameters for that pen</li>
+    <li>Useful for: outline on one pen (fast + light), hatch fill on another pen (slower + deeper)</li>
+    <li>Eye icon = visibility toggle (hidden objects don't get marked)</li>
+    <li>Lock icon = prevents accidental selection/move</li>
+  </ul>
+
+  <div class="section-heading"><span class="icon">📐</span> Alignment Tools</div>
+  <p>Select multiple objects (<kbd>Ctrl</kbd>+click or drag-select), then use the Modify menu or the alignment toolbar buttons:</p>
+  <div class="tag-row">
+    <span class="tag">Align Left Edge</span>
+    <span class="tag">Align Right Edge</span>
+    <span class="tag">Align Top</span>
+    <span class="tag">Align Bottom</span>
+    <span class="tag">Center Horizontally</span>
+    <span class="tag">Center Vertically</span>
+    <span class="tag">Distribute Evenly H</span>
+    <span class="tag">Distribute Evenly V</span>
+    <span class="tag">Same Width</span>
+    <span class="tag">Same Height</span>
+  </div>
+
+  <div class="section-heading"><span class="icon">📝</span> Text Tool — Deep Dive</div>
+  <ul>
+    <li>Press <kbd>T</kbd>, click on canvas — a text dialog appears</li>
+    <li>Choose any installed Windows TrueType font</li>
+    <li>Set size in mm (not points — EzCad works in mm)</li>
+    <li>Bold/Italic via font selection (choose the Bold variant of the font)</li>
+    <li><strong>Variable Text</strong> — use <code>#</code> symbol for auto-incrementing serial numbers</li>
+    <li><strong>Date/Time Variables</strong> — insert via the variable text dropdown in text properties</li>
+    <li><strong>Curved text</strong> — EzCad has a "Text on Circle" function in the Draw menu</li>
+    <li>For stamp plates: use Arial Bold or similar clean sans-serif for best deep engrave results</li>
+  </ul>
+</div>
+
+<!-- TAB 4 -->
+<div id="tab-panel-4" class="tab-panel">
+  <div class="section-heading"><span class="icon">📂</span> Supported Import Formats</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Vector Formats</div>
+      <ul>
+        <li><strong>PLT</strong> — HPGL plotter format — excellent compatibility</li>
+        <li><strong>DXF</strong> — AutoCAD format — most common for engineering</li>
+        <li><strong>AI</strong> — Adobe Illustrator (legacy AI format)</li>
+        <li><strong>DST</strong> — Embroidery file format (unusual but supported)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Raster / Bitmap Formats</div>
+      <ul>
+        <li><strong>BMP</strong> — best for bitmaps — lossless</li>
+        <li><strong>JPG / JPEG</strong> — compressed, use for photos</li>
+        <li><strong>PNG</strong> — good quality, transparency supported</li>
+        <li><strong>GIF</strong> — basic support</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip-box danger"><strong>EzCad does NOT import SVG.</strong> This is the biggest workflow pain point. You must convert SVG to DXF or PLT first using a free tool like Inkscape. See the workflow below.</div>
+
+  <div class="section-heading"><span class="icon">🔄</span> SVG → EzCad Workflow (Critical for Stamp Plates)</div>
+  <p>Since EzCad can't open SVG directly, here are three proven conversion methods:</p>
+
+  <div class="card">
+    <div class="card-title">Option A — Inkscape → DXF R14 (RECOMMENDED)</div>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Open your SVG in Inkscape</strong> (free at inkscape.org)</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Select all objects</strong> (<kbd>Ctrl</kbd>+<kbd>A</kbd>), then go to <strong>Path → Object to Path</strong> to convert any shapes/text to paths</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Stroke to Path</strong> — if you have stroked outlines: Path → Stroke to Path. This makes outlines into filled regions</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>File → Save As → DXF R14</strong> — in the DXF dialog, set units to mm, enable "Use ROBO-Master type of spline output"</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>In EzCad:</strong> File → Import → select your DXF → click Open → place on canvas</div></div>
+    <div class="step-row"><div class="step-num">6</div><div class="step-content"><strong>After import:</strong> go to Edit → Select All, then Modify → Explode if needed to separate grouped paths</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Option B — Inkscape → PLT (HPGL)</div>
+    <ol>
+      <li>Open SVG in Inkscape</li>
+      <li>Convert all to paths (Object to Path)</li>
+      <li>Extensions → Export → Plot (or use the PLT export extension)</li>
+      <li>Import PLT in EzCad — very reliable, curves stay smooth</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Option C — Adobe Illustrator → AI Legacy Format</div>
+    <ol>
+      <li>Open or create in Illustrator</li>
+      <li>File → Save As → Adobe Illustrator (.ai)</li>
+      <li>In options: set compatibility to <strong>Illustrator 8</strong> or earlier (legacy format)</li>
+      <li>Import the .ai file in EzCad</li>
+    </ol>
+    <div class="tip-box warning" style="margin-top:10px"><strong>Note:</strong> Modern AI format (CC) won't import. Must save as legacy AI 8 or older.</div>
+  </div>
+
+  <div class="section-heading"><span class="icon">🔧</span> DXF Import Settings & Troubleshooting</div>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Design too small (tiny)</td><td>DXF was exported in inches instead of mm</td><td>Select all in EzCad, scale up by 25.4×</td></tr>
+    <tr><td>Design too large</td><td>DXF units mismatch</td><td>Check Inkscape document units are mm before export</td></tr>
+    <tr><td>Curves look like polygons (jagged)</td><td>Low resolution DXF export</td><td>In Inkscape DXF dialog, increase "Maximum Approximation Error" to smaller value (0.001mm)</td></tr>
+    <tr><td>Missing paths/lines</td><td>Objects not converted to paths</td><td>In Inkscape: select all → Path → Object to Path before export</td></tr>
+    <tr><td>Design in wrong position</td><td>DXF origin offset</td><td>Select all in EzCad → use F7 (center on field) or manually position</td></tr>
+    <tr><td>Many separate pieces</td><td>Exploded paths</td><td>Select all → Ctrl+G to group, or use Modify → Join Curves</td></tr>
+  </table>
+
+  <div class="section-heading"><span class="icon">🖼️</span> Importing Bitmaps (Photos & Logos)</div>
+  <ul>
+    <li>File → Import → select BMP/JPG/PNG file</li>
+    <li>Bitmap appears on canvas as an object</li>
+    <li>Double-click to open bitmap mark parameters</li>
+    <li>Set mark mode to <strong>"Bitmap"</strong> in the Mark Parameters dialog</li>
+    <li>For photos: use <strong>Floyd-Steinberg dithering</strong> or <strong>Ordered dithering</strong> for best results on metal</li>
+    <li>Resolution: 500 DPI recommended for photo engraving on metal</li>
+    <li>Invert image if needed (light areas = marked on dark metal)</li>
+    <li>Use "Uniform scan" not "Jump scan" for photos — more uniform marks</li>
+  </ul>
+
+  <div class="section-heading"><span class="icon">✅</span> Best Practices for Stamp Plate File Prep</div>
+  <div class="tip-box">Follow this checklist before importing any design for stamp plate work:</div>
+  <ol>
+    <li>Design at actual size in Inkscape (mm units) — what you design is what gets marked</li>
+    <li>Convert all text to paths (Text → Object to Path) so fonts don't matter on the EzCad PC</li>
+    <li>Expand all strokes to paths (Path → Stroke to Path) — EzCad doesn't handle stroke widths well</li>
+    <li>Remove any fills — only outlines/paths should remain for vector marking</li>
+    <li>Combine overlapping paths (Path → Union or Difference as needed)</li>
+    <li>Keep node count reasonable — under 5,000 nodes for smooth operation</li>
+    <li>Export as DXF R14, mm units</li>
+    <li>Test import in EzCad before going to machine</li>
+  </ol>
+</div>
+
+<!-- TAB 5 -->
+<div id="tab-panel-5" class="tab-panel">
+  <div class="section-heading"><span class="icon">⚙️</span> Accessing Mark Parameters</div>
+  <p>Mark parameters control exactly how the laser behaves when it marks. Access them by:</p>
+  <ul>
+    <li><strong>Method 1:</strong> Double-click any object on canvas → Mark Parameters dialog opens</li>
+    <li><strong>Method 2:</strong> Double-click the color/pen in the Object List (right panel)</li>
+    <li><strong>Method 3:</strong> <kbd>F4</kbd> → Pen Settings tab</li>
+  </ul>
+  <div class="tip-box info">Parameters set on a <strong>pen/layer</strong> apply to all objects on that layer. Parameters set on an individual object override the layer. Best practice: set params per layer.</div>
+
+  <div class="section-heading"><span class="icon">🎛️</span> All Key Parameters — Explained</div>
+
+  <div class="param-box">
+    <div class="param-name">SPEED <span class="param-unit">mm/s — galvo mirror movement speed</span></div>
+    <div class="param-desc">Controls how fast the galvo mirrors sweep across the material. Higher speed = less time per mm = less energy delivered = lighter mark. Lower speed = more time per mm = more energy = deeper, darker mark.</div>
+    <div class="param-range">SS304 Stamp Outline: 200–400 mm/s | Deep Engrave: 100–200 mm/s | Fast Surface Mark: 500–800 mm/s</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">POWER <span class="param-unit">% — percentage of laser's maximum rated wattage</span></div>
+    <div class="param-desc">Sets what fraction of the laser's full power is delivered. A 20W laser at 60% delivers 12W. Higher power = more material removal per pass. Too high = burning edges, oxidation, rough surface. Too low = no mark or very faint.</div>
+    <div class="param-range">SS304 Stamp: 50–70% | Annealing (color): 20–40% | Aluminum: 40–60% | Deep engrave: 70–90%</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">FREQUENCY <span class="param-unit">kHz — pulses per second (FIBER LASER ONLY)</span></div>
+    <div class="param-desc">How many laser pulses fire per second. Lower frequency = fewer, more energetic pulses = deeper material removal per pulse. Higher frequency = more pulses, less energy each = smoother marks, better for surface-level work. This is one of the most important parameters to understand.</div>
+    <div class="param-range">SS304 Stamp Plates: 20–50 kHz | Annealing/Color: 50–100 kHz | General marking: 30 kHz | Deep engrave: 20–30 kHz</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">Q-PULSE WIDTH <span class="param-unit">ns — nanoseconds (MOPA FIBER LASER ONLY)</span></div>
+    <div class="param-desc">Only available on MOPA (Master Oscillator Power Amplifier) fiber lasers. Controls the duration of each laser pulse in nanoseconds. Narrow pulses (2–4ns) create very high peak power for fine detail and color marking. Wide pulses (100–200ns) have more total energy per pulse for material removal. Standard Q-switched fiber lasers have a fixed pulse width — only MOPA gives you this control.</div>
+    <div class="param-range">Fine Detail / SS304 outline: 4–8 ns | Color marking on Ti: 2–4 ns | Deep engraving: 100–200 ns | General marking: 60–100 ns</div>
+    <div class="tip-box warning" style="margin-top:10px"><strong>Don't have this setting?</strong> Your machine is a standard Q-switched fiber laser, not MOPA. That's normal — most budget machines are Q-switched. MOPA machines cost more but give color marking capability.</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">LOOP COUNT <span class="param-unit">passes — how many times the laser retraces the same path</span></div>
+    <div class="param-desc">Each pass adds depth. One pass may be enough for surface marking; 3–5 passes for deeper engraving. More passes also means more heat accumulation — add delays between passes for heat-sensitive materials.</div>
+    <div class="param-range">Surface mark: 1 pass | Stamp plate outline: 1–3 passes | Deep engrave (hatch): 2–5 passes</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">JUMP SPEED <span class="param-unit">mm/s — galvo travel speed when laser is OFF (moving between paths)</span></div>
+    <div class="param-desc">Speed at which galvo repositions between objects while the laser is off. Set this as high as possible (3000–8000 mm/s) for efficiency. If you get positioning errors or marks appearing where they shouldn't, reduce jump speed.</div>
+    <div class="param-range">Default: 3000 mm/s | Maximum: 8000 mm/s | Troubleshoot positioning: reduce to 1000–2000 mm/s</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">START TC / END TC / POLY TC <span class="param-unit">μs — timing correction delays</span></div>
+    <div class="param-desc">Time Correction values sync the laser firing with the galvo mirror position. START TC = delay before laser fires at start of a path. END TC = delay after laser stops at end of path. POLY TC = delay at corners/direction changes. Critical for corner quality. If corners are burned/rounded, adjust these values. Default factory values are usually fine.</div>
+    <div class="param-range">Typical defaults: Start TC 150–300 μs | End TC 50–100 μs | Poly TC 50–100 μs</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">WOBBLE / WOBBLE AMPLITUDE <span class="param-unit">mm — oscillation added to path</span></div>
+    <div class="param-desc">Adds a slight zigzag oscillation perpendicular to the scan direction. Creates a wider effective mark without changing speed or requiring multiple passes. Good for creating wider line marks in one pass.</div>
+    <div class="param-range">Line widening: 0.05–0.2 mm amplitude | Texture effects: 0.1–0.5 mm</div>
+  </div>
+
+  <div class="section-heading"><span class="icon">📊</span> Recommended Parameters — Common Materials</div>
+  <table class="guide-table">
+    <tr>
+      <th>Material</th>
+      <th>Speed (mm/s)</th>
+      <th>Power %</th>
+      <th>Freq (kHz)</th>
+      <th>Passes</th>
+      <th>Effect</th>
+    </tr>
+    <tr><td><strong>SS304 — Outline</strong></td><td>300</td><td>60%</td><td>30</td><td>1–2</td><td>Dark surface mark</td></tr>
+    <tr><td><strong>SS304 — Deep Engrave</strong></td><td>150</td><td>70%</td><td>20</td><td>3–5</td><td>0.1–0.3mm depth</td></tr>
+    <tr><td><strong>SS304 — Annealing</strong></td><td>500</td><td>25%</td><td>80</td><td>1</td><td>Color without removal</td></tr>
+    <tr><td><strong>Aluminum — Mark</strong></td><td>400</td><td>50%</td><td>50</td><td>1</td><td>White/grey contrast</td></tr>
+    <tr><td><strong>Aluminum — Engrave</strong></td><td>200</td><td>65%</td><td>25</td><td>2–3</td><td>Deep recessed</td></tr>
+    <tr><td><strong>Brass — Mark</strong></td><td>350</td><td>55%</td><td>40</td><td>1–2</td><td>Dark contrast</td></tr>
+    <tr><td><strong>Mild Steel</strong></td><td>250</td><td>65%</td><td>25</td><td>2–3</td><td>Deep mark</td></tr>
+    <tr><td><strong>Titanium — Color</strong></td><td>600</td><td>20%</td><td>100</td><td>1</td><td>Oxide color (MOPA)</td></tr>
+    <tr><td><strong>Painted Metal</strong></td><td>500</td><td>30%</td><td>40</td><td>1</td><td>Paint removal</td></tr>
+  </table>
+  <div class="tip-box warning"><strong>These are starting points.</strong> Always run a test grid (vary speed and power in a grid pattern) on scrap material before marking your actual workpiece. Every machine and laser source is slightly different.</div>
+
+  <div class="section-heading"><span class="icon">💾</span> Saving Parameter Presets</div>
+  <ul>
+    <li>In the Mark Parameters dialog, click <strong>"Save"</strong> or use the preset dropdown</li>
+    <li>Name clearly: "SS304_Outline_30W", "Aluminum_Deep_20W" etc.</li>
+    <li>Presets are stored in EzCad's config folder — back them up with your .ezd files</li>
+    <li>Better yet: save a master .ezd file with all your tested parameters as different layers/pens</li>
+    <li>Create one .ezd per material category and use it as a template</li>
+  </ul>
+</div>
+
+<!-- TAB 6 -->
+<div id="tab-panel-6" class="tab-panel">
+  <div class="section-heading"><span class="icon">🔨</span> SS304 Stamp Plates — Overview</div>
+  <p>SS304 (304-grade stainless steel) is the most common material for rubber stamp metal plates in India. A laser-engraved SS304 stamp plate is used as the master die for making rubber/polymer stamps. The plate needs <strong>deep, clean, sharp edges</strong> — the quality of the engrave directly determines stamp quality.</p>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Typical Stamp Plate Specs</div>
+      <ul>
+        <li><strong>Thickness:</strong> 0.3mm – 1.0mm SS304 sheet</li>
+        <li><strong>Mark depth needed:</strong> 0.05mm – 0.15mm for rubber stamp use</li>
+        <li><strong>Area:</strong> 30×30mm to 80×60mm typical</li>
+        <li><strong>Feature size:</strong> Minimum 0.3mm line width recommended</li>
+        <li><strong>Surface finish:</strong> 2B or BA (bright annealed) — smoother is better</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Why Fiber Laser for SS304</div>
+      <ul>
+        <li>1064nm wavelength — absorbed excellently by steel</li>
+        <li>Galvo scan = very fast, precise</li>
+        <li>No tooling wear — same quality every plate</li>
+        <li>Can do 10mm×10mm plate in under 2 minutes</li>
+        <li>Extremely sharp corners — better than chemical etching</li>
+        <li>No chemicals, no mess, no darkroom</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading"><span class="icon">📐</span> Stamp Plate Design Workflow</div>
+
+  <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Design in Inkscape (recommended)</strong> — Create your stamp design at actual size in mm. Use black for areas to be engraved (recessed). Text should be correct-reading (not mirrored) — EzCad will handle mirror if needed.</div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Prepare the file</strong> — Convert text to paths, expand strokes to paths, remove fills, keep only outlines. For stamp plates you engrave the OUTLINE of text/logo, then fill with hatch inside.</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Export as DXF R14</strong> from Inkscape (mm units). Import into EzCad.</div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Set up layers in EzCad</strong> — Pen 1 (red): outline pass with outline parameters. Pen 2 (blue): hatch fill with hatch parameters. Assign objects to correct pens.</div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Mirror the design if required</strong> — For stamps, the plate must be a mirror image so the stamp impression reads correctly. In EzCad: select all → Modify → Mirror → Horizontal. Confirm this looks correct before marking.</div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-content"><strong>Red dot preview</strong> — Press <kbd>Space</kbd> to trace the path with the red pointer (no laser). Confirm position and size on your SS304 sheet.</div></div>
+  <div class="step-row"><div class="step-num">7</div><div class="step-content"><strong>Mark the plate</strong> — Secure SS304 sheet on the work table (use magnets or double-sided tape). Press <kbd>F5</kbd> or <kbd>Enter</kbd> to start marking.</div></div>
+
+  <div class="section-heading"><span class="icon">⚙️</span> SS304 Stamp Plate Parameters</div>
+
+  <h3>Layer 1 — Outline Pass</h3>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>20W Machine</th><th>30W Machine</th><th>50W Machine</th></tr>
+    <tr><td>Speed (mm/s)</td><td>250–350</td><td>300–400</td><td>400–500</td></tr>
+    <tr><td>Power %</td><td>65–75%</td><td>55–65%</td><td>45–55%</td></tr>
+    <tr><td>Frequency (kHz)</td><td>25–35</td><td>30–40</td><td>35–50</td></tr>
+    <tr><td>Passes</td><td>2–3</td><td>1–2</td><td>1–2</td></tr>
+    <tr><td>Jump Speed</td><td>3000</td><td>3000</td><td>3000</td></tr>
+  </table>
+
+  <h3>Layer 2 — Hatch Fill (Inside Areas)</h3>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>20W Machine</th><th>30W Machine</th><th>50W Machine</th></tr>
+    <tr><td>Speed (mm/s)</td><td>150–200</td><td>200–300</td><td>300–400</td></tr>
+    <tr><td>Power %</td><td>70–80%</td><td>60–70%</td><td>50–60%</td></tr>
+    <tr><td>Frequency (kHz)</td><td>20–30</td><td>25–35</td><td>30–40</td></tr>
+    <tr><td>Hatch Spacing</td><td>0.03–0.05 mm</td><td>0.03–0.05 mm</td><td>0.03–0.05 mm</td></tr>
+    <tr><td>Passes</td><td>2–4</td><td>2–3</td><td>1–2</td></tr>
+    <tr><td>Hatch Angle</td><td>45°</td><td>45°</td><td>45°</td></tr>
+  </table>
+  <div class="tip-box info"><strong>Hatch Spacing:</strong> Tighter spacing (smaller number) = smoother, deeper engrave surface but takes longer. For stamp plates, 0.03–0.05mm is the sweet spot. Don't go wider than 0.08mm or you'll see hatch lines in your stamps.</div>
+
+  <div class="section-heading"><span class="icon">✅</span> Quality Check — SS304 Stamp Plates</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Good Plate Signs</div>
+      <ul>
+        <li>Clean, sharp edges on all lines and curves</li>
+        <li>Uniform depth across the entire engraved area</li>
+        <li>Smooth floor in engraved areas (no visible hatch lines)</li>
+        <li>No burring or raised edges around marks</li>
+        <li>Consistent depth — same in center as at edges of field</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Problems & Fixes</div>
+      <ul>
+        <li><strong>Rough/jagged edges:</strong> Reduce speed 20%, check .cor file loaded</li>
+        <li><strong>Visible hatch lines:</strong> Reduce hatch spacing to 0.03mm or less</li>
+        <li><strong>Shallow depth:</strong> Increase passes or reduce speed</li>
+        <li><strong>Burning at corners:</strong> Reduce poly TC, increase corner speed</li>
+        <li><strong>Uneven depth edge vs center:</strong> Load correct .cor file</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading"><span class="icon">🇮🇳</span> Sourcing SS304 for Stamp Plates in India</div>
+  <div class="card">
+    <table class="guide-table">
+      <tr><th>Thickness</th><th>Use Case</th><th>Price (approx)</th><th>Where to Buy</th></tr>
+      <tr><td>0.3mm</td><td>Flexible stamp plates, small designs</td><td>₹80–120/sheet (100×100mm)</td><td>Local steel shop, IndiaMART</td></tr>
+      <tr><td>0.5mm</td><td>Standard stamp plates — most common</td><td>₹120–180/sheet</td><td>Steel sheet dealers</td></tr>
+      <tr><td>1.0mm</td><td>Heavy duty, large stamps</td><td>₹200–300/sheet</td><td>Engineering material suppliers</td></tr>
+    </table>
+    <p style="margin-top:10px">Look for <strong>2B finish</strong> (smooth, bright) rather than 2D (dull) for better engraving results. Search "SS304 2B sheet" on IndiaMART. Many laser operators buy 300×300mm sheets and cut to size.</p>
+  </div>
+
+  <div class="tip-box"><strong>Pro Tip:</strong> After engraving, clean the plate with acetone or IPA (isopropyl alcohol) to remove oxidation and residue. Polish lightly with a cotton swab. The plate should look clean and sharp before using it to make stamps.</div>
+</div>
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  var panel=document.getElementById('tab-panel-'+n);
+  if(panel) panel.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===n-1)b.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+
+
+
+
+<!-- TAB 7: Hatch & Fill Modes -->
+<div class="tab-panel" id="tab-panel-7">
+
+  <div class="section-heading"><span class="icon">🔲</span> Hatch &amp; Fill Modes</div>
+  <p>Hatch in EzCad is the equivalent of "fill" or "raster" in LightBurn — it fills a closed shape with parallel lines, turning an outline into a solid-looking engraved area. Understanding when to use hatch vs outline is one of the most important decisions in fiber laser work.</p>
+
+  <h3>What Is Hatch?</h3>
+  <div class="card">
+    <div class="card-title">Hatch = Parallel Lines Inside a Closed Shape</div>
+    <p>When you apply hatch to a closed vector shape (circle, rectangle, text outline, logo), EzCad fills the interior with a series of parallel laser passes spaced by the <strong>line spacing</strong> value. The galvo scans back and forth, removing or marking material across the entire filled area — like mowing a lawn in parallel strips.</p>
+    <ul>
+      <li><strong>Outline (Line mode):</strong> Laser traces only the edge path — fast, clean, minimal material removal</li>
+      <li><strong>Hatch (Fill mode):</strong> Laser fills the interior — slower, removes more material, creates solid appearance</li>
+    </ul>
+  </div>
+
+  <h3>Hatch vs Outline — When to Use Each</h3>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Use Case</th><th>Recommended Mode</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stamp plate engraving (rubber/polymer stamp)</td><td><strong>Outline only</strong></td><td>Hatch removes too much SS304 — outline depth is sufficient for ink transfer</td></tr>
+      <tr><td>Deep engraving (removing background)</td><td><strong>Heavy hatch</strong></td><td>Need to remove bulk material to create relief</td></tr>
+      <tr><td>Logo on metal award/gift</td><td><strong>Hatch filled areas + outline borders</strong></td><td>Creates solid black logo appearance</td></tr>
+      <tr><td>Text on metal business card</td><td><strong>Outline or light hatch</strong></td><td>Outline is crisp; hatch gives bolder look</td></tr>
+      <tr><td>Photo engraving</td><td><strong>Hatch (bitmap mode)</strong></td><td>Requires raster-style fill for tonal gradation</td></tr>
+      <tr><td>Jewelry tag engraving</td><td><strong>Outline</strong></td><td>Fine detail, minimal material removal</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Hatch Parameters Explained</h3>
+
+  <div class="param-box">
+    <div class="param-name">Line Spacing <span class="param-unit">mm</span></div>
+    <div class="param-desc">Distance between parallel hatch lines. Smaller = denser fill, better coverage, longer time. Larger = visible lines, faster.</div>
+    <div class="param-range">Stamp/jewelry: 0.02–0.04mm | General: 0.05–0.08mm | Fast/coarse: 0.1mm+</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">Hatch Angle <span class="param-unit">degrees</span></div>
+    <div class="param-desc">Direction of parallel lines. 0° = horizontal, 90° = vertical, 45° = diagonal.</div>
+    <div class="param-range">0° | 45° | 90° | Custom angle | Cross-hatch = two passes at 90° to each other</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">Edge Offset <span class="param-unit">mm</span></div>
+    <div class="param-desc">Insets the hatch fill from the shape border. Positive value leaves a gap between outline and hatch. Set to 0 for full fill.</div>
+    <div class="param-range">Typical: 0 – 0.05mm</div>
+  </div>
+
+  <div class="param-box">
+    <div class="param-name">All Calc (All Calculation)</div>
+    <div class="param-desc">When enabled, EzCad recalculates the hatch for overlapping shapes as a single region — avoids double-marking overlap areas. Recommended for complex logos.</div>
+    <div class="param-range">Enable for overlapping objects | Disable for independent hatching</div>
+  </div>
+
+  <h3>Hatch Types</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Unidirectional</div>
+      <p>Laser fills in one direction only — travels back to start of each line before firing again. Slower but very consistent marking direction. Good for materials sensitive to directional marks.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Bidirectional (Zigzag)</div>
+      <p>Laser fills forward then back (zigzag). <strong>Fastest hatch mode</strong> — roughly 2x faster than unidirectional. Use for most SS304 and metal work. Minor difference in appearance.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Bow-Tie (X-Hatch Decorative)</div>
+      <p>Creates alternating diagonal fill — decorative pattern. Rarely used for functional engraving. Occasionally used for textured backgrounds on gifts.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Cross-Hatch (Two Pass)</div>
+      <p>Runs hatch at angle X, then runs again at X+90°. Creates a grid pattern. <strong>Removes significantly more material</strong> — good for deep engraving and background removal. Takes 2x as long as single hatch.</p>
+    </div>
+  </div>
+
+  <h3>Setting Up Outline + Hatch on the Same Object</h3>
+  <p>EzCad allows assigning different layers (pens) to the same object. This is how you get a sharp outline border AND a filled interior in one job:</p>
+  <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Draw or import your closed shape</strong><br>Shape must be fully closed — no gaps at nodes.</div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Select the object → double-click to open Pen properties</strong><br>Assign Pen 1 as "Line" (outline) at your border settings.</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Click the "Hatch" tab in Pen properties</strong><br>Enable hatch, set line spacing, angle, type.</div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Check "Hatch Pen" and select Pen 2</strong><br>EzCad separates the hatch onto Pen 2 with its own power/speed settings.</div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Set Pen 2 parameters for fill</strong><br>Typically same speed but slightly higher power than outline Pen 1.</div></div>
+  <div class="tip-box info">In EzCad2, outline runs first, then hatch (or reverse — set under Marking Order). Running outline last gives cleaner edges after hatch.</div>
+
+  <h3>For Stamp Plates — Outline Only Is Best</h3>
+  <div class="tip-box warning">
+    <strong>Key insight:</strong> For rubber/polymer stamp production, you are just marking SS304 — the stamp plate itself uses the SS304 as a jig/registration surface and the laser depth just needs to be consistent. <strong>Hatch removes too much material</strong> and adds time without benefit for typical stamp plate engraving. Use Line mode (outline only) at 1-3 passes for stamp plate work.
+  </div>
+  <p>Exception: If you are making a <strong>direct impression stamp</strong> (where the SS304 itself IS the stamp surface), then deep hatch engraving to remove the background and leave raised text is appropriate.</p>
+
+  <h3>For Logo Engraving on Awards and Gifts</h3>
+  <p>When marking a company logo on a metal award or stainless trophy plate:</p>
+  <ul>
+    <li>Text outlines: Line mode, 1 pass</li>
+    <li>Solid logo fills (filled circles, solid areas): Hatch, 0.04mm spacing, bidirectional</li>
+    <li>Thin decorative borders: Line mode</li>
+    <li>Background removal (logo raised from surface): Cross-hatch, 0.03mm, 3-4 passes</li>
+  </ul>
+
+  <h3>For Deep Engraving (Background Removal)</h3>
+  <div class="card">
+    <div class="card-title">Heavy Hatch for Material Removal</div>
+    <p>To create a raised logo or relief effect, you engrave the background away with heavy hatch settings:</p>
+    <ul>
+      <li>Line spacing: 0.02–0.03mm (very dense)</li>
+      <li>Type: Cross-hatch (two passes, 90° apart)</li>
+      <li>Passes: 3–5 (repeat in marking parameters)</li>
+      <li>Speed: Lower (150–200 mm/s on SS304)</li>
+      <li>Power: Higher (70–80% on 20W)</li>
+    </ul>
+    <p>This is slow but creates a professional deep-engraved effect. A 50×50mm background fill at 0.02mm spacing takes 10–20 minutes.</p>
+  </div>
+
+  <h3>Time Estimation for Hatch Jobs</h3>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Area (mm²)</th><th>Line Spacing</th><th>Approx Time (1 pass, 300mm/s)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>10×10 (100mm²)</td><td>0.05mm</td><td>~30 seconds</td></tr>
+      <tr><td>20×20 (400mm²)</td><td>0.05mm</td><td>~2 minutes</td></tr>
+      <tr><td>50×50 (2500mm²)</td><td>0.04mm</td><td>~12 minutes</td></tr>
+      <tr><td>50×50 (2500mm²)</td><td>0.02mm</td><td>~25 minutes</td></tr>
+      <tr><td>100×100 (10000mm²)</td><td>0.05mm</td><td>~40 minutes</td></tr>
+    </tbody>
+  </table>
+  <p>EzCad shows estimated time in the bottom bar after clicking <kbd>F5</kbd> simulation (EzCad3) or calculated via the Mark progress indicator.</p>
+
+  <h3>EzCad3 Hatch Improvements</h3>
+  <ul>
+    <li><strong>Smarter fill optimization:</strong> EzCad3 calculates hatch paths more efficiently, reducing unnecessary galvo travel</li>
+    <li><strong>Better corner handling:</strong> Corners and sharp angles are handled with less overshoot</li>
+    <li><strong>Ring fill mode:</strong> New contour-parallel fill (fills parallel to shape boundary, not straight lines) — good for rounded logos</li>
+    <li><strong>Named hatch presets:</strong> Save and recall hatch settings by name</li>
+  </ul>
+
+  <h3>Practical Example: Company Logo on Metal Business Card</h3>
+  <div class="card">
+    <div class="card-title">SS304 Business Card — Outline Text + Hatch Logo Area</div>
+    <p><strong>Material:</strong> SS304 0.3mm, 85×54mm (standard business card size)</p>
+    <p><strong>Design:</strong> Company name (text) + company logo (solid shape)</p>
+    <div class="two-col">
+      <div>
+        <h4>Pen 1 — Text Outline</h4>
+        <ul>
+          <li>Mode: Line</li>
+          <li>Speed: 300 mm/s</li>
+          <li>Power: 60%</li>
+          <li>Freq: 30kHz</li>
+          <li>Passes: 1</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Pen 2 — Logo Hatch Fill</h4>
+        <ul>
+          <li>Mode: Hatch (bidirectional)</li>
+          <li>Spacing: 0.04mm</li>
+          <li>Speed: 300 mm/s</li>
+          <li>Power: 65%</li>
+          <li>Freq: 30kHz</li>
+          <li>Passes: 1</li>
+        </ul>
+      </div>
+    </div>
+    <p><strong>Result:</strong> Sharp text lines + solid black logo. Total mark time: ~3–5 minutes per card.<br>
+    <strong>Cost:</strong> ₹30 material → sell ₹200–500 per card</p>
+  </div>
+
+</div><!-- end tab-panel-7 -->
+
+<!-- TAB 8: Array & Step-Repeat -->
+<div class="tab-panel" id="tab-panel-8">
+
+  <div class="section-heading"><span class="icon">🔁</span> Array &amp; Step-Repeat (Batch Production)</div>
+  <p>The Array function lets you mark the same design multiple times in a precise grid — the backbone of profitable batch production. Instead of marking one piece, repositioning, and marking again, you lay out multiple copies and run the whole sheet at once.</p>
+
+  <h3>Using the Array Function</h3>
+  <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Select your object(s)</strong><br>Select all elements of your design (Ctrl+A or drag-select).</div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Modify → Array (or right-click → Array)</strong><br>Opens the Array dialog.</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Set rows, columns, and spacing</strong><br>Enter number of rows and columns. Set X spacing (horizontal gap between copies) and Y spacing (vertical gap). Spacing is measured from the origin of each copy.</div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Verify layout in workspace</strong><br>Array preview shows in workspace. Check it fits within your field size (typically 110×110mm or 200×200mm).</div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Mark all</strong><br>Press F2 (Mark) — EzCad marks all copies in sequence. Galvo scans each position.</div></div>
+
+  <div class="tip-box info"><strong>Spacing tip:</strong> Spacing in EzCad Array = distance from the left edge of copy 1 to the left edge of copy 2 (i.e., includes the design width). If your stamp plate design is 40mm wide and you want 5mm gap between plates, set X spacing to 45mm.</div>
+
+  <h3>Batch Stamp Plate Production — 6 Plates Per Sheet</h3>
+  <div class="card">
+    <div class="card-title">SS304 Sheet Layout: 6 Stamp Plates in One Job</div>
+    <p><strong>Sheet size:</strong> 300×200mm SS304 (standard cut from supplier)<br>
+    <strong>Plate size:</strong> 80×50mm each (fits 3 columns × 2 rows = 6 plates)<br>
+    <strong>Gap between plates:</strong> 5mm (for cutting clearance)</p>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Design one plate in EzCad</strong><br>Position at (0,0) origin or use absolute coordinates. Size: 78×48mm (leave 2mm border).</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Array: 2 rows × 3 columns</strong><br>X spacing: 85mm (80mm plate + 5mm gap). Y spacing: 55mm (50mm + 5mm).</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Add registration marks at sheet corners</strong><br>Draw small crosses (+ symbols) at 3 corners — helps realign sheet if job needs to be restarted.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Set origin to sheet corner</strong><br>Place sheet flush against machine's X/Y stops. Set EzCad origin to match physical corner position.</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Run full sheet job</strong><br>Press F2. EzCad marks all 6 plates sequentially. Do not interrupt.</div></div>
+
+    <h4>Time and Cost Calculation (6 Plates Per Sheet)</h4>
+    <table class="guide-table">
+      <thead><tr><th>Item</th><th>Per Sheet (6 plates)</th><th>Per Plate</th></tr></thead>
+      <tbody>
+        <tr><td>Mark time (outline only)</td><td>~15–20 min</td><td>~3 min</td></tr>
+        <tr><td>SS304 sheet material</td><td>₹300–500</td><td>₹50–83</td></tr>
+        <tr><td>Electricity (20W laser)</td><td>₹2–3</td><td>₹0.50</td></tr>
+        <tr><td>Design + setup time</td><td>₹100 (one-time)</td><td>₹17</td></tr>
+        <tr><td><strong>Total cost per plate</strong></td><td>—</td><td><strong>₹67–100</strong></td></tr>
+        <tr><td><strong>Typical selling price</strong></td><td>—</td><td><strong>₹600–1200</strong></td></tr>
+        <tr><td><strong>Profit margin</strong></td><td>—</td><td><strong>85–92%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Variable Text Array — Auto-Increment Numbers</h3>
+  <p>EzCad's variable text feature auto-increments serial numbers, dates, or custom sequences across array copies:</p>
+  <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Create a text object</strong><br>Use the Text tool. Type your static prefix (e.g., "TAG-").</div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Enable Serial Number</strong><br>In text properties, check "Serial Number". Set start number, increment, and digit count (e.g., start=001, increment=1, digits=3).</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Include in Array</strong><br>Select all objects including variable text. Apply Array. Each copy will auto-increment the serial number.</div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>For multi-batch jobs</strong><br>Save the file. Next batch: open file, EzCad remembers last serial number, continues from there.</div></div>
+
+  <div class="tip-box"><strong>India use case:</strong> Jewelry tags with serial numbers — mark 500 tags per hour with auto-incrementing hallmark numbers. B2B goldmine in Surat and Jaipur jewelry districts.</div>
+
+  <h3>Flying Marking (On-the-Fly)</h3>
+  <div class="card">
+    <div class="card-title">Advanced: Marking Moving Objects on Conveyor</div>
+    <p>Flying marking uses an encoder connected to the fiber laser controller to track conveyor belt speed in real time. The laser marks moving products without stopping the conveyor. Requires:</p>
+    <ul>
+      <li>JCZ controller with encoder input</li>
+      <li>Physical encoder (quadrature) connected to conveyor roller</li>
+      <li>EzCad configured with correct encoder pulses/mm</li>
+      <li>Trigger sensor at entry of marking field</li>
+    </ul>
+    <p><strong>India application:</strong> Batch marking dates on pharmaceutical packaging, serial numbers on industrial components, hallmarks on jewelry chains on a jig conveyor.</p>
+    <p class="tip-box warning"><strong>Complex setup</strong> — requires calibration. Not recommended for beginners. Seek JCZ technical support or your machine supplier for flying marking commissioning.</p>
+  </div>
+
+  <h3>PowerCombine — Sequential Multi-File Marking</h3>
+  <p>PowerCombine (in EzCad2 Pro / EzCad3) lets you queue multiple .ezd files and mark them in sequence automatically:</p>
+  <ul>
+    <li>Load up to 99 files in a batch queue</li>
+    <li>Each file marks once, then EzCad moves to the next</li>
+    <li>Useful for: marking multiple different designs on same sheet, or different parameter sets</li>
+    <li>Can be combined with physical X/Y stage or rotary axis for fully automated batch work</li>
+  </ul>
+
+  <h3>Array with Mixed Designs on One Sheet</h3>
+  <p>To put different designs on one sheet (e.g., 3 different stamp designs, 2 copies each):</p>
+  <ul>
+    <li>Place each unique design manually at its position (no array function needed)</li>
+    <li>Use grid coordinates: Design A at (0,0), Design B at (85,0), Design C at (170,0), Design D at (0,55), etc.</li>
+    <li>Set each design to a different Pen if different parameters are needed</li>
+    <li>Mark order: EzCad marks in object layer order — reorder via Object List if needed</li>
+  </ul>
+  <div class="tip-box info">Use the "Position" dialog (right-click → Position) to set exact XY coordinates for precise placement without drag-and-drop guesswork.</div>
+
+  <h3>EzCad3 Array Improvements</h3>
+  <ul>
+    <li><strong>Named positions:</strong> Save specific XY positions as named presets — "Card Position A", "Stamp Position B"</li>
+    <li><strong>Better array dialog:</strong> Preview updates live as you change rows/columns/spacing</li>
+    <li><strong>Array rotation:</strong> Can rotate entire array — useful for non-rectangular sheet cuts</li>
+    <li><strong>Linked variable text:</strong> Variable text better integrated with array — no manual serial re-entry needed</li>
+  </ul>
+
+  <h3>India Business Batch Applications</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Batch Trophy Plates</div>
+      <p>Awards season (Jan, Aug, Nov): 10–20 plates same design (school names, recipient names via variable text). Array on SS304 sheet. ₹300–500 per plate at volume.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Batch Jewelry Tags</div>
+      <p>Brass tags 20×30mm — 20 per sheet. Variable serial numbers. B2B pricing: ₹5–15/tag. 500+ tags/day possible. Approach Surat/Jaipur wholesalers.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Batch Stamp Plates</div>
+      <p>6 per SS304 sheet as above. Run 3–5 sheets per day = 18–30 plates/day. At ₹700 average = ₹12,600–21,000/day gross revenue.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Corporate Gifting</div>
+      <p>Diwali season: 50–200 identical business card plates or name plates per order. Array saves enormous time vs individual marking.</p>
+    </div>
+  </div>
+
+</div><!-- end tab-panel-8 -->
+
+<!-- TAB 9: Material Settings Complete Guide -->
+<div class="tab-panel" id="tab-panel-9">
+
+  <div class="section-heading"><span class="icon">⚙️</span> Material Settings Complete Guide</div>
+  <p>Complete parameter tables for all materials commonly marked with a fiber laser in India. All settings are starting points for a 20W MOPA fiber laser — adjust ±20% based on your specific machine, lens, and beam quality. Always test on scrap before marking customer material.</p>
+
+  <div class="tip-box warning"><strong>Always test first.</strong> Laser output varies between machines even of the same spec. These are calibrated starting points, not guaranteed settings. Run a parameter matrix test (vary speed and power in a grid) on scrap material before committing to customer work.</div>
+
+  <!-- SS304 -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🔩</span> SS304 Stainless Steel — Primary Stamp Plate Material</div>
+
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed (mm/s)</th><th>Power %</th><th>Freq (kHz)</th><th>Pulse Width (ns)</th><th>Passes</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Outline / stamp marking</td><td>300</td><td>60</td><td>30</td><td>8</td><td>1</td><td>Clean line, ideal for stamp plates</td></tr>
+      <tr><td>Deep engraving</td><td>150</td><td>75</td><td>20</td><td>100</td><td>3</td><td>Multiple passes with Z-axis step-down if available</td></tr>
+      <tr><td>Black color marking (MOPA)</td><td>200</td><td>45</td><td>60</td><td>4</td><td>1</td><td>High freq, short pulse = black oxide layer</td></tr>
+      <tr><td>Gray marking</td><td>400</td><td>35</td><td>80</td><td>2</td><td>1</td><td>Light surface mark</td></tr>
+      <tr><td>Fine text (&lt;1mm)</td><td>400</td><td>55</td><td>50</td><td>6</td><td>1</td><td>Faster speed = thinner lines on fine text</td></tr>
+      <tr><td>Background removal</td><td>200</td><td>70</td><td>20</td><td>80</td><td>5</td><td>Cross-hatch, 0.03mm spacing</td></tr>
+    </tbody>
+  </table>
+  <div class="card">
+    <div class="card-title">India Sourcing — SS304</div>
+    <p><strong>Best sources:</strong> IndiaMART suppliers (search "SS304 sheet laser cutting"), local steel fabrication shops, Bharat Steel and similar distributors.</p>
+    <p><strong>Standard sizes available:</strong> 300×200mm, 300×300mm, 500×500mm sheets. Thickness: 0.3mm, 0.5mm, 1mm, 2mm.</p>
+    <p><strong>Price range:</strong> <span class="price-tag mid">₹400–800 per sheet (300×300mm, 1mm)</span></p>
+    <p><strong>Thinner sheets</strong> (0.3–0.5mm) for stamp plates: ₹200–400 per sheet. Often sold as "SS304 laser grade" — specify BA (bright annealed) finish for best marking consistency.</p>
+  </div>
+
+  <!-- Mild Steel -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🔧</span> Mild Steel (MS)</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Pulse</th><th>Passes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Surface marking</td><td>250</td><td>65</td><td>25</td><td>10</td><td>1</td></tr>
+      <tr><td>Deep engraving</td><td>150</td><td>80</td><td>20</td><td>100</td><td>4</td></tr>
+      <tr><td>Black marking</td><td>180</td><td>50</td><td>55</td><td>4</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p><strong>India source:</strong> Any hardware shop or steel supplier. Much cheaper than SS304. Use for industrial marking and prototypes. Surface tends to be rougher — clean with IPA before marking.</p>
+
+  <!-- Aluminum Anodized -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🪟</span> Aluminum — Anodized</div>
+  <p>Anodized aluminum is one of the most satisfying materials to mark — the laser removes the colored anodized coating to reveal bright silver aluminum underneath. Very high contrast, no deep engraving needed.</p>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Pulse</th><th>Passes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Black anodized (remove coating)</td><td>500</td><td>25</td><td>80</td><td>2</td><td>1</td></tr>
+      <tr><td>Colored anodized</td><td>400</td><td>30</td><td>70</td><td>3</td><td>1</td></tr>
+      <tr><td>Fine detail on anodized</td><td>600</td><td>20</td><td>100</td><td>2</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p><strong>India source:</strong> Hardware shops, Amazon.in (search "black anodized aluminum sheet"), industrial suppliers. <span class="price-tag">₹150–400 per sheet</span></p>
+  <div class="tip-box"><strong>Business opportunity:</strong> Black anodized aluminum plaques are hugely popular for memorial plaques, pet portraits, and corporate awards. ₹50 material → ₹500–2000 selling price for custom engraved plaque.</div>
+
+  <!-- Brass -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">💛</span> Brass</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Pulse</th><th>Passes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Surface marking (dark)</td><td>200</td><td>70</td><td>25</td><td>15</td><td>1</td></tr>
+      <tr><td>Deep engraving</td><td>100</td><td>85</td><td>20</td><td>120</td><td>5</td></tr>
+      <tr><td>Light surface mark</td><td>400</td><td>40</td><td>50</td><td>5</td><td>1</td></tr>
+      <tr><td>Jewelry tag (fine)</td><td>350</td><td>55</td><td>40</td><td>8</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <div class="card">
+    <div class="card-title">India Sourcing — Brass</div>
+    <p><strong>Best sources:</strong> Jewelry supply shops in Surat, Jaipur, Zaveri Bazaar (Mumbai). IndiaMART "brass sheet engraving grade".</p>
+    <p><strong>Price:</strong> <span class="price-tag mid">₹500–800 per sheet (200×200mm, 0.5mm)</span></p>
+    <p><strong>Business angle:</strong> Jewelry tags for goldsmith shops are a massive B2B opportunity in India. Approach jewelry wholesalers in your city with samples.</p>
+  </div>
+
+  <!-- Gold / Silver -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">💍</span> Gold and Silver (Jewelry)</div>
+  <div class="tip-box danger"><strong>Caution:</strong> Precious metals require very conservative settings. Always test on non-precious metal of similar thickness first. Excess power can melt or deform jewelry pieces.</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Metal</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Pulse</th><th>Passes</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>22K Gold</td><td>600</td><td>15</td><td>100</td><td>2</td><td>1</td><td>Ultra low power — gold is soft and highly reflective</td></tr>
+      <tr><td>18K Gold</td><td>500</td><td>20</td><td>80</td><td>3</td><td>1</td><td>Slightly more power than 22K</td></tr>
+      <tr><td>925 Silver</td><td>400</td><td>25</td><td>80</td><td>3</td><td>1</td><td>Silver marks well — darker contrast</td></tr>
+      <tr><td>Silver (fine marking)</td><td>500</td><td>20</td><td>100</td><td>2</td><td>1</td><td>For hallmarks and fine detail</td></tr>
+      <tr><td>Gold-plated items</td><td>300</td><td>30</td><td>60</td><td>4</td><td>1</td><td>Don't burn through plating</td></tr>
+    </tbody>
+  </table>
+  <p><strong>India business:</strong> Jewelry engraving is a massive market in India — Surat (diamonds/gold), Jaipur (silver/gemstones), Bangalore (B2B jewelry manufacturers). Even small text hallmarking on 500+ pieces/day is very profitable. B2B rates: ₹10–50 per piece for hallmarking.</p>
+
+  <!-- Copper -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🟠</span> Copper</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Pulse</th><th>Passes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Surface dark mark</td><td>200</td><td>75</td><td>25</td><td>20</td><td>1</td></tr>
+      <tr><td>Deep engraving</td><td>100</td><td>90</td><td>20</td><td>150</td><td>5</td></tr>
+    </tbody>
+  </table>
+  <div class="tip-box warning"><strong>Note:</strong> Copper is highly reflective at 1064nm. Requires higher power and slower speed than steel. Risk of back-reflection — ensure beam dump is in place. Not ideal for engraving (better for cutting with diode lasers). Fiber laser marks copper with dark surface oxidation.</div>
+  <p><strong>India source:</strong> Electrical supply shops, jewelry supply. Copper sheets: ₹600–1200 per kg depending on gauge.</p>
+
+  <!-- Titanium Color -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🌈</span> Titanium — Color Marking (MOPA Only)</div>
+  <p>Titanium color marking is one of the most impressive capabilities of a MOPA fiber laser. By varying frequency and speed, the laser creates an oxide layer of different thicknesses, resulting in different interference colors — without any dyes or coatings.</p>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Target Color</th><th>Speed (mm/s)</th><th>Freq (kHz)</th><th>Power %</th><th>Pulse (ns)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Gold / Yellow</td><td>600</td><td>400</td><td>30</td><td>2</td></tr>
+      <tr><td>Purple</td><td>500</td><td>300</td><td>35</td><td>2</td></tr>
+      <tr><td>Blue</td><td>400</td><td>250</td><td>40</td><td>3</td></tr>
+      <tr><td>Cyan / Teal</td><td>350</td><td>200</td><td>45</td><td>4</td></tr>
+      <tr><td>Green</td><td>300</td><td>150</td><td>50</td><td>6</td></tr>
+      <tr><td>Red / Orange</td><td>250</td><td>100</td><td>55</td><td>8</td></tr>
+      <tr><td>Dark Blue / Navy</td><td>200</td><td>80</td><td>60</td><td>10</td></tr>
+      <tr><td>Black / Dark</td><td>150</td><td>60</td><td>65</td><td>15</td></tr>
+    </tbody>
+  </table>
+  <div class="tip-box warning"><strong>Calibration required:</strong> Titanium color settings are highly sensitive to laser power, environment temperature, and titanium grade. Always run a color test grid on your specific titanium before customer work. Colors shift with ambient temperature and even slight power variations.</div>
+  <div class="card">
+    <div class="card-title">Premium Product: Titanium Color Stamp Plates</div>
+    <p>Colored titanium mandala stamp plates are a premium product for the Indian gift market. Material: Grade 1 or Grade 2 CP titanium sheet, 0.5–1mm, 80×80mm.</p>
+    <p><strong>India sourcing:</strong> Titanium sheet from IndiaMART (aerospace/industrial suppliers), sometimes available on Amazon.in. <span class="price-tag high">₹800–1500 per small sheet</span></p>
+    <p><strong>Selling price:</strong> ₹2000–5000 per colored titanium plate — premium gifting market, luxury craft supplies.</p>
+  </div>
+
+  <!-- Plastics -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🧪</span> Plastics (ABS, Polycarbonate)</div>
+  <div class="tip-box danger"><strong>Warning:</strong> Many plastics emit toxic fumes when laser-marked. Always use proper ventilation/exhaust. PVC must NEVER be used with any laser (produces HCl gas — toxic and corrosive to machine). Test unknown plastics with extreme caution.</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Material</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ABS (blackening)</td><td>800</td><td>20</td><td>100</td><td>Fiber blackens surface — works on light-colored ABS</td></tr>
+      <tr><td>Polycarbonate (PC)</td><td>700</td><td>15</td><td>100</td><td>Light surface mark — very low power to avoid melting</td></tr>
+      <tr><td>Acetal / Delrin</td><td>600</td><td>25</td><td>80</td><td>Good dark marking contrast</td></tr>
+      <tr><td>PEEK</td><td>500</td><td>30</td><td>60</td><td>Industrial applications — dark surface oxidation</td></tr>
+    </tbody>
+  </table>
+  <p>Fiber lasers are not ideal for plastics in general — CO2 lasers work better. For cutting/marking most plastics, a CO2 laser is recommended. Fiber laser is best for metal, some hard plastics (ABS, PC) for surface blackening only.</p>
+
+  <!-- Leather -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🎨</span> Leather (Fiber Laser)</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Passes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Surface engraving (natural leather)</td><td>800</td><td>20</td><td>80</td><td>1</td></tr>
+      <tr><td>Dark marking (vegetable tanned)</td><td>600</td><td>30</td><td>60</td><td>1</td></tr>
+      <tr><td>Jewelry leather tag</td><td>700</td><td>25</td><td>70</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p>Fiber lasers can mark natural leather — particularly vegetable-tanned leather which darkens beautifully. Good for jewelry tags on leather backing, personalized leather accessories. CO2 laser gives better results for leather generally, but 20W MOPA at high speed/low power works.</p>
+
+  <!-- Painted Metal -->
+  <div class="section-heading" style="font-size:1.1rem;margin-top:28px"><span class="icon">🎭</span> Painted / Coated Metal</div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Application</th><th>Speed</th><th>Power %</th><th>Freq</th><th>Passes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Remove paint (reveal metal)</td><td>500</td><td>30</td><td>60</td><td>1</td></tr>
+      <tr><td>Powder-coated aluminum</td><td>400</td><td>35</td><td>50</td><td>1</td></tr>
+      <tr><td>Industrial baked enamel</td><td>300</td><td>40</td><td>40</td><td>1–2</td></tr>
+    </tbody>
+  </table>
+  <p>Painted metal marking removes the paint layer to reveal the metal substrate. Very high contrast. Great for branded products (tools, awards, plates). The silver-on-black or silver-on-any-color contrast is very dramatic.</p>
+
+</div><!-- end tab-panel-9 -->
+
+<!-- TAB 10: Troubleshooting -->
+<div class="tab-panel" id="tab-panel-10">
+
+  <div class="section-heading"><span class="icon">🔧</span> Troubleshooting — 20+ Problems &amp; Fixes</div>
+  <p>The most common issues users face with EzCad and fiber laser machines, with specific attention to India-specific problems like power quality and climate.</p>
+
+  <div class="tip-box danger"><strong>Safety first:</strong> Never look into the laser aperture or at beam reflections. Always wear appropriate OD7+ fiber laser safety glasses (1064nm). The F2 key marks immediately — keep your workpiece in position before pressing.</div>
+
+  <!-- Issues 1-5 -->
+  <h3>Software / Connection Issues</h3>
+
+  <div class="card">
+    <div class="card-title">1. Dongle Not Found / "USB Key Not Found" Error</div>
+    <p><strong>Cause:</strong> EzCad2 requires its JCZ USB dongle to run. If dongle is not recognized, EzCad shows this error at startup and won't operate.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul>
+      <li>Try a different USB port (USB 2.0 preferred over USB 3.0 for dongles)</li>
+      <li>Check Device Manager for yellow exclamation on dongle — install Sentinel HASP driver manually</li>
+      <li>In monsoon season: humidity can cause poor USB contact — clean dongle pins with dry cloth, try compressed air in port</li>
+      <li>Dongle may be damaged — contact your India supplier for replacement. Keep the dongle serial number safe for JCZ registration</li>
+      <li>EzCad3 uses a different activation system — see Tab 12 for EzCad3 license issues</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">2. "Card Not Found" / "Controller Not Connected" Error</div>
+    <p><strong>Cause:</strong> EzCad cannot communicate with the JCZ galvo controller card (internal PCIe card or external USB controller).</p>
+    <p><strong>Fixes:</strong></p>
+    <ul>
+      <li>Check that the controller cable (DB25 / fiber cable from controller to laser) is firmly connected</li>
+      <li>For PCIe cards: ensure card is fully seated in slot — vibration in transit sometimes unseats it</li>
+      <li>Restart EzCad after reconnecting hardware</li>
+      <li>Windows update sometimes breaks the JCZ driver — reinstall driver from the CD that came with the machine</li>
+      <li>Try a different USB port for USB-based controllers (USB 2.0)</li>
+      <li>India-specific: power surge can damage controller — check if the card is getting 12V/5V power correctly</li>
+    </ul>
+  </div>
+
+  <!-- Issues 3-6 -->
+  <h3>Marking Quality Issues</h3>
+
+  <div class="card">
+    <div class="card-title">3. Marks Too Light / Not Visible</div>
+    <p><strong>Possible causes:</strong></p>
+    <ul>
+      <li>Power too low — increase power % or slow down speed</li>
+      <li>Focus incorrect — workpiece not at focal length (typically 160mm or 254mm from F-theta lens). Test focus by marking at different Z heights</li>
+      <li>F-theta lens dirty — clean with lens tissue + IPA (isopropyl alcohol). Never touch lens surface with fingers</li>
+      <li>Fiber cable bent too tightly — check minimum bend radius (typically 100mm minimum) from laser to galvo head</li>
+      <li>Laser diode degrading — check output power with power meter if available</li>
+      <li>Material reflectivity — very polished surfaces mark lighter. Lightly sand or apply marking compound (Cermark / Brilliance)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4. Marks Too Deep / Burning / Material Warping</div>
+    <p><strong>Possible causes and fixes:</strong></p>
+    <ul>
+      <li>Power too high — reduce power % or increase speed</li>
+      <li>Too many passes — reduce to 1 pass</li>
+      <li>Thin material — SS304 0.3mm will warp if power is too high; reduce by 20% and test</li>
+      <li>Speed too slow — increase speed first before reducing power</li>
+      <li>Frequency too low (MOPA) — low frequency = more energy per pulse = deeper marks. Increase frequency</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5. Uneven Marking Across the Field (Edge Distortion)</div>
+    <p><strong>Cause:</strong> Galvo field correction file (.cor file) is missing, corrupted, or wrong. The .cor file corrects for optical distortion at the edges of the marking field.</p>
+    <p><strong>Fix:</strong></p>
+    <ul>
+      <li>Check that the correct .cor file for your lens (110mm, 160mm, 200mm field) is loaded in EzCad: File → Laser Settings → Correction File</li>
+      <li>If marks are fine in center but distorted at edges, the .cor file is wrong — request correct file from your machine supplier</li>
+      <li>Your machine supplier should have provided the .cor file on a USB stick or CD with the machine</li>
+      <li>JCZ field correction files are lens-specific and machine-specific — don't use another machine's file</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">6. Text / Design Appears Mirrored</div>
+    <p><strong>Fix:</strong> In EzCad, File → Laser Settings → check "Mirror X" setting. Also check "Mirror Y". One combination gives the correct non-mirrored output for your specific galvo head orientation. Your machine supplier should tell you the correct mirror settings — it depends on how the galvo head is mounted (which direction X and Y scan).</p>
+  </div>
+
+  <!-- Issues 7-12 -->
+  <h3>Positioning and Accuracy Issues</h3>
+
+  <div class="card">
+    <div class="card-title">7. Design Shifted from Expected Position</div>
+    <p><strong>Causes and fixes:</strong></p>
+    <ul>
+      <li>EzCad origin not set correctly — use the red dot pointer to set the origin. Press <kbd>F1</kbd> to move red dot to center of design, then use that as your reference point</li>
+      <li>"Use current position as origin" option — ensure consistent use session to session</li>
+      <li>Material not placed at same reference point — use physical stops or jig on machine table</li>
+      <li>Galvo zero offset drifting — recalibrate galvo offset in Laser Settings if shift is consistent</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">8. Curved Lines Not Smooth (Appear as Straight Segments)</div>
+    <p><strong>Cause:</strong> Low arc precision setting in EzCad, or the source DXF file has low resolution curves.</p>
+    <p><strong>Fix:</strong> In EzCad, Edit → Preferences → set "Curve accuracy" or "Arc approximation" to a smaller value (e.g., 0.001mm instead of 0.01mm). Also check the source design — if exported from Inkscape as DXF, ensure "Maximum deviation" is set very small (0.001mm) in the DXF export settings.</p>
+  </div>
+
+  <!-- Issues 9-14 -->
+  <h3>Software / Performance Issues</h3>
+
+  <div class="card">
+    <div class="card-title">9. EzCad Crashes on Large Files</div>
+    <p><strong>Causes:</strong></p>
+    <ul>
+      <li>Very complex paths (high node count) — simplify paths in Inkscape before exporting</li>
+      <li>Large bitmap images — fiber laser handles vectors better than bitmaps; convert photos to vectors or use EzCad's bitmap marking with reduced resolution</li>
+      <li>Low RAM PC — EzCad2 works fine on 2GB RAM for simple files but complex files need 4GB+</li>
+    </ul>
+    <p><strong>Fix:</strong> Simplify designs in Inkscape (Path → Simplify, Ctrl+L). Split very large jobs into sections.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">10. F2/Enter Fires Laser Unexpectedly</div>
+    <p><strong>Warning:</strong> <kbd>F2</kbd> in EzCad immediately begins marking. If your workpiece is not in position, or you accidentally press F2, the laser fires at whatever is under the head. <strong>Always position your workpiece before pressing F2.</strong></p>
+    <p><strong>Safety tip:</strong> Set a "delay before mark" in marking settings (1–2 seconds) so you have time to confirm position. Use the footpedal or a confirmation dialog if your machine supports it.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">11. Red Dot Pointer Misaligned with Actual Mark Position</div>
+    <p><strong>Cause:</strong> The red dot pointer (low-power visible diode) is offset from the actual IR laser beam. This is normal — it's calibrated at purchase but can drift.</p>
+    <p><strong>Fix:</strong> Recalibrate the red dot offset in Laser Settings. Mark a dot at known position, measure the offset between where red dot pointed and where mark appeared, enter the offset values in the Red Dot Offset fields (X, Y in mm). Your machine supplier can also do this calibration.</p>
+  </div>
+
+  <!-- Issues 12-17 -->
+  <h3>MOPA-Specific Issues</h3>
+
+  <div class="card">
+    <div class="card-title">12. "Frequency Out of Range" Error (MOPA)</div>
+    <p><strong>Cause:</strong> You've set a frequency outside the MOPA laser's valid range. Different MOPA lasers have different ranges — typically 1kHz to 4000kHz, but the specific range depends on the pulse width selected.</p>
+    <p><strong>Fix:</strong> Check your laser's specification sheet for frequency range at each pulse width. At very short pulse widths (1–2ns), maximum frequency is limited. At long pulse widths (200ns+), minimum frequency is higher. Stay within the specified range for your pulse width.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">13. Q-Pulse Width Not Changing Effect (Wrong Laser Type)</div>
+    <p><strong>Cause:</strong> In EzCad Laser Settings, the "Laser Type" must match your actual laser — MOPA (JPT, Raycus MOPA) vs. Q-switch (standard Raycus, IPG). If set to Q-switch when you have MOPA, pulse width changes do nothing (Q-switch pulse width is fixed internally).</p>
+    <p><strong>Fix:</strong> File → Laser Settings → Laser Type. Set to "MOPA" or the specific model (JPT-M6, Raycus MOPA, etc.) that matches your laser source. Confirm with your machine supplier.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">14. Machine Marks but Galvo Speed Seems Capped</div>
+    <p><strong>Cause:</strong> EzCad has a "Max Speed" limit in Laser Settings. Also, some controllers have firmware-level speed limits.</p>
+    <p><strong>Fix:</strong> Check Laser Settings → Max Speed parameter. Increase if needed (up to the galvo scanner's rated maximum, typically 6000–8000 mm/s). Note: very high speeds reduce mark quality — above 2000mm/s marks become increasingly inconsistent on metal.</p>
+  </div>
+
+  <!-- India-specific Issues -->
+  <h3>India-Specific Issues</h3>
+
+  <div class="card">
+    <div class="card-title">15. Power Surge Damaged Controller Card</div>
+    <p><strong>India context:</strong> Unstable grid power (voltage spikes, brown-outs) is the #1 cause of premature fiber laser controller failure in India.</p>
+    <p><strong>Prevention:</strong></p>
+    <ul>
+      <li><strong>Servo voltage stabilizer (servo AVR):</strong> ₹3,000–8,000 for a 3kVA unit — essential investment. Places like Luminous, V-Guard, Servokon.</li>
+      <li><strong>Online UPS:</strong> Better than stabilizer alone — provides clean power and ride-through during brief cuts. ₹8,000–20,000 for suitable capacity.</li>
+      <li>Never run fiber laser directly from raw mains in areas with poor grid quality</li>
+    </ul>
+    <p><strong>If already damaged:</strong> Controller card replacement from JCZ India distributor. Cost: ₹8,000–25,000 for a replacement JCZ E-series card. Always have the machine serial number and card model ready.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">16. Summer Heat Causing Controller Errors / Random Shutdowns</div>
+    <p><strong>India context:</strong> In summer (April–June), ambient temperatures in workshops can exceed 40°C. Fiber laser controllers have thermal protection that triggers shutdown at high temperatures.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul>
+      <li>Keep machine room below 35°C — add a room AC or at minimum a dedicated wall-mount AC for the machine corner</li>
+      <li>Ensure at least 30cm clearance on all sides of machine for airflow</li>
+      <li>Check the controller cooling fan is running (small fan on controller card) — replace if failed</li>
+      <li>The fiber laser source itself has a water chiller or air cooler — ensure chiller water is clean and coolant level is adequate</li>
+      <li>Clean dust from cooling fins annually (compressed air)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">17. Monsoon Humidity Causing Dongle / Connection Issues</div>
+    <p><strong>India context:</strong> High humidity (80–95% RH in monsoon) can cause condensation on PCB surfaces and USB contacts.</p>
+    <p><strong>Fixes:</strong></p>
+    <ul>
+      <li>Silica gel packets inside machine cabinet — replace or recharge every 3 months</li>
+      <li>Never leave IPA or cleaning solvents open near machine — raises humidity and creates explosion risk</li>
+      <li>If machine has been off overnight in monsoon: power on and let warm up for 15–20 minutes before marking — controller PCB needs to dry slightly</li>
+      <li>Dehumidifier in machine room if budget allows — target RH below 60%</li>
+    </ul>
+  </div>
+
+  <!-- Issues 18-20 -->
+  <h3>Advanced Issues</h3>
+
+  <div class="card">
+    <div class="card-title">18. EzCad3 License Errors</div>
+    <p>EzCad3 uses a cloud-based or file-based license instead of a physical dongle. Common errors:</p>
+    <ul>
+      <li><strong>"License expired":</strong> EzCad3 licenses may be time-limited — check renewal with your machine supplier</li>
+      <li><strong>"License not valid for this machine":</strong> License is locked to PC hardware fingerprint. If you changed your PC, contact JCZ to re-register</li>
+      <li><strong>"Cannot connect to license server":</strong> EzCad3 may require internet connection for license validation — ensure internet access or switch to offline license mode</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">19. Galvo Correction File Lost (Edge Distortion After Windows Reinstall)</div>
+    <p><strong>Cause:</strong> After Windows reinstall or when setting up on new PC, the .cor (galvo correction) file is not automatically transferred.</p>
+    <p><strong>Fix:</strong> The .cor file should be in the EzCad installation folder (typically <code>C:\EzCad2\</code> or on the CD/USB that came with machine). Copy it to new installation. If lost: contact your machine supplier — they should have a copy of the calibration file for your machine serial number. Some suppliers re-do galvo calibration on-site (may cost ₹1,000–3,000 service call).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">20. Jump TC Errors — Dots at Start of Lines</div>
+    <p><strong>Cause:</strong> "Jump TC" (Jump Time Constant) is the delay EzCad waits for the galvo to settle at a new position before firing. If too short, laser fires while galvo is still moving — creates dots or smears at line starts.</p>
+    <p><strong>Fix:</strong> File → Laser Settings → Jump TC. Increase value by 0.1ms increments (start from 0.3ms, test up to 1.5ms). Higher value = better quality but slower overall marking (more delay between objects). Also check "Laser On TC" and "Laser Off TC" parameters.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">21. Mark Jumps to Wrong Position (Origin Drift)</div>
+    <p><strong>Cause:</strong> The "current position" origin in EzCad is not saved between sessions. If machine is turned off/on or EzCad is restarted, the origin resets.</p>
+    <p><strong>Fix:</strong> Always re-home your origin at the start of each session. Use physical reference stops on your machine table. If doing batch work across multiple sessions, use a jig plate with fixed pin positions for consistent material placement. Save origin presets in EzCad3 (not available in EzCad2 — document the offset values).</p>
+  </div>
+
+</div><!-- end tab-panel-10 -->
+
+<!-- TAB 11: Practice Projects -->
+<div class="tab-panel" id="tab-panel-11">
+
+  <div class="section-heading"><span class="icon">🎯</span> Practice Projects for Indian Fiber Laser Business</div>
+  <p>Six complete projects designed for real Indian market applications — from stamp plates to jewelry tags to premium titanium work. Each includes full workflow, settings, cost calculation, and business context.</p>
+
+  <!-- Project 1 -->
+  <div class="card" style="border-color:#ff6b35">
+    <div class="card-title" style="font-size:1.15rem;color:#ff6b35">PROJECT 1: SS304 Stamp Plate — Mandala Design (Core Product)</div>
+    <p><strong>Business context:</strong> This is the bread-and-butter product for most Indian fiber laser businesses. Mandala stamps sell consistently on Etsy, local craft markets, and Instagram. ₹80 material, sell ₹600–1200.</p>
+
+    <h4>Full Workflow</h4>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Design: SVG Studio / Procreate → Inkscape</strong><br>Create mandala as SVG in your preferred app. In Inkscape: clean all paths, merge overlapping nodes, ensure all outlines are closed. Export as DXF (1:1 scale, mm units, polyline format).</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Import DXF into EzCad</strong><br>File → Import → select your DXF. Scale to check: if mandala should be 70mm diameter, verify in EzCad object properties. Correct any scale errors from DXF unit mismatch.</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Assign parameters (Pen 1)</strong><br>Double-click object to open Pen settings. Set: Speed 300mm/s, Power 60%, Freq 30kHz, Pulse 8ns, Passes 1. Mode: Line (outline only for stamp plate).</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Position on SS304</strong><br>Place SS304 sheet (80×80mm minimum, 1mm thick) on machine table. Use red dot pointer to confirm center position. Set origin at center of workpiece.</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Test mark on scrap SS304</strong><br>Run on scrap piece first. Check mark depth (consistent scratch on surface), line continuity (no gaps), and overall size accuracy.</div></div>
+    <div class="step-row"><div class="step-num">6</div><div class="step-content"><strong>Mark final plate</strong><br>Place customer SS304 plate. Press F2. Do not interrupt. Job time: 3–8 minutes depending on design complexity.</div></div>
+    <div class="step-row"><div class="step-num">7</div><div class="step-content"><strong>Quality check</strong><br>Under bright light: all lines continuous, no gaps at path junctions, no stray burn marks, consistent depth throughout, design centered on plate.</div></div>
+
+    <h4>Settings (20W MOPA)</h4>
+    <div class="two-col">
+      <div class="param-box"><div class="param-name">Speed</div><div class="param-range">300 mm/s</div></div>
+      <div class="param-box"><div class="param-name">Power</div><div class="param-range">60%</div></div>
+      <div class="param-box"><div class="param-name">Frequency</div><div class="param-range">30 kHz</div></div>
+      <div class="param-box"><div class="param-name">Pulse Width</div><div class="param-range">8 ns (MOPA)</div></div>
+    </div>
+
+    <h4>Cost Breakdown</h4>
+    <table class="guide-table">
+      <tbody>
+        <tr><td>SS304 sheet (80×80mm, 1mm)</td><td>₹60–80</td></tr>
+        <tr><td>Design time (first design)</td><td>₹200–300 (one-time)</td></tr>
+        <tr><td>Mark time (machine running)</td><td>₹5–10</td></tr>
+        <tr><td>Packaging (bubble wrap, box)</td><td>₹15–25</td></tr>
+        <tr><td><strong>Total cost per plate</strong></td><td><strong>₹80–115</strong></td></tr>
+        <tr><td><strong>Selling price (Etsy/local)</strong></td><td><strong>₹600–1,200</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="card" style="border-color:#3fb950">
+    <div class="card-title" style="font-size:1.15rem;color:#3fb950">PROJECT 2: Jewelry Tag Engraving — B2B Surat/Jaipur Market</div>
+    <p><strong>Business context:</strong> Jewelry tags are an incredibly high-volume, low-skill B2B product. Approach jewelry wholesalers in your city with samples. 1000 tags/day is achievable. Profit at ₹5–15 per tag on volume orders.</p>
+
+    <h4>Specifications</h4>
+    <ul>
+      <li><strong>Material:</strong> Brass tags, 20×30mm, 0.3mm thick with pre-punched hole</li>
+      <li><strong>Design:</strong> Brand logo (one side) + serial number (auto-increment, other side)</li>
+      <li><strong>Array:</strong> 12 tags per sheet (4 columns × 3 rows) on 120×120mm brass sheet</li>
+    </ul>
+
+    <h4>Variable Text (Serial Number) Setup</h4>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Create base tag design</strong><br>Logo outline centered on 18×28mm area (2mm border). Logo as DXF lines.</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Add serial text</strong><br>Text tool → type prefix "TG-". Enable Serial Number: start=0001, increment=1, digits=4.</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Array 4×3</strong><br>Select all → Array → 3 rows, 4 cols, X spacing 30mm, Y spacing 32mm. Each copy gets next serial number automatically.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Mark one sheet = 12 tags</strong><br>Sheet time: ~5 minutes. At 12 tags × 10 sheets/hour = 120 tags/hour.</div></div>
+
+    <h4>B2B Pitch</h4>
+    <p>Visit local jewelry wholesaler with a sample set of 20 tags. Offer: 500 tags in 2 days. Pricing: ₹8–12/tag for orders over 500. ₹5–7/tag for 2000+ orders. At ₹8/tag × 500 = ₹4,000 per order. Material cost: ₹500. Profit: ₹3,500 per order.</p>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="card" style="border-color:#79c0ff">
+    <div class="card-title" style="font-size:1.15rem;color:#79c0ff">PROJECT 3: SS304 Metal Business Card (Premium Product)</div>
+    <p><strong>Business context:</strong> Metal business cards are a premium corporate gifting product. Very popular for startup founders, senior executives, and as Diwali gifts. ₹30 material, sell ₹200–500 per card.</p>
+
+    <h4>Specifications</h4>
+    <ul>
+      <li><strong>Material:</strong> SS304, 0.3mm thick, 85×54mm (standard business card size)</li>
+      <li><strong>Design:</strong> Company logo (hatch-filled solid areas) + name + title + contact (all outline text)</li>
+      <li><strong>Array:</strong> 6 per sheet for batch orders (3×2 on A4-equivalent sheet)</li>
+    </ul>
+
+    <h4>Key Settings</h4>
+    <table class="guide-table">
+      <thead><tr><th>Element</th><th>Speed</th><th>Power %</th><th>Mode</th></tr></thead>
+      <tbody>
+        <tr><td>Text (outline)</td><td>300</td><td>60%</td><td>Line</td></tr>
+        <tr><td>Logo (hatch fill)</td><td>300</td><td>65%</td><td>Hatch, 0.04mm, bidirectional</td></tr>
+        <tr><td>Border line</td><td>400</td><td>55%</td><td>Line</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Corporate Gifting Strategy (India)</h4>
+    <p>Diwali season (Oct–Nov) is peak season. Approach HR departments of companies for bulk orders (50–200 cards). Per-card price drops with volume but margin stays high:</p>
+    <table class="guide-table">
+      <tbody>
+        <tr><td>1–10 cards</td><td>₹350–500 each</td></tr>
+        <tr><td>11–50 cards</td><td>₹250–350 each</td></tr>
+        <tr><td>51–200 cards</td><td>₹150–250 each</td></tr>
+        <tr><td>Material cost</td><td>₹25–35 each</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Project 4 -->
+  <div class="card" style="border-color:#e3b341">
+    <div class="card-title" style="font-size:1.15rem;color:#e3b341">PROJECT 4: Titanium Color Marking — Premium Stamp Plates</div>
+    <p><strong>Business context:</strong> Color-marked titanium is the premium end of the stamp plate market. Indian craft buyers are increasingly willing to pay ₹2,000–5,000 for a beautiful colored mandala titanium stamp. MOPA only — standard Q-switch cannot do this.</p>
+
+    <h4>Color Marking Process</h4>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Separate design by intended color zones</strong><br>In Inkscape: each color zone on a separate layer → export as separate DXFs, or combine into one file with each zone as a separate EzCad pen.</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Assign different pens for each color zone</strong><br>Pen 1 = gold zone settings. Pen 2 = blue zone settings. Pen 3 = purple zone settings. (See color chart in Tab 12.)</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Mark in correct order</strong><br>Mark lighter colors first (gold), then progress to darker colors. This avoids darker oxide contaminating lighter areas.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Do not touch surface between passes</strong><br>Skin oils contaminate the oxide layer. Handle titanium by edges only.</div></div>
+    <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>Final inspection under neutral light</strong><br>Colors look different under different light sources. Evaluate under natural (daylight) light for true color assessment.</div></div>
+
+    <div class="tip-box warning"><strong>Repeatability challenge:</strong> Titanium color marking is sensitive — slight changes in ambient temperature, laser warm-up state, or titanium surface finish affect colors. Run a test piece before each customer batch.</div>
+  </div>
+
+  <!-- Project 5 -->
+  <div class="card" style="border-color:#bc8cff">
+    <div class="card-title" style="font-size:1.15rem;color:#bc8cff">PROJECT 5: Anodized Aluminum Photo Engraving</div>
+    <p><strong>Business context:</strong> Photo engraving on black anodized aluminum is popular for memorial plaques, pet portraits, and personal gifts. India's gifting market is enormous — ₹50 material, ₹500–2,000 selling price.</p>
+
+    <h4>Specifications</h4>
+    <ul>
+      <li><strong>Material:</strong> Black anodized aluminum, 1–2mm thick, 100×150mm (typical)</li>
+      <li><strong>Design:</strong> Portrait photo or pet photo — converted to grayscale bitmap</li>
+    </ul>
+
+    <h4>Photo Preparation</h4>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Convert to high-contrast grayscale</strong><br>In Photoshop or GIMP: desaturate, increase contrast by 30–40%, sharpen slightly. Output: 600 DPI minimum at final size.</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Import bitmap into EzCad</strong><br>File → Import → select PNG/BMP (EzCad2 handles BMP best). Set size to 90×135mm (allows 5mm border).</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Set bitmap marking parameters</strong><br>Double-click bitmap → Bitmap mode. Power: 25%, Speed: 500mm/s, Freq: 80kHz (anodized aluminum settings). DPI: 300–500.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Test on sample anodized piece</strong><br>Check: do bright areas stay bright? Are shadows detailed? Adjust power ±5% based on test.</div></div>
+
+    <h4>Business Positioning</h4>
+    <p>Photo plaques are highly emotional purchases — people pay premium for quality. Build a portfolio of sample photos (pets, families, memorials). Market on Instagram, WhatsApp groups, and local gifting stores. Turnaround: 24–48 hours. Premium for rushed orders.</p>
+  </div>
+
+  <!-- Project 6 -->
+  <div class="card" style="border-color:#ff6b35">
+    <div class="card-title" style="font-size:1.15rem;color:#ff6b35">PROJECT 6: Batch Jewelry Hallmarking (B2B Goldmine)</div>
+    <p><strong>Business context:</strong> BIS hallmarking is mandatory for gold jewelry in India (Bureau of Indian Standards). Jewelers need hallmarks on each piece. This is a pure B2B volume business — approach any jeweler or goldsmith.</p>
+
+    <h4>Specifications</h4>
+    <ul>
+      <li><strong>Design:</strong> Small text + BIS logo, 1–3mm total height</li>
+      <li><strong>Target:</strong> Auto-incrementing 6-digit HUID (Hallmark Unique ID) numbers</li>
+      <li><strong>Volume:</strong> 200–1000+ pieces per day</li>
+    </ul>
+
+    <h4>Setup for High Volume</h4>
+    <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Create a jig for jewelry pieces</strong><br>Machined aluminum jig with pockets for rings/chains/pendants — ensures consistent positioning for each piece.</div></div>
+    <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Variable text HUID</strong><br>Enable serial number in EzCad text. Start from customer's provided HUID start number. Increment by 1.</div></div>
+    <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Mark one piece per press of F2</strong><br>Place jewelry in jig, press F2, remove, place next. At 15 seconds per piece = 240 pieces/hour.</div></div>
+    <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Log and export</strong><br>EzCad can export a list of all serials marked in a session — provide to customer as certificate of marking.</div></div>
+
+    <div class="tip-box info"><strong>B2B pricing:</strong> ₹10–25 per hallmark. 500 pieces/day × ₹15 = ₹7,500/day. Pure service — customer provides jewelry, you provide hallmarking. Near-zero material cost. This is one of the highest ROI services for a fiber laser in India.</div>
+  </div>
+
+</div><!-- end tab-panel-11 -->
+
+<!-- TAB 12: Expert Tips & Complete Reference -->
+<div class="tab-panel" id="tab-panel-12">
+
+  <div class="section-heading"><span class="icon">⭐</span> Expert Tips &amp; Complete Reference</div>
+
+  <h3>Complete EzCad2 Keyboard Shortcuts</h3>
+  <div class="two-col">
+    <div>
+      <h4>File &amp; Marking</h4>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>F2</kbd></div><div class="shortcut-desc">Mark (fires laser immediately)</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>F1</kbd></div><div class="shortcut-desc">Red dot / pointer to current object center</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+N</kbd></div><div class="shortcut-desc">New file</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+O</kbd></div><div class="shortcut-desc">Open file</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+S</kbd></div><div class="shortcut-desc">Save file</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+Z</kbd></div><div class="shortcut-desc">Undo</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+Y</kbd></div><div class="shortcut-desc">Redo</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+A</kbd></div><div class="shortcut-desc">Select all objects</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Delete</kbd></div><div class="shortcut-desc">Delete selected object</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+C</kbd></div><div class="shortcut-desc">Copy</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+V</kbd></div><div class="shortcut-desc">Paste</div></div>
+    </div>
+    <div>
+      <h4>View &amp; Edit</h4>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Space</kbd></div><div class="shortcut-desc">Pan (hold and drag)</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Scroll</kbd></div><div class="shortcut-desc">Zoom in/out</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+G</kbd></div><div class="shortcut-desc">Group selected objects</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+U</kbd></div><div class="shortcut-desc">Ungroup</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+M</kbd></div><div class="shortcut-desc">Move to specific coordinates</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+D</kbd></div><div class="shortcut-desc">Duplicate (copy + paste in place)</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>F3</kbd></div><div class="shortcut-desc">Zoom to fit all objects</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Ctrl+L</kbd></div><div class="shortcut-desc">Align objects (open align dialog)</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Esc</kbd></div><div class="shortcut-desc">Cancel / deselect / stop simulation</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Tab</kbd></div><div class="shortcut-desc">Select next object in layer</div></div>
+      <div class="shortcut-row"><div class="shortcut-key"><kbd>Enter</kbd></div><div class="shortcut-desc">Confirm / close shape in draw mode</div></div>
+    </div>
+  </div>
+
+  <h3>EzCad3 vs EzCad2 — Worth Upgrading?</h3>
+  <table class="vs-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>EzCad2 <span class="badge badge-old">Old</span></th>
+        <th>EzCad3 <span class="badge badge-new">New</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Cost</td><td>Free with machine (dongle)</td><td>Paid upgrade or new machine</td></tr>
+      <tr><td>Interface</td><td>Dated but functional</td><td>Modern, cleaner UI</td></tr>
+      <tr><td>Hatch quality</td><td>Good</td><td>Better corner handling</td></tr>
+      <tr><td>Variable text</td><td>Basic serial numbers</td><td>More variable types, date/time, QR</td></tr>
+      <tr><td>Array management</td><td>Basic</td><td>Named positions, live preview</td></tr>
+      <tr><td>Multi-axis support</td><td>Limited</td><td>Better rotary/3D axis support</td></tr>
+      <tr><td>License type</td><td>USB dongle (reliable)</td><td>Software license (internet req.)</td></tr>
+      <tr><td>Stability on complex files</td><td>Occasional crashes</td><td>Generally more stable</td></tr>
+      <tr><td>Learning resources</td><td>Vast community resources</td><td>Fewer resources (newer)</td></tr>
+      <tr><td>Verdict for most India users</td><td colspan="2" style="text-align:center;color:#e3b341"><strong>EzCad2 is sufficient for 90% of use cases. Upgrade to EzCad3 only if you need advanced multi-axis or QR variable text.</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Pro Workflow for Stamp Plate Production Business</h3>
+
+  <h4>Template Files for Each Plate Size</h4>
+  <p>Create and save EzCad template files (.ezd) for your common plate sizes:</p>
+  <ul>
+    <li><code>template_80x80.ezd</code> — 80×80mm square plate with border line, center crosshair</li>
+    <li><code>template_80x50_rect.ezd</code> — 80×50mm rectangular, standard business stamp size</li>
+    <li><code>template_round_70mm.ezd</code> — 70mm circle outline for round stamps</li>
+    <li><code>template_address_stamp.ezd</code> — 60×30mm with text layer preset</li>
+  </ul>
+  <p>Each template has border, reference marks, and pen settings pre-configured for SS304. When a new order comes in, open the matching template, import the customer's design, position, and mark.</p>
+
+  <h4>Parameter Presets Saved for Each Material</h4>
+  <p>In EzCad, save your tested and verified parameter sets as named presets in each pen. Document them externally too (photo of parameter screen, or a spreadsheet):</p>
+  <table class="guide-table">
+    <thead><tr><th>Material</th><th>Preset Name</th><th>Key Settings</th></tr></thead>
+    <tbody>
+      <tr><td>SS304 (outline)</td><td><code>SS304_outline_20W</code></td><td>S300, P60%, F30kHz, PW8ns</td></tr>
+      <tr><td>SS304 (black MOPA)</td><td><code>SS304_black_MOPA</code></td><td>S200, P45%, F60kHz, PW4ns</td></tr>
+      <tr><td>Brass (jewelry tag)</td><td><code>Brass_tag_20W</code></td><td>S350, P55%, F40kHz, PW8ns</td></tr>
+      <tr><td>Anodized Al</td><td><code>Anod_Al_black</code></td><td>S500, P25%, F80kHz, PW2ns</td></tr>
+      <tr><td>Gold 22K</td><td><code>Gold_22K_safe</code></td><td>S600, P15%, F100kHz, PW2ns</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Batch File Naming Convention</h4>
+  <p>Consistent file naming saves time and prevents errors:</p>
+  <code>YYYYMMDD_CustomerName_Design_Material_Size.ezd</code>
+  <p>Example: <code>20241115_RajeshKumar_MandalaFloral_SS304_80x80.ezd</code></p>
+  <ul>
+    <li>Store all files in a dated folder structure: <code>2024/November/</code></li>
+    <li>Keep a "Completed" subfolder — move files there after marking</li>
+    <li>Back up to Google Drive or external HDD weekly</li>
+  </ul>
+
+  <h4>Quality Control Checklist</h4>
+  <ul>
+    <li>☐ Design correct (match customer approval image)</li>
+    <li>☐ Text correctly spelled (especially names)</li>
+    <li>☐ Design mirroring correct (rubber stamp needs mirror so impression is correct)</li>
+    <li>☐ All paths closed (no open ends in outlines)</li>
+    <li>☐ Test mark on scrap SS304 before customer plate</li>
+    <li>☐ Mark depth consistent across entire design</li>
+    <li>☐ No stray marks outside design boundary</li>
+    <li>☐ Clean plate with IPA before shipping</li>
+    <li>☐ Photo of completed plate for records</li>
+  </ul>
+
+  <h3>MOPA Color Marking — Complete Guide</h3>
+  <div class="tip-box info">Color marking on stainless steel and titanium uses different physics: the laser creates oxide layers of specific thickness that produce interference colors (like oil on water). The thickness is controlled by energy per pulse = frequency + pulse width combination.</div>
+
+  <h4>SS304 Color Chart (20W MOPA)</h4>
+  <table class="guide-table">
+    <thead><tr><th>Color</th><th>Speed (mm/s)</th><th>Power %</th><th>Freq (kHz)</th><th>Pulse (ns)</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Bright white/silver</td><td>800</td><td>20</td><td>200</td><td>1</td><td>Ultra-light surface mark</td></tr>
+      <tr><td>Light gold</td><td>500</td><td>30</td><td>150</td><td>2</td><td>Subtle champagne tone</td></tr>
+      <tr><td>Dark gold/brown</td><td>300</td><td>40</td><td>80</td><td>4</td><td>Warm tones</td></tr>
+      <tr><td>Blue-purple</td><td>200</td><td>45</td><td>60</td><td>6</td><td>Higher energy per pulse</td></tr>
+      <tr><td>Dark blue</td><td>150</td><td>50</td><td>50</td><td>8</td><td>Deeper oxide layer</td></tr>
+      <tr><td>Black</td><td>200</td><td>45</td><td>60</td><td>4</td><td>Dense oxide — most popular</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Fiber Laser Maintenance Checklist</h3>
+  <h4>Monthly</h4>
+  <ul>
+    <li><strong>Clean F-theta lens:</strong> Use proper lens tissue (never paper towel) + spectroscopy-grade IPA or acetone. Single-direction wipe. Dirty lens = inconsistent marks + potential damage</li>
+    <li><strong>Check galvo mirrors:</strong> Visually inspect for dust, pits, or oxidation. Do not touch mirror surfaces. Report any damage to supplier immediately</li>
+    <li><strong>Check fiber cable bend radius:</strong> Ensure the fiber delivery cable (from laser source to galvo head) has no tight bends (minimum 100mm radius). Bent fiber = degraded power</li>
+    <li><strong>Check cooling system:</strong> Water chiller coolant level, chiller filter cleanliness. Air-cooled systems: clean dust from heatsink fins with compressed air</li>
+    <li><strong>Check ventilation:</strong> Machine enclosure ventilation fan working, extraction exhaust not blocked</li>
+    <li><strong>Clean work surface / Z-axis table:</strong> Remove metal dust, IPA residue with dry cloth. Metal dust on electrical connectors causes problems</li>
+    <li><strong>Test mark quality:</strong> Run a standard test pattern on scrap SS304, compare to your reference image. Any degradation = investigate</li>
+  </ul>
+  <h4>Annually</h4>
+  <ul>
+    <li>Professional laser power output measurement (power meter) — compare to rated output</li>
+    <li>Galvo field recalibration if marks show increasing edge distortion</li>
+    <li>Water chiller coolant replacement</li>
+  </ul>
+
+  <h3>India-Specific Tips</h3>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Power Quality — Voltage Stabilizer</div>
+      <p>India's grid has significant voltage fluctuation (170–250V in many areas). The fiber laser controller is sensitive to voltage spikes. A servo voltage stabilizer (₹3,000–8,000) is the single most important investment after buying the machine. Brands: Servokon, V-Guard, Luminous.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Summer Temperature Control</div>
+      <p>Keep machine room below 35°C. A window AC unit (1.5 ton) in the machine area is worth the investment. Signs of overheating: random shutdowns, "thermal protection" errors, inconsistent laser output.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Monsoon Humidity</div>
+      <p>Use silica gel packets in machine cabinet. Never leave IPA/acetone containers open. Allow machine to warm up 15 minutes after being off overnight during monsoon before marking.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Power Cut During Marking</div>
+      <p>EzCad does not auto-resume after power cut. The job is lost. Check if design is partially marked — if so, you may need to restart the entire job. With a UPS, brief cuts (1–5 min) are handled without job loss.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Dongle Backup — JCZ Registration</div>
+      <p>Register your dongle serial number with JCZ (or your India supplier) immediately after purchase. In India, dongle replacement typically takes 1–3 weeks. Keep the dongle serial number photographed and stored in cloud. Never keep the dongle attached when machine is not in use — reduces physical damage risk.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Buying from IndiaMART — Supplier Checklist</div>
+      <ul style="font-size:0.87rem">
+        <li>Ask for machine serial number before paying</li>
+        <li>Verify JCZ / Raycus / IPG controller and source brands</li>
+        <li>Request video of machine running before dispatch</li>
+        <li>Confirm galvo correction (.cor) file included</li>
+        <li>Ask about after-sales support in your city</li>
+        <li>Check GST invoice (needed for warranty)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Business Integration: Etsy Order → Ship</h3>
+  <div class="step-row"><div class="step-num">1</div><div class="step-content"><strong>Etsy order notification</strong><br>Customer orders stamp plate with custom design. Etsy sends email notification.</div></div>
+  <div class="step-row"><div class="step-num">2</div><div class="step-content"><strong>Design request</strong><br>Send standard design brief form to customer. Receive SVG/PDF/PNG of their logo or text.</div></div>
+  <div class="step-row"><div class="step-num">3</div><div class="step-content"><strong>Design preparation (Inkscape)</strong><br>Convert to clean vector DXF. Verify size, check all paths closed. 15–30 minutes for new designs.</div></div>
+  <div class="step-row"><div class="step-num">4</div><div class="step-content"><strong>Customer proof</strong><br>Send mock-up screenshot from EzCad for approval. Use Etsy Messages. Wait for "looks good" before marking.</div></div>
+  <div class="step-row"><div class="step-num">5</div><div class="step-content"><strong>EzCad batch production</strong><br>Open template file, import DXF, verify parameters, test mark on scrap, mark customer plate(s).</div></div>
+  <div class="step-row"><div class="step-num">6</div><div class="step-content"><strong>Quality check + pack</strong><br>Inspect under bright light. Clean with IPA. Pack with bubble wrap in rigid box. Add "how to use stamp" card.</div></div>
+  <div class="step-row"><div class="step-num">7</div><div class="step-content"><strong>Ship via India Post / Delhivery / Shiprocket</strong><br>Update Etsy with tracking number. Standard shipping 3–7 days within India, 15–25 days international.</div></div>
+
+  <h3>EzCad Community Resources</h3>
+  <ul>
+    <li><strong>JCZ official forum:</strong> forum.jczlaser.com — technical queries, firmware updates</li>
+    <li><strong>Facebook groups:</strong> "Fiber Laser India", "Fiber Laser Engravers India" — active Indian community, settings sharing, supplier reviews</li>
+    <li><strong>YouTube:</strong> Search "EzCad2 tutorial" — many Chinese and Western creators with practical demos</li>
+    <li><strong>WhatsApp groups:</strong> Local city-based fiber laser groups — ask your machine supplier to add you</li>
+  </ul>
+
+  <h3>When to Upgrade to LightBurn</h3>
+  <div class="tip-box info">
+    <strong>Upgrade to LightBurn when you need:</strong>
+    <ul>
+      <li>Camera overlay for precise positioning on non-flat or pre-marked material</li>
+      <li>Better integrated design tools (LightBurn has a full vector editor)</li>
+      <li>Multi-machine management from one PC</li>
+      <li>Active development and growing feature set (LightBurn updates far more frequently than EzCad)</li>
+      <li>Galvo fiber laser support: LightBurn added MOPA/galvo support — check compatibility with your specific controller</li>
+    </ul>
+    EzCad2 remains excellent for dedicated fiber laser production work. LightBurn makes more sense if you run multiple machine types (CO2 + fiber) or need its camera/design features.
+  </div>
+
+  <div class="tip-box warning">
+    <strong>xTool F1 Ultra note:</strong> The xTool F1 Ultra uses LightBurn or XCS (xTool's own software) instead of EzCad — it is not compatible with EzCad. If you have an xTool F1 Ultra, refer to the LightBurn Ultimate Guide on this site for software documentation.
+  </div>
+
+</div><!-- end tab-panel-12 -->
+
+</body></html>
