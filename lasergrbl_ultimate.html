@@ -1,0 +1,2008 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaserGRBL Ultimate Guide — Free Laser Engraving Software</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --surface3: #21262d;
+    --accent: #39d353;
+    --accent2: #56d364;
+    --accent-dim: #1a4726;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --border: #30363d;
+    --red: #f85149;
+    --yellow: #e3b341;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --radius: 8px;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.65; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0d1117 0%, #1a2d1a 50%, #0d1117 100%); border-bottom: 1px solid var(--border); padding: 48px 24px 40px; text-align: center; }
+  .hero-badge { display: inline-block; background: var(--accent-dim); border: 1px solid var(--accent); color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(26px, 5vw, 46px); font-weight: 800; color: #fff; margin-bottom: 12px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { font-size: 16px; color: var(--text-muted); max-width: 680px; margin: 0 auto 20px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .pill { background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px; }
+  .pill.green { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+  /* TABS */
+  .tab-nav-wrap { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; overflow-x: auto; }
+  .tab-nav { display: flex; min-width: max-content; padding: 0 16px; }
+  .tab-btn { background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); cursor: pointer; font-size: 12.5px; font-weight: 600; padding: 14px 16px; white-space: nowrap; transition: color .18s, border-color .18s; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PANELS */
+  .tab-panel { display: none; max-width: 960px; margin: 0 auto; padding: 40px 24px 60px; }
+  .tab-panel.active { display: block; }
+
+  /* TYPOGRAPHY */
+  h2 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  h3 { font-size: 18px; font-weight: 700; color: var(--accent2); margin: 28px 0 10px; }
+  h4 { font-size: 15px; font-weight: 700; color: var(--text); margin: 18px 0 8px; }
+  p { margin-bottom: 14px; color: var(--text); }
+  ul, ol { padding-left: 22px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  strong { color: #fff; }
+  code { background: var(--surface3); border: 1px solid var(--border); border-radius: 4px; color: var(--accent); font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; padding: 1px 6px; }
+  pre { background: var(--surface3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--accent2); font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; line-height: 1.6; overflow-x: auto; padding: 16px 18px; margin-bottom: 18px; }
+
+  /* CARDS & BOXES */
+  .panel-intro { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 28px; font-size: 15px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .info-box { background: #0c1f2e; border: 1px solid #1d4060; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+  .info-box.green { background: #0c1f14; border-color: var(--accent-dim); }
+  .info-box.yellow { background: #1f1a0c; border-color: #5a4a00; }
+  .info-box.red { background: #1f0c0c; border-color: #5a1a1a; }
+  .info-box .box-title { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+  .info-box.green .box-title { color: var(--accent); }
+  .info-box.yellow .box-title { color: var(--yellow); }
+  .info-box.red .box-title { color: var(--red); }
+  .info-box.blue { background: #0c1828; border-color: #1d3a60; }
+  .info-box.blue .box-title { color: var(--blue); }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; border-radius: var(--radius); border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; min-width: 480px; }
+  th { background: var(--surface2); color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .06em; padding: 10px 14px; text-align: left; text-transform: uppercase; }
+  td { border-top: 1px solid var(--border); color: var(--text); font-size: 13.5px; padding: 9px 14px; }
+  tr:hover td { background: var(--surface2); }
+
+  /* STEP LISTS */
+  .steps { counter-reset: step; list-style: none; padding: 0; margin-bottom: 20px; }
+  .steps li { counter-increment: step; display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+  .steps li::before { content: counter(step); background: var(--accent); border-radius: 50%; color: #000; flex-shrink: 0; font-size: 12px; font-weight: 800; height: 24px; line-height: 24px; min-width: 24px; text-align: center; margin-top: 2px; }
+
+  /* BADGES */
+  .badge { border-radius: 4px; font-size: 11px; font-weight: 700; padding: 2px 7px; text-transform: uppercase; display: inline-block; }
+  .badge.green { background: var(--accent-dim); color: var(--accent); }
+  .badge.red { background: #2d0f0f; color: var(--red); }
+  .badge.yellow { background: #2a2000; color: var(--yellow); }
+  .badge.blue { background: #0c1f3a; color: var(--blue); }
+  .badge.purple { background: #1e1030; color: var(--purple); }
+
+  /* SECTION DIVIDER */
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* COMPARISON */
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width: 600px) { .compare-row { grid-template-columns: 1fr; } .card-grid { grid-template-columns: 1fr; } }
+
+  /* KEYBOARD SHORTCUTS TABLE */
+  kbd { background: var(--surface3); border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; color: var(--text); font-family: monospace; font-size: 12px; padding: 1px 6px; }
+
+  /* TAG */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); font-size: 12px; padding: 3px 10px; }
+
+  /* HIGHLIGHT */
+  .highlight { color: var(--accent); font-weight: 700; }
+  .muted { color: var(--text-muted); font-size: 13px; }
+
+  /* INDIA CALLOUT */
+  .india-callout { background: linear-gradient(90deg, #1a0c28, #0c1828); border: 1px solid #3a2060; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+  .india-callout .box-title { color: var(--purple); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 620px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Ultimate Guide Series</div>
+  <h1>🟢 <span>LaserGRBL</span> Ultimate Guide</h1>
+  <p>The free, open-source laser software — Windows only, works with any GRBL laser</p>
+  <div class="pills">
+    <span class="pill green">100% Free</span>
+    <span class="pill green">Open Source</span>
+    <span class="pill">GRBL Lasers</span>
+    <span class="pill">Diode &amp; CO2</span>
+    <span class="pill">Windows Only</span>
+    <span class="pill">No Trial Limits</span>
+  </div>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav-wrap">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(1)">1. Understanding LaserGRBL</button>
+    <button class="tab-btn" onclick="switchTab(2)">2. Setup &amp; Connection</button>
+    <button class="tab-btn" onclick="switchTab(3)">3. Interface &amp; Controls</button>
+    <button class="tab-btn" onclick="switchTab(4)">4. Image Engraving</button>
+    <button class="tab-btn" onclick="switchTab(5)">5. Vector &amp; SVG</button>
+    <button class="tab-btn" onclick="switchTab(6)">6. Speed &amp; Power Settings</button>
+    <button class="tab-btn" onclick="switchTab(7)">7. Material Guide</button>
+    <button class="tab-btn" onclick="switchTab(8)">8. G-Code &amp; Advanced</button>
+    <button class="tab-btn" onclick="switchTab(9)">9. Camera &amp; Overlay</button>
+    <button class="tab-btn" onclick="switchTab(10)">10. Troubleshooting</button>
+    <button class="tab-btn" onclick="switchTab(11)">11. Practice Projects</button>
+    <button class="tab-btn" onclick="switchTab(12)">12. Expert Tips</button>
+  </div>
+</div>
+
+<!-- ==================== TAB 1 ==================== -->
+<div id="tab-panel-1" class="tab-panel active">
+  <h2>Understanding LaserGRBL</h2>
+  <div class="panel-intro">
+    LaserGRBL is a <strong>completely free, open-source</strong> Windows application that sends G-code instructions to GRBL-based laser engravers and cutters. It handles image conversion, job control, and real-time machine communication — all without ever asking for a payment. No watermarks, no file limits, no expiry.
+  </div>
+
+  <h3>What Is LaserGRBL?</h3>
+  <p>LaserGRBL was created by <strong>Diego Manzoli</strong> (GitHub: <code>arkypita</code>) and first released around 2016. Written in C#, it runs natively on Windows and communicates with laser machines over USB serial. The software converts raster images (photos, logos, line art) and vector files (SVG) into G-code streams that GRBL firmware can execute to move the laser head precisely.</p>
+  <p>Unlike proprietary alternatives that lock features behind paywalls, LaserGRBL gives you access to <strong>every feature from day one</strong> — dithering algorithms, engraving direction, speed/power profiles, G-code preview, camera overlay, and more. The source code lives on GitHub at <code>arkypita/LaserGRBL</code> where the community can audit, fork, and contribute.</p>
+
+  <div class="info-box green">
+    <div class="box-title">Why LaserGRBL is Perfect for India</div>
+    <p style="margin:0">Most laser engravers sold on Amazon.in, Flipkart, and Robu.in are GRBL-based Chinese diode lasers priced ₹8,000–₹35,000. LaserGRBL costs ₹0, requires no dongle or activation, and works on any Windows PC including older Core i3 laptops running Windows 7/8/10/11. You do not need to pay ₹8,000–₹12,000/year for Lightburn if you are just starting out.</p>
+  </div>
+
+  <h3>What Is GRBL?</h3>
+  <p>GRBL (pronounced "gerbil") is open-source firmware that runs on an <strong>Arduino Uno or Nano</strong> (ATmega328P) and transforms G-code commands into stepper motor pulses. Nearly every budget diode laser under ₹40,000 uses a GRBL-based control board. When your computer sends <code>G1 X50 Y50 F3000 S800</code>, GRBL interprets that as "move to X=50mm Y=50mm at 3000mm/min with laser at 800/1000 power."</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>GRBL Key Parameters</h4>
+      <ul>
+        <li><strong>$30</strong> — Maximum S-value (usually 1000)</li>
+        <li><strong>$32</strong> — Laser mode enable (set to 1)</li>
+        <li><strong>$110/$111</strong> — Max feed rate X/Y (mm/min)</li>
+        <li><strong>$120/$121</strong> — Acceleration X/Y</li>
+        <li><strong>$100/$101</strong> — Steps per mm X/Y</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>GRBL Versions You'll Encounter</h4>
+      <ul>
+        <li><strong>GRBL 0.9</strong> — Very old, some cheap machines still ship this</li>
+        <li><strong>GRBL 1.1f/h</strong> — Most common on machines sold 2020–present</li>
+        <li><strong>GRBL-LPC</strong> — 32-bit variant (rare on budget machines)</li>
+        <li><strong>Sculpfun/Ortur custom</strong> — GRBL 1.1 with small vendor tweaks</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Supported Machines (India Market)</h3>
+  <p>Any laser engraver with GRBL 1.1 firmware will work with LaserGRBL. Here are the most common machines available in India:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Machine</th><th>Laser Power</th><th>Work Area</th><th>Approx. India Price</th><th>Notes</th></tr>
+      <tr><td><strong>Sculpfun S9</strong></td><td>5W optical</td><td>410×420mm</td><td>₹14,000–₹17,000</td><td>Best budget pick, excellent community support</td></tr>
+      <tr><td><strong>Sculpfun S30 Pro</strong></td><td>10W optical</td><td>410×420mm</td><td>₹24,000–₹28,000</td><td>Air assist built-in, cuts 10mm wood in 1 pass</td></tr>
+      <tr><td><strong>Ortur Laser Master 3</strong></td><td>10W optical</td><td>400×400mm</td><td>₹22,000–₹26,000</td><td>Safety features, flame detection</td></tr>
+      <tr><td><strong>Atomstack A20 Pro</strong></td><td>20W optical</td><td>400×400mm</td><td>₹28,000–₹34,000</td><td>Quad-diode, very fast engraving</td></tr>
+      <tr><td><strong>xTool D1 Pro 10W</strong></td><td>10W optical</td><td>430×390mm</td><td>₹25,000–₹30,000</td><td>Premium build quality, very accurate</td></tr>
+      <tr><td><strong>Creality Falcon2 22W</strong></td><td>22W optical</td><td>400×415mm</td><td>₹30,000–₹38,000</td><td>Good for thicker cuts, solid frame</td></tr>
+      <tr><td><strong>Ender 3 + Laser Module</strong></td><td>1.6–5W</td><td>220×220mm</td><td>₹3,000–₹6,000 (add-on)</td><td>Add-on for existing Ender 3 owners</td></tr>
+      <tr><td><strong>Generic/Banggood A5</strong></td><td>5–10W</td><td>400×400mm</td><td>₹8,000–₹13,000</td><td>No-name GRBL boards — all work with LaserGRBL</td></tr>
+    </table>
+  </div>
+
+  <div class="india-callout">
+    <div class="box-title">India Sourcing Tip</div>
+    <p style="margin:0">Sculpfun and Atomstack machines import from China — check <strong>Amazon.in global store</strong>, <strong>Robu.in</strong>, and <strong>Banggood.com</strong> (ships to India, usually 7–15 days). Customs duty of ~18% IGST is typically included in listed prices on Amazon.in. Avoid local re-sellers in shops who mark up 30–40%. The Sculpfun S9 at ~₹15,000 is the best entry point for a complete LaserGRBL setup.</p>
+  </div>
+
+  <h3>LaserGRBL vs LightBurn — Honest Comparison</h3>
+  <div class="compare-row">
+    <div class="card">
+      <h4 style="color:var(--accent)">LaserGRBL</h4>
+      <ul>
+        <li><span class="badge green">PRO</span> Completely free forever</li>
+        <li><span class="badge green">PRO</span> Open source (GitHub)</li>
+        <li><span class="badge green">PRO</span> Works on Windows 7 and up</li>
+        <li><span class="badge green">PRO</span> Great image-to-engrave pipeline</li>
+        <li><span class="badge green">PRO</span> Active community, frequent updates</li>
+        <li><span class="badge red">CON</span> Windows only — no Mac/Linux</li>
+        <li><span class="badge red">CON</span> Vector editing is basic</li>
+        <li><span class="badge red">CON</span> No built-in text tool</li>
+        <li><span class="badge red">CON</span> No tiling for large jobs</li>
+        <li><span class="badge red">CON</span> Limited multi-layer control</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--blue)">LightBurn</h4>
+      <ul>
+        <li><span class="badge green">PRO</span> Mac, Linux, Windows</li>
+        <li><span class="badge green">PRO</span> Full vector design tools</li>
+        <li><span class="badge green">PRO</span> Tiling, array, rotary</li>
+        <li><span class="badge green">PRO</span> Multi-layer with colors</li>
+        <li><span class="badge green">PRO</span> Better camera workflow</li>
+        <li><span class="badge red">CON</span> ₹2,700 (~$35 USD) for GRBL license</li>
+        <li><span class="badge red">CON</span> Paid upgrade after 1 year</li>
+        <li><span class="badge yellow">NOTE</span> 30-day free trial only</li>
+        <li><span class="badge yellow">NOTE</span> Same job quality at same settings</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="info-box yellow">
+    <div class="box-title">The Real-World Verdict</div>
+    <p style="margin:0">For <strong>photo engraving, logo burning, and business card engraving</strong> — LaserGRBL does the job perfectly well. For complex vector designs, text layouts with multiple fonts, or running a production shop with many design layers — LightBurn pays for itself quickly. Many Indian hobbyists start with LaserGRBL and upgrade to LightBurn only when they need the vector editing features.</p>
+  </div>
+
+  <h3>Downloading LaserGRBL</h3>
+  <ol class="steps">
+    <li>Visit <code>lasergrbl.com</code> — the official homepage. Do not trust random download links from YouTube descriptions or forums; always get it from the official site or the GitHub releases page.</li>
+    <li>Click the <strong>Download</strong> button. The installer is a standard Windows .exe (self-contained, no online activation needed).</li>
+    <li>Windows Defender or SmartScreen may warn you — click <strong>"More info" → "Run anyway"</strong>. This happens because the app is not code-signed with an expensive certificate; the source code on GitHub proves it is safe.</li>
+    <li>Install to the default path. No special admin rights needed after installation.</li>
+    <li>If Windows flags it as a virus (false positive on some AV tools), <strong>add an exclusion</strong> in Windows Security for the LaserGRBL folder, or temporarily disable real-time protection during install.</li>
+    <li>Launch LaserGRBL — no license key, no registration email, no "activate later" nag. You're done.</li>
+  </ol>
+
+  <h3>Community &amp; Updates</h3>
+  <p>LaserGRBL is actively maintained. New releases typically arrive every 2–4 months with bug fixes, new dithering algorithms, and UI improvements. The best places to get help:</p>
+  <ul>
+    <li><strong>Facebook Group:</strong> "LaserGRBL Users" — 50,000+ members, very responsive</li>
+    <li><strong>GitHub Issues:</strong> <code>github.com/arkypita/LaserGRBL/issues</code> — for bugs and feature requests</li>
+    <li><strong>Reddit:</strong> r/LaserEngraving — general community for all software including LaserGRBL</li>
+    <li><strong>YouTube:</strong> Search "LaserGRBL tutorial" — dozens of walkthroughs in English and Hindi</li>
+  </ul>
+
+  <div class="info-box blue">
+    <div class="box-title">No Dongle, No Activation</div>
+    <p style="margin:0">LaserGRBL requires no USB dongle, no internet connection after download, no account, and no hardware lock. You can copy the installed folder to a USB drive and run it on any Windows PC. This is genuinely useful in Indian workshop environments where the engraving PC may not have stable internet.</p>
+  </div>
+</div>
+
+<!-- ==================== TAB 2 ==================== -->
+<div id="tab-panel-2" class="tab-panel">
+  <h2>Setup &amp; Connection</h2>
+  <div class="panel-intro">
+    Getting LaserGRBL to talk to your laser is usually simple — plug in USB, select the right COM port and baud rate, click Connect. This tab covers every step and every problem you might hit, especially common India-specific issues with CH340 USB chips found on most Chinese laser boards.
+  </div>
+
+  <h3>Step 1: Install the CH340 Driver</h3>
+  <p>Most Chinese laser control boards (Sculpfun, Atomstack, Ortur budget lines, generic A5/A20 boards) use the <strong>CH340G or CH341 USB-to-serial chip</strong> because it costs about ₹5 vs ₹80 for the FTDI chip. Windows 10/11 sometimes installs it automatically, but it often doesn't, causing the machine to simply not appear as a COM port.</p>
+
+  <ol class="steps">
+    <li>Plug in your laser via USB. Open <strong>Device Manager</strong> (Win + X → Device Manager). Look under "Ports (COM &amp; LPT)". If you see "CH340" or "USB-SERIAL CH340" — the driver is already installed. If you see a yellow warning triangle or nothing at all — you need the driver.</li>
+    <li>Download the CH340 driver from <code>wch-ic.com/downloads/CH341SER_EXE.html</code> (official WCH website). This is the Chinese manufacturer's site — it's safe and the correct source.</li>
+    <li>Run <strong>CH341SER.EXE</strong> as Administrator. Click <strong>INSTALL</strong>. You'll see a "Driver install success" popup in about 3 seconds.</li>
+    <li>Unplug and re-plug the USB cable. Device Manager should now show <strong>USB-SERIAL CH340 (COM3)</strong> or similar. Note the COM number — you'll need it in LaserGRBL.</li>
+    <li>If using <strong>Ortur Laser Master 3 or newer Sculpfun</strong> machines, they may use a <strong>CP2102</strong> chip instead. Download "CP210x Universal Windows Driver" from Silicon Labs website. Same install process.</li>
+  </ol>
+
+  <div class="info-box red">
+    <div class="box-title">Common India Problem: "No COM Port Found"</div>
+    <ul style="margin:0">
+      <li>Try a <strong>different USB cable</strong> — many included cables are charge-only with no data wires. This is extremely common with Indian bundled accessories. Use a cable that has USB data (test it with your phone file transfer).</li>
+      <li>Plug directly into the PC, not through a USB hub. Hubs can cause recognition failures especially on older motherboards.</li>
+      <li>If using Windows 7: You may need the older CH340 driver version 3.4 instead of the latest — check the WCH driver archive.</li>
+      <li>Some counterfeit CH340 chips need a specific "patched" driver — search "CH340 driver fake chip fix" if none of the above works.</li>
+    </ul>
+  </div>
+
+  <h3>Step 2: Connection Settings in LaserGRBL</h3>
+  <p>In the LaserGRBL toolbar at the top, you'll see a dropdown for COM port and baud rate. Set these correctly before clicking Connect:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Setting</th><th>Value</th><th>Notes</th></tr>
+      <tr><td>COM Port</td><td>Whatever Device Manager shows</td><td>Usually COM3–COM8 on most PCs</td></tr>
+      <tr><td>Baud Rate</td><td><strong>115200</strong></td><td>Correct for GRBL 1.1 on all modern machines</td></tr>
+      <tr><td>Baud Rate (old)</td><td>9600</td><td>Only for very old GRBL 0.9 machines</td></tr>
+      <tr><td>Probe (PWM)</td><td>Set to your $30 value</td><td>Usually 1000, check with $$ command</td></tr>
+    </table>
+  </div>
+
+  <p>Click the <strong>green Connect button</strong> (plug icon). The console panel at the bottom should show:</p>
+  <pre>Grbl 1.1h ['$' for help]
+[MSG:Check limits]
+[MSG:'$H'|'$X' to unlock]</pre>
+  <p>If you see this, you're connected. If the console is blank after 3 seconds, check the COM port selection and cable.</p>
+
+  <h3>Step 3: Verify GRBL Firmware with $$ Command</h3>
+  <p>In the console input box at the bottom of LaserGRBL, type <code>$$</code> and press Enter. This dumps all GRBL configuration parameters. Key things to check:</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Must Verify: $32 Laser Mode</h4>
+      <code>$32=1</code>
+      <p style="margin-top:8px">This <em>must</em> be 1 for laser operation. If it's 0 (spindle mode), the laser will fire at full power the moment it moves, ruining your material. Type <code>$32=1</code> in the console and press Enter to fix it.</p>
+    </div>
+    <div class="card">
+      <h4>Must Verify: $30 Max S-Value</h4>
+      <code>$30=1000</code>
+      <p style="margin-top:8px">This defines the maximum laser power value. LaserGRBL needs to know this to correctly translate percentage power to S-values. In LaserGRBL settings (menu → Settings), set "Laser power max" to match your $30 value.</p>
+    </div>
+  </div>
+
+  <div class="info-box yellow">
+    <div class="box-title">Mismatch Warning: $30 and LaserGRBL Setting</div>
+    <p style="margin:0">If GRBL has <code>$30=255</code> but LaserGRBL thinks it's 1000, your "100% power" in LaserGRBL will actually send S=1000 when the machine only accepts up to S=255 — which may cause unpredictable behavior. Always match these. Most modern machines use $30=1000. Some older ones use $30=255. Run <code>$$</code> and check.</p>
+  </div>
+
+  <h3>Step 4: Homing and Workspace Setup</h3>
+  <p>Most budget diode lasers do <strong>not</strong> have limit switches / homing switches (they would cost extra). This means your laser has no "home" position — it powers on wherever the head happens to be. This affects how LaserGRBL handles the origin.</p>
+
+  <h4>Machines Without Limit Switches (Most Budget Lasers)</h4>
+  <ol class="steps">
+    <li>Physically move the laser head to the <strong>bottom-left corner</strong> of the work area (or wherever you want the origin to be) by hand — while the machine is powered off, or using the jog controls after connecting.</li>
+    <li>In LaserGRBL, click the <strong>"Set Zero"</strong> button (looks like a target/crosshair). This tells GRBL: "this current position = 0,0." Now all job coordinates are relative to this point.</li>
+    <li>Before every job, always re-verify the laser head is at your intended origin. LaserGRBL will not move it there automatically.</li>
+  </ol>
+
+  <h4>Machines With Limit Switches (Sculpfun S30 Pro, some Ortur)</h4>
+  <ol class="steps">
+    <li>In the LaserGRBL console, type <code>$H</code> and press Enter. The machine will home — moving to the corner with limit switches at high speed, then slowly backing off for precise positioning.</li>
+    <li>After homing, position 0,0 is defined by firmware. All your jobs will be absolute from that corner.</li>
+    <li>If you get a "GRBL Alarm: Homing fail" error, check that the limit switch wires are seated properly in their connectors on the control board.</li>
+  </ol>
+
+  <h4>Unlock After Alarm State</h4>
+  <p>GRBL enters Alarm state after power-on or after an error (limit switch triggered, etc.). The console will show <code>ALARM:1</code> or similar. Type <code>$X</code> in the console to unlock and resume normal operation. Never force-move the machine while in alarm state.</p>
+
+  <h3>Step 5: LaserGRBL Settings Configuration</h3>
+  <p>Go to <strong>Edit → Settings</strong> (or the gear icon) in LaserGRBL. Configure these key settings on first setup:</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>Setting</th><th>Recommended Value</th><th>Why</th></tr>
+      <tr><td>Laser Power Max</td><td>1000 (match $30)</td><td>Correct S-value scaling</td></tr>
+      <tr><td>Speed Factor</td><td>1.0</td><td>Leave at 1 unless testing overrides</td></tr>
+      <tr><td>Line Shift Compensation</td><td>0 initially</td><td>Tune later if lines appear shifted at high speed</td></tr>
+      <tr><td>Soft Reset On Connect</td><td>Enabled</td><td>Sends reset to clear stale GRBL state on connect</td></tr>
+      <tr><td>Check Alarm On Connect</td><td>Enabled</td><td>Warns you if machine is in alarm state</td></tr>
+      <tr><td>Upload Timeout</td><td>100ms</td><td>Increase to 200ms if you get dropped commands on slow PCs</td></tr>
+    </table>
+  </div>
+
+  <h3>First Connection Troubleshooting Checklist</h3>
+  <div class="info-box blue">
+    <div class="box-title">Systematic Diagnosis</div>
+    <ul style="margin:0">
+      <li><strong>No COM port in list:</strong> CH340 driver not installed → see Step 1</li>
+      <li><strong>COM port shown but won't connect:</strong> Wrong baud rate, or another program (Pronterface, Arduino IDE Serial Monitor) has the port open — close them</li>
+      <li><strong>Connects but console blank:</strong> USB cable is charge-only, no data lines — try different cable</li>
+      <li><strong>Console shows gibberish:</strong> Wrong baud rate — try 9600 instead of 115200 (old machine)</li>
+      <li><strong>ALARM state immediately:</strong> Type $X to unlock, or check if limit switch is triggered or wiring is wrong</li>
+      <li><strong>Laser fires at full power on move:</strong> $32=0 (spindle mode) — send $32=1 immediately and power cycle</li>
+      <li><strong>Windows 11 not recognizing CH340:</strong> Disable "Driver Signature Enforcement" in Advanced Startup or use Device Manager "Update Driver" → "Browse my computer"</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== TAB 3 ==================== -->
+<div id="tab-panel-3" class="tab-panel">
+  <h2>Interface &amp; Controls</h2>
+  <div class="panel-intro">
+    LaserGRBL's interface is compact and functional. Every button has a purpose — knowing the layout saves you from accidentally firing the laser, ruining your focus, or losing your origin. This tab maps every UI element so you know exactly what to click (and what to avoid).
+  </div>
+
+  <h3>Main Interface Layout</h3>
+  <div class="card" style="font-family:monospace;font-size:13px;line-height:1.8;color:var(--accent2)">
+    <pre style="border:none;background:none;padding:0;margin:0;color:inherit">
+┌─────────────────────────────────────────────────────────────┐
+│  TOOLBAR: [File][Edit][View][Tools][Help]                    │
+│  TOOLBAR: [COM▼][Baud▼][⚡Connect] [Jog buttons] [⚙Settings]│
+├───────────────────────────────┬─────────────────────────────┤
+│                               │  CONTROL PANEL              │
+│    PREVIEW / WORK AREA        │  [X: 0.00  Y: 0.00 ]        │
+│                               │  [Set Zero] [Go to Zero]    │
+│   (your image appears here,   │  [Jog: ←↑↓→ + Home]        │
+│    with work area border)     │  [Speed: 1000 mm/min]       │
+│                               │  [Laser: OFF] [Test Fire]   │
+│                               │  ─────────────────────────  │
+│                               │  JOB CONTROLS               │
+│                               │  [▶ Run] [⏸ Pause] [■ Stop] │
+│                               │  Progress: ████░░ 45%       │
+│                               │  Estimated: 12:30 remain    │
+├───────────────────────────────┴─────────────────────────────┤
+│  CONSOLE                                                     │
+│  > Grbl 1.1h ['$' for help]                                 │
+│  > ok                                                        │
+│  [Input box: type commands here]               [Send]       │
+└─────────────────────────────────────────────────────────────┘
+    </pre>
+  </div>
+
+  <h3>Toolbar — File &amp; Menu Bar</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Menu</th><th>Key Items</th></tr>
+      <tr><td><strong>File</strong></td><td>Open File (image/SVG/G-code), Recent Files, Save G-code to disk</td></tr>
+      <tr><td><strong>Edit</strong></td><td>Settings, Program Options, Manage Buttons (customize toolbar)</td></tr>
+      <tr><td><strong>View</strong></td><td>Toggle Console, Toggle Control Panel, Zoom In/Out, Show Grid</td></tr>
+      <tr><td><strong>Tools</strong></td><td>Create Calibration Grid, Burn Border (frame test), Grbl Configuration, Update Firmware</td></tr>
+      <tr><td><strong>Help</strong></td><td>Documentation (offline), Check for Updates, Report Bug, About</td></tr>
+    </table>
+  </div>
+
+  <h3>Connection Toolbar</h3>
+  <p>The horizontal toolbar below the menu bar is your primary connection and job control area. Left to right:</p>
+  <ul>
+    <li><strong>COM Port dropdown</strong> — Select the CH340/CP2102 port. Refresh with the small circular arrow button.</li>
+    <li><strong>Baud Rate dropdown</strong> — Almost always 115200. Set once and forget.</li>
+    <li><strong>Connect button (green plug icon)</strong> — Connects/disconnects. Turns red when connected.</li>
+    <li><strong>Open File button (folder icon)</strong> — Import image, SVG, or G-code file. Opens the conversion wizard for images.</li>
+    <li><strong>Run / Pause / Stop buttons</strong> — Start, pause, and stop the current job. Stop sends a hard GRBL reset.</li>
+    <li><strong>Overrides</strong> — Feed rate override and laser power override sliders (appear during job run). Adjusting these mid-job can save a bad burn.</li>
+    <li><strong>Zoom slider</strong> — Zoom the preview area. Also works with mouse scroll wheel.</li>
+  </ul>
+
+  <h3>Control Panel (Right Side)</h3>
+  <h4>Position Display</h4>
+  <p>Shows current X, Y coordinates in mm. These are work coordinates (relative to your set zero point), not machine coordinates. If GRBL reports machine position (<code>MPos</code>), LaserGRBL converts it automatically.</p>
+
+  <h4>Jog Controls</h4>
+  <p>The arrow buttons move the laser head. The dropdown next to them sets the jog step size — typically 0.1mm, 1mm, 10mm, 100mm. Hold <kbd>Shift</kbd> while clicking for continuous movement (only on some LaserGRBL versions). Jog commands are sent as real-time GRBL jog commands (<code>$J=</code> protocol) so they can be cancelled instantly.</p>
+
+  <div class="info-box red">
+    <div class="box-title">Never Jog Past Machine Limits</div>
+    <p style="margin:0">Budget diode lasers have no limit switches (usually). If you jog X or Y beyond the physical travel range, the stepper motor will skip steps and you will <strong>lose your origin position</strong>. Always jog slowly near the edges, and watch the machine physically to see when it hits the end of travel.</p>
+  </div>
+
+  <h4>Set Zero / Go to Zero</h4>
+  <ul>
+    <li><strong>Set Zero</strong> — Defines current position as the job origin (0,0). Do this before every job.</li>
+    <li><strong>Go to Zero</strong> — Moves the laser head back to the defined origin. Useful for re-running a job on the same material.</li>
+  </ul>
+
+  <h4>Laser Test Fire</h4>
+  <p>The <strong>Test Fire</strong> button (lightbulb icon, usually at very low power ~1–5%) fires the laser briefly so you can check focus or mark the exact center of a material. Configure the test fire power in Settings — <strong>never leave it at full power</strong>. Test fire should be visible as a dim dot on your material without burning.</p>
+
+  <h4>Job Progress</h4>
+  <p>During a job, the progress bar shows percentage complete. The time estimate is calculated from job G-code and can be inaccurate on first few jobs — LaserGRBL learns from actual feed rates. You'll also see a live lines-per-second counter showing how fast GRBL is processing commands.</p>
+
+  <h3>Preview Area</h3>
+  <p>The large central area shows your loaded image/G-code as a preview. Key interactions:</p>
+  <ul>
+    <li><strong>Mouse scroll</strong> — Zoom in/out</li>
+    <li><strong>Right-click drag</strong> — Pan the preview</li>
+    <li><strong>Left-click on preview</strong> — In some modes, moves the job origin to clicked position</li>
+    <li><strong>Red border rectangle</strong> — Represents your machine's work area (set in Settings → Work Area)</li>
+    <li><strong>Blue/green job outline</strong> — The actual job boundaries. Should fit inside the red border.</li>
+  </ul>
+
+  <div class="info-box blue">
+    <div class="box-title">Setting Work Area Dimensions</div>
+    <p style="margin:0">In Settings, enter your machine's actual cutting area dimensions (e.g., 410×420 for Sculpfun S9). This draws the boundary rectangle in the preview and prevents you from accidentally running a job that would exceed the machine's travel range. Without this set, LaserGRBL has no way to warn you about out-of-bounds jobs.</p>
+  </div>
+
+  <h3>Console Panel</h3>
+  <p>The console at the bottom is a direct serial terminal to your GRBL machine. You can type any GRBL command here:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Command</th><th>Action</th></tr>
+      <tr><td><code>$$</code></td><td>Display all GRBL settings</td></tr>
+      <tr><td><code>$#</code></td><td>Show coordinate offset data (work offsets)</td></tr>
+      <tr><td><code>?</code></td><td>Query machine status (position, state, feed, laser)</td></tr>
+      <tr><td><code>$X</code></td><td>Kill Alarm Lock (unlock machine after alarm)</td></tr>
+      <tr><td><code>$H</code></td><td>Run homing cycle (requires limit switches)</td></tr>
+      <tr><td><code>$RST=$</code></td><td>Reset all GRBL settings to firmware defaults</td></tr>
+      <tr><td><code>G28</code></td><td>Go to pre-defined home position</td></tr>
+      <tr><td><code>M3 S100</code></td><td>Fire laser at S=100 power (constant mode — turn off with M5)</td></tr>
+      <tr><td><code>M5</code></td><td>Turn off laser immediately</td></tr>
+      <tr><td><code>G0 X50 Y50</code></td><td>Rapid move to X=50mm Y=50mm</td></tr>
+    </table>
+  </div>
+
+  <h3>Keyboard Shortcuts</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Open file</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo last action</td></tr>
+      <tr><td><kbd>F5</kbd></td><td>Start / Resume job</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Pause job</td></tr>
+      <tr><td><kbd>Del</kbd></td><td>Stop job (hard reset)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>Ctrl</kbd>+<kbd>-</kbd></td><td>Zoom in/out in preview</td></tr>
+      <tr><td><kbd>Arrow keys</kbd></td><td>Jog laser head (when console not focused)</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>G</kbd></td><td>Go to zero / return to origin</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Home</kbd></td><td>Set zero at current position</td></tr>
+    </table>
+  </div>
+
+  <h3>Customizing the Toolbar</h3>
+  <p>Go to <strong>Edit → Manage Buttons</strong>. You can add custom buttons that send specific G-code commands or GRBL commands. This is extremely useful for power users — create one-click buttons for "Move to center of work area," "Run frame trace at 10% power," or "Set specific speed/power." You can import button sets shared by the community from the LaserGRBL Facebook group or GitHub discussions.</p>
+</div>
+
+<!-- ==================== TAB 4 ==================== -->
+<div id="tab-panel-4" class="tab-panel">
+  <h2>Image Engraving</h2>
+  <div class="panel-intro">
+    LaserGRBL's core strength is converting raster images — photos, logos, line art — into laser engravable G-code. The conversion wizard gives you control over dithering algorithm, line density, direction, and size. Understanding these settings is the difference between a muddy, patchy burn and a sharp, detailed engraving.
+  </div>
+
+  <h3>The Image Import Workflow</h3>
+  <ol class="steps">
+    <li>Click <strong>File → Open File</strong> (or the folder icon, or drag &amp; drop onto the preview area). Select a PNG, JPG, BMP, or GIF file.</li>
+    <li>The <strong>Image Conversion Wizard</strong> opens. This is LaserGRBL's most important dialog — don't rush through it.</li>
+    <li>Set your target size in the <strong>Width/Height</strong> fields (in mm). Enable "Keep Aspect Ratio" to avoid distortion.</li>
+    <li>Choose your <strong>Conversion Algorithm</strong> (dithering method — see below). The preview updates in real time.</li>
+    <li>Set <strong>Line Distance</strong> (controls resolution/DPI). Set <strong>Engraving Direction</strong> (horizontal, vertical, diagonal).</li>
+    <li>Set <strong>Speed</strong> and <strong>Power (S-value)</strong> for the job.</li>
+    <li>Click <strong>Next</strong>. The G-code is generated and loaded into the preview. You can still adjust position by clicking in the preview.</li>
+    <li>Click <strong>Run</strong> to start engraving, or <strong>Burn Border</strong> first to trace the job outline at low power and verify placement.</li>
+  </ol>
+
+  <h3>Supported Image Formats</h3>
+  <ul>
+    <li><strong>JPEG (.jpg/.jpeg)</strong> — Most common; good for photos</li>
+    <li><strong>PNG (.png)</strong> — Best for logos, supports transparency (transparent areas = no laser fire)</li>
+    <li><strong>BMP</strong> — Windows bitmap, works well</li>
+    <li><strong>GIF</strong> — Supported, but use PNG instead</li>
+    <li><strong>TIFF</strong> — Supported in newer versions</li>
+  </ul>
+  <p>For best results, pre-process your image in <strong>MS Paint, GIMP, or Photoshop</strong> to adjust contrast/brightness before importing. LaserGRBL's built-in adjustments are basic.</p>
+
+  <h3>Dithering Algorithms — Which to Use When</h3>
+  <p>Dithering converts a grayscale image into a pattern of black-and-white dots that, when engraved, create the illusion of gray tones. Choosing the right algorithm for your material and image type is critical.</p>
+
+  <div class="card">
+    <h4>Floyd-Steinberg</h4>
+    <div class="tag-row"><span class="tag">Error Diffusion</span><span class="tag">Best for Photos</span><span class="tag">Most Popular</span></div>
+    <p>Distributes quantization error to neighboring pixels, producing a natural-looking dot pattern with no obvious directional artifacts. <strong>Best all-around choice for photographs on wood, leather, and slate.</strong> The dots are randomized enough that small imperfections in engraving speed don't create visible banding. Start here for any photo job. Works especially well on darker woods like walnut and cherry.</p>
+  </div>
+
+  <div class="card">
+    <h4>Jarvis / Jarvis-Judice-Ninke</h4>
+    <div class="tag-row"><span class="tag">Error Diffusion</span><span class="tag">More Detail</span><span class="tag">Slower to Compute</span></div>
+    <p>Similar to Floyd-Steinberg but spreads error over a wider neighborhood, producing slightly finer detail and smoother gradients. <strong>Use for high-resolution photos where you want maximum tonal range.</strong> The increased detail can look slightly noisy on rough materials but is excellent on smooth acrylic, painted tiles, or powder-coated metal. Computation time is slightly longer but still fast.</p>
+  </div>
+
+  <div class="card">
+    <h4>Stucki</h4>
+    <div class="tag-row"><span class="tag">Error Diffusion</span><span class="tag">Clean &amp; Sharp</span><span class="tag">Good for Portraits</span></div>
+    <p>Another error-diffusion variant with a different weighting matrix that tends to produce sharper edges compared to Floyd-Steinberg. <strong>Excellent for portraits and face engraving</strong> where you want fine detail in hair and facial features. The slight sharpening effect helps on light-colored woods (pine, maple) where the laser contrast is lower. Many engravers consider Stucki the best algorithm for portrait work.</p>
+  </div>
+
+  <div class="card">
+    <h4>Newsprint / Halftone</h4>
+    <div class="tag-row"><span class="tag">Ordered Dither</span><span class="tag">Artistic Effect</span><span class="tag">High Contrast Images</span></div>
+    <p>Creates circular/dot halftone patterns similar to newspaper printing. <strong>Best for high-contrast logos and artwork</strong> where you want a visible halftone aesthetic rather than photorealistic reproduction. Not ideal for photos — the regular dot pattern looks artificial. Great for stamp plates, artistic prints, and any design where the dithering pattern itself is part of the aesthetic. Also works well on black anodized aluminum.</p>
+  </div>
+
+  <div class="card">
+    <h4>2D / Diagonal Line Dithering</h4>
+    <div class="tag-row"><span class="tag">Line Based</span><span class="tag">Fast Execution</span><span class="tag">High Contrast</span></div>
+    <p>Creates diagonal or crossed line patterns instead of dots. <strong>Best for logos, text, and simple graphics with clear black/white areas.</strong> Very fast to engrave because the laser moves in long continuous strokes. Produces a hatching/crosshatch appearance that can look artistic on certain materials. Not suitable for photographs where you need smooth gradients — the line pattern becomes very obvious.</p>
+  </div>
+
+  <div class="card">
+    <h4>1-Bit (No Dithering / Threshold)</h4>
+    <div class="tag-row"><span class="tag">Binary</span><span class="tag">Clean Lines</span><span class="tag">Logos &amp; Line Art</span></div>
+    <p>Simple threshold: pixels above 50% brightness = no laser, below 50% = full laser. <strong>Best for pure black-and-white logos, QR codes, barcodes, and line art.</strong> Zero dithering artifacts. If your image is already black-and-white (not grayscale), always use this mode. Produces the sharpest possible lines and the fastest G-code generation.</p>
+  </div>
+
+  <h3>Quick Reference: Algorithm Selection Guide</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Image Type</th><th>Best Algorithm</th><th>Second Choice</th></tr>
+      <tr><td>Photo of a person / portrait</td><td>Stucki</td><td>Floyd-Steinberg</td></tr>
+      <tr><td>Landscape / nature photo</td><td>Floyd-Steinberg</td><td>Jarvis</td></tr>
+      <tr><td>Logo with gradients</td><td>Floyd-Steinberg</td><td>Jarvis</td></tr>
+      <tr><td>Pure black/white logo</td><td>1-Bit Threshold</td><td>2D Line</td></tr>
+      <tr><td>Text only</td><td>1-Bit Threshold</td><td>2D Line</td></tr>
+      <tr><td>Artistic/halftone effect</td><td>Newsprint</td><td>2D Diagonal</td></tr>
+      <tr><td>Stamp plate design</td><td>1-Bit Threshold</td><td>Newsprint</td></tr>
+      <tr><td>QR code / barcode</td><td>1-Bit Threshold</td><td>(only this)</td></tr>
+    </table>
+  </div>
+
+  <h3>Line Distance (DPI / Resolution)</h3>
+  <p>Line Distance is the gap between engraving lines in millimeters. This directly controls the effective DPI of your engrave:</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Line Distance</th><th>Effective DPI</th><th>Use Case</th><th>Job Time Impact</th></tr>
+      <tr><td>0.5mm</td><td>~50 DPI</td><td>Fast fills, drafts</td><td>Fastest</td></tr>
+      <tr><td>0.25mm</td><td>~100 DPI</td><td>Text, basic logos</td><td>Fast</td></tr>
+      <tr><td>0.15mm</td><td>~170 DPI</td><td>General engrave</td><td>Medium</td></tr>
+      <tr><td>0.1mm</td><td>~250 DPI</td><td>Photos, fine detail</td><td>Slow</td></tr>
+      <tr><td>0.075mm</td><td>~340 DPI</td><td>High quality photos</td><td>Very slow</td></tr>
+      <tr><td>0.05mm</td><td>~500 DPI</td><td>Maximum quality</td><td>Extremely slow</td></tr>
+    </table>
+  </div>
+  <p>For a typical 100×100mm photo on wood at 0.1mm line distance, expect <strong>30–60 minutes</strong> of engrave time at 3000mm/min. At 0.15mm, it drops to 20–30 minutes with only a minor quality reduction. Match line distance to your laser spot size — using 0.05mm lines on a laser with a 0.15mm spot just wastes time with no quality gain.</p>
+
+  <h3>Engraving Direction</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>Horizontal (Left-Right) ↔</h4>
+      <p>Default. Most efficient for most images. The Y axis makes small steps while X does all the work. Good for landscape-oriented images. Some machines show mechanical resonance in horizontal that vertical doesn't — experiment with both.</p>
+    </div>
+    <div class="card">
+      <h4>Vertical (Up-Down) ↕</h4>
+      <p>X makes small steps, Y does all the work. Better for portrait-oriented images. Can reduce Y-axis banding artifacts visible on some machines. Try this if horizontal engraves show regular horizontal stripes.</p>
+    </div>
+    <div class="card">
+      <h4>Diagonal (45°)</h4>
+      <p>Engraves at 45 degrees. Distributes mechanical vibration across both axes simultaneously. Can give the smoothest result on machines with slight axis vibration, at the cost of more complex G-code and slightly longer job times.</p>
+    </div>
+    <div class="card">
+      <h4>Bidirectional vs Unidirectional</h4>
+      <p>Bidirectional engraves in both left-to-right and right-to-left passes (faster). Unidirectional only engraves in one direction (slower, potentially more accurate). If you see a left-right line shift (alternating dark/light lines), enable "Line Shift Compensation" in Settings rather than switching to unidirectional.</p>
+    </div>
+  </div>
+
+  <h3>Pre-Processing Your Image for Best Results</h3>
+  <h4>In GIMP (Free) or Photoshop Before Importing</h4>
+  <ul>
+    <li><strong>Convert to grayscale</strong> — LaserGRBL converts color internally but doing it manually first gives more control</li>
+    <li><strong>Increase contrast by 20–40%</strong> — Laser engravings have less tonal range than ink, so boosting contrast compensates</li>
+    <li><strong>Sharpen slightly</strong> — Unsharp mask at 50% amount, 0.5 radius helps edge definition</li>
+    <li><strong>Remove background</strong> — Use PNG with transparent background so only the subject engraves</li>
+    <li><strong>Check minimum line width</strong> — Any line thinner than 0.15mm at your output size may not engrave visibly</li>
+  </ul>
+
+  <div class="india-callout">
+    <div class="box-title">India Use Case: Business Cards &amp; Name Boards</div>
+    <p style="margin:0">For wood business card engraving (a popular small business in India), use: PNG image at 600 DPI input resolution, 1-Bit Threshold algorithm for clean text, 0.1mm line distance, horizontal direction, 3000mm/min speed, 80% power on 4mm ply. The Sculpfun S9 can do 30–40 cards per hour with this setup. Bamboo visiting card blanks from Robu.in or local stationery shops work beautifully.</p>
+  </div>
+</div>
+
+<!-- ==================== TAB 5 ==================== -->
+<div id="tab-panel-5" class="tab-panel">
+  <h2>Vector &amp; SVG Import</h2>
+  <div class="panel-intro">
+    Vectors work fundamentally differently from raster images in LaserGRBL. Instead of converting pixels to dots, vectors tell the laser to trace precise mathematical paths. This means perfectly sharp lines at any size, faster cutting jobs, and cleaner outlines — but requires understanding how LaserGRBL handles SVG specifically.
+  </div>
+
+  <h3>How LaserGRBL Handles Vectors vs Images</h3>
+  <div class="compare-row">
+    <div class="card">
+      <h4>Raster Image Workflow</h4>
+      <p>Image → Dithering → Horizontal scan lines → G-code with S-value modulated per pixel column → Laser sweeps back and forth filling the whole area</p>
+      <p class="muted">Time is proportional to the area of the bounding box, not the complexity of the design.</p>
+    </div>
+    <div class="card">
+      <h4>Vector SVG Workflow</h4>
+      <p>SVG paths → G-code lines following path curves → Laser traces outlines and/or fills → Result has mathematically perfect edges at any scale</p>
+      <p class="muted">Time is proportional to path length, not bounding area. Sparse designs are much faster.</p>
+    </div>
+  </div>
+  <p>For cutting operations (cutting out shapes from thin material), vectors are essential — you need to trace the cut line exactly, not raster-fill the whole area. For engraving fills, you can choose to either raster-fill a vector shape (like engraving) or trace outline paths (like scoring).</p>
+
+  <h3>Importing SVG Files</h3>
+  <ol class="steps">
+    <li>Go to <strong>File → Open File</strong> and select a .svg file. LaserGRBL uses its internal SVG parser — it supports basic SVG path data but NOT all SVG features.</li>
+    <li>The <strong>Vector Import Dialog</strong> appears (different from the raster wizard). Here you choose how each path group should be handled.</li>
+    <li>For each layer/group in the SVG, choose: <strong>Line Mode</strong> (trace the path outline) or <strong>Fill Mode</strong> (raster-fill the enclosed area like an engraving).</li>
+    <li>Set speed and power for each mode. Cutting lines typically use lower speed and higher power than fill engraving.</li>
+    <li>Set output size in mm. LaserGRBL respects SVG document dimensions but you can override.</li>
+    <li>Click OK. Preview shows the vector paths as thin colored lines.</li>
+  </ol>
+
+  <div class="info-box yellow">
+    <div class="box-title">LaserGRBL SVG Limitations</div>
+    <ul style="margin:0">
+      <li><strong>No gradient support</strong> — Gradient fills are ignored or rendered as solid fills</li>
+      <li><strong>No embedded rasters</strong> — SVG files with embedded PNG/JPG images inside won't show the raster part</li>
+      <li><strong>Basic path support</strong> — Complex SVG filters, masks, and effects are ignored</li>
+      <li><strong>No text rendering</strong> — SVG text elements must be converted to paths before importing</li>
+      <li><strong>Single layer output</strong> — All paths go into one job; no multi-pass by color grouping (unlike LightBurn)</li>
+      <li>For complex multi-layer SVGs, consider pre-processing in Inkscape (free) to flatten and simplify before importing</li>
+    </ul>
+  </div>
+
+  <h3>Preparing SVG Files in Inkscape (Free)</h3>
+  <p>Inkscape is the free, open-source vector editor used by most LaserGRBL users for SVG preparation. Download from <code>inkscape.org</code>.</p>
+
+  <h4>Recommended SVG Prep Steps</h4>
+  <ol class="steps">
+    <li><strong>Convert text to paths:</strong> Select all text → Path → Object to Path. This embeds font outlines as paths so the font doesn't need to be installed on the machine running LaserGRBL.</li>
+    <li><strong>Flatten strokes:</strong> If you have thick stroked lines that need to engrave as solid fills, do Stroke to Path (Path → Stroke to Path) first.</li>
+    <li><strong>Remove clipping masks and effects:</strong> Edit → Find/Replace or manually inspect the XML editor for clip-path, filter, or mask attributes — remove them.</li>
+    <li><strong>Set document size to final output size:</strong> File → Document Properties — set width/height to your intended engraving size in mm. This helps LaserGRBL import at the correct scale without guessing.</li>
+    <li><strong>Save as Plain SVG:</strong> File → Save As → Plain SVG (not Inkscape SVG). Plain SVG removes Inkscape-specific namespace extensions that LaserGRBL may misinterpret.</li>
+  </ol>
+
+  <h3>Line Mode vs Fill Mode — Choosing for Your Job</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Mode</th><th>What It Does</th><th>Best For</th><th>Typical Settings</th></tr>
+      <tr><td><strong>Line Mode</strong></td><td>Traces SVG path outlines at exact coordinates</td><td>Cutting, scoring, outlines</td><td>High power, low-medium speed</td></tr>
+      <tr><td><strong>Fill Mode</strong></td><td>Raster-fills enclosed areas like an image engrave</td><td>Deep engraving, filled logos</td><td>Medium power, high speed</td></tr>
+      <tr><td><strong>Both</strong></td><td>Fill first, then trace outline</td><td>Engrave + cut in one job</td><td>Different power per pass</td></tr>
+    </table>
+  </div>
+
+  <h4>Line Mode Tips</h4>
+  <ul>
+    <li>For cutting 3mm wood: multiple passes work better than one very slow, high-power pass. 3 passes at 600mm/min 100% is often cleaner than 1 pass at 200mm/min.</li>
+    <li>GRBL supports repeating a job N times — use the "Repeat" option in job settings rather than re-importing.</li>
+    <li>Kerf (the material removed by the laser beam) is approximately 0.1–0.2mm for diode lasers. Account for this in Inkscape when designing press-fit pieces.</li>
+  </ul>
+
+  <h3>Working with SVG Studio Stamp Plate Files</h3>
+  <p>The <strong>SVG Studio</strong> app (available on iOS and Android) is a popular tool in the Indian craft community for generating mandala, rangoli, stamp plate, and decorative SVG designs. Here's how to get those files working in LaserGRBL:</p>
+
+  <ol class="steps">
+    <li>Export your design from SVG Studio as an SVG file. Transfer to PC via USB or cloud sync (Google Drive, WhatsApp — WhatsApp compresses files, use Drive instead for SVG).</li>
+    <li>Open in <strong>Inkscape</strong> first to check the file. SVG Studio files often contain grouped elements, decorative effects, and multiple layers. Ungroup everything (Ctrl+Shift+G, repeat multiple times), then flatten complex paths with Path → Union or Path → Break Apart as needed.</li>
+    <li>Convert all strokes to paths if the design uses visible stroke lines (Path → Stroke to Path). Check that all areas you want engraved are actual closed paths, not just outline strokes of text.</li>
+    <li>Save as Plain SVG and import into LaserGRBL. Use <strong>Fill Mode</strong> for filled areas (the stamp raised portion) and <strong>Line Mode</strong> for outlines/cut lines.</li>
+    <li>For a stamp plate, invert your design (the engraved area should be the background/negative, the raised area is what you leave un-engraved). In Inkscape, use Edit → Invert Selection after selecting all design elements, then add a bounding rectangle and do Path → Difference to create the inverted plate design.</li>
+  </ol>
+
+  <div class="india-callout">
+    <div class="box-title">India Use Case: Stamp Plates on Rubber &amp; Wood</div>
+    <p style="margin:0">Laser-engraved stamp plates are a booming small business in India — used for fabric printing, clay pottery, greeting cards, and leather stamping. Materials: soft rubber stamp sheets (~₹200–₹500/sheet from craft stores or Amazon.in) or MDF. For rubber: low power (30–40%), slow speed (500–800mm/min), deep pass to create relief. For wood stamps: multiple lighter passes. SVG Studio + LaserGRBL + Sculpfun S9 is a complete ₹0 software solution for this business.</p>
+  </div>
+
+  <h3>Creating Vectors Within LaserGRBL</h3>
+  <p>LaserGRBL includes a basic <strong>image-to-vector tracing</strong> feature. After importing a raster image:</p>
+  <ol class="steps">
+    <li>Import a high-contrast black-and-white image (PNG with no grayscale — pure B&amp;W).</li>
+    <li>In the conversion wizard, select <strong>"Vectorize"</strong> mode instead of a dithering algorithm.</li>
+    <li>LaserGRBL runs a basic potrace-like algorithm to trace the image edges into path data.</li>
+    <li>The result is G-code that traces outlines rather than scanning horizontally — much faster for outline jobs and gives crisper edges.</li>
+  </ol>
+  <p>For complex tracing, the built-in vectorizer is limited. Use Inkscape's <strong>Path → Trace Bitmap</strong> (which uses the full Potrace engine with more settings) for better results, then import the resulting SVG.</p>
+
+  <h3>G-Code Preview for Vector Jobs</h3>
+  <p>After loading an SVG, the G-code preview shows colored lines:
+  <ul>
+    <li><strong>Green lines</strong> — Laser ON (cutting/engraving paths)</li>
+    <li><strong>Gray/dotted lines</strong> — Rapid moves (laser OFF, head repositioning)</li>
+    <li><strong>Red outline</strong> — Work area boundary</li>
+  </ul>
+  Zoom into the preview to verify path order and check for obviously wrong paths before running the job. You can scroll through the G-code in the console to inspect specific commands.</p>
+</div>
+
+<!-- ==================== TAB 6 ==================== -->
+<div id="tab-panel-6" class="tab-panel">
+  <h2>Speed &amp; Power Settings</h2>
+  <div class="panel-intro">
+    Speed and power are the two most critical variables in laser engraving and cutting. Too fast = not enough energy (light or incomplete burn). Too slow = over-burn (charring, fire risk, melted acrylic). This tab gives you complete reference tables, explains the GRBL S-value system, and shows you how to build material test grids so you never guess again.
+  </div>
+
+  <h3>Understanding GRBL S-Values vs Percentage</h3>
+  <p>In GRBL, laser power is controlled by the <strong>S parameter</strong> in G-code commands:</p>
+  <pre>G1 X50 Y0 F3000 S800   ; move right 50mm at 3000mm/min, laser at S=800</pre>
+  <p>The S-value ranges from 0 (laser off) to the value set by <code>$30</code> (maximum power, usually 1000). LaserGRBL shows you a percentage (0–100%) in its UI and converts it to S-values internally using: <strong>S = percentage × ($30 / 100)</strong></p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>$30 = 1000 (most machines)</h4>
+      <ul>
+        <li>100% power = S1000</li>
+        <li>80% power = S800</li>
+        <li>50% power = S500</li>
+        <li>20% power = S200</li>
+        <li>1% power = S10</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>$30 = 255 (old machines)</h4>
+      <ul>
+        <li>100% power = S255</li>
+        <li>80% power = S204</li>
+        <li>50% power = S127</li>
+        <li>20% power = S51</li>
+        <li>1% power = S2</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="info-box yellow">
+    <div class="box-title">Critical: $32=1 Laser Mode Must Be Enabled</div>
+    <p style="margin:0">When $32=1 (laser mode), GRBL modulates the laser power dynamically as the head accelerates and decelerates. This prevents over-burning at corners and line starts where the head slows down. With $32=0 (spindle mode), the laser stays at constant power regardless of speed — causing burned corners and ignoring S-values during rapid changes. Always verify <code>$32=1</code> before any job.</p>
+  </div>
+
+  <h3>Feed Rate Explained</h3>
+  <p>Feed rate (F value in G-code) is the movement speed of the laser head in <strong>mm/min</strong>. In LaserGRBL's image conversion dialog, you set "Speed" — this becomes the F value. The relationship between speed and power determines energy density:</p>
+  <ul>
+    <li><strong>Higher speed + higher power</strong> = same total energy, but less heat soak (better for thin materials, reducing burn edges)</li>
+    <li><strong>Lower speed + lower power</strong> = same total energy, but more heat soak (worse for crisp edges but deeper in thick material)</li>
+    <li><strong>Effective Engraving:</strong> Find the combination that marks the material without charring surrounding areas</li>
+  </ul>
+  <p>Your machine's maximum reliable feed rate depends on the stepper motor drivers and $110/$111 GRBL settings. Most budget diode laser machines handle 3000–6000mm/min for engraving, 300–800mm/min for cutting reliably. Exceeding $110/$111 causes GRBL to automatically cap the speed without warning — your actual speed may be lower than requested.</p>
+
+  <h3>Speed &amp; Power Reference Tables</h3>
+  <p>These values are starting points for a <strong>5–10W optical diode laser</strong> (Sculpfun S9, S30, Ortur LM3, Atomstack A20 in single-laser mode). Actual values vary by machine age, focus quality, and material batch. Always run a test grid first on a new material.</p>
+
+  <h4>Wood — Engraving</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Line Dist.</th><th>Passes</th><th>Notes</th></tr>
+      <tr><td>Pine / Spruce (3mm)</td><td>3000</td><td>60–70%</td><td>0.1mm</td><td>1</td><td>Common plywood backing, soft wood, burns easily</td></tr>
+      <tr><td>Birch Plywood (3mm)</td><td>3000</td><td>70–80%</td><td>0.1mm</td><td>1</td><td>Best for crisp photo engraving, consistent grain</td></tr>
+      <tr><td>Walnut (3–4mm)</td><td>2500</td><td>75%</td><td>0.1mm</td><td>1</td><td>Dark wood — high contrast, excellent for photos</td></tr>
+      <tr><td>Bamboo Slice</td><td>3000</td><td>65%</td><td>0.1mm</td><td>1</td><td>Widely available in India, excellent engraving</td></tr>
+      <tr><td>MDF (3mm)</td><td>2500</td><td>75–85%</td><td>0.1mm</td><td>1</td><td>Glue binders absorb power, need slightly more</td></tr>
+      <tr><td>Cork Sheet</td><td>4000</td><td>50%</td><td>0.15mm</td><td>1</td><td>Very light touch, burns instantly</td></tr>
+    </table>
+  </div>
+
+  <h4>Wood — Cutting (Line Mode)</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>Notes</th></tr>
+      <tr><td>Balsa Wood 3mm</td><td>800</td><td>80%</td><td>2</td><td>Very soft, cuts easily</td></tr>
+      <tr><td>Pine Plywood 3mm</td><td>400–500</td><td>100%</td><td>3–4</td><td>Standard hobby plywood from hardware stores</td></tr>
+      <tr><td>Birch Plywood 3mm</td><td>400</td><td>100%</td><td>3–4</td><td>Denser than pine, needs more passes</td></tr>
+      <tr><td>MDF 3mm</td><td>300–400</td><td>100%</td><td>4–5</td><td>Glue makes cutting harder, lots of smoke</td></tr>
+      <tr><td>Cardboard 3mm</td><td>1500</td><td>60%</td><td>1–2</td><td>Burns rather than cuts — low flame risk</td></tr>
+      <tr><td>Craft Foam 3mm</td><td>500</td><td>30%</td><td>1</td><td>EVA foam — melts, don't engrave PVC foam</td></tr>
+    </table>
+  </div>
+
+  <h4>Other Materials</h4>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Material</th><th>Speed</th><th>Power %</th><th>Passes</th><th>Mode</th><th>Notes</th></tr>
+      <tr><td>Leather (genuine, 2mm)</td><td>2000</td><td>60%</td><td>1</td><td>Engrave</td><td>Excellent results, reduces speed for deeper marks</td></tr>
+      <tr><td>Leather (cut, 2mm)</td><td>400</td><td>90%</td><td>2–3</td><td>Cut</td><td>Produces smoke — ventilation critical</td></tr>
+      <tr><td>Acrylic (3mm, cast)</td><td>250</td><td>100%</td><td>4–5</td><td>Cut</td><td>Cast acrylic only — not extruded. Produces toxic fumes.</td></tr>
+      <tr><td>Acrylic — Engrave</td><td>3000</td><td>40–50%</td><td>1</td><td>Engrave</td><td>White frosted marks on clear; paint fill optional</td></tr>
+      <tr><td>Slate Coaster</td><td>1500</td><td>90%</td><td>1</td><td>Engrave</td><td>High contrast, white marks. Popular for gifts.</td></tr>
+      <tr><td>Anodized Aluminum</td><td>1500–2000</td><td>80%</td><td>1</td><td>Engrave</td><td>Removes anodizing to reveal bare aluminum</td></tr>
+      <tr><td>Cermark/Moly Lube + Steel</td><td>800</td><td>90%</td><td>1</td><td>Engrave</td><td>Apply spray to steel, laser bonds it permanently</td></tr>
+      <tr><td>Rubber Stamp Sheet</td><td>500</td><td>35–40%</td><td>1</td><td>Engrave</td><td>Relief depth matters — test with different powers</td></tr>
+      <tr><td>Paper / Cardstock</td><td>4000</td><td>20–30%</td><td>1</td><td>Cut/Engrave</td><td>Fire risk — never leave unattended</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box red">
+    <div class="box-title">NEVER Engrave or Cut These Materials</div>
+    <ul style="margin:0">
+      <li><strong>PVC (Polyvinyl Chloride)</strong> — Produces chlorine gas. Extremely dangerous. Destroys machine optics. PVC includes: vinyl stickers, fake leather labeled "PU vinyl," most flexible cutting mats</li>
+      <li><strong>Polycarbonate (PC)</strong> — Catches fire, produces toxic fumes, does not cut cleanly</li>
+      <li><strong>Epoxy resin (cured)</strong> — Toxic fumes, very inconsistent results</li>
+      <li><strong>Mirrors</strong> — Diode laser reflects off mirrors and can damage the laser module or your eyes</li>
+      <li><strong>Carbon fiber</strong> — Carcinogenic dust when cut</li>
+      <li><strong>HDPE (milk jugs, cutting boards)</strong> — Melts and catches fire</li>
+      <li>When in doubt: if you don't know the exact plastic type, do NOT engrave it</li>
+    </ul>
+  </div>
+
+  <h3>Building a Material Test Grid</h3>
+  <p>Never guess settings for a new material. Build a test grid first. LaserGRBL has a built-in <strong>Create Calibration Grid</strong> tool:</p>
+
+  <ol class="steps">
+    <li>Go to <strong>Tools → Create Calibration Grid</strong> (or equivalent in your version — some call it "Test Grid Generator").</li>
+    <li>Set the <strong>X axis</strong> to represent Speed: e.g., 1000, 2000, 3000, 4000mm/min (4 columns).</li>
+    <li>Set the <strong>Y axis</strong> to represent Power: e.g., 40%, 60%, 80%, 100% (4 rows).</li>
+    <li>Set cell size (e.g., 10×10mm). Total grid: 40×40mm on a scrap piece of your target material.</li>
+    <li>Run the grid. Each cell engraves with a unique speed/power combination. Read the results to find the ideal cell — darkest without charring the edges.</li>
+    <li>Save the optimal settings per material. Use LaserGRBL's "Material Library" feature (if available in your version) or simply keep a note — many users stick a hand-written settings card to their machine.</li>
+  </ol>
+
+  <div class="info-box green">
+    <div class="box-title">Test Grid Pro Tips</div>
+    <ul style="margin:0">
+      <li>Run the grid on the same batch of material you'll use for the final job — material quality varies significantly between batches</li>
+      <li>For cutting tests, use line mode with a simple rectangle in each cell and check for clean edge, minimal char, and full penetration</li>
+      <li>Photograph your test grid and store it with your LaserGRBL project file for future reference</li>
+      <li>Re-run a mini test grid (4 cells) whenever you get a new material shipment, even if it's the "same" product</li>
+      <li>Laser power decreases over time as the diode ages — your settings from 6 months ago may need 10–15% more power today</li>
+    </ul>
+  </div>
+
+  <h3>Saving Settings Per Material</h3>
+  <p>LaserGRBL does not have a built-in material profile library like LightBurn, but there are practical workarounds:</p>
+  <ul>
+    <li><strong>Save converted G-code files</strong> — After optimizing settings for a material/design combination, save the G-code via File → Save G-code. You can re-load and re-run it without going through the wizard again.</li>
+    <li><strong>Custom button presets</strong> — Create toolbar buttons (Edit → Manage Buttons) that run a G-code snippet setting your favorite speed/power values for common materials. One click to switch "Wood Mode" or "Leather Mode."</li>
+    <li><strong>Spreadsheet or notepad</strong> — Keep a simple settings log: Material | Thickness | Speed | Power | Passes | Result. Many serious users maintain this as a shared Google Sheet.</li>
+    <li><strong>Filename conventions</strong> — Name project files like <code>logo_birch3mm_3000mmpm_75pct.lgcode</code> so settings are visible in the filename without opening the file.</li>
+  </ul>
+
+  <div class="india-callout">
+    <div class="box-title">India Sourcing: Where to Get Materials</div>
+    <p style="margin:0"><strong>Birch plywood</strong> — Not commonly available in small quantities at local hardware stores. Try Amazon.in ("3mm birch plywood sheet laser") or Robu.in. Bangalore/Mumbai/Delhi craft supply markets carry small sheets. <strong>Bamboo slices &amp; coasters</strong> — Available in bulk from Meesho, Etsy India sellers, or wholesale bamboo craft markets. <strong>Acrylic sheets</strong> — Local plastic shops (ask for "cast acrylic" specifically — not extruded) in any major city industrial area. <strong>Leather scraps</strong> — Dharavi (Mumbai), leather wholesale markets in Chennai and Kanpur, or Amazon.in scrap leather packs ₹200–₹500.</p>
+  </div>
+</div>
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  var panel=document.getElementById('tab-panel-'+n);
+  if(panel) panel.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===n-1)b.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+
+
+
+
+<!-- TAB 7: Material Guide -->
+<div class="tab-panel" id="tab-panel-7">
+  <h2 style="color:#39d353">Material Guide — India Focus</h2>
+  <p>Settings below are starting points for a <strong>5W–10W diode laser</strong> (405nm/450nm). Always run a test burn on a scrap piece before engraving your final material. All prices are approximate 2024 Indian market rates.</p>
+
+  <!-- WOOD -->
+  <h3 style="color:#39d353">Wood</h3>
+  <p>Wood is the most forgiving material for diode lasers. Darker, denser woods engrave with more contrast. Resinous woods (pine) engrave darker than plain woods (poplar).</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th><th>Where to Buy</th></tr></thead>
+      <tbody>
+        <tr><td>3mm Plywood (engrave)</td><td>3000–4000</td><td>50–70%</td><td>1</td><td>₹8–15/sq ft</td><td>Local timber mart, hardware shop</td></tr>
+        <tr><td>3mm Plywood (cut)</td><td>400–600</td><td>90–100%</td><td>3–4</td><td>₹8–15/sq ft</td><td>Local timber mart</td></tr>
+        <tr><td>6mm Plywood (engrave)</td><td>3000</td><td>60–75%</td><td>1</td><td>₹15–25/sq ft</td><td>Local timber mart</td></tr>
+        <tr><td>6mm Plywood (cut)</td><td>300–400</td><td>100%</td><td>5–7</td><td>₹15–25/sq ft</td><td>Local timber mart</td></tr>
+        <tr><td>MDF 3mm (engrave)</td><td>3500–4500</td><td>55–70%</td><td>1</td><td>₹10–18/sq ft</td><td>Hardware shop, building material store</td></tr>
+        <tr><td>MDF 3mm (cut)</td><td>500–700</td><td>90–100%</td><td>3</td><td>₹10–18/sq ft</td><td>Hardware shop</td></tr>
+        <tr><td>Pine wood (engrave)</td><td>2500–3500</td><td>45–60%</td><td>1</td><td>₹20–35/sq ft</td><td>Timber mart, carpenter supply</td></tr>
+        <tr><td>Teak wood (engrave)</td><td>2000–3000</td><td>60–80%</td><td>1</td><td>₹80–150/sq ft</td><td>Premium timber mart</td></tr>
+        <tr><td>Bamboo (engrave)</td><td>3000–4000</td><td>50–65%</td><td>1</td><td>₹5–10/sq ft</td><td>Local bamboo shop, craft shops</td></tr>
+        <tr><td>Coconut shell (engrave)</td><td>1500–2500</td><td>70–85%</td><td>1–2</td><td>Free–₹5/piece</td><td>Local vegetable market, coconut vendors</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip-box">
+    <strong>India Tip:</strong> Coconut shell and bamboo are <em>zero-cost or near-zero-cost</em> raw materials that make unique products. Engraved coconut shell bowls and bamboo keychains sell well on Etsy India and local craft fairs for ₹200–600 each.
+  </div>
+
+  <!-- LEATHER -->
+  <h3 style="color:#39d353">Leather</h3>
+  <p>Both genuine and faux (rexine) leather engrave well. Genuine leather produces a beautiful deep brown burn. Faux leather (PU/rexine) is cheaper and more consistent but produces more fumes — always use ventilation.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th><th>Where to Buy</th></tr></thead>
+      <tbody>
+        <tr><td>Genuine leather (engrave)</td><td>2500–3500</td><td>40–55%</td><td>1</td><td>₹150–400/sq ft</td><td>Dharavi leather market (Mumbai), local leather shops</td></tr>
+        <tr><td>Faux leather / Rexine (engrave)</td><td>3000–4000</td><td>35–50%</td><td>1</td><td>₹40–80/sq ft</td><td>Textile market, online (Amazon.in)</td></tr>
+        <tr><td>Thick leather wallet blank</td><td>2000–3000</td><td>45–60%</td><td>1</td><td>₹80–200/piece</td><td>Leather craft shops, IndiaMART</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip-box">
+    <strong>India Tip:</strong> Engraved leather wallets and passport covers sell extremely well during Diwali and wedding season. Source plain leather wallets in bulk from Kolkata or Kanpur leather markets at ₹80–120 each and sell engraved versions at ₹350–600.
+  </div>
+
+  <!-- ACRYLIC -->
+  <h3 style="color:#39d353">Acrylic</h3>
+  <div class="warning-box">
+    <strong>Warning:</strong> Never engrave PVC (it looks like acrylic but releases toxic chlorine gas). Acrylic is safe when ventilated. Test with a flame — acrylic burns clean and drips; PVC smells like chlorine.
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th><th>Where to Buy</th></tr></thead>
+      <tbody>
+        <tr><td>Clear acrylic 3mm (engrave)</td><td>3000–4000</td><td>55–70%</td><td>1</td><td>₹80–120/sq ft</td><td>Acrylic sheet shops, IndiaMART</td></tr>
+        <tr><td>Colored acrylic 3mm (engrave)</td><td>3000–4000</td><td>50–65%</td><td>1</td><td>₹90–140/sq ft</td><td>Acrylic sheet shops</td></tr>
+        <tr><td>Mirror acrylic 3mm (engrave)</td><td>3500–4500</td><td>45–60%</td><td>1</td><td>₹100–160/sq ft</td><td>Acrylic sheet shops, sign-making supply</td></tr>
+        <tr><td>Acrylic 3mm (cut)</td><td>200–300</td><td>100%</td><td>3–5</td><td>—</td><td>Multiple passes needed; 10W+ recommended</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip-box">
+    <strong>India Tip:</strong> Clear acrylic engraves <em>white/frosted</em> where the laser hits — this creates beautiful LED lamp bases. Colored acrylic engraves to expose a lighter color underneath. Mirror acrylic makes premium-looking products. Search "acrylic sheet dealer" in your city on IndiaMART.
+  </div>
+
+  <!-- SLATE -->
+  <h3 style="color:#39d353">Slate Coasters</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th><th>Where to Buy</th></tr></thead>
+      <tbody>
+        <tr><td>Slate coaster (engrave)</td><td>1500–2500</td><td>80–100%</td><td>1–2</td><td>₹30–60/piece</td><td>Stone/marble shops, Amazon.in (bulk)</td></tr>
+        <tr><td>Marble tile 4mm (surface mark)</td><td>1000–2000</td><td>90–100%</td><td>2–3</td><td>₹20–40/piece</td><td>Tile shop offcuts (free/cheap)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Slate gives a beautiful white-on-dark contrast. After engraving, wipe clean. Apply a coat of olive oil to bring out contrast. A set of 4 slate coasters with a mandala design sells for ₹800–1,500 in Indian gift markets.</p>
+
+  <!-- RUBBER STAMPS -->
+  <h3 style="color:#39d353">Rubber Stamps</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th><th>Where to Buy</th></tr></thead>
+      <tbody>
+        <tr><td>Stamp rubber sheet 2.3mm</td><td>1000–1500</td><td>80–95%</td><td>1–2</td><td>₹50–100/A5 sheet</td><td>Art supply shops, craft stores, Amazon.in</td></tr>
+        <tr><td>Linoleum block (carving)</td><td>800–1200</td><td>90–100%</td><td>2–3</td><td>₹30–60/piece</td><td>Art supply shops</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning-box">
+    <strong>IMPORTANT — Diode Laser Limitation for Stamps:</strong> Diode lasers engrave rubber to make stamps for ink pad use (office stamps, craft stamps, art stamps). However, <strong>diode lasers CANNOT make photopolymer stamp plates or metal dies</strong>. For professional stamp plates on steel or zinc, a <strong>fiber laser</strong> is required. This is why rubber stamp engraving on diode is good for the craft market, but not for industrial stamp plate production.
+  </div>
+
+  <!-- CARDBOARD -->
+  <h3 style="color:#39d353">Cardboard / Cardstock</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th></tr></thead>
+      <tbody>
+        <tr><td>Cardstock 300gsm (engrave/cut)</td><td>5000–8000</td><td>30–50%</td><td>1</td><td>₹5–15/sheet</td></tr>
+        <tr><td>Corrugated cardboard (cut)</td><td>3000–5000</td><td>60–80%</td><td>1–2</td><td>Free (packaging waste)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FABRIC -->
+  <h3 style="color:#39d353">Fabric</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Denim (engrave)</td><td>3000–4000</td><td>40–60%</td><td>1</td><td>₹80–200/meter</td><td>Great for custom jeans patches</td></tr>
+        <tr><td>Cotton (engrave)</td><td>3000–5000</td><td>35–55%</td><td>1</td><td>₹50–150/meter</td><td>Results vary by weave density</td></tr>
+        <tr><td>Felt (engrave/cut)</td><td>2000–3000</td><td>50–70%</td><td>1</td><td>₹30–60/sheet</td><td>Very clean cuts</td></tr>
+        <tr><td>Jute fabric (engrave)</td><td>2500–3500</td><td>55–70%</td><td>1</td><td>₹40–80/meter</td><td>Excellent for corporate gifting bags</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip-box">
+    <strong>India Tip:</strong> Jute is a uniquely Indian material with massive B2B potential. Engrave corporate logos on jute bags for bulk orders. Jute is biodegradable — strong selling point for eco-conscious brands. Approach local NGOs, startups, and hospitality brands.
+  </div>
+
+  <!-- GLASS -->
+  <h3 style="color:#39d353">Glass</h3>
+  <p>Diode lasers can <strong>surface-mark</strong> glass with limited results. The laser scatters off the surface and creates a frosted/etched look, but depth and consistency are limited compared to CO2 lasers. Use a black paint or flat black tape on the glass surface to improve absorption, then burn through it.</p>
+  <ul>
+    <li>Speed: 1000–2000 mm/min, Power: 80–100%, multiple passes</li>
+    <li>Use "Jarvis" or "Stucki" dithering for photos on glass</li>
+    <li>Result: light frosted marking — acceptable for mugs/bottles as decorative, not deep etching</li>
+    <li>For true deep glass etching, a CO2 laser or sandblasting is needed</li>
+  </ul>
+
+  <!-- METALS -->
+  <h3 style="color:#39d353">Coated / Anodized Metals</h3>
+  <p>Diode lasers can mark <strong>anodized aluminum</strong> (removes the anodized coating to reveal bare aluminum underneath). This works for engraved business cards, dog tags, tumblers.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>India Price</th></tr></thead>
+      <tbody>
+        <tr><td>Anodized aluminum card (mark)</td><td>1000–2000</td><td>90–100%</td><td>1–2</td><td>₹15–30/card blank</td></tr>
+        <tr><td>Powder-coated steel (mark)</td><td>800–1500</td><td>90–100%</td><td>2–3</td><td>Varies</td></tr>
+        <tr><td>Black painted metal (mark)</td><td>1500–2500</td><td>80–100%</td><td>1–2</td><td>Varies</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- WHAT DIODE CANNOT DO -->
+  <h3 style="color:#e74c3c">What Diode Lasers CANNOT Do ❌</h3>
+  <div class="warning-box">
+    <ul>
+      <li><strong>Bare steel / stainless steel SS304:</strong> Diode lasers (450nm blue) reflect off bare metal — no marking occurs and you risk damaging your lens. SS304 requires a <strong>fiber laser (1064nm)</strong> which is absorbed by metal.</li>
+      <li><strong>Bare aluminum (uncoated):</strong> Reflects the diode beam. Only anodized/coated aluminum works.</li>
+      <li><strong>Copper, brass (bare):</strong> Highly reflective at 450nm. Cannot be marked without coating (use Cermark spray ₹2,000+ for experimental results).</li>
+      <li><strong>Hard plastics like PC, PETG:</strong> Melt or crack rather than engrave cleanly.</li>
+      <li><strong>PVC (never attempt):</strong> Releases chlorine gas — toxic and corrosive to your machine.</li>
+      <li><strong>Transparent materials without surface prep:</strong> Clear acrylic and glass allow the beam to pass through — use surface markings only.</li>
+    </ul>
+    <p><strong>Why this matters for stamp plates:</strong> Traditional rubber/polymer stamp plates for professional use require fiber laser or UV laser. If you want to enter the industrial stamp plate business, budget ₹3,50,000–8,00,000 for a fiber laser machine — appropriate only once you're earning ₹30,000+/month from diode work.</p>
+  </div>
+
+  <!-- INDIA SPECIAL MATERIALS -->
+  <h3 style="color:#39d353">India-Specific Materials — Unique Product Opportunities</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Material</th><th>Settings</th><th>India Price</th><th>Product Ideas</th><th>Market</th></tr></thead>
+      <tbody>
+        <tr><td>Coconut shell</td><td>1500–2500 mm/min, 70–85%</td><td>Free–₹5</td><td>Bowls, wall art, keychains</td><td>Etsy, craft fairs, tourist shops</td></tr>
+        <tr><td>Bamboo</td><td>3000–4000 mm/min, 50–65%</td><td>₹5–10/sq ft</td><td>Keychains, boxes, coasters</td><td>Gifting, corporate, Etsy</td></tr>
+        <tr><td>Jute fabric</td><td>2500–3500 mm/min, 55–70%</td><td>₹40–80/meter</td><td>Corporate bags, tote bags</td><td>B2B corporate gifting</td></tr>
+        <tr><td>Sal wood leaves (pressed)</td><td>2000–3000 mm/min, 60–75%</td><td>Near-free</td><td>Decorative art, festival items</td><td>Craft market, Diwali</td></tr>
+        <tr><td>Terracotta (clay pots)</td><td>1000–2000 mm/min, 85–100%</td><td>₹10–30/pot</td><td>Festival diyas, planters</td><td>Diwali, home decor</td></tr>
+        <tr><td>Cork sheets</td><td>3000–5000 mm/min, 40–60%</td><td>₹60–100/sheet</td><td>Coasters, trivets, notice boards</td><td>Home decor, gifting</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 8: G-Code & Advanced Features -->
+<div class="tab-panel" id="tab-panel-8">
+  <h2 style="color:#39d353">G-Code &amp; Advanced Features</h2>
+
+  <h3 style="color:#39d353">What is G-Code?</h3>
+  <p>G-Code is the universal language of CNC machines and laser engravers. It is a series of plain text instructions that tell the machine where to move (X, Y, Z coordinates), at what speed, and when to turn the laser on/off. When you import an image in LaserGRBL and configure settings, LaserGRBL <strong>generates G-Code automatically</strong> and streams it to your machine line by line over USB.</p>
+  <p>You don't need to write G-Code manually for most jobs, but understanding it gives you more control — especially for troubleshooting, resuming after power cuts (very common in India!), and creating automation macros.</p>
+
+  <h3 style="color:#39d353">Console Commands Quick Reference</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Command</th><th>What it Does</th><th>When to Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>$$</code></td><td>Print all GRBL settings to console</td><td>Check machine configuration, troubleshoot</td></tr>
+        <tr><td><code>$H</code></td><td>Home the machine (moves to limit switches)</td><td>At start of session if homing switches fitted</td></tr>
+        <tr><td><code>$X</code></td><td>Kill alarm / unlock machine</td><td>After alarm state (e.g., after emergency stop)</td></tr>
+        <tr><td><code>$I</code></td><td>Print GRBL version info</td><td>Check firmware version</td></tr>
+        <tr><td><code>$C</code></td><td>Check G-Code mode (dry run)</td><td>Test G-Code without firing laser</td></tr>
+        <tr><td><code>$RST=$</code></td><td>Reset GRBL settings to defaults</td><td>When settings are corrupted — use carefully</td></tr>
+        <tr><td><code>G28</code></td><td>Go to predefined home position</td><td>Return to origin</td></tr>
+        <tr><td><code>G0 X0 Y0</code></td><td>Rapid move to X=0, Y=0</td><td>Return to origin quickly</td></tr>
+        <tr><td><code>G1 X50 Y50 F1000</code></td><td>Linear move to X=50, Y=50 at F=1000 mm/min</td><td>Manual positioning</td></tr>
+        <tr><td><code>M3 S100</code></td><td>Laser ON at power S=100 (of 1000)</td><td>Test laser at 10% power — WEAR GOGGLES</td></tr>
+        <tr><td><code>M5</code></td><td>Laser OFF</td><td>Turn off laser manually</td></tr>
+        <tr><td><code>?</code></td><td>Real-time status query</td><td>Check current position and machine state</td></tr>
+        <tr><td><code>!</code></td><td>Feed hold (pause)</td><td>Emergency pause during job</td></tr>
+        <tr><td><code>~</code></td><td>Cycle start / resume</td><td>Resume after feed hold</td></tr>
+        <tr><td><code>Ctrl+X</code></td><td>Soft reset</td><td>Reset GRBL without power cycle</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#39d353">Important GRBL Settings ($0–$132)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Setting</th><th>Parameter</th><th>Default</th><th>Description</th><th>India Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>$0</code></td><td>Step pulse time (µs)</td><td>10</td><td>Duration of step pulse to stepper drivers</td><td>Leave at default</td></tr>
+        <tr><td><code>$1</code></td><td>Step idle delay (ms)</td><td>25</td><td>Time before steppers disable after stop</td><td>Set to 255 to keep steppers always on</td></tr>
+        <tr><td><code>$2</code></td><td>Step port invert</td><td>0</td><td>Invert step signals for drivers</td><td>Change if motors jitter</td></tr>
+        <tr><td><code>$3</code></td><td>Direction port invert</td><td>0</td><td>Invert direction for X/Y/Z axes</td><td>Fix if axis moves wrong way</td></tr>
+        <tr><td><code>$4</code></td><td>Step enable invert</td><td>0</td><td>Invert stepper enable signal</td><td>Change if motors don't engage</td></tr>
+        <tr><td><code>$5</code></td><td>Limit pins invert</td><td>0</td><td>Invert limit switch logic</td><td>Change for NC vs NO switches</td></tr>
+        <tr><td><code>$10</code></td><td>Status report mask</td><td>1</td><td>What data real-time status returns</td><td>Leave at default</td></tr>
+        <tr><td><code>$20</code></td><td>Soft limits enable</td><td>0</td><td>Enable software travel limits</td><td>Enable once homing works</td></tr>
+        <tr><td><code>$21</code></td><td>Hard limits enable</td><td>0</td><td>Enable hardware limit switches</td><td>Enable if limit switches fitted</td></tr>
+        <tr><td><code>$22</code></td><td>Homing enable</td><td>0</td><td>Enable homing cycle</td><td>Enable if limit switches fitted</td></tr>
+        <tr><td><code>$23</code></td><td>Homing direction</td><td>0</td><td>Which corner is home</td><td>Adjust to match your machine</td></tr>
+        <tr><td><code>$24</code></td><td>Homing feed (mm/min)</td><td>25</td><td>Slow speed for final homing approach</td><td>Leave at default</td></tr>
+        <tr><td><code>$25</code></td><td>Homing seek (mm/min)</td><td>500</td><td>Fast speed for homing search</td><td>Leave at default</td></tr>
+        <tr><td><code>$30</code></td><td>Max spindle speed (RPM)</td><td>1000</td><td>S-value max (maps to 100% power)</td><td>CRITICAL — must match LaserGRBL setting</td></tr>
+        <tr><td><code>$31</code></td><td>Min spindle speed (RPM)</td><td>0</td><td>S-value min (0% power)</td><td>Leave at 0</td></tr>
+        <tr><td><code>$32</code></td><td>Laser mode enable</td><td>0</td><td>1=Laser mode, 0=spindle mode</td><td>MUST be 1 for laser engraving</td></tr>
+        <tr><td><code>$100</code></td><td>X steps/mm</td><td>80</td><td>Steps per mm for X axis</td><td>Calibrate if engraving dimensions are wrong</td></tr>
+        <tr><td><code>$101</code></td><td>Y steps/mm</td><td>80</td><td>Steps per mm for Y axis</td><td>Calibrate if engraving dimensions are wrong</td></tr>
+        <tr><td><code>$110</code></td><td>X max rate (mm/min)</td><td>8000</td><td>Maximum X axis speed</td><td>Match to your machine's capability</td></tr>
+        <tr><td><code>$111</code></td><td>Y max rate (mm/min)</td><td>8000</td><td>Maximum Y axis speed</td><td>Match to your machine's capability</td></tr>
+        <tr><td><code>$120</code></td><td>X acceleration (mm/s²)</td><td>500</td><td>X axis acceleration</td><td>Reduce if losing steps on X</td></tr>
+        <tr><td><code>$121</code></td><td>Y acceleration (mm/s²)</td><td>500</td><td>Y axis acceleration</td><td>Reduce if losing steps on Y</td></tr>
+        <tr><td><code>$130</code></td><td>X max travel (mm)</td><td>200</td><td>Work area X dimension</td><td>Set to your machine's actual X size</td></tr>
+        <tr><td><code>$131</code></td><td>Y max travel (mm)</td><td>200</td><td>Work area Y dimension</td><td>Set to your machine's actual Y size</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip-box">
+    <strong>Most Critical Setting — $32=1:</strong> Without this, the laser stays at full power whenever moving, burning everything in its path. Always verify <code>$32=1</code> is set before running any job. Check by typing <code>$$</code> in the console.
+  </div>
+
+  <h3 style="color:#39d353">S-Value Mismatch Problem</h3>
+  <p>If <code>$30=1000</code> (machine setting) but LaserGRBL is configured for S-max=255, your "100% power" in LaserGRBL actually outputs S=255, which is only 25.5% laser power. This is a very common problem with cheap machines from Amazon.in. Fix: In LaserGRBL, go to File → Settings → check "S Max Value" and match it to <code>$30</code>. Or change <code>$30=255</code> if you prefer 0–255 range.</p>
+
+  <h3 style="color:#39d353">Custom G-Code Macro Buttons</h3>
+  <p>LaserGRBL allows you to create custom buttons with G-Code macros. Right-click in the button area → Add Button. Useful macros:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Button Name</th><th>G-Code</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Go to Origin</td><td><code>G0 X0 Y0</code></td><td>Return to work origin</td></tr>
+        <tr><td>Unlock</td><td><code>$X</code></td><td>Kill alarm state</td></tr>
+        <tr><td>Laser Test 5%</td><td><code>M3 S50&#10;G4 P0.5&#10;M5</code></td><td>Quick 0.5sec test pulse at 5%</td></tr>
+        <tr><td>Frame Job</td><td><code>G0 X0 Y0&#10;G0 X[WIDTH] Y0&#10;G0 X[WIDTH] Y[HEIGHT]&#10;G0 X0 Y[HEIGHT]&#10;G0 X0 Y0</code></td><td>Trace bounding box without laser</td></tr>
+        <tr><td>Center Material</td><td><code>G0 X[WIDTH/2] Y[HEIGHT/2]</code></td><td>Move to center of work area</td></tr>
+        <tr><td>Home</td><td><code>$H</code></td><td>Run homing cycle</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#39d353">Importing &amp; Exporting G-Code Files</h3>
+  <p><strong>Export G-Code:</strong> After configuring your image/vector in LaserGRBL, click the save icon next to the Engrave button → Save as .nc or .gcode file. This file contains all the machine instructions.</p>
+  <p><strong>Import G-Code:</strong> File → Open (or drag and drop a .nc/.gcode file). LaserGRBL previews the toolpath before sending.</p>
+  <p><strong>Supported formats:</strong> .nc, .gcode, .gc, .cnc, .tap</p>
+
+  <h3 style="color:#39d353">Resume After Power Cut — India Power Cut Tip</h3>
+  <div class="tip-box">
+    <strong>India Reality:</strong> Power cuts (load shedding) happen without warning in many Indian cities, especially in summer. A job that gets interrupted mid-way can waste your material. Here is how to protect yourself:
+    <ol>
+      <li>Always <strong>export the G-Code file</strong> before starting a long job (save as .nc file)</li>
+      <li>When power returns, open the saved .nc file in LaserGRBL</li>
+      <li>In the G-Code viewer, scroll to approximately where the job was interrupted (you can see the burn marks on the material)</li>
+      <li>Right-click on the line → "Start from here"</li>
+      <li>Carefully realign your material to the exact same position using the origin marks you made</li>
+      <li>Resume the job from that line</li>
+    </ol>
+    <strong>Prevention:</strong> A basic UPS (₹2,000–4,000) that powers your laser control board and computer for 15–30 minutes can save a job during short cuts. The laser module itself draws too much power for most small UPS units, so the laser will shut off but you can save your G-Code position.
+  </div>
+
+  <h3 style="color:#39d353">Multi-Pass via G-Code</h3>
+  <p>For deep cuts, multiple passes at the same Z height are better than one slow pass (which burns excessively). In LaserGRBL, set the "Line Pass" count before engraving. Each pass re-runs the entire G-Code, allowing the cut to go deeper without charring. For 6mm plywood cuts, 5–7 passes at 100% power / 400 mm/min is better than 1 pass at 50 mm/min.</p>
+
+  <h3 style="color:#39d353">Homing and Work Coordinates</h3>
+  <p>LaserGRBL uses a simple work coordinate system. When you click "Set Origin" in LaserGRBL, it sets the current head position as X=0, Y=0 for that job. No physical homing (limit switches) is required for most diode laser work — just place your material, position the head at the desired start point, and click Set Origin.</p>
+  <p>If your machine has limit switches: run <code>$H</code> to home first, then move to your material and set work origin. This allows repeatable positioning across sessions.</p>
+
+  <h3 style="color:#39d353">Speed Override During Job</h3>
+  <p>LaserGRBL supports real-time speed and power override during a running job using the sliders in the main interface. You can increase or decrease speed by ±10–50% to see effect in real time. This is useful for test engraving — start at higher speed, slow down if too light. Note: changes are temporary for that job only.</p>
+
+  <h3 style="color:#39d353">LaserGRBL Scripting / Automation</h3>
+  <p>LaserGRBL supports basic scripting through its button system and G-Code macros. For batch processing (engraving 50 keychains), create a G-Code file with multiple copies arranged on a grid, exported from Inkscape with the "Laser Tools" extension. This is more efficient than re-running individual jobs.</p>
+  <p>For advanced automation, you can also use LaserGRBL's command line interface to queue G-Code files from external scripts — useful for production environments.</p>
+</div>
+
+<!-- TAB 9: Camera & Overlay -->
+<div class="tab-panel" id="tab-panel-9">
+  <h2 style="color:#39d353">Camera &amp; Overlay</h2>
+
+  <h3 style="color:#39d353">LaserGRBL Camera Feature Overview</h3>
+  <p>LaserGRBL has a built-in camera overlay feature that lets you see your material through a webcam and position your design on top of it visually. This is useful for:</p>
+  <ul>
+    <li>Precise placement on pre-made objects (wallets, coasters, pens)</li>
+    <li>Avoiding grain patterns or knots in wood</li>
+    <li>Centering designs without measuring</li>
+    <li>Second-pass alignment for multi-layer burns</li>
+  </ul>
+  <div class="warning-box">
+    <strong>Limitation:</strong> LaserGRBL's camera overlay is functional but basic compared to LightBurn's camera system. LightBurn offers automatic lens distortion correction and precise calibration. LaserGRBL's camera is suitable for approximate visual placement. For sub-millimeter precision, use physical jigs instead.
+  </div>
+
+  <h3 style="color:#39d353">Setting Up Camera in LaserGRBL</h3>
+  <ol>
+    <li>Connect a USB webcam to your computer. Mount it above the laser work area — at least 30–50cm above for a full view. A flexible arm or overhead mount works best.</li>
+    <li>In LaserGRBL, go to <strong>View → Camera</strong> (or click the camera icon in the toolbar)</li>
+    <li>Select your camera from the dropdown list</li>
+    <li>A camera window will appear showing the live feed</li>
+    <li>Overlay your design on the camera feed to visually position it</li>
+  </ol>
+  <p><strong>Recommended webcam:</strong> Any 720p USB webcam works. In India, Logitech C270 (₹1,800) or Zebronics USB webcam (₹500–800) are popular options.</p>
+
+  <h3 style="color:#39d353">Calibrating Camera Position</h3>
+  <p>For the overlay to be accurate, you need to calibrate the camera's field of view against the machine's coordinate system:</p>
+  <ol>
+    <li>Burn 4 corner marks on a piece of cardboard (use a low-power dot at each corner of your work area)</li>
+    <li>In the camera overlay, click the calibration points to match the burned dots to the machine coordinates</li>
+    <li>LaserGRBL will then map camera pixels to machine coordinates</li>
+    <li>Re-calibrate whenever you move the camera</li>
+  </ol>
+  <div class="tip-box">
+    <strong>Quick Calibration Method:</strong> Use a ruler or known-size template (e.g., a 100mm × 100mm square cut from cardboard). Burn it first, then use the corners as calibration reference points for the camera overlay.
+  </div>
+
+  <h3 style="color:#39d353">Using Overlay to Position Designs</h3>
+  <ol>
+    <li>Place your material on the bed</li>
+    <li>Open the camera view — you'll see a live image of your material</li>
+    <li>Import your design in LaserGRBL</li>
+    <li>Enable the overlay — the design appears as a ghost image on top of the camera feed</li>
+    <li>Drag the design in LaserGRBL to the desired position on your material</li>
+    <li>The X/Y coordinates update in real time</li>
+    <li>Engrave when satisfied with the position</li>
+  </ol>
+
+  <h3 style="color:#39d353">Limitations vs LightBurn Camera</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>LaserGRBL Camera</th><th>LightBurn Camera</th></tr></thead>
+      <tbody>
+        <tr><td>Lens distortion correction</td><td>Manual/none</td><td>Automatic with calibration card</td></tr>
+        <tr><td>Accuracy</td><td>±2–5mm typical</td><td>±0.5–1mm typical</td></tr>
+        <tr><td>Calibration ease</td><td>Manual point matching</td><td>Automated wizard</td></tr>
+        <tr><td>Camera overhead mount</td><td>Required</td><td>Required</td></tr>
+        <tr><td>Cost</td><td>Free</td><td>Included in LightBurn</td></tr>
+        <tr><td>Use for production work</td><td>Good enough for most jobs</td><td>Better for precise repeat work</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#39d353">Alternative: Phone Camera for Manual Positioning</h3>
+  <p>If you don't have a webcam, use your phone camera as a reference. Clamp your phone above the work area using a phone stand or flexible arm tripod (₹200–400 on Amazon.in). Use the camera to visually check material placement. It won't overlay in LaserGRBL, but you can use it to check alignment with a printed template placed on the material before burning.</p>
+  <p><strong>Practical method:</strong> Print your design at actual size on paper, tape it to your material, position the laser head at a corner, set origin, remove the paper template, and burn.</p>
+
+  <h3 style="color:#39d353">Red Dot Pointer: Using $32=0 to See Beam Path</h3>
+  <div class="warning-box">
+    <strong>CAUTION — Eye Safety Critical:</strong> The following technique uses the laser at very low power to trace the job path. ALWAYS wear laser safety goggles rated for your laser's wavelength (OD4+ at 450nm for blue diode lasers). NEVER look directly at the beam even at low power.
+  </div>
+  <p>To preview the job path as a visible trace:</p>
+  <ol>
+    <li>Type <code>$32=0</code> in the console (disables laser mode — laser is now always on when moving)</li>
+    <li>In LaserGRBL, set power to 1–3% maximum</li>
+    <li>Start the job — the laser will trace the path visibly at very low power</li>
+    <li>Observe the trace path on your material</li>
+    <li>Cancel the job, adjust position if needed</li>
+    <li><strong>CRITICAL: Type <code>$32=1</code> before doing the real job</strong> — if you forget this, the laser burns at full power during all movement, destroying your material</li>
+  </ol>
+  <p>Many users skip this technique and use the "frame" button instead (which moves the head around the bounding box without firing the laser). The frame method is safer and simpler for most positioning tasks.</p>
+
+  <h3 style="color:#39d353">Grid Overlay for Alignment Without Camera</h3>
+  <p>LaserGRBL can display a grid overlay on the job preview window. This helps you align your design relative to known material dimensions. Enable it in View → Show Grid. Set grid spacing to match your material size (e.g., 100mm grid for a 100×100mm coaster).</p>
+  <p>Use a physical ruler to mark your material's edges and corners, then use the LaserGRBL coordinate readout to position the head at known coordinates. This method is reliable and requires no camera.</p>
+
+  <h3 style="color:#39d353">India Budget Positioning Setup — ₹500</h3>
+  <div class="tip-box">
+    <strong>Cheap but Effective:</strong>
+    <ul>
+      <li>₹300–500: Basic USB webcam (Zebronics/Quantum brand from local electronics shop)</li>
+      <li>₹100–200: Flexible arm phone holder (repurposed as webcam mount)</li>
+      <li>₹0: Phone torch for illuminating dark work area</li>
+      <li>Total: ₹400–700 for a functional camera-assisted positioning setup</li>
+    </ul>
+    Mount the webcam 40–50cm above the bed for a full work area view. This is good enough for ±3–5mm accuracy, which is fine for most engraving work where the design covers a larger area.
+  </div>
+</div>
+
+<!-- TAB 10: Troubleshooting -->
+<div class="tab-panel" id="tab-panel-10">
+  <h2 style="color:#39d353">Troubleshooting</h2>
+  <p>This section covers the most common problems encountered by LaserGRBL users in India, with specific attention to local issues like CH340 drivers, summer heat, and power cuts.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>COM port not found / machine not detected</strong></td>
+          <td>CH340 USB-to-serial chip driver not installed (most common on Indian budget machines); Windows 11 compatibility issue</td>
+          <td>
+            1. Open Device Manager (Win+X → Device Manager)<br>
+            2. Look for "Unknown Device" or yellow warning icon<br>
+            3. Download CH340 driver from: <em>wch-ic.com</em> (official) or search "CH340 driver Windows 11"<br>
+            4. Install driver, restart computer<br>
+            5. In LaserGRBL, try each COM port (COM3, COM4, etc.) at 115200 baud<br>
+            6. If still failing, try a different USB cable and different USB port (avoid USB hubs)<br>
+            <em>India tip: Most cheap engravers from Amazon.in / Flipkart use CH340. Download the driver before your machine arrives.</em>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Laser fires but doesn't engrave / marks are invisible</strong></td>
+          <td>$32=1 not set (spindle mode); S-value mismatch between machine and software</td>
+          <td>
+            1. Open console, type <code>$$</code> and check <code>$32</code> — must be 1<br>
+            2. If $32=0, type <code>$32=1</code> and press Enter<br>
+            3. Check <code>$30</code> value — if 1000, set LaserGRBL S-max to 1000<br>
+            4. Test with M3 S500 (50% power) in console — does laser glow?<br>
+            5. If laser glows in console but not during job, check LaserGRBL power slider is not at 0%
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Engraving too light / barely visible</strong></td>
+          <td>Power too low; speed too high; dirty/scratched lens; focal distance wrong</td>
+          <td>
+            1. Increase power to 80–100% for a test<br>
+            2. Reduce speed to 1500–2000 mm/min for test<br>
+            3. Clean lens with isopropyl alcohol (IPA) and cotton swab gently<br>
+            4. Re-check focus: laser spot should be smallest possible dot on material<br>
+            5. Check S-max mismatch (see above)<br>
+            6. Run focus test: burn a diagonal line on ramp material to find sharpest focus point
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Engraving too dark / material burning / charring</strong></td>
+          <td>Speed too slow; power too high; multiple passes too many</td>
+          <td>
+            1. Increase speed (try 4000–5000 mm/min)<br>
+            2. Reduce power (try 40–50%)<br>
+            3. Reduce number of passes to 1<br>
+            4. For photos: use Jarvis dithering at higher speed for better gradients<br>
+            5. Add air assist to blow smoke away (keeps lens clean, reduces charring)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Diagonal burn lines at left/right edges</strong></td>
+          <td>Head not decelerating fast enough before direction change — overscanning needed</td>
+          <td>
+            1. Enable "Overscan" in LaserGRBL settings (adds extra travel beyond image edge)<br>
+            2. Set overscan to 5–10% of image width<br>
+            3. Alternatively, reduce engraving speed to allow proper deceleration<br>
+            4. Increase $120/$121 acceleration values slightly (test carefully)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Curved / wavy engraved lines</strong></td>
+          <td>Loose belts; loose V-wheels; mechanical play in the gantry</td>
+          <td>
+            1. Check all GT2 belts — they should be taut like a guitar string, not saggy<br>
+            2. Tighten belt tensioners (most machines have a small screw or sliding tensioner)<br>
+            3. Check V-wheels — they should spin smoothly but not wobble<br>
+            4. Tighten eccentric nuts on V-wheels until there's no wobble but no binding<br>
+            5. Check X-axis rail is straight — can twist on cheap machines
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Job starts in wrong position</strong></td>
+          <td>Origin not set correctly; homing state confusion; previous job shifted origin</td>
+          <td>
+            1. After placing material, move head to desired start position<br>
+            2. Click "Set Origin" in LaserGRBL<br>
+            3. Always verify origin before starting (use frame function)<br>
+            4. If machine has homing, run $H first, then set work origin<br>
+            5. Do not power off machine between setting origin and engraving
+          </td>
+        </tr>
+        <tr>
+          <td><strong>LaserGRBL crashes / freezes on large files</strong></td>
+          <td>Large image file; too high DPI setting; insufficient RAM</td>
+          <td>
+            1. Reduce image DPI: 254 DPI is sufficient for most wood/leather work<br>
+            2. For photos, use 200–300 DPI maximum<br>
+            3. Close other applications before running LaserGRBL<br>
+            4. Process image in lower resolution: resize image to actual print size before import<br>
+            5. If engraving 400×400mm at 500 DPI — that's 200M+ dots. Use 254 DPI instead: 4M dots<br>
+            6. Update LaserGRBL to latest version (bug fixes included)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Intermittent connection / job stops randomly</strong></td>
+          <td>Bad USB cable; USB port power management; EMI interference from stepper motors</td>
+          <td>
+            1. Use a good quality shielded USB cable (not the cable that came with the machine)<br>
+            2. Disable USB selective suspend: Control Panel → Power Options → Advanced → USB Settings<br>
+            3. Try a different USB port (prefer rear ports on desktop PCs)<br>
+            4. Avoid USB hubs — connect directly to computer<br>
+            5. Add ferrite core to USB cable to reduce EMI noise<br>
+            <em>India tip: Ferrite cores (₹50–100) from electronic components shops reduce EMI that causes random disconnects</em>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Power cut mid-job (India power cut)</strong></td>
+          <td>Load shedding / power fluctuation</td>
+          <td>
+            1. Prevention: Use a UPS (₹2,000–4,000) for control board + computer<br>
+            2. Always export G-Code before starting long jobs<br>
+            3. After power returns, open saved .nc file<br>
+            4. Estimate which line the job was on (look at burn marks)<br>
+            5. Right-click in G-Code view → "Start from line X"<br>
+            6. Carefully re-align material to exact original position<br>
+            7. Resume job from that line
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Summer heat causing stepper drift / skipped steps</strong></td>
+          <td>Indian summer temperatures (40–45°C) overheating stepper drivers</td>
+          <td>
+            1. Add a small 12V fan (₹150–300) to the electronics/control board area<br>
+            2. Work during cooler morning/evening hours if possible<br>
+            3. Reduce $120/$121 acceleration settings by 20% in summer<br>
+            4. If using an enclosure, add ventilation to prevent heat buildup<br>
+            5. Check that stepper drivers have heatsinks fitted (most cheap machines do)<br>
+            6. If consistent drifting: reduce job speed 10–20%
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Machine from Amazon.in with wrong firmware / not responding to $32=1</strong></td>
+          <td>Some cheap machines ship with modified GRBL firmware or incorrect configuration</td>
+          <td>
+            1. Check firmware version: type <code>$I</code> in console. Should show GRBL 1.1f or similar<br>
+            2. If not GRBL (e.g., shows "Marlin" or custom firmware), you may need to reflash<br>
+            3. Reflashing guide: Download GRBL 1.1 from GitHub, flash via Arduino IDE to the CH340-based board<br>
+            4. For Sculpfun, xTool, Atomstack, Creality specific machines: search "[machine model] GRBL firmware" for specific instructions<br>
+            5. <em>Warning: Reflashing voids warranty but often fixes persistent issues with cheap machines</em>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Engraving is mirrored / upside down</strong></td>
+          <td>Axis direction inverted; incorrect image flip settings</td>
+          <td>
+            1. In LaserGRBL, right-click on the image preview — flip horizontally or vertically as needed<br>
+            2. If machine consistently engraves mirrored, change $3 setting to invert axis direction<br>
+            3. Check <code>$3</code> value via <code>$$</code>; try <code>$3=1</code>, <code>$3=2</code>, or <code>$3=3</code> to fix axis direction<br>
+            4. For leather wallet flip: always mirror text before engraving (text appears correct when facing up)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Laser not firing at all / no power output</strong></td>
+          <td>PWM wire disconnected; laser module failure; driver board issue</td>
+          <td>
+            1. Check all 3 wires to laser module: power (12V/24V), ground, PWM signal<br>
+            2. Test with M3 S500 in console — check if laser LED illuminates faintly<br>
+            3. Check 5V or 3.3V signal on PWM wire with multimeter<br>
+            4. If no signal: control board issue. If signal present but no output: laser module failure<br>
+            5. Laser modules are replaceable: 5W module ₹1,500–3,000 on Amazon.in/IndiaMART
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#39d353">First-Time Setup Checklist</h3>
+  <div class="tip-box">
+    <ol>
+      <li>Install CH340 driver before connecting machine</li>
+      <li>Open LaserGRBL → connect at 115200 baud</li>
+      <li>Type <code>$$</code> in console — verify you get settings output</li>
+      <li>Check <code>$32=1</code> (laser mode) — if not, type <code>$32=1</code></li>
+      <li>Check <code>$30</code> value — note it and set LaserGRBL S-max to match</li>
+      <li>Focus laser (smallest bright dot on material)</li>
+      <li>WEAR GOGGLES — put them on before any test</li>
+      <li>Test engrave on scrap wood: 3000 mm/min, 50% power, 1 pass</li>
+      <li>Adjust settings based on result</li>
+    </ol>
+  </div>
+</div>
+
+<!-- TAB 11: Practice Projects -->
+<div class="tab-panel" id="tab-panel-11">
+  <h2 style="color:#39d353">Practice Projects</h2>
+  <p>Six beginner-to-intermediate projects with full settings, India-specific material sourcing, and market pricing. Each project builds skills progressively.</p>
+
+  <!-- PROJECT 1 -->
+  <div style="border:1px solid #39d353;border-radius:8px;padding:1.2rem;margin-bottom:2rem;">
+    <h3 style="color:#39d353;margin-top:0">Project 1: Personalized Wooden Keychain</h3>
+    <p><strong>Skill Level:</strong> Beginner | <strong>Time:</strong> 10–15 min setup + 5–10 min per piece | <strong>Material Cost:</strong> ₹2–5/piece | <strong>Sell Price:</strong> ₹150–300/piece</p>
+
+    <h4>Materials Needed</h4>
+    <ul>
+      <li>3mm plywood sheet (birch preferred, pine works) — ₹8–15/sq ft from local timber mart</li>
+      <li>Keychain rings — ₹2–5/piece (pack of 100 = ₹200–300 from Amazon.in)</li>
+      <li>Small drill bit or punch for hole</li>
+    </ul>
+
+    <h4>Design</h4>
+    <p>Create a 40×20mm rectangle in Inkscape. Add a name in bold font (Calibri Bold, Arial Black). Leave 3mm margin from edges. Add a 3mm circle at one end for the keyring hole. Export as SVG. Import into LaserGRBL.</p>
+
+    <h4>LaserGRBL Settings</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Operation</th><th>Speed</th><th>Power</th><th>Passes</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Engrave name/design (raster)</td><td>3500 mm/min</td><td>60%</td><td>1</td></tr>
+          <tr><td>2</td><td>Cut outline (vector)</td><td>500 mm/min</td><td>95%</td><td>3–4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Step by Step</h4>
+    <ol>
+      <li>Tape plywood flat to the bed (blue painter's tape prevents movement)</li>
+      <li>Set origin at bottom-left corner of plywood</li>
+      <li>Frame the job to confirm position</li>
+      <li>Run engraving pass first (text/design)</li>
+      <li>Run cut pass (outline)</li>
+      <li>Remove piece, punch/drill keyring hole</li>
+      <li>Sand edges lightly with 220-grit sandpaper</li>
+      <li>Optional: apply clear varnish spray for durability</li>
+    </ol>
+
+    <h4>India Market Angle</h4>
+    <p>Personalized keychains are top sellers at school events, college festivals, weddings, and online via Instagram DMs. Offer customization (name + nickname) for ₹200–300. Production rate: 30–40 pieces/hour once set up. Monthly potential: ₹15,000–25,000 part-time selling at local markets + online.</p>
+    <div class="tip-box">
+      <strong>Pro Tip:</strong> Arrange 20–30 keychains on a single sheet in Inkscape (grid layout) so you engrave and cut an entire batch in one job. Use Inkscape's "Clone" + "Tile Clones" for quick grid arrangement.
+    </div>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div style="border:1px solid #39d353;border-radius:8px;padding:1.2rem;margin-bottom:2rem;">
+    <h3 style="color:#39d353;margin-top:0">Project 2: Leather Wallet Engraving (Custom Monogram)</h3>
+    <p><strong>Skill Level:</strong> Beginner-Intermediate | <strong>Time:</strong> 15–20 min | <strong>Material Cost:</strong> ₹100–200/wallet | <strong>Sell Price:</strong> ₹350–700/wallet</p>
+
+    <h4>Materials Needed</h4>
+    <ul>
+      <li>Plain bifold leather wallet (genuine or faux) — ₹100–200 from leather market/IndiaMART bulk</li>
+      <li>Monogram design (initials in decorative font — download free from dafont.com)</li>
+    </ul>
+
+    <h4>LaserGRBL Settings — Faux Leather (Rexine)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Power</th><th>Passes</th><th>DPI</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>3000 mm/min</td><td>40–50%</td><td>1</td><td>254</td><td>Line Fill or Jarvis</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Settings — Genuine Leather</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Power</th><th>Passes</th><th>DPI</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>2500 mm/min</td><td>45–55%</td><td>1</td><td>254</td><td>Line Fill</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Step by Step</h4>
+    <ol>
+      <li>Flatten the wallet — tape it flat on the bed (wallets curve slightly)</li>
+      <li>Create a jig: cut a wallet-shaped hole in cardboard, tape to bed. Wallet drops into jig perfectly every time for repeatable positioning</li>
+      <li>Design monogram: 2–3 initials in a circle, 40–50mm diameter</li>
+      <li>Position design in LaserGRBL center-aligned to wallet card pocket area</li>
+      <li>Run a test on scrap faux leather first — adjust power if needed</li>
+      <li>Engrave the wallet</li>
+      <li>Clean any residue with a slightly damp cloth</li>
+    </ol>
+
+    <h4>India Market Angle</h4>
+    <p><strong>Diwali gifting:</strong> Engraved leather wallets are premium corporate gifts. Companies order 50–200 pieces with their logo + recipient names for Diwali hampers. Quote ₹500–700/piece for bulk (minimum order ₹25,000). Corporate gifting season is Oct–Nov. Start marketing in September.</p>
+    <div class="tip-box">
+      <strong>Diwali Production Tip:</strong> Create a jig system so you can load, engrave, and unload 1 wallet every 3–4 minutes. That's 15–20 wallets/hour. A 100-piece Diwali order can be fulfilled in 1 weekend.
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div style="border:1px solid #39d353;border-radius:8px;padding:1.2rem;margin-bottom:2rem;">
+    <h3 style="color:#39d353;margin-top:0">Project 3: Slate Coaster Set with Mandala (4-Piece Set)</h3>
+    <p><strong>Skill Level:</strong> Intermediate | <strong>Time:</strong> 30–45 min for 4 coasters | <strong>Material Cost:</strong> ₹150–250/set | <strong>Sell Price:</strong> ₹800–1,500/set</p>
+
+    <h4>Materials Needed</h4>
+    <ul>
+      <li>Slate coasters (4-inch / 10cm square) — ₹30–60/piece from stone shops or Amazon.in</li>
+      <li>Mandala SVG design (free from Flaticon, Freepik, or design your own in Inkscape)</li>
+      <li>Olive oil for finishing</li>
+      <li>Gift box (₹50–100)</li>
+    </ul>
+
+    <h4>LaserGRBL Settings</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Power</th><th>Passes</th><th>DPI</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>1500–2000 mm/min</td><td>85–100%</td><td>2</td><td>300</td><td>Line Fill (0.1mm line spacing)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Getting Mandala SVG from SVG Studio App</h4>
+    <ol>
+      <li>Download "SVG Studio" app (Android/iOS) or "Mandala Maker" app</li>
+      <li>Create or select a mandala design</li>
+      <li>Export as SVG file</li>
+      <li>Transfer to PC via WhatsApp or Google Drive</li>
+      <li>Open in Inkscape, resize to 90×90mm (leaves 5mm border on 100mm coaster)</li>
+      <li>Export as bitmap (PNG) at 300 DPI for raster engraving OR keep as SVG for vector fill</li>
+    </ol>
+
+    <h4>Step by Step</h4>
+    <ol>
+      <li>Clean slate coaster — wipe with dry cloth</li>
+      <li>Place coaster on bed, set origin at bottom-left of coaster</li>
+      <li>Frame job to confirm alignment</li>
+      <li>Run first pass at 90–100% power</li>
+      <li>Run second pass (same settings, same origin) for deeper engraving</li>
+      <li>Wipe dust with dry cloth after engraving</li>
+      <li>Apply olive oil with paper towel — let sit 2 minutes, wipe off excess</li>
+      <li>Engraved area turns bright white/light grey, unengraved area stays dark — beautiful contrast</li>
+      <li>Package set of 4 in gift box</li>
+    </ol>
+
+    <h4>India Market Angle</h4>
+    <p>Mandala-engraved slate coasters sell consistently on Instagram shops and Etsy India. Target: home decor buyers, wedding gifting (bulk orders), hotel/restaurant tabletop decor. A 4-piece set at ₹1,200 with free shipping has strong demand. Run Instagram ads targeting "home decor India" — ₹500/month in ads can generate ₹8,000–15,000/month in orders.</p>
+  </div>
+
+  <!-- PROJECT 4 -->
+  <div style="border:1px solid #39d353;border-radius:8px;padding:1.2rem;margin-bottom:2rem;">
+    <h3 style="color:#39d353;margin-top:0">Project 4: Rubber Stamp Making</h3>
+    <p><strong>Skill Level:</strong> Intermediate | <strong>Time:</strong> 20–30 min | <strong>Material Cost:</strong> ₹30–60/stamp | <strong>Sell Price:</strong> ₹200–500/stamp</p>
+
+    <h4>Materials Needed</h4>
+    <ul>
+      <li>Stamp rubber sheet (2.3mm thick, laser-safe type) — ₹50–100 per A5 sheet from art supply shops or Amazon.in (search "laser stamp rubber sheet")</li>
+      <li>Wooden mount block — ₹10–20 from craft shops or cut from scrap wood</li>
+      <li>Double-sided tape</li>
+    </ul>
+
+    <h4>LaserGRBL Settings for Stamp Rubber</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Power</th><th>Passes</th><th>DPI</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>1000–1500 mm/min</td><td>80–95%</td><td>1–2</td><td>500</td><td>Line Fill (0.05–0.1mm spacing)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Design Tips for Stamps</h4>
+    <ul>
+      <li>Design must be <strong>mirrored horizontally</strong> — the stamp image prints in reverse</li>
+      <li>Use bold, thick fonts — thin lines may not transfer ink well</li>
+      <li>Minimum line width: 0.5mm for good ink transfer</li>
+      <li>Keep design areas that should print (ink-receiving) as raised rubber — the laser removes the background</li>
+      <li>In LaserGRBL: import as bitmap, invert colors if needed (black areas = laser removes material)</li>
+    </ul>
+
+    <h4>Step by Step</h4>
+    <ol>
+      <li>Create design in Inkscape — black on white, mirrored</li>
+      <li>Export as PNG at 500 DPI</li>
+      <li>Import to LaserGRBL</li>
+      <li>Tape rubber sheet flat on bed</li>
+      <li>Engrave — laser removes background rubber, leaving raised design</li>
+      <li>Clean engraved rubber with soft brush to remove debris</li>
+      <li>Test with ink pad on paper</li>
+      <li>Mount rubber on wooden block with double-sided tape</li>
+    </ol>
+
+    <h4>India Market Angle</h4>
+    <p>Sell to: artists (custom art stamps), teachers (grading stamps), small businesses (address stamps, logo stamps for packaging), craft hobbyists. Traditional Indian motifs (paisley, rangoli patterns, lotus, peacock) sell well as art stamps to crafters. Price: ₹200–350 for small stamps, ₹400–600 for large complex designs.</p>
+    <div class="warning-box">
+      <strong>Important Limitation:</strong> These are craft/art ink stamps only. For official rubber stamps (used for legal documents, business official stamps), customers expect a professional metal die + rubber plate stamp. Diode laser rubber stamps are craft-quality — great for art, packaging, crafting; not suitable as legal office stamps requiring precise fine text at &lt;1mm.
+    </div>
+  </div>
+
+  <!-- PROJECT 5 -->
+  <div style="border:1px solid #39d353;border-radius:8px;padding:1.2rem;margin-bottom:2rem;">
+    <h3 style="color:#39d353;margin-top:0">Project 5: Acrylic LED Lamp Base</h3>
+    <p><strong>Skill Level:</strong> Intermediate | <strong>Time:</strong> 45–60 min | <strong>Material Cost:</strong> ₹150–250 | <strong>Sell Price:</strong> ₹500–1,200</p>
+
+    <h4>Materials Needed</h4>
+    <ul>
+      <li>Clear acrylic sheet 3–5mm thick, ~15×15cm — ₹80–120 from acrylic sheet dealer</li>
+      <li>LED base (USB powered, color-changing) — ₹80–150 from Amazon.in (search "acrylic LED light base")</li>
+      <li>Acrylic cement or double-sided tape for assembly</li>
+    </ul>
+
+    <h4>How It Works</h4>
+    <p>The laser engraves a design into the surface of clear acrylic. When light from an LED base shines into the edge of the acrylic, it travels through the acrylic (total internal reflection) and scatters/glows only at the engraved areas. Result: a glowing design on the acrylic panel.</p>
+
+    <h4>LaserGRBL Settings — Clear Acrylic Engraving</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Power</th><th>Passes</th><th>DPI</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>3500 mm/min</td><td>60–75%</td><td>1</td><td>300</td><td>Line Fill (0.1mm spacing)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Step by Step</h4>
+    <ol>
+      <li>Remove protective film from acrylic on the top side only (keep bottom film on while engraving to prevent scratches)</li>
+      <li>Design: simple bold outline designs work best — mandalas, deities (Ganesha, Om symbol), portraits, couple names</li>
+      <li>Engrave design into acrylic — the engraved areas will be frosted/white</li>
+      <li>Peel remaining protective film after engraving</li>
+      <li>Clean acrylic with microfiber cloth</li>
+      <li>Set acrylic panel into LED base slot</li>
+      <li>Optional: frosted/colored acrylic creates different effects</li>
+    </ol>
+
+    <h4>India Market Angle</h4>
+    <p>Popular products: Ganesha LED lamp (sells well during Ganesh Chaturthi), couple name lamps (Valentine's Day, weddings), logo LED lamps for desks. Wedding favor LED lamps with couple names are in high demand — a set of 50 wedding favors at ₹400 each = ₹20,000 order. Market on Instagram wedding groups and Shaadi.com vendor marketplace.</p>
+    <div class="tip-box">
+      <strong>Popular Designs for India Market:</strong> Om symbol, Ganesha silhouette, Tree of Life, couple names in Devanagari + English, college logo lamps, state maps (Maharashtra, Gujarat, etc.), cricket stadium outline.
+    </div>
+  </div>
+
+  <!-- PROJECT 6 -->
+  <div style="border:1px solid #39d353;border-radius:8px;padding:1.2rem;margin-bottom:2rem;">
+    <h3 style="color:#39d353;margin-top:0">Project 6: Jute Bag with Corporate Logo (B2B Opportunity)</h3>
+    <p><strong>Skill Level:</strong> Intermediate | <strong>Time:</strong> 5–10 min per bag | <strong>Material Cost:</strong> ₹60–100/bag | <strong>Sell Price (bulk B2B):</strong> ₹200–350/bag (MOQ 100 pieces)</p>
+
+    <h4>Materials Needed</h4>
+    <ul>
+      <li>Plain jute bags (natural jute, 12×14 inch grocery/tote size) — ₹40–60/piece in bulk from IndiaMART or local jute suppliers</li>
+      <li>Client logo file (SVG or high-res PNG)</li>
+      <li>Cardboard insert to flatten the bag while engraving</li>
+    </ul>
+
+    <h4>LaserGRBL Settings — Jute Fabric</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Speed</th><th>Power</th><th>Passes</th><th>DPI</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>2500–3000 mm/min</td><td>55–65%</td><td>1</td><td>254</td><td>Line Fill or Threshold</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Step by Step</h4>
+    <ol>
+      <li>Insert a piece of stiff cardboard inside the bag to flatten the engraving surface and prevent burning through to the back side</li>
+      <li>Tape bag flat on bed — the cardboard inside keeps it rigid</li>
+      <li>Set origin at bottom-left of desired engraving area</li>
+      <li>For logos: use Threshold mode (bi-level) for clean logo engraving</li>
+      <li>Test first on a spare bag at reduced power</li>
+      <li>Production tip: create a jig (cardboard frame) for consistent placement of every bag</li>
+      <li>Engrave logo at 3000 mm/min, 60% power</li>
+      <li>Remove cardboard insert, bag is ready</li>
+    </ol>
+
+    <h4>B2B India Corporate Gifting Strategy</h4>
+    <p><strong>Target clients:</strong> startups, hotels, NGOs, food brands, pharma companies (for CSR events), retail chains.</p>
+    <p><strong>Pitch:</strong> "Eco-friendly laser-engraved jute bags — no ink, no screen printing, permanent branding, fully biodegradable." This resonates strongly with companies targeting ESG/sustainability credentials.</p>
+    <p><strong>Pricing example:</strong> 200 jute bags with logo → material cost ₹12,000 + laser time 30 hours → quote ₹50,000–60,000. Profit: ₹35,000–45,000.</p>
+    <div class="tip-box">
+      <strong>Getting B2B Orders:</strong> Create a sample kit (5 bags with different logos) and approach local businesses directly. Post on LinkedIn targeting "marketing managers" in your city. List on IndiaMART as "custom laser engraved jute bags" — serious B2B inquiries come regularly. Minimum order ₹15,000 to make it worthwhile.
+    </div>
+  </div>
+</div>
+
+<!-- TAB 12: Expert Tips & Shortcuts -->
+<div class="tab-panel" id="tab-panel-12">
+  <h2 style="color:#39d353">Expert Tips &amp; Shortcuts</h2>
+
+  <h3 style="color:#39d353">Complete Keyboard Shortcuts Reference</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>F1</kbd></td><td>Connect / Disconnect machine</td></tr>
+        <tr><td><kbd>F2</kbd></td><td>Open file (image/G-Code)</td></tr>
+        <tr><td><kbd>F3</kbd></td><td>Home machine ($H)</td></tr>
+        <tr><td><kbd>F4</kbd></td><td>Unlock machine ($X)</td></tr>
+        <tr><td><kbd>F5</kbd></td><td>Start/Resume job</td></tr>
+        <tr><td><kbd>F6</kbd></td><td>Pause job (feed hold)</td></tr>
+        <tr><td><kbd>F7</kbd></td><td>Stop job</td></tr>
+        <tr><td><kbd>Arrow keys</kbd></td><td>Jog machine (when jog panel active)</td></tr>
+        <tr><td><kbd>+</kbd> / <kbd>-</kbd></td><td>Increase/decrease jog step size</td></tr>
+        <tr><td><kbd>Ctrl+Z</kbd></td><td>Undo (in image editing)</td></tr>
+        <tr><td><kbd>Ctrl+O</kbd></td><td>Open file</td></tr>
+        <tr><td><kbd>Ctrl+S</kbd></td><td>Save G-Code file</td></tr>
+        <tr><td><kbd>Delete</kbd></td><td>Delete selected element</td></tr>
+        <tr><td><kbd>Space</kbd></td><td>Pause/Resume running job</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Emergency stop / cancel</td></tr>
+        <tr><td><kbd>Ctrl+C</kbd></td><td>Copy (console text)</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Send console command</td></tr>
+        <tr><td><kbd>Up Arrow</kbd> (console)</td><td>Previous console command (history)</td></tr>
+        <tr><td><kbd>Ctrl+Mouse Wheel</kbd></td><td>Zoom in/out on preview</td></tr>
+        <tr><td><kbd>Middle click drag</kbd></td><td>Pan preview</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#39d353">Pro Tips</h3>
+
+  <h4>Always Use Shielded USB Cable</h4>
+  <p>The single most common cause of random disconnects and job failures is an unshielded USB cable. The stepper motor PWM signals create electromagnetic interference (EMI) that corrupts USB data. Use a shielded USB-A to USB-B cable (or the appropriate connector for your machine) with a ferrite core clamp. Cost: ₹100–200. This one upgrade eliminates 80% of connection issues. Avoid USB hubs and extenders — connect direct to PC.</p>
+
+  <h4>Air Assist DIY — Aquarium Pump Method (₹300–500)</h4>
+  <p>Air assist blows a focused stream of air across the laser focal point, which:</p>
+  <ul>
+    <li>Clears smoke away from the lens (extends lens life dramatically)</li>
+    <li>Reduces charring on wood (the smoke is what causes the dark halo around burns)</li>
+    <li>Allows faster cutting speeds</li>
+    <li>Reduces fire risk</li>
+  </ul>
+  <p><strong>DIY setup:</strong> Buy a small aquarium air pump (₹200–300 from pet shops), connect airline tubing, attach a bent metal tube or 3D-printed nozzle aimed at the laser focus point. Total cost: ₹300–500. This outperforms many commercial air assist kits costing ₹2,000+.</p>
+
+  <h4>Fire Safety — Non-Negotiable</h4>
+  <div class="warning-box">
+    <strong>Fire Safety Rules (India Context):</strong>
+    <ul>
+      <li><strong>Never leave the machine unattended while running</strong> — even for 2 minutes. Go to bathroom? Pause the job.</li>
+      <li>Keep a <strong>bucket of dry sand</strong> next to your laser. In India, CO2 fire extinguishers are less common in homes. Sand works on any fire and doesn't damage electronics like water does.</li>
+      <li>A basic <strong>CO2 fire extinguisher</strong> (₹800–1,500) is a worthwhile investment once you're running the machine regularly</li>
+      <li>Do not engrave unknown materials — some plastics release toxic/flammable gases</li>
+      <li>Keep workspace ventilated — open window or use exhaust fan</li>
+      <li>If using an enclosure, ensure it has ventilation — smoke buildup is a fire risk</li>
+      <li>Keep a spray bottle of water nearby for smoldering material (not for electrical fires)</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#39d353">India Business Tips for Diode Laser</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Product Category</th><th>Target Market</th><th>Sell Price Range</th><th>Monthly Potential</th></tr></thead>
+      <tbody>
+        <tr><td>Wooden keychains (personalized)</td><td>Retail, events, Instagram</td><td>₹150–300/piece</td><td>₹8,000–20,000</td></tr>
+        <tr><td>Leather wallets (engraved)</td><td>Gifting, corporate Diwali</td><td>₹350–700/piece</td><td>₹15,000–40,000</td></tr>
+        <tr><td>Slate coaster sets</td><td>Home decor, gifting, Etsy</td><td>₹800–1,500/set</td><td>₹10,000–25,000</td></tr>
+        <tr><td>Acrylic LED lamps</td><td>Weddings, gifting, decor</td><td>₹500–1,200/piece</td><td>₹12,000–35,000</td></tr>
+        <tr><td>Jute bags (B2B corporate)</td><td>Companies, NGOs, brands</td><td>₹200–350/piece bulk</td><td>₹20,000–60,000</td></tr>
+        <tr><td>Rubber stamps (craft)</td><td>Artists, small businesses</td><td>₹200–500/stamp</td><td>₹5,000–15,000</td></tr>
+        <tr><td>Bamboo/coconut products</td><td>Tourist shops, Etsy India</td><td>₹200–600/piece</td><td>₹8,000–20,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Platforms to Sell Laser Products in India</h4>
+  <ul>
+    <li><strong>Instagram:</strong> Best for gifting products — Reels showing the laser engraving process get huge organic reach</li>
+    <li><strong>Etsy India:</strong> Best for international buyers — slate coasters, wooden decor, leather items sell to US/UK/Australia</li>
+    <li><strong>Amazon.in Seller:</strong> Works for standard catalog products (keychains, coasters) at scale</li>
+    <li><strong>Meesho:</strong> Good for lower-price points, tier 2/3 city reach</li>
+    <li><strong>IndiaMART:</strong> B2B inquiries for bulk corporate orders</li>
+    <li><strong>Local craft fairs:</strong> Maker markets in metros (Bombay, Bangalore, Delhi, Hyderabad)</li>
+    <li><strong>WhatsApp Business:</strong> Direct customer relationships, repeat orders from local buyers</li>
+  </ul>
+
+  <h3 style="color:#39d353">Upgrading Path: LaserGRBL → LightBurn</h3>
+  <p>LaserGRBL is free and excellent for learning and starting a laser business. When to consider upgrading to LightBurn (₹4,000 one-time license):</p>
+  <ul>
+    <li>You're spending more time fighting file format issues than engraving</li>
+    <li>You need camera-assisted precise placement for production work</li>
+    <li>You want to cut complex vector shapes with multiple settings in one job</li>
+    <li>You're running the machine 4+ hours per day commercially</li>
+    <li>You need rotary attachment support for cylindrical items</li>
+  </ul>
+  <p><strong>Bottom line:</strong> LaserGRBL free → get your first ₹10,000/month → then invest ₹4,000 in LightBurn for better workflow.</p>
+
+  <h3 style="color:#39d353">Machine Upgrades — India Pricing 2024</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Upgrade</th><th>Cost (₹)</th><th>Benefit</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td>Shielded USB cable + ferrite</td><td>₹150–250</td><td>Eliminates connection drops</td><td>Do immediately</td></tr>
+        <tr><td>Laser safety goggles (OD4+)</td><td>₹500–1,500</td><td>Protect your eyes — not optional</td><td>Do immediately</td></tr>
+        <tr><td>DIY air assist (aquarium pump)</td><td>₹300–500</td><td>Cleaner cuts, longer lens life, less fire risk</td><td>Do within first month</td></tr>
+        <tr><td>Honeycomb bed</td><td>₹1,500–2,500</td><td>Better ventilation, cleaner cuts, non-stick surface</td><td>Month 1–2</td></tr>
+        <tr><td>Commercial air assist kit</td><td>₹1,500–2,500</td><td>Consistent air flow, neater than DIY</td><td>Month 2–3</td></tr>
+        <tr><td>Enclosure with ventilation</td><td>₹2,500–5,000 DIY / ₹8,000+ commercial</td><td>Smoke control, reduces fumes, noise reduction</td><td>Month 2–3</td></tr>
+        <tr><td>Rotary attachment</td><td>₹2,000–4,000</td><td>Engrave cylindrical objects (mugs, pens, bottles)</td><td>When you want to expand product range</td></tr>
+        <tr><td>Higher power laser module (10W→20W)</td><td>₹5,000–12,000</td><td>Faster cutting, better on thick wood</td><td>When speed is limiting production</td></tr>
+        <tr><td>Z-axis auto-focus probe</td><td>₹800–2,000</td><td>Consistent focus across uneven materials</td><td>Nice to have</td></tr>
+        <tr><td>LightBurn license</td><td>₹4,000 one-time</td><td>Better workflow, camera, vector tools</td><td>After ₹10K/month revenue</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="color:#39d353">Community &amp; Resources</h3>
+  <ul>
+    <li><strong>LaserGRBL GitHub:</strong> github.com/arkypita/LaserGRBL — report bugs, download latest version, read wiki</li>
+    <li><strong>LaserGRBL Facebook Group:</strong> "LaserGRBL Users" — 30,000+ members, active troubleshooting</li>
+    <li><strong>Facebook: "Diode Laser India"</strong> — India-specific group, local buying advice, project inspiration</li>
+    <li><strong>Facebook: "Laser Engraving India"</strong> — mix of CO2 and diode users, business discussion</li>
+    <li><strong>Reddit: r/lasercutting</strong> — international community, excellent for technical questions</li>
+    <li><strong>YouTube: Makers Mashup, Roly's Workshop</strong> — LaserGRBL tutorials</li>
+    <li><strong>Inkscape Forums:</strong> inkscape.org/forums — for design help</li>
+  </ul>
+
+  <h3 style="color:#39d353">When to Upgrade to Fiber Laser — For SS304 Stamp Plates</h3>
+  <div class="tip-box">
+    <strong>The Fiber Laser Decision:</strong>
+    <p>Diode lasers cannot mark bare stainless steel (SS304) — the 450nm blue light reflects off bare metal. Fiber lasers (1064nm infrared) are absorbed by metal and can engrave, mark, and even cut thin metal.</p>
+    <p>If you're in the <strong>stamp plate business</strong> or want to engrave metal nameplates, jewelry, cutlery, or industrial parts — you need a fiber laser.</p>
+    <p><strong>India fiber laser pricing (2024):</strong></p>
+    <ul>
+      <li>Budget desktop fiber (20W MOPA): ₹1,80,000–2,50,000 (Chinese brands: Cloudray, Raycus)</li>
+      <li>Mid-range fiber (30W MOPA): ₹3,00,000–4,50,000</li>
+      <li>Professional (50W MOPA): ₹6,00,000–9,00,000</li>
+    </ul>
+    <p><strong>Recommendation:</strong> Once your diode laser business consistently earns ₹30,000+/month and you're regularly losing business because you can't do metal engraving — then invest in fiber. Until then, the diode laser has a much broader material range for gifting/craft markets and much lower entry cost.</p>
+    <p>A fiber laser + diode laser combination covers 95% of all laser engraving requests in India.</p>
+  </div>
+
+  <h3 style="color:#39d353">India Diode Laser Machine Buying Guide 2024</h3>
+  <p>If you're still choosing a machine or planning to upgrade, here's the India market reality:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Machine</th><th>Power</th><th>Work Area</th><th>India Price</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Sculpfun S9</td><td>5.5W</td><td>410×420mm</td><td>₹12,000–16,000</td><td>Great entry-level, good GRBL support</td></tr>
+        <tr><td>Sculpfun S30 Pro</td><td>10W</td><td>600×600mm</td><td>₹25,000–32,000</td><td>Best value for serious hobbyist, large bed</td></tr>
+        <tr><td>xTool D1 Pro 10W</td><td>10W</td><td>430×390mm</td><td>₹30,000–40,000</td><td>Premium build quality, good software ecosystem</td></tr>
+        <tr><td>Atomstack A5 Pro</td><td>5W</td><td>410×400mm</td><td>₹13,000–18,000</td><td>Popular, widely available on Amazon.in</td></tr>
+        <tr><td>Creality Falcon 10W</td><td>10W</td><td>400×415mm</td><td>₹22,000–28,000</td><td>Good brand support in India</td></tr>
+        <tr><td>Ortur LM3</td><td>10W</td><td>400×400mm</td><td>₹28,000–35,000</td><td>Safety features, good for enclosed use</td></tr>
+        <tr><td>No-brand Amazon.in</td><td>5–10W</td><td>Varies</td><td>₹6,000–12,000</td><td>Risky — firmware issues, no support, check reviews carefully</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip-box">
+    <strong>India Buying Advice:</strong>
+    <ul>
+      <li>Buy from Amazon.in or Flipkart for return protection and warranty claims</li>
+      <li>Avoid bare-minimum cheap machines under ₹8,000 — usually poor firmware, no support</li>
+      <li>Sculpfun and Atomstack have the best India user communities for troubleshooting</li>
+      <li>Always check if spare parts (laser module, belt, wheels) are available locally or via Amazon.in before buying</li>
+      <li>A 10W machine is worth the extra ₹8,000–12,000 over 5W for significantly faster cutting</li>
+      <li>For starting a business, minimum recommended: 10W machine + honeycomb bed + air assist = ₹30,000–40,000 total setup</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#39d353">Final Expert Tips Summary</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Tip</th><th>Impact</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Always run a material test burn before the real job</td><td>Saves expensive materials</td></tr>
+        <tr><td>2</td><td>Use shielded USB cable from day 1</td><td>Eliminates 80% of connection issues</td></tr>
+        <tr><td>3</td><td>Export G-Code before long jobs (India power cut protection)</td><td>Never lose a job to power cuts</td></tr>
+        <tr><td>4</td><td>Check $32=1 every session start</td><td>Prevents runaway laser burns</td></tr>
+        <tr><td>5</td><td>Clean lens weekly with IPA</td><td>Maintains consistent power output</td></tr>
+        <tr><td>6</td><td>Keep sand bucket near machine</td><td>Fire safety — non-negotiable</td></tr>
+        <tr><td>7</td><td>Make jigs for repeat production items</td><td>Speeds up B2B order fulfillment 3–5×</td></tr>
+        <tr><td>8</td><td>Use air assist (even DIY aquarium pump)</td><td>Cleaner results, longer lens life</td></tr>
+        <tr><td>9</td><td>Wear goggles — every single time</td><td>Protect your only pair of eyes</td></tr>
+        <tr><td>10</td><td>Post the laser process on Instagram Reels</td><td>Free marketing — laser videos go viral</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body></html>
