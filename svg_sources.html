@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Sources Directory — Stamp Plate Designers</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ── TOP NAV ── */
+  .top-nav {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .back-link {
+    color: #7c6fff;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+  }
+  .back-link:hover { opacity: 0.75; }
+
+  .nav-sep { color: #30363d; }
+
+  .nav-title {
+    font-size: 14px;
+    color: #8b949e;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #7c6fff 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: #8b949e;
+    max-width: 520px;
+    margin: 0 auto 24px;
+  }
+
+  .license-warning {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #1c1107;
+    border: 1px solid #d97706;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13px;
+    color: #fbbf24;
+    max-width: 620px;
+    text-align: left;
+  }
+
+  .license-warning .warn-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── CATEGORY SECTION ── */
+  .category-section {
+    margin-bottom: 56px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .section-icon {
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e6edf3;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: #8b949e;
+    margin-bottom: 18px;
+    max-width: 760px;
+    line-height: 1.65;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin-bottom: 20px;
+  }
+
+  /* ── CARD GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  /* ── LINK CARD ── */
+  .link-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+    cursor: pointer;
+  }
+
+  .link-card:hover {
+    border-color: #7c6fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 111, 255, 0.12);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .site-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #7c6fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .site-name .ext-icon { font-size: 11px; opacity: 0.6; }
+
+  /* License badges */
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .badge-free     { background: #0d3321; color: #3fb950; border: 1px solid #238636; }
+  .badge-paid     { background: #2d1a00; color: #f97316; border: 1px solid #d97706; }
+  .badge-sub      { background: #0c1a3a; color: #60a5fa; border: 1px solid #1d4ed8; }
+  .badge-check    { background: #2d0d0d; color: #f87171; border: 1px solid #b91c1c; }
+
+  .search-term {
+    font-size: 12px;
+    background: #161b22;
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: #e6edf3;
+    font-family: 'Consolas', 'Courier New', monospace;
+    align-self: flex-start;
+    border: 1px solid #21262d;
+  }
+
+  .price-tag {
+    font-size: 12px;
+    color: #ff9933;
+    font-weight: 600;
+  }
+
+  .pro-tip {
+    font-size: 12px;
+    color: #8b949e;
+    border-left: 2px solid #7c6fff;
+    padding-left: 8px;
+    line-height: 1.5;
+  }
+
+  /* ── NOTE CALLOUT ── */
+  .note-callout {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-left: 3px solid #7c6fff;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #8b949e;
+    margin-top: 12px;
+  }
+
+  .note-callout strong { color: #e6edf3; }
+
+  /* ── WORKFLOW SECTION ── */
+  .workflow-section {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+
+  .workflow-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #e6edf3;
+  }
+
+  .workflow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .workflow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 24px;
+  }
+
+  .workflow-step:last-child { padding-bottom: 0; }
+
+  .step-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
+
+  .step-num {
+    width: 34px;
+    height: 34px;
+    background: #7c6fff;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: #30363d;
+    min-height: 20px;
+    margin-top: 4px;
+  }
+
+  .workflow-step:last-child .step-line { display: none; }
+
+  .step-body { padding-top: 6px; }
+
+  .step-body strong {
+    font-size: 15px;
+    color: #e6edf3;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .step-body span {
+    font-size: 13px;
+    color: #8b949e;
+  }
+
+  .step-body a {
+    color: #7c6fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── PRO TIPS ── */
+  .tips-section {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+
+  .tips-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #e6edf3;
+  }
+
+  .tips-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tip-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.55;
+  }
+
+  .tip-bullet {
+    color: #7c6fff;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    text-align: center;
+    font-size: 13px;
+    color: #484f58;
+    padding: 24px;
+    border-top: 1px solid #21262d;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .hero { padding: 32px 16px 28px; }
+    .page-wrap { padding: 28px 16px 60px; }
+    .workflow-section, .tips-section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="index.html" class="back-link">&#8592; Hub</a>
+  <span class="nav-sep">›</span>
+  <span class="nav-title">SVG Sources Directory</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>SVG Sources Directory</h1>
+  <p class="hero-sub">Find professional stamp-ready SVGs for every category — curated links, no filler.</p>
+  <div class="license-warning">
+    <span class="warn-icon">⚠</span>
+    <span><strong>Commercial use warning:</strong> Always check the license before selling commercially. Look for <em>"commercial use OK"</em> or <em>"no attribution required"</em> in listings. When in doubt, contact the seller.</span>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-wrap">
+
+  <!-- ══════════════════════════════════════════
+       1. WARHAMMER / GOTHIC / CHAOS
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">💀</span>
+      <h2 class="section-title">Warhammer / Gothic / Chaos</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Best sellers for miniature hobbyists and the nail art stamping community — massive overlap with the Goblin Hobbies market. Skull motifs, chaos stars, and gothic lettering sell consistently year-round. Focus on symbols and iconography rather than specific faction logos to avoid IP issues.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=warhammer+svg&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"warhammer svg" · "chaos star svg" · "gothic skull svg stamp"</span>
+        <span class="price-tag">₹200–600 / pack</span>
+        <span class="pro-tip">Filter by "digital download", look for "commercial license included" in the listing description.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=gothic+skull" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"gothic skull" · "chaos symbol" · "warhammer inspired"</span>
+        <span class="price-tag">~₹400 / month unlimited</span>
+        <span class="pro-tip">Best value for bulk downloading — commercial license included with subscription.</span>
+      </a>
+
+      <a href="https://designbundles.net/search?q=gothic+svg+bundle" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Design Bundles <span class="ext-icon">↗</span></span>
+          <span class="badge badge-paid">Paid</span>
+        </div>
+        <span class="search-term">"gothic svg bundle" · "skull svg"</span>
+        <span class="price-tag">₹150–400 / pack</span>
+        <span class="pro-tip">Buy bundles, not singles — the per-design price drops dramatically in bundle packs.</span>
+      </a>
+
+      <a href="https://www.svgcuts.com" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">SVGCuts <span class="ext-icon">↗</span></span>
+          <span class="badge badge-paid">Paid</span>
+        </div>
+        <span class="search-term">gothic · horror · skull themed collections</span>
+        <span class="price-tag">₹300–500</span>
+        <span class="pro-tip">High quality, laser-optimized paths — less cleanup needed before engraving.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       2. ANIME / JAPANESE
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🌸</span>
+      <h2 class="section-title">Anime / Japanese</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Japanese mon crests, sakura patterns, and anime silhouettes are evergreen sellers. Focus on traditional Japanese motifs (family crests, wave patterns, torii gates) for commercial safety — these are public domain designs. Character-specific anime faces carry IP risk; stick to silhouettes and inspired aesthetics.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=japanese+mon+svg&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"anime svg" · "japanese mon svg" · "samurai svg cut file"</span>
+        <span class="price-tag">₹150–500 / pack</span>
+        <span class="pro-tip">Search "japanese family crest svg" for fully public-domain traditional designs.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=japanese+pattern" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"anime" · "japanese pattern" · "sakura svg"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Huge catalog of traditional Japanese patterns — ideal for mandala-style stamp plates.</span>
+      </a>
+
+      <a href="https://www.freepik.com/search#query=japanese+pattern+vector" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Freepik <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">"japanese pattern vector" · "anime silhouette"</span>
+        <span class="price-tag">Free / paid for commercial</span>
+        <span class="pro-tip">Premium plan removes attribution requirement — worth it for commercial stamp plates.</span>
+      </a>
+
+      <a href="https://www.vecteezy.com/search?qterm=japanese+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Vecteezy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">Free tier</span>
+        </div>
+        <span class="search-term">"japanese svg" · "anime vector"</span>
+        <span class="price-tag">Free tier available</span>
+        <span class="pro-tip">Filter by "Free" license — many Japanese patterns are available with no attribution needed.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       3. FANTASY / D&D / RPG
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🐉</span>
+      <h2 class="section-title">Fantasy / D&D / RPG</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">The tabletop RPG community is massive and hungry for unique accessories. Dragons, shields, potions, dungeon symbols, and class icons all convert well to stamp plates. The secret weapon here is game-icons.net — 4000+ MIT-licensed icons that are stamp-perfect out of the box.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=dnd+svg+bundle&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"dnd svg" · "fantasy svg bundle" · "dragon svg stamp"</span>
+        <span class="price-tag">₹200–800 / pack</span>
+        <span class="pro-tip">Many sellers bundle 50–100 designs — check if commercial license is included before buying.</span>
+      </a>
+
+      <a href="https://game-icons.net" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">game-icons.net ⭐ <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">MIT Free</span>
+        </div>
+        <span class="search-term">skull · sword · dragon · shield · potion · dungeon</span>
+        <span class="price-tag">100% Free — MIT license</span>
+        <span class="pro-tip">4000+ icons, instant SVG download, full commercial use. Single best free source for RPG designs.</span>
+      </a>
+
+      <a href="https://2minutetabletop.com/product-category/assets/" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">2-Minute Tabletop <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check commercial</span>
+        </div>
+        <span class="search-term">RPG map icons · fantasy symbols · dungeon assets</span>
+        <span class="price-tag">Free / paid packs</span>
+        <span class="pro-tip">Excellent quality fantasy assets — verify commercial license for selling stamp plates.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=fantasy+svg+bundle" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"fantasy svg" · "dragon svg bundle"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Pair with game-icons.net — use CF for ornate borders/frames, game-icons for symbols.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       4. GAMES / ESPORTS
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🎮</span>
+      <h2 class="section-title">Games / Esports</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Gaming-themed stamp plates sell well to the streamer and LAN event market. Focus on generic gaming iconography (controllers, pixel art, crosshairs, loading symbols) rather than specific game logos to avoid trademark issues. Esports event organizers are a great B2B client for custom plates.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=gaming+svg+bundle&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"gaming svg bundle" · "esports logo svg" · "gamer svg cricut"</span>
+        <span class="price-tag">₹200–600</span>
+        <span class="pro-tip">Look for sellers offering game controller, headset, and pixel art packs — high demand items.</span>
+      </a>
+
+      <a href="https://game-icons.net" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">game-icons.net <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">MIT Free</span>
+        </div>
+        <span class="search-term">controller · joystick · pixel sword · game pad</span>
+        <span class="price-tag">Free — MIT license</span>
+        <span class="pro-tip">Instant SVG download, no account needed. Search directly and grab what you need.</span>
+      </a>
+
+      <a href="https://www.flaticon.com/search?word=gaming+icon" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Flaticon <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">"gaming icon" · "esports" · "controller"</span>
+        <span class="price-tag">Free / paid premium</span>
+        <span class="pro-tip">Premium plan removes attribution — filter by "SVG" format before downloading.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=gaming+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"gaming svg" · "streamer svg" · "gamer bundle"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Good source for gaming typography and banner-style designs for larger plates.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       5. INDIAN ART / MANDALA
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🪷</span>
+      <h2 class="section-title">Indian Art / Mandala</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">This is your competitive advantage — high domestic demand AND strong Etsy India export market. Mandala, mehndi, rangoli, and classical Indian motifs are deeply underserved in the laser-engraved stamp plate niche. The intricate geometry of these designs creates visually striking results on mirror steel plates that photograph exceptionally well.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=mandala+svg&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"mandala svg" · "Indian pattern svg" · "mehndi svg stamp" · "rangoli svg"</span>
+        <span class="price-tag">₹100–400 / pack</span>
+        <span class="pro-tip">Also search "henna svg" — same designs, different keyword, often cheaper listings.</span>
+      </a>
+
+      <a href="https://www.freepik.com/search#query=mandala+vector" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Freepik <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">"mandala vector" · "Indian ornament svg" · "lotus svg"</span>
+        <span class="price-tag">Free / premium plan</span>
+        <span class="pro-tip">Largest free mandala library online. Premium plan for commercial use without attribution.</span>
+      </a>
+
+      <a href="https://www.vecteezy.com/search?qterm=mandala+svg+free" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Vecteezy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">CC0 available</span>
+        </div>
+        <span class="search-term">"mandala svg free" · "Indian pattern"</span>
+        <span class="price-tag">Free tier / pro plan</span>
+        <span class="pro-tip">Filter by CC0 license — many mandala designs are available with zero restrictions.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=mandala+bundle" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"mandala bundle" · "Indian art svg" · "henna bundle"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Best value here — thousands of mandala variations under one subscription.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       6. K-POP / IDOL / POP STAR
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">⭐</span>
+      <h2 class="section-title">K-Pop / Idol / Pop Star</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">K-pop fandom merchandise has explosive demand, but specific group logos (BTS, Blackpink, Stray Kids) carry serious trademark risk for commercial products. Focus on inspired aesthetic designs — lightstick silhouettes, crown motifs, star patterns, and concert-themed iconography. These sell to the same audience with zero legal exposure.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=kpop+svg&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"kpop svg" · "lightstick svg" · "star badge svg cricut" · "idol fan svg"</span>
+        <span class="price-tag">₹150–400</span>
+        <span class="pro-tip">Search "kpop inspired" to find designs that avoid specific group IP while hitting the aesthetic.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=kpop+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"kpop" · "star crown svg" · "concert svg"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Good source for sparkle, star, and crown motifs that work across all fandoms.</span>
+      </a>
+
+      <a href="https://www.flaticon.com/search?word=microphone" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Flaticon <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">microphone · star · music icon · crown · sparkle</span>
+        <span class="price-tag">Free / premium</span>
+        <span class="pro-tip">Build your own K-pop aesthetic from individual icon components — fully safe approach.</span>
+      </a>
+
+    </div>
+    <div class="note-callout">
+      <strong>IP Warning:</strong> Avoid specific group logos (BTS, Blackpink, TWICE, etc.) for commercial stamp plates. Use inspired aesthetic designs — same market, zero legal risk.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       7. TV SERIES / MOVIES
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🎬</span>
+      <h2 class="section-title">TV Series / Movies (Pop Culture)</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Fandom merchandise is high-demand but high-risk. Direct show logos and character likenesses are protected IP. The safe path is "inspired by" designs — the House Stark wolf aesthetic without the actual logo, the Death Star geometric pattern without the Star Wars trademark. Reach out to fan artists directly for licensing — many are open to it.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=fandom+svg+inspired&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license carefully</span>
+        </div>
+        <span class="search-term">"fandom svg" · "movie inspired svg" · "tv show cut file"</span>
+        <span class="price-tag">₹200–600</span>
+        <span class="pro-tip">Always read the full listing description — "for personal use only" means you cannot sell plates.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=fandom+svg+bundle" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"fandom svg bundle" · "movie quote svg"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">CF vets commercial licensing — designs on CF subscription are safer to use commercially.</span>
+      </a>
+
+      <a href="https://www.redbubble.com" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Redbubble Artists <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Negotiate directly</span>
+        </div>
+        <span class="search-term">Find fan artists → contact for SVG licensing</span>
+        <span class="price-tag">Negotiable</span>
+        <span class="pro-tip">Many fan artists welcome licensing deals — reach out via their shop contact with a specific offer.</span>
+      </a>
+
+    </div>
+    <div class="note-callout">
+      <strong>Copyright reality:</strong> Direct show logos = high risk. Search <em>"inspired by"</em> versions. Fan-made geometric interpretations of fandom symbols are generally safer territory than direct reproductions.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       8. SCI-FI / SPACE / CYBERPUNK
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🚀</span>
+      <h2 class="section-title">Sci-Fi / Space / Cyberpunk</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Space exploration aesthetics, circuit board patterns, robot iconography, and cyberpunk geometry engrave beautifully on mirror steel — the reflective surface amplifies the tech-industrial aesthetic. Strong seller for the corporate gifting and tech startup markets. Circuit trace patterns work especially well as repeating tile plates.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=sci+fi+svg+bundle&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"sci fi svg" · "space svg bundle" · "alien svg" · "cyberpunk svg cricut"</span>
+        <span class="price-tag">₹200–700</span>
+        <span class="pro-tip">Search "circuit board svg" for excellent tile plate designs — very popular with tech gifting market.</span>
+      </a>
+
+      <a href="https://game-icons.net" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">game-icons.net <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">MIT Free</span>
+        </div>
+        <span class="search-term">robot · rocket · alien · laser · circuit · satellite</span>
+        <span class="price-tag">Free — MIT license</span>
+        <span class="pro-tip">Superb sci-fi icon selection — search "death ray", "tentacle", "robot" for interesting finds.</span>
+      </a>
+
+      <a href="https://www.svgrepo.com/search/space/" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">SVGrepo <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">CC0 available</span>
+        </div>
+        <span class="search-term">space · robot · circuit · alien · UFO</span>
+        <span class="price-tag">Free — filter CC0</span>
+        <span class="pro-tip">Filter by CC0 license specifically — 500,000+ SVGs, many sci-fi/tech options available.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=cyberpunk+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"cyberpunk svg" · "space svg bundle" · "futuristic svg"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Best for complex cyberpunk typography and holographic-style frame designs.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       9. NATURE / ANIMALS / WILDLIFE
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🦅</span>
+      <h2 class="section-title">Nature / Animals / Wildlife</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Animal silhouettes and botanical designs are perennial bestsellers across all gift markets. Wolf, eagle, and mandala-animal combinations do particularly well. Openclipart is an underrated gem here — fully public domain, entirely free for commercial use, with a surprisingly strong animal silhouette library.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=animal+silhouette+svg&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"wolf svg" · "animal silhouette svg" · "wildlife svg stamp"</span>
+        <span class="price-tag">₹150–500</span>
+        <span class="pro-tip">Search "wolf mandala svg" for high-converting combination designs — sell as premium plates.</span>
+      </a>
+
+      <a href="https://www.freepik.com/search#query=wolf+vector+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Freepik <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">"wolf vector" · "eagle svg" · "floral svg" · "butterfly silhouette"</span>
+        <span class="price-tag">Free / paid premium</span>
+        <span class="pro-tip">Large free library — premium plan removes attribution for commercial plate production.</span>
+      </a>
+
+      <a href="https://www.svgrepo.com/search/wolf/" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">SVGrepo <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">CC0 available</span>
+        </div>
+        <span class="search-term">wolf · eagle · butterfly · feather · bear</span>
+        <span class="price-tag">Free — filter CC0</span>
+        <span class="pro-tip">Consistently clean silhouettes — filter CC0 and download directly as SVG.</span>
+      </a>
+
+      <a href="https://openclipart.org" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Openclipart <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">Public Domain</span>
+        </div>
+        <span class="search-term">any animal name — wolf, eagle, deer, fox, bear</span>
+        <span class="price-tag">100% Free — no restrictions</span>
+        <span class="pro-tip">Fully public domain — no license, no attribution, no restrictions. Zero commercial use concerns.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       10. CELTIC / NORSE / VIKING
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">⚡</span>
+      <h2 class="section-title">Celtic / Norse / Viking</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Celtic knotwork and Norse rune designs have devoted collector communities with high willingness to pay. These designs are intricate enough to justify premium pricing and have no IP issues — all are historical designs in the public domain. Viking and Norse mythology aesthetics are trending strongly with the gaming and fantasy crossover market.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=celtic+knot+svg&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"celtic knot svg" · "viking svg bundle" · "norse rune svg stamp"</span>
+        <span class="price-tag">₹200–600</span>
+        <span class="pro-tip">Search "vegvisir svg" and "yggdrasil svg" — high-demand specific Norse symbols.</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=celtic+svg+bundle" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"celtic svg bundle" · "viking svg" · "norse svg"</span>
+        <span class="price-tag">Subscription</span>
+        <span class="pro-tip">Excellent source for knotwork border patterns — great for framing other designs on plates.</span>
+      </a>
+
+      <a href="https://www.freepik.com/search#query=celtic+pattern+vector" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Freepik <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">"celtic pattern" · "viking symbol" · "norse ornament"</span>
+        <span class="price-tag">Free / premium</span>
+        <span class="pro-tip">Good base patterns — may need simplification in Inkscape before engraving.</span>
+      </a>
+
+      <a href="https://www.vecteezy.com/search?qterm=celtic+knot+svg+free" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Vecteezy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">Free tier</span>
+        </div>
+        <span class="search-term">"celtic knot svg free" · "viking pattern"</span>
+        <span class="price-tag">Free tier available</span>
+        <span class="pro-tip">Filter free + CC license — several high-quality Celtic knotwork designs available.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       11. FLORAL / BOTANICAL / WEDDING
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">🌿</span>
+      <h2 class="section-title">Floral / Botanical / Wedding</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">The single largest market segment for stamp plates — wedding and event stationery alone is a massive opportunity in India. Custom bridal mehendi stamp plates, wedding favor stamps, and invitation wax seal designs command premium prices. Floral patterns photograph beautifully and drive social media sharing which is free marketing for your plates.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.etsy.com/search?q=floral+svg+bundle&ref=search_bar" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Etsy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Check license</span>
+        </div>
+        <span class="search-term">"floral svg bundle" · "wedding svg stamp" · "botanical svg"</span>
+        <span class="price-tag">₹150–500</span>
+        <span class="pro-tip">Huge India wedding market — search "Indian floral svg" and "wedding invitation border svg".</span>
+      </a>
+
+      <a href="https://www.creativefabrica.com/search/?query=floral+bundle" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Creative Fabrica <span class="ext-icon">↗</span></span>
+          <span class="badge badge-sub">Subscription</span>
+        </div>
+        <span class="search-term">"floral bundle" · "wedding svg" · "botanical illustration"</span>
+        <span class="price-tag">Subscription — best value here</span>
+        <span class="pro-tip">Best value for floral — thousands of options. Download in bulk and build a large plate catalog.</span>
+      </a>
+
+      <a href="https://www.freepik.com/search#query=floral+vector+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Freepik <span class="ext-icon">↗</span></span>
+          <span class="badge badge-check">Free w/ attribution</span>
+        </div>
+        <span class="search-term">"floral vector" · "botanical svg" · "rose svg" · "lotus flower"</span>
+        <span class="price-tag">Free / premium plan</span>
+        <span class="pro-tip">Massive floral library — search "hand drawn floral" for organic looks that engrave beautifully.</span>
+      </a>
+
+      <a href="https://www.vecteezy.com/search?qterm=floral+svg" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Vecteezy <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">Free tier</span>
+        </div>
+        <span class="search-term">"floral svg" · "botanical vector" · "wreath svg"</span>
+        <span class="price-tag">Free tier available</span>
+        <span class="pro-tip">Strong wreath and frame designs — ideal for combining with text on custom plates.</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       12. LOGO / BRANDING / BUSINESS
+  ══════════════════════════════════════════ -->
+  <section class="category-section">
+    <div class="section-header">
+      <span class="section-icon">💼</span>
+      <h2 class="section-title">Logo / Branding / Business</h2>
+    </div>
+    <hr class="section-divider">
+    <p class="section-desc">Custom business stamp plates are an excellent B2B revenue stream — one corporate client ordering 10 plates beats 30 individual retail orders. Startups, restaurants, boutiques, and event planners are all potential customers. The most common workflow: the client provides their own logo file, you engrave it. Zero sourcing cost, pure service revenue.</p>
+    <div class="cards-grid">
+
+      <a href="https://www.canva.com" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Canva <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <span class="search-term">Logo Maker → export as SVG → trace in Inkscape</span>
+        <span class="price-tag">Free</span>
+        <span class="pro-tip">Clients often have Canva logos — ask them to export as SVG and send directly. Works most of the time.</span>
+      </a>
+
+      <a href="https://www.adobe.com/express/create/logo" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Adobe Express <span class="ext-icon">↗</span></span>
+          <span class="badge badge-free">Free</span>
+        </div>
+        <span class="search-term">Free logo maker → SVG export</span>
+        <span class="price-tag">Free (with account)</span>
+        <span class="pro-tip">Clean vector output — better for engraving than raster-traced logos from clients.</span>
+      </a>
+
+      <a href="https://looka.com" target="_blank" rel="noopener" class="link-card">
+        <div class="card-top">
+          <span class="site-name">Looka.com <span class="ext-icon">↗</span></span>
+          <span class="badge badge-paid">Paid export</span>
+        </div>
+        <span class="search-term">AI logo generator → SVG download</span>
+        <span class="price-tag">Free to generate, paid to download</span>
+        <span class="pro-tip">Show clients the preview, have THEM purchase and send you the SVG — zero cost to you.</span>
+      </a>
+
+      <div class="link-card" style="border-color: #238636;">
+        <div class="card-top">
+          <span class="site-name" style="color: #3fb950;">Client-Provided Logos</span>
+          <span class="badge badge-free">Best model</span>
+        </div>
+        <span class="search-term">Client sends their own logo → you engrave it</span>
+        <span class="price-tag">₹0 sourcing cost</span>
+        <span class="pro-tip">Best business model — zero sourcing cost, no license risk, client already owns the IP. Accept PDF, AI, SVG, PNG (for tracing).</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       WORKFLOW SECTION
+  ══════════════════════════════════════════ -->
+  <div class="workflow-section">
+    <h2>⚙ From SVG to Stamp Plate — The Full Workflow</h2>
+    <div class="workflow-steps">
+
+      <div class="workflow-step">
+        <div class="step-track">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <strong>Find &amp; download your SVG</strong>
+          <span>Use the sources above to find a design. Download as .svg format. Check the license before proceeding to a commercial plate.</span>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-track">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <strong>Clean up in Inkscape (free)</strong>
+          <span>Open in <a href="https://inkscape.org" target="_blank">Inkscape</a> — simplify complex paths, remove all color fills, make everything black strokes. Use Path → Simplify if the file is too complex. Flatten to a single layer.</span>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-track">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <strong>Compose your plate layout</strong>
+          <span>Upload to the <a href="stamp_plate_app.html">SVG Studio app</a> — arrange multiple designs on your plate dimensions, set margins, check the engraving preview, export the final plate SVG.</span>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-track">
+          <div class="step-num">4</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <strong>Open in your laser software</strong>
+          <span>Import the plate SVG into Lightburn, EzCad2, or xTool XCS. Set your engraving parameters for SS304 mirror steel — typically 80% speed, 50% power, 500 DPI for fine detail work.</span>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-track">
+          <div class="step-num">5</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-body">
+          <strong>Engrave on SS304 mirror steel — done</strong>
+          <span>Run your laser engraver on the mirror finish steel plate. Clean with isopropyl alcohol after engraving. Quality control: press-test on stamp ink before packing.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PRO TIPS SECTION
+  ══════════════════════════════════════════ -->
+  <div class="tips-section">
+    <h2>💡 Pro Tips from the Field</h2>
+    <div class="tips-list">
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span>The nail art stamping community uses <strong>identical designs</strong> to miniature painting stamps — search both markets when sourcing. "Nail art stamp svg" often surfaces designs not found under "stamp plate svg".</span>
+      </div>
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span><strong>Goblin Hobbies</strong> (<a href="https://www.goblinhobbies.com" target="_blank" style="color: #7c6fff;">goblinhobbies.com</a>) is the reference catalog for what sells in the miniature stamping market — study their catalog before sourcing new designs.</span>
+      </div>
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span>When buying on Etsy, sellers offering a <strong>"commercial license" add-on</strong> (usually +₹200 extra) are a good sign — they understand the market and the designs are likely high quality.</span>
+      </div>
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span><strong>Creative Fabrica subscription at ~₹400/month</strong> pays for itself after 3–4 packs you'd have bought individually. Essential if you're producing plates regularly across multiple categories.</span>
+      </div>
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span><strong><a href="https://game-icons.net" target="_blank" style="color: #7c6fff;">game-icons.net</a> is the single best free source</strong> — MIT license, 4000+ stamp-perfect designs, instant SVG download, no account needed. Bookmark this before anything else.</span>
+      </div>
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span>Always <strong>test-trace in Inkscape before engraving</strong> — some complex SVGs have overlapping paths, hidden elements, or hairline details that won't survive engraving. Path → Object to Path, then check for issues.</span>
+      </div>
+
+      <div class="tip-item">
+        <span class="tip-bullet">→</span>
+        <span>Build a <strong>library of 20–30 tested, engrave-ready SVGs</strong> in your most popular categories before listing. Customers who order fast get repeat business — don't source on-demand for paid orders.</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  SVG Sources Directory &mdash; Part of the Stamp Plate Designer's Hub &mdash; <a href="index.html" style="color: #7c6fff;">← Back to Hub</a>
+</footer>
+
+</body>
+</html>
