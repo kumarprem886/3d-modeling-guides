@@ -1,0 +1,1688 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stamp Plate SVG Studio</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; }
+a { color: #e91e8c; text-decoration: none; }
+.app-header { position: sticky; top: 0; z-index: 100; background: #0d1117; border-bottom: 1px solid #30363d; display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+.back-btn { padding: 12px 16px; color: #8b949e; font-size: 13px; border-right: 1px solid #30363d; white-space: nowrap; }
+.back-btn:hover { color: #e91e8c; }
+.app-title { padding: 12px 16px; font-weight: 700; font-size: 15px; color: #e6edf3; border-right: 1px solid #30363d; white-space: nowrap; }
+.tab-nav { display: flex; flex: 1; overflow-x: auto; }
+.tab-nav-btn { padding: 12px 18px; background: transparent; border: none; color: #8b949e; cursor: pointer; font-size: 13px; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.tab-nav-btn:hover { color: #e6edf3; }
+.tab-nav-btn.active { color: #e91e8c; border-bottom-color: #e91e8c; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.two-col { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: calc(100vh - 50px); }
+.sidebar { background: #161b22; border-right: 1px solid #30363d; padding: 1.2rem; overflow-y: auto; }
+.main-area { padding: 1.2rem; overflow-y: auto; }
+.ctrl-label { font-size: 11px; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 14px; margin-bottom: 6px; display: block; }
+.ctrl-label:first-child { margin-top: 0; }
+select { width: 100%; background: #0d1117; border: 1px solid #30363d; color: #e6edf3; padding: 7px 10px; border-radius: 8px; font-size: 13px; outline: none; }
+select:focus { border-color: #e91e8c; }
+.slider-row { display: flex; align-items: center; gap: 8px; }
+input[type=range] { flex: 1; accent-color: #e91e8c; }
+.slider-val { font-size: 12px; color: #e6edf3; min-width: 36px; text-align: right; font-weight: 600; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; border: 1px solid #30363d; background: #161b22; color: #e6edf3; cursor: pointer; font-size: 13px; transition: all 0.15s; }
+.btn:hover { border-color: #e91e8c; color: #e91e8c; }
+.btn-primary { background: #e91e8c; border-color: #e91e8c; color: #fff; }
+.btn-primary:hover { background: #c4176e; border-color: #c4176e; color: #fff; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-group { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.preview-box { background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 320px; }
+.preview-box svg { max-width: 100%; max-height: 500px; }
+.pattern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+.pattern-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 10px; cursor: pointer; text-align: center; transition: all 0.15s; }
+.pattern-card:hover, .pattern-card.active { border-color: #e91e8c; }
+.pattern-card svg { width: 80px; height: 80px; }
+.pattern-card .pattern-name { font-size: 11px; color: #8b949e; margin-top: 6px; }
+.pattern-card.active .pattern-name { color: #e91e8c; }
+.upload-drop { border: 2px dashed #30363d; border-radius: 12px; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: #161b22; }
+.upload-drop:hover, .upload-drop.dragging { border-color: #e91e8c; background: #1a0a15; }
+.upload-drop-icon { font-size: 48px; margin-bottom: 1rem; }
+.upload-drop h3 { color: #e6edf3; font-size: 16px; margin-bottom: 8px; }
+.upload-drop p { color: #8b949e; font-size: 13px; }
+.section-h { color: #e91e8c; font-size: 13px; font-weight: 600; margin: 1.2rem 0 0.6rem; }
+.section-h:first-child { margin-top: 0; }
+.tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.tag-pink { background: #3d0030; color: #e91e8c; border: 1px solid #e91e8c; }
+.tag-green { background: #0d4429; color: #2daa6b; border: 1px solid #2daa6b; }
+.tag-blue { background: #001a30; color: #58a6ff; border: 1px solid #58a6ff; }
+.tag-orange { background: #2d1500; color: #ff9933; border: 1px solid #ff9933; }
+.tip { border-left: 3px solid #e91e8c; background: #1a0a15; padding: 8px 12px; border-radius: 0 8px 8px 0; font-size: 12px; color: #c9d1d9; margin: 10px 0; }
+.tip.info { border-color: #58a6ff; background: #001a30; }
+.tip.success { border-color: #2daa6b; background: #0d4429; }
+.plate-preview { background: #fff; border-radius: 8px; position: relative; }
+.plate-item { position: absolute; border: 1px dashed #e91e8c; cursor: move; display: flex; align-items: center; justify-content: center; }
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0d1117; } ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 1px solid #30363d; } }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <a href="index.html" class="back-btn">← Hub</a>
+  <div class="app-title">🎨 Stamp Plate SVG Studio</div>
+  <nav class="tab-nav">
+    <button class="tab-nav-btn active" data-tab="library" onclick="switchTab('library')">📚 Library</button>
+    <button class="tab-nav-btn" data-tab="upload" onclick="switchTab('upload')">⬆️ Upload &amp; Trace</button>
+    <button class="tab-nav-btn" data-tab="prompts" onclick="switchTab('prompts')">🤖 AI Prompts</button>
+    <button class="tab-nav-btn" data-tab="composer" onclick="switchTab('composer')">🖼️ Plate Composer (0)</button>
+  </nav>
+</div>
+
+<!-- LIBRARY TAB -->
+<div id="tab-library" class="tab-panel active">
+  <div class="two-col">
+    <div class="sidebar">
+      <span class="ctrl-label">Pattern</span>
+      <select id="lib-pattern" onchange="renderLibrary()">
+        <option value="mandala">🌸 Mandala</option>
+        <option value="lotus">🪷 Lotus</option>
+        <option value="temple_border">🏛️ Temple Border</option>
+        <option value="chainmail">⛓️ Chainmail</option>
+        <option value="dragon_scales">🐉 Dragon Scales</option>
+        <option value="celtic_knot">☘️ Celtic Knot</option>
+        <option value="arcane_circle">🔮 Arcane Circle</option>
+        <option value="norse_runes">⚡ Norse Runes</option>
+        <option value="heraldry_shield">🛡️ Heraldry Shield</option>
+        <option value="sci_fi_circuit">🔌 Sci-Fi Circuit</option>
+        <option value="mughal_jali">✨ Mughal Jali</option>
+        <option value="islamic_star">⭐ Islamic Star</option>
+      </select>
+
+      <span class="ctrl-label">Plate Size</span>
+      <select id="lib-size" onchange="renderLibrary()">
+        <option value="120">40×40mm (120px)</option>
+        <option value="180" selected>60×60mm (180px)</option>
+        <option value="240">80×80mm (240px)</option>
+        <option value="300">100×100mm (300px)</option>
+      </select>
+
+      <span class="ctrl-label">Rings / Layers</span>
+      <div class="slider-row">
+        <input type="range" id="lib-rings" min="2" max="8" value="4" oninput="document.getElementById('lib-rings-val').textContent=this.value;renderLibrary()">
+        <span class="slider-val" id="lib-rings-val">4</span>
+      </div>
+
+      <span class="ctrl-label">Line Weight</span>
+      <div class="slider-row">
+        <input type="range" id="lib-lw" min="0.5" max="4" step="0.5" value="1.5" oninput="document.getElementById('lib-lw-val').textContent=this.value;renderLibrary()">
+        <span class="slider-val" id="lib-lw-val">1.5</span>
+      </div>
+
+      <span class="ctrl-label">Rotation (°)</span>
+      <div class="slider-row">
+        <input type="range" id="lib-rot" min="0" max="90" step="5" value="0" oninput="document.getElementById('lib-rot-val').textContent=this.value;renderLibrary()">
+        <span class="slider-val" id="lib-rot-val">0</span>
+      </div>
+
+      <span class="ctrl-label">Complexity</span>
+      <div class="slider-row">
+        <input type="range" id="lib-complexity" min="1" max="10" value="5" oninput="document.getElementById('lib-complexity-val').textContent=this.value;renderLibrary()">
+        <span class="slider-val" id="lib-complexity-val">5</span>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="renderLibrary()">🔄 Regenerate</button>
+        <button class="btn" onclick="downloadSVG(currentSVGContent, currentPattern+'.svg')">⬇️ SVG</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn" style="width:100%" onclick="addToPlate(currentSVGContent, currentPattern)">➕ Add to Plate ↗</button>
+      </div>
+
+      <div class="tip" id="lib-tip" style="margin-top:16px">Select a pattern to see usage tips.</div>
+    </div>
+    <div class="main-area">
+      <div class="section-h">Quick Select</div>
+      <div class="pattern-grid" id="lib-thumbs"></div>
+      <div class="section-h" style="margin-top:1.4rem">Preview</div>
+      <div class="preview-box" id="lib-preview" style="margin-bottom:12px"></div>
+      <div id="lib-tags"></div>
+    </div>
+  </div>
+</div>
+
+<!-- UPLOAD TAB -->
+<div id="tab-upload" class="tab-panel">
+  <div style="padding:1.2rem">
+    <div class="upload-drop" id="upload-drop">
+      <div class="upload-drop-icon">🖼️</div>
+      <h3>Drop image here or click to browse</h3>
+      <p>Supports PNG, JPG, GIF, WebP — best results with high-contrast B&amp;W images</p>
+      <input type="file" id="file-input" accept="image/*" style="display:none">
+    </div>
+
+    <div id="upload-controls" style="display:none; margin-top:1.2rem">
+      <div class="two-col">
+        <div class="sidebar" style="border-radius:10px">
+          <span class="ctrl-label" style="margin-top:0">Threshold (0–255)</span>
+          <div class="slider-row">
+            <input type="range" id="trace-threshold" min="0" max="255" value="128" oninput="document.getElementById('trace-threshold-val').textContent=this.value;traceImage()">
+            <span class="slider-val" id="trace-threshold-val">128</span>
+          </div>
+
+          <span class="ctrl-label">Blur / Smooth</span>
+          <div class="slider-row">
+            <input type="range" id="trace-blur" min="0" max="5" value="1" oninput="document.getElementById('trace-blur-val').textContent=this.value;traceImage()">
+            <span class="slider-val" id="trace-blur-val">1</span>
+          </div>
+
+          <span class="ctrl-label">Scale (%)</span>
+          <div class="slider-row">
+            <input type="range" id="trace-scale" min="50" max="200" value="100" oninput="document.getElementById('trace-scale-val').textContent=this.value+'%';traceImage()">
+            <span class="slider-val" id="trace-scale-val">100%</span>
+          </div>
+
+          <span class="ctrl-label">Invert</span>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="trace-invert" onchange="traceImage()" style="accent-color:#e91e8c;width:16px;height:16px">
+            <span style="font-size:13px;color:#e6edf3">Invert black/white</span>
+          </label>
+
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="traceImage()">🔄 Re-trace</button>
+            <button class="btn" onclick="downloadSVG(window.lastTracedSVG||'', 'traced.svg')">⬇️ SVG</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn" style="width:100%" onclick="addToPlate(window.lastTracedSVG||'', 'Custom Upload')">➕ Add to Plate ↗</button>
+          </div>
+
+          <div class="tip info" style="margin-top:12px">
+            💡 Best results: high contrast B&amp;W images, clean outlines, minimal gradients
+          </div>
+        </div>
+        <div class="main-area">
+          <div style="display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap">
+            <div>
+              <div class="section-h">Original</div>
+              <div id="upload-original" style="background:#161b22;border-radius:8px;border:1px solid #30363d;padding:8px;min-width:160px;min-height:120px;display:flex;align-items:center;justify-content:center"></div>
+            </div>
+            <div style="font-size:28px;padding-top:36px;color:#8b949e">→</div>
+            <div style="flex:1">
+              <div class="section-h">Traced SVG</div>
+              <div id="upload-preview" class="preview-box" style="min-height:200px"></div>
+              <div id="trace-stats" style="font-size:12px;color:#8b949e;margin-top:8px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI PROMPTS TAB (Part B) -->
+<div id="tab-prompts" class="tab-panel">
+  <div style="padding:2rem;color:#8b949e;text-align:center">AI Prompts tab — loaded in Part B</div>
+</div>
+
+<!-- PLATE COMPOSER TAB (Part B) -->
+<div id="tab-composer" class="tab-panel">
+  <div style="padding:2rem;color:#8b949e;text-align:center">Plate Composer tab — loaded in Part B</div>
+</div>
+
+<script>
+// ============================================================
+// PATTERN GENERATORS
+// ============================================================
+window.PATTERNS = {};
+
+// Helper
+function pt(cx, cy, r, angle) {
+  const a = (angle - 90) * Math.PI / 180;
+  return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+}
+
+// 1. MANDALA
+PATTERNS.mandala = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  const cx = w/2, cy = h/2, R = Math.min(w,h)/2 - lw;
+  let s = '';
+  s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  for (let ri = 1; ri <= rings; ri++) {
+    const r = R * ri / (rings + 1);
+    const petals = 6 + (ri * 2);
+    const petalR = (R / (rings + 1)) * 0.9;
+    const angleOffset = ri % 2 === 0 ? (360 / petals / 2) : 0;
+    for (let p = 0; p < petals; p++) {
+      const angle = rot + angleOffset + (360 / petals) * p;
+      const [px, py] = pt(cx, cy, r, angle);
+      const [tx, ty] = pt(cx, cy, r + petalR * 0.9, angle);
+      const [c1x, c1y] = pt(cx, cy, r + petalR * 0.5, angle - 360/petals*0.4);
+      const [c2x, c2y] = pt(cx, cy, r + petalR * 0.5, angle + 360/petals*0.4);
+      s += `<path d="M${px.toFixed(2)},${py.toFixed(2)} C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${tx.toFixed(2)},${ty.toFixed(2)} C${c2x.toFixed(2)},${c2y.toFixed(2)} ${c1x.toFixed(2)},${c1y.toFixed(2)} ${px.toFixed(2)},${py.toFixed(2)}Z" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+    }
+    // inner decorative ring
+    s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="black" stroke-width="${lw*0.4}" stroke-dasharray="${r*0.2},${r*0.1}"/>`;
+  }
+  // spokes
+  const spokes = 12;
+  for (let i = 0; i < spokes; i++) {
+    const angle = rot + (360/spokes)*i;
+    const [x2,y2] = pt(cx,cy,R,angle);
+    s += `<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="black" stroke-width="${lw*0.3}" opacity="0.4"/>`;
+  }
+  s += `<circle cx="${cx}" cy="${cy}" r="${R*0.06}" fill="black"/>`;
+  return s;
+};
+
+// 2. LOTUS
+PATTERNS.lotus = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  const cx = w/2, cy = h/2, R = Math.min(w,h)/2 - lw;
+  let s = '';
+  s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  const layers = Math.min(rings, 6);
+  for (let l = 0; l < layers; l++) {
+    const layerR = R * (layers - l) / layers;
+    const petalCount = 8;
+    const angleOff = l % 2 === 0 ? 0 : 360/petalCount/2;
+    for (let p = 0; p < petalCount; p++) {
+      const angle = rot + angleOff + (360/petalCount)*p;
+      const [bx, by] = pt(cx, cy, layerR*0.1, angle);
+      const [tx, ty] = pt(cx, cy, layerR, angle);
+      const [c1x, c1y] = pt(cx, cy, layerR*0.7, angle - 12);
+      const [c2x, c2y] = pt(cx, cy, layerR*0.7, angle + 12);
+      s += `<path d="M${bx.toFixed(2)},${by.toFixed(2)} C${c1x.toFixed(2)},${c1y.toFixed(2)} ${tx.toFixed(2)},${ty.toFixed(2)} ${tx.toFixed(2)},${ty.toFixed(2)} C${c2x.toFixed(2)},${c2y.toFixed(2)} ${bx.toFixed(2)},${by.toFixed(2)} ${bx.toFixed(2)},${by.toFixed(2)}Z" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+      // vein
+      const [mx,my] = pt(cx,cy,layerR*0.6,angle);
+      s += `<line x1="${bx.toFixed(2)}" y1="${by.toFixed(2)}" x2="${mx.toFixed(2)}" y2="${my.toFixed(2)}" stroke="black" stroke-width="${lw*0.3}"/>`;
+    }
+  }
+  s += `<circle cx="${cx}" cy="${cy}" r="${R*0.12}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${R*0.05}" fill="black"/>`;
+  return s;
+};
+
+// 3. TEMPLE BORDER
+PATTERNS.temple_border = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const m = lw*2;
+  // double outer border
+  s += `<rect x="${m}" y="${m}" width="${w-m*2}" height="${h-m*2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  s += `<rect x="${m+lw*3}" y="${m+lw*3}" width="${w-m*2-lw*6}" height="${h-m*2-lw*6}" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+  // corner ornaments
+  const cs = 16;
+  [[m,m],[w-m-cs,m],[m,h-m-cs],[w-m-cs,h-m-cs]].forEach(([cx,cy])=>{
+    s += `<rect x="${cx}" y="${cy}" width="${cs}" height="${cs}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+    s += `<line x1="${cx}" y1="${cy}" x2="${cx+cs}" y2="${cy+cs}" stroke="black" stroke-width="${lw*0.6}"/>`;
+    s += `<line x1="${cx+cs}" y1="${cy}" x2="${cx}" y2="${cy+cs}" stroke="black" stroke-width="${lw*0.6}"/>`;
+    s += `<circle cx="${cx+cs/2}" cy="${cy+cs/2}" r="3" fill="black"/>`;
+  });
+  // top/bottom arch motifs
+  const archW = 20, archSpacing = archW + 4;
+  const topY = m + cs + 4;
+  const archCount = Math.floor((w - 2*(m+cs+4)) / archSpacing);
+  const archStartX = (w - archCount*archSpacing) / 2;
+  for (let i = 0; i < archCount; i++) {
+    const ax = archStartX + i*archSpacing;
+    s += `<path d="M${ax},${topY+12} Q${ax+archW/2},${topY} ${ax+archW},${topY+12}" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+    s += `<line x1="${ax}" y1="${topY+12}" x2="${ax}" y2="${topY+14}" stroke="black" stroke-width="${lw*0.8}"/>`;
+    s += `<line x1="${ax+archW}" y1="${topY+12}" x2="${ax+archW}" y2="${topY+14}" stroke="black" stroke-width="${lw*0.8}"/>`;
+    const botY = h - m - cs - 18;
+    s += `<path d="M${ax},${botY} Q${ax+archW/2},${botY+12} ${ax+archW},${botY}" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+  }
+  // side pillar motifs
+  const pillarH = 18, pillarW = 10;
+  const pillarCount = Math.floor((h - 2*(m+cs+4)) / (pillarH+4));
+  const pillarStartY = (h - pillarCount*(pillarH+4)) / 2;
+  for (let i = 0; i < pillarCount; i++) {
+    const py = pillarStartY + i*(pillarH+4);
+    [[m+cs+2, pillarW],[w-m-cs-pillarW-2, pillarW]].forEach(([px,pw])=>{
+      s += `<rect x="${px}" y="${py}" width="${pw}" height="${pillarH}" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+      s += `<rect x="${px-1}" y="${py}" width="${pw+2}" height="3" fill="black"/>`;
+      s += `<rect x="${px-1}" y="${py+pillarH-3}" width="${pw+2}" height="3" fill="black"/>`;
+    });
+  }
+  // inner frame
+  const innerM = m + cs + 20;
+  if (innerM*2 < w) s += `<rect x="${innerM}" y="${innerM}" width="${w-innerM*2}" height="${h-innerM*2}" fill="none" stroke="black" stroke-width="${lw*0.5}" stroke-dasharray="4,2"/>`;
+  return s;
+};
+
+// 4. CHAINMAIL
+PATTERNS.chainmail = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const rx = (w / (rings * 2 + 1)) * 1.2;
+  const ry = rx * 0.55;
+  const cols = Math.ceil(w / rx) + 2;
+  const rows = Math.ceil(h / ry) + 2;
+  s += `<clipPath id="cm-clip"><rect x="0" y="0" width="${w}" height="${h}"/></clipPath>`;
+  s += `<g clip-path="url(#cm-clip)">`;
+  for (let row = -1; row < rows; row++) {
+    for (let col = -1; col < cols; col++) {
+      const ox = col * rx + (row % 2 === 0 ? 0 : rx/2);
+      const oy = row * ry;
+      if (rot < 45) {
+        s += `<ellipse cx="${ox}" cy="${oy}" rx="${rx*0.48}" ry="${ry*0.45}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+      } else {
+        s += `<ellipse cx="${ox}" cy="${oy}" rx="${ry*0.45}" ry="${rx*0.48}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+      }
+    }
+  }
+  s += `</g>`;
+  s += `<rect x="1" y="1" width="${w-2}" height="${h-2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  return s;
+};
+
+// 5. DRAGON SCALES
+PATTERNS.dragon_scales = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const scaleW = w / (rings + 1);
+  const scaleH = scaleW * 0.7;
+  const cols = Math.ceil(w / scaleW) + 2;
+  const rows = Math.ceil(h / (scaleH*0.6)) + 2;
+  s += `<clipPath id="ds-clip"><rect x="0" y="0" width="${w}" height="${h}"/></clipPath>`;
+  s += `<g clip-path="url(#ds-clip)">`;
+  for (let row = -1; row < rows; row++) {
+    const offX = row % 2 === 0 ? 0 : scaleW/2;
+    for (let col = -1; col < cols; col++) {
+      const sx = col * scaleW + offX;
+      const sy = row * scaleH * 0.6;
+      s += `<path d="M${sx},${sy+scaleH} Q${sx+scaleW*0.2},${sy} ${sx+scaleW/2},${sy} Q${sx+scaleW*0.8},${sy} ${sx+scaleW},${sy+scaleH}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+      // center vein
+      s += `<line x1="${sx+scaleW/2}" y1="${sy+2}" x2="${sx+scaleW/2}" y2="${sy+scaleH}" stroke="black" stroke-width="${lw*0.4}"/>`;
+    }
+  }
+  s += `</g>`;
+  s += `<rect x="1" y="1" width="${w-2}" height="${h-2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  return s;
+};
+
+// 6. CELTIC KNOT
+PATTERNS.celtic_knot = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const border = lw * 2;
+  s += `<rect x="${border}" y="${border}" width="${w-border*2}" height="${h-border*2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  s += `<rect x="${border+lw*3}" y="${border+lw*3}" width="${w-border*2-lw*6}" height="${h-border*2-lw*6}" fill="none" stroke="black" stroke-width="${lw*0.5}"/>`;
+  const tileSize = Math.min(w, h) / (rings + 1);
+  const cols = Math.floor((w - border*4) / tileSize);
+  const rows = Math.floor((h - border*4) / tileSize);
+  const startX = (w - cols * tileSize) / 2;
+  const startY = (h - rows * tileSize) / 2;
+  const kw = lw * 2;
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const tx = startX + col * tileSize;
+      const ty = startY + row * tileSize;
+      const ts = tileSize;
+      // diagonal cross knot pattern
+      if ((row + col) % 2 === 0) {
+        // \ diagonal bands
+        s += `<line x1="${tx}" y1="${ty}" x2="${tx+ts}" y2="${ty+ts}" stroke="white" stroke-width="${kw*2.5}"/>`;
+        s += `<line x1="${tx}" y1="${ty}" x2="${tx+ts}" y2="${ty+ts}" stroke="black" stroke-width="${kw}"/>`;
+        s += `<line x1="${tx+ts}" y1="${ty}" x2="${tx}" y2="${ty+ts}" stroke="white" stroke-width="${kw*2.5}"/>`;
+        s += `<line x1="${tx+ts}" y1="${ty}" x2="${tx}" y2="${ty+ts}" stroke="black" stroke-width="${kw}"/>`;
+        // break top/right for over-under
+        s += `<line x1="${tx+ts*0.3}" y1="${ty+ts*0.3}" x2="${tx+ts*0.7}" y2="${ty+ts*0.7}" stroke="white" stroke-width="${kw*2.2}"/>`;
+        s += `<line x1="${tx}" y1="${ty}" x2="${tx+ts*0.35}" y2="${ty+ts*0.35}" stroke="black" stroke-width="${kw}"/>`;
+        s += `<line x1="${tx+ts*0.65}" y1="${ty+ts*0.65}" x2="${tx+ts}" y2="${ty+ts}" stroke="black" stroke-width="${kw}"/>`;
+      } else {
+        // / diagonal
+        s += `<line x1="${tx}" y1="${ty+ts}" x2="${tx+ts}" y2="${ty}" stroke="white" stroke-width="${kw*2.5}"/>`;
+        s += `<line x1="${tx}" y1="${ty+ts}" x2="${tx+ts}" y2="${ty}" stroke="black" stroke-width="${kw}"/>`;
+        s += `<line x1="${tx}" y1="${ty}" x2="${tx+ts}" y2="${ty+ts}" stroke="white" stroke-width="${kw*2.5}"/>`;
+        s += `<line x1="${tx}" y1="${ty}" x2="${tx+ts}" y2="${ty+ts}" stroke="black" stroke-width="${kw}"/>`;
+        s += `<line x1="${tx+ts*0.3}" y1="${ty+ts*0.7}" x2="${tx+ts*0.7}" y2="${ty+ts*0.3}" stroke="white" stroke-width="${kw*2.2}"/>`;
+        s += `<line x1="${tx}" y1="${ty+ts}" x2="${tx+ts*0.35}" y2="${ty+ts*0.65}" stroke="black" stroke-width="${kw}"/>`;
+        s += `<line x1="${tx+ts*0.65}" y1="${ty+ts*0.35}" x2="${tx+ts}" y2="${ty}" stroke="black" stroke-width="${kw}"/>`;
+      }
+    }
+  }
+  return s;
+};
+
+// 7. ARCANE CIRCLE
+PATTERNS.arcane_circle = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  const cx = w/2, cy = h/2, R = Math.min(w,h)/2 - lw;
+  let s = '';
+  // concentric circles
+  for (let i = 1; i <= rings + 2; i++) {
+    const r = R * i / (rings + 2);
+    const sw = i === rings+2 ? lw : lw * 0.5;
+    s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="black" stroke-width="${sw}"/>`;
+  }
+  // inscribed polygon
+  const sides = Math.min(4 + rings, 8);
+  let polyPts = [];
+  for (let i = 0; i < sides; i++) {
+    const [x,y] = pt(cx,cy,R*0.75,rot+i*360/sides);
+    polyPts.push([x,y]);
+  }
+  s += `<polygon points="${polyPts.map(p=>p.map(v=>v.toFixed(2)).join(',')).join(' ')}" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+  // star connections (skip 2)
+  for (let i = 0; i < sides; i++) {
+    const j = (i + 2) % sides;
+    s += `<line x1="${polyPts[i][0].toFixed(2)}" y1="${polyPts[i][1].toFixed(2)}" x2="${polyPts[j][0].toFixed(2)}" y2="${polyPts[j][1].toFixed(2)}" stroke="black" stroke-width="${lw*0.6}"/>`;
+  }
+  // tick marks
+  for (let a = 0; a < 360; a += 5) {
+    const inner = a % 45 === 0 ? R*0.88 : a % 10 === 0 ? R*0.91 : R*0.93;
+    const [x1,y1] = pt(cx,cy,R,rot+a);
+    const [x2,y2] = pt(cx,cy,inner,rot+a);
+    s += `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="black" stroke-width="${a%45===0?lw:lw*0.5}"/>`;
+  }
+  // rune marks between outer rings
+  for (let a = 0; a < 360; a += 360/sides/2) {
+    const [rx1,ry1] = pt(cx,cy,R*0.55,rot+a);
+    const [rx2,ry2] = pt(cx,cy,R*0.58,rot+a+5);
+    const [rx3,ry3] = pt(cx,cy,R*0.58,rot+a-5);
+    s += `<line x1="${rx1.toFixed(2)}" y1="${ry1.toFixed(2)}" x2="${rx2.toFixed(2)}" y2="${ry2.toFixed(2)}" stroke="black" stroke-width="${lw*0.5}"/>`;
+    s += `<line x1="${rx1.toFixed(2)}" y1="${ry1.toFixed(2)}" x2="${rx3.toFixed(2)}" y2="${ry3.toFixed(2)}" stroke="black" stroke-width="${lw*0.5}"/>`;
+  }
+  s += `<circle cx="${cx}" cy="${cy}" r="${R*0.04}" fill="black"/>`;
+  return s;
+};
+
+// 8. NORSE RUNES
+PATTERNS.norse_runes = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const m = 8;
+  s += `<rect x="${m}" y="${m}" width="${w-m*2}" height="${h-m*2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  s += `<rect x="${m+lw*4}" y="${m+lw*4}" width="${w-m*2-lw*8}" height="${h-m*2-lw*8}" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+  // corner knotwork
+  const cs = 18;
+  [[m,m],[w-m-cs,m],[m,h-m-cs],[w-m-cs,h-m-cs]].forEach(([cx,cy])=>{
+    s += `<rect x="${cx}" y="${cy}" width="${cs}" height="${cs}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+    s += `<line x1="${cx}" y1="${cy}" x2="${cx+cs}" y2="${cy+cs}" stroke="black" stroke-width="${lw*0.8}"/>`;
+    s += `<line x1="${cx+cs}" y1="${cy}" x2="${cx}" y2="${cy+cs}" stroke="black" stroke-width="${lw*0.8}"/>`;
+  });
+  // runes along edges
+  const runes = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ';
+  const fontSize = Math.min(12, (w-m*4-cs*2) / 12);
+  const runeSpacing = fontSize + 2;
+  // top edge runes
+  let rx = m + cs + 4;
+  let ri = 0;
+  while (rx < w - m - cs - fontSize && ri < runes.length) {
+    s += `<text x="${rx}" y="${m+lw*4+fontSize}" font-size="${fontSize}" fill="black" font-family="serif">${runes[ri%runes.length]}</text>`;
+    rx += runeSpacing; ri++;
+  }
+  // bottom edge
+  rx = m + cs + 4; ri = 6;
+  while (rx < w - m - cs - fontSize) {
+    s += `<text x="${rx}" y="${h-m-lw*5}" font-size="${fontSize}" fill="black" font-family="serif">${runes[ri%runes.length]}</text>`;
+    rx += runeSpacing; ri++;
+  }
+  // left edge (rotated)
+  let ry = m + cs + fontSize + 4; ri = 12;
+  while (ry < h - m - cs - fontSize) {
+    s += `<text x="${m+lw*5}" y="${ry}" font-size="${fontSize}" fill="black" font-family="serif" transform="rotate(-90,${m+lw*5+fontSize/2},${ry})">${runes[ri%runes.length]}</text>`;
+    ry += runeSpacing; ri++;
+  }
+  // right edge
+  ry = m + cs + fontSize + 4; ri = 18;
+  while (ry < h - m - cs - fontSize) {
+    s += `<text x="${w-m-lw*5-fontSize}" y="${ry}" font-size="${fontSize}" fill="black" font-family="serif" transform="rotate(90,${w-m-lw*5-fontSize/2},${ry})">${runes[ri%runes.length]}</text>`;
+    ry += runeSpacing; ri++;
+  }
+  // central concentric rings
+  const ccx = w/2, ccy = h/2;
+  const maxR = Math.min(w,h)/2 - m - cs - 24;
+  for (let i = 1; i <= rings && i*maxR/(rings+1) > 2; i++) {
+    s += `<circle cx="${ccx}" cy="${ccy}" r="${maxR*i/(rings+1)}" fill="none" stroke="black" stroke-width="${lw*0.6}"/>`;
+  }
+  return s;
+};
+
+// 9. HERALDRY SHIELD
+PATTERNS.heraldry_shield = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  const m = lw*2;
+  const sw = w - m*2, sh = h - m*2;
+  const sx = m, sy = m;
+  // shield outline: pointed bottom
+  const shieldPath = `M${sx+sw*0.1},${sy} L${sx+sw*0.9},${sy} Q${sx+sw},${sy} ${sx+sw},${sy+sh*0.5} Q${sx+sw},${sy+sh*0.8} ${sx+sw*0.5},${sy+sh} Q${sx},${sy+sh*0.8} ${sx},${sy+sh*0.5} Q${sx},${sy} ${sx+sw*0.1},${sy}Z`;
+  let s = `<clipPath id="shield-clip"><path d="${shieldPath}"/></clipPath>`;
+  s += `<path d="${shieldPath}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  // division lines
+  s += `<g clip-path="url(#shield-clip)">`;
+  if (rings >= 2) s += `<line x1="${sx+sw*0.5}" y1="${sy}" x2="${sx+sw*0.5}" y2="${sy+sh}" stroke="black" stroke-width="${lw*0.8}"/>`;
+  if (rings >= 3) s += `<line x1="${sx}" y1="${sy+sh*0.45}" x2="${sx+sw}" y2="${sy+sh*0.45}" stroke="black" stroke-width="${lw*0.8}"/>`;
+  if (rings >= 5) {
+    s += `<line x1="${sx}" y1="${sy}" x2="${sx+sw}" y2="${sy+sh}" stroke="black" stroke-width="${lw*0.6}"/>`;
+    s += `<line x1="${sx+sw}" y1="${sy}" x2="${sx}" y2="${sy+sh}" stroke="black" stroke-width="${lw*0.6}"/>`;
+  }
+  // charges
+  const ccx = sx+sw/2, ccy = sy+sh*0.38;
+  const cr = sw * 0.18;
+  if (rings >= 3) {
+    s += `<line x1="${ccx}" y1="${ccy-cr}" x2="${ccx}" y2="${ccy+cr}" stroke="black" stroke-width="${lw*1.2}"/>`;
+    s += `<line x1="${ccx-cr}" y1="${ccy}" x2="${ccx+cr}" y2="${ccy}" stroke="black" stroke-width="${lw*1.2}"/>`;
+  }
+  if (rings >= 4) {
+    s += `<path d="M${ccx},${ccy-cr*0.5} L${ccx+cr},${ccy+cr*0.3} L${ccx},${ccy+cr*0.1} L${ccx-cr},${ccy+cr*0.3}Z" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+  }
+  if (rings >= 5) {
+    for (let i=0;i<5;i++){
+      const [sx2,sy2]=pt(ccx,ccy,cr*0.6,rot+i*72);
+      const [sx3,sy3]=pt(ccx,ccy,cr*0.25,rot+i*72+36);
+      if(i===0) s+=`<polygon points="${Array.from({length:5},(_,j)=>{const[x,y]=pt(ccx,ccy,j%2===0?cr*0.6:cr*0.25,rot+j*36);return`${x.toFixed(1)},${y.toFixed(1)}`;}).join(' ')}" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+    }
+  }
+  s += `</g>`;
+  // orle (inner border)
+  const oi = lw*4;
+  const orlePath = `M${sx+sw*0.1+oi},${sy+oi} L${sx+sw*0.9-oi},${sy+oi} Q${sx+sw-oi},${sy+oi} ${sx+sw-oi},${sy+sh*0.5} Q${sx+sw-oi},${sy+sh*0.8-oi} ${sx+sw*0.5},${sy+sh-oi} Q${sx+oi},${sy+sh*0.8-oi} ${sx+oi},${sy+sh*0.5} Q${sx+oi},${sy+oi} ${sx+sw*0.1+oi},${sy+oi}Z`;
+  s += `<path d="${orlePath}" fill="none" stroke="black" stroke-width="${lw*0.5}" stroke-dasharray="3,2"/>`;
+  return s;
+};
+
+// 10. SCI-FI CIRCUIT
+PATTERNS.sci_fi_circuit = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const border = lw*2;
+  // background grid
+  const gridSize = w / (rings * 2 + 2);
+  s += `<g opacity="0.2">`;
+  for (let x = 0; x <= w; x += gridSize) s += `<line x1="${x.toFixed(1)}" y1="0" x2="${x.toFixed(1)}" y2="${h}" stroke="black" stroke-width="0.5"/>`;
+  for (let y = 0; y <= h; y += gridSize) s += `<line x1="0" y1="${y.toFixed(1)}" x2="${w}" y2="${y.toFixed(1)}" stroke="black" stroke-width="0.5"/>`;
+  s += `</g>`;
+  // seeded pseudo-random circuit traces
+  const seed = rot * 137 + rings * 31;
+  const pseudo = (n) => ((n * 1664525 + 1013904223) & 0x7fffffff) / 0x7fffffff;
+  const nodes = [];
+  for (let i = 0; i < (rings + 2) * 3; i++) {
+    const gx = Math.round(pseudo(seed + i*7) * (w/gridSize)) * gridSize;
+    const gy = Math.round(pseudo(seed + i*13) * (h/gridSize)) * gridSize;
+    nodes.push([gx, gy]);
+  }
+  // connect nearby nodes with orthogonal traces
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const [x1,y1] = nodes[i], [x2,y2] = nodes[i+1];
+    const mx = pseudo(seed+i*3) > 0.5 ? x1 : x2;
+    s += `<path d="M${x1},${y1} L${mx},${y2} L${x2},${y2}" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+  }
+  // junction nodes
+  nodes.forEach(([nx,ny], i) => {
+    if (pseudo(seed+i*17) > 0.5) {
+      s += `<rect x="${nx-3}" y="${ny-3}" width="6" height="6" fill="black"/>`;
+    } else {
+      s += `<circle cx="${nx}" cy="${ny}" r="3.5" fill="black"/>`;
+    }
+  });
+  // IC chip rectangles
+  for (let i = 0; i < rings; i++) {
+    const cx2 = pseudo(seed+i*23) * (w*0.6) + w*0.2;
+    const cy2 = pseudo(seed+i*29) * (h*0.6) + h*0.2;
+    const cw2 = gridSize*2, ch2 = gridSize;
+    s += `<rect x="${(cx2-cw2/2).toFixed(1)}" y="${(cy2-ch2/2).toFixed(1)}" width="${cw2}" height="${ch2}" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+    // pins
+    for (let p = 0; p < 3; p++) {
+      const px = cx2 - cw2/2 - gridSize*0.3;
+      const py = cy2 - ch2/3 + p*ch2/3;
+      s += `<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${(cx2-cw2/2).toFixed(1)}" y2="${py.toFixed(1)}" stroke="black" stroke-width="${lw*0.5}"/>`;
+    }
+  }
+  // border
+  s += `<rect x="${border}" y="${border}" width="${w-border*2}" height="${h-border*2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  // corner markers
+  const cm = 8;
+  [[border,border],[w-border-cm,border],[border,h-border-cm],[w-border-cm,h-border-cm]].forEach(([cx,cy])=>{
+    s += `<rect x="${cx}" y="${cy}" width="${cm}" height="${cm}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+    s += `<line x1="${cx+cm*0.2}" y1="${cy+cm*0.5}" x2="${cx+cm*0.8}" y2="${cy+cm*0.5}" stroke="black" stroke-width="${lw*0.5}"/>`;
+    s += `<line x1="${cx+cm*0.5}" y1="${cy+cm*0.2}" x2="${cx+cm*0.5}" y2="${cy+cm*0.8}" stroke="black" stroke-width="${lw*0.5}"/>`;
+  });
+  return s;
+};
+
+// 11. MUGHAL JALI
+PATTERNS.mughal_jali = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  let s = '';
+  const starSize = Math.min(w, h) / (rings + 1);
+  const cols = Math.ceil(w / starSize) + 2;
+  const rows = Math.ceil(h / (starSize * 0.866)) + 2;
+  const points = rings >= 5 ? 8 : 6;
+  s += `<clipPath id="jali-clip"><rect x="0" y="0" width="${w}" height="${h}"/></clipPath>`;
+  s += `<g clip-path="url(#jali-clip)">`;
+  const starPath = (cx, cy, r, pts, rotOffset) => {
+    let d = '';
+    for (let i = 0; i < pts; i++) {
+      const outerA = rotOffset + i * 360 / pts;
+      const innerA = rotOffset + (i + 0.5) * 360 / pts;
+      const [ox,oy] = pt(cx,cy,r,outerA);
+      const [ix,iy] = pt(cx,cy,r*0.4,innerA);
+      d += (i===0?'M':'L') + `${ox.toFixed(2)},${oy.toFixed(2)} L${ix.toFixed(2)},${iy.toFixed(2)} `;
+    }
+    return d + 'Z';
+  };
+  for (let row = -1; row < rows; row++) {
+    const offX = row % 2 === 0 ? 0 : starSize / 2;
+    for (let col = -1; col < cols; col++) {
+      const cx = col * starSize + offX;
+      const cy = row * starSize * (points === 6 ? 0.866 : 1);
+      s += `<path d="${starPath(cx,cy,starSize*0.48,points,rot)}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+      // connecting hexagonal frame
+      for (let i = 0; i < points; i++) {
+        const a1 = rot + i * 360/points;
+        const a2 = rot + (i+0.5) * 360/points;
+        const [x1,y1] = pt(cx,cy,starSize*0.48,a1);
+        const [x2,y2] = pt(cx,cy,starSize*0.48,a2);
+        s += `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="black" stroke-width="${lw*0.5}" opacity="0.5"/>`;
+      }
+    }
+  }
+  s += `</g>`;
+  s += `<rect x="1" y="1" width="${w-2}" height="${h-2}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  return s;
+};
+
+// 12. ISLAMIC STAR
+PATTERNS.islamic_star = function(w, h, {rings=4, lw=1.5, rot=0}) {
+  const cx = w/2, cy = h/2, R = Math.min(w,h)/2 - lw*2;
+  let s = '';
+  // outer border
+  s += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  // concentric decorative rings
+  for (let i = 1; i <= Math.min(rings, 5); i++) {
+    s += `<circle cx="${cx}" cy="${cy}" r="${R*(1-i*0.1)}" fill="none" stroke="black" stroke-width="${lw*0.4}"/>`;
+  }
+  // large 8-pointed star (octagram)
+  const octPath = (cx, cy, r, rotOff) => {
+    let d = '';
+    for (let i = 0; i < 8; i++) {
+      const [ox,oy] = pt(cx,cy,r,rotOff+i*45);
+      const [ix,iy] = pt(cx,cy,r*0.42,rotOff+i*45+22.5);
+      d += (i===0?'M':'L') + `${ox.toFixed(2)},${oy.toFixed(2)} L${ix.toFixed(2)},${iy.toFixed(2)} `;
+    }
+    return d+'Z';
+  };
+  s += `<path d="${octPath(cx,cy,R*0.72,rot)}" fill="none" stroke="black" stroke-width="${lw}"/>`;
+  // second star rotated 22.5
+  s += `<path d="${octPath(cx,cy,R*0.55,rot+22.5)}" fill="none" stroke="black" stroke-width="${lw*0.7}"/>`;
+  // surrounding smaller stars
+  for (let i = 0; i < 8; i++) {
+    const [scx,scy] = pt(cx,cy,R*0.72,rot+i*45);
+    s += `<path d="${octPath(scx,scy,R*0.2,rot+i*45)}" fill="none" stroke="black" stroke-width="${lw*0.6}"/>`;
+  }
+  // connecting shapes between stars
+  for (let i = 0; i < 8; i++) {
+    const [p1x,p1y] = pt(cx,cy,R*0.72,rot+i*45);
+    const [p2x,p2y] = pt(cx,cy,R*0.72,rot+(i+1)*45);
+    const [mx,my] = [(p1x+p2x)/2,(p1y+p2y)/2];
+    s += `<line x1="${p1x.toFixed(2)}" y1="${p1y.toFixed(2)}" x2="${mx.toFixed(2)}" y2="${my.toFixed(2)}" stroke="black" stroke-width="${lw*0.5}"/>`;
+    s += `<line x1="${p2x.toFixed(2)}" y1="${p2y.toFixed(2)}" x2="${mx.toFixed(2)}" y2="${my.toFixed(2)}" stroke="black" stroke-width="${lw*0.5}"/>`;
+  }
+  s += `<circle cx="${cx}" cy="${cy}" r="${R*0.08}" fill="none" stroke="black" stroke-width="${lw*0.8}"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${R*0.03}" fill="black"/>`;
+  return s;
+};
+
+// ============================================================
+// APP STATE & CORE LOGIC
+// ============================================================
+let currentPattern = 'mandala';
+let currentSVGContent = '';
+let plateItems = [];
+
+function generateSVG(pattern, w, h, params) {
+  const content = PATTERNS[pattern](w, h, params);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${content}</svg>`;
+}
+
+function renderLibrary() {
+  const pattern = document.getElementById('lib-pattern').value;
+  const size = parseInt(document.getElementById('lib-size').value);
+  const rings = parseInt(document.getElementById('lib-rings').value);
+  const lw = parseFloat(document.getElementById('lib-lw').value);
+  const rot = parseInt(document.getElementById('lib-rot').value);
+  const complexity = parseInt(document.getElementById('lib-complexity').value);
+  currentPattern = pattern;
+  currentSVGContent = generateSVG(pattern, size, size, {rings, lw, rot, complexity});
+  document.getElementById('lib-preview').innerHTML = currentSVGContent;
+  // update active card
+  document.querySelectorAll('.pattern-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.pattern === pattern);
+    c.querySelector('.pattern-name').classList.toggle('active', c.dataset.pattern === pattern);
+  });
+  // update tip
+  const tips = {
+    mandala: '🌸 Perfect for medallion stamps, wedding invitations, Indian-themed designs',
+    lotus: '🪷 Ideal for spiritual/wellness brands, yoga studios, Buddhist motifs',
+    temple_border: '🏛️ Great for ornate frames, certificates, formal invitations',
+    chainmail: '⛓️ Fantasy armor, medieval RPG, jewelry-box liners',
+    dragon_scales: '🐉 Dragon/reptile themes, scale textures, armor plating',
+    celtic_knot: '☘️ Celtic/Irish themes, infinity symbols, interlaced borders',
+    arcane_circle: '🔮 Occult seals, magic circles, RPG spell diagrams',
+    norse_runes: '⚡ Viking/Norse themes, rune sets, Elder Futhark borders',
+    heraldry_shield: '🛡️ Coats of arms, family crests, medieval heraldry',
+    sci_fi_circuit: '🔌 Cyberpunk, tech brands, PCB-inspired stamps',
+    mughal_jali: '✨ Mughal architecture, Islamic patterns, lattice windows',
+    islamic_star: '⭐ Geometric Islamic art, star patterns, Arabic calligraphy frames'
+  };
+  document.getElementById('lib-tip').textContent = tips[pattern] || 'Select a pattern.';
+  // tags
+  const tags = {
+    mandala: ['<span class="tag tag-pink">Etsy Global</span>', '<span class="tag tag-green">Spiritual</span>', '<span class="tag tag-blue">Wedding</span>'],
+    lotus: ['<span class="tag tag-pink">Wellness</span>', '<span class="tag tag-green">Yoga</span>'],
+    temple_border: ['<span class="tag tag-orange">Frames</span>', '<span class="tag tag-blue">Formal</span>'],
+    chainmail: ['<span class="tag tag-orange">Fantasy</span>', '<span class="tag tag-pink">RPG</span>'],
+    dragon_scales: ['<span class="tag tag-orange">Dragon</span>', '<span class="tag tag-green">Texture</span>'],
+    celtic_knot: ['<span class="tag tag-green">Celtic</span>', '<span class="tag tag-blue">Irish</span>'],
+    arcane_circle: ['<span class="tag tag-pink">Occult</span>', '<span class="tag tag-orange">Magic</span>'],
+    norse_runes: ['<span class="tag tag-blue">Viking</span>', '<span class="tag tag-orange">Norse</span>'],
+    heraldry_shield: ['<span class="tag tag-blue">Heraldry</span>', '<span class="tag tag-orange">Medieval</span>'],
+    sci_fi_circuit: ['<span class="tag tag-green">Cyberpunk</span>', '<span class="tag tag-blue">Tech</span>'],
+    mughal_jali: ['<span class="tag tag-pink">Mughal</span>', '<span class="tag tag-green">Islamic</span>'],
+    islamic_star: ['<span class="tag tag-pink">Geometric</span>', '<span class="tag tag-blue">Arabic</span>']
+  };
+  document.getElementById('lib-tags').innerHTML = '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">' + (tags[pattern]||[]).join('') + '</div>';
+}
+
+function downloadSVG(content, filename) {
+  if (!content) { showNotification('Nothing to download!'); return; }
+  const blob = new Blob([`<?xml version="1.0"?>\n` + content], {type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function addToPlate(svgContent, label) {
+  if (!svgContent) { showNotification('Generate a pattern first!'); return; }
+  const id = Date.now();
+  plateItems.push({id, svgContent, label: label || 'Pattern'});
+  updatePlateCount();
+  showNotification('✅ Added to plate!');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelector(`[data-tab="${name}"]`).classList.add('active');
+  if (name === 'composer' && typeof renderPlate === 'function') renderPlate();
+}
+
+function showNotification(msg) {
+  const n = document.createElement('div');
+  n.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#e91e8c;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:9999;animation:fadeIn 0.2s';
+  n.textContent = msg;
+  document.body.appendChild(n);
+  setTimeout(() => n.remove(), 2000);
+}
+
+function updatePlateCount() {
+  const el = document.querySelector('[data-tab="composer"]');
+  if (el) el.textContent = `🖼️ Plate Composer (${plateItems.length})`;
+}
+
+// Build pattern thumbnail grid
+function buildThumbGrid() {
+  const grid = document.getElementById('lib-thumbs');
+  const patternKeys = ['mandala','lotus','temple_border','chainmail','dragon_scales','celtic_knot','arcane_circle','norse_runes','heraldry_shield','sci_fi_circuit','mughal_jali','islamic_star'];
+  const patternLabels = {'mandala':'Mandala','lotus':'Lotus','temple_border':'Temple','chainmail':'Chainmail','dragon_scales':'Dragon Scales','celtic_knot':'Celtic Knot','arcane_circle':'Arcane Circle','norse_runes':'Norse Runes','heraldry_shield':'Heraldry','sci_fi_circuit':'Sci-Fi Circuit','mughal_jali':'Mughal Jali','islamic_star':'Islamic Star'};
+  grid.innerHTML = '';
+  patternKeys.forEach(key => {
+    const svg = generateSVG(key, 80, 80, {rings:3, lw:1, rot:0});
+    const card = document.createElement('div');
+    card.className = 'pattern-card' + (key === currentPattern ? ' active' : '');
+    card.dataset.pattern = key;
+    card.innerHTML = `<div>${svg}</div><div class="pattern-name">${patternLabels[key]}</div>`;
+    card.onclick = () => {
+      document.getElementById('lib-pattern').value = key;
+      renderLibrary();
+    };
+    grid.appendChild(card);
+  });
+}
+
+// ============================================================
+// UPLOAD & TRACE
+// ============================================================
+let uploadedImage = null;
+
+function handleImageUpload(file) {
+  if (!file || !file.type.startsWith('image/')) { showNotification('Please select an image file'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      uploadedImage = img;
+      document.getElementById('upload-original').innerHTML = `<img src="${e.target.result}" style="max-width:150px;max-height:150px;border-radius:6px;">`;
+      traceImage();
+      document.getElementById('upload-controls').style.display = 'block';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function traceImage() {
+  if (!uploadedImage) return;
+  const threshold = parseInt(document.getElementById('trace-threshold').value);
+  const blurAmount = parseInt(document.getElementById('trace-blur').value);
+  const invert = document.getElementById('trace-invert').checked;
+  const scale = parseInt(document.getElementById('trace-scale').value) / 100;
+  const maxDim = 400;
+  const ratio = Math.min(maxDim / uploadedImage.width, maxDim / uploadedImage.height);
+  const cw = Math.round(uploadedImage.width * ratio);
+  const ch = Math.round(uploadedImage.height * ratio);
+  const canvas = document.createElement('canvas');
+  canvas.width = cw; canvas.height = ch;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(uploadedImage, 0, 0, cw, ch);
+  let imageData = ctx.getImageData(0, 0, cw, ch);
+  let data = imageData.data;
+  const gray = new Float32Array(cw * ch);
+  for (let i = 0; i < data.length; i += 4) {
+    gray[i/4] = 0.299*data[i] + 0.587*data[i+1] + 0.114*data[i+2];
+  }
+  const blurred = new Float32Array(cw * ch);
+  const r = blurAmount;
+  for (let y = 0; y < ch; y++) {
+    for (let x = 0; x < cw; x++) {
+      let sum = 0, count = 0;
+      for (let dy = -r; dy <= r; dy++) {
+        for (let dx = -r; dx <= r; dx++) {
+          const nx = x+dx, ny = y+dy;
+          if (nx >= 0 && nx < cw && ny >= 0 && ny < ch) { sum += gray[ny*cw+nx]; count++; }
+        }
+      }
+      blurred[y*cw+x] = sum/count;
+    }
+  }
+  const binary = new Uint8Array(cw * ch);
+  for (let i = 0; i < blurred.length; i++) {
+    let v = blurred[i] < threshold ? 1 : 0;
+    if (invert) v = 1-v;
+    binary[i] = v;
+  }
+  const edges = new Uint8Array(cw * ch);
+  let edgeCount = 0;
+  for (let y = 1; y < ch-1; y++) {
+    for (let x = 1; x < cw-1; x++) {
+      if (binary[y*cw+x] === 1) {
+        if (binary[(y-1)*cw+x]===0 || binary[(y+1)*cw+x]===0 || binary[y*cw+(x-1)]===0 || binary[y*cw+(x+1)]===0) {
+          edges[y*cw+x] = 1; edgeCount++;
+        }
+      }
+    }
+  }
+  const outW = uploadedImage.width * scale;
+  const outH = uploadedImage.height * scale;
+  const scaleX = outW / cw;
+  const scaleY = outH / ch;
+  const strokeW = Math.max(scaleX, 0.5).toFixed(2);
+  let pathD = '';
+  for (let y = 0; y < ch; y++) {
+    let runStart = -1;
+    for (let x = 0; x <= cw; x++) {
+      const isEdge = x < cw && edges[y*cw+x] === 1;
+      if (isEdge && runStart < 0) { runStart = x; }
+      else if (!isEdge && runStart >= 0) {
+        pathD += `M${(runStart*scaleX).toFixed(1)},${(y*scaleY).toFixed(1)}H${(x*scaleX).toFixed(1)} `;
+        runStart = -1;
+      }
+    }
+  }
+  const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${outW.toFixed(0)} ${outH.toFixed(0)}" width="${outW.toFixed(0)}" height="${outH.toFixed(0)}"><rect width="${outW.toFixed(0)}" height="${outH.toFixed(0)}" fill="white"/><path d="${pathD}" stroke="black" stroke-width="${strokeW}" fill="none"/></svg>`;
+  document.getElementById('upload-preview').innerHTML = svgContent;
+  document.getElementById('trace-stats').textContent = `${edgeCount} edge pixels detected • ${Math.round(outW)}×${Math.round(outH)}px output`;
+  window.lastTracedSVG = svgContent;
+}
+
+function setupUploadDrop() {
+  const drop = document.getElementById('upload-drop');
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragging'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('dragging'));
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('dragging'); handleImageUpload(e.dataTransfer.files[0]); });
+  drop.addEventListener('click', () => document.getElementById('file-input').click());
+  document.getElementById('file-input').addEventListener('change', e => handleImageUpload(e.target.files[0]));
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'r' || e.key === 'R') renderLibrary();
+  if (e.key === 'd' || e.key === 'D') downloadSVG(currentSVGContent, currentPattern + '.svg');
+});
+
+// Init
+window.addEventListener('DOMContentLoaded', () => {
+  buildThumbGrid();
+  renderLibrary();
+  setupUploadDrop();
+});
+</script>
+
+
+
+
+
+<!-- ===== TAB 3: AI PROMPTS ===== -->
+<div id="tab-prompts" class="tab-content" style="display:none;">
+  <div style="max-width:900px;margin:0 auto;padding:1.5rem;">
+
+    <!-- Header -->
+    <div style="margin-bottom:2rem;">
+      <h2 class="section-h" style="font-size:1.6rem;margin-bottom:0.5rem;">AI Image Generation Prompts for Stamp Plates</h2>
+      <p style="color:#8b949e;font-size:0.95rem;margin-bottom:1.5rem;">Generate perfect source images using AI, then upload them to the Trace tab to convert to SVG</p>
+
+      <!-- Workflow diagram -->
+      <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:1rem 1.5rem;margin-bottom:1.5rem;">
+        <div style="font-size:0.8rem;color:#8b949e;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em;">Workflow</div>
+        <div style="display:flex;align-items:center;gap:0;flex-wrap:wrap;gap:4px;">
+          <span style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:6px 12px;font-size:0.85rem;color:#c9d1d9;">🤖 AI Tool</span>
+          <span style="color:#30363d;font-size:1.2rem;padding:0 4px;">→</span>
+          <span style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:6px 12px;font-size:0.85rem;color:#c9d1d9;">🖼️ Generate Image</span>
+          <span style="color:#30363d;font-size:1.2rem;padding:0 4px;">→</span>
+          <span style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:6px 12px;font-size:0.85rem;color:#c9d1d9;">📤 Upload to Trace Tab</span>
+          <span style="color:#30363d;font-size:1.2rem;padding:0 4px;">→</span>
+          <span style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:6px 12px;font-size:0.85rem;color:#c9d1d9;">✏️ Get SVG</span>
+          <span style="color:#30363d;font-size:1.2rem;padding:0 4px;">→</span>
+          <span style="background:#0d4429;border:1px solid #2daa6b;border-radius:6px;padding:6px 12px;font-size:0.85rem;color:#2daa6b;">🎨 Add to Plate</span>
+        </div>
+      </div>
+
+      <!-- Critical tip box -->
+      <div class="tip" style="border-color:#e3b341;background:#272115;">
+        <div style="font-weight:700;color:#e3b341;margin-bottom:0.5rem;">⚡ Critical: Add These Words to ANY Prompt</div>
+        <div style="font-size:0.85rem;color:#c9d1d9;margin-bottom:0.5rem;">For best SVG tracing results, always append:</div>
+        <code style="display:block;background:#1c1007;border:1px solid #3d2e0a;border-radius:6px;padding:10px 14px;font-size:0.82rem;color:#e3b341;line-height:1.6;word-break:break-word;">"black and white only, high contrast, clean bold outlines, no gradients, no shading, white background, vector art style, stamp design, flat design"</code>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 1: Indian Mandala ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">🪷 Category 1: Indian Mandala</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-pink">India Sales</span>
+          <span class="tag-green">Both Markets</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">Your hero product — highest demand on Indian marketplaces (Meesho, Etsy India) and globally. Mandala stamps are perennial bestsellers for journaling, fabric, and resin art.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+            <span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span>
+          </div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p1mj">intricate Indian mandala pattern, circular geometric design with lotus petals and temple motifs, concentric rings, fine decorative lines, black ink on white paper, coloring book style, stamp design --ar 1:1 --style raw --v 6</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p1mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+            <span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span>
+          </div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p1de">A perfect circular Indian mandala design suitable for a rubber stamp. Intricate geometric patterns with lotus flowers, peacock feathers and temple border motifs. Black ink on pure white background. Clean crisp lines, high contrast, no shading or gradients. Top-down view, perfectly centered.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p1de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+            <span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span>
+          </div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p1sd">indian mandala stamp design, black white, lotus motifs, geometric circles, concentric rings, line art, coloring book, clean edges, high contrast, no gray, flat design, (masterpiece:1.2), (line art:1.4)</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p1sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 2: Heraldry & Shields ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">⚜️ Category 2: Heraldry &amp; Shields</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-green">Etsy Global</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">Top seller for Warhammer / D&amp;D hobbyists and medieval LARP communities. Works great for wax seals, notebook stamps, and miniature basing.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p2mj">medieval heraldry shield design, fleur de lis and cross motifs, quarterly division, bold outlines, black and white line art, coat of arms, stamp design, clean edges --ar 1:1 --style raw</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p2mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p2de">A medieval heraldic shield design for a stamp plate. Bold geometric divisions with a cross, chevron and fleur-de-lis. Pure black on white background. Sharp clean edges, no shading, no gradients, suitable for laser engraving.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p2de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p2sd">heraldic shield coat of arms, black white line art, fleur de lis, medieval crest, bold outlines, stamp design, (line art:1.4), high contrast, flat</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p2sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 3: Norse Runes & Viking ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">⚡ Category 3: Norse Runes &amp; Viking</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-green">Etsy Global</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">Huge demand from Blood Rage / fantasy board game hobbyists, Viking LARP, and Norse pagan communities globally. Rectangular border designs sell as wax seal stamps.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p3mj">norse viking rune border design, elder futhark runes arranged in rectangular frame, knotwork corners, mjolnir center, black ink on white, ancient manuscript style, stamp plate --ar 1:1</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p3mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p3de">Norse Viking rune border for a stamp plate. Elder Futhark runic alphabet arranged along all four sides of a rectangle with Celtic knotwork corner ornaments. Black on white, clean lines, no shading, suitable for etching into metal.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p3de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p3sd">norse rune border, elder futhark, celtic knot corners, viking design, black white, line art, (stamp:1.3), high contrast, (clean lines:1.2), ancient</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p3sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 4: Temple & Mughal Patterns ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">🏛️ Category 4: Temple &amp; Mughal Patterns</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-pink">India Sales</span>
+          <span class="tag-green">Both Markets</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">India-unique designs that sell extremely well locally — temple invitations, Mughal-themed wedding stationery, henna and mehndi pattern stamps. Also popular internationally as "Indian art" on Etsy.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p4mj">Indian temple border pattern, repeated arch motifs with lotus columns, Mughal jali lattice, geometric star polygons, black ink line art, architectural ornament, stamp design --ar 1:1 --style raw --v 6</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p4mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p4de">An Indian temple border decoration for a stamp plate. Repeating arched columns with lotus capitals, geometric star lattice pattern in the center inspired by Mughal jali screens. Pure black on white, crisp architectural line drawing.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p4de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p4sd">indian temple border, mughal jali lattice, islamic geometric stars, architectural ornament, black white, line art, (intricate:1.3), high contrast, stamp design</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p4sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 5: Dragon Scales & Fantasy Textures ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">🐉 Category 5: Dragon Scales &amp; Fantasy Textures</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-green">Etsy Global</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">Texture stamps for miniature painters and tabletop hobbyists — used to texture polymer clay, resin bases, and leather-working projects. Seamless tile designs are especially popular.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p5mj">dragon scale texture pattern, overlapping scales in regular rows, each scale with central spine line, reptilian skin texture, black ink on white, seamless pattern, stamp design --tile --ar 1:1</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p5mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p5de">A dragon scale texture pattern for a stamp plate. Rows of overlapping semicircular scales, each with a subtle vein line down the center. Pure black outlines on white background, perfectly regular pattern, no shading.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p5de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p5sd">dragon scale texture, overlapping scales, reptile skin pattern, black white line art, stamp design, (regular pattern:1.3), high contrast, clean outlines</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p5sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 6: Arcane & Spell Circles ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">✨ Category 6: Arcane &amp; Spell Circles</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-green">Etsy Global</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">D&amp;D / RPG community staple — wizard seals, spell scroll borders, summoning circles. Sell as wax seals, journal stamps, and resin art molds. High AOV category internationally.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p6mj">arcane magic circle, inscribed pentagram with runic text, alchemical symbols in concentric rings, mystical seal design, black ink on white, occult geometry, stamp design --ar 1:1 --style raw</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p6mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p6de">A magical arcane circle design for a stamp plate. Concentric rings with an inscribed star polygon, arcane rune symbols between the rings, tick marks on the outer ring. Black ink on white, precise geometric, like a wizard's summoning circle.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p6de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p6sd">arcane magic circle, pentagram, rune symbols, concentric rings, occult geometry, black white line art, (precise:1.3), high contrast, stamp design, alchemical</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p6sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 7: Sci-Fi & Mechanicus ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">⚙️ Category 7: Sci-Fi &amp; Mechanicus</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-green">Etsy Global</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">Warhammer 40K Adeptus Mechanicus aesthetic — circuit boards, cog patterns, binary code borders. Popular with 40K painters for weathering stamps, basing texture plates, and squad marking stamps.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p7mj">warhammer 40k mechanicus style circuit pattern, cogwheel gears with binary code, mechanical skulls and cog teeth border, grimdark technology aesthetic, black ink on white, technical drawing style --ar 1:1</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p7mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p7de">A Warhammer 40K Adeptus Mechanicus inspired stamp plate design. Circular gear patterns with binary code, circuit traces, and mechanical cog borders. Black technical drawing on white background, no shading, suitable for miniature painting stamps.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p7de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p7sd">mechanicus circuit pattern, warhammer 40k, cogwheel gears, technical drawing, black white, (grimdark:1.2), circuit board, stamp design, high contrast, line art</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p7sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORY 8: Lotus & Sacred Geometry ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:0.5rem;">
+        <h3 style="margin:0;font-size:1.1rem;color:#c9d1d9;">🌸 Category 8: Lotus &amp; Sacred Geometry</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span class="tag-pink">India Sales</span>
+          <span class="tag-green">Both Markets</span>
+        </div>
+      </div>
+      <p style="color:#8b949e;font-size:0.85rem;margin:0 0 1rem;">Spiritual and wellness market — yoga studios, meditation journals, reiki practitioners. Sri Yantra is highly specific to India; Flower of Life sells globally. Both markets have strong recurring buyers.</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a1f6b;color:#79c0ff;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Midjourney</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p8mj">sacred geometry lotus mandala, flower of life pattern with lotus petals, Sri Yantra triangles, geometric divine proportions, black ink on white, spiritual art, stamp design --ar 1:1 --v 6</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p8mj').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#1a3a1a;color:#3fb950;padding:2px 8px;border-radius:4px;font-size:0.72rem;">DALL-E 3</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p8de">Sacred geometry stamp plate featuring a lotus flower mandala combined with Sri Yantra triangular geometry. Nested triangles surrounded by lotus petals and a circular border. Black on white, precise geometric, no shading.</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p8de').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.75rem;color:#8b949e;margin-bottom:4px;"><span style="background:#2a1a1a;color:#f78166;padding:2px 8px;border-radius:4px;font-size:0.72rem;">Stable Diffusion</span></div>
+          <div style="background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:10px 14px;position:relative;">
+            <code style="font-size:0.78rem;color:#c9d1d9;line-height:1.6;word-break:break-all;display:block;padding-right:70px;" id="p8sd">sacred geometry lotus, sri yantra, flower of life, lotus petals, geometric, black white line art, (sacred:1.2), high contrast, stamp design, spiritual</code>
+            <button class="btn" onclick="copyPrompt(this, document.getElementById('p8sd').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Complete Workflow Section ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <h3 class="section-h" style="margin-top:0;">🔄 Complete Workflow: AI Image → Stamp Plate SVG</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1f6feb;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">Copy a prompt above → paste into <strong>Midjourney</strong> / <strong>DALL-E 3</strong> / <strong>Stable Diffusion</strong></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1f6feb;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">Generate <strong>4 variations</strong> → pick the cleanest, highest contrast one</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1f6feb;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">If needed: open in <strong>Canva / phone editor</strong> → adjust contrast to max, convert to B&amp;W</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1f6feb;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">Upload to the <strong>"Upload &amp; Trace"</strong> tab in this app</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1f6feb;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">Adjust the <strong>threshold slider</strong> until outlines look clean and sharp</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#1f6feb;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">Download SVG → import to <strong>Blender</strong> (extrude for resin molds) or <strong>Lightburn</strong> (laser etch SS304)</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:#2daa6b;color:#fff;font-size:0.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">7</div>
+          <div style="padding-top:4px;color:#c9d1d9;font-size:0.9rem;">Add to <strong>Plate Composer</strong> tab to arrange multiple designs on one plate → export full plate SVG</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Recommended AI Tools ===== -->
+    <div style="margin-bottom:2rem;background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.5rem;">
+      <h3 class="section-h" style="margin-top:0;">🤖 Recommended AI Tools</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;">
+        <a href="https://midjourney.com" target="_blank" rel="noopener" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#58a6ff'" onmouseout="this.style.borderColor='#30363d'">
+          <span style="font-size:1.4rem;flex-shrink:0;">🎨</span>
+          <div>
+            <div style="color:#79c0ff;font-weight:600;font-size:0.88rem;">Midjourney</div>
+            <div style="color:#8b949e;font-size:0.78rem;margin-top:2px;">Best quality — needs Discord. Paid plan required.</div>
+            <div style="color:#30363d;font-size:0.72rem;margin-top:3px;">midjourney.com</div>
+          </div>
+        </a>
+        <a href="https://chat.openai.com" target="_blank" rel="noopener" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#58a6ff'" onmouseout="this.style.borderColor='#30363d'">
+          <span style="font-size:1.4rem;flex-shrink:0;">💬</span>
+          <div>
+            <div style="color:#79c0ff;font-weight:600;font-size:0.88rem;">DALL-E 3</div>
+            <div style="color:#8b949e;font-size:0.78rem;margin-top:2px;">Easiest to use — via ChatGPT Plus subscription.</div>
+            <div style="color:#30363d;font-size:0.72rem;margin-top:3px;">chat.openai.com</div>
+          </div>
+        </a>
+        <a href="https://firefly.adobe.com" target="_blank" rel="noopener" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#58a6ff'" onmouseout="this.style.borderColor='#30363d'">
+          <span style="font-size:1.4rem;flex-shrink:0;">🔥</span>
+          <div>
+            <div style="color:#79c0ff;font-weight:600;font-size:0.88rem;">Adobe Firefly</div>
+            <div style="color:#8b949e;font-size:0.78rem;margin-top:2px;">Free tier available — good for vector/line art style.</div>
+            <div style="color:#30363d;font-size:0.72rem;margin-top:3px;">firefly.adobe.com</div>
+          </div>
+        </a>
+        <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui" target="_blank" rel="noopener" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#58a6ff'" onmouseout="this.style.borderColor='#30363d'">
+          <span style="font-size:1.4rem;flex-shrink:0;">💻</span>
+          <div>
+            <div style="color:#79c0ff;font-weight:600;font-size:0.88rem;">Stable Diffusion</div>
+            <div style="color:#8b949e;font-size:0.78rem;margin-top:2px;">Completely free, local. Needs a GPU. AUTOMATIC1111 UI.</div>
+            <div style="color:#30363d;font-size:0.72rem;margin-top:3px;">github.com / automatic1111</div>
+          </div>
+        </a>
+        <a href="https://canva.com" target="_blank" rel="noopener" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#58a6ff'" onmouseout="this.style.borderColor='#30363d'">
+          <span style="font-size:1.4rem;flex-shrink:0;">🖼️</span>
+          <div>
+            <div style="color:#79c0ff;font-weight:600;font-size:0.88rem;">Canva AI</div>
+            <div style="color:#8b949e;font-size:0.78rem;margin-top:2px;">Free tier — also useful for contrast adjustments post-gen.</div>
+            <div style="color:#30363d;font-size:0.72rem;margin-top:3px;">canva.com</div>
+          </div>
+        </a>
+        <a href="https://bing.com/create" target="_blank" rel="noopener" style="display:flex;gap:10px;align-items:flex-start;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:12px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#58a6ff'" onmouseout="this.style.borderColor='#30363d'">
+          <span style="font-size:1.4rem;flex-shrink:0;">🔍</span>
+          <div>
+            <div style="color:#79c0ff;font-weight:600;font-size:0.88rem;">Bing Image Creator</div>
+            <div style="color:#8b949e;font-size:0.78rem;margin-top:2px;">Free — powered by DALL-E. Just needs a Microsoft account.</div>
+            <div style="color:#30363d;font-size:0.72rem;margin-top:3px;">bing.com/create</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end tab-prompts -->
+
+
+<!-- ===== TAB 4: PLATE COMPOSER ===== -->
+<div id="tab-composer" class="tab-content" style="display:none;">
+  <div class="two-col" style="height:calc(100vh - 120px);min-height:500px;">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" style="display:flex;flex-direction:column;gap:0;overflow-y:auto;">
+
+      <div style="padding:1rem 1rem 0.75rem;">
+        <h3 class="section-h" style="margin:0 0 0.75rem;">Your Queue</h3>
+        <!-- Queue list rendered by JS -->
+        <div id="plate-queue-list">
+          <div style="color:#8b949e;font-size:13px;text-align:center;padding:1.5rem 0.5rem;border:1px dashed #30363d;border-radius:8px;">
+            <div style="font-size:2rem;margin-bottom:8px;">📋</div>
+            No designs yet.<br>Add from Library or Upload tab.
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid #21262d;margin:0.5rem 0;"></div>
+
+      <!-- Plate settings -->
+      <div style="padding:0.75rem 1rem;">
+        <div style="font-size:0.75rem;color:#8b949e;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;">Plate Settings</div>
+
+        <div style="margin-bottom:10px;">
+          <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Plate Size</label>
+          <select id="plate-size-select" onchange="renderPlateCanvas()" style="width:100%;background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;padding:6px 10px;font-size:0.83rem;">
+            <option value="standard">Standard 40×60mm</option>
+            <option value="large">Large 60×90mm</option>
+            <option value="full">Full sheet 100×150mm</option>
+            <option value="square">Square 60×60mm</option>
+          </select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+          <div>
+            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Columns</label>
+            <select id="plate-cols" onchange="renderPlateCanvas()" style="width:100%;background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;padding:6px 10px;font-size:0.83rem;">
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Gap (px)</label>
+            <select id="plate-gap" onchange="renderPlateCanvas()" style="width:100%;background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;padding:6px 10px;font-size:0.83rem;">
+              <option value="10">2mm</option>
+              <option value="20" selected>5mm</option>
+              <option value="30">7mm</option>
+              <option value="40">10mm</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.83rem;color:#c9d1d9;">
+            <input type="checkbox" id="plate-border" onchange="renderPlateCanvas()" style="width:14px;height:14px;accent-color:#2daa6b;">
+            Add plate border
+          </label>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn" onclick="clearPlate()" style="width:100%;font-size:0.83rem;">🗑️ Clear All</button>
+          <button class="btn btn-primary" onclick="downloadFullPlate()" style="width:100%;font-size:0.83rem;">⬇️ Download Full Plate SVG</button>
+          <button class="btn" onclick="downloadEachSeparately()" style="width:100%;font-size:0.83rem;">📦 Download Each Separately</button>
+        </div>
+
+        <div class="tip" style="margin-top:12px;font-size:0.78rem;padding:10px 12px;">
+          💡 Add designs from the <strong>Library</strong> or <strong>Upload</strong> tabs using the <strong>"Add to Plate"</strong> button on each design.
+        </div>
+      </div>
+
+    </div><!-- end sidebar -->
+
+    <!-- MAIN AREA -->
+    <div class="main-area" style="display:flex;flex-direction:column;overflow:hidden;">
+
+      <div style="padding:1rem 1.25rem 0.75rem;border-bottom:1px solid #21262d;flex-shrink:0;">
+        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+          <h3 class="section-h" style="margin:0;">Plate Preview</h3>
+          <span id="plate-subtitle" style="font-size:0.82rem;color:#8b949e;">40×60mm • 0 designs • 2 columns</span>
+        </div>
+      </div>
+
+      <!-- Canvas area -->
+      <div style="flex:1;overflow:auto;padding:1.25rem;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div id="plate-canvas-wrap" style="background:#2d2d2d;border-radius:8px;padding:20px;display:inline-flex;align-items:center;justify-content:center;min-width:200px;min-height:200px;max-width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.4);">
+          <div id="plate-canvas" style="background:white;border-radius:4px;min-width:160px;min-height:200px;display:flex;align-items:center;justify-content:center;">
+            <!-- SVG plate rendered here by JS -->
+            <div style="color:#ccc;font-size:0.82rem;text-align:center;padding:2rem;">
+              <div style="font-size:2.5rem;margin-bottom:8px;">🎨</div>
+              Add designs to see<br>plate preview
+            </div>
+          </div>
+        </div>
+
+        <!-- Info row -->
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 16px;text-align:center;">
+            <div style="font-size:1.2rem;font-weight:700;color:#c9d1d9;" id="plate-count-display">0</div>
+            <div style="font-size:0.72rem;color:#8b949e;margin-top:2px;">Designs</div>
+          </div>
+          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 16px;text-align:center;">
+            <div style="font-size:1.2rem;font-weight:700;color:#c9d1d9;" id="plate-area-display">—</div>
+            <div style="font-size:0.72rem;color:#8b949e;margin-top:2px;">Print Area</div>
+          </div>
+          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 16px;text-align:center;">
+            <div style="font-size:1.2rem;font-weight:700;color:#c9d1d9;" id="plate-scale-display">1:1</div>
+            <div style="font-size:0.72rem;color:#8b949e;margin-top:2px;">Scale</div>
+          </div>
+        </div>
+
+        <!-- Quick usage tips -->
+        <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:1rem 1.25rem;max-width:560px;width:100%;">
+          <div style="font-size:0.78rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">How to use this tab</div>
+          <ul style="margin:0;padding-left:1.2rem;color:#8b949e;font-size:0.82rem;line-height:1.8;">
+            <li>Go to the <strong style="color:#c9d1d9;">Library</strong> or <strong style="color:#c9d1d9;">Upload &amp; Trace</strong> tabs</li>
+            <li>Click <strong style="color:#c9d1d9;">"Add to Plate"</strong> on any design</li>
+            <li>Return here to arrange, preview, and download</li>
+            <li>Use <strong style="color:#c9d1d9;">Download Full Plate SVG</strong> for Lightburn / Blender</li>
+            <li>Use <strong style="color:#c9d1d9;">Download Each Separately</strong> for individual files</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- end main-area -->
+  </div><!-- end two-col -->
+</div><!-- end tab-composer -->
+
+
+<!-- ===== JavaScript for Plate Composer + AI Prompts ===== -->
+<script>
+// ---- Plate Composer State ----
+var plateItems = [];
+var plateIdCounter = 0;
+
+function addToPlate(svgContent, label) {
+  plateIdCounter++;
+  plateItems.push({ id: plateIdCounter, svgContent: svgContent, label: label || ('Design ' + plateIdCounter) });
+  updatePlateCount();
+  renderPlate();
+  showNotification('Added to plate: ' + (label || 'Design'));
+}
+
+function clearPlate() {
+  plateItems = [];
+  updatePlateCount();
+  renderPlate();
+}
+
+function updatePlateCount() {
+  var el = document.getElementById('plate-count-display');
+  if (el) el.textContent = plateItems.length;
+  var badge = document.getElementById('tab-composer-badge');
+  if (badge) badge.textContent = plateItems.length > 0 ? plateItems.length : '';
+}
+
+function renderPlate() {
+  var list = document.getElementById('plate-queue-list');
+  if (!list) return;
+
+  if (plateItems.length === 0) {
+    list.innerHTML = '<div style="color:#8b949e;font-size:13px;text-align:center;padding:1.5rem 0.5rem;border:1px dashed #30363d;border-radius:8px;"><div style="font-size:2rem;margin-bottom:8px;">📋</div>No designs yet.<br>Add from Library or Upload tab.</div>';
+  } else {
+    list.innerHTML = plateItems.map(function(item, i) {
+      var thumb = item.svgContent.replace(/width="[^"]*"/, 'width="40"').replace(/height="[^"]*"/, 'height="40"');
+      return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;">' +
+        '<div style="width:40px;height:40px;background:#fff;border-radius:4px;overflow:hidden;flex-shrink:0;">' + thumb + '</div>' +
+        '<span style="flex:1;font-size:12px;color:#c9d1d9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + item.label + '</span>' +
+        '<button class="btn btn-sm" onclick="removePlateItem(' + item.id + ')" style="flex-shrink:0;padding:3px 8px;font-size:11px;">✕</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  renderPlateCanvas();
+}
+
+function removePlateItem(id) {
+  plateItems = plateItems.filter(function(item) { return item.id !== id; });
+  updatePlateCount();
+  renderPlate();
+}
+
+function renderPlateCanvas() {
+  var canvas = document.getElementById('plate-canvas');
+  if (!canvas) return;
+
+  var sizeMap = { standard: '400 600', large: '600 900', full: '1000 1500', square: '600 600' };
+  var sizeNames = { standard: '40×60mm', large: '60×90mm', full: '100×150mm', square: '60×60mm' };
+  var sizeValEl = document.getElementById('plate-size-select');
+  var sizeVal = sizeValEl ? sizeValEl.value : 'standard';
+  var dims = (sizeMap[sizeVal] || '400 600').split(' ').map(Number);
+  var pw = dims[0], ph = dims[1];
+  var colsEl = document.getElementById('plate-cols');
+  var cols = parseInt(colsEl ? colsEl.value : 2);
+  var gapEl = document.getElementById('plate-gap');
+  var gap = parseInt(gapEl ? gapEl.value : 20);
+  var borderEl = document.getElementById('plate-border');
+  var hasBorder = borderEl ? borderEl.checked : false;
+
+  var cellW = (pw - gap * (cols + 1)) / cols;
+  var rows = Math.ceil(plateItems.length / cols);
+  var totalH = rows * (cellW + gap) + gap;
+  var actualH = Math.max(ph, totalH || ph);
+
+  var svgContent = '<rect width="' + pw + '" height="' + actualH + '" fill="white"/>';
+  if (hasBorder) svgContent += '<rect x="2" y="2" width="' + (pw-4) + '" height="' + (actualH-4) + '" fill="none" stroke="#333" stroke-width="2"/>';
+
+  plateItems.forEach(function(item, i) {
+    var col = i % cols;
+    var row = Math.floor(i / cols);
+    var x = gap + col * (cellW + gap);
+    var y = gap + row * (cellW + gap);
+    svgContent += '<g transform="translate(' + x + ',' + y + ')">' + extractSVGContent(item.svgContent, cellW, cellW) + '</g>';
+  });
+
+  var fullSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pw + ' ' + actualH + '" style="max-width:100%;background:white">' + svgContent + '</svg>';
+  canvas.innerHTML = plateItems.length === 0
+    ? '<div style="color:#ccc;font-size:0.82rem;text-align:center;padding:2rem;"><div style="font-size:2.5rem;margin-bottom:8px;">🎨</div>Add designs to see<br>plate preview</div>'
+    : fullSVG;
+
+  window.lastPlateSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pw + ' ' + actualH + '">' + svgContent + '</svg>';
+
+  var subtitleEl = document.getElementById('plate-subtitle');
+  var sizeName = sizeNames[sizeVal] || (pw/10 + '×' + actualH/10 + 'mm');
+  if (subtitleEl) subtitleEl.textContent = sizeName + ' • ' + plateItems.length + ' designs • ' + cols + ' columns';
+
+  var areaEl = document.getElementById('plate-area-display');
+  if (areaEl) areaEl.textContent = sizeName;
+  var scaleEl = document.getElementById('plate-scale-display');
+  if (scaleEl) scaleEl.textContent = '1:1';
+}
+
+function extractSVGContent(svgStr, targetW, targetH) {
+  var match = svgStr.match(/viewBox="([^"]+)"/);
+  var vb = match ? match[1] : ('0 0 ' + targetW + ' ' + targetH);
+  var inner = svgStr.replace(/<svg[^>]*>/, '').replace(/<\/svg>/, '');
+  return '<svg viewBox="' + vb + '" width="' + targetW + '" height="' + targetH + '" preserveAspectRatio="xMidYMid meet">' + inner + '</svg>';
+}
+
+function downloadFullPlate() {
+  if (!window.lastPlateSVG || plateItems.length === 0) {
+    if (typeof showNotification === 'function') showNotification('Add designs to the plate first!');
+    return;
+  }
+  if (typeof downloadSVG === 'function') downloadSVG(window.lastPlateSVG, 'stamp_plate_full.svg');
+}
+
+function downloadEachSeparately() {
+  if (plateItems.length === 0) {
+    if (typeof showNotification === 'function') showNotification('No designs in queue!');
+    return;
+  }
+  plateItems.forEach(function(item, i) {
+    setTimeout(function() {
+      if (typeof downloadSVG === 'function') downloadSVG(item.svgContent, 'stamp_plate_' + (i+1) + '_' + item.label.replace(/\s+/g,'_') + '.svg');
+    }, i * 300);
+  });
+}
+
+// ---- Copy Prompt to Clipboard ----
+function copyPrompt(btn, text) {
+  var cleanText = text.trim();
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(cleanText).then(function() {
+      btn.textContent = '✓ Copied!';
+      btn.style.background = '#0d4429';
+      btn.style.borderColor = '#2daa6b';
+      btn.style.color = '#2daa6b';
+      setTimeout(function() {
+        btn.textContent = 'Copy';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 2000);
+    }).catch(function() { fallbackCopy(btn, cleanText); });
+  } else {
+    fallbackCopy(btn, cleanText);
+  }
+}
+
+function fallbackCopy(btn, text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = '✓ Copied!';
+    btn.style.background = '#0d4429';
+    btn.style.borderColor = '#2daa6b';
+    btn.style.color = '#2daa6b';
+    setTimeout(function() {
+      btn.textContent = 'Copy';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2000);
+  } catch(e) {
+    btn.textContent = 'Failed';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  }
+  document.body.removeChild(ta);
+}
+
+// Init plate on load
+document.addEventListener('DOMContentLoaded', function() {
+  renderPlate();
+});
+</script>
+
+</body>
+</html>
