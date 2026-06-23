@@ -1,0 +1,2637 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>xTool Creative Space Ultimate Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  a { color: #4cc9f0; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    border-bottom: 2px solid #4cc9f0;
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #f0f6fc;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: #8b949e;
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .pill {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #4cc9f0;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* TAB BAR */
+  .tab-bar {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 8px 8px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #8b949e;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 12px 10px;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+    border-radius: 4px 4px 0 0;
+  }
+  .tab-btn:hover { color: #c9d1d9; background: #21262d; }
+  .tab-btn.active {
+    color: #4cc9f0;
+    border-bottom-color: #4cc9f0;
+    background: #0d1117;
+  }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; padding: 32px 24px; max-width: 960px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION HEADINGS */
+  .section-heading {
+    color: #f0f6fc;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 32px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-heading:first-of-type { margin-top: 0; }
+
+  /* CARDS */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    color: #f0f6fc;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* TIP BOXES */
+  .tip-box {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    border-left: 4px solid;
+    font-size: 0.9rem;
+  }
+  .tip-box { background: #0c2d4a; border-color: #4cc9f0; color: #a8d8f0; }
+  .tip-box.warning { background: #2d2200; border-color: #e3b341; color: #e3d074; }
+  .tip-box.danger { background: #2d0c0c; border-color: #f85149; color: #ffa198; }
+  .tip-box.info { background: #0d2d1a; border-color: #3fb950; color: #7ee787; }
+  .tip-box strong { color: inherit; }
+
+  /* KBD */
+  kbd {
+    background: #21262d;
+    border: 1px solid #444c56;
+    border-bottom: 3px solid #444c56;
+    border-radius: 4px;
+    color: #c9d1d9;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.8rem;
+    padding: 2px 7px;
+    display: inline-block;
+  }
+  .shortcut-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #21262d;
+    font-size: 0.88rem;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-row .desc { color: #8b949e; }
+
+  /* TABLES */
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 0.88rem;
+  }
+  .guide-table th {
+    background: #21262d;
+    color: #f0f6fc;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #30363d;
+  }
+  .guide-table td {
+    padding: 9px 14px;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    vertical-align: top;
+  }
+  .guide-table tr:nth-child(even) td { background: #161b22; }
+  .guide-table tr:nth-child(odd) td { background: #0d1117; }
+  .guide-table tr:hover td { background: #1c2129; }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* STEPS */
+  .step-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #21262d;
+  }
+  .step-row:last-child { border-bottom: none; }
+  .step-num {
+    background: #4cc9f0;
+    color: #0d1117;
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* PRICE TAG */
+  .price-tag {
+    display: inline-block;
+    background: #0d2d1a;
+    color: #3fb950;
+    border: 1px solid #3fb950;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+  .price-tag.mid { background: #2d2200; color: #e3b341; border-color: #e3b341; }
+  .price-tag.high { background: #2d0c0c; color: #f85149; border-color: #f85149; }
+
+  /* BADGE / CHIP */
+  .badge {
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    margin: 2px 2px;
+  }
+  .badge-blue { background: #0c2d4a; color: #4cc9f0; border: 1px solid #4cc9f0; }
+  .badge-green { background: #0d2d1a; color: #3fb950; border: 1px solid #3fb950; }
+  .badge-yellow { background: #2d2200; color: #e3b341; border: 1px solid #e3b341; }
+  .badge-red { background: #2d0c0c; color: #f85149; border: 1px solid #f85149; }
+
+  /* HIGHLIGHT */
+  code {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    color: #79c0ff;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85em;
+    padding: 1px 6px;
+  }
+
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  p { margin-bottom: 10px; }
+
+  .divider { height: 1px; background: #21262d; margin: 28px 0; }
+
+  .tab-label-num {
+    display: inline-block;
+    background: #4cc9f0;
+    color: #0d1117;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0 5px;
+    margin-right: 4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>🔵 xTool Creative Space Ultimate Guide</h1>
+  <p class="subtitle">Master xTool's free software — the easiest way to start laser engraving with your xTool machine</p>
+  <div class="pill-row">
+    <span class="pill">100% Free</span>
+    <span class="pill">xTool Machines</span>
+    <span class="pill">SVG Import</span>
+    <span class="pill">AI Design Built-in</span>
+    <span class="pill">Cloud Library</span>
+    <span class="pill">Windows + Mac + iPad</span>
+  </div>
+</div>
+
+<!-- TAB BAR (all 12) -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(1)"><span class="tab-label-num">1</span>Understanding XCS</button>
+  <button class="tab-btn" onclick="switchTab(2)"><span class="tab-label-num">2</span>Setup &amp; Connection</button>
+  <button class="tab-btn" onclick="switchTab(3)"><span class="tab-label-num">3</span>Interface &amp; Tools</button>
+  <button class="tab-btn" onclick="switchTab(4)"><span class="tab-label-num">4</span>Importing Files</button>
+  <button class="tab-btn" onclick="switchTab(5)"><span class="tab-label-num">5</span>Laser Settings</button>
+  <button class="tab-btn" onclick="switchTab(6)"><span class="tab-label-num">6</span>xTool F1 Ultra Guide</button>
+  <button class="tab-btn" onclick="switchTab(7)"><span class="tab-label-num">7</span>Material Settings</button>
+  <button class="tab-btn" onclick="switchTab(8)"><span class="tab-label-num">8</span>Camera &amp; Preview</button>
+  <button class="tab-btn" onclick="switchTab(9)"><span class="tab-label-num">9</span>Stamp Plate Workflow</button>
+  <button class="tab-btn" onclick="switchTab(10)"><span class="tab-label-num">10</span>Troubleshooting</button>
+  <button class="tab-btn" onclick="switchTab(11)"><span class="tab-label-num">11</span>Practice Projects</button>
+  <button class="tab-btn" onclick="switchTab(12)"><span class="tab-label-num">12</span>Expert Tips</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 1 — Understanding XCS
+═══════════════════════════════════════════════════════════════ -->
+<div id="tab-panel-1" class="tab-panel active">
+
+  <h2 class="section-heading">What is xTool Creative Space?</h2>
+  <div class="card">
+    <h3>Free Laser Control + Design Software by xTool</h3>
+    <p>xTool Creative Space (XCS) is the official free software developed by xTool specifically for their laser machines. It combines a full design editor with direct machine control — meaning you can create your design and send it to the laser, all in one application, without needing any third-party software.</p>
+    <p>Unlike generic laser software, XCS is optimised exclusively for xTool hardware, giving you smart presets, camera integration, and a built-in AI design generator that other tools simply don't offer at zero cost.</p>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Completely free, forever.</strong> No license key, no dongle, no subscription. Download once, use indefinitely. A free xTool account unlocks the cloud design library and settings sync.
+  </div>
+
+  <h2 class="section-heading">Compatible xTool Machines</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Fiber Laser</h3>
+      <ul>
+        <li><strong>xTool F1</strong> — 10W fiber + 2W diode, enclosed</li>
+        <li><strong>xTool F1 Ultra</strong> — 20W fiber + 2W diode, touchscreen, camera</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Diode Laser</h3>
+      <ul>
+        <li><strong>xTool S1</strong> — 10W/20W/40W diode, enclosed</li>
+        <li><strong>xTool D1 Pro</strong> — 5W/10W/20W diode, open frame</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>CO2 Laser</h3>
+      <ul>
+        <li><strong>xTool P2</strong> — 55W CO2, large format, enclosed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Hybrid</h3>
+      <ul>
+        <li><strong>xTool M1</strong> — 10W diode + blade cutter combo</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">XCS vs Lightburn vs LaserGRBL — Full Comparison</h2>
+  <table class="guide-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>xTool Creative Space</th>
+        <th>Lightburn</th>
+        <th>LaserGRBL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Price</strong></td>
+        <td><span class="badge badge-green">Free forever</span></td>
+        <td><span class="badge badge-yellow">~$60 one-time</span></td>
+        <td><span class="badge badge-green">Free</span></td>
+      </tr>
+      <tr>
+        <td><strong>Ease of use</strong></td>
+        <td>⭐⭐⭐⭐⭐ Easiest</td>
+        <td>⭐⭐⭐ Moderate</td>
+        <td>⭐⭐ Technical</td>
+      </tr>
+      <tr>
+        <td><strong>Design tools built-in</strong></td>
+        <td>Yes — full editor + AI</td>
+        <td>Basic vector tools</td>
+        <td>None (import only)</td>
+      </tr>
+      <tr>
+        <td><strong>AI design generator</strong></td>
+        <td>Yes, built-in</td>
+        <td>No</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Cloud design library</strong></td>
+        <td>1000+ free designs</td>
+        <td>No</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>SVG import</strong></td>
+        <td>Yes, native</td>
+        <td>Yes, native</td>
+        <td>Limited</td>
+      </tr>
+      <tr>
+        <td><strong>Camera support</strong></td>
+        <td>Yes (F1 Ultra, P2)</td>
+        <td>Yes (most machines)</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>xTool machine support</strong></td>
+        <td>All xTool models</td>
+        <td>Most xTool models</td>
+        <td>GRBL only (D1 Pro)</td>
+      </tr>
+      <tr>
+        <td><strong>Advanced path editing</strong></td>
+        <td>Moderate</td>
+        <td>Excellent</td>
+        <td>Minimal</td>
+      </tr>
+      <tr>
+        <td><strong>iPad / mobile</strong></td>
+        <td>Yes (iPad app)</td>
+        <td>No</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td><strong>Offline use</strong></td>
+        <td>Yes after install</td>
+        <td>Yes</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>Beginners, xTool owners</td>
+        <td>Power users, multi-machine</td>
+        <td>GRBL tinkerers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box warning">
+    <strong>Verdict for xTool owners:</strong> Start with XCS — it's purpose-built for your machine with zero learning curve. Upgrade to Lightburn only if you need advanced path editing or run multiple brands of lasers.
+  </div>
+
+  <h2 class="section-heading">Key Features at a Glance</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>🎨 Design & Create</h3>
+      <ul>
+        <li>Drag-and-drop design canvas</li>
+        <li>Shapes, text, freehand drawing</li>
+        <li>AI image generator (prompt-to-design)</li>
+        <li>1000+ free cloud designs by category</li>
+        <li>SVG, PNG, JPG, DXF import</li>
+        <li>Image trace to vector</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚙️ Machine Control</h3>
+      <ul>
+        <li>One-click device connection (USB/WiFi)</li>
+        <li>Smart material presets</li>
+        <li>Layer-based processing settings</li>
+        <li>Real-time laser path preview</li>
+        <li>Job time estimate</li>
+        <li>Firmware update prompts</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📷 Camera & Safety</h3>
+      <ul>
+        <li>Live camera preview (F1 Ultra, P2)</li>
+        <li>Visual job positioning on material</li>
+        <li>Built-in power safety limits</li>
+        <li>Enclosed machine lid detection</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>☁️ Cloud & Sync</h3>
+      <ul>
+        <li>Free xTool account (optional)</li>
+        <li>Save and sync projects to cloud</li>
+        <li>Access designs on any device</li>
+        <li>Works fully offline after install</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Download XCS</h2>
+  <div class="card">
+    <h3>Where to get it</h3>
+    <p>Official download page: <strong>xtool.com/pages/software</strong></p>
+    <div class="two-col">
+      <div>
+        <strong>Windows</strong><br>
+        Windows 10 / 11, 64-bit<br>
+        <code>.exe</code> installer, ~200MB
+      </div>
+      <div>
+        <strong>macOS</strong><br>
+        macOS 11 (Big Sur) or newer<br>
+        <code>.dmg</code> installer
+      </div>
+      <div>
+        <strong>iPad</strong><br>
+        iOS 15 or newer<br>
+        Search "xTool Creative Space" on App Store
+      </div>
+      <div>
+        <strong>Version</strong><br>
+        XCS v2 (current) — major redesign over v1<br>
+        Check for updates within the app
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>XCS v2 vs v1:</strong> XCS v2 is a complete rewrite with a cleaner interface, better layer management, improved AI tools, and faster performance. If you have v1 installed, uninstall it and install v2 fresh — settings don't transfer cleanly.
+  </div>
+
+  <h2 class="section-heading">xTool Account — Do You Need One?</h2>
+  <div class="card">
+    <h3>Free account — optional but recommended</h3>
+    <p>You can use XCS without an account for basic engraving. Creating a free account at <strong>xtool.com</strong> unlocks:</p>
+    <ul>
+      <li>Access to the 1000+ cloud design library</li>
+      <li>Save and sync your projects across devices</li>
+      <li>Download purchased or free design packs</li>
+      <li>Access xTool community and support resources</li>
+    </ul>
+    <p style="margin-top:10px">Account creation is free — just email + password. No payment info required.</p>
+  </div>
+
+  <h2 class="section-heading">xTool in India</h2>
+  <div class="card">
+    <h3>Availability & Shipping</h3>
+    <ul>
+      <li><strong>Amazon.in</strong> — xTool machines listed on Amazon India, fulfilled by Amazon or seller</li>
+      <li><strong>xtool.com direct</strong> — ships via DHL Express, typically 7–14 business days to India</li>
+      <li><strong>Customs duty</strong> — expect 18–28% import duty added at delivery (IGST + BCD on electronics)</li>
+      <li>All xTool machines support <strong>100–240V AC auto-switching</strong> — standard Indian 220V works perfectly, no voltage converter needed</li>
+      <li>Plug adapter may be needed (Type B/C to Type D Indian plug)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>India Community Resources</h3>
+    <ul>
+      <li>Facebook group: search <strong>"xTool India Users"</strong> — active community, buy/sell, tips</li>
+      <li>YouTube: several Indian creators cover xTool stamp plate businesses</li>
+      <li>xTool official YouTube channel has subtitled tutorials</li>
+    </ul>
+  </div>
+
+</div><!-- /tab-panel-1 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 2 — Setup & Connection
+═══════════════════════════════════════════════════════════════ -->
+<div id="tab-panel-2" class="tab-panel">
+
+  <h2 class="section-heading">System Requirements</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Platform</th><th>Requirement</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Windows</strong></td>
+        <td>Windows 10 / 11, 64-bit</td>
+        <td>32-bit not supported. 8GB RAM recommended.</td>
+      </tr>
+      <tr>
+        <td><strong>macOS</strong></td>
+        <td>macOS 11 Big Sur or newer</td>
+        <td>Intel and Apple Silicon (M1/M2/M3) supported</td>
+      </tr>
+      <tr>
+        <td><strong>iPad</strong></td>
+        <td>iOS / iPadOS 15 or newer</td>
+        <td>iPhone not officially supported — iPad only</td>
+      </tr>
+      <tr>
+        <td><strong>Storage</strong></td>
+        <td>~500MB free space</td>
+        <td>More needed for cloud design cache</td>
+      </tr>
+      <tr>
+        <td><strong>Internet</strong></td>
+        <td>Required for install + account</td>
+        <td>Offline use after initial setup</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">Installation Steps</h2>
+  <div class="card">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div>Go to <strong>xtool.com/pages/software</strong> and download the installer for your OS.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div>Run the installer. On Windows, right-click → Run as Administrator if you get permission errors.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>Accept the license agreement and choose install location (default is fine).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>Launch XCS. On first launch, it will prompt you to log in or create a free xTool account.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div>Skip login if preferred — you can use XCS offline without an account (cloud features disabled).</div>
+    </div>
+  </div>
+
+  <div class="tip-box warning">
+    <strong>Windows Antivirus / Defender:</strong> Windows Defender Firewall or third-party antivirus (McAfee, Norton, Quick Heal) may block XCS from detecting your machine over WiFi. Add XCS to your firewall exceptions if device detection fails.
+  </div>
+
+  <h2 class="section-heading">Connecting Your xTool Machine</h2>
+
+  <div class="card">
+    <h3>xTool F1 Ultra (your machine) — USB or WiFi</h3>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div><strong>USB-C:</strong> Connect the supplied USB-C cable from F1 Ultra to your computer. XCS auto-detects it within seconds. Recommended for most reliable connection.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div><strong>WiFi setup:</strong> On the F1 Ultra touchscreen — Settings → WiFi → enter your network SSID and password. The machine connects to your local network.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>In XCS, click the device icon (top bar) → your F1 Ultra appears in the list → click Connect.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>Device status shows <span class="badge badge-green">Online</span> in the top-right of XCS when connected.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>xTool S1</h3>
+      <ul>
+        <li>USB-C cable connection (included)</li>
+        <li>WiFi: configure via XCS Settings or machine display</li>
+        <li>XCS auto-detects S1 model and loads correct work area (498×319mm)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>xTool D1 Pro</h3>
+      <ul>
+        <li>USB-A to USB-C cable</li>
+        <li>WiFi module sold separately for D1 Pro</li>
+        <li>Select D1 Pro in device list after connection</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>xTool P2</h3>
+      <ul>
+        <li>USB-C or WiFi</li>
+        <li>Ethernet option available</li>
+        <li>Large work area: 600×308mm</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>iPad Connection</h3>
+      <ul>
+        <li>USB-C direct (iPad Pro/Air) or Lightning-to-USB adapter</li>
+        <li>WiFi only (machine and iPad on same network)</li>
+        <li>Bluetooth not supported</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Machine Setup Wizard</h2>
+  <div class="card">
+    <p>First time connecting a machine, XCS runs a setup wizard:</p>
+    <ol>
+      <li>Confirms machine model and laser module (e.g., F1 Ultra 20W fiber + 2W diode)</li>
+      <li>Sets the correct work area dimensions for your model</li>
+      <li>Optionally runs a built-in <strong>test engrave pattern</strong> to verify the machine is working</li>
+      <li>Prompts for firmware update if a newer version is available</li>
+    </ol>
+  </div>
+
+  <div class="tip-box">
+    <strong>Always run the test engrave</strong> on a scrap piece of stainless steel or anodized aluminum when first setting up the F1 Ultra. It confirms correct focus, power, and that the fiber laser module is functioning correctly.
+  </div>
+
+  <h2 class="section-heading">Firmware Updates</h2>
+  <div class="card">
+    <p>XCS prompts automatically when a firmware update is available for your connected machine.</p>
+    <ul>
+      <li><strong>Always update firmware</strong> — updates fix bugs, improve speed, and add new features</li>
+      <li>Update takes 2–5 minutes; machine will restart</li>
+      <li>Do not disconnect or power off during firmware update</li>
+      <li>Check: <strong>Settings → Device → Check for Updates</strong> to manually trigger</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">India Power & Safety Notes</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Power Supply</h3>
+      <ul>
+        <li>All xTool machines: <strong>100–240V AC, 50/60Hz</strong> auto-switching</li>
+        <li>Indian standard 220V / 50Hz — fully compatible</li>
+        <li>No step-down transformer needed</li>
+        <li>Recommended: use a surge protector / UPS (power fluctuations in India can harm electronics)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>F1 Ultra Safety Advantage</h3>
+      <ul>
+        <li>Fully enclosed — no open laser beam</li>
+        <li>Lid sensor stops laser if opened mid-job</li>
+        <li>Safe for home and apartment use</li>
+        <li>Built-in air assist and ventilation port</li>
+        <li>Connect exhaust to window or air purifier</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Common Setup Issues</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>XCS doesn't detect machine over WiFi</td>
+        <td>Windows Firewall blocking UDP broadcast</td>
+        <td>Add XCS to Firewall exceptions; ensure both devices on same subnet</td>
+      </tr>
+      <tr>
+        <td>Antivirus quarantines XCS</td>
+        <td>False positive on installer</td>
+        <td>Whitelist XCS folder in antivirus settings; re-download from official site only</td>
+      </tr>
+      <tr>
+        <td>Machine shows as "Offline" in XCS</td>
+        <td>USB driver not installed</td>
+        <td>XCS installs USB drivers during setup — try reinstalling XCS; check Device Manager</td>
+      </tr>
+      <tr>
+        <td>iPad won't connect via USB</td>
+        <td>USB-C hub / dongle incompatibility</td>
+        <td>Connect iPad directly to machine USB-C port without hub</td>
+      </tr>
+      <tr>
+        <td>XCS crashes on launch</td>
+        <td>Old v1 files conflicting</td>
+        <td>Uninstall v1 completely, delete AppData/xTool folder, reinstall v2</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div><!-- /tab-panel-2 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 3 — Interface & Tools
+═══════════════════════════════════════════════════════════════ -->
+<div id="tab-panel-3" class="tab-panel">
+
+  <h2 class="section-heading">XCS Interface Layout</h2>
+  <div class="card">
+    <p>XCS uses a five-zone layout that keeps design tools, canvas, and machine settings visible simultaneously:</p>
+    <table class="guide-table">
+      <thead>
+        <tr><th>Zone</th><th>Location</th><th>What's There</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Menu Bar</strong></td>
+          <td>Top</td>
+          <td>File, Edit, View menus + device status indicator + account avatar</td>
+        </tr>
+        <tr>
+          <td><strong>Tool Panel</strong></td>
+          <td>Left sidebar</td>
+          <td>Select, shapes, text, image import, AI generate, draw tools, eraser</td>
+        </tr>
+        <tr>
+          <td><strong>Canvas / Work Area</strong></td>
+          <td>Center</td>
+          <td>Visual representation of the machine bed — your design goes here</td>
+        </tr>
+        <tr>
+          <td><strong>Properties Panel</strong></td>
+          <td>Right sidebar</td>
+          <td>Position (X/Y), size (W/H), rotation, flip, lock ratio — changes based on selected object</td>
+        </tr>
+        <tr>
+          <td><strong>Layer / Processing Panel</strong></td>
+          <td>Bottom</td>
+          <td>Layer list + per-layer settings: mode (Score/Fill/Cut), speed, power, passes, DPI</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-box info">
+    <strong>The canvas represents your machine's actual work area.</strong> For the F1 Ultra, the canvas is 115×115mm. Objects outside this area will not be engraved.
+  </div>
+
+  <h2 class="section-heading">Left Tool Panel — All Tools</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Selection & Navigation</h3>
+      <ul>
+        <li><strong>Select / Move</strong> <kbd>V</kbd> — click to select, drag to move, drag handles to resize</li>
+        <li><strong>Pan</strong> <kbd>Space</kbd> + drag — navigate large canvases</li>
+        <li><strong>Zoom</strong> — scroll wheel, or Ctrl+= / Ctrl+-</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Shape Tools</h3>
+      <ul>
+        <li><strong>Rectangle</strong> — drag to draw; hold Shift for square</li>
+        <li><strong>Circle / Ellipse</strong> — drag to draw; hold Shift for circle</li>
+        <li><strong>Polygon</strong> — set number of sides in properties</li>
+        <li><strong>Line</strong> — click-drag for straight lines</li>
+        <li><strong>Star</strong> — adjustable inner/outer radius</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Text Tool <kbd>T</kbd></h3>
+      <ul>
+        <li>Click canvas to place text cursor</li>
+        <li>Font family, size, bold, italic in properties</li>
+        <li><strong>Arc Text</strong> — curved text along a circular path</li>
+        <li><strong>Text on Path</strong> — attach text to any vector path</li>
+        <li>Convert text to paths for export: right-click → Convert to Path</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Image & Design</h3>
+      <ul>
+        <li><strong>Import Image</strong> — PNG, JPG, SVG, DXF, PDF via button or drag & drop</li>
+        <li><strong>AI Generate</strong> — type a prompt, generate engraving-ready artwork</li>
+        <li><strong>Design Library</strong> — browse 1000+ free cloud designs by category</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Drawing Tools</h3>
+      <ul>
+        <li><strong>Pen / Draw</strong> — freehand vector path drawing</li>
+        <li><strong>Bezier</strong> — click to place anchor points, drag for curves</li>
+        <li><strong>Eraser</strong> — remove portions of paths</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Arrange Tools</h3>
+      <ul>
+        <li><strong>Align & Distribute</strong> — align selected objects to canvas or to each other</li>
+        <li><strong>Boolean</strong> — Union, Subtract, Intersect, Exclude for combining paths</li>
+        <li><strong>Offset</strong> — inward or outward path offset (great for stamps)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Right Properties Panel</h2>
+  <div class="card">
+    <p>Selecting any object shows its editable properties on the right:</p>
+    <ul>
+      <li><strong>X / Y</strong> — position on canvas (in mm, measured from top-left corner)</li>
+      <li><strong>W / H</strong> — width and height in mm</li>
+      <li><strong>Lock aspect ratio</strong> — padlock icon, prevents distortion when resizing</li>
+      <li><strong>Rotation</strong> — degrees (0–360), with 90° quick buttons</li>
+      <li><strong>Flip</strong> — horizontal / vertical mirror (critical for stamp plates — designs must be mirrored!)</li>
+      <li><strong>Opacity</strong> — visual transparency (does not affect laser power)</li>
+    </ul>
+  </div>
+
+  <div class="tip-box warning">
+    <strong>Stamp Plate Reminder:</strong> When engraving stamp plates, you MUST mirror / flip the design horizontally before engraving. What gets engraved is the mirror of what you see. XCS Flip Horizontal handles this in one click.
+  </div>
+
+  <h2 class="section-heading">Layer System</h2>
+  <div class="card">
+    <h3>How XCS Layers Work</h3>
+    <p>XCS uses a color-based layer system. Each unique color in your design becomes a separate processing layer, each with its own Speed, Power, Passes, and Mode settings.</p>
+    <ul>
+      <li>Black objects → Layer 1</li>
+      <li>Red objects → Layer 2</li>
+      <li>Blue objects → Layer 3</li>
+      <li>...and so on</li>
+    </ul>
+    <p style="margin-top:10px">This is extremely powerful for multi-step jobs — for example: engrave first (black layer), then cut (red layer), automatically in the correct order.</p>
+  </div>
+
+  <div class="card">
+    <h3>Layer Processing Panel (Bottom)</h3>
+    <p>Each layer row shows:</p>
+    <ul>
+      <li><strong>Color swatch</strong> — the color this layer controls</li>
+      <li><strong>Mode</strong> — Score / Fill / Cut</li>
+      <li><strong>Speed</strong> — mm/s</li>
+      <li><strong>Power</strong> — percentage</li>
+      <li><strong>Passes</strong> — number of repetitions</li>
+      <li><strong>DPI</strong> (Fill mode) — resolution of raster fill</li>
+      <li><strong>Eye icon</strong> — toggle visibility</li>
+      <li><strong>Lock icon</strong> — lock layer from editing</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Design Library & AI Generator</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Cloud Design Library</h3>
+      <ul>
+        <li>Click the Library icon in the left panel</li>
+        <li>Browse categories: floral, mandala, animals, text frames, holiday, etc.</li>
+        <li>1000+ designs, all free with xTool account</li>
+        <li>Click a design → Add to Canvas</li>
+        <li>Resize, recolor, and combine with other elements</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>AI Image Generator</h3>
+      <ul>
+        <li>Tools menu → AI Generate (or left panel AI icon)</li>
+        <li>Type a prompt: e.g. "minimal lotus flower line art"</li>
+        <li>XCS generates engraving-optimized vector-style artwork</li>
+        <li>Select result → Add to Canvas</li>
+        <li>Best for: decorative fills, background patterns, unique designs</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">All Keyboard Shortcuts</h2>
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <div class="shortcut-row"><kbd>V</kbd> <span class="desc">Select / Move tool</span></div>
+        <div class="shortcut-row"><kbd>T</kbd> <span class="desc">Text tool</span></div>
+        <div class="shortcut-row"><kbd>Space</kbd> <span class="desc">Pan canvas (hold + drag)</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Z</kbd> <span class="desc">Undo</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> <span class="desc">Redo</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>S</kbd> <span class="desc">Save project</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>C</kbd> <span class="desc">Copy</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>V</kbd> <span class="desc">Paste</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>D</kbd> <span class="desc">Duplicate in place</span></div>
+        <div class="shortcut-row"><kbd>Delete</kbd> <span class="desc">Delete selected</span></div>
+      </div>
+      <div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>A</kbd> <span class="desc">Select all objects</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>G</kbd> <span class="desc">Group selected</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> <span class="desc">Ungroup</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>[</kbd> <span class="desc">Send backward (layer order)</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>]</kbd> <span class="desc">Bring forward (layer order)</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>=</kbd> <span class="desc">Zoom in</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>-</kbd> <span class="desc">Zoom out</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>0</kbd> <span class="desc">Fit canvas to window</span></div>
+        <div class="shortcut-row"><kbd>Ctrl</kbd>+<kbd>F</kbd> <span class="desc">Flip horizontal</span></div>
+        <div class="shortcut-row"><kbd>Esc</kbd> <span class="desc">Deselect / cancel operation</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-panel-3 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 4 — Importing Files
+═══════════════════════════════════════════════════════════════ -->
+<div id="tab-panel-4" class="tab-panel">
+
+  <h2 class="section-heading">Supported File Formats</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Format</th><th>Type</th><th>Best For</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>SVG</strong></td>
+        <td>Vector</td>
+        <td>Stamp designs, logos, illustrations, outlines</td>
+        <td>Native support — no conversion needed. Best format for stamp plates.</td>
+      </tr>
+      <tr>
+        <td><strong>PNG</strong></td>
+        <td>Raster</td>
+        <td>Photos, greyscale engrave, logo fills</td>
+        <td>Transparent background preserved. XCS applies image processing modes.</td>
+      </tr>
+      <tr>
+        <td><strong>JPG / JPEG</strong></td>
+        <td>Raster</td>
+        <td>Photo engraving, reference images</td>
+        <td>No transparency. Use Greyscale or B&W mode in XCS.</td>
+      </tr>
+      <tr>
+        <td><strong>BMP</strong></td>
+        <td>Raster</td>
+        <td>Simple graphics</td>
+        <td>Supported but large file sizes — prefer PNG</td>
+      </tr>
+      <tr>
+        <td><strong>DXF</strong></td>
+        <td>Vector (CAD)</td>
+        <td>Precision parts, Fusion 360, AutoCAD files</td>
+        <td>Watch for scale — always check mm vs inches after import</td>
+      </tr>
+      <tr>
+        <td><strong>PDF</strong></td>
+        <td>Mixed</td>
+        <td>Simple single-page designs</td>
+        <td>Basic support only — complex PDFs may not import correctly</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">How to Import Files</h2>
+  <div class="card">
+    <h3>Method 1: Drag & Drop (Fastest)</h3>
+    <p>Open your file manager (Windows Explorer / Finder), find your SVG, PNG, or DXF file, and drag it directly onto the XCS canvas. XCS auto-detects the file type and imports it.</p>
+  </div>
+  <div class="card">
+    <h3>Method 2: File Menu Import</h3>
+    <p>File → Import → browse to your file → Open. Works for all supported formats.</p>
+  </div>
+  <div class="card">
+    <h3>Method 3: Copy-Paste from Inkscape</h3>
+    <p>Select objects in Inkscape → Ctrl+C → click XCS canvas → Ctrl+V. Pastes as SVG paths. Useful for quick transfers.</p>
+  </div>
+
+  <h2 class="section-heading">SVG Import — The Key Format for Stamp Plates</h2>
+  <div class="card">
+    <h3>Why SVG is Ideal</h3>
+    <p>SVG is a native vector format — XCS reads it directly without rasterizing. This means:</p>
+    <ul>
+      <li>Crisp, smooth paths at any size — no pixelation</li>
+      <li>Each stroke/path becomes a separate laser pass</li>
+      <li>Colors map directly to XCS layers</li>
+      <li>Resize freely without quality loss</li>
+    </ul>
+  </div>
+
+  <div class="tip-box info">
+    <strong>SVG from Stamp Plate SVG Studio app:</strong> Download your SVG → drag into XCS → resize to plate dimensions (e.g., 40×60mm or 60×60mm) → set layer to Score mode → engrave. No intermediate conversion needed — this is the cleanest workflow.
+  </div>
+
+  <h2 class="section-heading">Image Processing Modes (PNG/JPG)</h2>
+  <p>When you import a raster image, XCS asks you to choose a processing mode. This determines how the image is converted into laser movements:</p>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Mode</th><th>How It Works</th><th>Best For</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Greyscale</strong></td>
+        <td>Maps pixel brightness to laser power — darker pixels = more power</td>
+        <td>Portrait photos, detailed grayscale artwork on wood/acrylic</td>
+      </tr>
+      <tr>
+        <td><strong>Black & White</strong></td>
+        <td>Threshold converts to pure black/white — pixels are either engraved or not</td>
+        <td>Logos, high-contrast line art, text from images</td>
+      </tr>
+      <tr>
+        <td><strong>Seal</strong></td>
+        <td>Inverts image for stamp plate use — dark areas become raised rubber</td>
+        <td>Stamp plate images (not needed if using SVG)</td>
+      </tr>
+      <tr>
+        <td><strong>Line</strong></td>
+        <td>Edge detection — only engraves the outlines/edges of shapes</td>
+        <td>Sketchy engraved look, portraits with line-art effect</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">Tracing Images to Vector</h2>
+  <div class="card">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div>Import your PNG or JPG image onto the canvas.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div>Right-click the image → <strong>Trace Image</strong> (or Image menu → Trace).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>Adjust the <strong>Threshold</strong> slider — higher = more detail, lower = simpler paths.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>Click <strong>Apply</strong> — XCS generates vector paths from the image.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div>Delete the original raster image — you now have clean vector paths for laser engraving.</div>
+    </div>
+  </div>
+
+  <div class="tip-box warning">
+    <strong>Trace quality depends on image quality.</strong> Use high-contrast PNG images for best results. Photos with gradients trace poorly — use Greyscale mode for those instead.
+  </div>
+
+  <h2 class="section-heading">DXF Import Tips</h2>
+  <div class="card">
+    <ul>
+      <li>DXF from <strong>Fusion 360</strong>: Export as DXF, set units to millimeters in Fusion before export</li>
+      <li>DXF from <strong>AutoCAD</strong>: Save as DXF 2013 or older — newer DXF versions may not import</li>
+      <li>After import, always check the size: <strong>if design is 25.4x too large</strong>, the DXF was in inches — scale down by ÷25.4</li>
+      <li>DXF layers become XCS color layers (layer names/colors should be set in CAD software)</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Resizing and Positioning Imported Files</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Visual Resize</h3>
+      <ul>
+        <li>Click object → drag corner handles</li>
+        <li>Hold Shift while dragging to lock aspect ratio</li>
+        <li>For stamp plates: enable lock ratio, then set exact width or height</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Exact Dimensions</h3>
+      <ul>
+        <li>Select object → type W and H values in Properties panel (right)</li>
+        <li>Lock ratio padlock ensures proportional scaling</li>
+        <li>For 40×60mm stamp plate: set W=40, H=60 (verify ratio locked)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Common Import Issues & Fixes</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SVG imports too large or too small</td>
+        <td>Inkscape document units set to px instead of mm</td>
+        <td>In Inkscape: File → Document Properties → set units to mm, resize artboard to match your plate (e.g., 60×60mm)</td>
+      </tr>
+      <tr>
+        <td>SVG colors not showing separate layers</td>
+        <td>All paths have same color or no color</td>
+        <td>In Inkscape, assign distinct stroke colors to paths that need different processing settings</td>
+      </tr>
+      <tr>
+        <td>Text not showing correctly after SVG import</td>
+        <td>Font not embedded in SVG</td>
+        <td>In Inkscape: select all text → Path → Object to Path before saving SVG. This converts fonts to vector outlines.</td>
+      </tr>
+      <tr>
+        <td>DXF scale is 25.4x too large</td>
+        <td>CAD file in inches, XCS interprets as mm</td>
+        <td>Scale the imported object to 1/25.4 (3.937%) or re-export DXF with mm units</td>
+      </tr>
+      <tr>
+        <td>PNG looks blurry/pixelated in XCS</td>
+        <td>Low-resolution source image</td>
+        <td>Use 300+ DPI images; at 60×60mm output, image should be at least 700×700px</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">Best Practices for Stamp Plate SVG Files</h2>
+  <div class="card">
+    <ul>
+      <li>Use <strong>stroke paths only</strong> (no fills) for text and outlines — maps cleanly to Score mode</li>
+      <li>Set document size in Inkscape to match your plate (40×60mm or 60×60mm) before saving</li>
+      <li>Convert all text to paths (Path → Object to Path) before export</li>
+      <li>Use a single color (black) for all paths — XCS will assign to one layer, easy to set Score mode on all at once</li>
+      <li>Group the entire design: <kbd>Ctrl</kbd>+<kbd>A</kbd> then <kbd>Ctrl</kbd>+<kbd>G</kbd> before export</li>
+      <li>Save as <strong>Plain SVG</strong> (not Inkscape SVG) for best compatibility with XCS</li>
+    </ul>
+  </div>
+
+</div><!-- /tab-panel-4 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 5 — Laser Settings Deep Dive
+═══════════════════════════════════════════════════════════════ -->
+<div id="tab-panel-5" class="tab-panel">
+
+  <h2 class="section-heading">The Three Processing Modes</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Score (Vector Engrave)</h3>
+      <p>The laser follows the exact path of your vector lines — like a pen drawing. Used for outlines, text strokes, detailed linework.</p>
+      <p style="margin-top:8px"><strong>Stamp plates:</strong> Score mode is what you want. Each stroke becomes a precise groove in the metal.</p>
+      <span class="badge badge-blue">Follows paths</span>
+      <span class="badge badge-green">Fast</span>
+      <span class="badge badge-green">Stamp plates</span>
+    </div>
+    <div class="card">
+      <h3>Fill (Raster Engrave)</h3>
+      <p>The laser sweeps back and forth (like a printer) filling solid areas. Used for logos, filled text, photos, and solid shapes.</p>
+      <p style="margin-top:8px"><strong>DPI setting</strong> controls resolution — higher DPI = more detail but longer time.</p>
+      <span class="badge badge-yellow">Raster scan</span>
+      <span class="badge badge-yellow">Slower</span>
+      <span class="badge badge-blue">Logos/fills</span>
+    </div>
+    <div class="card">
+      <h3>Cut</h3>
+      <p>Laser moves along the path with high enough power to cut completely through the material. Usually slower, higher power, multiple passes.</p>
+      <p style="margin-top:8px"><strong>Note:</strong> xTool F1 Ultra fiber laser cannot cut — it marks/engraves. The 2W diode can cut thin materials.</p>
+      <span class="badge badge-red">Cuts through</span>
+      <span class="badge badge-red">High power</span>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Settings Explained</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Setting</th><th>Range (typical)</th><th>Effect</th><th>Tip</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Speed (mm/s)</strong></td>
+        <td>10 – 10,000 (F1 Ultra)</td>
+        <td>Faster = lighter mark; Slower = deeper/darker mark</td>
+        <td>Start with 200mm/s for stamp plates on SS304</td>
+      </tr>
+      <tr>
+        <td><strong>Power (%)</strong></td>
+        <td>1 – 100%</td>
+        <td>Higher = more energy = deeper/darker mark</td>
+        <td>Start at 55–60% for SS304 stamp plates</td>
+      </tr>
+      <tr>
+        <td><strong>Passes</strong></td>
+        <td>1 – 10+</td>
+        <td>Multiple passes deepen the mark or cut</td>
+        <td>1 pass for most stamp work; 2 for deeper marks</td>
+      </tr>
+      <tr>
+        <td><strong>DPI (Fill only)</strong></td>
+        <td>100 – 1000</td>
+        <td>Resolution of raster fill — higher = finer detail, longer job</td>
+        <td>254 DPI for general use; 508+ for fine photo engraving</td>
+      </tr>
+      <tr>
+        <td><strong>Frequency (Hz)</strong></td>
+        <td>20–80kHz (fiber)</td>
+        <td>Pulse frequency — affects surface finish and depth</td>
+        <td>Default 20kHz works for most SS304 applications</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">F1 Ultra Stamp Plate Settings Guide (SS304)</h2>
+  <div class="tip-box info">
+    These are starting points for xTool F1 Ultra (20W fiber) on SS304 stainless steel stamp plates. Always run a test patch on scrap material before a full job.
+  </div>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Use Case</th><th>Mode</th><th>Speed</th><th>Power</th><th>Passes</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Standard stamp text</strong></td>
+        <td>Score</td>
+        <td>200 mm/s</td>
+        <td>60%</td>
+        <td>1</td>
+        <td>Good for 1–3mm text and simple borders</td>
+      </tr>
+      <tr>
+        <td><strong>Fine detail / small text</strong></td>
+        <td>Score</td>
+        <td>300 mm/s</td>
+        <td>50%</td>
+        <td>1</td>
+        <td>Faster speed with lower power for delicate marks</td>
+      </tr>
+      <tr>
+        <td><strong>Deep engrave / logo fill</strong></td>
+        <td>Score</td>
+        <td>100 mm/s</td>
+        <td>75%</td>
+        <td>2</td>
+        <td>Deeper groove for bold stamp impressions</td>
+      </tr>
+      <tr>
+        <td><strong>Quick test patch</strong></td>
+        <td>Fill</td>
+        <td>500 mm/s</td>
+        <td>40–70% (grid)</td>
+        <td>1</td>
+        <td>Use XCS "Parameter Test" feature to find sweet spot</td>
+      </tr>
+      <tr>
+        <td><strong>Annealing (color mark)</strong></td>
+        <td>Fill</td>
+        <td>150 mm/s</td>
+        <td>35–50%</td>
+        <td>1</td>
+        <td>Creates dark oxide mark without material removal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box warning">
+    <strong>F1 Ultra vs F1 Power Scaling:</strong> The F1 Ultra has a 20W fiber laser vs the F1's 10W. For the same result on the same material, F1 Ultra users typically use <strong>lower power percentages or higher speeds</strong> compared to F1 settings you find online. If a tutorial says "80% power on F1", try 50–55% on F1 Ultra first.
+  </div>
+
+  <h2 class="section-heading">Material Presets in XCS</h2>
+  <div class="card">
+    <h3>Using Built-in Presets</h3>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div>In the layer settings (bottom panel), click the <strong>Material</strong> dropdown for a layer.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div>Select your material category (Metal, Wood, Acrylic, etc.) → choose specific material.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>XCS auto-populates Speed, Power, and Passes based on your connected machine's laser type.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>Use as a starting point — fine-tune from there based on your specific material batch.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Creating Custom Presets</h3>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div>Dial in your perfect settings (speed, power, passes, DPI).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div>Click <strong>Save as Preset</strong> (floppy disk icon in layer settings).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>Name it descriptively: e.g., "SS304 Stamp Score 200/60" or "Walnut Wood Cut 3mm".</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>Your custom preset appears in the material dropdown for future projects.</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Layer Order & Processing Sequence</h2>
+  <div class="card">
+    <p>XCS processes layers from <strong>bottom to top</strong> in the layer list. This is important for multi-operation jobs:</p>
+    <ul>
+      <li><strong>Engrave first, cut last</strong> — if you cut first, the material may shift, misaligning the engrave</li>
+      <li>Drag layers in the bottom panel to reorder them</li>
+      <li>Standard workflow: engrave layers at bottom → score/detail layers in middle → cut layer at top</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Preview & Time Estimate</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Preview Mode</h3>
+      <ul>
+        <li>Click the <strong>Preview</strong> button (top right of canvas area)</li>
+        <li>See animated laser path before running — check for missed areas or unexpected paths</li>
+        <li>Verify position relative to material boundaries</li>
+        <li>Check that all layers are included and in correct order</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Time Estimate</h3>
+      <ul>
+        <li>Shown automatically in the Preview panel</li>
+        <li>Use this to <strong>price your stamp plates</strong> accurately</li>
+        <li>Typical F1 Ultra stamp plate (60×60mm): 30–120 seconds</li>
+        <li>Fill mode jobs take significantly longer than Score mode</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">XCS Safety Limits</h2>
+  <div class="tip-box info">
+    <strong>XCS has built-in machine-specific safety limits.</strong> You cannot set power or speed beyond what the machine is rated for. For example, F1 Ultra fiber laser is capped appropriately to prevent damage to the laser module. You cannot accidentally "over-power" the laser through XCS settings.
+  </div>
+
+</div><!-- /tab-panel-5 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     TAB 6 — xTool F1 Ultra Complete Guide
+═══════════════════════════════════════════════════════════════ -->
+<div id="tab-panel-6" class="tab-panel">
+
+  <h2 class="section-heading">F1 Ultra Technical Specifications</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Spec</th><th>Value</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Fiber Laser Power</strong></td><td>20W MOPA fiber laser</td></tr>
+      <tr><td><strong>Diode Laser Power</strong></td><td>2W blue diode (450nm)</td></tr>
+      <tr><td><strong>Work Area</strong></td><td>115 × 115 mm</td></tr>
+      <tr><td><strong>Max Speed (fiber)</strong></td><td>10,000 mm/s</td></tr>
+      <tr><td><strong>Max Speed (diode)</strong></td><td>6,000 mm/s</td></tr>
+      <tr><td><strong>Precision</strong></td><td>0.001 mm</td></tr>
+      <tr><td><strong>Enclosure</strong></td><td>Yes — fully enclosed, Class 1 laser product</td></tr>
+      <tr><td><strong>Display</strong></td><td>Touchscreen (run jobs without computer)</td></tr>
+      <tr><td><strong>Camera</strong></td><td>Built-in overhead camera, live preview in XCS</td></tr>
+      <tr><td><strong>Connectivity</strong></td><td>USB-C, WiFi 2.4GHz/5GHz</td></tr>
+      <tr><td><strong>Power Input</strong></td><td>100–240V AC, 50/60Hz (global)</td></tr>
+      <tr><td><strong>Machine Dimensions</strong></td><td>~362 × 335 × 275 mm</td></tr>
+      <tr><td><strong>Weight</strong></td><td>~9.5 kg</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-heading">The Two Lasers — What Each Does</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>20W MOPA Fiber Laser</h3>
+      <span class="badge badge-blue">Metal marking</span>
+      <span class="badge badge-blue">Permanent</span>
+      <span class="badge badge-blue">Stamp plates</span>
+      <p style="margin-top:10px"><strong>Best for:</strong></p>
+      <ul>
+        <li>Stainless steel (SS304, SS316) — stamp plates, cutlery, tools</li>
+        <li>Aluminum — anodized (colors) and bare</li>
+        <li>Brass, copper, gold, silver, titanium</li>
+        <li>Some plastics and coated surfaces</li>
+      </ul>
+      <p style="margin-top:8px"><strong>Cannot do:</strong> Wood, acrylic, leather, fabric, paper (use diode)</p>
+      <p style="margin-top:8px"><strong>MOPA advantage:</strong> Adjustable pulse width — enables color annealing on stainless steel (black, blue, gold, etc.) by changing pulse settings</p>
+    </div>
+    <div class="card">
+      <h3>2W Blue Diode Laser</h3>
+      <span class="badge badge-green">Organic materials</span>
+      <span class="badge badge-green">Wood/leather</span>
+      <span class="badge badge-yellow">Limited cutting</span>
+      <p style="margin-top:10px"><strong>Best for:</strong></p>
+      <ul>
+        <li>Wood engraving (teak, walnut, bamboo, MDF)</li>
+        <li>Leather engraving (tags, wallets, journals)</li>
+        <li>Acrylic engraving (frosted look)</li>
+        <li>Fabric / felt marking</li>
+        <li>Paper cutting (thin sheets)</li>
+        <li>Dark coated materials</li>
+      </ul>
+      <p style="margin-top:8px"><strong>Cannot do:</strong> Bare metal, transparent acrylic cutting</p>
+      <p style="margin-top:8px"><strong>Note:</strong> 2W is lower power than dedicated diode machines — for deep cuts, use a dedicated S1 or D1 Pro</p>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Switching Lasers in XCS</h2>
+  <div class="card">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div>In the layer settings panel (bottom), click the <strong>Laser</strong> dropdown for your layer.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div>Select <strong>Fiber Laser</strong> for metal work, or <strong>Diode Laser</strong> for wood/leather/acrylic.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>XCS automatically updates available settings and material presets for the selected laser type.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>You can have different layers use different lasers in the same job (e.g., fiber mark + diode engrave in one file).</div>
+    </div>
+  </div>
+
+  <div class="tip-box warning">
+    <strong>Physical laser switching is automatic.</strong> The F1 Ultra switches between fiber and diode lasers automatically during a job — you don't need to manually change anything inside the machine. XCS sends the correct sequence.
+  </div>
+
+  <h2 class="section-heading">Built-in Camera</h2>
+  <div class="card">
+    <h3>Live Camera Preview in XCS</h3>
+    <ul>
+      <li>Click <strong>Camera</strong> icon or <strong>Preview → Camera View</strong> in XCS</li>
+      <li>Live feed from the overhead camera shows what's on the bed</li>
+      <li>Drag your design on top of the camera view to <strong>visually position it on your material</strong></li>
+      <li>No more guessing — you can see exactly where the laser will hit before starting</li>
+      <li>Calibration: run camera calibration once (Settings → Camera Calibration) for accurate positioning</li>
+    </ul>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Stamp plate positioning tip:</strong> Place your SS304 plate on the bed → use Camera View → drag design overlay onto the plate → Start. Perfect placement every time without measuring or test burns.
+  </div>
+
+  <h2 class="section-heading">Touchscreen — Running Jobs Without a Computer</h2>
+  <div class="card">
+    <ul>
+      <li>The F1 Ultra has a built-in touchscreen display</li>
+      <li>After sending a job from XCS, it's stored on the machine</li>
+      <li>Stores the last <strong>10 jobs</strong> — accessible from the touchscreen</li>
+      <li>Select any saved job → press Start → runs without computer connection</li>
+      <li>Great for production: set up job once in XCS, run repeatedly from touchscreen</li>
+      <li>Touchscreen also shows: job progress, elapsed time, remaining time, error alerts</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">The F1 Ultra Stamp Plate Workflow — Step by Step</h2>
+  <div class="card">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div><strong>Design:</strong> Create your stamp design in <strong>SVG Studio app</strong> (or Inkscape, Procreate, etc.) → export/download as SVG file.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div><strong>Import:</strong> Open XCS → drag your SVG file onto the canvas. The design appears as a vector layer.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div><strong>Resize:</strong> Select the design → lock aspect ratio in Properties → type exact plate dimensions (W: 40, H: 60 for a 40×60mm plate, or W: 60, H: 60 for square).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div><strong>Mirror:</strong> Click <strong>Flip Horizontal</strong> in Properties panel. Stamps must be mirrored — what's engraved is the reverse of the final impression.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div><strong>Layer settings:</strong> In the bottom panel, set Mode to <strong>Score</strong>, select <strong>Stainless Steel</strong> from material presets. Starting settings: Speed 200 mm/s, Power 55–60%, Passes 1.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">6</div>
+      <div><strong>Preview:</strong> Click <strong>Preview</strong> → verify the laser path looks correct → check time estimate (should be 30–90 seconds for a typical stamp plate).</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">7</div>
+      <div><strong>Position:</strong> Use Camera View to visually place the design over your SS304 plate on the bed. Or use the corner/edge positioning method with the F1 Ultra's built-in framing function.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">8</div>
+      <div><strong>Engrave:</strong> Place SS304 plate on the bed, close the lid, click <strong>Start</strong> in XCS. The F1 Ultra auto-focuses, then runs the job. Done in 30–90 seconds.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">9</div>
+      <div><strong>Clean:</strong> Open lid, remove plate. Clean with IPA (isopropyl alcohol) and a cotton swab to remove metal dust and reveal the clean engraving.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">10</div>
+      <div><strong>Test:</strong> Press the stamp plate onto a stamp pad and test impression on paper. Adjust depth on next plate if needed (reduce speed or increase passes for deeper marks).</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">F1 Ultra for Complementary Products</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Wood Coasters (Diode Laser)</h3>
+      <ul>
+        <li>Blank round/square coasters from craft stores / Amazon.in</li>
+        <li>Use 2W diode laser, Fill mode</li>
+        <li>Speed 2000, Power 70%, DPI 254</li>
+        <li>Finish with food-safe linseed or walnut oil</li>
+        <li>Cost: ₹20–40 per coaster, sell ₹250–500 each</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Leather Gift Tags (Diode)</h3>
+      <ul>
+        <li>Veg-tan leather blanks (pre-cut tags)</li>
+        <li>Use 2W diode laser, Fill or Score mode</li>
+        <li>Speed 1500, Power 60%, DPI 254</li>
+        <li>Natural tan leather works best</li>
+        <li>Pair with ribbon for gifting products</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Acrylic Keychains (Diode)</h3>
+      <ul>
+        <li>Opaque colored acrylic sheets, 3mm</li>
+        <li>Diode laser engraves; cannot cut clear acrylic</li>
+        <li>Works on mirrored, colored, and painted acrylic</li>
+        <li>Add keyring hardware from hardware stores</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Metal Business Cards (Fiber)</h3>
+      <ul>
+        <li>SS304 or aluminum business card blanks</li>
+        <li>Fiber laser, Score or Fill mode</li>
+        <li>Permanent, professional-grade marking</li>
+        <li>High perceived value — premium gift / corporate</li>
+        <li>XCS handles complex text and logo import easily</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Rotary Attachment</h2>
+  <div class="card">
+    <h3>Engrave Cylinders & Rings</h3>
+    <ul>
+      <li>Sold separately — xTool RA2 Pro or xTool Rotary Attachment</li>
+      <li>India price: approx ₹5,000–8,000 on Amazon.in</li>
+      <li>Fits tumblers, wine glasses, pens, rings, bangles</li>
+      <li>In XCS: Settings → Rotary → enter object diameter → canvas scales automatically</li>
+      <li>Use fiber laser for metal tumblers (SS, titanium)</li>
+      <li>Use diode for painted/coated tumblers (powder-coated, Hydro Flask)</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">F1 Ultra India Pricing & Accessories</h2>
+  <table class="guide-table">
+    <thead>
+      <tr><th>Item</th><th>Approx India Price</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>xTool F1 Ultra machine</td>
+        <td><span class="price-tag high">₹75,000–90,000</span></td>
+        <td>Amazon.in, check deals during Prime Day, festival sales. Direct from xtool.com adds customs duty.</td>
+      </tr>
+      <tr>
+        <td>Rotary Attachment</td>
+        <td><span class="price-tag mid">₹5,000–8,000</span></td>
+        <td>For cylinders (tumblers, pens, rings). Optional but expands product range.</td>
+      </tr>
+      <tr>
+        <td>Riser Kit</td>
+        <td><span class="price-tag">₹1,500–2,500</span></td>
+        <td>Raises the machine height to accommodate taller objects. Useful for chunky tumblers.</td>
+      </tr>
+      <tr>
+        <td>Honeycomb Panel</td>
+        <td><span class="price-tag">₹1,000–2,000</span></td>
+        <td>Work surface for diode laser cutting — prevents material from sticking and improves airflow.</td>
+      </tr>
+      <tr>
+        <td>Air Purifier / Fume Extractor</td>
+        <td><span class="price-tag mid">₹5,000–15,000</span></td>
+        <td>Highly recommended for indoor use. Filters smoke and fumes from diode laser work on wood/leather.</td>
+      </tr>
+      <tr>
+        <td>SS304 Stamp Plates (10-pack)</td>
+        <td><span class="price-tag">₹500–1,500</span></td>
+        <td>Search "SS304 laser stamp plate blank" on Amazon.in. 60×60mm and 40×60mm sizes available.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <h3>Warranty & Support in India</h3>
+    <ul>
+      <li><strong>xTool warranty:</strong> 1 year manufacturer warranty (register at xtool.com after purchase)</li>
+      <li><strong>Amazon.in:</strong> Standard Amazon return/replacement policy applies if purchased there</li>
+      <li><strong>Support:</strong> xTool support.xtool.com — live chat + email, responsive team</li>
+      <li><strong>Parts:</strong> Laser modules are replaceable — fiber modules rated for ~50,000 hours, diode modules for shorter lifespan</li>
+      <li>xTool India community (Facebook group) often has local repair/assistance contacts</li>
+    </ul>
+  </div>
+
+</div><!-- /tab-panel-6 -->
+
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  var panel=document.getElementById('tab-panel-'+n);
+  if(panel) panel.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===n-1)b.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+
+
+
+<style>
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; }
+  .card h3 { color: #4cc9f0; margin-top: 0; }
+  .badge { display: inline-block; background: #4cc9f022; color: #4cc9f0; border: 1px solid #4cc9f055; border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; margin: 2px; }
+  .badge-warn { background: #f0a50022; color: #f0a500; border-color: #f0a50055; }
+  .badge-green { background: #3fb95022; color: #3fb950; border-color: #3fb95055; }
+  .badge-red { background: #f8514922; color: #f85149; border-color: #f8514955; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { background: #0d1117; color: #4cc9f0; text-align: left; padding: 10px 12px; border-bottom: 2px solid #4cc9f044; }
+  td { padding: 9px 12px; border-bottom: 1px solid #21262d; color: #e6edf3; vertical-align: top; }
+  tr:hover td { background: #161b22; }
+  .tip-box { background: #4cc9f011; border-left: 3px solid #4cc9f0; border-radius: 0 8px 8px 0; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .warn-box { background: #f0a50011; border-left: 3px solid #f0a500; border-radius: 0 8px 8px 0; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .danger-box { background: #f8514911; border-left: 3px solid #f85149; border-radius: 0 8px 8px 0; padding: 1rem 1.2rem; margin: 1rem 0; }
+  code { background: #0d1117; color: #79c0ff; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.88em; }
+  pre { background: #0d1117; color: #e6edf3; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; border: 1px solid #30363d; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #4cc9f0; color: #0d1117; border-radius: 50%; font-weight: 700; font-size: 0.85rem; margin-right: 8px; flex-shrink: 0; }
+  .step-row { display: flex; align-items: flex-start; margin-bottom: 1rem; }
+  .step-content { flex: 1; }
+  h4 { color: #c9d1d9; margin: 1.2rem 0 0.5rem; }
+  .price-tag { color: #3fb950; font-weight: 700; }
+  .check { color: #3fb950; }
+  .cross { color: #f85149; }
+  .section-title { font-size: 1.4rem; font-weight: 700; color: #4cc9f0; border-bottom: 2px solid #4cc9f033; padding-bottom: 0.5rem; margin: 0 0 1.5rem; }
+  @media(max-width:700px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 7 ═══ -->
+<div id="tab-panel-7" class="tab-panel">
+  <p class="section-title">Advanced Techniques</p>
+
+  <!-- Layering passes -->
+  <div class="card">
+    <h3>&#9638; Layering Multiple Passes for Deep Engraving</h3>
+    <p>Single-pass engraving sits at roughly 0.1–0.3 mm depth on wood. For 3D-relief plaques, jewellery boxes, or architectural models you need controlled multi-pass layering.</p>
+    <div class="step-row"><span class="step-num">1</span><div class="step-content"><strong>Design in layers.</strong> In XCS, duplicate your artwork across separate layers — each layer gets its own power/speed setting. Name them <code>Pass-1</code>, <code>Pass-2</code>, etc.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content"><strong>Increment power, keep speed.</strong> Start Pass-1 at 60 % power, Pass-2 at 70 %, Pass-3 at 80 %. Keeping speed constant gives uniform char removal per pass.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content"><strong>Air assist on.</strong> Between passes, debris accumulates. Air assist clears it and prevents flare-ups that cause uneven depth.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content"><strong>Focus check.</strong> As material ablates, focal distance changes slightly. For &gt;3 passes on acrylic, re-focus between pass 2 and 3.</div></div>
+    <div class="tip-box">&#128161; <strong>Tip:</strong> Do NOT move the material between passes. Lock your origin in XCS or use registration holes drilled at corners of your stock.</div>
+    <h4>Depth Reference (Baltic Birch, diode 10 W)</h4>
+    <table>
+      <tr><th>Passes</th><th>Approx Depth</th><th>Best Use</th></tr>
+      <tr><td>1</td><td>0.15 mm</td><td>Surface mark, logo</td></tr>
+      <tr><td>2</td><td>0.35 mm</td><td>Detailed engraving</td></tr>
+      <tr><td>3</td><td>0.6 mm</td><td>Relief portrait</td></tr>
+      <tr><td>4–5</td><td>1.0 mm+</td><td>Deep sculptural relief</td></tr>
+    </table>
+  </div>
+
+  <!-- Variable power gradients -->
+  <div class="card">
+    <h3>&#127765; Variable Power Gradients for 3D Effect</h3>
+    <p>Simulate 3D depth using a grayscale bitmap where pixel brightness maps directly to laser power — white = full power (deep), black = no power (surface).</p>
+    <div class="grid-2">
+      <div>
+        <h4>Workflow in XCS</h4>
+        <ol>
+          <li>Create/import a grayscale height-map image (PNG, 300 DPI).</li>
+          <li>Set layer mode to <strong>Grayscale</strong> (not dithered).</li>
+          <li>Set max power 85 %, speed 800 mm/min, lines/inch 254.</li>
+          <li>Run a test tile — adjust gamma curve if midtones are too flat.</li>
+          <li>Post-process: sand with 400-grit, apply Danish oil for contrast.</li>
+        </ol>
+      </div>
+      <div>
+        <h4>Image Prep Tips</h4>
+        <ul>
+          <li>Use Photoshop/GIMP: Image → Mode → Grayscale</li>
+          <li>Add 10–15 % contrast boost — lasers compress midtones</li>
+          <li>Blur edges 1–2 px to avoid banding</li>
+          <li>Invert if your software expects inverted brightness</li>
+          <li>Canvas size = actual burn area in mm at 10 px/mm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box">&#128247; Best materials for gradient engraving: Anodized aluminium (dramatic), Baltic birch, dark leather. Avoid MDF (tears up) and acrylic (melts unevenly).</div>
+  </div>
+
+  <!-- Multi-material -->
+  <div class="card">
+    <h3>&#127981; Multi-Material in a Single Job</h3>
+    <p>You can engrave two different areas with different settings in one session by masking unused zones with painter's tape or transfer tape.</p>
+    <div class="step-row"><span class="step-num">1</span><div class="step-content"><strong>Lay material flat.</strong> Tape adjacent materials flush to the bed — e.g., leather left, wood right.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content"><strong>In XCS, assign layers by zone.</strong> Elements over the leather zone → Leather layer (speed 200, power 50 %). Elements over wood → Wood layer.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content"><strong>Run each layer separately.</strong> Pause between, adjust air assist if needed.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content"><strong>Masking tape as protective layer.</strong> Apply tape on the surface you don't want smoke-stained, then remove after the job — especially useful on mirror acrylic.</div></div>
+    <div class="warn-box">&#9888; Never mix materials that off-gas dangerously near each other (PVC near food-safe wood). Keep incompatible materials in separate jobs.</div>
+  </div>
+
+  <!-- Rotary -->
+  <div class="card">
+    <h3>&#128260; Rotary Attachment Setup</h3>
+    <p>The xTool RA2 Pro rotary works with xTool D1 Pro and S1. It has four modes: roller (cylinders), chuck (bottles/rings), sphere, and ring.</p>
+    <h4>Step-by-Step Setup</h4>
+    <div class="step-row"><span class="step-num">1</span><div class="step-content">Connect RA2 Pro to the Y-axis port on your machine (unplug Y stepper first). Power off machine before swapping.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content">In XCS: Settings → Rotary → Enable. Select mode (Roller / Chuck). Enter object diameter in mm.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content">Set circumference = π × diameter. XCS will stretch the Y-axis accordingly so the artwork wraps correctly.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content">Run framing (outline preview) — the rotary will spin the object. Check ends don't overhang the rollers.</div></div>
+    <div class="step-row"><span class="step-num">5</span><div class="step-content">Reduce speed by 30 % vs flat-bed presets — rotary inertia causes stutter at high acceleration.</div></div>
+    <table style="margin-top:1rem">
+      <tr><th>Object Type</th><th>Rotary Mode</th><th>Diameter Entry</th><th>Speed Adjustment</th></tr>
+      <tr><td>Steel tumbler 750 ml</td><td>Roller</td><td>82 mm</td><td>−30 %</td></tr>
+      <tr><td>Wine glass stem</td><td>Chuck</td><td>Measure thinnest point</td><td>−40 %</td></tr>
+      <tr><td>Ring / bangle</td><td>Ring fixture</td><td>Inner diameter</td><td>−50 %</td></tr>
+      <tr><td>Egg / sphere</td><td>Sphere</td><td>Diameter</td><td>−40 %</td></tr>
+    </table>
+    <div class="tip-box">&#128161; For tumblers: engrave at the widest diameter zone. Taper at ends causes focus shift — engrave only the straight cylinder section.</div>
+  </div>
+
+  <!-- Camera alignment -->
+  <div class="card">
+    <h3>&#128247; Camera Alignment for Precise Repeat Positioning</h3>
+    <p>xTool S1, D1 Pro and F1 Ultra have built-in cameras. Calibrate once; thereafter the camera overlays a live preview on your stock so you can position artwork precisely.</p>
+    <h4>Calibration Procedure</h4>
+    <ol>
+      <li>Open XCS → Camera → Calibrate Camera.</li>
+      <li>Place the printed calibration card (from xTool package) on the bed.</li>
+      <li>Click <strong>Start Calibration</strong>. The laser marks 9 target points.</li>
+      <li>XCS asks you to click on each mark in the camera image — do this carefully; accuracy here determines overlay precision.</li>
+      <li>Save calibration. Typical accuracy: ±0.5 mm at bed centre, ±1 mm at corners.</li>
+    </ol>
+    <h4>Repeat Positioning Workflow</h4>
+    <ol>
+      <li>Place item on bed. In XCS, capture a camera frame.</li>
+      <li>Drag your artwork over the camera image to align visually.</li>
+      <li>For repeat batches: use <strong>Array Grid</strong> (see next section) and place a row of identical items.</li>
+      <li>Camera overlay shows exact placement — adjust until artwork sits over the item.</li>
+    </ol>
+    <div class="warn-box">&#9888; Re-calibrate after moving the machine or adjusting bed height. Camera accuracy degrades if the machine is physically disturbed.</div>
+  </div>
+
+  <!-- Batch & array -->
+  <div class="card">
+    <h3>&#9783; Batch Processing & Array Grid Function</h3>
+    <p>Array Grid lets you tile your design across a grid of items — perfect for engraving 10 keychains, 20 coasters, or 50 labels in one job.</p>
+    <div class="grid-2">
+      <div>
+        <h4>Using Array Grid in XCS</h4>
+        <ol>
+          <li>Select your artwork.</li>
+          <li>Object → Array Grid (or Ctrl+Shift+A).</li>
+          <li>Set rows, columns, X-spacing, Y-spacing.</li>
+          <li>Spacing = item width + gap (usually 2–5 mm).</li>
+          <li>Preview the grid. Confirm it fits bed.</li>
+          <li>Run job — all copies engraved in one pass.</li>
+        </ol>
+      </div>
+      <div>
+        <h4>Batch Tips</h4>
+        <ul>
+          <li>Use jig (MDF template with cut-out pockets) so items stay aligned across batches.</li>
+          <li>Mark jig origin with a small laser dot — re-home to same point each load.</li>
+          <li>For odd-shaped items (keychains), cut the jig pockets first, then switch to engrave job without moving anything.</li>
+          <li>Batch mode in XCS lets you load a CSV of names/text to auto-personalise each copy.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Framing + tabs -->
+  <div class="card">
+    <h3>&#9645; Framing Before Cut &amp; Tab/Bridge Function</h3>
+    <h4>Framing (Outline Preview)</h4>
+    <p>Before any cut job, always run <strong>Frame</strong> (the bounding box preview). The laser head traces the outer rectangle of your job at low power — no burning. This confirms:</p>
+    <ul>
+      <li>Job fits within the material boundaries.</li>
+      <li>Origin point is where you expect.</li>
+      <li>Rotary/fixture won't collide with machine walls.</li>
+    </ul>
+    <p>Shortcut: <code>F</code> key or the Frame button in XCS toolbar. For shaped outlines (not just bounding box), use <strong>Trace Frame</strong> mode.</p>
+    <h4>Tabs / Bridges for Cut Pieces</h4>
+    <p>When cutting small pieces, they fall through or shift before the cut completes — ruining the edge. Tabs are small uncut bridges that hold the piece in place.</p>
+    <ol>
+      <li>Select cut path → right-click → Add Tabs.</li>
+      <li>Set tab width: 1–2 mm for thin material, 3 mm for 6 mm+ wood.</li>
+      <li>Set tab count: 2 tabs for pieces &lt;50 mm, 4 tabs for larger pieces.</li>
+      <li>After job completes, snap pieces out by hand. Sand tab stubs with 220-grit.</li>
+    </ol>
+    <div class="tip-box">&#128161; For acrylic, tabs leave small marks — finish with a flat scraper or file. Alternatively, apply masking tape on both sides before cutting; it acts as a holder and protects the surface from smoke.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 8 ═══ -->
+<div id="tab-panel-8" class="tab-panel">
+  <p class="section-title">Business Projects — India Focus</p>
+
+  <!-- Wedding invitations -->
+  <div class="card">
+    <h3>&#128141; Wedding Invitation Laser Engraving</h3>
+    <p>One of the highest-margin laser products in India. Couples pay a premium for personalized acrylic or wood invitations. Typical order: 100–500 cards.</p>
+    <div class="grid-2">
+      <div>
+        <h4>Acrylic Invitation (₹800–2000/piece)</h4>
+        <ul>
+          <li>Material: 3 mm clear or frosted acrylic, 15×10 cm</li>
+          <li>Cost: ₹40–80 per blank (buy wholesale Sadar Bazaar / Amazon Business)</li>
+          <li>Engrave: Names, date, venue, mandala border</li>
+          <li>Settings: Speed 400, Power 65 %, diode laser</li>
+          <li>Optional: Paint fill engrave with gold/silver paint pen → wipe excess</li>
+          <li>Packaging: velvet envelope ₹15, ribbon ₹5 → present at ₹1500/piece</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Wood Invitation (₹500–1200/piece)</h4>
+        <ul>
+          <li>Material: 3 mm Baltic birch or premium MDF, laser-cut to shape</li>
+          <li>Cost: ₹25–50 per blank</li>
+          <li>Cut decorative arch shape + engrave text</li>
+          <li>Finish: Tung oil or spray lacquer for sheen</li>
+          <li>Magnetic closure option: embed magnets (₹8 each)</li>
+          <li>Minimum order 50 cards → negotiate material bulk discount</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-box">&#128161; Source: Join Indian Wedding Vendor groups on Facebook/WhatsApp. Approach wedding planners in Tier 1 cities — they handle bulk orders and refer you across events.</div>
+    <h4>Pricing Formula for Wedding Invites</h4>
+    <pre>Material cost per piece: ₹60
+Laser time: 4 min × ₹200/hr = ₹13
+Packaging: ₹20
+Overhead (10%): ₹9
+----------------------------------
+Total cost: ₹102
+Retail price (3x): ₹306 → round to ₹399 or ₹499
+For premium acrylic + paint fill: ₹799–₹1499</pre>
+  </div>
+
+  <!-- Corporate gifting -->
+  <div class="card">
+    <h3>&#127970; Corporate Gifting: Metal Name Plates &amp; Desk Items</h3>
+    <p>Corporate gifting is a ₹15,000-crore industry in India. Laser-engraved items command 3–5× premium over printed alternatives.</p>
+    <div class="grid-3">
+      <div class="card" style="margin:0">
+        <h4 style="color:#4cc9f0">SS304 Name Plates</h4>
+        <p>Size: 200×60 mm. Fiber laser black marking. Mount on acrylic backing.</p>
+        <p class="price-tag">₹250–500/piece</p>
+        <p>Cost: ₹60 material + ₹20 time</p>
+      </div>
+      <div class="card" style="margin:0">
+        <h4 style="color:#4cc9f0">Pen Stands</h4>
+        <p>Bamboo/wood pen holder, laser-engraved company logo + employee name.</p>
+        <p class="price-tag">₹400–800/piece</p>
+        <p>MOQ typically 50 units from corporates</p>
+      </div>
+      <div class="card" style="margin:0">
+        <h4 style="color:#4cc9f0">Desk Organizer Sets</h4>
+        <p>Laser-cut MDF, engraved compartment labels, flat-pack assembly.</p>
+        <p class="price-tag">₹600–1500/piece</p>
+        <p>Design once, cut batch — high margin</p>
+      </div>
+    </div>
+    <h4>B2B Sales Tips</h4>
+    <ul>
+      <li>Target HR departments during Diwali (Oct–Nov), New Year (Dec–Jan), Employee Appreciation Days.</li>
+      <li>Offer samples — ship 2 personalised pieces free to HR managers. Conversion rate ~40 %.</li>
+      <li>Bulk pricing tiers: 10–49 pcs full price, 50–99 pcs −15 %, 100+ pcs −25 %.</li>
+      <li>Create a simple rate card PDF (logo on letterhead) for professional feel.</li>
+    </ul>
+  </div>
+
+  <!-- Leather -->
+  <div class="card">
+    <h3>&#127968; Leather Passport Covers &amp; Wallet Personalization</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Passport Cover</h4>
+        <ul>
+          <li>Blank cover cost: ₹180–350 (genuine leather, Amazon/local)</li>
+          <li>Engrave: Name, monogram, flag, mandala</li>
+          <li>Settings (diode): Speed 200, Power 50 %, 1 pass</li>
+          <li>Test on scrap leather first — genuine vs PU behave differently</li>
+          <li>Retail: ₹699–1299</li>
+          <li>Sell on Etsy India, Instagram, Amazon Handmade</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Wallet Personalization</h4>
+        <ul>
+          <li>Accept customer's existing wallet — ₹299 service charge</li>
+          <li>No material cost, pure labour + laser time</li>
+          <li>Turn-around: 15 min including packaging</li>
+          <li>Works as a pop-up stall at malls, craft fairs</li>
+          <li>Same-day service premium: ₹100 extra</li>
+          <li>Monogram 2–3 letters most popular</li>
+        </ul>
+      </div>
+    </div>
+    <div class="danger-box">&#9888; Never engrave PVC-coated wallets — toxic chlorine gas. Always smell-test or check material label. Genuine leather, veg-tan leather, and suede are safe.</div>
+  </div>
+
+  <!-- Jewelry -->
+  <div class="card">
+    <h3>&#128142; Jewellery Personalization — Gold-Filled, Silver, Copper</h3>
+    <p>Fiber laser (F1 Ultra) can mark metals without coating — black annealing on stainless, colour on titanium, ablation on gold-filled.</p>
+    <table>
+      <tr><th>Metal</th><th>Technique</th><th>F1 Ultra Settings</th><th>Result</th></tr>
+      <tr><td>Gold-filled pendant</td><td>Ablation engraving</td><td>Speed 300, Power 40 %, 35 kHz</td><td>Bright scratch-style name</td></tr>
+      <tr><td>925 Silver ring</td><td>Black annealing</td><td>Speed 120, Power 75 %, 20 kHz</td><td>Dark permanent mark</td></tr>
+      <tr><td>Copper bangle</td><td>Surface ablation</td><td>Speed 150, Power 65 %, 25 kHz</td><td>Bright copper on oxidised base</td></tr>
+      <tr><td>Titanium earring</td><td>Colour marking</td><td>Speed 800, Power 30 %, 60 kHz</td><td>Iridescent blue/gold</td></tr>
+    </table>
+    <div class="tip-box">&#128161; Use a jewellery chuck or homemade fixture (Plasticine clay mould) to hold small pieces perfectly flat. Even 0.5 mm tilt causes focus error on tiny items.</div>
+    <h4>Jewellery Business Tips</h4>
+    <ul>
+      <li>Partner with jewellery retailers — offer in-store engraving as an add-on service.</li>
+      <li>Valentine's Day, Rakhi, anniversaries: surge demand — book 2 weeks ahead.</li>
+      <li>Instagram reels of the engraving process get high organic reach.</li>
+      <li>Price: ₹150–500 per engraving depending on complexity.</li>
+    </ul>
+  </div>
+
+  <!-- Stamp plates -->
+  <div class="card">
+    <h3>&#9749; Stamp Plates for Handmade Business Branding</h3>
+    <p>SS304 fiber-laser-marked plates used as stamps for paper, clay, leather. The F1 Ultra creates deep enough relief via repeated passes to produce usable stamps.</p>
+    <h4>Workflow (SS304 Stamp Plate)</h4>
+    <div class="step-row"><span class="step-num">1</span><div class="step-content">Design logo/text in XCS — keep lines &gt;0.4 mm thick for stamp clarity. Mirror the design (it prints reversed).</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content">Fiber settings: Speed 200, Power 60 %, Freq 30 kHz, 3 passes. This removes surface oxidation creating a recessed area.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content">Polish background with 600-grit wet-dry sandpaper — the engraved valleys remain dark while raised areas shine.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content">Mount plate on wood handle with epoxy or screw through pre-drilled holes.</div></div>
+    <div class="step-row"><span class="step-num">5</span><div class="step-content">Ink with stamp pad and press onto kraft paper/tissue for packaging. Sells for ₹800–2500 to artisans, bakers, soap makers.</div></div>
+    <div class="tip-box">&#128161; Target market: Small home bakers, handmade soap brands, boutique clothing labels — all need affordable custom stamps. Post in "Work From Home India" Facebook groups.</div>
+  </div>
+
+  <!-- B2B -->
+  <div class="card">
+    <h3>&#127981; B2B: IndiaMART Listing &amp; GST Invoice Setup</h3>
+    <div class="grid-2">
+      <div>
+        <h4>IndiaMART Listing Tips</h4>
+        <ul>
+          <li>Create free IndiaMART seller account at indiamart.com/sell</li>
+          <li>Category: "Laser Engraving Services" or "Personalized Gifts"</li>
+          <li>Upload 10+ product photos — white background, good lighting</li>
+          <li>Set minimum order quantity (MOQ): 10 pieces for best leads</li>
+          <li>Respond to inquiries within 1 hour (platform tracks response rate)</li>
+          <li>Use "TrustSEAL" verification for higher ranking (₹0 — just verify documents)</li>
+        </ul>
+      </div>
+      <div>
+        <h4>GST Invoice Basics</h4>
+        <ul>
+          <li>Register GST if annual turnover &gt;₹20 lakhs (₹10 L for special states)</li>
+          <li>HSN Code for laser engraving services: <code>998898</code></li>
+          <li>GST rate: 18 % on services</li>
+          <li>Free invoicing: Vyapar app, Zoho Invoice (free tier)</li>
+          <li>Mention "Reverse Charge" for B2B unregistered buyers</li>
+          <li>Keep purchase invoices for input tax credit on machine, materials</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Etsy/Instagram -->
+  <div class="card">
+    <h3>&#128247; Etsy &amp; Instagram Shop Setup</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Etsy India</h4>
+        <ul>
+          <li>Open shop at etsy.com/sell — accepts Indian sellers via Payoneer/Wise</li>
+          <li>Listing fee: $0.20 USD (~₹17) per listing</li>
+          <li>Transaction fee: 6.5 % of sale price</li>
+          <li>Ship internationally via India Post Speed Post or Shiprocket</li>
+          <li>Keywords: "custom laser engraved", "personalized gift India", "laser wood art"</li>
+          <li>First 40 listings free — use Etsy referral link for bonus listings</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Instagram Shop</h4>
+        <ul>
+          <li>Switch to Creator/Business account — free</li>
+          <li>Connect Facebook Page for Instagram Shopping feature</li>
+          <li>Tag products in posts → direct purchase flow</li>
+          <li>Reels showing the laser process get 5–10× organic reach vs static posts</li>
+          <li>Use hashtags: #laserengravingIndia #customgifts #handmadeIndia</li>
+          <li>DM response time &lt;1 hr for algorithm boost</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing formula -->
+  <div class="card">
+    <h3>&#128200; Pricing Formula</h3>
+    <pre>PRICING FORMULA
+===============
+Base Price = (Material Cost × 3) + Time Cost
+
+Where:
+  Material Cost = cost of raw material per piece (including waste factor 1.2×)
+  Time Cost     = (job time in hours) × ₹200/hr minimum
+                  (₹300–500/hr if your skill level is higher)
+
+Add-ons:
+  Rush order (same day)     : +₹150 flat
+  Personalization per item  : +₹50–100
+  Design fee (new artwork)  : ₹500–2000 one-time
+  Packaging premium         : cost × 1.5
+
+Example — Acrylic keychain:
+  Material: ₹35
+  Time: 3 min = 0.05 hr × ₹200 = ₹10
+  Base = (₹35 × 3) + ₹10 = ₹115
+  Round up → sell at ₹149 or ₹199 on Instagram</pre>
+    <div class="tip-box">&#128161; The ×3 material multiplier covers: waste, machine depreciation, electricity, consumables, and your entrepreneurial risk. Never go below ×2 for custom work.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 9 ═══ -->
+<div id="tab-panel-9" class="tab-panel">
+  <p class="section-title">Troubleshooting Guide</p>
+
+  <div class="card">
+    <h3>&#128295; 15 Common Problems — Causes &amp; Fixes</h3>
+    <table>
+      <tr><th>#</th><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+      <tr>
+        <td>1</td>
+        <td><strong>No USB/WiFi connection</strong></td>
+        <td>Driver not installed, wrong COM port, WiFi password mismatch</td>
+        <td>Reinstall xTool driver from xTool.com/downloads. In Windows Device Manager verify COM port. For WiFi: connect machine to 2.4 GHz band only (5 GHz unsupported). Reset network settings on machine.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Job not starting (button press ignored)</strong></td>
+        <td>Emergency stop engaged, limit switch triggered, fire protection active</td>
+        <td>Check E-stop button — twist to release. Open XCS → check status bar for error code. Ensure lid is fully closed (lid sensor). Check that flame detector is not dirty/blocked.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Uneven burn across bed</strong></td>
+        <td>Bed not level, focus height wrong, lens dirty</td>
+        <td>Use bed levelling card at 9 points. Re-focus. Clean lens with IPA + lens tissue — circular motion, no pressure. Check if honeycomb bed is warped (replace if severely dented).</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Camera overlay offset (&gt;2 mm)</strong></td>
+        <td>Camera calibration stale, machine moved, bed height changed</td>
+        <td>Redo full camera calibration. Ensure bed is at same height as during calibration. Calibrate at operating temperature (warm machine up 5 min first).</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>File won't import into XCS</strong></td>
+        <td>Unsupported format, corrupt file, DXF version mismatch</td>
+        <td>XCS supports SVG, DXF (R12–R2018), PNG, JPG, BMP, PDF. For DXF: re-export from CAD as R14 or 2000. For SVG: ensure all text is converted to paths. PDF: flatten layers before export.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><strong>Laser won't fire (no beam)</strong></td>
+        <td>Safety interlock, power too low, laser tube end-of-life, key switch off</td>
+        <td>Check key switch position (S1 has physical key). Ensure power &gt;10 % (below threshold → no fire). Test with a known-good preset. If tube won't fire at 80 %+ → contact xTool support; tube may need replacement.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><strong>Wrong power/speed applied</strong></td>
+        <td>Layer settings not saved, XCS applied default preset</td>
+        <td>Always verify layer settings in the right panel before running. Save your presets as named materials. Check that the correct layer is selected when editing settings.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td><strong>Banding (horizontal lines in engraving)</strong></td>
+        <td>Belt slipping, acceleration too high, Y-axis dirty</td>
+        <td>Clean Y-axis rails with dry cloth. Check belt tension — should pluck like a guitar string. Reduce acceleration in XCS Advanced Settings. Slow down speed by 20 %.</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><strong>Burn marks / scorching at edges of cut</strong></td>
+        <td>Speed too slow, too many passes, no air assist</td>
+        <td>Enable air assist (essential for cutting). Increase speed, reduce passes. Apply masking tape — peel after job. For acrylic: leave protective film on during cutting.</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td><strong>XCS app crashes mid-job</strong></td>
+        <td>RAM insufficient, large file, OS update conflict</td>
+        <td>Minimum 8 GB RAM for large jobs. Close all other apps. Convert bitmaps to lower DPI (300 instead of 600). Update XCS. On Windows: disable hardware acceleration in XCS Settings if GPU causes crashes.</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><strong>Firmware mismatch error</strong></td>
+        <td>XCS updated but machine firmware is old (or vice versa)</td>
+        <td>Open XCS → Device → Check Firmware Update. Update machine firmware. If XCS is newer than compatible firmware, downgrade XCS temporarily or wait for firmware release.</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td><strong>Rotary not working / skipping steps</strong></td>
+        <td>Y-axis not properly disabled, speed too high, heavy object</td>
+        <td>Confirm Y-axis port swap. In XCS Rotary settings, reduce speed by 40 %. Check roller grip — lightly sand rollers if too smooth. Ensure object weight &lt;2 kg for RA2 Pro.</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td><strong>Framing wrong (frame too large/small)</strong></td>
+        <td>Canvas size ≠ design size, wrong units (mm vs inch)</td>
+        <td>In XCS check Document Settings — confirm mm, confirm canvas = bed size. Verify design dimensions numerically. Frame traces bounding box of all objects, not just visible area — delete off-canvas stray objects.</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td><strong>Overcut corners (rounded corners on cuts)</strong></td>
+        <td>Speed too high for sharp corners, acceleration setting</td>
+        <td>Reduce cut speed by 30 %. In Advanced Settings, reduce corner acceleration. For perfect corners: use XCS "Overcut" setting that adds a tiny extra pass at corners.</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td><strong>Underpowered cuts (material not fully cut through)</strong></td>
+        <td>Focus off, lens dirty, wrong preset, material thicker than spec</td>
+        <td>Measure actual material thickness — it varies ±0.3 mm. Re-focus. Clean lens. Add 1 pass before increasing power. Check if air assist is on (clears debris that blocks beam).</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- India-specific -->
+  <div class="card">
+    <h3>&#127470;&#127475; India-Specific Issues</h3>
+
+    <div class="danger-box">
+      <strong>&#9889; Power Fluctuation Causing Mid-Job Failure</strong>
+      <p>Indian power grids — especially in Tier 2/3 cities — experience frequent voltage fluctuations (180 V to 260 V). A sudden voltage drop mid-job causes the machine to restart, ruining expensive material.</p>
+      <strong>Fix:</strong>
+      <ul>
+        <li>Use a <strong>1 kVA Online UPS</strong> (APC or Luminous brand, ₹8,000–15,000). Online UPS (not offline/standby) provides zero-transfer-time switchover.</li>
+        <li>Add a <strong>Servo Voltage Stabilizer</strong> (1 kVA) — ₹3,000–5,000 — if UPS budget is too high.</li>
+        <li>Check machine input voltage range: xTool D1 Pro accepts 100–240 V. F1 Ultra: 100–240 V. Still, surges &gt;260 V can damage SMPS.</li>
+        <li>Add a surge protector strip as a minimum — ₹500–800 at local electrical store.</li>
+      </ul>
+    </div>
+
+    <div class="warn-box">
+      <strong>&#9728; Summer Heat and Machine Drift (April–June)</strong>
+      <p>Ambient temperatures of 38–45 °C in Indian summers cause thermal expansion of the machine frame, leading to focus drift and accuracy loss.</p>
+      <ul>
+        <li>Run machine in an air-conditioned room, or use a room cooler to keep ambient below 32 °C.</li>
+        <li>Warm machine up for 10 min before production work — allows frame to reach thermal equilibrium.</li>
+        <li>Re-calibrate camera every morning during summer.</li>
+        <li>For the F1 Ultra fiber laser: the internal chiller handles laser tube cooling, but the motion system still drifts — keep room cool.</li>
+      </ul>
+    </div>
+
+    <div class="warn-box">
+      <strong>&#127783; Monsoon Humidity Affecting Wood (June–September)</strong>
+      <p>Relative humidity of 80–95 % causes wood to absorb moisture, swelling by 1–3 % and increasing char. Engravings appear darker and cuts need more passes.</p>
+      <ul>
+        <li>Store wood stock in a sealed plastic bin with silica gel packets (₹50 for 10 packs on Amazon).</li>
+        <li>Dry wood pieces in an oven at 60 °C for 30 min before lasering if very humid.</li>
+        <li>Re-run your material test tiles during monsoon — presets from winter will burn darker.</li>
+        <li>Acrylic and metal are unaffected — shift to these materials for mission-critical jobs during peak monsoon.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Quick diagnostic -->
+  <div class="card">
+    <h3>&#128270; Quick Diagnostic Checklist</h3>
+    <p>Run this before contacting xTool support:</p>
+    <pre>[ ] Machine firmware up to date?
+[ ] XCS app latest version?
+[ ] Lens clean (IPA wipe)?
+[ ] Focus height correct for this material?
+[ ] Belt tension OK (plucks like guitar string)?
+[ ] Air assist connected and on?
+[ ] Emergency stop released (twist clockwise)?
+[ ] Lid fully closed / lid sensor clean?
+[ ] Computer has stable USB (not through hub)?
+[ ] Material lying flat (no warp)?
+[ ] UPS / stabilizer in line?
+[ ] Room temperature below 35°C?</pre>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 10 ═══ -->
+<div id="tab-panel-10" class="tab-panel">
+  <p class="section-title">XCS vs Lightburn Decision Guide</p>
+
+  <div class="card">
+    <h3>&#9878; Full Feature Comparison</h3>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th>Feature</th><th>XCS (xTool Creative Space)</th><th>Lightburn</th></tr>
+      <tr><td>Price</td><td><span class="check">&#10003;</span> Free</td><td><span class="cross">&#10007;</span> ₹5,500 one-time (gcode licence)</td></tr>
+      <tr><td>Platform</td><td>Windows, Mac, iPad</td><td>Windows, Mac, Linux</td></tr>
+      <tr><td>xTool machine support</td><td><span class="check">&#10003;</span> Native, all features</td><td>Partial (no camera, no batch CSV on some models)</td></tr>
+      <tr><td>Non-xTool machines</td><td><span class="cross">&#10007;</span> xTool only</td><td><span class="check">&#10003;</span> 100+ brands (Sculpfun, Atomstack, K40, etc.)</td></tr>
+      <tr><td>Camera overlay</td><td><span class="check">&#10003;</span> Built-in, calibrated</td><td>Supported on some xTool models (limited)</td></tr>
+      <tr><td>SVG node editing</td><td>Basic</td><td><span class="check">&#10003;</span> Advanced bezier node editor</td></tr>
+      <tr><td>Text on path</td><td><span class="check">&#10003;</span> Yes</td><td><span class="check">&#10003;</span> Yes + offset</td></tr>
+      <tr><td>Variable text / CSV merge</td><td><span class="check">&#10003;</span> Batch personalization</td><td><span class="check">&#10003;</span> Yes (more flexible)</td></tr>
+      <tr><td>Rotary support</td><td><span class="check">&#10003;</span> RA2 Pro native</td><td><span class="check">&#10003;</span> Advanced, with circumference correction</td></tr>
+      <tr><td>Grayscale engraving</td><td><span class="check">&#10003;</span> Yes</td><td><span class="check">&#10003;</span> Yes + more dither modes</td></tr>
+      <tr><td>Dithering modes</td><td>3 modes</td><td>7+ modes (Jarvis, Stucki, Newsprint, etc.)</td></tr>
+      <tr><td>Layer management</td><td>Basic layers</td><td><span class="check">&#10003;</span> Full layer stack with priorities</td></tr>
+      <tr><td>Boolean operations</td><td>Limited</td><td><span class="check">&#10003;</span> Union, subtract, intersect, weld</td></tr>
+      <tr><td>Image trace (vectorise)</td><td><span class="check">&#10003;</span> Built-in</td><td><span class="check">&#10003;</span> Built-in + threshold control</td></tr>
+      <tr><td>Job time estimate</td><td><span class="check">&#10003;</span> Yes</td><td><span class="check">&#10003;</span> Yes (more accurate)</td></tr>
+      <tr><td>Array/grid function</td><td><span class="check">&#10003;</span> Yes</td><td><span class="check">&#10003;</span> Yes</td></tr>
+      <tr><td>Tabs / bridges</td><td>Limited</td><td><span class="check">&#10003;</span> Full tab control</td></tr>
+      <tr><td>Power / speed profiles</td><td>Material library</td><td><span class="check">&#10003;</span> Material library + import/export</td></tr>
+      <tr><td>GCode direct editing</td><td><span class="cross">&#10007;</span> No</td><td><span class="check">&#10003;</span> GCode console + direct edit</td></tr>
+      <tr><td>Start/end GCode</td><td><span class="cross">&#10007;</span> No</td><td><span class="check">&#10003;</span> Custom start/end scripts</td></tr>
+      <tr><td>Z-axis control</td><td>Basic</td><td><span class="check">&#10003;</span> Full Z axis + autofocus</td></tr>
+      <tr><td>Passthrough cuts (large stock)</td><td>Limited</td><td><span class="check">&#10003;</span> Advanced passthrough workflow</td></tr>
+      <tr><td>Offline use</td><td><span class="check">&#10003;</span> Yes</td><td><span class="check">&#10003;</span> Yes</td></tr>
+      <tr><td>Cloud project sync</td><td><span class="check">&#10003;</span> xTool cloud</td><td><span class="cross">&#10007;</span> No (local only)</td></tr>
+      <tr><td>Design templates</td><td><span class="check">&#10003;</span> Large library</td><td>Limited (community files)</td></tr>
+      <tr><td>AI image features</td><td><span class="check">&#10003;</span> AI background remove, upscale</td><td><span class="cross">&#10007;</span> No</td></tr>
+      <tr><td>Learning curve</td><td><span class="check">&#10003;</span> Beginner-friendly</td><td>Moderate (2–3 days to master)</td></tr>
+      <tr><td>Community / forum</td><td>xTool forum</td><td><span class="check">&#10003;</span> Large Lightburn forum + Facebook group</td></tr>
+      <tr><td>Update frequency</td><td>Monthly</td><td>Monthly</td></tr>
+      <tr><td>Trial period</td><td>N/A (always free)</td><td>30-day free trial</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="color:#3fb950">&#10003; Stick with XCS When...</h3>
+      <ul>
+        <li>You are a beginner getting started — XCS has guided workflows, templates, tutorials.</li>
+        <li>You use only xTool machines — XCS unlocks all native features (camera, batch CSV, AI tools).</li>
+        <li>Camera overlay is important to your workflow — calibration and overlay is seamless in XCS.</li>
+        <li>You do occasional hobby projects, not daily production.</li>
+        <li>Budget is tight — free is hard to beat.</li>
+        <li>You need cloud storage and project sharing.</li>
+        <li>You use the xTool AI features (background removal, image upscaling).</li>
+        <li>iPad workflow — XCS has an excellent iPad app.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:#4cc9f0">&#8594; Upgrade to Lightburn When...</h3>
+      <ul>
+        <li>You run a production business and need advanced node editing for complex designs.</li>
+        <li>You own or plan to buy non-xTool machines (Sculpfun, Atomstack, OMTech CO₂).</li>
+        <li>You need 7+ dithering modes for photo engraving quality.</li>
+        <li>Advanced rotary work with precise circumference correction.</li>
+        <li>You want GCode console access for troubleshooting.</li>
+        <li>Complex boolean operations for precision design.</li>
+        <li>Passthrough workflow for cuts larger than bed size.</li>
+        <li>You're comfortable with a steeper learning curve for more power.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>&#128250; Lightburn 30-Day Trial — How to Evaluate</h3>
+    <div class="step-row"><span class="step-num">1</span><div class="step-content">Download from lightburnsoftware.com. No credit card. 30 full days.</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-content">Test your most common jobs: photo engraving, text cutting, rotary work. Compare quality with XCS output.</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-content">Try the SVG node editor on a complex design. If it saves you 20+ min/week → worth ₹5,500.</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-content">Test material library: import xTool presets, run test tiles. Note quality difference.</div></div>
+    <div class="step-row"><span class="step-num">5</span><div class="step-content">After trial: if daily production and quality difference is clear → buy. If occasional use → stay on XCS.</div></div>
+    <div class="tip-box">&#128161; Lightburn licence: one licence covers 2 computers. Buy via PayPal/credit card — no Indian payment UPI option currently. Use Wise card for USD payment at minimal forex fee.</div>
+  </div>
+
+  <div class="card">
+    <h3>&#127757; India Laser Community</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Facebook Groups</h4>
+        <ul>
+          <li><strong>xTool Laser Engraver India</strong> — main India group, 15,000+ members</li>
+          <li><strong>Laser Engraving India — Buy Sell Trade</strong></li>
+          <li><strong>Lightburn India Users</strong></li>
+          <li><strong>DIY Laser Cutter Engraver India</strong></li>
+          <li><strong>Home Business Laser India</strong> — business-focused tips</li>
+        </ul>
+      </div>
+      <div>
+        <h4>YouTube Channels</h4>
+        <ul>
+          <li><strong>xTool Official</strong> — English, tutorial-heavy</li>
+          <li><strong>Make With Miles</strong> — English, project-based</li>
+          <li><strong>Laser Everything</strong> — English, settings deep-dives</li>
+          <li><strong>TechPriya</strong> — Hindi, Indian material sourcing</li>
+          <li><strong>Maker's Studio India</strong> — Hindi, business tips</li>
+          <li><strong>DIY India Workshop</strong> — Hindi, beginner friendly</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 11 ═══ -->
+<div id="tab-panel-11" class="tab-panel">
+  <p class="section-title">Material Presets Reference</p>
+
+  <div class="card">
+    <h3>&#9889; xTool F1 Ultra — Fiber Laser (1064 nm) Presets</h3>
+    <p>These presets are starting points. Always run a test tile on a scrap piece of the same batch. Metal varies by alloy, finish, and coating.</p>
+    <table>
+      <tr><th>Material</th><th>Speed (mm/s)</th><th>Power %</th><th>Frequency</th><th>Passes</th><th>Result</th><th>Notes</th></tr>
+      <tr><td>SS304 Mirror Finish (stamp plates)</td><td>200</td><td>60 %</td><td>30 kHz</td><td>1</td><td>Matte grey marking on mirror</td><td>Degrease with IPA first. Do not touch surface before job.</td></tr>
+      <tr><td>SS304 Black Marking</td><td>100</td><td>80 %</td><td>20 kHz</td><td>1</td><td>Deep black anneal</td><td>Fill marking — works for QR codes, barcodes, logos. Stable to washing.</td></tr>
+      <tr><td>SS304 White Marking</td><td>1500</td><td>20 %</td><td>60 kHz</td><td>1</td><td>Bright white/silver</td><td>High-speed low-power = bleaching. Good for fine text on dark SS.</td></tr>
+      <tr><td>Brass (yellow)</td><td>150</td><td>70 %</td><td>25 kHz</td><td>1</td><td>Dark brown/black etch</td><td>Brass oxidises faster than SS — result depends on base metal quality.</td></tr>
+      <tr><td>Copper</td><td>120</td><td>75 %</td><td>20 kHz</td><td>1</td><td>Dark oxidised etch</td><td>Copper reflects 1064 nm — use higher power. Polish first for contrast.</td></tr>
+      <tr><td>Aluminium (anodised black)</td><td>500</td><td>50 %</td><td>40 kHz</td><td>1</td><td>Bright silver on black anodise</td><td>Ablates anodised layer. Very clean result. Common for phone cases.</td></tr>
+      <tr><td>Aluminium (raw)</td><td>200</td><td>70 %</td><td>25 kHz</td><td>1</td><td>Matte grey mark</td><td>Requires higher power than anodised. Use cermark spray for darker mark.</td></tr>
+      <tr><td>Gold-Filled Jewellery</td><td>300</td><td>40 %</td><td>35 kHz</td><td>1</td><td>Bright engraving</td><td>Lower power to avoid burning through gold layer. Test on scrap first.</td></tr>
+      <tr><td>925 Silver</td><td>150</td><td>65 %</td><td>22 kHz</td><td>1</td><td>Dark mark on silver</td><td>Silver reflects 1064 nm — use higher power than SS. Result: oxidised dark line.</td></tr>
+      <tr><td>Titanium — Blue</td><td>800</td><td>30 %</td><td>60 kHz</td><td>1</td><td>Iridescent blue colour</td><td>Temperature-induced oxidation. Speed controls colour. Test tile critical.</td></tr>
+      <tr><td>Titanium — Gold</td><td>600</td><td>35 %</td><td>60 kHz</td><td>1</td><td>Gold/yellow colour</td><td>Slightly slower = higher temp = longer wavelength oxide = gold colour.</td></tr>
+      <tr><td>Titanium — Purple</td><td>500</td><td>40 %</td><td>60 kHz</td><td>1</td><td>Purple/violet colour</td><td>Slowest speed for deepest colour. Combine zones for rainbow effect.</td></tr>
+      <tr><td>Carbon Steel (tool steel)</td><td>100</td><td>85 %</td><td>20 kHz</td><td>1</td><td>Dark black marking</td><td>High carbon content anneals well. Good for knife blades, tools.</td></tr>
+      <tr><td>Cermark-coated Ceramic</td><td>200</td><td>55 %</td><td>30 kHz</td><td>1</td><td>Permanent black ceramic</td><td>Apply Cermark spray, let dry 5 min, laser, wipe residue. Works on glass too.</td></tr>
+    </table>
+    <div class="tip-box">&#128161; Titanium colour marking is highly sensitive to speed. Create a 10×10 grid test tile varying speed in 50 mm/s increments — you will get a colour chart unique to your machine batch.</div>
+  </div>
+
+  <div class="card">
+    <h3>&#9728; xTool F1 Ultra — Diode Laser (455 nm Blue) Presets</h3>
+    <p>The F1 Ultra's diode module handles all organic materials: wood, leather, cardboard, fabric, acrylic, and some painted metals.</p>
+    <table>
+      <tr><th>Material</th><th>Speed (mm/min)</th><th>Power %</th><th>Passes</th><th>Mode</th><th>Notes</th></tr>
+      <tr><td>Baltic Birch Plywood 3 mm</td><td>3600 (60 mm/s)</td><td>100 %</td><td>1</td><td>Cut</td><td>Air assist on. Grain direction affects edge quality — test both ways.</td></tr>
+      <tr><td>Baltic Birch Plywood 3 mm</td><td>6000 (100 mm/s)</td><td>80 %</td><td>1</td><td>Engrave</td><td>LPI 254. For portrait photos: 200 LPI, Speed 100, Power 60 %.</td></tr>
+      <tr><td>Baltic Birch Plywood 6 mm</td><td>2400 (40 mm/s)</td><td>100 %</td><td>2</td><td>Cut</td><td>Refocus between passes if possible. Air assist essential.</td></tr>
+      <tr><td>MDF 3 mm</td><td>3000 (50 mm/s)</td><td>100 %</td><td>2</td><td>Cut</td><td>MDF cuts slower than birch due to glue content. Lots of smoke — ventilate well.</td></tr>
+      <tr><td>MDF 3 mm</td><td>4800 (80 mm/s)</td><td>70 %</td><td>1</td><td>Engrave</td><td>MDF engraves clean. Good for paint-fill projects.</td></tr>
+      <tr><td>Bamboo board 3 mm</td><td>3000 (50 mm/s)</td><td>100 %</td><td>1</td><td>Cut</td><td>Bamboo is denser than birch — test cut before full job.</td></tr>
+      <tr><td>Genuine Leather 1.5 mm</td><td>12000 (200 mm/s)</td><td>50 %</td><td>1</td><td>Engrave</td><td>Low power to avoid burning through. Result: dark brown mark on tan leather.</td></tr>
+      <tr><td>Genuine Leather 1.5 mm</td><td>2400 (40 mm/s)</td><td>90 %</td><td>1</td><td>Cut</td><td>Cut edges have slight brown char — acceptable for most products.</td></tr>
+      <tr><td>Acrylic (clear) 3 mm</td><td>1200 (20 mm/s)</td><td>100 %</td><td>1</td><td>Cut</td><td>Leave protective film on. Air assist off for cleaner edge (less turbulence).</td></tr>
+      <tr><td>Acrylic (coloured) 3 mm</td><td>1200 (20 mm/s)</td><td>100 %</td><td>1</td><td>Cut</td><td>Coloured acrylic may need 2 passes. Check specific colour — dark absorbs more.</td></tr>
+      <tr><td>Acrylic 3 mm — Engrave</td><td>4800 (80 mm/s)</td><td>40 %</td><td>1</td><td>Engrave</td><td>Diode engraves acrylic as frosted white. Works best on clear acrylic.</td></tr>
+      <tr><td>Cardboard 2–3 mm</td><td>9000 (150 mm/s)</td><td>60 %</td><td>1</td><td>Cut</td><td>Watch for flame at slower speeds. Air assist on. Do not leave unattended.</td></tr>
+      <tr><td>Fabric — Cotton (mark)</td><td>24000 (400 mm/s)</td><td>30 %</td><td>1</td><td>Mark</td><td>High speed to avoid burning through fabric. Result: slight darkening.</td></tr>
+      <tr><td>Fabric — Denim (engrave)</td><td>18000 (300 mm/s)</td><td>40 %</td><td>1</td><td>Engrave</td><td>Denim engraves dramatically — bleaches dye out cleanly.</td></tr>
+      <tr><td>Cork sheet 3 mm</td><td>6000 (100 mm/s)</td><td>70 %</td><td>1</td><td>Cut</td><td>Cork cuts well with diode. Excellent for coasters, trivets.</td></tr>
+      <tr><td>Felt 2 mm</td><td>6000 (100 mm/s)</td><td>60 %</td><td>1</td><td>Cut</td><td>Pin felt flat — it lifts in air assist. Use tape at corners.</td></tr>
+      <tr><td>Slate tile</td><td>3000 (50 mm/s)</td><td>100 %</td><td>2</td><td>Engrave</td><td>Slate engrave = white marking on grey/black stone. Brilliant contrast.</td></tr>
+      <tr><td>Anodised Aluminium (painted)</td><td>6000 (100 mm/s)</td><td>80 %</td><td>1</td><td>Engrave</td><td>Diode laser removes painted/powder-coated layer. Less precise than fiber.</td></tr>
+    </table>
+    <div class="warn-box">&#9888; These are F1 Ultra presets. If using D1 Pro or S1 (different wattage), recalibrate with test tiles — power scales differently across machine models.</div>
+  </div>
+
+  <div class="card">
+    <h3>&#128203; How to Build Your Own Preset Library</h3>
+    <pre>MATERIAL TEST TILE PROCESS
+==========================
+1. Cut a 100×100 mm piece of the new material.
+2. Create a 5×5 grid of 18×18 mm squares in XCS.
+3. Label columns: Speed 50, 100, 200, 400, 800 (mm/min)
+4. Label rows: Power 20%, 40%, 60%, 80%, 100%
+5. Each square engraves at that speed/power combo.
+6. Run the test. Examine each square.
+7. Circle the best result. Note settings as your preset.
+8. Photograph the tile and file it — future reference.
+
+For cutting tests:
+  - Draw 5 lines at different speeds, same power
+  - Check which cuts fully through in 1 pass</pre>
+    <div class="tip-box">&#128161; Save your test tiles! Glue a label with material source, date, and machine settings. Build a physical binder of test tiles — invaluable when a material batch changes.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 12 ═══ -->
+<div id="tab-panel-12" class="tab-panel">
+  <p class="section-title">Resources &amp; Community</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>&#127760; Official xTool Resources</h3>
+      <ul>
+        <li><strong>Documentation:</strong> <code>xTool.com/pages/manuals</code> — PDF manuals, quick-start guides for all machines</li>
+        <li><strong>xTool Forum:</strong> <code>forum.xtool.com</code> — official support threads, beta firmware announcements</li>
+        <li><strong>YouTube — xTool Official:</strong> Tutorial videos, project ideas, machine comparisons (English)</li>
+        <li><strong>XCS Template Library:</strong> Inside XCS app → Templates — 500+ free designs, editable</li>
+        <li><strong>xTool Support Chat:</strong> Live chat on xTool.com (9 AM–6 PM UTC+8, Mon–Fri)</li>
+        <li><strong>Firmware downloads:</strong> <code>xTool.com/pages/firmware</code> — always check before major projects</li>
+        <li><strong>xTool Creator Community:</strong> <code>community.xtool.com</code> — user project gallery, share XCS files</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>&#127470;&#127475; India Facebook Groups</h3>
+      <ul>
+        <li><strong>xTool Laser Engraver India</strong> — 15,000+ members, most active India group. Post questions, buy/sell used machines.</li>
+        <li><strong>Laser Engraving India Community</strong> — brand-agnostic, material sourcing tips heavy</li>
+        <li><strong>DIY CNC &amp; Laser India</strong> — technical deep-dives, homemade builds</li>
+        <li><strong>Home Business India — Laser &amp; Crafts</strong> — pricing, Etsy tips, GST discussions</li>
+        <li><strong>Sculptfun / Atomstack India Users</strong> — if you also own other brands</li>
+        <li><strong>Lightburn India Users</strong> — Lightburn-specific tips, preset sharing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>&#128250; Recommended YouTube Channels</h3>
+      <h4>English</h4>
+      <ul>
+        <li><strong>xTool Official</strong> — machine launches, project tutorials</li>
+        <li><strong>Make With Miles</strong> — practical business projects, settings explained</li>
+        <li><strong>Laser Everything</strong> — deep dives on settings, material science</li>
+        <li><strong>Pew Pew Laser</strong> — beginners, diode laser focus</li>
+        <li><strong>The Ruida Lab</strong> — CO₂ and fiber laser professional techniques</li>
+      </ul>
+      <h4>Hindi / India Focus</h4>
+      <ul>
+        <li><strong>TechPriya</strong> — Hindi tutorials, Indian material sourcing</li>
+        <li><strong>Maker's Studio India</strong> — business setup, pricing in INR</li>
+        <li><strong>DIY India Workshop</strong> — beginner projects, Hindi commentary</li>
+        <li><strong>Jugaad Crafts</strong> — low-budget hacks, local material alternatives</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>&#127978; Where to Buy Materials in India</h3>
+      <h4>Online</h4>
+      <ul>
+        <li><strong>Amazon.in</strong> — Baltic birch, acrylic sheets, leather blanks. Search "laser cutting acrylic sheet"</li>
+        <li><strong>Flipkart</strong> — competitive on MDF and plywood</li>
+        <li><strong>IndiaMart</strong> — bulk wholesale, negotiate MOQ with suppliers</li>
+        <li><strong>Craft supplies: Itsy Bitsy, Hobbyideas.in</strong> — craft blanks, wood shapes</li>
+      </ul>
+      <h4>Local (Offline)</h4>
+      <ul>
+        <li><strong>Timber markets:</strong> Kirti Nagar (Delhi), Timber Market (Mumbai), Nagdevi St (Mumbai)</li>
+        <li><strong>Acrylic:</strong> Local plastic dealers — search "plastic sheet dealer" on Google Maps</li>
+        <li><strong>Leather:</strong> Dharavi (Mumbai), Jajmau (Kanpur) for wholesale; local leather goods markets in any major city</li>
+        <li><strong>SS304 sheets:</strong> Metal dealers in GIDC industrial areas (Gujarat), Mandi Gobindgarh (Punjab)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>&#127347; xTool India — Warranty &amp; Support Process</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Warranty Coverage</h4>
+        <ul>
+          <li>xTool machines purchased from official India resellers (Qubo, Amazon.in xTool store) come with 1-year warranty.</li>
+          <li>Laser module: 1 year or rated hours (whichever first).</li>
+          <li>Frame/motion: 1 year manufacturing defects.</li>
+          <li>Consumables (lens, mirrors): NOT covered.</li>
+          <li>Damage from improper use (PVC, wrong voltage): NOT covered.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support Process</h4>
+        <ol>
+          <li>Document the issue with photos/video.</li>
+          <li>Create ticket at <code>support.xtool.com</code>.</li>
+          <li>Provide: purchase proof, machine serial number (sticker on back), error description, photos.</li>
+          <li>First response: 24–48 hrs (business days).</li>
+          <li>Parts shipped from: Singapore warehouse or India stock (Bengaluru).</li>
+          <li>For critical failures: xTool may issue replacement unit for machines &lt;90 days old.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip-box">&#128161; Keep your purchase invoice and machine serial number in a photos folder on your phone. Warranty claims are faster when you have these ready instantly.</div>
+  </div>
+
+  <div class="card">
+    <h3>&#128200; Machine Upgrade Path</h3>
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin:1rem 0">
+      <div class="card" style="margin:0;flex:1;min-width:150px;text-align:center">
+        <div style="font-size:1.5rem">&#128295;</div>
+        <strong>xTool D1 Pro</strong>
+        <div style="color:#c9d1d9;font-size:0.85rem;margin-top:0.5rem">Entry diode<br>₹25,000–45,000<br>10–20 W<br>Best: wood, leather, acrylic</div>
+      </div>
+      <div style="font-size:2rem;color:#4cc9f0">&#8594;</div>
+      <div class="card" style="margin:0;flex:1;min-width:150px;text-align:center">
+        <div style="font-size:1.5rem">&#9889;</div>
+        <strong>xTool F1 Ultra</strong>
+        <div style="color:#c9d1d9;font-size:0.85rem;margin-top:0.5rem">Dual fiber+diode<br>₹1,20,000–1,80,000<br>20 W fiber + 20 W diode<br>Best: metals + all organics</div>
+      </div>
+      <div style="font-size:2rem;color:#4cc9f0">&#8594;</div>
+      <div class="card" style="margin:0;flex:1;min-width:150px;text-align:center">
+        <div style="font-size:1.5rem">&#127981;</div>
+        <strong>Industrial Fiber</strong>
+        <div style="color:#c9d1d9;font-size:0.85rem;margin-top:0.5rem">MOPA fiber<br>₹5,00,000–15,00,000<br>30–50 W<br>Best: high-volume production</div>
+      </div>
+    </div>
+    <h4>When to Upgrade</h4>
+    <ul>
+      <li><strong>D1 Pro → F1 Ultra:</strong> When you get consistent metal orders (jewellery, corporate nameplates) and diode can't mark metal reliably. Also when you need speed — fiber is 5–10× faster on metal.</li>
+      <li><strong>F1 Ultra → Industrial MOPA:</strong> When monthly order volume exceeds 500 metal pieces, or when you need to engrave on curved, large, or very thick metal parts.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>&#128260; Project Sharing — XCS File Format</h3>
+    <p>XCS saves projects in <code>.xcs</code> format (ZIP-based archive containing SVG layers + settings JSON). You can share these files with other XCS users.</p>
+    <h4>Sharing via Google Drive</h4>
+    <ol>
+      <li>In XCS: File → Save As → choose location. Extension: <code>.xcs</code></li>
+      <li>Upload to Google Drive folder → right-click → Get Shareable Link → "Anyone with link can view".</li>
+      <li>Share link in Facebook groups or WhatsApp — recipients download and open in XCS.</li>
+    </ol>
+    <div class="tip-box">&#128161; The XCS community template gallery lets you publish designs publicly. Go to XCS → Community → Upload Design. Your design appears in the global template library for all XCS users.</div>
+  </div>
+
+  <!-- Quick Reference Card -->
+  <div class="card" style="border-color:#4cc9f055">
+    <h3>&#128203; Quick Reference Card — Print &amp; Keep at Machine</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Top 20 XCS Keyboard Shortcuts</h4>
+        <table>
+          <tr><th>Action</th><th>Shortcut</th></tr>
+          <tr><td>New project</td><td><code>Ctrl+N</code></td></tr>
+          <tr><td>Open file</td><td><code>Ctrl+O</code></td></tr>
+          <tr><td>Save</td><td><code>Ctrl+S</code></td></tr>
+          <tr><td>Undo</td><td><code>Ctrl+Z</code></td></tr>
+          <tr><td>Redo</td><td><code>Ctrl+Y</code></td></tr>
+          <tr><td>Select all</td><td><code>Ctrl+A</code></td></tr>
+          <tr><td>Group objects</td><td><code>Ctrl+G</code></td></tr>
+          <tr><td>Ungroup</td><td><code>Ctrl+Shift+G</code></td></tr>
+          <tr><td>Duplicate</td><td><code>Ctrl+D</code></td></tr>
+          <tr><td>Array grid</td><td><code>Ctrl+Shift+A</code></td></tr>
+          <tr><td>Zoom in</td><td><code>Ctrl++</code></td></tr>
+          <tr><td>Zoom out</td><td><code>Ctrl+-</code></td></tr>
+          <tr><td>Fit to screen</td><td><code>Ctrl+Shift+F</code></td></tr>
+          <tr><td>Frame (preview)</td><td><code>F</code></td></tr>
+          <tr><td>Start job</td><td><code>Ctrl+Enter</code></td></tr>
+          <tr><td>Pause job</td><td><code>Space</code></td></tr>
+          <tr><td>Stop job</td><td><code>Esc</code></td></tr>
+          <tr><td>Move to origin</td><td><code>Ctrl+Home</code></td></tr>
+          <tr><td>Flip horizontal</td><td><code>Ctrl+Shift+H</code></td></tr>
+          <tr><td>Flip vertical</td><td><code>Ctrl+Shift+V</code></td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="danger-box" style="margin-bottom:1rem">
+          <strong>&#9940; EMERGENCY STOP</strong>
+          <ol style="margin:0.5rem 0 0">
+            <li>Press red E-STOP button on machine</li>
+            <li>OR press <code>Esc</code> in XCS immediately</li>
+            <li>If fire: use CO₂ extinguisher — NEVER water on electrical</li>
+            <li>Power off machine at wall switch</li>
+            <li>Open lid ONLY after laser stops (3-second delay)</li>
+          </ol>
+        </div>
+        <div class="warn-box">
+          <strong>&#9989; Pre-Job Safety Checklist</strong>
+          <ul style="margin:0.5rem 0 0">
+            <li>&#9723; Ventilation fan / fume extractor ON</li>
+            <li>&#9723; Material confirmed safe (no PVC, no chlorine)</li>
+            <li>&#9723; Lens clean and focused</li>
+            <li>&#9723; Workspace clear of flammables</li>
+            <li>&#9723; Water / fire extinguisher nearby</li>
+            <li>&#9723; Safety glasses on (even for enclosed machines)</li>
+            <li>&#9723; Job framed and position verified</li>
+            <li>&#9723; Power / speed settings verified for material</li>
+            <li>&#9723; Do NOT leave machine unattended</li>
+          </ul>
+        </div>
+        <div class="tip-box" style="margin-top:1rem">
+          <strong>&#128222; xTool Support</strong><br>
+          Email: <code>support@xtool.com</code><br>
+          Chat: xTool.com (top-right button)<br>
+          Forum: <code>forum.xtool.com</code><br>
+          Hours: Mon–Fri 9 AM–6 PM CST
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- End of tab panels -->
+</div></div></body></html>
