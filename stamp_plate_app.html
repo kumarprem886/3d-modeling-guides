@@ -73,7 +73,7 @@ input[type=range] { flex: 1; accent-color: #e91e8c; }
     <button class="tab-nav-btn active" data-tab="library" onclick="switchTab('library')">📚 Library</button>
     <button class="tab-nav-btn" data-tab="upload" onclick="switchTab('upload')">⬆️ Upload &amp; Trace</button>
     <button class="tab-nav-btn" data-tab="prompts" onclick="switchTab('prompts')">🤖 AI Prompts</button>
-    <button class="tab-nav-btn" data-tab="composer" onclick="switchTab('composer')">🖼️ Plate Composer <span id="tab-composer-badge" style="background:#e91e8c;color:#fff;border-radius:10px;padding:1px 7px;font-size:11px;margin-left:4px;display:none"></span></button>
+    <button class="tab-nav-btn" data-tab="composer" onclick="switchTab('composer')">📐 Inkscape Guide</button>
   </nav>
 </div>
 
@@ -773,10 +773,7 @@ function downloadSVG(content, filename) {
   a.click();
 }
 
-// plateItems lives in Part B script — these stubs are intentionally empty here
-function addToPlate(svgContent, label) {
-  // Overridden by Part B script below
-  if (!svgContent) { showNotification('Generate a pattern first!'); return; }
+
   showNotification('Loading composer...');
 }
 
@@ -787,7 +784,6 @@ function switchTab(name) {
   if (panel) panel.classList.add('active');
   const btn = document.querySelector(`[data-tab="${name}"]`);
   if (btn) btn.classList.add('active');
-  if (name === 'composer' && typeof renderPlate === 'function') renderPlate();
 }
 
 function showNotification(msg) {
@@ -1376,323 +1372,168 @@ window.addEventListener('DOMContentLoaded', () => {
 </div><!-- end tab-prompts -->
 
 
-<!-- ===== TAB 4: PLATE COMPOSER ===== -->
+
+<!-- ===== TAB 4: INKSCAPE GUIDE ===== -->
 <div id="tab-composer" class="tab-panel">
-  <div class="two-col" style="height:calc(100vh - 120px);min-height:500px;">
+<div style="max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 3rem;">
 
-    <!-- SIDEBAR -->
-    <div class="sidebar" style="display:flex;flex-direction:column;gap:0;overflow-y:auto;">
+<h2 style="font-size:1.4rem;font-weight:800;color:#e6edf3;margin-bottom:6px;">From SVG to Finished Stamp Plate</h2>
+<p style="color:#8b949e;font-size:14px;margin-bottom:2rem;">Step-by-step: arrange your designs in Inkscape, prepare the file, send to your laser engraver.</p>
 
-      <div style="padding:1rem 1rem 0.75rem;">
-        <h3 class="section-h" style="margin:0 0 0.75rem;">Your Queue</h3>
-        <!-- Queue list rendered by JS -->
-        <div id="plate-queue-list">
-          <div style="color:#8b949e;font-size:13px;text-align:center;padding:1.5rem 0.5rem;border:1px dashed #30363d;border-radius:8px;">
-            <div style="font-size:2rem;margin-bottom:8px;">📋</div>
-            No designs yet.<br>Add from Library or Upload tab.
-          </div>
-        </div>
-      </div>
+<!-- WHAT YOU NEED -->
+<div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;">
+  <div style="font-size:13px;font-weight:700;color:#e91e8c;margin-bottom:10px;">What you need</div>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:6px 14px;font-size:13px;color:#e6edf3;">Inkscape (free — inkscape.org)</span>
+    <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:6px 14px;font-size:13px;color:#e6edf3;">Your SVG files downloaded</span>
+    <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:6px 14px;font-size:13px;color:#e6edf3;">SS304 mirror finish steel plate</span>
+    <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:6px 14px;font-size:13px;color:#e6edf3;">Fiber laser (EzCad / Lightburn / xTool XCS)</span>
+  </div>
+</div>
 
-      <div style="border-top:1px solid #21262d;margin:0.5rem 0;"></div>
+<!-- STEP 1 -->
+<div style="border-left:3px solid #e91e8c;background:#1a0010;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin-bottom:1rem;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="background:#e91e8c;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">1</div>
+    <div style="font-size:15px;font-weight:700;color:#e6edf3;">Set up your plate canvas in Inkscape</div>
+  </div>
+  <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+    <li>Open Inkscape → <strong>File → Document Properties</strong> (Shift+Ctrl+D)</li>
+    <li>Set <strong>Units to mm</strong></li>
+    <li>Set canvas size to your plate dimensions — common sizes:<br>
+      <span style="font-family:monospace;background:#0d1117;padding:2px 8px;border-radius:4px;font-size:12px;color:#79c0ff;">40×60mm</span>
+      <span style="font-family:monospace;background:#0d1117;padding:2px 8px;border-radius:4px;font-size:12px;color:#79c0ff;">60×90mm</span>
+      <span style="font-family:monospace;background:#0d1117;padding:2px 8px;border-radius:4px;font-size:12px;color:#79c0ff;">100×150mm</span>
+      <span style="font-family:monospace;background:#0d1117;padding:2px 8px;border-radius:4px;font-size:12px;color:#79c0ff;">60×60mm square</span>
+    </li>
+    <li>Close Document Properties</li>
+  </ol>
+</div>
 
-      <!-- Plate settings -->
-      <div style="padding:0.75rem 1rem;">
-        <div style="font-size:0.75rem;color:#8b949e;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.75rem;">Plate Settings</div>
+<!-- STEP 2 -->
+<div style="border-left:3px solid #e91e8c;background:#1a0010;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin-bottom:1rem;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="background:#e91e8c;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">2</div>
+    <div style="font-size:15px;font-weight:700;color:#e6edf3;">Import and clean each SVG</div>
+  </div>
+  <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+    <li><strong>File → Import</strong> (Ctrl+I) → select your SVG file</li>
+    <li>Select all (Ctrl+A) → <strong>Path → Object to Path</strong> — converts everything to pure paths</li>
+    <li>Select all → <strong>Object → Ungroup</strong> (Ctrl+Shift+G) — repeat until nothing is grouped</li>
+    <li>Select all → open <strong>Fill and Stroke</strong> (Shift+Ctrl+F):<br>
+      &nbsp;&nbsp;• Set <strong>Fill → No paint</strong> (X button)<br>
+      &nbsp;&nbsp;• Set <strong>Stroke → Flat color → Black (#000000)</strong><br>
+      &nbsp;&nbsp;• Stroke width: <strong>0.1mm</strong> (for engraving, thinner = better detail)
+    </li>
+    <li>Delete any white background rectangles — select them and press Delete</li>
+    <li><strong>Path → Combine</strong> (Ctrl+K) — merge all paths into one object (cleaner for laser)</li>
+  </ol>
+  <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:12px;color:#8b949e;">
+    Tip: Use <strong>Edit → Find/Replace</strong> to select objects by fill color if you need to bulk-remove colored fills
+  </div>
+</div>
 
-        <div style="margin-bottom:10px;">
-          <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Plate Size</label>
-          <select id="plate-size-select" onchange="renderPlateCanvas()" style="width:100%;background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;padding:6px 10px;font-size:0.83rem;">
-            <option value="standard">Standard 40×60mm</option>
-            <option value="large">Large 60×90mm</option>
-            <option value="full">Full sheet 100×150mm</option>
-            <option value="square">Square 60×60mm</option>
-          </select>
-        </div>
+<!-- STEP 3 -->
+<div style="border-left:3px solid #e91e8c;background:#1a0010;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin-bottom:1rem;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="background:#e91e8c;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">3</div>
+    <div style="font-size:15px;font-weight:700;color:#e6edf3;">Arrange designs on the plate</div>
+  </div>
+  <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+    <li>Enable <strong>View → Show/Hide → Guides</strong> and <strong>Snap to page border</strong></li>
+    <li>Import each cleaned SVG one by one using Ctrl+I</li>
+    <li>Resize each design: select it → hold <strong>Ctrl+Shift while dragging corner</strong> to scale proportionally</li>
+    <li>Leave at least <strong>2mm gap between designs</strong> and <strong>3mm from plate edges</strong></li>
+    <li>Use <strong>Align and Distribute</strong> (Shift+Ctrl+A) to space designs evenly:<br>
+      &nbsp;&nbsp;• "Make horizontal gaps equal" button<br>
+      &nbsp;&nbsp;• "Center on vertical axis" for symmetric layouts
+    </li>
+    <li>Typical layout for 60×90mm plate: <strong>3 columns × 4 rows = 12 designs</strong></li>
+  </ol>
+  <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 14px;margin-top:10px;font-size:12px;color:#8b949e;">
+    Tip: Add a thin rectangle the exact plate size as a border guide — set it to a different color (red) so you can identify and delete it before exporting
+  </div>
+</div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
-          <div>
-            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Columns</label>
-            <select id="plate-cols" onchange="renderPlateCanvas()" style="width:100%;background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;padding:6px 10px;font-size:0.83rem;">
-              <option value="1">1</option>
-              <option value="2" selected>2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          <div>
-            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Gap (px)</label>
-            <select id="plate-gap" onchange="renderPlateCanvas()" style="width:100%;background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;padding:6px 10px;font-size:0.83rem;">
-              <option value="10">2mm</option>
-              <option value="20" selected>5mm</option>
-              <option value="30">7mm</option>
-              <option value="40">10mm</option>
-            </select>
-          </div>
-        </div>
+<!-- STEP 4 -->
+<div style="border-left:3px solid #e91e8c;background:#1a0010;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin-bottom:1rem;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+    <div style="background:#e91e8c;color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">4</div>
+    <div style="font-size:15px;font-weight:700;color:#e6edf3;">Export the final plate SVG</div>
+  </div>
+  <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+    <li>Select all (Ctrl+A) → delete any guide rectangles that were colored</li>
+    <li><strong>File → Save As</strong> → choose <strong>Plain SVG</strong> (not Inkscape SVG) — cleaner for laser software</li>
+    <li>Alternatively: <strong>File → Save a Copy</strong> → format: <strong>DXF</strong> — required for EzCad</li>
+    <li>Name the file clearly: <code style="background:#0d1117;padding:2px 6px;border-radius:4px;color:#79c0ff;">plate_warhammer_60x90mm.svg</code></li>
+  </ol>
+</div>
 
-        <div style="margin-bottom:12px;">
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.83rem;color:#c9d1d9;">
-            <input type="checkbox" id="plate-border" onchange="renderPlateCanvas()" style="width:14px;height:14px;accent-color:#2daa6b;">
-            Add plate border
-          </label>
-        </div>
+<!-- STEP 5 — THREE PATHS -->
+<div style="margin-bottom:1rem;">
+  <div style="font-size:15px;font-weight:700;color:#e6edf3;margin-bottom:1rem;padding:12px 16px;background:#161b22;border-radius:10px;border:1px solid #30363d;">Step 5 — Send to your laser software</div>
 
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <button class="btn" onclick="clearPlate()" style="width:100%;font-size:0.83rem;">🗑️ Clear All</button>
-          <button class="btn btn-primary" onclick="downloadFullPlate()" style="width:100%;font-size:0.83rem;">⬇️ Download Full Plate SVG</button>
-          <button class="btn" onclick="downloadEachSeparately()" style="width:100%;font-size:0.83rem;">📦 Download Each Separately</button>
-        </div>
+  <!-- LIGHTBURN -->
+  <div style="border-left:3px solid #00b4d8;background:#001a20;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin-bottom:10px;">
+    <div style="font-size:14px;font-weight:700;color:#00b4d8;margin-bottom:8px;">If using Lightburn</div>
+    <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+      <li>Open Lightburn → <strong>File → Import</strong> → select your SVG</li>
+      <li>All paths appear in the workspace — check they are black outlines</li>
+      <li>In Cuts/Layers panel: set layer to <strong>Line</strong> mode (not Fill)</li>
+      <li>SS304 mirror finish settings: <strong>Speed 200mm/s, Power 60%, Frequency 30kHz, 1 pass</strong></li>
+      <li>Click <strong>Frame</strong> to preview the laser path on the plate</li>
+      <li>Click <strong>Start</strong></li>
+    </ol>
+  </div>
 
-        <div class="tip" style="margin-top:12px;font-size:0.78rem;padding:10px 12px;">
-          💡 Add designs from the <strong>Library</strong> or <strong>Upload</strong> tabs using the <strong>"Add to Plate"</strong> button on each design.
-        </div>
-      </div>
+  <!-- EZCAD -->
+  <div style="border-left:3px solid #ff6b35;background:#1a0a00;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;margin-bottom:10px;">
+    <div style="font-size:14px;font-weight:700;color:#ff6b35;margin-bottom:8px;">If using EzCad2 / EzCad3 (Chinese fiber lasers)</div>
+    <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+      <li><strong>EzCad cannot import SVG directly</strong> — export as DXF from Inkscape first:<br>
+        Inkscape → File → Save a Copy → DXF format → select "R14" version
+      </li>
+      <li>Open EzCad → <strong>File → Import</strong> → select the .dxf file</li>
+      <li>Select all paths → in properties panel set <strong>Mark Type: Hatch</strong> or <strong>Vector</strong></li>
+      <li>SS304 settings: <strong>Speed 200, Power 60%, Frequency 30kHz, Q-Pulse 100ns, Loop 1</strong></li>
+      <li>Press <strong>F2</strong> to mark (engrave)</li>
+    </ol>
+  </div>
 
-    </div><!-- end sidebar -->
+  <!-- XTOOL XCS -->
+  <div style="border-left:3px solid #4cc9f0;background:#001020;border-radius:0 10px 10px 0;padding:1.2rem 1.5rem;">
+    <div style="font-size:14px;font-weight:700;color:#4cc9f0;margin-bottom:8px;">If using xTool Creative Space (F1 Ultra)</div>
+    <ol style="padding-left:1.2rem;color:#c9d1d9;font-size:13px;line-height:2.2;">
+      <li>Open xTool Creative Space → <strong>New Project</strong></li>
+      <li><strong>Import</strong> → select your SVG file directly (XCS supports SVG natively)</li>
+      <li>Select all → set processing mode to <strong>Score</strong> (not Fill or Cut)</li>
+      <li>Select <strong>Fiber laser</strong> module (not diode)</li>
+      <li>SS304 settings: <strong>Speed 200, Power 60%, Frequency 30kHz, 1 pass</strong></li>
+      <li>Use camera to align position on plate → click <strong>Process</strong></li>
+    </ol>
+  </div>
+</div>
 
-    <!-- MAIN AREA -->
-    <div class="main-area" style="display:flex;flex-direction:column;overflow:hidden;">
+<!-- TIPS -->
+<div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.2rem 1.5rem;margin-top:1.5rem;">
+  <div style="font-size:13px;font-weight:700;color:#e91e8c;margin-bottom:12px;">Pro Tips</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:13px;color:#c9d1d9;border-left:2px solid #e91e8c;padding-left:10px;">Always do a <strong>test burn on scrap SS304</strong> before engraving your full plate — verify the settings are right</div>
+    <div style="font-size:13px;color:#c9d1d9;border-left:2px solid #e91e8c;padding-left:10px;">The mirror finish must face <strong>up toward the laser</strong> — engrave on the shiny side</div>
+    <div style="font-size:13px;color:#c9d1d9;border-left:2px solid #e91e8c;padding-left:10px;">After engraving, clean the plate with <strong>isopropyl alcohol</strong> to remove residue — the marks become crisp and sharp</div>
+    <div style="font-size:13px;color:#c9d1d9;border-left:2px solid #e91e8c;padding-left:10px;">For Inkscape DXF export to EzCad: use <strong>R14 format</strong>, not 2007 — EzCad handles older DXF better</div>
+    <div style="font-size:13px;color:#c9d1d9;border-left:2px solid #e91e8c;padding-left:10px;">Increase <strong>power to 70-80%</strong> for deeper marks if you want them visible on fabric/clay. Lower power (50%) for delicate surface marks on stamp ink pads</div>
+    <div style="font-size:13px;color:#c9d1d9;border-left:2px solid #e91e8c;padding-left:10px;">Run <strong>Path → Simplify</strong> in Inkscape before exporting — reduces node count, faster laser processing</div>
+  </div>
+</div>
 
-      <div style="padding:1rem 1.25rem 0.75rem;border-bottom:1px solid #21262d;flex-shrink:0;">
-        <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
-          <h3 class="section-h" style="margin:0;">Plate Preview</h3>
-          <span id="plate-subtitle" style="font-size:0.82rem;color:#8b949e;">40×60mm • 0 designs • 2 columns</span>
-        </div>
-      </div>
-
-      <!-- Canvas area -->
-      <div style="flex:1;overflow:auto;padding:1.25rem;display:flex;flex-direction:column;align-items:center;gap:12px;">
-        <div id="plate-canvas-wrap" style="background:#2d2d2d;border-radius:8px;padding:20px;display:inline-flex;align-items:center;justify-content:center;min-width:200px;min-height:200px;max-width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.4);">
-          <div id="plate-canvas" style="background:white;border-radius:4px;min-width:160px;min-height:200px;display:flex;align-items:center;justify-content:center;">
-            <!-- SVG plate rendered here by JS -->
-            <div style="color:#ccc;font-size:0.82rem;text-align:center;padding:2rem;">
-              <div style="font-size:2.5rem;margin-bottom:8px;">🎨</div>
-              Add designs to see<br>plate preview
-            </div>
-          </div>
-        </div>
-
-        <!-- Info row -->
-        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
-          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 16px;text-align:center;">
-            <div style="font-size:1.2rem;font-weight:700;color:#c9d1d9;" id="plate-count-display">0</div>
-            <div style="font-size:0.72rem;color:#8b949e;margin-top:2px;">Designs</div>
-          </div>
-          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 16px;text-align:center;">
-            <div style="font-size:1.2rem;font-weight:700;color:#c9d1d9;" id="plate-area-display">—</div>
-            <div style="font-size:0.72rem;color:#8b949e;margin-top:2px;">Print Area</div>
-          </div>
-          <div style="background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 16px;text-align:center;">
-            <div style="font-size:1.2rem;font-weight:700;color:#c9d1d9;" id="plate-scale-display">1:1</div>
-            <div style="font-size:0.72rem;color:#8b949e;margin-top:2px;">Scale</div>
-          </div>
-        </div>
-
-        <!-- Quick usage tips -->
-        <div style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:1rem 1.25rem;max-width:560px;width:100%;">
-          <div style="font-size:0.78rem;font-weight:600;color:#8b949e;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">How to use this tab</div>
-          <ul style="margin:0;padding-left:1.2rem;color:#8b949e;font-size:0.82rem;line-height:1.8;">
-            <li>Go to the <strong style="color:#c9d1d9;">Library</strong> or <strong style="color:#c9d1d9;">Upload &amp; Trace</strong> tabs</li>
-            <li>Click <strong style="color:#c9d1d9;">"Add to Plate"</strong> on any design</li>
-            <li>Return here to arrange, preview, and download</li>
-            <li>Use <strong style="color:#c9d1d9;">Download Full Plate SVG</strong> for Lightburn / Blender</li>
-            <li>Use <strong style="color:#c9d1d9;">Download Each Separately</strong> for individual files</li>
-          </ul>
-        </div>
-      </div>
-
-    </div><!-- end main-area -->
-  </div><!-- end two-col -->
+</div>
 </div><!-- end tab-composer -->
 
-
-<!-- ===== JavaScript for Plate Composer + AI Prompts ===== -->
 <script>
-// ---- Plate Composer State ----
-var plateItems = [];
-var plateIdCounter = 0;
-
-function addToPlate(svgContent, label) {
-  plateIdCounter++;
-  plateItems.push({ id: plateIdCounter, svgContent: svgContent, label: label || ('Design ' + plateIdCounter) });
-  updatePlateCount();
-  renderPlate();
-  showNotification('Added to plate: ' + (label || 'Design'));
-}
-
-function clearPlate() {
-  plateItems = [];
-  updatePlateCount();
-  renderPlate();
-}
-
-function updatePlateCount() {
-  var el = document.getElementById('plate-count-display');
-  if (el) el.textContent = plateItems.length;
-  var badge = document.getElementById('tab-composer-badge');
-  if (badge) {
-    badge.textContent = plateItems.length;
-    badge.style.display = plateItems.length > 0 ? 'inline' : 'none';
-  }
-}
-
-function renderPlate() {
-  var list = document.getElementById('plate-queue-list');
-  if (!list) return;
-
-  if (plateItems.length === 0) {
-    list.innerHTML = '<div style="color:#8b949e;font-size:13px;text-align:center;padding:1.5rem 0.5rem;border:1px dashed #30363d;border-radius:8px;"><div style="font-size:2rem;margin-bottom:8px;">📋</div>No designs yet.<br>Add from Library or Upload tab.</div>';
-  } else {
-    list.innerHTML = plateItems.map(function(item, i) {
-      var thumb = item.svgContent.replace(/width="[^"]*"/, 'width="40"').replace(/height="[^"]*"/, 'height="40"');
-      return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #21262d;">' +
-        '<div style="width:40px;height:40px;background:#fff;border-radius:4px;overflow:hidden;flex-shrink:0;">' + thumb + '</div>' +
-        '<span style="flex:1;font-size:12px;color:#c9d1d9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + item.label + '</span>' +
-        '<button class="btn btn-sm" onclick="removePlateItem(' + item.id + ')" style="flex-shrink:0;padding:3px 8px;font-size:11px;">✕</button>' +
-        '</div>';
-    }).join('');
-  }
-
-  renderPlateCanvas();
-}
-
-function removePlateItem(id) {
-  plateItems = plateItems.filter(function(item) { return item.id !== id; });
-  updatePlateCount();
-  renderPlate();
-}
-
-function renderPlateCanvas() {
-  var canvas = document.getElementById('plate-canvas');
-  if (!canvas) return;
-
-  var sizeMap = { standard: '400 600', large: '600 900', full: '1000 1500', square: '600 600' };
-  var sizeNames = { standard: '40×60mm', large: '60×90mm', full: '100×150mm', square: '60×60mm' };
-  var sizeValEl = document.getElementById('plate-size-select');
-  var sizeVal = sizeValEl ? sizeValEl.value : 'standard';
-  var dims = (sizeMap[sizeVal] || '400 600').split(' ').map(Number);
-  var pw = dims[0], ph = dims[1];
-  var colsEl = document.getElementById('plate-cols');
-  var cols = parseInt(colsEl ? colsEl.value : 2);
-  var gapEl = document.getElementById('plate-gap');
-  var gap = parseInt(gapEl ? gapEl.value : 20);
-  var borderEl = document.getElementById('plate-border');
-  var hasBorder = borderEl ? borderEl.checked : false;
-
-  var cellW = (pw - gap * (cols + 1)) / cols;
-  var rows = Math.ceil(plateItems.length / cols);
-  var totalH = rows * (cellW + gap) + gap;
-  var actualH = Math.max(ph, totalH || ph);
-
-  var svgContent = '<rect width="' + pw + '" height="' + actualH + '" fill="white"/>';
-  if (hasBorder) svgContent += '<rect x="2" y="2" width="' + (pw-4) + '" height="' + (actualH-4) + '" fill="none" stroke="#333" stroke-width="2"/>';
-
-  plateItems.forEach(function(item, i) {
-    var col = i % cols;
-    var row = Math.floor(i / cols);
-    var x = gap + col * (cellW + gap);
-    var y = gap + row * (cellW + gap);
-    svgContent += '<g transform="translate(' + x + ',' + y + ')">' + extractSVGContent(item.svgContent, cellW, cellW) + '</g>';
-  });
-
-  var fullSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pw + ' ' + actualH + '" style="max-width:100%;background:white">' + svgContent + '</svg>';
-  canvas.innerHTML = plateItems.length === 0
-    ? '<div style="color:#ccc;font-size:0.82rem;text-align:center;padding:2rem;"><div style="font-size:2.5rem;margin-bottom:8px;">🎨</div>Add designs to see<br>plate preview</div>'
-    : fullSVG;
-
-  window.lastPlateSVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + pw + ' ' + actualH + '">' + svgContent + '</svg>';
-
-  var subtitleEl = document.getElementById('plate-subtitle');
-  var sizeName = sizeNames[sizeVal] || (pw/10 + '×' + actualH/10 + 'mm');
-  if (subtitleEl) subtitleEl.textContent = sizeName + ' • ' + plateItems.length + ' designs • ' + cols + ' columns';
-
-  var areaEl = document.getElementById('plate-area-display');
-  if (areaEl) areaEl.textContent = sizeName;
-  var scaleEl = document.getElementById('plate-scale-display');
-  if (scaleEl) scaleEl.textContent = '1:1';
-}
-
-function extractSVGContent(svgStr, targetW, targetH) {
-  var match = svgStr.match(/viewBox="([^"]+)"/);
-  var vb = match ? match[1] : ('0 0 ' + targetW + ' ' + targetH);
-  var inner = svgStr.replace(/<svg[^>]*>/, '').replace(/<\/svg>/, '');
-  return '<svg viewBox="' + vb + '" width="' + targetW + '" height="' + targetH + '" preserveAspectRatio="xMidYMid meet">' + inner + '</svg>';
-}
-
-function downloadFullPlate() {
-  if (!window.lastPlateSVG || plateItems.length === 0) {
-    if (typeof showNotification === 'function') showNotification('Add designs to the plate first!');
-    return;
-  }
-  if (typeof downloadSVG === 'function') downloadSVG(window.lastPlateSVG, 'stamp_plate_full.svg');
-}
-
-function downloadEachSeparately() {
-  if (plateItems.length === 0) {
-    if (typeof showNotification === 'function') showNotification('No designs in queue!');
-    return;
-  }
-  plateItems.forEach(function(item, i) {
-    setTimeout(function() {
-      if (typeof downloadSVG === 'function') downloadSVG(item.svgContent, 'stamp_plate_' + (i+1) + '_' + item.label.replace(/\s+/g,'_') + '.svg');
-    }, i * 300);
-  });
-}
-
-// ---- Copy Prompt to Clipboard ----
-function copyPrompt(btn, text) {
-  var cleanText = text.trim();
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(cleanText).then(function() {
-      btn.textContent = '✓ Copied!';
-      btn.style.background = '#0d4429';
-      btn.style.borderColor = '#2daa6b';
-      btn.style.color = '#2daa6b';
-      setTimeout(function() {
-        btn.textContent = 'Copy';
-        btn.style.background = '';
-        btn.style.borderColor = '';
-        btn.style.color = '';
-      }, 2000);
-    }).catch(function() { fallbackCopy(btn, cleanText); });
-  } else {
-    fallbackCopy(btn, cleanText);
-  }
-}
-
-function fallbackCopy(btn, text) {
-  var ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.position = 'fixed';
-  ta.style.opacity = '0';
-  document.body.appendChild(ta);
-  ta.focus();
-  ta.select();
-  try {
-    document.execCommand('copy');
-    btn.textContent = '✓ Copied!';
-    btn.style.background = '#0d4429';
-    btn.style.borderColor = '#2daa6b';
-    btn.style.color = '#2daa6b';
-    setTimeout(function() {
-      btn.textContent = 'Copy';
-      btn.style.background = '';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-    }, 2000);
-  } catch(e) {
-    btn.textContent = 'Failed';
-    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
-  }
-  document.body.removeChild(ta);
-}
-
-// Init plate on load
-document.addEventListener('DOMContentLoaded', function() {
-  renderPlate();
-});
+// Inkscape guide tab — no plate composer state needed
 </script>
+
 
 </body>
 </html>
