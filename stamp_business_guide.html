@@ -1,0 +1,2572 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start a Miniature Stamp Plate Business in India</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --card2: #1c2128;
+    --border: #30363d;
+    --accent: #e91e8c;
+    --accent2: #ff6ec7;
+    --accent-dim: rgba(233,30,140,0.15);
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --blue: #58a6ff;
+    --orange: #f0883e;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a0a14 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(233,30,140,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-emoji { font-size: 52px; display: block; margin-bottom: 12px; }
+  .hero h1 {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-subtitle {
+    font-size: clamp(13px, 2vw, 16px);
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .pill {
+    background: var(--accent-dim);
+    border: 1px solid rgba(233,30,140,0.35);
+    color: var(--accent2);
+    padding: 4px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── TAB BAR ── */
+  .tab-bar-wrap {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-bar-wrap::-webkit-scrollbar { height: 3px; }
+  .tab-bar-wrap::-webkit-scrollbar-track { background: var(--card); }
+  .tab-bar-wrap::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+  .tab-bar {
+    display: flex;
+    white-space: nowrap;
+    padding: 0 8px;
+    min-width: max-content;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 14px 14px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── PANELS ── */
+  .tab-panel { display: none; padding: 32px 20px 60px; max-width: 960px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 36px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-heading:first-child { margin-top: 0; }
+  .section-heading .sh-icon {
+    background: var(--accent-dim);
+    border: 1px solid rgba(233,30,140,0.3);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+  .card p, .card li { color: var(--text); font-size: 14.5px; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card li { margin-bottom: 5px; }
+
+  /* ── TIP BOX ── */
+  .tip-box {
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    border-left: 3px solid;
+  }
+  .tip-box strong { display: block; margin-bottom: 4px; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .tip-box { background: rgba(88,166,255,0.08); border-color: var(--blue); color: #c0d8f5; }
+  .tip-box strong { color: var(--blue); }
+  .tip-box.warning { background: rgba(210,153,34,0.1); border-color: var(--yellow); color: #f0d080; }
+  .tip-box.warning strong { color: var(--yellow); }
+  .tip-box.danger { background: rgba(248,81,73,0.1); border-color: var(--red); color: #fdb8b5; }
+  .tip-box.danger strong { color: var(--red); }
+  .tip-box.info { background: rgba(63,185,80,0.08); border-color: var(--green); color: #a0d8a8; }
+  .tip-box.info strong { color: var(--green); }
+
+  /* ── PRICE TAG ── */
+  .price-tag {
+    display: inline-block;
+    background: rgba(63,185,80,0.12);
+    color: var(--green);
+    border: 1px solid rgba(63,185,80,0.3);
+    border-radius: var(--radius-sm);
+    padding: 2px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: monospace;
+  }
+  .price-tag.mid {
+    background: rgba(210,153,34,0.12);
+    color: var(--yellow);
+    border-color: rgba(210,153,34,0.3);
+  }
+  .price-tag.high {
+    background: rgba(248,81,73,0.1);
+    color: var(--red);
+    border-color: rgba(248,81,73,0.3);
+  }
+  .inr { font-family: monospace; font-weight: 700; color: var(--green); }
+
+  /* ── PRODUCT CARD ── */
+  .product-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .product-name {
+    font-weight: 700;
+    color: #fff;
+    font-size: 15px;
+  }
+  .product-desc {
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  /* ── TABLE ── */
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 14px 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .guide-table th {
+    background: rgba(233,30,140,0.12);
+    color: var(--accent2);
+    font-weight: 700;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .guide-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(48,54,61,0.6);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .guide-table tr:last-child td { border-bottom: none; }
+  .guide-table tr:nth-child(even) td { background: rgba(28,33,40,0.5); }
+  .guide-table tr:hover td { background: rgba(233,30,140,0.05); }
+
+  /* ── TWO COL ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── STEP ROW ── */
+  .step-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .step-num {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    min-width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { display: block; color: #fff; font-size: 14.5px; margin-bottom: 3px; }
+  .step-content p { color: var(--muted); font-size: 13.5px; }
+
+  /* ── PATH CARD ── */
+  .path-card {
+    background: linear-gradient(135deg, var(--card2), var(--card));
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+  }
+  .path-card .pc-num { font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .path-card .pc-label { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .path-card .pc-desc { font-size: 13.5px; color: var(--text); margin-top: 8px; }
+
+  /* ── KBD / SHORTCUT ── */
+  kbd {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-bottom: 2px solid #444;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .shortcut-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(48,54,61,0.4);
+    font-size: 13.5px;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+
+  /* ── STAT GRID ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .stat-card {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .badge-green { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .badge-red { background: rgba(248,81,73,0.12); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+  .badge-yellow { background: rgba(210,153,34,0.12); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+  .badge-blue { background: rgba(88,166,255,0.1); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+  .badge-pink { background: var(--accent-dim); color: var(--accent2); border: 1px solid rgba(233,30,140,0.3); }
+
+  /* ── HIGHLIGHT ── */
+  .highlight-box {
+    background: var(--accent-dim);
+    border: 1px solid rgba(233,30,140,0.25);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin: 14px 0;
+  }
+  .highlight-box h4 { color: var(--accent2); font-size: 15px; margin-bottom: 8px; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #79c0ff;
+    overflow-x: auto;
+    margin: 10px 0;
+    white-space: pre;
+  }
+
+  /* ── SETTINGS ROW ── */
+  .settings-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-label { font-size: 14px; color: var(--text); font-weight: 600; }
+  .settings-val { font-size: 13.5px; color: var(--accent2); font-family: monospace; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { padding: 6px 0; padding-left: 26px; position: relative; font-size: 14px; color: var(--text); border-bottom: 1px solid rgba(48,54,61,0.3); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .checklist li.warn::before { content: '⚠'; color: var(--yellow); }
+  .checklist li.cross::before { content: '✕'; color: var(--red); }
+
+  /* ── FOOTER NOTE ── */
+  .panel-note {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12.5px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+
+  /* ── UTILITY ── */
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mb-8 { margin-bottom: 8px; }
+  .text-muted { color: var(--muted); font-size: 13.5px; }
+  .text-accent { color: var(--accent2); }
+  b, strong { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ HERO -->
+<div class="hero">
+  <span class="hero-emoji">🎨</span>
+  <h1>Miniature <span>Stamp Plate</span> Business</h1>
+  <p class="hero-subtitle">Start India's First Goblin Hobbies — Using Your Resin 3D Printer</p>
+  <div class="hero-pills">
+    <span class="pill">Zero Competition in India</span>
+    <span class="pill">₹ Low Startup Cost</span>
+    <span class="pill">Global Etsy Market</span>
+    <span class="pill">Resin Printer Required</span>
+    <span class="pill">India + Export Sales</span>
+    <span class="pill">Creative Business</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB BAR -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(1)">1. The Opportunity</button>
+    <button class="tab-btn" onclick="switchTab(2)">2. Design Plates</button>
+    <button class="tab-btn" onclick="switchTab(3)">3. 3D Print Plates</button>
+    <button class="tab-btn" onclick="switchTab(4)">4. Make Stamps &amp; Tools</button>
+    <button class="tab-btn" onclick="switchTab(5)">5. Paint &amp; Ink</button>
+    <button class="tab-btn" onclick="switchTab(6)">6. Testing &amp; QC</button>
+    <button class="tab-btn" onclick="switchTab(7)">7. Pricing &amp; Costs</button>
+    <button class="tab-btn" onclick="switchTab(8)">8. Selling India &amp; Global</button>
+    <button class="tab-btn" onclick="switchTab(9)">9. Branding &amp; Marketing</button>
+    <button class="tab-btn" onclick="switchTab(10)">10. Legal &amp; Setup</button>
+    <button class="tab-btn" onclick="switchTab(11)">11. Starter Shopping List</button>
+    <button class="tab-btn" onclick="switchTab(12)">12. 12-Month Roadmap</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 1 -->
+<div id="tab-panel-1" class="tab-panel active">
+
+  <div class="section-heading">
+    <span class="sh-icon">01</span>
+    The Opportunity — India's Untapped Market
+  </div>
+
+  <div class="card">
+    <h3>🖼️ What Are Miniature Stamp Plates?</h3>
+    <p>Stamp plates are thin, flat plates featuring raised or recessed designs — heraldry, textures, symbols, script, geometric patterns — that miniature painters use to quickly and consistently apply detailed patterns onto their models. The workflow is simple: apply a thin layer of paint onto the plate, transfer it using a soft foam or silicone stamper, then press the stamper onto the miniature surface. In seconds you get a crisp, repeatable design that would take a skilled painter 10+ minutes to paint freehand.</p>
+    <p class="mt-8">They are used for:</p>
+    <ul class="mt-8">
+      <li><strong>Heraldry &amp; shields</strong> — fleur-de-lis, crosses, chevrons on Space Marine shoulder pads or knight shields</li>
+      <li><strong>Armour textures</strong> — chainmail, leather, scales on large flat surfaces</li>
+      <li><strong>Tabard &amp; cloth patterns</strong> — stripes, checks, diamond motifs</li>
+      <li><strong>Sci-fi detailing</strong> — circuit board traces, hexagonal grilles, mechanicus symbols</li>
+      <li><strong>Basing</strong> — cobblestone, wood plank, tile textures stamped onto bases</li>
+      <li><strong>Script &amp; lettering</strong> — battle cries, chapter names, runes along banner edges</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">02</span>
+    Goblin Hobbies — The Inspiration
+  </div>
+
+  <div class="card">
+    <h3>🇺🇸 What Goblin Hobbies Offers (and What They Don't)</h3>
+    <p><strong>goblinhobbies.com</strong> is a US-based company that produces high-quality resin stamp plates specifically for miniature painters. Their product line includes:</p>
+    <ul class="mt-8">
+      <li>Reusable stamp plates at <strong>$15–25 per plate</strong> (approx. <span class="inr">₹1,250–₹2,075</span>)</li>
+      <li>Their own proprietary "Stampin' Colors" ink formulated for miniature surfaces</li>
+      <li>Starter kits bundling plates, stamper, and ink</li>
+      <li>Themed collections: heraldry, sci-fi, textures, lettering</li>
+    </ul>
+    <div class="tip-box danger mt-16">
+      <strong>🚫 Critical Gap</strong>
+      Goblin Hobbies ships only to USA, EU, Australia, and New Zealand. <strong>India is completely excluded</strong> from their shipping zones. Indian hobbyists who want these products face shipping costs of $30–50+ via forwarding services, plus customs duties, making them effectively unavailable.
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">03</span>
+    The India Market Gap
+  </div>
+
+  <div class="highlight-box">
+    <h4>🇮🇳 Zero Indian Competitors — Right Now</h4>
+    <p>There is currently no dedicated Indian maker producing miniature stamp plates. A search across Indian e-commerce (Amazon.in, Flipkart, Meesho, IndiaMART), Etsy India sellers, Instagram, and Facebook hobbyist groups reveals <strong>zero competition</strong> in this exact niche. The market is completely open.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>🎯 Primary Target Customers</h3>
+      <ul>
+        <li>Warhammer 40,000 &amp; Age of Sigmar players</li>
+        <li>D&amp;D / Pathfinder miniature painters</li>
+        <li>Board game enthusiasts (Zombicide, Blood Rage, Gloomhaven)</li>
+        <li>Scale model hobbyists (armour, historical figures)</li>
+        <li>Resin miniature collectors &amp; painters</li>
+        <li>Content creators / YouTube painters</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📈 India's Growing Hobby Scene</h3>
+      <ul>
+        <li>Games Workshop opening official India stores</li>
+        <li>Hobby cafes in Bangalore, Mumbai, Delhi, Hyderabad, Pune</li>
+        <li>Discord: "Indian Hobbyists", "Warhammer India"</li>
+        <li>Facebook groups: D&amp;D India, Indian Tabletop Gamers</li>
+        <li>Reddit: r/IndiaMinis (growing)</li>
+        <li>Instagram miniature painting communities</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">04</span>
+    India's Unique Design Advantage
+  </div>
+
+  <div class="card">
+    <h3>🪷 Designs No Western Seller Can Offer</h3>
+    <p>This is your strongest differentiator — both for Indian customers <em>and</em> for international Etsy buyers who want something different:</p>
+    <div class="two-col mt-8">
+      <ul>
+        <li><strong>Mandala patterns</strong> — intricate geometric</li>
+        <li><strong>Lotus motifs</strong> — single, repeating, border</li>
+        <li><strong>Paisley / Butah</strong> — traditional curved tear-drop</li>
+        <li><strong>Temple border patterns</strong> — carved stone motifs</li>
+        <li><strong>Elephant silhouettes &amp; patterns</strong></li>
+        <li><strong>Indian armour textures</strong> — Mughal chainmail, lamellar</li>
+      </ul>
+      <ul>
+        <li><strong>Devanagari script</strong> — battle cries in Sanskrit/Hindi</li>
+        <li><strong>Regional textiles</strong> — Ikat, Kantha, Bandhani patterns</li>
+        <li><strong>Rangoli-inspired geometric</strong> borders</li>
+        <li><strong>Peacock feather textures</strong></li>
+        <li><strong>Kolam / Muggu</strong> — South Indian floor patterns</li>
+        <li><strong>Chakra / Dharmachakra</strong> symbols</li>
+      </ul>
+    </div>
+    <div class="tip-box info mt-16">
+      <strong>💡 Etsy Gold Mine</strong>
+      Western miniature painters are actively looking for "Eastern", "Indian", "Asian" themed designs for converting minis into Mughal warriors, Indian mythology armies, or just exotic patterned armour. <strong>Nobody is selling this</strong> on Etsy in resin stamp plate format.
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">05</span>
+    Revenue Streams &amp; Financial Potential
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">₹30K–50K</div>
+      <div class="stat-label">Total Startup Cost</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">₹20K–80K</div>
+      <div class="stat-label">Monthly Income (6 months)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">₹1–3L</div>
+      <div class="stat-label">Monthly Potential (Year 1)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">₹83</div>
+      <div class="stat-label">Per USD (Etsy exports)</div>
+    </div>
+  </div>
+
+  <div class="two-col mt-16">
+    <div class="card">
+      <h3>💰 Revenue Stream A — India Sales (INR)</h3>
+      <ul>
+        <li>Instagram / WhatsApp direct orders</li>
+        <li>Indian Etsy / Meesho / own website</li>
+        <li>Hobby store consignment (Bangalore, Mumbai)</li>
+        <li>Discord community sales</li>
+        <li>Starter kit bundles ₹600–1,200</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🌍 Revenue Stream B — Global Etsy (USD)</h3>
+      <ul>
+        <li>Etsy.com — world's #1 handmade marketplace</li>
+        <li>$15–25 per plate = ₹1,250–₹2,075</li>
+        <li>International shipping via India Post / DHL</li>
+        <li>Indian-themed designs command premium</li>
+        <li>No Indian competition on Etsy in this niche</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">06</span>
+    Why a Resin Printer is Essential
+  </div>
+
+  <div class="card">
+    <h3>🔬 Resin vs FDM — Not Even Close for Stamps</h3>
+    <p>Miniature stamp plates require extreme surface detail — fine lines as thin as 0.3mm, sharp edges, smooth flat faces. FDM printers (like Ender 3) physically cannot achieve this:</p>
+    <table class="guide-table mt-8">
+      <thead><tr><th>Specification</th><th>FDM Printer</th><th>Resin Printer</th></tr></thead>
+      <tbody>
+        <tr><td>Minimum layer height</td><td>0.1–0.2mm</td><td>0.025–0.05mm</td></tr>
+        <tr><td>XY resolution</td><td>0.3–0.4mm (nozzle)</td><td>0.019–0.05mm (LCD pixel)</td></tr>
+        <tr><td>Surface texture</td><td>Visible layer lines, rough</td><td>Smooth, glass-like</td></tr>
+        <tr><td>Fine text/lines possible?</td><td>No — minimum ~1mm</td><td>Yes — down to 0.3mm</td></tr>
+        <tr><td>Result on stamp?</td><td>Smeared, indistinct</td><td>Sharp, crisp, professional</td></tr>
+        <tr><td>Post-processing needed</td><td>Extensive sanding</td><td>Wash + cure only</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">07</span>
+    Competitor Landscape
+  </div>
+
+  <table class="guide-table">
+    <thead>
+      <tr><th>Seller</th><th>Location</th><th>Price/Plate</th><th>Ships to India?</th><th>Indian Designs?</th><th>Threat Level</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Goblin Hobbies</strong></td>
+        <td>USA</td>
+        <td>$15–25</td>
+        <td><span class="badge badge-red">NO</span></td>
+        <td><span class="badge badge-red">NO</span></td>
+        <td><span class="badge badge-yellow">Reference Only</span></td>
+      </tr>
+      <tr>
+        <td><strong>EU Etsy Sellers</strong></td>
+        <td>UK / Germany</td>
+        <td>€12–22</td>
+        <td><span class="badge badge-yellow">Expensive</span></td>
+        <td><span class="badge badge-red">NO</span></td>
+        <td><span class="badge badge-green">Low</span></td>
+      </tr>
+      <tr>
+        <td><strong>AliExpress Generic</strong></td>
+        <td>China</td>
+        <td>$3–8</td>
+        <td><span class="badge badge-green">YES</span></td>
+        <td><span class="badge badge-red">NO</span></td>
+        <td><span class="badge badge-yellow">Medium (low quality)</span></td>
+      </tr>
+      <tr>
+        <td><strong>Indian Makers</strong></td>
+        <td>India</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="badge badge-green">ZERO EXISTS</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--accent)">YOU</strong></td>
+        <td><strong>India</strong></td>
+        <td><strong>₹400–900</strong></td>
+        <td><span class="badge badge-green">YES — Fast</span></td>
+        <td><span class="badge badge-pink">EXCLUSIVE</span></td>
+        <td><span class="badge badge-pink">First Mover</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="panel-note">
+    <span>Tab 1 of 12 — The Opportunity</span>
+    <span>Continue → Tab 2: Design Stamp Plates</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 2 -->
+<div id="tab-panel-2" class="tab-panel">
+
+  <div class="section-heading">
+    <span class="sh-icon">01</span>
+    What Makes a Great Stamp Plate Design
+  </div>
+
+  <div class="card">
+    <h3>📐 Technical Design Requirements</h3>
+    <p>Not every design translates well to a stamp plate. Before opening any software, understand these physical constraints:</p>
+    <ul class="mt-8">
+      <li><strong>Raised height:</strong> Design elements should be raised 0.3–0.5mm above the plate surface. Too shallow (under 0.2mm) and paint won't transfer cleanly. Too deep (over 0.7mm) and stamper foam compresses unevenly.</li>
+      <li><strong>Minimum feature size:</strong> No line or element thinner than 0.3mm — fine detail gets lost in the stamping process even if the print is perfect</li>
+      <li><strong>No undercuts:</strong> All surfaces must be printable without supports on the stamp face — undercuts trap resin and ruin the stamp surface</li>
+      <li><strong>Clean, sharp edges:</strong> Bevelled at 45° where possible — helps paint release cleanly from raised edges</li>
+      <li><strong>Test scale:</strong> Design and test at 25mm scale (standard miniature height) — a beautiful design at 100mm may be useless at 25mm</li>
+      <li><strong>1mm border:</strong> Always add a flat 1mm border around your design — gives the stamper foam a reference edge</li>
+      <li><strong>Alignment marks:</strong> Add tiny corner notches or dots for repositioning multi-layer stamp designs</li>
+    </ul>
+  </div>
+
+  <div class="tip-box warning">
+    <strong>⚠️ Common Beginner Mistake</strong>
+    Designing beautiful art that looks great on screen but has 0.1mm fine lines — these will either not print or will break off the plate within a few uses. Always zoom in to your thinnest elements and verify they meet the 0.3mm minimum before printing.
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">02</span>
+    Software Options — Compared
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Blender <span class="badge badge-green">FREE</span></div>
+    <div class="product-desc"><strong>Best for:</strong> organic patterns, sculpted textures, anything with curves — chainmail, dragon scales, leather, mandala, paisley. Use the Sculpt mode for organic shapes, then Boolean modifier to subtract/add from your flat plate base. Steep learning curve but extremely powerful. Huge library of tutorials on YouTube. Export as STL or OBJ for slicer.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Fusion 360 <span class="badge badge-green">FREE for Hobbyists</span></div>
+    <div class="product-desc"><strong>Best for:</strong> precise geometric designs — heraldry, shields, circuit patterns, hexagons, crosses, symmetric symbols. Sketch-based workflow makes it easy to create mathematically precise designs. Parametric — change one dimension and everything updates. Register for free personal/hobbyist license at autodesk.com.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Inkscape → Tinkercad <span class="badge badge-green">FREE</span></div>
+    <div class="product-desc"><strong>Best for:</strong> converting vector clip art / SVG designs into 3D stamp plates. Workflow: create or download SVG in Inkscape → import into Tinkercad → use "SVG to STL" conversion → set extrude height to 0.4mm → export. Great for Devanagari script and traditional Indian patterns sourced from design sites. Tinkercad is browser-based, no install needed.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">ZBrush <span class="badge badge-yellow">PAID — ~₹8,000/year</span></div>
+    <div class="product-desc"><strong>Best for:</strong> professional-quality organic detail — faces, feathers, complex textures, sculpted patterns. The industry standard for miniature sculptors. If you want museum-quality mandala or temple motif stamps, ZBrush's IMM brushes and Noise Maker are unparalleled. Subscription via Maxon. Consider starting with free Blender and upgrading later.</div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Procreate + Blender Workflow <span class="badge badge-blue">iPad Required</span></div>
+    <div class="product-desc"><strong>Best for:</strong> artists who prefer drawing their designs by hand. Draw pattern on iPad in Procreate → export as PNG → import into Blender as Image Texture → use Displace modifier to raise the design → bake to geometry → export as STL. Allows very natural, hand-drawn feel in final stamp. Great for folk art patterns.</div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">03</span>
+    Design Categories to Build Your Catalogue
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>⚔️ Western Fantasy / Sci-Fi (Global Sales)</h3>
+      <ul>
+        <li><strong>Heraldry &amp; shields:</strong> fleur-de-lis, crosses, chevrons, rampant lions, eagles — always top sellers</li>
+        <li><strong>Sci-fi tech:</strong> circuit traces, hex grilles, Adeptus Mechanicus-style cog patterns, scanner grids</li>
+        <li><strong>Fantasy runes:</strong> Norse-style runes, elvish borders, dwarvish angular script</li>
+        <li><strong>Dragon scales:</strong> overlapping teardrop texture, good for large flat surfaces</li>
+        <li><strong>Chainmail texture:</strong> classic linked ring pattern, essential for any fantasy range</li>
+        <li><strong>Cobblestone / flagstone:</strong> random or regular stone patterns for bases</li>
+        <li><strong>Wood plank:</strong> parallel grain with knots for basing or wagon surfaces</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🪷 Indian / Eastern (Unique USP)</h3>
+      <ul>
+        <li><strong>Mandala:</strong> radial symmetry patterns, full plate or corner motif versions</li>
+        <li><strong>Lotus:</strong> single lotus, repeating border, lotus-and-vine</li>
+        <li><strong>Paisley / Butah:</strong> the classic teardrop motif with interior patterning</li>
+        <li><strong>Temple border:</strong> carved stone frieze patterns from Ajanta, Ellora, Hampi</li>
+        <li><strong>Mughal chainmail:</strong> distinctive pattern from Mughal armour, not on any Western site</li>
+        <li><strong>Devanagari script:</strong> "वीर" (brave), "धर्म" (dharma), custom battle cries</li>
+        <li><strong>Kolam / Rangoli:</strong> South Indian geometric floor patterns</li>
+        <li><strong>Ikat textile:</strong> geometric diamond-based weave pattern</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">04</span>
+    Standard Plate Dimensions
+  </div>
+
+  <table class="guide-table">
+    <thead><tr><th>Size</th><th>Dimensions</th><th>Best For</th><th>Print Time (approx)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Mini / Sample</strong></td><td>20 × 20mm</td><td>Testing designs, sample packs, freebies</td><td>~20 min</td></tr>
+      <tr><td><strong>Standard Small</strong></td><td>40 × 60mm</td><td>Shoulder pad patterns, single motifs, script strips</td><td>~45 min</td></tr>
+      <tr><td><strong>Standard Large</strong></td><td>60 × 90mm</td><td>Full armour patterns, large shields, complex mandalas</td><td>~70 min</td></tr>
+      <tr><td><strong>Texture Sheet</strong></td><td>80 × 120mm</td><td>Chainmail, scales, cobblestone — large repeating textures</td><td>~90 min</td></tr>
+      <tr><td><strong>Basing Plate</strong></td><td>Round, 32–60mm dia.</td><td>Texture for specific base sizes</td><td>~40 min</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-heading">
+    <span class="sh-icon">05</span>
+    Design Tips &amp; Workflow
+  </div>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Start with reference collection</strong>
+      <p>Build a Pinterest board or folder of reference patterns. For Indian designs: visit temple websites, search "Indian textile patterns vector free SVG", browse Wikimedia Commons for historical armour photos. For western: search medieval heraldry databases (Armorial Register, Roll of Arms).</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Create the flat base plate first</strong>
+      <p>In Fusion 360 or Blender: create a flat rectangle or shape at your chosen dimensions, 2mm thick. This is your base — all design elements will be raised from this surface. The 2mm thickness gives strength without wasting resin.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Add raised elements at 0.35–0.45mm height</strong>
+      <p>Extrude or Boolean-add your design elements at 0.35mm for fine detail, 0.45mm for bold design elements. Test first on a small 20mm square — print it before committing the full plate design. Save resin, save time.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Bevel all sharp edges at 45°</strong>
+      <p>Sharp 90° edges on raised elements cause paint to pool at the base and drag across the plate surface. A 0.1mm bevel at 45° on all vertical edges creates a cleaner stamp release. This is the difference between amateur and professional stamp quality.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <strong>Add plate details: border, alignment marks, product code</strong>
+      <p>Recess (don't raise) a thin border line 1mm from the plate edge. Add tiny recessed dots at two corners for alignment. Add a small recessed product code on the back (e.g. "INK-M01") — helps you identify plates in your inventory and looks professional.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">6</div>
+    <div class="step-content">
+      <strong>Export and pre-check in slicer</strong>
+      <p>Export as STL. Open in Chitubox or Lychee Slicer. Orient face-down (stamp face touching build plate). Check for any islands (unsupported geometry). Run slice at 0.05mm. Visually inspect first 10 layers for any anomalies. Only then hit print.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">06</span>
+    Free Design Resources
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>📥 Reference &amp; Inspiration Sources</h3>
+      <ul>
+        <li><strong>Thingiverse.com</strong> — free STL models for miniature stamp inspiration (don't copy, use as reference)</li>
+        <li><strong>MyMiniFactory</strong> — higher quality miniature STLs, good for scale reference</li>
+        <li><strong>Vecteezy / Freepik</strong> — free vector art for converting to 3D via Inkscape</li>
+        <li><strong>Wikimedia Commons</strong> — historical textile &amp; armour reference, public domain</li>
+        <li><strong>Fonts: Google Fonts (Noto Serif Devanagari)</strong> — free, convert to SVG outlines for stamps</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚠️ Intellectual Property — Critical Rules</h3>
+      <ul>
+        <li class="warn"><strong>Never copy</strong> Games Workshop / Privateer Press / Wyrd logos or symbols directly</li>
+        <li class="warn">Space Marine chapter icons, Warhammer faction symbols = copyright infringement</li>
+        <li class="cross">Do NOT copy Goblin Hobbies designs</li>
+        <li>Create your own original designs inspired by historical sources</li>
+        <li>Historical heraldry (pre-1900) is public domain — safe to use as inspiration</li>
+        <li>Traditional Indian patterns are cultural heritage — freely usable</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel-note">
+    <span>Tab 2 of 12 — Design Stamp Plates</span>
+    <span>Continue → Tab 3: 3D Printing</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 3 -->
+<div id="tab-panel-3" class="tab-panel">
+
+  <div class="section-heading">
+    <span class="sh-icon">01</span>
+    Why Resin is Non-Negotiable
+  </div>
+
+  <div class="card">
+    <h3>🔬 Resin Printing — The Only Choice for Stamp Plates</h3>
+    <p>Miniature stamp plates live or die on surface detail resolution. The stamp face must be glass-smooth with crisp raised features as fine as 0.3mm. Resin MSLA/DLP printers achieve this through UV-cured photopolymer and an LCD screen that cures each layer in one shot — the XY pixel size determines the finest detail possible.</p>
+    <p class="mt-8">A 4K mono screen gives ~35μm XY resolution. An 8K/9K screen gives ~19–22μm. Compare this to FDM's 0.4mm nozzle diameter — there is no contest.</p>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">02</span>
+    Recommended Printers for Stamp Plate Production
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Elegoo Mars 4 Ultra <span class="price-tag">₹14,000–18,000</span> <span class="badge badge-green">RECOMMENDED STARTER</span></div>
+    <div class="product-desc">
+      <strong>Why it's ideal:</strong> 9K mono LCD screen, 18μm XY resolution — exceeds what stamp plates actually need. Build plate 153×77mm, more than enough for standard 60×90mm plates. Fast curing with mono screen (2–3 second layers). Quiet, compact (fits on a desk), and the most cost-effective option for starting this business. Ships to India via Amazon.in / Elegoo official store. Replacement FEP sheets widely available in India.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Elegoo Saturn 3 Ultra <span class="price-tag mid">₹28,000–35,000</span> <span class="badge badge-yellow">SCALE UP</span></div>
+    <div class="product-desc">
+      <strong>Why it's useful:</strong> 12K mono screen, 218×123mm build plate — allows printing multiple plates in one batch or your 80×120mm large texture sheets. When you have 10+ designs and need to fulfil larger orders, this pays for itself quickly. Print 4× standard plates per run vs the Mars's 2×. Better ROI per print hour at volume.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Anycubic Photon Mono M5s <span class="price-tag mid">₹18,000–22,000</span> <span class="badge badge-blue">ALTERNATIVE</span></div>
+    <div class="product-desc">
+      <strong>Good alternative if:</strong> Elegoo Mars is out of stock. 12K mono screen, 218×123mm build plate — similar specs to Saturn 3 at a slightly lower price. Anycubic's slicer (Photon Workshop) is slightly less polished than Chitubox but fully functional. Spare parts (FEP, screen) available on Amazon.in and AliExpress.
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">03</span>
+    Resin Selection for Stamp Plates
+  </div>
+
+  <table class="guide-table">
+    <thead><tr><th>Resin Type</th><th>Price (1kg)</th><th>For Stamps?</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Standard Resin</strong></td>
+        <td><span class="inr">₹1,800–2,500</span></td>
+        <td><span class="badge badge-yellow">Prototyping</span></td>
+        <td>Good detail, affordable. Brittle — cracks after ~50 heavy uses. Use for initial tests before committing to production resin.</td>
+      </tr>
+      <tr>
+        <td><strong>ABS-Like Resin</strong></td>
+        <td><span class="inr">₹2,000–2,800</span></td>
+        <td><span class="badge badge-green">BEST CHOICE</span></td>
+        <td>Slightly flexible, impact-resistant, holds fine detail excellently. Stamp plates last 200+ uses without cracking. Elegoo ABS-Like Pro 2 is excellent. Recommended for all production plates.</td>
+      </tr>
+      <tr>
+        <td><strong>Water Washable Resin</strong></td>
+        <td><span class="inr">₹2,200–3,000</span></td>
+        <td><span class="badge badge-yellow">Good Alternative</span></td>
+        <td>Easier cleanup (no IPA needed), good detail retention. Slightly more brittle than ABS-like. Good option if IPA is hard to source locally. Detail quality is excellent.</td>
+      </tr>
+      <tr>
+        <td><strong>Tough / Flexible Resin</strong></td>
+        <td><span class="inr">₹3,000–4,500</span></td>
+        <td><span class="badge badge-red">AVOID</span></td>
+        <td>Too rubbery — raised design elements flex and stamp unevenly. Creates inconsistent ink transfer. Not suitable for stamp plates.</td>
+      </tr>
+      <tr>
+        <td><strong>Castable Resin</strong></td>
+        <td><span class="inr">₹5,000+</span></td>
+        <td><span class="badge badge-red">AVOID</span></td>
+        <td>Designed for lost-wax casting metal parts. Unnecessary expense and burns in UV. No benefit for stamp plates.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box info">
+    <strong>💡 Brand Recommendations Available in India</strong>
+    Elegoo ABS-Like Pro 2 (₹2,200–2,500/kg), Anycubic ABS-Like (₹2,000–2,400/kg), and Sunlu ABS-Like (₹1,900–2,200/kg) — all available on Amazon.in. Buy 1kg to start, scale to 5kg orders for better per-unit cost.
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">04</span>
+    Critical Print Settings — Optimised for Stamp Plates
+  </div>
+
+  <div class="card">
+    <h3>⚙️ Slicer Settings (Chitubox / Lychee)</h3>
+    <p class="text-muted mb-8">These settings are for a mono screen printer (Mars 4 / Saturn 3 / Photon M5s). Adjust exposure by ±0.2s for your specific resin — always run a calibration print (RERF test) with a new resin before committing to a full plate print.</p>
+    <div class="settings-row">
+      <span class="settings-label">Layer Height</span>
+      <span class="settings-val">0.05mm</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Normal Exposure Time</span>
+      <span class="settings-val">2.0–3.0 seconds</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Bottom Layers</span>
+      <span class="settings-val">6–8 layers</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Bottom Exposure Time</span>
+      <span class="settings-val">35–45 seconds</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Lift Speed (Normal)</span>
+      <span class="settings-val">40 mm/min (SLOW)</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Bottom Lift Speed</span>
+      <span class="settings-val">25 mm/min</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Retract Speed</span>
+      <span class="settings-val">150 mm/min</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Anti-Aliasing</span>
+      <span class="settings-val">ON — Level 4</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Grey Level</span>
+      <span class="settings-val">Enabled (if slicer supports)</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Plate Orientation</span>
+      <span class="settings-val">FLAT — stamp face DOWN, touching build plate</span>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">Supports</span>
+      <span class="settings-val">NONE on flat plates — no floating islands</span>
+    </div>
+  </div>
+
+  <div class="tip-box danger">
+    <strong>🚨 Orientation is Critical</strong>
+    Always print stamp plates flat with the stamp face DOWN (touching the build plate directly). Printing on supports creates support marks on the stamp face — these will show in every single stamp you make. The flat face must be printed directly on the FEP → build plate. The raised design elements face DOWN into the resin vat during printing.
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">05</span>
+    Post-Processing for Stamp Plates
+  </div>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Remove from build plate carefully</strong>
+      <p>Use a thin metal scraper at a shallow angle. Flat plates can be stubborn — gentle horizontal sliding force, not prying upward. Prying can flex and crack the plate. If prints stick too hard, reduce bottom exposure by 5 seconds next batch.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>IPA wash — 3 to 4 minutes maximum</strong>
+      <p>Submerge in 90%+ IPA (isopropyl alcohol) for 3–4 minutes with gentle agitation. Do NOT exceed 5 minutes — over-washing softens fine detail. Use two-container washing: first bath removes bulk resin, second bath is cleaner IPA for final rinse. Let plates dry in a dust-free area for 5 minutes.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>UV cure — 2 minutes each side</strong>
+      <p>Cure stamp face up for 2 minutes, then flip and cure back for 2 minutes. Do NOT over-cure — excess UV makes ABS-like resin more brittle. Use a UV cure station (₹1,500–3,000) rather than sunlight for consistent results. Sunlight curing is uneven and can warp thin plates.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Optional: light sand with 600-800 grit</strong>
+      <p>If the flat background of the stamp plate has slight texture (from the FEP film), lightly wet-sand with 800 grit on a flat glass surface. This ensures the raised design elements are the only part that contacts the paint — a smoother background means cleaner stamping.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <strong>Quality test before packaging</strong>
+      <p>Do a test stamp on white cardstock with a dark paint. This reveals every flaw in your plate before it reaches the customer. If any element is missing or unclear, identify whether it's a print failure or a design issue. See Tab 6 for full QC protocol.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">06</span>
+    IPA Sourcing in India &amp; Batch Production
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>🧪 IPA — Where to Buy in India</h3>
+      <ul>
+        <li><strong>Amazon.in:</strong> "IPA 99% isopropyl alcohol" — ₹350–500/litre (Faridabad Chemical, Capatue, etc.)</li>
+        <li><strong>Local chemical suppliers:</strong> Search "isopropyl alcohol industrial supplier [your city]" — ₹200–300/litre in 5L+ quantities</li>
+        <li><strong>Hardware stores:</strong> Some electrical supply stores stock IPA as circuit board cleaner</li>
+        <li><strong>Distil &amp; reuse:</strong> Use an IPA still (₹2,000–4,000 on Amazon) to reclaim dirty IPA — saves significant cost at volume</li>
+        <li><strong>Alternative:</strong> Water-washable resin eliminates IPA need entirely</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📦 Batch Production Strategy</h3>
+      <ul>
+        <li>Nest multiple small plates on one build plate — maximise each print run</li>
+        <li>Mars 4 Ultra can fit 4× standard small (40×60mm) plates per print</li>
+        <li>Organise by resin colour: print all grey plates together, then colour plates</li>
+        <li>Print overnight: a 90-minute print run while you sleep = morning inventory</li>
+        <li>Keep a print log: plate design, resin batch, exposure settings, result — identify patterns in failures</li>
+        <li>Pre-slice a library of your designs so you can launch any print in minutes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel-note">
+
+    <hr class="divider">
+    <h2 class="section-heading">🔩 Premium Option: SS304 Stainless Steel Mirror Finish Plates</h2>
+    <div class="tip-box info">
+      <strong>This is what professional stamp plate companies use.</strong> Brands like Moyou London, Bundle Monster, and Konad all use etched stainless steel — not plastic. SS304 mirror finish plates last essentially forever, feel premium, and command 3–4× the price of resin plates.
+    </div>
+
+    <h3 style="color:#e91e8c;margin:1rem 0 0.5rem;">SS304 vs Resin — Full Comparison</h3>
+    <table class="guide-table">
+      <thead><tr><th>Property</th><th>Resin 3D Printed</th><th>SS304 Mirror Finish</th></tr></thead>
+      <tbody>
+        <tr><td>Durability</td><td>~200 stamps before wear</td><td><strong>Essentially permanent (100,000+)</strong></td></tr>
+        <tr><td>Detail quality</td><td>Good (0.05mm layer lines visible)</td><td><strong>Excellent — sub-0.01mm possible</strong></td></tr>
+        <tr><td>Paint pickup</td><td>Good</td><td><strong>Superior — mirror finish = clean release</strong></td></tr>
+        <tr><td>Feel in hand</td><td>Plastic, lightweight</td><td><strong>Premium, weighted, professional</strong></td></tr>
+        <tr><td>Price you can charge</td><td>₹350–600/plate</td><td><strong>₹800–2,000+/plate</strong></td></tr>
+        <tr><td>How to make</td><td>Your resin printer</td><td>Laser engraving / chemical etching / CNC</td></tr>
+        <tr><td>Setup cost</td><td>Already have printer</td><td>₹40,000–80,000 (fiber laser) OR ₹2,000 DIY etch</td></tr>
+        <tr><td>Best for</td><td>Starting out, prototyping</td><td><strong>Premium product line, Etsy bestseller</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color:#e91e8c;margin:1rem 0 0.5rem;">How to Make SS304 Stamp Plates — 4 Methods</h3>
+
+    <div class="card">
+      <div class="path-title">Method 1: Fiber Laser Engraver (Best Quality, Own the Process)</div>
+      <p style="color:#c9d1d9;margin-bottom:0.6rem;">A 20W–30W fiber laser can engrave detailed designs directly onto SS304 sheets. You own the entire production process — no outsourcing.</p>
+      <table class="guide-table">
+        <thead><tr><th>Machine</th><th>Power</th><th>Price (₹)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>xTool F1 Ultra</td><td>20W fiber</td><td>₹65,000–80,000</td><td>Best for SS304, compact, fast</td></tr>
+          <tr><td>Sculpfun SF-A9</td><td>10W fiber</td><td>₹45,000–55,000</td><td>Entry level, slower but good quality</td></tr>
+          <tr><td>Generic Chinese fiber laser</td><td>20W</td><td>₹40,000–55,000</td><td>From Robocraze/AliExpress, DIY setup</td></tr>
+          <tr><td>MOPA fiber laser (professional)</td><td>20–30W</td><td>₹1,20,000+</td><td>Color marking on steel possible</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box">Design in Lightburn software (₹3,500 one-time) or LaserGRBL (free). Export from Blender/Inkscape as SVG → import to Lightburn → engrave.</div>
+    </div>
+
+    <div class="card">
+      <div class="path-title">Method 2: Chemical Etching — DIY, Very Cheap (₹2,000 Setup)</div>
+      <p style="color:#c9d1d9;margin-bottom:0.6rem;">Same process used for PCB making. Ferric chloride etches the steel where it's exposed, leaving your design raised. Surprisingly good quality.</p>
+      <div class="step-row"><span class="step-num">1</span><span class="step-text">Print your design on <strong>laser printer</strong> onto glossy photo paper (inkjet won't work)</span></div>
+      <div class="step-row"><span class="step-num">2</span><span class="step-text">Iron the printout face-down onto SS304 sheet — toner transfers to steel (toner transfer method)</span></div>
+      <div class="step-row"><span class="step-num">3</span><span class="step-text">Submerge in <strong>ferric chloride solution</strong> (₹300–500/litre, electronics shops or Amazon.in) for 15–30 min</span></div>
+      <div class="step-row"><span class="step-num">4</span><span class="step-text">Remove, wash with water + baking soda to neutralize, peel toner with acetone</span></div>
+      <div class="step-row"><span class="step-num">5</span><span class="step-text">Polish with metal polish (Brasso ₹120) to restore mirror finish on unetched areas</span></div>
+      <div class="tip-box warning">Works best on 0.5mm–1mm SS304 sheets. Thicker = more rigid plates. Source from local metal suppliers or Amazon.in (SS304 sheet 200×200mm ~₹400–600).</div>
+      <div class="tip-box">Alternative etchant: Electrolytic etching with salt water + 9V battery — even safer, available everywhere in India.</div>
+    </div>
+
+    <div class="card">
+      <div class="path-title">Method 3: Outsource to CNC/Laser Engraving Shop (No Equipment Needed)</div>
+      <p style="color:#c9d1d9;margin-bottom:0.6rem;">India has thousands of laser engraving/CNC shops. Send your design files, they engrave onto your SS304 blanks.</p>
+      <ul class="guide-list">
+        <li>Find shops on IndiaMART search "fiber laser engraving stainless steel"</li>
+        <li>Local trophy/award shops often have fiber lasers — they engrave steel daily</li>
+        <li>Cost per plate: ₹80–200 per plate (depending on design complexity and quantity)</li>
+        <li>Min order: usually 10–20 plates per design</li>
+        <li>Turnaround: 2–5 days</li>
+        <li>Provide: DXF or AI file, specify depth 0.1–0.3mm, mirror finish must be preserved</li>
+      </ul>
+      <div class="tip-box info">Best starting strategy — zero equipment investment, test market demand before buying a laser.</div>
+    </div>
+
+    <div class="card">
+      <div class="path-title">Method 4: Photochemical Etching Service (Mass Production)</div>
+      <p style="color:#c9d1d9;margin-bottom:0.6rem;">What Goblin Hobbies and Moyou London use at scale. Professional PCB/metal etching factories in India (Pune, Chennai, Bangalore industrial areas).</p>
+      <ul class="guide-list">
+        <li>Min order: 50–100 plates per design</li>
+        <li>Cost per plate: ₹50–120 at volume</li>
+        <li>Precision: 0.05mm feature size</li>
+        <li>Search IndiaMART: "photo chemical etching stainless steel" or "metal nameplate etching"</li>
+        <li>Used for: industrial nameplates, instrument panels — same technology</li>
+      </ul>
+    </div>
+
+    <h3 style="color:#e91e8c;margin:1rem 0 0.5rem;">SS304 Material Sourcing in India</h3>
+    <table class="guide-table">
+      <thead><tr><th>Material</th><th>Spec</th><th>Price</th><th>Where to Buy</th></tr></thead>
+      <tbody>
+        <tr><td>SS304 mirror finish sheet</td><td>0.5mm, 200×300mm</td><td>₹400–700/sheet</td><td>Amazon.in, local metal suppliers</td></tr>
+        <tr><td>SS304 mirror finish sheet</td><td>1.0mm, 300×300mm</td><td>₹700–1,200/sheet</td><td>IndiaMART steel suppliers, Steel Authority India</td></tr>
+        <tr><td>Pre-cut blanks 40×60mm</td><td>0.5mm mirror</td><td>₹40–80/piece</td><td>IndiaMART custom cut orders (MOQ 50 pcs)</td></tr>
+        <tr><td>Ferric chloride etchant</td><td>500ml ready solution</td><td>₹300–450</td><td>Amazon.in, electronics/PCB supply shops</td></tr>
+        <tr><td>Brasso metal polish</td><td>200ml</td><td>₹120–150</td><td>Any supermarket / Amazon.in</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box">
+      <strong>Recommended Business Approach:</strong> Start with <strong>resin plates</strong> (you already have the printer) to validate designs and build your catalog. Once you identify your top 5 best-selling designs, <strong>reproduce them in SS304</strong> as a "Premium Edition" at 2–3× the price. Offer both tiers — entry resin for beginners, steel for serious painters.
+    </div>
+    <span>Tab 3 of 12 — 3D Print Plates</span>
+    <span>Continue → Tab 4: Make Stamps &amp; Tools</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 4 -->
+<div id="tab-panel-4" class="tab-panel">
+
+  <div class="section-heading">
+    <span class="sh-icon">01</span>
+    The Complete Stamping Kit — All Components
+  </div>
+
+  <div class="card">
+    <h3>🎁 What a Full Kit Contains</h3>
+    <p>A complete stamp kit sold to your customer contains four functional components. Understanding each one helps you make better versions and sell complete kits at a premium over plates alone.</p>
+    <div class="two-col mt-8">
+      <div>
+        <p><strong>1. Stamp Plate</strong> — your 3D printed resin plate with the raised design. The hero product.</p>
+        <p class="mt-8"><strong>2. Stamper / Applicator</strong> — the tool that picks up paint from the plate and presses it onto the miniature. Must be soft enough to conform to curved surfaces without smearing.</p>
+      </div>
+      <div>
+        <p><strong>3. Scraper</strong> — used to apply and spread a thin, even layer of paint across the stamp plate surface before stamping.</p>
+        <p class="mt-8"><strong>4. Stampin' Ink / Paint</strong> — the specialised medium that works with stamp plates. Regular miniature paints dry too fast. Optional add-on product you can brand and sell separately.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">02</span>
+    Making the Stamper Head — Four Options
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Option A — EVA Craft Foam <span class="price-tag">₹50/sheet</span> <span class="badge badge-green">EASIEST START</span></div>
+    <div class="product-desc">
+      2mm thick EVA foam (the stuff craft foam sheets are made from) cut to the required shape. Available at any craft store, Itsy Bitsy, or Amazon.in. Cut slightly larger than your stamp plate, glue to your 3D printed handle with contact cement. Works well for flat surface stamping — adequate conformity for slightly curved surfaces. Lifespan: 50–100 uses before compression set. Very cheap to replace. Good starting material while you test your workflow.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Option B — DIY Silicone (Shore 10–20A) <span class="price-tag mid">₹15–25 per head (at volume)</span> <span class="badge badge-blue">BEST QUALITY</span></div>
+    <div class="product-desc">
+      Silicone rubber at Shore hardness 10–20A (very soft) is the professional solution — it conforms excellently to curved miniature surfaces, has a long lifespan (500+ uses), releases from the stamp plate cleanly, and looks premium. Mold Star 15 SLOW or Smooth-Sil 910 work well. In India, source platinum cure silicone from <strong>Smooth-On distributors</strong> or check Amazon.in for "two-part silicone rubber Shore A 10". DIY process described below.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Option C — Makeup / Beauty Sponges <span class="price-tag">₹20–50 each</span> <span class="badge badge-yellow">QUICK HACK</span></div>
+    <div class="product-desc">
+      Flat makeup sponge wedges (the soft latex ones sold in 12-packs) work surprisingly well as stamp heads. Available from any chemist or D-Mart in India. Dense foam, good conformity, washable. Cut to fit, press-fit or glue into your 3D printed handle. Great for customers who want an all-in-one — the same sponge they can find at their local store. Not as professional as silicone but works and is extremely accessible.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Option D — Craft Store Stamp Foam <span class="price-tag">₹30–80</span> <span class="badge badge-yellow">AVAILABLE INDIA</span></div>
+    <div class="product-desc">
+      Dedicated stamp foam (sold for traditional rubber stamping) available at Itsy Bitsy, Hobbycraft India, or art supply stores in metro cities. Slightly denser than EVA foam, designed for ink/paint stamping. Works well. Slightly more expensive than EVA but better performance. Can also source online from Art Supplies India or Amazon.in (search "stamp foam pad").
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">03</span>
+    DIY Silicone Stamper — Step by Step
+  </div>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Make the mold: PVC pipe section</strong>
+      <p>Cut a 25mm diameter PVC pipe (plumbing, available at any hardware store — ₹50–100/metre) into 30mm tall sections. Seal one end with heavy tape or hot glue. This is your cylinder mold for one stamper head. Make 10 at once — it's the same effort.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Mix and pour silicone</strong>
+      <p>Mix two-part silicone per manufacturer ratio (usually 1:1 by weight). Use a digital kitchen scale (₹300–500) for accuracy — wrong ratios mean the silicone won't cure properly. Pour slowly to minimize bubbles. Tap mold on desk 10 times to release air bubbles. Fill to top.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Cure for 4–6 hours at room temperature</strong>
+      <p>In Indian summer (30°C+) cure time reduces to 3–4 hours. In air-conditioned rooms (22°C) may take 6–8 hours. Do NOT use a heat gun to accelerate — causes surface bubbles and inconsistent hardness. Silicone is fully cured when it springs back immediately when pressed.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Demold and attach to handle</strong>
+      <p>Remove tape from bottom, push or cut the silicone cylinder out of the PVC mold. Attach to your 3D printed handle using: (a) press-fit socket in the handle design, (b) cyanoacrylate (CA glue / Fevikwik), or (c) a small metal screw through the handle into the silicone. Press-fit with a slight interference is cleanest — allows head replacement.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">04</span>
+    Designing the Handle (3D Print — FDM is Fine)
+  </div>
+
+  <div class="card">
+    <h3>🖨️ Handle Design Principles</h3>
+    <p>Unlike the stamp plate, the handle can be printed on any FDM printer (Ender 3, Bambu, etc.) in PLA. Surface quality doesn't matter — ergonomics do.</p>
+    <ul class="mt-8">
+      <li><strong>Length:</strong> 80–100mm works for most hands. Taper from 20mm diameter at grip to 25mm at head end.</li>
+      <li><strong>Socket:</strong> 25mm diameter, 15mm deep press-fit socket at the base — accepts the silicone cylinder. Design with 0.1–0.2mm negative tolerance (your socket is 24.8mm for a 25mm cylinder).</li>
+      <li><strong>Ergonomics:</strong> Add slight texture or finger grooves to the grip section. PLA is slippery when wet (paint on hands) — texture matters.</li>
+      <li><strong>Flat top:</strong> Include a flat area on top for applying downward pressure with your thumb. Rounded tops are harder to control.</li>
+      <li><strong>Branding:</strong> Recess your business name or logo on the side of the handle — looks professional and is free marketing.</li>
+      <li><strong>Print in PETG:</strong> More chemical-resistant than PLA (IPA won't damage it). PLA is fine too — just don't soak it in IPA.</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">05</span>
+    Making the Scraper
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>💳 Quick Solution: Credit Card</h3>
+      <p>An old credit/debit card works perfectly as a scraper out of the box. Stiff, smooth edge, right thickness. Include one with each kit (old unused card, cut in half). Zero cost. Or use an old hotel key card — same dimensions.</p>
+    </div>
+    <div class="card">
+      <h3>🖨️ 3D Print a Dedicated Scraper</h3>
+      <p>For a more professional kit: design a small scraper tool in Fusion 360. 80×30mm, 1.5mm thick, with a 30° angled edge on one side. Include a thumb notch for grip. Print in PETG (chemical resistant). Add your logo. The angle helps apply just the right paint thickness.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">06</span>
+    Kit Cost Breakdown &amp; Packaging
+  </div>
+
+  <table class="guide-table">
+    <thead><tr><th>Component</th><th>Material Cost</th><th>Time to Make</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Stamp Plate (resin)</strong></td><td><span class="inr">₹30–60</span></td><td>Print overnight</td><td>Per 40×60mm plate, ABS-like resin at 2g–4g resin use</td></tr>
+      <tr><td><strong>Silicone Stamper Head</strong></td><td><span class="inr">₹15–25</span></td><td>4–6h cure</td><td>At ₹2,000 for 500g silicone kit = ~40–50 heads</td></tr>
+      <tr><td><strong>PLA Handle</strong></td><td><span class="inr">₹10–15</span></td><td>45–60 min print</td><td>~8–10g PLA filament at ₹1,200/kg</td></tr>
+      <tr><td><strong>Scraper</strong></td><td><span class="inr">₹5–10</span></td><td>15 min print</td><td>Or free if using old cards</td></tr>
+      <tr><td><strong>Packaging (zip bag + label)</strong></td><td><span class="inr">₹15–30</span></td><td>5 min</td><td>Resealable zip bags, printed label, small card insert</td></tr>
+      <tr><td><strong style="color:var(--accent2)">TOTAL per kit</strong></td><td><span class="price-tag">₹75–140</span></td><td>—</td><td>Sell complete kit for ₹500–900 = 5–7× margin</td></tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box info">
+    <strong>📦 Packaging Matters for Etsy</strong>
+    For international Etsy orders: place stamp plate in a resealable zip bag, wrap in bubble wrap, include a branded insert card (print on cardstock) with usage instructions, website URL, and Instagram handle. Bubble wrap rolls: Amazon.in ₹400–600 for large rolls. Kraft paper boxes (for full kits): ₹20–40 each in bulk from Amazon/Flipkart.
+  </div>
+
+  <div class="panel-note">
+    <span>Tab 4 of 12 — Make Stamps &amp; Tools</span>
+    <span>Continue → Tab 5: Paint &amp; Ink</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 5 -->
+<div id="tab-panel-5" class="tab-panel">
+
+  <div class="section-heading">
+    <span class="sh-icon">01</span>
+    Why Standard Miniature Paint Doesn't Work
+  </div>
+
+  <div class="card">
+    <h3>🚫 The Problem with Regular Paints</h3>
+    <p>Miniature paints like Citadel, Army Painter, or Vallejo are formulated for brush application — they are designed to dry relatively quickly on brushes and blend on miniature surfaces. For stamp plates, these properties become problems:</p>
+    <ul class="mt-8">
+      <li><strong>Dries too fast:</strong> By the time you spread paint on the plate, transfer to stamper, and press to mini — the paint has begun to skin over. Result: patchy, inconsistent transfer</li>
+      <li><strong>Too thick:</strong> Most miniature paints are high-viscosity. On the stamp plate, thick paint pools between raised elements and results in a smeared, indistinct stamp</li>
+      <li><strong>Drying on plate:</strong> Between multiple stamps, paint dries in the crevices of the plate — requires more frequent cleaning mid-session</li>
+      <li><strong>Poor release:</strong> Some paints bond to resin too aggressively — paint tears instead of transferring cleanly to the miniature</li>
+    </ul>
+    <p class="mt-8">The solution is either specially formulated stamp inks (like Goblin Hobbies' Stampin' Colors) or modified acrylics with extended working time and appropriate viscosity — both of which you can source or make yourself.</p>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">02</span>
+    Best Paints &amp; Inks for Stamping — Tested Options
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Liquitex Acrylic Ink <span class="price-tag mid">₹400–600/bottle</span> <span class="badge badge-green">BEST PERFORMANCE</span></div>
+    <div class="product-desc">
+      <strong>Why it's excellent:</strong> Already at the perfect fluid viscosity — no thinning required. Extremely strong pigment load (better colour opacity than watered-down paint). Long open time. Available in 30+ colours on Amazon.in. Works directly from bottle onto stamp plate. Best choice for red, black, gold, silver metallic stamping.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Golden Fluid Acrylics <span class="price-tag mid">₹500–800/bottle</span> <span class="badge badge-blue">PROFESSIONAL GRADE</span></div>
+    <div class="product-desc">
+      <strong>Why it's excellent:</strong> Professional-grade fluid acrylic, the artist standard. Available from art supply stores in India (Camlin, Art House) and Amazon.in. Exceptional pigment quality — even a single stamp impression is fully opaque. Slightly longer open time than Liquitex. Golden brand is also easy to resell / bundle under your brand.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Vallejo Model Color (thinned) <span class="price-tag">₹280–320/bottle</span> <span class="badge badge-yellow">GOOD OPTION</span></div>
+    <div class="product-desc">
+      <strong>Workflow:</strong> Thin Vallejo Model Color 1:1 with water + 2 drops of flow improver per 5ml of paint. Vallejo is widely available in India at hobby stores and online. The large colour range is useful — you can recommend specific Vallejo colours that work with each stamp design. Not as good as fluid acrylics but very accessible and familiar to the target customer.
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-name">Army Painter Speedpaints <span class="price-tag mid">₹350–400/bottle</span> <span class="badge badge-yellow">SOME WORK</span></div>
+    <div class="product-desc">
+      <strong>Mixed results:</strong> Some Speedpaints work well for stamping directly (they're already fluid). Others have too much "self-levelling" agent and flow off the raised stamp surface before transfer. Test each colour before selling as a kit — provide tested colour recommendations to customers.
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">03</span>
+    Indian Paint Alternatives — Budget Options
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>🎨 Camel Artist Acrylic</h3>
+      <p><strong>Cost:</strong> <span class="inr">₹80–120/tube</span></p>
+      <p class="mt-8">Available at every art supply store in India. Must be thinned heavily (1:2 paint to flow improver). Pigment quality is lower than Golden/Liquitex — may need two stamps for opacity. Good for customers on a budget. Primaries and metallics work best.</p>
+    </div>
+    <div class="card">
+      <h3>🎨 Fevicryl Acrylic</h3>
+      <p><strong>Cost:</strong> <span class="inr">₹60–100/bottle</span></p>
+      <p class="mt-8">Already slightly thinner than tube acrylics. With flow improver added (1:1), works adequately for stamping. Very widely available across India even in smaller cities. Excellent starter option for the budget-conscious hobbyist. Metallic Fevicryl colours perform better than standard colours.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">04</span>
+    DIY Flow Improver — Home Formula
+  </div>
+
+  <div class="highlight-box">
+    <h4>🧪 Flow Improver Recipe (Cost: ~₹5 per 50ml batch)</h4>
+    <div class="code-block">Flow Improver Formula:
+  70% distilled water         → ₹20–30/litre from pharmacy
+  20% isopropyl alcohol (IPA) → 99% strength
+  10% glycerin                → ₹30–50/100ml from pharmacy
+
+Usage: Mix 2 parts paint : 1 part flow improver
+Store in a dropper bottle
+Shelf life: 3–6 months at room temperature</div>
+    <p style="color:var(--muted); font-size:13px; margin-top:10px">The glycerin extends the open/working time of the paint on the stamp plate — this is the critical ingredient. Glycerin is sold as "glycerine" at any Indian pharmacy or chemist. The IPA helps the mix bond to the resin plate surface. Distilled water gives clean pigment suspension.</p>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">05</span>
+    Stamping Technique — Step by Step
+  </div>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Apply thin paint layer to stamp plate with scraper</strong>
+      <p>Put 1–2 drops of paint/ink on the stamp plate. Use the scraper at ~30° angle to spread a thin, even layer across all raised elements. The goal is coverage — not flooding. The background (recessed areas) should be mostly free of paint.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Blot excess on paper towel — THIS IS THE KEY STEP</strong>
+      <p>This is where most beginners fail. Lay a folded paper towel flat, press the stamp plate (paint side down) onto it once, and lift. This removes the excess paint while leaving paint only on the raised design elements. The stamp is now "loaded" correctly. Over-loaded stamps smear; under-loaded stamps are faint.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Press stamper head onto loaded stamp plate</strong>
+      <p>Press your silicone/foam stamper head firmly and evenly onto the stamp plate. Hold for 2–3 seconds with steady pressure — don't rock or twist. Lift straight up. The design is now transferred to the stamper head.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Press stamper onto miniature surface — 3 to 5 seconds</strong>
+      <p>Position the stamper precisely where you want the design. Press firmly and evenly. Hold still for 3–5 seconds — the silicone needs time to conform to the surface and transfer paint. Breathe. Don't rush.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <strong>Lift straight up — no rocking, no sliding</strong>
+      <p>Lift the stamper vertically and directly upward. Any lateral movement at this stage will smear the design. If you've applied a base coat, wait for it to be fully dry (not just touch-dry) before stamping over it.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">6</div>
+    <div class="step-content">
+      <strong>Touch up with fine brush (optional)</strong>
+      <p>Even the best stamp is 90–95% accurate. Use a 0 or 00 brush to clean up any minor bleed or missing coverage. The stamp provides the structure — the brush provides the polish. This is normal and expected, not a sign of failure.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">06</span>
+    Colour Recommendations &amp; Selling Your Own Ink
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>🎨 Best Colours for Stamping</h3>
+      <ul>
+        <li><strong>Metallics:</strong> Gold and silver are the top sellers — work beautifully on dark armour surfaces</li>
+        <li><strong>High contrast:</strong> White on black, black on white — maximum design visibility</li>
+        <li><strong>Deep reds:</strong> Blood red / dark red — classic heraldry colour, very popular</li>
+        <li><strong>Bone/Ivory:</strong> Great for parchment text effects on scrolls and banners</li>
+        <li><strong>Bronze:</strong> Warm metallic for ancient/fantasy aesthetic</li>
+        <li><strong>Avoid light yellows:</strong> Low opacity — requires multiple coats</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💰 Sell Your Own "Stampin' Ink" Add-on</h3>
+      <ul>
+        <li>Source small dropper bottles (10ml) — Amazon.in ₹6–12 each in bulk</li>
+        <li>Fill with pre-mixed paint + flow improver, in your tested colours</li>
+        <li>Design a branded label (Canva — free) — "Mudra Ink" or your brand name</li>
+        <li>Price: ₹80–120 per 10ml bottle (material cost ₹15–25)</li>
+        <li>Bundle: plate + stamper + 2 inks = complete kit, higher order value</li>
+        <li>Position as: "tested and calibrated for our plates — guaranteed results"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel-note">
+    <span>Tab 5 of 12 — Paint &amp; Ink</span>
+    <span>Continue → Tab 6: Testing &amp; QC</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ TAB 6 -->
+<div id="tab-panel-6" class="tab-panel">
+
+  <div class="section-heading">
+    <span class="sh-icon">01</span>
+    Why Quality Control is Your Competitive Advantage
+  </div>
+
+  <div class="card">
+    <h3>⭐ Your Etsy Reputation Depends on QC</h3>
+    <p>On Etsy, you have no store presence, no in-person demo, no ability to explain a bad review. Customers buy your stamp plates <strong>blind</strong> — based entirely on your listing photos, reviews, and description. One 1-star review "the design was blurry and didn't stamp properly" can suppress your listing in Etsy search for weeks and undermine months of work. Conversely, consistently excellent reviews drive Etsy's algorithm to promote your listings organically.</p>
+    <p class="mt-8">Every single plate that leaves your hands must pass a physical stamp test. No exceptions. The 30 seconds it takes to test stamp a plate saves hours of customer service and reputation repair.</p>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">02</span>
+    Complete QC Test Protocol — Before Listing Any Design
+  </div>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <strong>Print the test plate at 0.05mm layer height</strong>
+      <p>Use exactly the production settings you'll use for all subsequent plates. Don't cut corners on the test print — any change in settings between test and production is a variable you can't control.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <strong>Stamp on white cardstock paper first</strong>
+      <p>White cardstock (125gsm+) is the most revealing test surface — every gap, bleed, missing element, and smear shows up clearly. Take a photo of this paper stamp. This is also your first product photo. Use black acrylic ink for maximum contrast.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <strong>Stamp on a curved surface</strong>
+      <p>Wrap the stamp around a cylindrical surface (a paint bottle or marker pen) to test how the design performs on convex miniature surfaces like shoulder pads, torso armour, and helmets. If the stamp breaks up or loses detail on curves, you may need to redesign it into a smaller section or add a flex score line.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <strong>Stamp on an actual 28mm or 32mm miniature base</strong>
+      <p>If you have a spare plastic or resin miniature (even an old damaged one), stamp it with the plate. Photograph the result alongside the stamp plate for scale reference. This is the most powerful product photo you can take — it shows exactly what the customer will achieve.</p>
+    </div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <strong>Photograph all results — these are your product images</strong>
+      <p>Your QC photos ARE your product photos. A macro shot of the stamp impression on cardstock, the stamp plate itself, and ideally a painted miniature using the stamp — three images that make a complete listing. The stamping process video is even better (30 seconds = 10x higher conversion rate on Etsy).</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">03</span>
+    Common Print Failures — Diagnosis &amp; Fix
+  </div>
+
+  <table class="guide-table">
+    <thead><tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>FEP adhesion failure</strong><br><span style="color:var(--muted);font-size:12px">Print peels off FEP mid-print</span></td>
+        <td>FEP too loose/tight, bottom exposure too low</td>
+        <td>Check FEP tension (ping = good), lower lift speed to 30mm/min, add 5s to bottom exposure</td>
+      </tr>
+      <tr>
+        <td><strong>Detail loss on fine features</strong><br><span style="color:var(--muted);font-size:12px">0.3mm lines not printing</span></td>
+        <td>Exposure too low, insufficient curing</td>
+        <td>Increase normal exposure by 0.2–0.5s. Run RERF calibration print to find optimal exposure.</td>
+      </tr>
+      <tr>
+        <td><strong>Plate warping</strong><br><span style="color:var(--muted);font-size:12px">Plate curves upward at edges</span></td>
+        <td>Over-exposure, FEP suction, thin plate design</td>
+        <td>Add raft in slicer, ensure plate is at least 2mm thick, reduce exposure by 0.3s</td>
+      </tr>
+      <tr>
+        <td><strong>Surface roughness</strong><br><span style="color:var(--muted);font-size:12px">Visible texture on stamp face</span></td>
+        <td>Low anti-aliasing, dirty FEP, cheap resin</td>
+        <td>Enable anti-aliasing level 4, clean or replace FEP film, try different resin brand</td>
+      </tr>
+      <tr>
+        <td><strong>Missing layers / horizontal lines</strong><br><span style="color:var(--muted);font-size:12px">Step lines across the design</span></td>
+        <td>Build plate loose, Z-axis wobble</td>
+        <td>Tighten build plate thumb screws, check Z rod for debris, re-level build plate</td>
+      </tr>
+      <tr>
+        <td><strong>Hollow areas in solid print</strong><br><span style="color:var(--muted);font-size:12px">Bubbles / voids in plate</span></td>
+        <td>Resin not mixed, old resin, low temperature</td>
+        <td>Shake resin bottle thoroughly (2 min), warm resin to 25–28°C before printing in winter</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-heading">
+    <span class="sh-icon">04</span>
+    Common Stamping Failures — Diagnosis &amp; Fix
+  </div>
+
+  <table class="guide-table">
+    <thead><tr><th>Problem</th><th>Cause</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Smearing</strong></td>
+        <td>Paint too wet, not enough blotting</td>
+        <td>Blot stamp plate on paper towel one extra time before transferring to stamper. Reduce paint volume.</td>
+      </tr>
+      <tr>
+        <td><strong>Missing detail / faint stamp</strong></td>
+        <td>Paint too thick, stamper head too hard</td>
+        <td>Thin paint more with flow improver. Check stamper hardness — should dent with light fingernail pressure.</td>
+      </tr>
+      <tr>
+        <td><strong>Ghosting between stamps</strong></td>
+        <td>Plate not cleaned between uses</td>
+        <td>After each stamp, wipe plate gently with a barely-damp IPA cotton pad, then dry before re-loading paint.</td>
+      </tr>
+      <tr>
+        <td><strong>Cracking plate after heavy use</strong></td>
+        <td>Standard resin too brittle</td>
+        <td>Switch to ABS-like resin for all production plates. Standard resin plates are prototype/test only.</td>
+      </tr>
+      <tr>
+        <td><strong>Design shifting on mini</strong></td>
+        <td>Stamper head moving during hold phase</td>
+        <td>Hold stamper with two hands or brace against table. Hold for full 5 seconds without any movement.</td>
+      </tr>
+      <tr>
+        <td><strong>Paint beading on mini surface</strong></td>
+        <td>Mini has mould release residue or is unprimed</td>
+        <td>Always stamp on primed miniatures. Spray with any rattle-can primer (Vallejo, Army Painter, Citadel) first.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-heading">
+    <span class="sh-icon">05</span>
+    Durability &amp; Consistency Testing
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>💪 Durability Test — 200 Stamps</h3>
+      <p>Before listing any plate, run it through a 200-stamp endurance test on cardstock. Stamp 20 times, photograph. Stamp another 20, photograph. Continue. You should see no degradation of detail before stamp #100 (ABS-like resin). By stamp #200 there may be very slight edge wear on the finest features — document this and be transparent in your listing description.</p>
+      <p class="mt-8"><strong>Standard to aim for:</strong> "100+ high-quality stamps per plate, 200+ total uses with minor edge wear."</p>
+    </div>
+    <div class="card">
+      <h3>🔁 Consistency Test — 10 in a Row</h3>
+      <p>Stamp 10 stamps in sequence without re-loading paint, cleaning between each stamp with one light IPA wipe. Lay all 10 stamps on one sheet of paper. They should be visually identical. If stamps 7-10 are noticeably lighter than stamps 1-3, your paint formulation retains too little working time — add more glycerin to your flow improver.</p>
+      <p class="mt-8"><strong>Standard to aim for:</strong> All 10 stamps 90%+ identical in coverage and detail.</p>
+    </div>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">06</span>
+    Beta Testing with Real Hobbyists
+  </div>
+
+  <div class="card">
+    <h3>👥 Free Kit Beta Program — Essential Step</h3>
+    <p>Before launching on Etsy or to the public, give 5–10 complete free kits to Indian miniature painters and ask for honest feedback. This is not optional — it's how you catch usability problems you're blind to because you made the product.</p>
+    <p class="mt-8"><strong>Where to find beta testers in India:</strong></p>
+    <ul>
+      <li><strong>Discord:</strong> "Warhammer India" server, "Indian Hobbyists", "D&amp;D India" — post in #resources or #general</li>
+      <li><strong>Facebook:</strong> "Warhammer India Community", "Indian Miniature Painters", "D&amp;D India"</li>
+      <li><strong>Reddit:</strong> r/IndiaMinis, r/warhammer (mention India shipping is free)</li>
+      <li><strong>Hobby cafes:</strong> Visit directly in Bangalore (Geek Havoc, Dice &amp; Decks), Mumbai, Delhi, Hyderabad — bring demo kit</li>
+      <li><strong>Instagram:</strong> DM miniature painters who tag #indianminiaturepainting or #Warhammer40KIndia</li>
+    </ul>
+    <p class="mt-8"><strong>What to ask beta testers:</strong></p>
+    <ul>
+      <li>Did the plate arrive in perfect condition? (packaging feedback)</li>
+      <li>How many stamps before detail started fading? (durability data)</li>
+      <li>Was the stamping technique clear from the included instructions? (UX feedback)</li>
+      <li>What additional designs would you want? (product roadmap)</li>
+      <li>Would you pay ₹400–600 for this plate? (pricing validation)</li>
+      <li>Would you leave an Etsy review if you purchased? (social proof pipeline)</li>
+    </ul>
+  </div>
+
+  <div class="section-heading">
+    <span class="sh-icon">07</span>
+    Product Photography for Etsy
+  </div>
+
+  <div class="tip-box info">
+    <strong>📸 Photography is 50% of Your Etsy Success</strong>
+    Etsy is a visual-first marketplace. Buyers cannot touch, hold, or test your product. Your photos must do all the convincing. A mediocre product with excellent photos outperforms an excellent product with poor photos every time on Etsy.
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>📷 Essential Shots (Minimum 5 per listing)</h3>
+      <ol style="padding-left:18px">
+        <li class="mt-8"><strong>Hero shot:</strong> Stamp plate face-on, clean white or black background, sharp focus on raised detail</li>
+        <li class="mt-8"><strong>Stamp impression on cardstock:</strong> Show the actual design output — dark ink on white card</li>
+        <li class="mt-8"><strong>Scale reference:</strong> Stamp plate next to a 25mm miniature — shows customers exactly how it fits</li>
+        <li class="mt-8"><strong>Detail macro:</strong> Extreme close-up of the finest design elements — shows quality</li>
+        <li class="mt-8"><strong>In-use shot:</strong> Stamper pressing onto a miniature — aspirational, shows the process</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>🎥 Video — The Game Changer</h3>
+      <p>A 30–60 second video of the stamping process — applying paint, blotting, pressing onto a mini, lifting to reveal the design — converts browsers into buyers at dramatically higher rates than photos alone. Etsy allows video as the first listing media.</p>
+      <p class="mt-8"><strong>Equipment:</strong> Any modern smartphone with macro mode. A ₹500 phone stand/tripod, a ring light (₹800–1,500 on Amazon.in), and good natural light or a lightbox. You don't need a camera — you need steady hands and good light.</p>
+      <p class="mt-8"><strong>Lighting:</strong> Diffused light (cloudy day by window, or softbox) > harsh direct light. Shadows reveal texture — which is good for showing your plate detail.</p>
+    </div>
+  </div>
+
+  <div class="panel-note">
+    <span>Tab 6 of 12 — Testing &amp; QC</span>
+    <span>Continue → Tab 7: Pricing &amp; Costs (Part B)</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ JS -->
+<script>
+function switchTab(n) {
+  var panels = document.querySelectorAll('.tab-panel');
+  var buttons = document.querySelectorAll('.tab-btn');
+  panels.forEach(function(p) { p.classList.remove('active'); });
+  buttons.forEach(function(b) { b.classList.remove('active'); });
+  var panel = document.getElementById('tab-panel-' + n);
+  if (panel) { panel.classList.add('active'); }
+  buttons.forEach(function(b, i) { if (i === n - 1) { b.classList.add('active'); } });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+
+</body>
+</html>
+
+
+
+<!-- TAB 7: Pricing & Costs -->
+<div class="tab-panel" id="tab-panel-7">
+  <h2 style="color:#e91e8c;border-bottom:2px solid #e91e8c;padding-bottom:10px;">Tab 7 — Pricing &amp; Costs</h2>
+
+  <h3 style="color:#e91e8c;">Cost of Goods Sold (COGS) per Stamp Plate Kit</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Component</th>
+        <th style="padding:10px 14px;text-align:right;">Cost (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Resin material (size-dependent)</td>
+        <td style="padding:9px 14px;text-align:right;">₹30 – ₹60</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Silicone stamper head</td>
+        <td style="padding:9px 14px;text-align:right;">₹15 – ₹25</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">PLA handle</td>
+        <td style="padding:9px 14px;text-align:right;">₹10 – ₹15</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Packaging (zip bag + box)</td>
+        <td style="padding:9px 14px;text-align:right;">₹20 – ₹40</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Electricity</td>
+        <td style="padding:9px 14px;text-align:right;">₹5 – ₹10</td>
+      </tr>
+      <tr style="background:#e91e8c;color:#fff;font-weight:700;">
+        <td style="padding:10px 14px;">Total COGS per Kit</td>
+        <td style="padding:10px 14px;text-align:right;">₹80 – ₹150</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:#fdf0f7;border-left:4px solid #e91e8c;padding:14px 18px;margin-bottom:24px;border-radius:4px;">
+    <strong>Pricing Formula:</strong> COGS &times; 4–6 = Retail Price. At 5× markup on a ₹100 kit, your retail is ₹500 — healthy margin that still undercuts imports.
+  </div>
+
+  <h3 style="color:#e91e8c;">India Retail Pricing</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Product</th>
+        <th style="padding:10px 14px;text-align:right;">Price Range (₹)</th>
+        <th style="padding:10px 14px;text-align:right;">Sweet Spot</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Single stamp plate</td>
+        <td style="padding:9px 14px;text-align:right;">₹350 – ₹600</td>
+        <td style="padding:9px 14px;text-align:right;">₹499</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Starter kit (plate + stamper + scraper)</td>
+        <td style="padding:9px 14px;text-align:right;">₹650 – ₹950</td>
+        <td style="padding:9px 14px;text-align:right;">₹799</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Bundle of 5 plates</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,500 – ₹2,200</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,499</td>
+      </tr>
+      <tr style="background:#fdf0f7;">
+        <td style="padding:9px 14px;">Full themed set (8 plates + tools + ink)</td>
+        <td style="padding:9px 14px;text-align:right;">₹2,500 – ₹3,500</td>
+        <td style="padding:9px 14px;text-align:right;">₹2,999</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">International Pricing (Etsy, USD)</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Product</th>
+        <th style="padding:10px 14px;text-align:right;">Price Range (USD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Single plate</td>
+        <td style="padding:9px 14px;text-align:right;">$8 – $15</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Starter kit</td>
+        <td style="padding:9px 14px;text-align:right;">$18 – $28</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Bundle of 5</td>
+        <td style="padding:9px 14px;text-align:right;">$35 – $55</td>
+      </tr>
+      <tr style="background:#fdf0f7;">
+        <td style="padding:9px 14px;">Full themed set</td>
+        <td style="padding:9px 14px;text-align:right;">$55 – $85</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="background:#fff3e0;border-left:4px solid #ff9800;padding:14px 18px;margin-bottom:24px;border-radius:4px;">
+    <strong>💡 Competitor Comparison — Goblin Hobbies:</strong> They charge $12–$20/plate + $15–$25 shipping to India, totalling <strong>₹2,500–₹3,000 for ONE plate</strong>. You can deliver the same quality for ₹500–₹700 with faster domestic shipping. That price gap is your entire pitch.
+  </div>
+
+  <h3 style="color:#e91e8c;">Shipping Costs</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Destination</th>
+        <th style="padding:10px 14px;text-align:right;">Service</th>
+        <th style="padding:10px 14px;text-align:right;">Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Within city</td>
+        <td style="padding:9px 14px;text-align:right;">Dunzo / Porter</td>
+        <td style="padding:9px 14px;text-align:right;">₹50 – ₹80</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">India domestic</td>
+        <td style="padding:9px 14px;text-align:right;">Delhivery / India Post</td>
+        <td style="padding:9px 14px;text-align:right;">₹80 – ₹150</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">International (economy)</td>
+        <td style="padding:9px 14px;text-align:right;">India Post Registered (2–4 wks)</td>
+        <td style="padding:9px 14px;text-align:right;">₹600 – ₹1,200</td>
+      </tr>
+      <tr style="background:#fdf0f7;">
+        <td style="padding:9px 14px;">International (express)</td>
+        <td style="padding:9px 14px;text-align:right;">DHL / FedEx (5–7 days)</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,500 – ₹2,500</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Monthly P&amp;L at Scale (50 India + 20 Etsy orders)</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Line Item</th>
+        <th style="padding:10px 14px;text-align:right;">Amount (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">India revenue (50 orders ~₹600 avg)</td>
+        <td style="padding:9px 14px;text-align:right;">₹30,000</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Etsy revenue (20 orders ~₹3,000 avg)</td>
+        <td style="padding:9px 14px;text-align:right;">₹60,000</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;font-weight:600;">
+        <td style="padding:9px 14px;">Gross Revenue</td>
+        <td style="padding:9px 14px;text-align:right;">₹90,000</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;color:#c62828;">
+        <td style="padding:9px 14px;">COGS + Shipping</td>
+        <td style="padding:9px 14px;text-align:right;">– ₹25,000</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;color:#c62828;">
+        <td style="padding:9px 14px;">Etsy fees (6.5% + listings)</td>
+        <td style="padding:9px 14px;text-align:right;">– ₹4,000</td>
+      </tr>
+      <tr style="background:#e91e8c;color:#fff;font-weight:700;">
+        <td style="padding:10px 14px;">Net Profit</td>
+        <td style="padding:10px 14px;text-align:right;">~ ₹61,000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Price Psychology &amp; Discounts</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Use charm pricing:</strong> ₹499, ₹999, ₹1,499 — never round numbers like ₹500 or ₹1,000</li>
+    <li><strong>First-order coupon:</strong> 10% off with code FIRSTKIT — lowers barrier, builds habit</li>
+    <li><strong>Bundle savings:</strong> make bundles feel like 20–25% cheaper than buying individual pieces</li>
+    <li><strong>Community discount:</strong> share a private code on Warhammer India Discord — builds loyalty and word-of-mouth</li>
+  </ul>
+</div>
+
+<!-- TAB 8: Selling in India & Globally -->
+<div class="tab-panel" id="tab-panel-8">
+  <h2 style="color:#e91e8c;border-bottom:2px solid #e91e8c;padding-bottom:10px;">Tab 8 — Selling in India &amp; Globally</h2>
+
+  <p style="font-size:1.05em;">Use <strong>all</strong> channels simultaneously — each audience is different, and cross-channel presence builds credibility fast.</p>
+
+  <h3 style="color:#e91e8c;margin-top:24px;">India Channels</h3>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px;">
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Instagram Shop</div>
+      <p style="margin:0;font-size:0.93em;">Primary discovery platform for Indian hobbyists. Reels of the stamping process get huge organic reach. Link bio to WhatsApp for instant orders — no cart friction.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">WhatsApp Business</div>
+      <p style="margin:0;font-size:0.93em;">Use the Catalog feature to list products. COD-friendly, personal service builds loyalty. Most Indian hobbyists prefer WhatsApp over formal checkout flows.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Etsy India</div>
+      <p style="margin:0;font-size:0.93em;">Good for domestic buyers but USD pricing confuses them. Keep a separate INR pricing sheet to share via DM when Indian buyers ask.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Amazon.in Handmade</div>
+      <p style="margin:0;font-size:0.93em;">Requires GST registration. High trust factor with Indian buyers. 15% commission — price accordingly. Excellent for starter kits at ₹799–999.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Meesho</div>
+      <p style="margin:0;font-size:0.93em;">Low commission, COD built-in, reaches Tier 2 &amp; 3 cities. Surprisingly strong hobby buyer base outside metros — an underrated channel.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Local Hobby Stores</div>
+      <p style="margin:0;font-size:0.93em;">Approach The Dice Forge (Bangalore), Pandemonium Games (Delhi), Games Workshop India. Offer wholesale at 40% of retail price. Great for recurring B2B orders.</p>
+    </div>
+  </div>
+
+  <h3 style="color:#e91e8c;">International Channels</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px;">
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Etsy (Primary)</div>
+      <p style="margin:0;font-size:0.93em;">Set up an "India Stamp Plates" shop. USD pricing. Ship via India Post Registered — tracked, insured, and buyers accept 2–4 week wait for good prices.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">eBay</div>
+      <p style="margin:0;font-size:0.93em;">Strong for European buyers who are less Etsy-native. List the same products with slightly different copy targeting the EU wargaming community.</p>
+    </div>
+    <div style="border:1px solid #e91e8c;border-radius:8px;padding:16px;">
+      <div style="font-weight:700;color:#e91e8c;margin-bottom:6px;">Facebook Groups</div>
+      <p style="margin:0;font-size:0.93em;">Warhammer Facebook groups have millions of members. Post WIP photos, offer to ship internationally. Organic reach is enormous in these communities.</p>
+    </div>
+  </div>
+
+  <h3 style="color:#e91e8c;">What Sells Best (Ranked)</h3>
+  <ol style="line-height:2;font-size:1em;">
+    <li><strong>Indian/Eastern designs</strong> — mandala, lotus, paisley. <span style="color:#e91e8c;font-weight:600;">Globally unique — no competition.</span></li>
+    <li><strong>Heraldry sets</strong> — shields, banners. Evergreen Warhammer demand worldwide.</li>
+    <li><strong>Sci-fi textures</strong> — Warhammer 40K aesthetic, mechanicus panels.</li>
+    <li><strong>Fantasy script/runes</strong> — Elvish, Dwarven, Orcish-style alphabets.</li>
+    <li><strong>Texture plates</strong> — chainmail, scales, leather. Universally useful.</li>
+    <li><strong>Starter kits</strong> — best margin, ideal for gifting, easiest upsell.</li>
+  </ol>
+
+  <h3 style="color:#e91e8c;">Content Strategy</h3>
+  <ul style="line-height:1.9;">
+    <li>Post <strong>15–30 second stamping process videos</strong> on Instagram Reels and YouTube Shorts — the transformation from plain to stamped mini is inherently satisfying</li>
+    <li>Show dramatic <strong>before/after</strong>: blank grey miniature → beautifully textured and stamped mini</li>
+    <li>Tutorial content (how to use the stamp) builds trust and drives purchase decisions</li>
+    <li><strong>Collaborate with Indian mini painters</strong> — tag them, send free kits, they'll share with their audience</li>
+    <li>Communities to join actively: Warhammer India Facebook Group, Indian Hobbyists Discord, r/IndiaMiniPainters</li>
+  </ul>
+
+  <h3 style="color:#e91e8c;">Seasonal India Sales Calendar</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:8px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Season</th>
+        <th style="padding:10px 14px;text-align:left;">Opportunity</th>
+        <th style="padding:10px 14px;text-align:right;">Target Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;"><strong>Diwali</strong> (Oct/Nov)</td>
+        <td style="padding:9px 14px;">Gifting season — push gift-wrapped bundle sets</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,500–₹3,000</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;"><strong>Christmas</strong> (Dec)</td>
+        <td style="padding:9px 14px;">International Etsy peak, Indian Christians, board game gifters</td>
+        <td style="padding:9px 14px;text-align:right;">$25–$65</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;"><strong>New Year</strong> (Jan)</td>
+        <td style="padding:9px 14px;">"New hobby" impulse buys — push starter kits</td>
+        <td style="padding:9px 14px;text-align:right;">₹799</td>
+      </tr>
+      <tr style="background:#fdf0f7;">
+        <td style="padding:9px 14px;"><strong>Summer Holidays</strong> (May/Jun)</td>
+        <td style="padding:9px 14px;">Kids hobby projects, D&amp;D camp gifts, school craft projects</td>
+        <td style="padding:9px 14px;text-align:right;">₹350–₹700</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- TAB 9: Branding & Marketing -->
+<div class="tab-panel" id="tab-panel-9">
+  <h2 style="color:#e91e8c;border-bottom:2px solid #e91e8c;padding-bottom:10px;">Tab 9 — Branding &amp; Marketing</h2>
+
+  <p style="font-size:1.05em;">Stamp plates are a <strong>creative product</strong>. Buyers choose based on aesthetic and trust first, price second. Branding is not optional — it's what makes you look like a real business vs. a random seller.</p>
+
+  <h3 style="color:#e91e8c;">Naming Your Brand</h3>
+  <p>Your name should be memorable, hobby-adjacent, and available across platforms. Check Instagram handle, domain (.com or .in), and do a quick trademark search before committing.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px;">
+    <div style="background:#fdf0f7;border:1px solid #e91e8c;border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:1.1em;font-weight:700;color:#e91e8c;">Mudra Stamps</div>
+      <div style="font-size:0.85em;color:#555;margin-top:4px;">Mudra = hand gesture/stamp in Sanskrit. Perfect cultural resonance.</div>
+    </div>
+    <div style="background:#fdf0f7;border:1px solid #e91e8c;border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:1.1em;font-weight:700;color:#e91e8c;">DharmaForge</div>
+      <div style="font-size:0.85em;color:#555;margin-top:4px;">Strong, memorable, global appeal with Indian roots.</div>
+    </div>
+    <div style="background:#fdf0f7;border:1px solid #e91e8c;border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:1.1em;font-weight:700;color:#e91e8c;">Rasa Stamps</div>
+      <div style="font-size:0.85em;color:#555;margin-top:4px;">Rasa = essence/flavor in Sanskrit. Evocative.</div>
+    </div>
+    <div style="background:#fdf0f7;border:1px solid #e91e8c;border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:1.1em;font-weight:700;color:#e91e8c;">InkForge</div>
+      <div style="font-size:0.85em;color:#555;margin-top:4px;">Clean, universal, easy to remember internationally.</div>
+    </div>
+    <div style="background:#fdf0f7;border:1px solid #e91e8c;border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:1.1em;font-weight:700;color:#e91e8c;">BazaarBrush</div>
+      <div style="font-size:0.85em;color:#555;margin-top:4px;">Playful, India-flavored, approachable.</div>
+    </div>
+    <div style="background:#fdf0f7;border:1px solid #e91e8c;border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:1.1em;font-weight:700;color:#e91e8c;">StampWala</div>
+      <div style="font-size:0.85em;color:#555;margin-top:4px;">Distinctly Indian, fun, instantly understood.</div>
+    </div>
+  </div>
+
+  <h3 style="color:#e91e8c;">Visual Identity</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Logo:</strong> must work at 32×32px (Instagram profile pic) AND as large banner art — test both sizes before finalizing</li>
+    <li><strong>Color palette:</strong> dark background + 1–2 accent colors. Black + gold feels premium and luxury; works well for hobby products</li>
+    <li><strong>Fonts (free, Google Fonts):</strong> Cinzel (display/headings, classical feel) + Inter (body text, clean readability)</li>
+  </ul>
+
+  <h3 style="color:#e91e8c;">Instagram Setup Checklist</h3>
+  <div style="background:#fdf0f7;border-radius:8px;padding:18px;margin-bottom:24px;">
+    <ul style="list-style:none;padding:0;margin:0;line-height:2.1;">
+      <li>☐ Switch to <strong>Business Account</strong> (free analytics, contact button, shop integration)</li>
+      <li>☐ Bio: <em>"🎨 Miniature Stamp Plates | Made in India 🇮🇳 | Ship Worldwide | DM to order"</em></li>
+      <li>☐ Pinned posts: product showcase, a tutorial, a customer photo post</li>
+      <li>☐ Post frequency: minimum <strong>3–4×/week</strong> for the first 6 months</li>
+      <li>☐ Use all relevant hashtags: <code>#miniaturepainting #warhammer40k #dndminis #minipaining #stamping #madeinindia #indianhobbyist</code></li>
+      <li>☐ Engage with comments within 1 hour of posting — boosts algorithm reach</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#e91e8c;">Budget Photography Setup (₹5,000–₹10,000 total)</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Item</th>
+        <th style="padding:10px 14px;text-align:right;">Cost</th>
+        <th style="padding:10px 14px;text-align:left;">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Light tent</td>
+        <td style="padding:9px 14px;text-align:right;">₹800–₹1,500</td>
+        <td style="padding:9px 14px;">Or DIY with white cardboard — works just as well</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Ring light</td>
+        <td style="padding:9px 14px;text-align:right;">₹500–₹1,000</td>
+        <td style="padding:9px 14px;">Amazon.in — doubles for video content</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Phone with macro mode</td>
+        <td style="padding:9px 14px;text-align:right;">You likely own one</td>
+        <td style="padding:9px 14px;">Modern flagships all work; no dedicated camera needed</td>
+      </tr>
+      <tr style="background:#fdf0f7;">
+        <td style="padding:9px 14px;">Black velvet background</td>
+        <td style="padding:9px 14px;text-align:right;">₹200–₹400</td>
+        <td style="padding:9px 14px;">Dramatic contrast for product shots — looks professional</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.9em;color:#555;margin-top:-16px;margin-bottom:24px;">Ideal product shot: painted mini + stamp plate + handle tool, all in frame on black velvet with even lighting.</p>
+
+  <h3 style="color:#e91e8c;">YouTube / Shorts Content Ideas</h3>
+  <ul style="line-height:1.9;">
+    <li><em>"How I make stamp plates in India"</em> — educational angle, builds credibility</li>
+    <li><em>"Stamp vs freehand — which is better?"</em> — controversy drives views and comments</li>
+    <li><em>"Indian mandala stamp on a Space Marine"</em> — high search traffic, culturally unique</li>
+  </ul>
+
+  <h3 style="color:#e91e8c;">Etsy SEO Formula</h3>
+  <div style="background:#fdf0f7;border-left:4px solid #e91e8c;padding:14px 18px;border-radius:4px;margin-bottom:12px;">
+    <strong>Title example:</strong> "Miniature Stamp Plate - Mandala Pattern - 28mm Wargaming - Heraldry Stamp"<br>
+    <strong>Tags:</strong> Fill all 13 — mix broad terms (miniature stamp, wargaming) with specific (mandala plate 28mm, heraldry stamp warhammer)<br>
+    <strong>Photos:</strong> High-quality first photo is the thumbnail — it determines click-through rate<br>
+    <strong>Video:</strong> Add a 15-second stamping demo directly in the listing — Etsy boosts listings with video
+  </div>
+</div>
+
+<!-- TAB 10: Legal & Business Setup -->
+<div class="tab-panel" id="tab-panel-10">
+  <h2 style="color:#e91e8c;border-bottom:2px solid #e91e8c;padding-bottom:10px;">Tab 10 — Legal &amp; Business Setup</h2>
+
+  <h3 style="color:#e91e8c;">Business Structure Options</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Structure</th>
+        <th style="padding:10px 14px;text-align:left;">Cost to Register</th>
+        <th style="padding:10px 14px;text-align:left;">Best For</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;"><strong>Sole Proprietorship</strong></td>
+        <td style="padding:9px 14px;">Free (use personal PAN)</td>
+        <td style="padding:9px 14px;">Starting out — easiest, no registration needed</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;"><strong>One Person Company (OPC)</strong></td>
+        <td style="padding:9px 14px;">₹5,000–₹8,000</td>
+        <td style="padding:9px 14px;">Once you cross ₹10L/month — provides limited liability</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 14px;"><strong>Partnership</strong></td>
+        <td style="padding:9px 14px;">₹2,000–₹5,000</td>
+        <td style="padding:9px 14px;">If starting with a co-founder</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">MSME / Udyam Registration — Do This First</h3>
+  <div style="background:#e8f5e9;border-left:4px solid #4caf50;padding:14px 18px;margin-bottom:24px;border-radius:4px;">
+    <strong>Website:</strong> udyamregistration.gov.in &nbsp;|&nbsp; <strong>Cost: FREE</strong> &nbsp;|&nbsp; <strong>Time: ~1 hour online</strong><br><br>
+    Register as <em>Manufacturing</em> under toy/hobby category. Benefits unlocked:
+    <ul style="margin:8px 0 0 0;padding-left:20px;line-height:1.8;">
+      <li>Priority bank loans at lower interest rates</li>
+      <li>Subsidized electricity tariffs</li>
+      <li>Eligibility for government tenders</li>
+      <li>Required before applying for MSME subsidies on your 3D printer</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#e91e8c;">GST Registration</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Required when:</strong> turnover exceeds ₹20L/year (₹10L in some states), OR you want to sell on Amazon.in</li>
+    <li><strong>GST rate</strong> for miniature art supplies: <strong>12%</strong></li>
+    <li><strong>Filing:</strong> GSTR-1 (monthly/quarterly) + GSTR-3B. CA/accountant cost ₹2,000–₹3,000/year</li>
+    <li><strong>Benefit:</strong> claim input tax credit on resin, printer, IPA, electricity — saves money</li>
+  </ul>
+
+  <h3 style="color:#e91e8c;">Bank Account &amp; Payments</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Tool</th>
+        <th style="padding:10px 14px;text-align:left;">Use Case</th>
+        <th style="padding:10px 14px;text-align:right;">Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Current Account (HDFC/ICICI/Kotak)</td>
+        <td style="padding:9px 14px;">Required for GST, separates business &amp; personal finances</td>
+        <td style="padding:9px 14px;text-align:right;">Free / low MAB</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Razorpay</td>
+        <td style="padding:9px 14px;">India payments — UPI, cards, net banking, COD</td>
+        <td style="padding:9px 14px;text-align:right;">2% + ₹3/txn</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">UPI (direct)</td>
+        <td style="padding:9px 14px;">WhatsApp/Instagram sales — zero cost</td>
+        <td style="padding:9px 14px;text-align:right;">Free</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Payoneer</td>
+        <td style="padding:9px 14px;">Receive Etsy USD, convert to INR (~₹83/$)</td>
+        <td style="padding:9px 14px;text-align:right;">Free account</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 14px;">Wise</td>
+        <td style="padding:9px 14px;">Better exchange rate than Payoneer for large amounts</td>
+        <td style="padding:9px 14px;text-align:right;">Low flat fee</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Intellectual Property — What NOT to Do</h3>
+  <div style="background:#ffebee;border-left:4px solid #f44336;padding:14px 18px;margin-bottom:24px;border-radius:4px;">
+    <strong>Do NOT copy</strong> Games Workshop, Privateer Press, or any other company's branded symbols, logos, or named characters — even "inspired by" versions that are clearly derivative.<br><br>
+    <strong>Do:</strong> create original designs inspired by public domain sources (historical heraldry, classical Indian art, ancient manuscripts). Consider trademarking your own brand name once established (₹4,500–₹9,000 online via IP India portal).
+  </div>
+
+  <h3 style="color:#e91e8c;">Import &amp; Export Compliance</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Buying resins from US/EU:</strong> customs duty 18–28% — factor into your cost calculations</li>
+    <li><strong>Exports under ₹5L/year:</strong> no IEC code needed</li>
+    <li><strong>Exports above ₹5L/year:</strong> get Import Export Code (IEC) from DGFT — free, fully online</li>
+    <li><strong>India Post Registered/Speed Post:</strong> auto-includes tracking and basic insurance — best value for international shipping</li>
+    <li><strong>Equipment insurance:</strong> not mandatory but ₹2,000–₹4,000/year basic fire/equipment cover for your printer is worth considering</li>
+  </ul>
+</div>
+
+<!-- TAB 11: Starter Shopping List -->
+<div class="tab-panel" id="tab-panel-11">
+  <h2 style="color:#e91e8c;border-bottom:2px solid #e91e8c;padding-bottom:10px;">Tab 11 — Starter Shopping List</h2>
+  <p style="font-size:1.05em;">Everything you need to start the business, with realistic Indian prices and where to buy each item.</p>
+
+  <h3 style="color:#e91e8c;">Essential Equipment</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Item</th>
+        <th style="padding:10px 14px;text-align:right;">Price (₹)</th>
+        <th style="padding:10px 14px;text-align:left;">Where to Buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;"><strong>Elegoo Mars 4 Ultra</strong> resin printer</td>
+        <td style="padding:9px 14px;text-align:right;">₹14,000–₹18,000</td>
+        <td style="padding:9px 14px;">Robocraze.com / Amazon.in</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">UV curing station (Elegoo Mercury Plus)</td>
+        <td style="padding:9px 14px;text-align:right;">₹2,500–₹4,000</td>
+        <td style="padding:9px 14px;">Robocraze.com / Amazon.in</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Wash station (or IPA jars DIY)</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,500–₹2,500</td>
+        <td style="padding:9px 14px;">Amazon.in</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">FDM printer for handles (Ender 3 V3 SE)</td>
+        <td style="padding:9px 14px;text-align:right;">₹8,000–₹12,000</td>
+        <td style="padding:9px 14px;">Amazon.in (skip if you already have one)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Nitrile gloves, box of 100</td>
+        <td style="padding:9px 14px;text-align:right;">₹300–₹500</td>
+        <td style="padding:9px 14px;">Amazon.in / pharmacy</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">N95 masks, pack of 5–10</td>
+        <td style="padding:9px 14px;text-align:right;">₹300–₹400</td>
+        <td style="padding:9px 14px;">Amazon.in / pharmacy</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 14px;">Safety goggles</td>
+        <td style="padding:9px 14px;text-align:right;">₹200–₹300</td>
+        <td style="padding:9px 14px;">Amazon.in</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Consumables — First Month</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Item</th>
+        <th style="padding:10px 14px;text-align:right;">Price (₹)</th>
+        <th style="padding:10px 14px;text-align:left;">Where to Buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">ABS-like resin, 1kg</td>
+        <td style="padding:9px 14px;text-align:right;">₹2,200–₹2,800</td>
+        <td style="padding:9px 14px;">Amazon.in / Robocraze</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">IPA 99%, 1 litre</td>
+        <td style="padding:9px 14px;text-align:right;">₹400–₹500</td>
+        <td style="padding:9px 14px;">Amazon.in / local pharmacy</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">PLA filament, 1kg (handles)</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,100–₹1,400</td>
+        <td style="padding:9px 14px;">Fabstore.in / Amazon.in</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Silicone rubber, 500g kit (stamper heads)</td>
+        <td style="padding:9px 14px;text-align:right;">₹1,500–₹2,000</td>
+        <td style="padding:9px 14px;">Amazon.in</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">EVA foam sheets, 10-pack</td>
+        <td style="padding:9px 14px;text-align:right;">₹200–₹300</td>
+        <td style="padding:9px 14px;">Itsy Bitsy craft stores / Amazon.in</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Zip bags, 100 pcs</td>
+        <td style="padding:9px 14px;text-align:right;">₹200</td>
+        <td style="padding:9px 14px;">Amazon.in / local packaging store</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 14px;">Kraft boxes, 50 pcs</td>
+        <td style="padding:9px 14px;text-align:right;">₹500–₹800</td>
+        <td style="padding:9px 14px;">Amazon.in / Itsy Bitsy</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Design &amp; Photography</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Item</th>
+        <th style="padding:10px 14px;text-align:right;">Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Blender / Fusion 360 / Tinkercad</td>
+        <td style="padding:9px 14px;text-align:right;color:#2e7d32;font-weight:600;">FREE</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Light tent</td>
+        <td style="padding:9px 14px;text-align:right;">₹800–₹1,500</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 14px;">Ring light</td>
+        <td style="padding:9px 14px;text-align:right;">₹500–₹800</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Business Registrations &amp; Accounts</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <thead>
+      <tr style="background:#e91e8c;color:#fff;">
+        <th style="padding:10px 14px;text-align:left;">Item</th>
+        <th style="padding:10px 14px;text-align:right;">Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">MSME / Udyam Registration</td>
+        <td style="padding:9px 14px;text-align:right;color:#2e7d32;font-weight:600;">FREE</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Razorpay account</td>
+        <td style="padding:9px 14px;text-align:right;color:#2e7d32;font-weight:600;">FREE (pay per txn)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Payoneer account</td>
+        <td style="padding:9px 14px;text-align:right;color:#2e7d32;font-weight:600;">FREE</td>
+      </tr>
+      <tr style="background:#fdf0f7;border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Etsy shop listings</td>
+        <td style="padding:9px 14px;text-align:right;">$0.20 / listing (~₹17)</td>
+      </tr>
+      <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:9px 14px;">Instagram Business</td>
+        <td style="padding:9px 14px;text-align:right;color:#2e7d32;font-weight:600;">FREE</td>
+      </tr>
+      <tr style="background:#fdf0f7;">
+        <td style="padding:9px 14px;">WhatsApp Business</td>
+        <td style="padding:9px 14px;text-align:right;color:#2e7d32;font-weight:600;">FREE</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color:#e91e8c;">Total Startup Cost Summary</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:24px;">
+    <div style="background:#fdf0f7;border:2px solid #e91e8c;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:0.9em;color:#555;margin-bottom:6px;">If you already own a resin printer</div>
+      <div style="font-size:1.6em;font-weight:700;color:#e91e8c;">₹8,000–₹15,000</div>
+    </div>
+    <div style="background:#fdf0f7;border:2px solid #e91e8c;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:0.9em;color:#555;margin-bottom:6px;">With Mars 4 Ultra purchase</div>
+      <div style="font-size:1.6em;font-weight:700;color:#e91e8c;">₹25,000–₹38,000</div>
+    </div>
+    <div style="background:#fdf0f7;border:2px solid #e91e8c;border-radius:10px;padding:18px;text-align:center;">
+      <div style="font-size:0.9em;color:#555;margin-bottom:6px;">Premium setup (Saturn 3 Ultra)</div>
+      <div style="font-size:1.6em;font-weight:700;color:#e91e8c;">₹40,000–₹55,000</div>
+    </div>
+  </div>
+
+  <h3 style="color:#e91e8c;">Where to Buy in India — Quick Reference</h3>
+  <ul style="line-height:1.9;">
+    <li><strong>Robocraze.com</strong> — best for Elegoo printers, fast shipping, good support</li>
+    <li><strong>Amazon.in</strong> — resin, IPA, silicone kits, packaging supplies</li>
+    <li><strong>Fabstore.in</strong> — FDM filament (PLA, PETG), good prices</li>
+    <li><strong>Local pharmacy</strong> — glycerin, IPA (sometimes cheaper than Amazon)</li>
+    <li><strong>Itsy Bitsy</strong> (craft stores &amp; online) — EVA foam, packaging, craft tools</li>
+    <li><strong>DTDC / Delhivery</strong> — open a bulk shipping account once orders pick up</li>
+  </ul>
+</div>
+
+<!-- TAB 12: 12-Month Roadmap -->
+<div class="tab-panel" id="tab-panel-12">
+  <h2 style="color:#e91e8c;border-bottom:2px solid #e91e8c;padding-bottom:10px;">Tab 12 — 12-Month Roadmap</h2>
+  <p style="font-size:1.05em;">A realistic, phase-by-phase plan. Treat the checkboxes as your weekly task list — print it out and tick them off.</p>
+
+  <!-- Phase 1 -->
+  <div style="border:2px solid #e91e8c;border-radius:10px;padding:20px;margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;color:#e91e8c;">Phase 1 — Setup</h3>
+      <span style="background:#e91e8c;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.9em;font-weight:600;">Month 1–2</span>
+    </div>
+    <ul style="list-style:none;padding:0;margin:0 0 16px 0;line-height:2.1;">
+      <li>☐ Buy / set up resin printer and run test prints</li>
+      <li>☐ Learn Blender or Fusion 360 basics via free YouTube courses</li>
+      <li>☐ Design first 5 stamp plates (2 heraldry, 2 textures, 1 Indian mandala)</li>
+      <li>☐ Print, test, and iterate until quality is consistent and reliable</li>
+      <li>☐ Make first batch of stamper handles + silicone heads</li>
+      <li>☐ Register MSME/Udyam (free, ~1 hour at udyamregistration.gov.in)</li>
+      <li>☐ Set up Instagram Business account and Etsy shop</li>
+      <li>☐ Set up Razorpay and Payoneer accounts</li>
+      <li>☐ Join Warhammer India Discord and Indian Hobbyists Facebook Group</li>
+      <li>☐ Send 5 free kits to Indian hobbyists in communities for honest feedback + photos</li>
+    </ul>
+    <div style="background:#fdf0f7;border-radius:6px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span style="font-weight:600;color:#555;">Target spend this phase:</span>
+      <span style="font-weight:700;color:#e91e8c;font-size:1.1em;">₹30,000–₹45,000</span>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div style="border:2px solid #e91e8c;border-radius:10px;padding:20px;margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;color:#e91e8c;">Phase 2 — Launch</h3>
+      <span style="background:#e91e8c;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.9em;font-weight:600;">Month 3–4</span>
+    </div>
+    <ul style="list-style:none;padding:0;margin:0 0 16px 0;line-height:2.1;">
+      <li>☐ List first 5 designs on Etsy with professional photos + stamping process video</li>
+      <li>☐ Post 3×/week on Instagram — process videos, customer photos, behind-the-scenes</li>
+      <li>☐ Launch WhatsApp Business catalog for India orders</li>
+      <li>☐ First India sales via Instagram DM / WhatsApp (aim: 10–20 orders)</li>
+      <li>☐ First international Etsy orders (aim: 5–10 orders)</li>
+      <li>☐ Collect reviews aggressively — personally ask every customer after delivery</li>
+      <li>☐ Design 5 more plates based on community feedback and what sold first</li>
+      <li>☐ Document production process so you can scale or delegate it later</li>
+    </ul>
+    <div style="background:#fdf0f7;border-radius:6px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span style="font-weight:600;color:#555;">Target revenue/month:</span>
+      <span style="font-weight:700;color:#e91e8c;font-size:1.1em;">₹15,000–₹35,000</span>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div style="border:2px solid #e91e8c;border-radius:10px;padding:20px;margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;color:#e91e8c;">Phase 3 — Grow</h3>
+      <span style="background:#e91e8c;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.9em;font-weight:600;">Month 5–8</span>
+    </div>
+    <ul style="list-style:none;padding:0;margin:0 0 16px 0;line-height:2.1;">
+      <li>☐ Expand catalog to 20+ designs across multiple themes</li>
+      <li>☐ Launch themed bundles: Indian Mythology set, Sci-Fi Mechanicus set, Fantasy Heraldry set</li>
+      <li>☐ Reach out to 3 local hobby shops for wholesale arrangements</li>
+      <li>☐ Apply for Amazon.in Handmade (requires GST — get it now if not already registered)</li>
+      <li>☐ Collaborate with 2–3 Indian mini-painting Instagrammers for feature posts</li>
+      <li>☐ List on Meesho for Tier 2/3 city reach</li>
+      <li>☐ Invest in better photography / video setup</li>
+      <li>☐ Build email list using Mailchimp (free for under 500 subscribers)</li>
+    </ul>
+    <div style="background:#fdf0f7;border-radius:6px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span style="font-weight:600;color:#555;">Target revenue/month:</span>
+      <span style="font-weight:700;color:#e91e8c;font-size:1.1em;">₹40,000–₹80,000</span>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div style="border:2px solid #e91e8c;border-radius:10px;padding:20px;margin-bottom:28px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <h3 style="margin:0;color:#e91e8c;">Phase 4 — Scale</h3>
+      <span style="background:#e91e8c;color:#fff;padding:4px 14px;border-radius:20px;font-size:0.9em;font-weight:600;">Month 9–12</span>
+    </div>
+    <ul style="list-style:none;padding:0;margin:0 0 16px 0;line-height:2.1;">
+      <li>☐ Hit 100+ Etsy sales — this triggers a significant algorithm visibility boost</li>
+      <li>☐ Launch Custom Stamp service (₹800–₹2,000 per custom design) — highest margin product</li>
+      <li>☐ Explore B2B: commission work for gaming stores' branded plates</li>
+      <li>☐ Consider hiring 1 part-time person for packing and shipping</li>
+      <li>☐ Explore mold making: cast resin stamps in bulk from silicone molds (10× faster production)</li>
+      <li>☐ Consider a Kickstarter campaign for a themed set launch (global reach)</li>
+      <li>☐ Register GST if approaching ₹20L annual turnover threshold</li>
+      <li>☐ Look at upgrading to Elegoo Saturn 3 Ultra for larger plate formats</li>
+    </ul>
+    <div style="background:#fdf0f7;border-radius:6px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span style="font-weight:600;color:#555;">Target revenue/month:</span>
+      <span style="font-weight:700;color:#e91e8c;font-size:1.1em;">₹80,000–₹2,00,000</span>
+    </div>
+  </div>
+
+  <h3 style="color:#e91e8c;">Realistic Income Projections</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:28px;">
+    <div style="background:#fdf0f7;border-radius:10px;padding:16px;text-align:center;border-top:4px solid #e91e8c;">
+      <div style="font-size:0.85em;color:#555;margin-bottom:4px;">Month 3</div>
+      <div style="font-size:1.3em;font-weight:700;color:#e91e8c;">₹10,000–₹25,000</div>
+    </div>
+    <div style="background:#fdf0f7;border-radius:10px;padding:16px;text-align:center;border-top:4px solid #e91e8c;">
+      <div style="font-size:0.85em;color:#555;margin-bottom:4px;">Month 6</div>
+      <div style="font-size:1.3em;font-weight:700;color:#e91e8c;">₹25,000–₹60,000</div>
+    </div>
+    <div style="background:#fdf0f7;border-radius:10px;padding:16px;text-align:center;border-top:4px solid #e91e8c;">
+      <div style="font-size:0.85em;color:#555;margin-bottom:4px;">Month 9</div>
+      <div style="font-size:1.3em;font-weight:700;color:#e91e8c;">₹50,000–₹1,20,000</div>
+    </div>
+    <div style="background:#fdf0f7;border-radius:10px;padding:16px;text-align:center;border-top:4px solid #e91e8c;">
+      <div style="font-size:0.85em;color:#555;margin-bottom:4px;">Month 12</div>
+      <div style="font-size:1.3em;font-weight:700;color:#e91e8c;">₹80,000–₹2,00,000</div>
+    </div>
+  </div>
+
+  <h3 style="color:#e91e8c;">Key Success Factors</h3>
+  <ul style="line-height:2;">
+    <li><strong>Indian/Eastern designs are your global differentiator</strong> — no one else makes mandala and mythology stamp plates for miniatures. This is a genuine gap in the global market.</li>
+    <li><strong>Quality over quantity</strong> — one great, crisp, well-photographed design beats ten mediocre ones. Perfect your first 5 before expanding.</li>
+    <li><strong>Community involvement</strong> — the Indian hobby community is small but tight-knit and intensely loyal. Be present, be generous, be a contributor first and seller second.</li>
+    <li><strong>Etsy reviews are everything</strong> — maintain 4.8+ rating. The Etsy algorithm heavily favors highly-reviewed shops. Respond to every review, resolve every issue fast.</li>
+    <li><strong>Reliable shipping</strong> — late or lost orders kill Etsy rankings and poison word-of-mouth. Use tracked services only. Over-communicate expected delivery times.</li>
+  </ul>
+
+  <div style="background:#e91e8c;color:#fff;border-radius:10px;padding:22px;margin-top:28px;">
+    <div style="font-size:1.1em;font-weight:700;margin-bottom:10px;">The Opportunity in One Sentence</div>
+    <p style="margin:0;line-height:1.7;font-size:1em;">Goblin Hobbies charges ₹2,500+ to ship a single stamp plate from the US to India. You can deliver the same quality — with unique Indian designs no one else makes — for ₹500–₹700 with next-week delivery. That gap is your entire business case.</p>
+  </div>
+</div>
+
+</div><!-- /content-wrap --></body></html>
