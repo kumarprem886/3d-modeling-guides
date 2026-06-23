@@ -970,11 +970,26 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
+      <!-- ChatGPT workflow box -->
+      <div style="background:#0d2137;border:1px solid #1f6feb;border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1rem;">
+        <div style="font-weight:700;color:#79c0ff;font-size:1rem;margin-bottom:0.6rem;">Using ChatGPT (DALL-E 3) — Recommended</div>
+        <ol style="color:#c9d1d9;font-size:0.88rem;line-height:2;padding-left:1.2rem;margin:0 0 0.8rem;">
+          <li>Copy any <span style="background:#1a3a1a;color:#3fb950;padding:1px 7px;border-radius:4px;font-size:0.75rem;">DALL-E 3</span> prompt below</li>
+          <li>Open <strong>ChatGPT</strong> → paste the prompt → hit Enter</li>
+          <li>Right-click the generated image → <strong>Save image as...</strong></li>
+          <li>Come back here → <strong>Upload &amp; Trace tab</strong> → drop the saved image</li>
+          <li>Adjust Threshold slider until lines are clean → <strong>Add to Plate</strong></li>
+        </ol>
+        <div style="font-size:0.82rem;color:#8b949e;">Pro tip: If the image has gray areas, bump Threshold up to 160–180 in the Trace tab to make lines crisper.</div>
+      </div>
+
       <!-- Critical tip box -->
       <div class="tip" style="border-color:#e3b341;background:#272115;">
-        <div style="font-weight:700;color:#e3b341;margin-bottom:0.5rem;">⚡ Critical: Add These Words to ANY Prompt</div>
-        <div style="font-size:0.85rem;color:#c9d1d9;margin-bottom:0.5rem;">For best SVG tracing results, always append:</div>
-        <code style="display:block;background:#1c1007;border:1px solid #3d2e0a;border-radius:6px;padding:10px 14px;font-size:0.82rem;color:#e3b341;line-height:1.6;word-break:break-word;">"black and white only, high contrast, clean bold outlines, no gradients, no shading, white background, vector art style, stamp design, flat design"</code>
+        <div style="font-weight:700;color:#e3b341;margin-bottom:0.5rem;">Magic words — add to ANY prompt for clean tracing</div>
+        <div style="position:relative;">
+          <code style="display:block;background:#1c1007;border:1px solid #3d2e0a;border-radius:6px;padding:10px 44px 10px 14px;font-size:0.82rem;color:#e3b341;line-height:1.6;word-break:break-word;" id="magic-suffix">black line art on pure white background, no shading, no gradients, no color, bold clean outlines, stamp design style, high contrast, flat design, vector art</code>
+          <button class="btn" onclick="copyPrompt(this, document.getElementById('magic-suffix').textContent)" style="position:absolute;top:8px;right:8px;padding:3px 10px;font-size:0.75rem;">Copy</button>
+        </div>
       </div>
     </div>
 
