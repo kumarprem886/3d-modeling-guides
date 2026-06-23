@@ -1,0 +1,2416 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lightburn Ultimate Guide — Complete Laser Software Mastery</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  a { color: #00b4d8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #0d1117 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 48px 24px 36px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #e6edf3;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: #8b949e;
+    margin-bottom: 20px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .hero-pills span {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: #00b4d8;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  /* TAB BAR */
+  .tab-bar-wrap {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-bar {
+    display: flex;
+    min-width: max-content;
+    padding: 0 12px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #8b949e;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 14px 14px 11px;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { color: #c9d1d9; }
+  .tab-btn.active {
+    color: #00b4d8;
+    border-bottom-color: #00b4d8;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION HEADING */
+  .section-heading {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #e6edf3;
+    border-left: 4px solid #00b4d8;
+    padding-left: 14px;
+    margin: 36px 0 18px;
+  }
+  .section-heading:first-child { margin-top: 0; }
+
+  /* CARDS */
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e6edf3;
+    margin-bottom: 10px;
+  }
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 5px; }
+
+  /* TIP BOXES */
+  .tip-box {
+    border-radius: 7px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-left: 4px solid;
+  }
+  .tip-box { background: #0d2a34; border-color: #00b4d8; }
+  .tip-box.warning { background: #2a2208; border-color: #e3b341; }
+  .tip-box.danger { background: #2a0d0d; border-color: #f85149; }
+  .tip-box.info { background: #0d1f2a; border-color: #388bfd; }
+  .tip-box strong { display: block; margin-bottom: 4px; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip-box { color: #90d8f0; }
+  .tip-box.warning { color: #e3c97a; }
+  .tip-box.danger { color: #f08080; }
+  .tip-box.info { color: #79b8ff; }
+
+  /* KBD */
+  kbd {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    color: #e6edf3;
+    font-family: 'Consolas', 'SFMono-Regular', monospace;
+    font-size: 0.82rem;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+
+  /* SHORTCUT ROW */
+  .shortcut-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #21262d;
+  }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-row .keys { min-width: 200px; }
+  .shortcut-row .desc { color: #8b949e; font-size: 0.9rem; }
+
+  /* TABLES */
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.88rem;
+  }
+  .guide-table th {
+    background: #21262d;
+    color: #e6edf3;
+    font-weight: 700;
+    padding: 10px 12px;
+    text-align: left;
+    border: 1px solid #30363d;
+  }
+  .guide-table td {
+    padding: 9px 12px;
+    border: 1px solid #30363d;
+    vertical-align: top;
+  }
+  .guide-table tr:nth-child(even) td { background: #161b22; }
+  .guide-table tr:nth-child(odd) td { background: #0d1117; }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* STEP ROW */
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .step-num {
+    background: #00b4d8;
+    color: #0d1117;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-row .step-content { flex: 1; }
+  .step-row .step-content strong { color: #e6edf3; }
+
+  /* PRICE TAG */
+  .price-tag {
+    display: inline-block;
+    background: #0d2a34;
+    border: 1px solid #00b4d8;
+    color: #00b4d8;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .price-tag.mid { background: #1a2208; border-color: #7ee787; color: #7ee787; }
+  .price-tag.high { background: #2a1708; border-color: #f0883e; color: #f0883e; }
+
+  /* INLINE CODE */
+  code {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 4px;
+    color: #79c0ff;
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+    padding: 1px 6px;
+  }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-green { background: #1c3a1e; color: #7ee787; border: 1px solid #2e6b32; }
+  .badge-blue { background: #0d2035; color: #79b8ff; border: 1px solid #1e4070; }
+  .badge-orange { background: #2a1708; color: #f0883e; border: 1px solid #6b3510; }
+
+  /* ACCENT TEXT */
+  .accent { color: #00b4d8; font-weight: 600; }
+  .muted { color: #8b949e; font-size: 0.88rem; }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 28px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>💡 Lightburn Ultimate Guide</h1>
+  <p class="subtitle">Complete laser control software mastery — from first cut to stamp plate production</p>
+  <div class="hero-pills">
+    <span>All Laser Types</span>
+    <span>Vector &amp; Raster</span>
+    <span>SS304 Settings</span>
+    <span>Stamp Plate Workflow</span>
+    <span>India Setup</span>
+    <span>Free 30-Day Trial</span>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(1)">1. Understanding Lightburn</button>
+    <button class="tab-btn" onclick="switchTab(2)">2. Interface &amp; Navigation</button>
+    <button class="tab-btn" onclick="switchTab(3)">3. Importing Files</button>
+    <button class="tab-btn" onclick="switchTab(4)">4. Cut Settings</button>
+    <button class="tab-btn" onclick="switchTab(5)">5. Engraving Modes</button>
+    <button class="tab-btn" onclick="switchTab(6)">6. Working with Materials</button>
+    <button class="tab-btn" onclick="switchTab(7)">7. Camera &amp; Alignment</button>
+    <button class="tab-btn" onclick="switchTab(8)">8. Optimization &amp; Speed</button>
+    <button class="tab-btn" onclick="switchTab(9)">9. Stamp Plate Workflow</button>
+    <button class="tab-btn" onclick="switchTab(10)">10. Troubleshooting</button>
+    <button class="tab-btn" onclick="switchTab(11)">11. Practice Projects</button>
+    <button class="tab-btn" onclick="switchTab(12)">12. Expert Tips &amp; Shortcuts</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ============================================================ TAB 1 -->
+<div id="tab-panel-1" class="tab-panel active">
+
+  <h2 class="section-heading">What is Lightburn?</h2>
+  <p>Lightburn is an all-in-one <strong>laser control + design software</strong> that runs natively on Windows, macOS, and Linux. It replaces the fragmented workflow of using separate design tools and machine controllers — you design, configure cut settings, and fire the laser all from one application.</p>
+
+  <div class="tip-box" style="margin-top:16px;">
+    <strong>The key distinction</strong>
+    Lightburn is your primary tool for sending jobs to the laser. It does basic vector design well. For complex artistic work, you'll still use Inkscape or Illustrator — but Lightburn handles everything from import to firing.
+  </div>
+
+  <h2 class="section-heading">Supported Laser Types</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>CO2 Lasers</h3>
+      <ul>
+        <li>K40 (budget 40W tubes)</li>
+        <li>OMTech 50W, 60W, 80W+</li>
+        <li>Boss Laser series</li>
+        <li>Any Ruida / Trocen controller machine</li>
+        <li>Can cut wood, acrylic, leather, fabric</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Diode Lasers</h3>
+      <ul>
+        <li>xTool D1 Pro, D1, S1</li>
+        <li>Sculpfun S30 Pro, S10</li>
+        <li>Ortur Laser Master 3</li>
+        <li>Atomstack, Creality Falcon</li>
+        <li>Runs via GRBL controller</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Fiber / MOPA Lasers</h3>
+      <ul>
+        <li>xTool F1 (portable fiber)</li>
+        <li>Chinese fiber machines (JPT, Raycus)</li>
+        <li>Marks metal permanently</li>
+        <li><strong>Required for SS304 stamp plates</strong></li>
+        <li>Needs Galvo license ($120)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Galvo Lasers</h3>
+      <ul>
+        <li>High-speed scanning mirrors</li>
+        <li>Used in fiber/UV/green laser systems</li>
+        <li>Lightburn supports EthernetGalvo/xTool</li>
+        <li><em>Note: EzCad machines need EzCad — not all galvo systems are Lightburn-compatible</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">What Lightburn Does vs. Doesn't Do</h2>
+  <table class="guide-table">
+    <tr><th>Lightburn CAN do</th><th>Lightburn CANNOT do</th></tr>
+    <tr><td>Control any supported laser</td><td>Replace Inkscape/Illustrator for complex art</td></tr>
+    <tr><td>Basic vector drawing &amp; editing</td><td>Run EzCad-only fiber machines</td></tr>
+    <tr><td>Node editing on paths</td><td>3D engraving / depth mapping (basic)</td></tr>
+    <tr><td>Import SVG, DXF, AI, PDF, images</td><td>CAM machining (it's not a CNC router tool)</td></tr>
+    <tr><td>Camera overlay for alignment</td><td>Direct cloud print from phone (no mobile app)</td></tr>
+    <tr><td>Material library / saved profiles</td><td>Auto-generate designs (no AI generation)</td></tr>
+    <tr><td>Power/speed test matrix</td><td>Multi-axis or rotary engraving (rotary needs workaround)</td></tr>
+    <tr><td>Rotary engraving (with setup)</td><td>Full parametric design like Fusion 360</td></tr>
+  </table>
+
+  <h2 class="section-heading">Licensing &amp; Pricing</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Gantry / Diode License <span class="price-tag">$60 one-time</span></h3>
+      <ul>
+        <li>For CO2 and diode lasers</li>
+        <li>GRBL, Ruida, Trocen, Smoothie controllers</li>
+        <li>1 year of free updates included</li>
+        <li>After 1 year: pay ~$20/yr to keep updates (optional — software keeps working)</li>
+        <li>India price: <strong>~₹5,000</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Galvo / Fiber License <span class="price-tag high">$120 one-time</span></h3>
+      <ul>
+        <li>For fiber, MOPA, galvo scanners</li>
+        <li>Required for xTool F1, Chinese fiber machines</li>
+        <li>Includes Gantry license too</li>
+        <li>1 year of free updates included</li>
+        <li>India price: <strong>~₹10,000</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box info">
+    <strong>Free Trial</strong>
+    Lightburn offers a full-featured <strong>30-day free trial</strong> — no credit card required. Download from <code>lightburnsoftware.com</code>. The trial is the full software; nothing is locked. Buy a key when ready.
+  </div>
+
+  <div class="tip-box warning">
+    <strong>India Payment</strong>
+    Pay directly at <code>lightburnsoftware.com</code> using an international debit/credit card (Visa/Mastercard). UPI does not work. If your card declines, try a different bank card or ask someone to buy it for you in USD and reimburse them. The license key is emailed instantly.
+  </div>
+
+  <h2 class="section-heading">Download &amp; Install</h2>
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content"><strong>Go to lightburnsoftware.com/download</strong> — download the Windows 64-bit installer. Windows 10/11 64-bit is strongly recommended. File is ~80MB.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content"><strong>Run the installer</strong> — standard next/next/finish. Installs to <code>C:\Program Files\LightBurn</code> by default. No special permissions needed.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content"><strong>First launch: Device Setup Wizard</strong> — Lightburn will ask you to add a device. Have your laser powered on and connected via USB or Ethernet before this step.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content"><strong>Find your laser</strong> — click "Find my Laser" for auto-detection (works for most GRBL machines on USB), or choose your controller type manually (Ruida, GRBL, etc.).</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content"><strong>Set your bed size</strong> — enter the work area dimensions in mm (e.g. 400×400 for most desktop machines, 200×200 for K40).</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">6</div>
+    <div class="step-content"><strong>Test connection</strong> — click the "Get Position" or "Home" button in the Move panel. If the laser responds, you're connected.</div>
+  </div>
+
+  <h2 class="section-heading">Supported Controllers</h2>
+  <table class="guide-table">
+    <tr><th>Controller</th><th>Laser Type</th><th>Connection</th><th>Notes</th></tr>
+    <tr><td>GRBL</td><td>Diode, small CO2</td><td>USB Serial</td><td>Most common; all xTool D1, Sculpfun, Ortur</td></tr>
+    <tr><td>Ruida</td><td>CO2 (mid-high power)</td><td>USB / Ethernet</td><td>OMTech, Boss, most Chinese CO2 machines</td></tr>
+    <tr><td>Trocen</td><td>CO2</td><td>USB</td><td>Some budget CO2 machines</td></tr>
+    <tr><td>Smoothieware</td><td>CO2, diode</td><td>USB</td><td>Open-source boards, Cohesion3D</td></tr>
+    <tr><td>xTool (Galvo)</td><td>xTool F1 fiber</td><td>USB</td><td>Needs Galvo license</td></tr>
+    <tr><td>EthernetGalvo</td><td>Chinese fiber</td><td>Ethernet</td><td>JPT/Raycus galvo heads</td></tr>
+    <tr><td><span style="color:#f85149">EzCad</span></td><td>Most fiber lasers</td><td>—</td><td><strong>NOT supported</strong> — EzCad is separate software</td></tr>
+  </table>
+
+  <div class="tip-box danger">
+    <strong>EzCad machines are NOT compatible with Lightburn</strong>
+    If your fiber laser uses EzCad (most cheap Chinese fiber machines sold on AliExpress), you must use EzCad2 or EzCad3 — Lightburn cannot control these. The xTool F1 is a notable exception (uses xTool's own protocol, Lightburn-compatible). Always verify controller compatibility before purchasing.
+  </div>
+
+  <h2 class="section-heading">Why Lightburn vs. Free Alternatives?</h2>
+  <p>Many beginners start with free software, but Lightburn's workflow improvements justify the cost within a few sessions. Here's an honest comparison:</p>
+
+  <table class="guide-table">
+    <tr>
+      <th>Feature</th>
+      <th>Lightburn</th>
+      <th>LaserGRBL</th>
+      <th>RDWorks</th>
+      <th>EzCad</th>
+      <th>LightObject</th>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td><span class="accent">$60/$120</span></td>
+      <td>Free</td>
+      <td>Free</td>
+      <td>Free (bundled)</td>
+      <td>Free</td>
+    </tr>
+    <tr>
+      <td>OS</td>
+      <td>Win/Mac/Linux</td>
+      <td>Windows</td>
+      <td>Windows</td>
+      <td>Windows</td>
+      <td>Windows</td>
+    </tr>
+    <tr>
+      <td>SVG/DXF import</td>
+      <td>✅ Excellent</td>
+      <td>❌ Images only</td>
+      <td>✅ OK</td>
+      <td>✅ OK</td>
+      <td>✅ Basic</td>
+    </tr>
+    <tr>
+      <td>Node editing</td>
+      <td>✅ Full</td>
+      <td>❌</td>
+      <td>⚠️ Limited</td>
+      <td>⚠️ Limited</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Live preview</td>
+      <td>✅ Animated</td>
+      <td>⚠️ Basic</td>
+      <td>✅ OK</td>
+      <td>⚠️ Basic</td>
+      <td>⚠️ Basic</td>
+    </tr>
+    <tr>
+      <td>Camera overlay</td>
+      <td>✅</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Material library</td>
+      <td>✅</td>
+      <td>❌</td>
+      <td>⚠️ Manual</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Power/Speed test</td>
+      <td>✅ Built-in</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Fiber/Galvo support</td>
+      <td>✅ ($120)</td>
+      <td>❌</td>
+      <td>❌</td>
+      <td>✅ (fiber only)</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Community / docs</td>
+      <td>✅ Excellent</td>
+      <td>⚠️ Limited</td>
+      <td>⚠️ OK</td>
+      <td>⚠️ Limited</td>
+      <td>⚠️ Limited</td>
+    </tr>
+  </table>
+
+</div><!-- /tab-panel-1 -->
+
+
+<!-- ============================================================ TAB 2 -->
+<div id="tab-panel-2" class="tab-panel">
+
+  <h2 class="section-heading">Full Interface Overview</h2>
+  <p>Lightburn's interface consists of a central canvas surrounded by docked panels. Understanding where everything lives is the first step to working fast.</p>
+
+  <div class="card">
+    <h3>Interface Layout</h3>
+    <ul>
+      <li><strong>Top:</strong> Menu bar (File / Edit / Tools / Arrange / Window / Laser / Help)</li>
+      <li><strong>Left:</strong> Drawing toolbar (Select, Node edit, Pan, Zoom, Shapes, Text)</li>
+      <li><strong>Center:</strong> Canvas / work area with rulers and grid</li>
+      <li><strong>Right:</strong> Cuts/Layers panel (top), Laser panel (bottom)</li>
+      <li><strong>Bottom-right:</strong> Console, Move, Shape Properties tabs</li>
+      <li><strong>Bottom:</strong> Status bar — shows cursor position, object size</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Menu Bar</h2>
+  <table class="guide-table">
+    <tr><th>Menu</th><th>Key functions</th></tr>
+    <tr><td><strong>File</strong></td><td>New, Open, Save, Import (Ctrl+I), Export, Recent files, Device settings</td></tr>
+    <tr><td><strong>Edit</strong></td><td>Undo/Redo, Cut/Copy/Paste, Select All, Delete, Convert shapes, Close open paths</td></tr>
+    <tr><td><strong>Tools</strong></td><td>Trace Image, Weld, Boolean operations, Offset shapes, Power scale test, Material test</td></tr>
+    <tr><td><strong>Arrange</strong></td><td>Align, Distribute, Group/Ungroup, Flip, Rotate, Move to layer, Nest shapes</td></tr>
+    <tr><td><strong>Window</strong></td><td>Show/hide all panels, reset layout, switch workspaces</td></tr>
+    <tr><td><strong>Laser</strong></td><td>Start, Pause, Stop, Frame, Go to origin, Run current job</td></tr>
+    <tr><td><strong>Help</strong></td><td>Docs, Forums, Enter license key, Check for updates</td></tr>
+  </table>
+
+  <h2 class="section-heading">Left Toolbar — Drawing Tools</h2>
+  <table class="guide-table">
+    <tr><th>Tool</th><th>Shortcut</th><th>What it does</th></tr>
+    <tr><td>Select / Move</td><td><kbd>F1</kbd> or <kbd>Esc</kbd></td><td>Select and move objects; click+drag to box select</td></tr>
+    <tr><td>Edit Nodes</td><td><kbd>F2</kbd></td><td>Edit individual path nodes; add, remove, smooth nodes</td></tr>
+    <tr><td>Pan</td><td><kbd>F3</kbd> or hold middle mouse</td><td>Pan the canvas view</td></tr>
+    <tr><td>Zoom</td><td>Mouse wheel</td><td>Zoom in/out on canvas</td></tr>
+    <tr><td>Draw Rectangle</td><td><kbd>R</kbd></td><td>Draw rectangular shapes</td></tr>
+    <tr><td>Draw Ellipse</td><td><kbd>E</kbd></td><td>Draw circles and ellipses (hold Shift for perfect circle)</td></tr>
+    <tr><td>Draw Line</td><td><kbd>L</kbd></td><td>Draw straight line segments</td></tr>
+    <tr><td>Draw Polyline</td><td><kbd>P</kbd></td><td>Draw connected line segments</td></tr>
+    <tr><td>Draw Bezier</td><td><kbd>B</kbd></td><td>Draw curved Bezier paths</td></tr>
+    <tr><td>Text</td><td><kbd>T</kbd></td><td>Add text; choose font, size, alignment</td></tr>
+    <tr><td>Cut Shapes</td><td>—</td><td>Boolean subtract / mask shapes</td></tr>
+  </table>
+
+  <h2 class="section-heading">Key Panels Explained</h2>
+
+  <div class="card">
+    <h3>Cuts / Layers Panel <span class="badge badge-blue">Most Important</span></h3>
+    <p>Every object on the canvas is assigned to a color layer. Each layer has its own:</p>
+    <ul style="margin-top:8px;">
+      <li><strong>Mode:</strong> Line, Fill, Fill+Line, Offset Fill — controls how the laser moves</li>
+      <li><strong>Speed:</strong> mm/s — how fast the laser head moves</li>
+      <li><strong>Max Power / Min Power:</strong> % — laser power (min is for slow/acceleration zones)</li>
+      <li><strong>Passes:</strong> how many times the laser runs each path</li>
+      <li><strong>Priority / Order:</strong> drag layers to change execution order (bottom = first)</li>
+    </ul>
+    <div class="tip-box" style="margin-top:12px;">
+      <strong>Pro tip</strong>
+      Colors are just layer identifiers. Assign red = cut, black = engrave, blue = mark — whatever system makes sense for your workflow. The actual laser settings live in the layer, not the color.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Laser Panel</h3>
+    <ul>
+      <li><strong>Start:</strong> sends the current job to the laser and begins cutting</li>
+      <li><strong>Pause/Resume:</strong> pause mid-job (useful for checking settings)</li>
+      <li><strong>Stop:</strong> emergency halt</li>
+      <li><strong>Frame:</strong> traces the bounding box of your job with the laser off — essential for alignment</li>
+      <li><strong>Home:</strong> sends laser to home position (0,0)</li>
+      <li><strong>Go to Origin:</strong> moves to the set start point</li>
+      <li><strong>Start from:</strong> Absolute Coords / User Origin / Current Position</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Console Panel</h3>
+    <p>Shows raw GRBL/controller commands and responses. Critical for debugging connection issues. If your laser isn't responding, check here for error messages like <code>error:9</code> (no homing) or <code>ALARM:1</code> (limit switch tripped).</p>
+  </div>
+
+  <div class="card">
+    <h3>Move Panel</h3>
+    <p>Manual jog controls. Set step size (0.1mm to 100mm), then click directional arrows. Use this to position the laser head before starting a job, or to test machine movement.</p>
+  </div>
+
+  <div class="card">
+    <h3>Shape Properties Panel</h3>
+    <p>When an object is selected, shows exact X/Y position, width, height, rotation angle. You can type exact values here for precision placement. Lock aspect ratio with the padlock icon.</p>
+  </div>
+
+  <h2 class="section-heading">Canvas Navigation</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Mouse Navigation</h3>
+      <ul>
+        <li><strong>Scroll wheel:</strong> zoom in/out</li>
+        <li><strong>Middle click + drag:</strong> pan canvas</li>
+        <li><strong>Right click:</strong> context menu (cut/copy/paste/layer assign)</li>
+        <li><strong>Left click:</strong> select object</li>
+        <li><strong>Left click + drag:</strong> box select</li>
+        <li><strong>Double click on path:</strong> enter node edit mode</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>View Shortcuts</h3>
+      <ul>
+        <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> — zoom to all objects</li>
+        <li><kbd>Num 5</kbd> — zoom to fit bed</li>
+        <li><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>-</kbd> — zoom in/out</li>
+        <li>Grid: View &gt; Grid Settings</li>
+        <li>Rulers: View &gt; Show Rulers</li>
+        <li>Crosshair: View &gt; Show Laser Position</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Complete Keyboard Shortcuts Reference</h2>
+  <div class="card">
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>Z</kbd></div><div class="desc">Undo</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>Y</kbd></div><div class="desc">Redo</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>S</kbd></div><div class="desc">Save file</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>I</kbd></div><div class="desc">Import file</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>A</kbd></div><div class="desc">Select all objects</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd></div><div class="desc">Select all on same layer</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>G</kbd></div><div class="desc">Group selected objects</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>U</kbd></div><div class="desc">Ungroup</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>D</kbd></div><div class="desc">Duplicate selected</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Delete</kbd></div><div class="desc">Delete selected</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Tab</kbd></div><div class="desc">Select next object</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>F1</kbd></div><div class="desc">Select / Move tool</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>F2</kbd></div><div class="desc">Edit nodes tool</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>F3</kbd></div><div class="desc">Pan tool</div></div>
+    <div class="shortcut-row"><div class="keys">Arrow keys</div><div class="desc">Nudge selected object (1mm)</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Shift</kbd> + Arrow</div><div class="desc">Nudge 10x (10mm)</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd></div><div class="desc">Flip horizontal</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd></div><div class="desc">Flip vertical</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></div><div class="desc">Start laser job</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Escape</kbd></div><div class="desc">Stop job / deselect</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Space</kbd></div><div class="desc">Start / pause job (toggle)</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>`</kbd> (backtick)</div><div class="desc">Frame selected area (laser traces outline, laser off)</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>V</kbd></div><div class="desc">Copy / Paste</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>X</kbd></div><div class="desc">Cut (remove and copy)</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>Ctrl</kbd>+<kbd>F</kbd></div><div class="desc">Find / Filter objects</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>R</kbd></div><div class="desc">Rectangle tool</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>E</kbd></div><div class="desc">Ellipse tool</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>T</kbd></div><div class="desc">Text tool</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>P</kbd></div><div class="desc">Polyline tool</div></div>
+    <div class="shortcut-row"><div class="keys"><kbd>B</kbd></div><div class="desc">Bezier curve tool</div></div>
+  </div>
+
+</div><!-- /tab-panel-2 -->
+
+
+<!-- ============================================================ TAB 3 -->
+<div id="tab-panel-3" class="tab-panel">
+
+  <h2 class="section-heading">Supported File Formats</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Vector Formats</h3>
+      <ul>
+        <li><strong>SVG</strong> — primary format, best for stamps</li>
+        <li><strong>DXF</strong> — from Fusion 360, AutoCAD, FreeCAD</li>
+        <li><strong>AI</strong> — Adobe Illustrator (older versions)</li>
+        <li><strong>PDF</strong> — vector PDFs (not scanned)</li>
+        <li><strong>.lbrn / .lbrn2</strong> — Lightburn native format</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Raster / Image Formats</h3>
+      <ul>
+        <li><strong>PNG</strong> — best for transparent backgrounds</li>
+        <li><strong>JPG / JPEG</strong> — photos, no transparency</li>
+        <li><strong>BMP</strong> — Windows bitmap</li>
+        <li><strong>TIFF</strong> — high-quality scans</li>
+        <li><strong>GIF</strong> — supported but rarely used</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Importing Files</h2>
+
+  <div class="card">
+    <h3>Method 1: File &gt; Import</h3>
+    <p>Menu: <strong>File &gt; Import</strong> (or <kbd>Ctrl</kbd>+<kbd>I</kbd>). Navigate to your file, click Open. Lightburn will ask about import settings for SVG/DXF.</p>
+  </div>
+
+  <div class="card">
+    <h3>Method 2: Drag &amp; Drop</h3>
+    <p>Simply drag any supported file from File Explorer onto the Lightburn canvas. This is the fastest method for quick imports. The file drops at the cursor position.</p>
+  </div>
+
+  <h2 class="section-heading">SVG Import — Getting It Right</h2>
+  <p>SVG is the most common format for laser work. Most issues come from how the SVG was exported from Inkscape/Illustrator.</p>
+
+  <div class="tip-box warning">
+    <strong>Set units to mm in Inkscape BEFORE exporting</strong>
+    File &gt; Document Properties &gt; set units to "mm" and set the document size to your desired output size. If you export with px units, Lightburn may import at the wrong size (96dpi vs 90dpi mismatch).
+  </div>
+
+  <h3 style="color:#e6edf3; font-size:1rem; margin: 20px 0 12px; font-weight:700;">Common SVG Import Issues &amp; Fixes</h3>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Cause</th><th>Fix</th></tr>
+    <tr>
+      <td>Wrong import size</td>
+      <td>SVG exported in pixels, not mm</td>
+      <td>In Inkscape: File &gt; Document Properties &gt; change to mm, then re-export</td>
+    </tr>
+    <tr>
+      <td>Paths not closed (gaps in shapes)</td>
+      <td>Open path ends don't connect</td>
+      <td>Select paths, Edit &gt; Close Selected Open Paths — or fix in Inkscape first</td>
+    </tr>
+    <tr>
+      <td>Missing fills / shapes appear empty</td>
+      <td>Shapes have no stroke, only fill — Lightburn uses strokes for cut lines</td>
+      <td>In Inkscape: give shapes a stroke color (0.1mm width), remove fill for cut lines</td>
+    </tr>
+    <tr>
+      <td>Groups won't separate</td>
+      <td>Objects are grouped in SVG</td>
+      <td>Select all, press <kbd>Ctrl</kbd>+<kbd>U</kbd> repeatedly until fully ungrouped</td>
+    </tr>
+    <tr>
+      <td>Text is ungrouped into letter shapes</td>
+      <td>Text converted to paths in Inkscape</td>
+      <td>Expected behavior — each letter becomes a separate path. Group them if needed.</td>
+    </tr>
+    <tr>
+      <td>Hairlines missing from import</td>
+      <td>Very thin strokes ignored</td>
+      <td>Ensure strokes are at least 0.01mm in Inkscape</td>
+    </tr>
+    <tr>
+      <td>Colors wrong / all on one layer</td>
+      <td>SVG colors not recognized</td>
+      <td>Use exact hex colors in Inkscape that match Lightburn's default layer colors</td>
+    </tr>
+  </table>
+
+  <h2 class="section-heading">Importing DXF (Fusion 360 / AutoCAD)</h2>
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content"><strong>Export from Fusion 360:</strong> Sketch &gt; right-click &gt; Save As DXF. Make sure the sketch is in mm units.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content"><strong>Import in Lightburn:</strong> File &gt; Import &gt; select DXF. Lightburn will ask for units — select <strong>mm</strong> if prompted.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content"><strong>Check size:</strong> After import, check dimensions in the Shape Properties panel. DXF files sometimes import in inches (×25.4 too large) — if so, undo, reimport, select "inches" and Lightburn converts it.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content"><strong>Close open paths:</strong> DXF files often have gaps at corners. Use Edit &gt; Close Selected Open Paths with a tolerance of 0.1mm to snap near-closes shut.</div>
+  </div>
+
+  <h2 class="section-heading">Importing Images for Engraving</h2>
+  <p>Drag a PNG or JPG onto the canvas. Lightburn adds it as an image object. In the Cuts/Layers panel, the image layer will default to a raster mode. Click the layer to set engraving parameters:</p>
+
+  <table class="guide-table">
+    <tr><th>Image Mode</th><th>Best for</th><th>Notes</th></tr>
+    <tr><td>Jarvis</td><td>Photos, portraits</td><td>Fine dithering, smooth gradients, most popular</td></tr>
+    <tr><td>Stucki</td><td>High-contrast photos</td><td>Slightly sharper than Jarvis, good for text-heavy images</td></tr>
+    <tr><td>Newsprint</td><td>Artistic/halftone look</td><td>Circular dot pattern, visible halftone effect</td></tr>
+    <tr><td>Threshold</td><td>Simple B&amp;W logos</td><td>Pure black or white, no dithering — ideal for crisp line art</td></tr>
+    <tr><td>Grayscale</td><td>Shaded 3D engraving</td><td>Pixel brightness directly controls laser power</td></tr>
+    <tr><td>Ordered</td><td>Quick jobs</td><td>Fast dithering, lower quality than Jarvis</td></tr>
+  </table>
+
+  <h2 class="section-heading">Trace Image — Raster to Vector</h2>
+  <p>One of Lightburn's most useful features for stamp work. Converts a PNG/JPG into clean SVG paths.</p>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">Import your image (PNG/JPG), select it on canvas.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">Go to <strong>Tools &gt; Trace Image</strong> (or right-click &gt; Trace Image).</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">Adjust <strong>Threshold</strong> slider to capture the right level of detail. Increase for more detail, decrease to ignore noise.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">Set <strong>Ignore less than X mm²</strong> to filter out tiny specks. 0.5mm² is a good starting point.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">Click <strong>Apply</strong> — Lightburn generates vector paths overlaid on the image. Click <strong>OK</strong>, then delete the original image.</div>
+  </div>
+
+  <div class="tip-box">
+    <strong>Stamp plate tip</strong>
+    For rubber stamp designs, Trace Image converts your client's logo PNG into vector paths you can engrave with Line mode on SS304. Clean up with node editing after tracing. Smoothing setting of 2–3 removes jagged staircase artifacts.
+  </div>
+
+  <h2 class="section-heading">Organizing with Layers</h2>
+  <p>Assign different elements to different color layers for precise control over what gets cut vs engraved:</p>
+  <ul style="padding-left:20px; margin-top:8px;">
+    <li><strong>Black layer (00):</strong> Main engrave / vector mark</li>
+    <li><strong>Red layer (01):</strong> Cut outline</li>
+    <li><strong>Blue layer (02):</strong> Score / light mark</li>
+    <li>Assign by selecting objects, then clicking the color in the Cuts/Layers panel</li>
+    <li>Each layer can be independently enabled/disabled — click the eye icon</li>
+  </ul>
+
+  <h2 class="section-heading">SVG Import Tips for Stamp Plates</h2>
+  <div class="card">
+    <ul>
+      <li>Set stroke width to <strong>0.1mm</strong> (hairline) in Inkscape — thinner strokes = sharper laser lines</li>
+      <li>Ensure all paths are <strong>black stroke, no fill</strong> for clean vector engraving</li>
+      <li><strong>Ungroup everything</strong> before exporting (Ctrl+U in Inkscape) so Lightburn can assign layers independently</li>
+      <li>Convert all text to paths in Inkscape: <strong>Text &gt; Object to Path</strong> — avoids font dependency issues</li>
+      <li>Use <strong>Save as Plain SVG</strong> (not Inkscape SVG) to avoid metadata Lightburn might misread</li>
+      <li>Check your SVG in a browser first — if it looks wrong in Chrome, it'll import wrong in Lightburn</li>
+    </ul>
+  </div>
+
+</div><!-- /tab-panel-3 -->
+
+
+<!-- ============================================================ TAB 4 -->
+<div id="tab-panel-4" class="tab-panel">
+
+  <h2 class="section-heading">The Cuts / Layers Panel — Full Breakdown</h2>
+  <p>Every laser job in Lightburn is controlled through the Cuts/Layers panel. This is where you set speed, power, mode, passes, and more for each color layer. Understanding this panel is the single most important skill in Lightburn.</p>
+
+  <div class="card">
+    <h3>Cuts/Layers Panel Columns</h3>
+    <table class="guide-table" style="margin:8px 0 0;">
+      <tr><th>Column</th><th>What it controls</th></tr>
+      <tr><td>Color swatch</td><td>Layer identifier — matches color of objects on canvas</td></tr>
+      <tr><td># (number)</td><td>Layer number / priority (drag to reorder)</td></tr>
+      <tr><td>Mode</td><td>Line / Fill / Fill+Line / Offset Fill</td></tr>
+      <tr><td>Speed</td><td>mm/s for gantry, mm/s for galvo</td></tr>
+      <tr><td>Power</td><td>Max power % (the main power setting)</td></tr>
+      <tr><td>Eye icon</td><td>Show/hide this layer on canvas</td></tr>
+      <tr><td>Output icon</td><td>Include/exclude this layer from laser job</td></tr>
+    </table>
+  </div>
+
+  <p style="margin-top:16px;">Double-click any layer row to open its full settings dialog with all advanced options.</p>
+
+  <h2 class="section-heading">The Four Cut Modes</h2>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Line Mode <span class="badge badge-green">Stamp Plates</span></h3>
+      <p>The laser follows path outlines exactly — like drawing with a pen. Used for:</p>
+      <ul style="margin-top:8px;">
+        <li>Vector engraving on metal (stamp plates)</li>
+        <li>Cutting through material</li>
+        <li>Scoring / folding lines</li>
+        <li>Engraving crisp outlines</li>
+      </ul>
+      <p style="margin-top:8px;" class="muted">Speed, power, and passes control depth. Multiple passes = deeper marks.</p>
+    </div>
+    <div class="card">
+      <h3>Fill Mode</h3>
+      <p>The laser scans back and forth like a printer, filling the interior of shapes. Used for:</p>
+      <ul style="margin-top:8px;">
+        <li>Engraving logos on wood, aluminum</li>
+        <li>Photo engraving</li>
+        <li>Filling text areas</li>
+        <li>Deep pocket engraving</li>
+      </ul>
+      <p style="margin-top:8px;" class="muted">Line interval controls density (DPI). Smaller interval = more passes = higher DPI.</p>
+    </div>
+    <div class="card">
+      <h3>Fill + Line Mode</h3>
+      <p>Fills the shape first, then runs the outline — best of both worlds. Used for:</p>
+      <ul style="margin-top:8px;">
+        <li>High-quality text engraving</li>
+        <li>Logos requiring crisp edges</li>
+        <li>Any engraving where edge quality matters</li>
+      </ul>
+      <p style="margin-top:8px;" class="muted">Takes longer but looks significantly better. Recommended for final production work.</p>
+    </div>
+    <div class="card">
+      <h3>Offset Fill Mode</h3>
+      <p>Fills shapes with concentric inward rings instead of parallel lines. Used for:</p>
+      <ul style="margin-top:8px;">
+        <li>Oval/round shapes (fewer direction changes)</li>
+        <li>Artistic engraving effects</li>
+        <li>Situations where linear fill creates banding</li>
+      </ul>
+      <p style="margin-top:8px;" class="muted">Slower to compute but can look more natural on organic shapes.</p>
+    </div>
+  </div>
+
+  <h2 class="section-heading">SS304 Stamp Plate Settings (Fiber Laser)</h2>
+
+  <div class="tip-box">
+    <strong>These are the starting point settings — always run a test first</strong>
+    Every fiber laser is different. These settings work for a 20W JPT MOPA or Raycus fiber laser. Adjust ±20% based on your test results.
+  </div>
+
+  <table class="guide-table">
+    <tr>
+      <th>Parameter</th>
+      <th>Recommended Value</th>
+      <th>Notes</th>
+    </tr>
+    <tr><td>Mode</td><td><span class="accent">Line</span></td><td>Vector paths only — follows stamp design exactly</td></tr>
+    <tr><td>Speed</td><td>150–300 mm/s</td><td>Slower = deeper mark. Start at 200mm/s</td></tr>
+    <tr><td>Max Power</td><td>50–70%</td><td>Start at 60% for 20W fiber</td></tr>
+    <tr><td>Min Power</td><td>45–65%</td><td>Keep ~5% below max power</td></tr>
+    <tr><td>Passes</td><td>1–3</td><td>1 pass for surface mark, 3 for deep recessed stamp</td></tr>
+    <tr><td>Frequency</td><td>20–50 kHz</td><td>30 kHz is a good default for SS304</td></tr>
+    <tr><td>Pulse Width (MOPA)</td><td>100–200 ns</td><td>Shorter pulse = less heat spread = sharper mark</td></tr>
+    <tr><td>Line Interval</td><td>N/A</td><td>Only relevant for Fill mode</td></tr>
+    <tr><td>Air Assist</td><td>Off for fiber</td><td>Fiber lasers don't use air assist</td></tr>
+    <tr><td>Expected depth</td><td>0.05–0.1mm</td><td>Per pass on SS304 mirror finish</td></tr>
+  </table>
+
+  <h2 class="section-heading">Min Power vs Max Power Explained</h2>
+  <p>This confuses many beginners. On Ruida controllers and fiber lasers:</p>
+  <div class="card">
+    <ul>
+      <li><strong>Max Power:</strong> power at full speed — used for most of the path</li>
+      <li><strong>Min Power:</strong> power when the machine is slowing down at corners or reversing direction (acceleration/deceleration zones)</li>
+      <li>If Min Power is too low, corners will be underburned compared to straight sections</li>
+      <li>If Min Power = Max Power, every point on the path gets the same power — good for consistency but can over-burn corners</li>
+      <li><strong>Rule of thumb:</strong> set Min Power = Max Power − 5 to 10%</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Frequency Setting (Fiber Lasers)</h2>
+  <div class="card">
+    <ul>
+      <li>Frequency = pulses per second (kHz) the laser fires</li>
+      <li><strong>Lower frequency (20–30 kHz):</strong> more energy per pulse, deeper penetration, darker mark on SS304</li>
+      <li><strong>Higher frequency (50–100 kHz):</strong> less energy per pulse, lighter surface mark, better for anodized aluminum</li>
+      <li>For SS304 stamp plates: <strong>20–35 kHz</strong> recommended</li>
+      <li>MOPA lasers also have pulse width control (nanoseconds) for even more fine-tuning</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Material Library</h2>
+  <p>Save your proven settings so you never have to remember them:</p>
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">Set up a layer with all your SS304 settings (speed, power, passes, frequency).</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">Open <strong>Window &gt; Material Library</strong>.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">Click <strong>New</strong> — name it "SS304 Mirror - Stamp - 20W Fiber".</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">Click <strong>Save from Layer</strong> — selects the current layer settings.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">Next time: select your layer in Cuts/Layers, open Material Library, find your entry, click <strong>Assign to Layer</strong>.</div>
+  </div>
+
+  <h2 class="section-heading">Power/Speed Test Matrix — The Most Important Step</h2>
+  <div class="tip-box warning">
+    <strong>Always run a test before cutting a real job</strong>
+    Never skip the test matrix on a new material or machine setting. It costs 5 minutes and saves wasted expensive material.
+  </div>
+
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">Go to <strong>Laser &gt; Material Test</strong> (or Tools &gt; Power Scale Test).</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">Set a grid: e.g. 5 columns (speed: 100, 150, 200, 250, 300 mm/s) × 5 rows (power: 40%, 50%, 60%, 70%, 80%).</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">Choose a simple shape (10×10mm square) and run the test on your material scrap.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">After engraving, examine results: find the combination that gives the mark depth and darkness you want for your stamps.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">Save those winning settings to your Material Library.</div>
+  </div>
+
+  <h2 class="section-heading">Layer Execution Order</h2>
+  <div class="card">
+    <p>Lightburn runs layers from <strong>bottom to top</strong> in the Cuts/Layers panel list. This matters:</p>
+    <ul style="margin-top:8px;">
+      <li><strong>Engrave before cut:</strong> put engraving layers lower in the list — they run first. Put cut layers at the top — they run last (after engraving is done on the piece). This prevents the cut piece from shifting mid-engrave.</li>
+      <li>Drag layer rows to reorder them</li>
+      <li>Right-click a layer &gt; "Move to top/bottom" for quick reordering</li>
+    </ul>
+  </div>
+
+</div><!-- /tab-panel-4 -->
+
+
+<!-- ============================================================ TAB 5 -->
+<div id="tab-panel-5" class="tab-panel">
+
+  <h2 class="section-heading">How Lightburn Engraving Modes Work</h2>
+  <p>Choosing the right engraving mode is as important as choosing the right power/speed. Each mode produces a fundamentally different result.</p>
+
+  <h2 class="section-heading">Line Mode — Vector Engraving</h2>
+  <div class="card">
+    <p>The laser traces each path as a single line. Perfect for stamp plates because:</p>
+    <ul style="margin-top:8px;">
+      <li>Follows your design paths exactly — no scanning, no fill patterns</li>
+      <li>Clean, precise marks with crisp edges</li>
+      <li>Fast for line-art designs</li>
+      <li>Depth controlled by speed, power, and passes</li>
+      <li>For SS304: use Line mode with 1–3 passes to get the recessed marks stamps need</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Fill Mode — Raster Scanning</h2>
+  <div class="card">
+    <p>The laser scans back and forth across the shape's bounding box, firing only when over the shape area — like an inkjet printer.</p>
+    <table class="guide-table" style="margin-top:10px;">
+      <tr><th>Line Interval</th><th>Effective DPI</th><th>Quality</th><th>Speed</th></tr>
+      <tr><td>0.2mm</td><td>127 DPI</td><td>Draft / fast preview</td><td>Fastest</td></tr>
+      <tr><td>0.1mm</td><td>254 DPI</td><td>Good general purpose</td><td>Moderate</td></tr>
+      <tr><td>0.075mm</td><td>339 DPI</td><td>High detail</td><td>Slower</td></tr>
+      <tr><td>0.05mm</td><td>508 DPI</td><td>Very high detail</td><td>Much slower</td></tr>
+      <tr><td>0.025mm</td><td>1016 DPI</td><td>Maximum (rarely needed)</td><td>Very slow</td></tr>
+    </table>
+    <p style="margin-top:8px;" class="muted">DPI = 25.4 / line interval (mm)</p>
+  </div>
+
+  <h2 class="section-heading">Dithering Modes for Photo Engraving</h2>
+  <table class="guide-table">
+    <tr><th>Mode</th><th>Best for</th><th>Characteristics</th></tr>
+    <tr>
+      <td><strong>Jarvis</strong></td>
+      <td>Portraits, gradients, general photos</td>
+      <td>Fine error-diffusion dither, smooth transitions, most natural-looking results on wood/slate</td>
+    </tr>
+    <tr>
+      <td><strong>Stucki</strong></td>
+      <td>High-contrast photos, text-heavy images</td>
+      <td>Slightly sharper than Jarvis, better edge definition, slightly more aggressive</td>
+    </tr>
+    <tr>
+      <td><strong>Newsprint (Halftone)</strong></td>
+      <td>Artistic / vintage look</td>
+      <td>Round dot halftone pattern — visible circular dots, retro newspaper effect</td></tr>
+    <tr>
+      <td><strong>Threshold</strong></td>
+      <td>Line art, logos, B&amp;W graphics</td>
+      <td>Pure on/off — pixel is either black or white, no dithering. Clean for crisp line art.</td>
+    </tr>
+    <tr>
+      <td><strong>Grayscale</strong></td>
+      <td>Shaded engravings, 3D-ish depth</td>
+      <td>Pixel brightness directly controls laser power — light pixels = less power, dark = more power</td>
+    </tr>
+    <tr>
+      <td><strong>Ordered</strong></td>
+      <td>Quick proofs</td>
+      <td>Fast computation, visible banding, lower quality — use for quick tests only</td>
+    </tr>
+    <tr>
+      <td><strong>Floyd-Steinberg</strong></td>
+      <td>Similar to Jarvis</td>
+      <td>Classic error-diffusion, slightly noisier than Jarvis but fast to compute</td>
+    </tr>
+  </table>
+
+  <h2 class="section-heading">Best Mode by Job Type</h2>
+  <table class="guide-table">
+    <tr><th>Job</th><th>Mode</th><th>Notes</th></tr>
+    <tr><td>SS304 stamp plates (fiber)</td><td><span class="accent">Line</span></td><td>Vector paths only, 1–3 passes for depth</td></tr>
+    <tr><td>Photo on anodized aluminum</td><td>Fill — Jarvis or Stucki</td><td>0.05–0.1mm interval, 500mm/s, 30% power</td></tr>
+    <tr><td>Logo on wood</td><td>Fill</td><td>0.1mm interval, 400mm/s, 25–30% power</td></tr>
+    <tr><td>Logo on wood (premium quality)</td><td>Fill + Line</td><td>Fill first, then outline — much crisper edges</td></tr>
+    <tr><td>Cutting acrylic</td><td>Line</td><td>Multiple passes, low speed, CO2 only</td></tr>
+    <tr><td>Text engraving on wood</td><td>Fill + Line</td><td>Cleaner edges than Fill alone</td></tr>
+    <tr><td>Portrait photo on wood</td><td>Fill — Jarvis</td><td>0.1mm interval, boost contrast before import</td></tr>
+    <tr><td>Deep pocket engraving</td><td>Fill (cross-hatch)</td><td>Run fill, then rotate 90° and run again</td></tr>
+    <tr><td>Leather surface mark</td><td>Fill — Threshold</td><td>Clean B&amp;W logo/text</td></tr>
+    <tr><td>Slate/stone marking</td><td>Fill — Jarvis</td><td>Invert image first (dark = engraved = shows white)</td></tr>
+  </table>
+
+  <h2 class="section-heading">Overscanning</h2>
+  <div class="card">
+    <h3>What is overscanning?</h3>
+    <p>When the laser reverses direction at the ends of scan lines, it slows down (decelerates) and then speeds back up. During this deceleration zone, if power isn't adjusted, the edges of your engraving can be over-burned (the laser dwells longer there).</p>
+    <p style="margin-top:8px;">Overscanning extends the laser's travel beyond the edge of your design so it's at full speed by the time it reaches the engraving. The laser is off during the extended travel.</p>
+    <ul style="margin-top:8px;">
+      <li>Set in Fill layer settings: <strong>Overscan %</strong> (typically 2–5%)</li>
+      <li>Higher speed = more overscan needed</li>
+      <li>Too little: burnt edges. Too much: wasted time.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Bi-Directional Scanning</h2>
+  <div class="card">
+    <p>By default, Fill mode only burns on the left-to-right pass and travels back on the right-to-left pass. Enabling <strong>bi-directional scanning</strong> burns on both passes — roughly 2× faster.</p>
+    <div class="tip-box warning" style="margin-top:12px;">
+      <strong>Check for alignment offset</strong>
+      Bi-directional scanning can produce slight offset between alternating lines if your machine has backlash or timing issues. Run a test: engrave a fine-detail image and check if lines are perfectly aligned. If not, use the <strong>Scanning Offset Adjustment</strong> tool (Edit &gt; Machine Settings) to calibrate.
+    </div>
+  </div>
+
+  <h2 class="section-heading">Cross-Hatch Engraving</h2>
+  <div class="card">
+    <p>Run Fill mode twice on the same layer — once at 0° and once at 90°. This creates a cross-hatch pattern that:</p>
+    <ul style="margin-top:8px;">
+      <li>Engraves deeper than a single pass</li>
+      <li>Looks more uniform — hides linear banding</li>
+        <li>Works well for deep pocket engraving on wood, MDF, and acrylic</li>
+      <li>Enable via: layer settings &gt; <strong>Crosshatch</strong> checkbox — Lightburn handles the 90° rotation automatically</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Combining Line + Fill in One Job</h2>
+  <p>You can have multiple layers with different modes in a single job. Common workflow for stamp logos:</p>
+  <div class="card">
+    <ol style="padding-left:20px;">
+      <li style="margin-bottom:8px;">Create your design with all paths on a <strong>black layer</strong> (Line mode, SS304 settings)</li>
+      <li style="margin-bottom:8px;">Add a bounding rectangle on a <strong>red layer</strong> (Line mode, cut settings) — to cut out the stamp blank after engraving</li>
+      <li style="margin-bottom:8px;">Order layers: black (engrave) runs first, red (cut) runs last</li>
+      <li>One job = engraved stamp + cut to shape</li>
+    </ol>
+  </div>
+
+</div><!-- /tab-panel-5 -->
+
+
+<!-- ============================================================ TAB 6 -->
+<div id="tab-panel-6" class="tab-panel">
+
+  <h2 class="section-heading">Material Settings Reference (India-Focused)</h2>
+  <p>These settings are starting points for a 20W fiber laser (for metals) and a 40W CO2 (for non-metals). Always run a test matrix first — your exact machine will vary. All speeds in mm/s, power in %.</p>
+
+  <div class="tip-box warning">
+    <strong>These are starting point settings only</strong>
+    Laser output varies by machine age, lens condition, power supply quality, and ambient temperature. Run a 5×5 power/speed test matrix before committing to production settings on any new material or machine.
+  </div>
+
+  <!-- SS304 -->
+  <h2 class="section-heading">SS304 Mirror Finish (Stamp Plates) <span class="badge badge-blue">Fiber Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Mode</td><td>Line</td></tr>
+    <tr><td>Speed</td><td>200 mm/s</td></tr>
+    <tr><td>Max Power</td><td>60%</td></tr>
+    <tr><td>Frequency</td><td>30 kHz</td></tr>
+    <tr><td>Passes</td><td>1–3 (more = deeper)</td></tr>
+    <tr><td>Expected result</td><td>Dark grey/black mark, recessed 0.05–0.1mm per pass</td></tr>
+  </table>
+  <div class="two-col">
+    <div class="card">
+      <h3>India Sourcing</h3>
+      <ul>
+        <li>IndiaMART — search "SS304 mirror finish sheet"</li>
+        <li>Local steel/metal suppliers in industrial areas</li>
+        <li>Mumbai: Kurla, Dharavi metal market</li>
+        <li>Delhi: Wazirpur industrial area</li>
+        <li>Price: <span class="price-tag">₹400–700/sheet</span> (300×300mm)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Notes</h3>
+      <ul>
+        <li>Mirror finish gives deepest, crispest marks</li>
+        <li>Clean with IPA before engraving</li>
+        <li>Do not touch surface — fingerprints affect mark quality</li>
+        <li>Use lens wipes to clean optics before long runs</li>
+        <li>Test different frequencies: 20kHz vs 40kHz gives very different results</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mild Steel -->
+  <hr class="divider">
+  <h2 class="section-heading">Mild Steel <span class="badge badge-blue">Fiber Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Mode</td><td>Line</td></tr>
+    <tr><td>Speed</td><td>150 mm/s</td></tr>
+    <tr><td>Max Power</td><td>70%</td></tr>
+    <tr><td>Frequency</td><td>25 kHz</td></tr>
+    <tr><td>Passes</td><td>2</td></tr>
+    <tr><td>Result</td><td>Dark oxidized mark, slightly rough surface</td></tr>
+  </table>
+  <p>India source: Hardware shops, local steel stockists. <span class="price-tag">₹200–400/sheet</span></p>
+
+  <!-- Anodized Aluminum -->
+  <hr class="divider">
+  <h2 class="section-heading">Anodized Aluminum (Black) <span class="badge badge-blue">Fiber Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Mode</td><td>Fill or Line</td></tr>
+    <tr><td>Speed</td><td>500 mm/s</td></tr>
+    <tr><td>Max Power</td><td>30%</td></tr>
+    <tr><td>Frequency</td><td>50 kHz</td></tr>
+    <tr><td>Passes</td><td>1</td></tr>
+    <tr><td>Result</td><td>Removes black anodizing, reveals bright silver aluminum underneath</td></tr>
+  </table>
+  <p>India source: Amazon.in (search "anodized aluminum sheet"), hardware shops. <span class="price-tag mid">₹300–600/sheet</span></p>
+  <div class="tip-box info">
+    <strong>Anodized aluminum tip</strong>
+    High frequency (50kHz+) and fast speed prevents penetrating through the anodizing into the base aluminum. You want surface removal only. Test: if you see deep gouges, reduce power or increase speed.
+  </div>
+
+  <!-- Brass -->
+  <hr class="divider">
+  <h2 class="section-heading">Brass <span class="badge badge-blue">Fiber Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Mode</td><td>Line</td></tr>
+    <tr><td>Speed</td><td>150 mm/s</td></tr>
+    <tr><td>Max Power</td><td>65%</td></tr>
+    <tr><td>Frequency</td><td>30 kHz</td></tr>
+    <tr><td>Passes</td><td>1</td></tr>
+    <tr><td>Result</td><td>Dark brown/black oxidized mark, good contrast on polished brass</td></tr>
+  </table>
+  <p>India source: Jewellery supply shops, Mumbai Zaveri Bazaar area. <span class="price-tag">₹600–1200/sheet</span> depending on thickness</p>
+
+  <!-- Copper -->
+  <hr class="divider">
+  <h2 class="section-heading">Copper <span class="badge badge-blue">Fiber Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Parameter</th><th>Value</th></tr>
+    <tr><td>Mode</td><td>Line</td></tr>
+    <tr><td>Speed</td><td>100 mm/s</td></tr>
+    <tr><td>Max Power</td><td>80%</td></tr>
+    <tr><td>Frequency</td><td>20 kHz</td></tr>
+    <tr><td>Passes</td><td>2</td></tr>
+    <tr><td>Result</td><td>Dark mark on copper — harder to mark than steel</td></tr>
+  </table>
+  <div class="tip-box danger">
+    <strong>Copper is highly reflective</strong>
+    Copper reflects laser energy at 1064nm (fiber wavelength) very efficiently. High power settings can reflect back and damage your laser head. Start low, test carefully. Some copper alloys mark much more easily than pure copper.
+  </div>
+
+  <!-- Acrylic -->
+  <hr class="divider">
+  <h2 class="section-heading">Acrylic (Clear / Cast) <span class="badge badge-orange">CO2 Laser Only</span></h2>
+  <div class="tip-box danger">
+    <strong>Fiber lasers cannot cut acrylic</strong>
+    1064nm fiber laser light passes through acrylic — you need a CO2 laser (10.6µm wavelength) to cut or engrave acrylic. Diode lasers also cannot cut most clear acrylics.
+  </div>
+  <table class="guide-table">
+    <tr><th>Operation</th><th>Speed</th><th>Power</th><th>Passes</th><th>Notes</th></tr>
+    <tr><td>Engrave (surface)</td><td>300 mm/s</td><td>15%</td><td>1</td><td>Frosted/white mark on clear acrylic</td></tr>
+    <tr><td>Cut 3mm</td><td>8 mm/s</td><td>85%</td><td>2</td><td>40W CO2. Mask with paper tape first.</td></tr>
+    <tr><td>Cut 5mm</td><td>5 mm/s</td><td>90%</td><td>3</td><td>40W CO2. May need 3–4 passes.</td></tr>
+    <tr><td>Cut 3mm (Cast)</td><td>10 mm/s</td><td>80%</td><td>2</td><td>Cast acrylic cuts cleaner than extruded</td></tr>
+  </table>
+  <p>India source: Acrylic sheets from hardware/signage shops, Amazon.in. <span class="price-tag mid">₹150–300/sheet</span> (3mm A4 size)</p>
+
+  <!-- Wood -->
+  <hr class="divider">
+  <h2 class="section-heading">Wood / Plywood <span class="badge badge-orange">CO2 / Diode Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Operation</th><th>Speed</th><th>Power</th><th>Passes</th><th>Notes</th></tr>
+    <tr><td>Engrave 3mm ply</td><td>400 mm/s</td><td>25%</td><td>1</td><td>40W CO2. Light brown mark, 0.1mm interval.</td></tr>
+    <tr><td>Deep engrave</td><td>200 mm/s</td><td>40%</td><td>2</td><td>Darker, deeper pocket — good for nameplates</td></tr>
+    <tr><td>Cut 3mm ply</td><td>15 mm/s</td><td>80%</td><td>2</td><td>40W CO2. Use air assist for clean cuts.</td></tr>
+    <tr><td>Cut 6mm ply</td><td>8 mm/s</td><td>90%</td><td>3</td><td>40W CO2. May warp on thin ply.</td></tr>
+    <tr><td>Engrave (diode 20W)</td><td>3000 mm/min</td><td>50%</td><td>1</td><td>Check diode-specific settings (mm/min not mm/s)</td></tr>
+  </table>
+  <p>India source: Hardware stores, timber yards, Amazon.in (Birch ply best for laser). <span class="price-tag mid">₹80–200/sheet</span> (3mm A4)</p>
+
+  <!-- Leather -->
+  <hr class="divider">
+  <h2 class="section-heading">Leather <span class="badge badge-orange">CO2 / Diode Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Operation</th><th>Speed</th><th>Power</th><th>Notes</th></tr>
+    <tr><td>Surface engrave</td><td>300 mm/s</td><td>20%</td><td>Darkens leather surface, good for logos</td></tr>
+    <tr><td>Deep engrave</td><td>150 mm/s</td><td>35%</td><td>More pronounced mark, slight 3D effect</td></tr>
+    <tr><td>Cut (thin leather)</td><td>20 mm/s</td><td>70%</td><td>1–2mm leather. Air assist helps cut quality.</td></tr>
+  </table>
+  <div class="tip-box danger">
+    <strong>Do NOT laser PVC or synthetic "leather"</strong>
+    PVC (vinyl leather, faux leather) releases chlorine gas when lasered — toxic and corrosive to your machine. Only laser genuine vegetable-tanned leather or label-confirmed "laser-safe" materials.
+  </div>
+  <p>India source: Local leather markets (Mumbai: Dharavi; Chennai: Thousand Lights area). <span class="price-tag mid">₹200–500 per piece</span></p>
+
+  <!-- MDF -->
+  <hr class="divider">
+  <h2 class="section-heading">MDF <span class="badge badge-orange">CO2 / Diode Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Operation</th><th>Speed</th><th>Power</th><th>Notes</th></tr>
+    <tr><td>Engrave</td><td>400 mm/s</td><td>30%</td><td>Light mark. MDF engrave looks beige/light brown.</td></tr>
+    <tr><td>Cut 3mm</td><td>12 mm/s</td><td>85%</td><td>MDF cuts slower than ply due to density</td></tr>
+  </table>
+  <div class="tip-box warning">
+    <strong>MDF releases formaldehyde when cut</strong>
+    Ensure good ventilation. Run MDF jobs with exhaust fan on maximum. Not recommended in enclosed spaces without proper extraction.
+  </div>
+
+  <!-- Glass -->
+  <hr class="divider">
+  <h2 class="section-heading">Glass (Surface Marking) <span class="badge badge-orange">CO2 Laser</span></h2>
+  <table class="guide-table">
+    <tr><th>Operation</th><th>Speed</th><th>Power</th><th>Notes</th></tr>
+    <tr><td>Surface mark</td><td>600 mm/s</td><td>20%</td><td>Frosted white mark. Fill mode. 0.1mm interval.</td></tr>
+    <tr><td>Deep marking</td><td>300 mm/s</td><td>30%</td><td>Deeper frost — good for drinkware logos</td></tr>
+  </table>
+  <div class="tip-box info">
+    <strong>Glass marking tip</strong>
+    Apply a thin layer of dish soap or a wet paper towel over the glass before engraving — it prevents micro-cracking (thermal shock) and produces a smoother frosted finish. Wipe off after engraving. This technique is called "wet engraving."
+  </div>
+
+  <!-- Material Library -->
+  <hr class="divider">
+  <h2 class="section-heading">Saving Material Profiles in Lightburn</h2>
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content">Go to <strong>Window &gt; Material Library</strong> to open the library panel.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content">Click <strong>New Entry</strong>. Give it a descriptive name: "SS304 Mirror 200mm/s 60% 30kHz - 20W"</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content">Set up your layer in Cuts/Layers with the correct settings. Then in the library, click <strong>Save from Layer</strong>.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content">Add notes in the description field: date tested, machine, thickness, result observations.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content">To reuse: select a layer in Cuts/Layers, find your library entry, click <strong>Assign to Layer</strong>. All settings are instantly applied.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">6</div>
+    <div class="step-content">Export your library (Library &gt; Export) and back it up! The library is stored locally and can be lost if you reinstall.</div>
+  </div>
+
+  <!-- Power supply India note -->
+  <hr class="divider">
+  <h2 class="section-heading">India Power Supply Note</h2>
+  <div class="card">
+    <h3>Protecting Your Fiber Laser in India</h3>
+    <p>Fiber lasers are sensitive to power fluctuations. Indian power supply can have voltage spikes, brownouts, and frequency variation — especially in industrial areas.</p>
+    <ul style="margin-top:10px;">
+      <li><strong>Fiber lasers are 220–240V:</strong> compatible with Indian standard power — no transformer needed</li>
+      <li><strong>Get a UPS (Uninterruptible Power Supply):</strong> ₹5,000–8,000 range. Look for pure sine wave output — cheaper UPSes output modified sine wave which can damage laser electronics</li>
+      <li><strong>Recommended UPS:</strong> APC Back-UPS Pro, Luminous Sine-wave models, or V-Guard. Minimum 1500VA for a 20W fiber system.</li>
+      <li><strong>Voltage stabilizer:</strong> Add a servo-based stabilizer (₹2,000–4,000) if your area has wide voltage swings</li>
+      <li><strong>Earthing:</strong> Ensure your workshop has proper 3-pin earthed power. Laser metal frames can become live on floating earth — dangerous and affects mark quality</li>
+      <li><strong>Dedicated circuit:</strong> Run your laser on its own MCB (circuit breaker) — don't share with other high-draw equipment</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Running a Test Matrix — Step by Step</h2>
+  <p>The power/speed matrix test is the most important step when working with any new material. Do this before every new material, and after any machine maintenance.</p>
+  <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-content"><strong>Prepare material scrap</strong> — use a 100×100mm piece of your target material.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-content"><strong>Open Material Test tool:</strong> Tools &gt; Material Test. OR manually create a 5×5 grid of 10×10mm squares, each with a different layer color.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-content"><strong>Set ranges:</strong> Speed axis: 5 steps across your expected range. Power axis: 5 steps from conservative to aggressive. Example for SS304: Speed 100/150/200/250/300 mm/s, Power 40/50/60/70/80%.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-content"><strong>Run the test</strong> — take 5–10 minutes. Ventilate properly. Stay present during the job.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-content"><strong>Evaluate results:</strong> Look for the mark that has the depth and contrast you want. Note the row/column — that's your speed and power target. Write it down and save to Material Library immediately.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-num">6</div>
+    <div class="step-content"><strong>Repeat for passes:</strong> Once you have speed/power, run a second test varying passes (1/2/3/4) to dial in depth for stamp plates.</div>
+  </div>
+
+</div><!-- /tab-panel-6 -->
+
+</div><!-- /content -->
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  var panel=document.getElementById('tab-panel-'+n);
+  if(panel) panel.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===n-1)b.classList.add('active');});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+
+
+
+
+<!-- ============================================================ TAB 7 -->
+<div id="tab-panel-7" class="tab-panel">
+
+  <h2 class="section-heading">Lightburn Camera System</h2>
+  <p>The Lightburn camera system mounts a USB camera above your laser bed and overlays a live image onto the workspace canvas. This lets you see your actual material, position designs visually on top of it, and verify exactly where the laser will fire before starting any job.</p>
+
+  <div class="tip-box">
+    <strong>Why it matters for stamp plate production</strong>
+    You can place a pre-scored SS304 sheet on the bed, see it live in Lightburn, and drag your stamp designs precisely onto specific areas — no more guessing or measuring with rulers.
+  </div>
+
+  <h2 class="section-heading">Setting Up the Camera</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <strong>Open Camera Control panel</strong>
+        Go to <strong>Window &gt; Camera Control</strong>. A panel opens showing the camera feed. Select your USB camera from the dropdown.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <strong>Lens Calibration (checkerboard method)</strong>
+        Print the checkerboard pattern from Lightburn docs. Place it flat on the bed, photograph it at 9 positions (center + 8 corners). Lightburn calculates lens distortion and corrects barrel/pincushion warping.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <strong>Alignment Calibration (burn 4 marks)</strong>
+        Click <strong>Update Overlay</strong>, then use Lightburn to burn 4 small dots at known corner positions on your bed. Photograph the marks, click each burned dot on the image, confirm alignment. Lightburn now maps camera pixels to real bed coordinates.
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <strong>Enable Overlay</strong>
+        Click <strong>Update Overlay</strong> after placing material. The canvas shows your bed contents live. Drag designs onto material.
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Camera Recommendations</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Lightburn-Branded Cameras</h3>
+      <ul>
+        <li>Available on Amazon.in: <strong>₹3,000–5,000</strong></li>
+        <li>Pre-configured field-of-view options (60°, 90°, 120°, 140°, 160°)</li>
+        <li>Mount height determines which angle to buy</li>
+        <li>90° or 120° suits most hobby enclosures</li>
+        <li>USB plug-and-play, no drivers needed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Generic USB Webcams (Budget Option)</h3>
+      <ul>
+        <li>Any 720p or 1080p USB webcam works</li>
+        <li>Logitech C270 / C310 — widely available in India, ~₹1,500–2,500</li>
+        <li>Fixed-focus preferred (autofocus can drift)</li>
+        <li>May need manual lens distortion calibration (a few extra clicks)</li>
+        <li>Works fine for general positioning tasks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>India-specific tip — floor vibration dampening</strong>
+    Indian workshop floors (especially ground floor concrete) transmit vibration from nearby machinery. A camera that shifts even 1mm between calibration and use creates alignment error. Mount your camera on a rubber or foam pad. Re-calibrate alignment after any physical disturbance to the mount.
+  </div>
+
+  <h2 class="section-heading">Framing Without a Camera</h2>
+  <p>Even without a camera, you can verify job position using <strong>Frame</strong> mode. The laser traces the bounding outline of your job at safe speed with the beam off (or red pointer active on some machines).</p>
+
+  <table class="guide-table">
+    <tr><th>Method</th><th>Shortcut</th><th>What it does</th></tr>
+    <tr><td>Frame (bounding box)</td><td><kbd>~</kbd> (tilde)</td><td>Traces rectangular outline of the entire job area</td></tr>
+    <tr><td>Frame (actual shape)</td><td>Hold Shift + Frame button</td><td>Traces actual vector paths at low speed</td></tr>
+    <tr><td>Frame single layer</td><td>Right-click layer &gt; Frame</td><td>Frames only that layer's objects</td></tr>
+  </table>
+
+  <h2 class="section-heading">Origin Settings — Critical for Positioning</h2>
+  <p>How Lightburn interprets "where to start the job" is controlled by the <strong>Start From</strong> setting in the Laser panel.</p>
+
+  <table class="guide-table">
+    <tr><th>Mode</th><th>When to use</th><th>Notes</th></tr>
+    <tr><td><strong>Absolute Coords</strong></td><td>Job always runs at same coordinates on the bed</td><td>Best for batch production — sheet goes to exact same position every time</td></tr>
+    <tr><td><strong>User Origin</strong></td><td>You manually set a start point (Set User Origin button)</td><td>Good when you need a consistent corner reference without full bed coordinates</td></tr>
+    <tr><td><strong>Current Position</strong></td><td>Job starts wherever laser head is now</td><td>Fastest for one-off tests but not reproducible</td></tr>
+  </table>
+
+  <h2 class="section-heading">Job Origin — 9-Point Grid</h2>
+  <p>The 9-point Job Origin grid tells Lightburn which corner/edge/center of the design to anchor to the Start From point.</p>
+
+  <div class="card">
+    <h3>When to use each Job Origin</h3>
+    <ul>
+      <li><strong>Top-left (default):</strong> Standard for most jobs — design expands right and down from origin</li>
+      <li><strong>Center:</strong> Useful for stamp plates — center design on material center mark</li>
+      <li><strong>Bottom-right:</strong> Some machines home bottom-right; use to match machine origin</li>
+      <li><strong>Stamp plate tip:</strong> Use <em>Center</em> origin when working with pre-cut 60×60mm blanks — position laser at plate center, set User Origin, run job. Design auto-centers on blank.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Rotary Setup</h2>
+  <p>For engraving cylindrical objects (tumblers, pens, rings), Lightburn has a Rotary mode that replaces Y-axis movement with rotary motor rotation.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>Go to <strong>Window &gt; Rotary Setup</strong></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>Select rotary type: <strong>Chuck</strong> (holds cylinder end) or <strong>Roller</strong> (object rests on rollers)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>Enter the <strong>object circumference</strong> (diameter × π) or let Lightburn calculate from diameter</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>Enable <strong>Enable Rotary</strong> checkbox — Y-axis is now remapped to rotation</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>Always disable rotary mode when returning to flat bed work</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Focus — Getting the Focal Point Right</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Manual Focus (Focus Card / Tool Method)</h3>
+      <ul>
+        <li>Most fiber/galvo machines ship with a <strong>focus card</strong> (small metal gauge)</li>
+        <li>Lower Z-axis until card fits snugly between nozzle and material</li>
+        <li>Alternatively: run a <strong>ramp test</strong> — engrave a line on angled material, sharpest line = focal point</li>
+        <li>Mark the Z height in Lightburn and set as default for that material thickness</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Autofocus (if machine supports Z-axis)</h3>
+      <ul>
+        <li>Some CO2 machines have motorized Z + autofocus sensor</li>
+        <li>Enable in <strong>Edit &gt; Device Settings &gt; Z-axis control</strong></li>
+        <li>Set material thickness in job settings — Lightburn adjusts Z automatically</li>
+        <li>Most fiber galvo systems have <strong>fixed focal length</strong> — manual focus only</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Laser Bed Alignment Check</h2>
+  <p>Before precision work, verify the laser head moves square to the bed surface using this simple check:</p>
+  <ul>
+    <li>Draw a 100×100mm square in Lightburn</li>
+    <li>Run Frame mode — laser traces the square</li>
+    <li>Use a ruler: measure diagonals of the traced square. If both diagonals are equal, bed is square</li>
+    <li>If not equal: mechanical adjustment needed (gantry squaring, belt tension)</li>
+    <li>For galvo/fiber: use the <strong>Field Correction</strong> calibration file in Lightburn galvo settings</li>
+  </ul>
+
+</div><!-- /tab-panel-7 -->
+
+<!-- ============================================================ TAB 8 -->
+<div id="tab-panel-8" class="tab-panel">
+
+  <h2 class="section-heading">Optimization Settings Overview</h2>
+  <p>Lightburn's optimization engine controls the order in which the laser executes cuts, how far it travels between cuts, and how it approaches each path. Poor optimization adds minutes of wasted travel time to every job.</p>
+  <p>Access via: <strong>Edit &gt; Device Settings &gt; Additional Settings</strong> or the <strong>Optimization Settings</strong> button in the Laser panel.</p>
+
+  <h2 class="section-heading">Cut Order Optimization</h2>
+  <table class="guide-table">
+    <tr><th>Setting</th><th>What it does</th><th>Recommended?</th></tr>
+    <tr><td><strong>Order by Layer</strong></td><td>Completes all objects in one layer before moving to next</td><td>Yes — for multi-layer stamp jobs (engrave then cut)</td></tr>
+    <tr><td><strong>Order by Group</strong></td><td>Completes each group before moving on</td><td>Yes — for batch stamp designs (group each plate)</td></tr>
+    <tr><td><strong>Order by Priority</strong></td><td>User-defined numbered priority per object</td><td>Advanced use only</td></tr>
+    <tr><td><strong>Reduce Travel Moves</strong></td><td>Reorders cuts to minimize laser travel distance</td><td>Always enable — major time saver</td></tr>
+    <tr><td><strong>Inner Before Outer</strong></td><td>Cuts inner shapes before outer boundary</td><td>Always enable for nested shapes</td></tr>
+    <tr><td><strong>Remove Overlapping Lines</strong></td><td>Eliminates duplicate lines at shape junctions</td><td>Enable for DXF imports</td></tr>
+  </table>
+
+  <div class="tip-box">
+    <strong>Inner before outer — critical for stamp plates</strong>
+    If you have text inside a rectangular plate border, Lightburn must engrave the inner text paths before cutting the outer border. Without this setting, the plate border cut causes the piece to shift, making inner details misaligned.
+  </div>
+
+  <h2 class="section-heading">Job Time Estimation</h2>
+  <p>Lightburn estimates job time before you run — check the <strong>Laser panel time display</strong> after loading a job. This is accurate to within 5-10% for most jobs.</p>
+
+  <div class="card">
+    <h3>Factors that affect job time</h3>
+    <ul>
+      <li><strong>Speed:</strong> Higher speed = shorter time, but quality may drop</li>
+      <li><strong>Travel distance:</strong> Reduce with optimization settings</li>
+      <li><strong>Raster DPI:</strong> Higher DPI = more scan lines = more time</li>
+      <li><strong>Number of passes:</strong> Each pass multiplies time linearly</li>
+      <li><strong>Acceleration:</strong> Machine acceleration limits actual top speed on short segments</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Speeding Up Raster Engraving</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Increase Scan Speed</h3>
+      <ul>
+        <li>For CO2: can often run 400–800mm/s for photos</li>
+        <li>For fiber galvo: 1000–3000mm/s is normal for raster fills</li>
+        <li>Test first — going too fast reduces mark depth</li>
+        <li>Compensate by increasing power slightly</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Reduce DPI / Line Interval</h3>
+      <ul>
+        <li>Default 254 DPI → try 200 DPI for quick proofs</li>
+        <li>Line interval: 0.1mm (254 DPI) → 0.15mm (169 DPI) saves ~33% time</li>
+        <li>For stamp plates: 0.05–0.08mm line interval gives sharp detail</li>
+        <li>For photo engraving: 0.08–0.12mm is usually sufficient</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Power Ramp Test — Finding Minimum Threshold</h2>
+  <p>Every laser has a minimum power level below which it fires weakly or inconsistently. Use the <strong>Power Scale Test</strong> (Tools menu) to find this threshold for each material.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>Go to <strong>Tools &gt; Material Test</strong> (or Power Scale Test)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>Set min power (e.g., 10%), max power (e.g., 80%), number of steps (8–10)</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>Also vary speed across columns — creates a power/speed matrix</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>Run on scrap SS304 — examine results under magnifying glass or phone camera</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>Identify the <em>lowest power that still makes a consistent mark</em> — set this as your Min Power in layer settings</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Fill Offset — Thickening / Thinning Engraved Lines</h2>
+  <p>In <strong>Fill</strong> or <strong>Offset Fill</strong> mode, the <strong>Fill Offset</strong> parameter expands or contracts the filled area, effectively making engraved lines appear thicker or thinner without changing the original design.</p>
+  <ul>
+    <li>Positive offset: expands fill outward — thicker appearance</li>
+    <li>Negative offset: shrinks fill inward — thinner/lighter appearance</li>
+    <li>Use +0.05 to +0.1mm offset for stamp designs that look too light after engraving</li>
+  </ul>
+
+  <h2 class="section-heading">Grouping Strategies for Batch Stamp Production</h2>
+  <table class="guide-table">
+    <tr><th>Strategy</th><th>How to do it</th><th>Benefit</th></tr>
+    <tr><td>Group per design</td><td>Select all paths of one stamp → Ctrl+G</td><td>Move/resize each stamp as a unit</td></tr>
+    <tr><td>Array Tool</td><td>Select design → Edit &gt; Array</td><td>Creates grid of copies with defined spacing automatically</td></tr>
+    <tr><td>Step-and-Repeat</td><td>Copy (Ctrl+C) → Paste in Place → shift by plate dimension</td><td>Manual control over exact spacing</td></tr>
+    <tr><td>Nest shapes</td><td>Arrange &gt; Nest shapes</td><td>Automatically packs irregular designs to minimize material waste</td></tr>
+  </table>
+
+  <h2 class="section-heading">Array Tool — 6 Stamp Plates in One Job</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>Design or import one stamp at 40×60mm</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>Select all elements of the design → <strong>Ctrl+G</strong> to group</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>Go to <strong>Edit &gt; Array</strong> — set 2 columns, 3 rows</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>Set X spacing: 44mm (40mm plate + 4mm gap), Y spacing: 64mm</div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div>Total area: 88×192mm — fits on a standard 100×200mm SS304 sheet</div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div>All 6 copies inherit the same layer settings — run once, get 6 identical plates</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Tabs and Bridges</h2>
+  <p>When cutting pieces from sheet material, small parts can fall through or shift before the cut completes. <strong>Tabs</strong> leave tiny uncut bridges that hold the piece in place.</p>
+  <ul>
+    <li>Edit &gt; Add Tabs — set tab width (0.5–1mm) and number per shape</li>
+    <li>After job: snap tabs with a blade or pliers</li>
+    <li>Not commonly needed for engraving-only stamp plates (no through-cuts)</li>
+    <li>Useful if cutting aluminum or acrylic blanks to size with the laser</li>
+  </ul>
+
+  <h2 class="section-heading">Lead-In / Lead-Out</h2>
+  <p>Smooth cut entry prevents burn marks or dents at the start/end of a curved cut path.</p>
+  <ul>
+    <li>Available in <strong>Cut Settings Editor</strong> for each layer (Line mode)</li>
+    <li>Lead-in: laser approaches the cut line at an angle before tracing the shape</li>
+    <li>Lead-out: laser exits the cut line at an angle after completing the shape</li>
+    <li>Common for cutting acrylic or wood with CO2 — less relevant for fiber metal marking</li>
+  </ul>
+
+  <h2 class="section-heading">Batch Stamp Plate Production Profile</h2>
+  <div class="card" style="border-color:#00b4d8;">
+    <h3 style="color:#00b4d8;">Step-by-Step: Run a Batch of 6 Stamp Plates</h3>
+    <ol style="line-height:2.2;">
+      <li>Import 6 different stamp SVG designs into Lightburn</li>
+      <li>Resize each to 40×60mm, group each design</li>
+      <li>Arrange with 4mm gaps — use <strong>Arrange &gt; Distribute Evenly</strong></li>
+      <li>Add registration mark (small cross) at top-left corner on a separate layer (no power — for camera alignment only)</li>
+      <li>Assign all designs to <strong>Layer 00</strong>: Speed 200mm/s, Power 60%, Freq 30kHz, 1 pass</li>
+      <li>Place SS304 sheet on bed, align corner to machine origin</li>
+      <li>Press <kbd>~</kbd> (Frame) — verify all 6 designs are on the sheet</li>
+      <li>Enable Optimization: Inner before outer, Reduce travel, Order by group</li>
+      <li>Estimated time: ~18–25 minutes for 6 moderate-complexity designs</li>
+      <li>Run job. Clean each plate with IPA when done.</li>
+    </ol>
+  </div>
+
+  <h2 class="section-heading">Quality vs Time Trade-offs</h2>
+  <table class="guide-table">
+    <tr><th>Setting change</th><th>Time impact</th><th>Quality impact</th></tr>
+    <tr><td>DPI 254 → 169</td><td>−35%</td><td>Slightly less sharp edges</td></tr>
+    <tr><td>Speed +20%</td><td>−17%</td><td>Marginally lighter mark</td></tr>
+    <tr><td>1 pass → 2 passes</td><td>+100%</td><td>Deeper, darker mark</td></tr>
+    <tr><td>Enable optimization</td><td>−10 to −30%</td><td>No quality change</td></tr>
+    <tr><td>Freq 30kHz → 50kHz</td><td>No change</td><td>Finer, lighter line on SS304</td></tr>
+  </table>
+
+</div><!-- /tab-panel-8 -->
+
+<!-- ============================================================ TAB 9 -->
+<div id="tab-panel-9" class="tab-panel">
+
+  <h2 class="section-heading">Stamp Plate Complete Workflow</h2>
+  <p>This tab is the practical core of this guide. Three complete workflows covering the most common scenarios for producing SS304 stamp plates with a fiber/MOPA laser and Lightburn.</p>
+
+  <!-- WORKFLOW A -->
+  <div class="card" style="border-left: 4px solid #00b4d8; margin-bottom:24px;">
+    <h3 style="color:#00b4d8;">Workflow A — SVG from Stamp Plate SVG Studio App</h3>
+    <p style="color:#8b949e; margin-bottom:12px;">Best path: purpose-built designs, clean vectors, fastest route to finished plate.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div><strong>Generate design in SVG Studio</strong> — open the Stamp Plate SVG Studio app, choose or trace a design, configure text/border, download the SVG file to your computer.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div><strong>Import into Lightburn</strong> — <strong>File &gt; Import</strong> (or Ctrl+I), select the SVG. Design appears on canvas.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div><strong>Check and set dimensions</strong> — click design, check W×H in toolbar. Resize to <strong>40×60mm</strong> (standard) or <strong>60×60mm</strong> (square) by typing exact values. Lock aspect ratio only if design is symmetric.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div><strong>Assign layer settings</strong> — design should be on a single color layer. In the Cuts/Layers panel, click the layer, set: <strong>Mode: Line</strong>, <strong>Speed: 200 mm/s</strong>, <strong>Power: 60%</strong>, <strong>Frequency: 30 kHz</strong>, <strong>Passes: 1</strong>.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div><strong>Place SS304 sheet on bed</strong> — clean surface with IPA, place firmly. Focus the laser using the focus card/gauge for your fiber machine.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div><strong>Frame the job</strong> — press <kbd>~</kbd> (tilde). Laser traces bounding box. Confirm design is positioned on the steel, not hanging off edges.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div><strong>Run test pass at reduced power</strong> — temporarily set power to 20%, run job on a corner of scrap material or the plate corner. Inspect mark visibility.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">8</div>
+        <div><strong>Run full job at correct settings</strong> — restore 60% power. Press <strong>Start</strong> in the Laser panel.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">9</div>
+        <div><strong>Inspect and clean</strong> — wipe plate with IPA on a lint-free cloth. Inspect under bright light (angled lighting reveals depth). Re-run at higher power if mark is too light.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW B -->
+  <div class="card" style="border-left: 4px solid #3fb950; margin-bottom:24px;">
+    <h3 style="color:#3fb950;">Workflow B — Batch Production: Multiple Designs on One Plate</h3>
+    <p style="color:#8b949e; margin-bottom:12px;">Maximize material use. Run 4–6 different designs on a single SS304 sheet.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div><strong>Import all designs</strong> — import 4–6 SVGs. Each appears stacked at origin; drag them apart.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div><strong>Arrange with consistent spacing</strong> — use <strong>Edit &gt; Arrange &gt; Distribute Horizontally / Vertically</strong> to evenly space designs. Leave 4–5mm gap between plates.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div><strong>Add corner registration marks</strong> — draw a small cross (+) at each corner of the full layout on a separate layer set to very low power (or no-output). These help re-align if you need to run a second pass.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div><strong>Assign all designs to the same layer</strong> — select all stamp design paths, assign to Layer 00. Set Speed: 200mm/s, Power: 60%, Freq: 30kHz.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div><strong>Frame and run</strong> — frame to verify all designs land on the steel sheet. Run full job. Expected time for 4–6 mid-complexity designs: 20–35 minutes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW C -->
+  <div class="card" style="border-left: 4px solid #f78166; margin-bottom:24px;">
+    <h3 style="color:#f78166;">Workflow C — Customer Logo (Image → Trace → Engrave)</h3>
+    <p style="color:#8b949e; margin-bottom:12px;">Customer sends a PNG or JPG logo. Convert to vector paths in Lightburn.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div><strong>Import the image</strong> — <strong>File &gt; Import</strong>, select PNG/JPG. Image appears on canvas as a bitmap (not yet vector).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div><strong>Trace image to vectors</strong> — select image, go to <strong>Tools &gt; Trace Image</strong>. Adjust <strong>Threshold</strong> slider until you see a clean outline of the logo (no stray pixels, no missing detail). Click <strong>OK</strong>.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div><strong>Delete the original bitmap</strong> — the trace creates new vector paths on top of the image. Click the original image, delete it. Only vector paths remain.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div><strong>Clean up nodes if needed</strong> — switch to Node Edit tool (<kbd>F2</kbd>). Remove stray nodes, smooth jagged curves. For text in logos: if trace result looks bad, re-type in Lightburn using a similar font.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div><strong>Assign to Line layer</strong> — set Mode: Line, Speed: 200mm/s, Power: 60%, Freq: 30kHz. For logos with fill areas, use Mode: Fill, Speed: 500mm/s, Power: 45%.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div><strong>Proof on paper or cardboard first</strong> — run at 5% power on paper to verify the shape looks correct before committing to steel.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Reference Card -->
+  <h2 class="section-heading">SS304 Settings Reference Card</h2>
+  <p>These are starting point settings for a 20W–30W MOPA fiber laser at standard 110mm×110mm field size and correct focal length. Your machine will vary — always run a ramp test first.</p>
+
+  <table class="guide-table">
+    <tr><th>Job Type</th><th>Speed</th><th>Power</th><th>Frequency</th><th>Passes</th><th>Result</th></tr>
+    <tr><td><strong>Outline only</strong></td><td>250 mm/s</td><td>55%</td><td>30 kHz</td><td>1</td><td>Clean bright line, light depth</td></tr>
+    <tr><td><strong>Deep mark</strong></td><td>150 mm/s</td><td>70%</td><td>20 kHz</td><td>2</td><td>Tactile depth, high contrast</td></tr>
+    <tr><td><strong>Fine detail</strong></td><td>300 mm/s</td><td>50%</td><td>40 kHz</td><td>1</td><td>Sharp thin lines, minimal heat spread</td></tr>
+    <tr><td><strong>Color mark (MOPA only)</strong></td><td>500 mm/s</td><td>30%</td><td>80 kHz</td><td>1</td><td>Oxide color — gold/blue/black depending on power tuning</td></tr>
+    <tr><td><strong>Fill engrave</strong></td><td>400 mm/s</td><td>55%</td><td>30 kHz</td><td>1</td><td>Filled areas, text blocks, logos</td></tr>
+  </table>
+
+  <div class="warn-box">
+    <strong>JPT vs Raycus vs nLIGHT source</strong>
+    Chinese fiber machines come with different laser sources. JPT MOPA sources support color marking (high frequency modes). Raycus pulsed fiber sources do not support color marking. Check your machine specs before attempting color mark workflows.
+  </div>
+
+  <!-- Troubleshooting Results -->
+  <h2 class="section-heading">Troubleshooting Stamp Plate Results</h2>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td>Mark too light / barely visible</td><td>Power too low or speed too high</td><td>Increase power by 5–10% or decrease speed by 20%; run second pass</td></tr>
+    <tr><td>Mark too dark / burned / black soot</td><td>Power too high or speed too low</td><td>Decrease power by 5–10% or increase speed by 20%</td></tr>
+    <tr><td>Rough, ragged edges on lines</td><td>Frequency too high, or out of focus</td><td>Reduce frequency (e.g., 30kHz → 20kHz); re-check focus</td></tr>
+    <tr><td>Lines not straight / wavy</td><td>Galvo mirror calibration drift</td><td>Run field correction calibration in Lightburn galvo settings</td></tr>
+    <tr><td>Design shifted or skewed on plate</td><td>File units mismatch (px vs mm)</td><td>Check SVG units; in Lightburn, verify dimensions in mm after import</td></tr>
+    <tr><td>Engraving only marks half the design</td><td>Origin mismatch — job runs off bed</td><td>Check Start From setting; use Absolute Coords + confirmed origin point</td></tr>
+    <tr><td>Inconsistent depth across plate</td><td>Plate not flat; focus varies</td><td>Ensure plate is lying flat; use clamps; check for warped SS304 sheet</td></tr>
+  </table>
+
+</div><!-- /tab-panel-9 -->
+
+<!-- ============================================================ TAB 10 -->
+<div id="tab-panel-10" class="tab-panel">
+
+  <h2 class="section-heading">Lightburn Troubleshooting Guide</h2>
+  <p>Systematic diagnosis for the most common Lightburn and laser hardware problems. Start with the simplest check first.</p>
+
+  <h2 class="section-heading">Connection & Communication Problems</h2>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td>Lightburn can't find laser / no devices</td><td>Wrong COM port; driver not installed; cable issue</td><td>Check Device Manager → Ports; install CH340/CP210x driver; try different USB cable or port; reinstall device in Lightburn</td></tr>
+    <tr><td>Device shows but won't connect</td><td>Another software (LaserGRBL, RDWorks) holding the port</td><td>Close all other laser software; restart Lightburn</td></tr>
+    <tr><td>Connection drops mid-job</td><td>USB power saving, long cable, EMI interference</td><td>Disable USB sleep in Windows power settings; use USB 2.0 port; add ferrite bead to cable</td></tr>
+    <tr><td>Ethernet-connected machine not found</td><td>IP address mismatch; firewall blocking</td><td>Set static IP on machine; add firewall exception for Lightburn; check network cable</td></tr>
+  </table>
+
+  <h2 class="section-heading">Laser Firing Problems</h2>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td>Laser not firing at all</td><td>Interlock not triggered; water/air sensor bypass needed; PWM signal not reaching laser</td><td>Check lid interlock switch; check water flow sensor / chiller; check PWM cable from controller to laser PSU; verify "Fire" button works in console</td></tr>
+    <tr><td>Laser fires but very weak</td><td>Below minimum power threshold; dirty lens; poor focus</td><td>Set Min Power higher (try 15–20%); clean lens with methanol; re-focus</td></tr>
+    <tr><td>Laser fires on travel moves</td><td>Min power set too high on some controllers</td><td>Set Min Power to 0; check S-value max in device settings matches laser PSU</td></tr>
+    <tr><td>No mark on SS304 with fiber</td><td>Wrong frequency for material; wrong focal length; galvo field size mismatch</td><td>Try 20–30kHz; check focal length matches your lens (100mm, 150mm, 254mm); run field correction</td></tr>
+  </table>
+
+  <h2 class="section-heading">Cut Quality Problems</h2>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td>Cut not going through material</td><td>Speed too high; power too low; dirty/damaged lens; multiple passes needed</td><td>Slow down 20%; increase power 10%; clean lens; add 2nd pass; check focus</td></tr>
+    <tr><td>Uneven engraving (lighter one side)</td><td>Dirty lens; out of focus across bed; material surface not flat</td><td>Clean lens; run focus test across bed; ensure material is flat and clamped</td></tr>
+    <tr><td>Curved or bowed lines in raster engraving</td><td>Galvo miscalibration (barrel/pincushion distortion)</td><td>Run field correction calibration; use Lightburn's galvo calibration image</td></tr>
+    <tr><td>Engraving too dark / burned</td><td>Speed too low; power too high; too many passes</td><td>Increase speed by 20% or reduce power; reduce passes to 1</td></tr>
+    <tr><td>Edges rough / jagged on curves</td><td>High frequency causing pulse overlap; poor focus</td><td>Reduce frequency; refocus; check for mechanical vibration</td></tr>
+    <tr><td>Halos or shadows around marks</td><td>Power too high causing heat spread</td><td>Reduce power; increase speed; check focus</td></tr>
+  </table>
+
+  <h2 class="section-heading">File & Import Problems</h2>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td>File imports wrong size (10× too large or small)</td><td>Unit mismatch — SVG exported as px instead of mm</td><td>In SVG export (Inkscape): set document units to mm; in Lightburn import dialog, check "mm" unit</td></tr>
+    <tr><td>SVG imports as image instead of vectors</td><td>SVG contains embedded bitmap or complex effects</td><td>Re-export from Inkscape as Plain SVG; expand/flatten all effects before export</td></tr>
+    <tr><td>DXF imports with missing lines</td><td>DXF version mismatch (R14 vs 2010)</td><td>Re-export from CAD software as DXF R14; enable "Remove duplicates" on import</td></tr>
+    <tr><td>Text appears as outlines not text</td><td>Font not embedded; Lightburn converted to paths</td><td>Normal behavior — Lightburn converts text to paths for laser. Edit text before importing or use Lightburn's own Text tool</td></tr>
+  </table>
+
+  <h2 class="section-heading">Origin & Positioning Problems</h2>
+  <table class="guide-table">
+    <tr><th>Problem</th><th>Likely Cause</th><th>Fix</th></tr>
+    <tr><td>Job starts in wrong position</td><td>Start From mode mismatch with machine setup</td><td>Match Start From setting to how your machine homes; use Absolute Coords for reproducible positioning</td></tr>
+    <tr><td>Job runs mirrored / upside down</td><td>Machine origin is different corner to Lightburn setting</td><td>Edit &gt; Device Settings → check Origin corner matches your machine's home position</td></tr>
+    <tr><td>Job shifts on repeated runs</td><td>Material moving; backlash in gantry; inconsistent homing</td><td>Clamp material; check belt tension; enable Soft Limits in device settings</td></tr>
+  </table>
+
+  <h2 class="section-heading">India-Specific Problems</h2>
+  <div class="warn-box">
+    <strong>Power fluctuation — inconsistent marks</strong>
+    Indian mains power (230V) fluctuates significantly, especially in industrial areas during peak hours. Fiber laser PSUs are sensitive to input voltage variation. Solution: use a <strong>UPS (online/double-conversion type)</strong> rated at minimum 2× your laser's power draw. A 1kVA UPS for a 30W fiber machine is adequate. Servo UPS units (available at ₹8,000–15,000) work well.
+  </div>
+
+  <div class="warn-box" style="margin-top:12px;">
+    <strong>Summer heat — thermal drift</strong>
+    Fiber laser galvo heads and controllers are temperature-sensitive. In Indian summer (40°C+ ambient), letting the machine warm up unevenly causes the focal point to shift slightly. <strong>Solution:</strong> power on the machine 30 minutes before precision work; allow galvo head temperature to stabilize before running calibration-critical jobs.
+  </div>
+
+  <div class="tip-box" style="margin-top:12px;">
+    <strong>Dust contamination — lens care</strong>
+    Workshop dust, especially near grinding or cutting operations, settles on the fiber lens and protective window. Cover the machine when not in use. Clean the protective window (not the main lens) before every session using methanol and lens tissue. A contaminated protective window causes inconsistent power delivery and eventually damages the lens beneath.
+  </div>
+
+  <h2 class="section-heading">Lightburn License Issues</h2>
+  <table class="guide-table">
+    <tr><th>Situation</th><th>Solution</th></tr>
+    <tr><td>Moving Lightburn to a new PC</td><td>Help &gt; Deactivate License on old PC first; install on new PC; activate with same key. If old PC is dead, contact Lightburn support — they reset activations.</td></tr>
+    <tr><td>Trial expired, can't activate</td><td>Purchase at lightburnsoftware.com; enter key via Help &gt; Enter License Key</td></tr>
+    <tr><td>License says "Galvo not supported"</td><td>You have Gantry license — purchase Galvo license upgrade for fiber/galvo machines</td></tr>
+    <tr><td>Update broke something</td><td>Roll back via Help &gt; Previous Versions; always export settings backup before updating</td></tr>
+  </table>
+
+</div><!-- /tab-panel-10 -->
+
+<!-- ============================================================ TAB 11 -->
+<div id="tab-panel-11" class="tab-panel">
+
+  <h2 class="section-heading">Practice Projects</h2>
+  <p>Six complete projects from beginner to advanced. Each includes full settings, step-by-step process, and expected results. All projects use a 20W–30W MOPA fiber laser unless specified.</p>
+
+  <!-- PROJECT 1 -->
+  <div class="card" style="border-left:4px solid #00b4d8; margin-bottom:28px;">
+    <h3 style="color:#00b4d8;">Project 1 — Basic Mandala Stamp Plate (SS304, 60×60mm)</h3>
+    <p><strong>Difficulty:</strong> Beginner &nbsp;|&nbsp; <strong>Time:</strong> ~8 minutes &nbsp;|&nbsp; <strong>Material:</strong> SS304 0.5mm sheet, 60×60mm</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Steps</h4>
+    <ol style="line-height:2.2;">
+      <li>Open <strong>Stamp Plate SVG Studio</strong> app → choose a mandala pattern → set canvas to 60×60mm → download SVG</li>
+      <li>Lightburn: File &gt; Import → select SVG → verify dimensions are 60×60mm in toolbar</li>
+      <li>Cuts/Layers panel → Layer 00: <strong>Mode: Line, Speed: 200 mm/s, Power: 60%, Freq: 30 kHz, Passes: 1</strong></li>
+      <li>Place SS304 on bed, focus using focus card</li>
+      <li>Frame job (<kbd>~</kbd>) — verify position</li>
+      <li>Run at 20% power on scrap corner — check that line is visible</li>
+      <li>Run full job at 60% power</li>
+      <li>Wipe with IPA, inspect — lines should be bright silver-white on steel</li>
+    </ol>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Expected Result</h4>
+    <p>Clean mandala pattern with sharp lines. Suitable for rubber stamp or wax seal impression testing. If marks look grey and inconsistent, re-check focus distance.</p>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="card" style="border-left:4px solid #3fb950; margin-bottom:28px;">
+    <h3 style="color:#3fb950;">Project 2 — Custom Client Logo Plate (PNG input)</h3>
+    <p><strong>Difficulty:</strong> Beginner–Intermediate &nbsp;|&nbsp; <strong>Time:</strong> ~12 minutes &nbsp;|&nbsp; <strong>Material:</strong> SS304 60×60mm</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Steps</h4>
+    <ol style="line-height:2.2;">
+      <li>Receive logo from client as PNG (minimum 300 DPI preferred)</li>
+      <li>Lightburn: File &gt; Import → select PNG → image appears on canvas</li>
+      <li>Select image → <strong>Tools &gt; Trace Image</strong> → adjust Threshold until logo outlines cleanly traced. Ignore threshold if trace looks messy — try "Centerline trace" option for thin logos</li>
+      <li>Click OK — vector paths created on top of image</li>
+      <li>Delete original bitmap image</li>
+      <li>Use Node Edit (<kbd>F2</kbd>) to clean any stray dots or rough nodes</li>
+      <li>Resize to 40×60mm or 60×60mm as agreed with client</li>
+      <li>Assign to Layer: <strong>Line mode, Speed: 200, Power: 60%, Freq: 30kHz</strong></li>
+      <li><strong>Proof on cardboard first</strong>: run at 2% power on plain cardboard — verify logo shape is correct, no missing elements, text is readable</li>
+      <li>If proof is good: run on SS304 at full settings</li>
+    </ol>
+
+    <div class="tip-box" style="margin-top:12px;">
+      <strong>Tip:</strong> For logos with very fine text (under 5pt), the trace may not be clean enough. Manually recreate text using the Lightburn Text tool with a matching free font from Google Fonts. This gives much cleaner results than tracing small text.
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="card" style="border-left:4px solid #f0883e; margin-bottom:28px;">
+    <h3 style="color:#f0883e;">Project 3 — Batch Production: 6 Plates in One Job</h3>
+    <p><strong>Difficulty:</strong> Intermediate &nbsp;|&nbsp; <strong>Time:</strong> ~25–30 minutes &nbsp;|&nbsp; <strong>Material:</strong> SS304 100×200mm sheet</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Layout</h4>
+    <ul>
+      <li>6 × 40×60mm designs in a 2-column × 3-row grid</li>
+      <li>4mm gap between designs horizontally and vertically</li>
+      <li>Total layout: 84×188mm — fits 100×200mm sheet with margin</li>
+    </ul>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Steps</h4>
+    <ol style="line-height:2.2;">
+      <li>Import 6 different SVG designs. Group each design individually (Ctrl+G per design)</li>
+      <li>Use Array or manually arrange in 2×3 grid with 4mm spacing</li>
+      <li>Select all → Arrange &gt; Distribute Horizontally, then Distribute Vertically — evens out spacing</li>
+      <li>Assign all to Layer 00: Speed 200mm/s, Power 60%, Freq 30kHz</li>
+      <li>Enable optimization: Inner before Outer, Reduce travel moves, Order by Group</li>
+      <li>Place 100×200mm SS304 sheet, align corner to machine origin</li>
+      <li>Frame to verify — all 6 designs should land on sheet</li>
+      <li>Run job. Estimated time: ~25 minutes</li>
+    </ol>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Cost Breakdown (India)</h4>
+    <table class="guide-table">
+      <tr><th>Item</th><th>Cost</th></tr>
+      <tr><td>SS304 sheet 100×200mm (0.5mm)</td><td>~₹80–120</td></tr>
+      <tr><td>Laser time (electricity, machine amortization)</td><td>~₹40–60</td></tr>
+      <tr><td>IPA cleaning, consumables</td><td>~₹10</td></tr>
+      <tr><td><strong>Total cost for 6 plates</strong></td><td><strong>~₹130–190</strong></td></tr>
+      <tr><td>Selling price per plate (Etsy / IndiaMART)</td><td>₹200–600 depending on design complexity</td></tr>
+      <tr><td><strong>Revenue for 6 plates</strong></td><td><strong>₹1,200–3,600</strong></td></tr>
+    </table>
+  </div>
+
+  <!-- PROJECT 4 -->
+  <div class="card" style="border-left:4px solid #a371f7; margin-bottom:28px;">
+    <h3 style="color:#a371f7;">Project 4 — Personalized Name Plate (Gift Item)</h3>
+    <p><strong>Difficulty:</strong> Beginner &nbsp;|&nbsp; <strong>Time:</strong> ~5 minutes &nbsp;|&nbsp; <strong>Occasion:</strong> Diwali gifts, weddings, corporate gifts</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Steps</h4>
+    <ol style="line-height:2.2;">
+      <li>In Lightburn: select <strong>Text tool</strong> (<kbd>T</kbd>)</li>
+      <li>Click on canvas, type the name (e.g., "Priya" or "Sharma Family")</li>
+      <li>Choose font — <strong>Cinzel</strong> or <strong>Trajan Pro</strong> for classic look; <strong>Great Vibes</strong> for script style. Install free Google Fonts on Windows, then they appear in Lightburn font picker.</li>
+      <li>Set font size: 12–18pt for a 60×30mm plate</li>
+      <li>Add a decorative border: draw rectangle, assign to same layer</li>
+      <li>Use <strong>Fill mode</strong> for bold text fills: Speed 400mm/s, Power 55%, Freq 30kHz</li>
+      <li>Use <strong>Line mode</strong> for outline-only text: Speed 200mm/s, Power 60%, Freq 30kHz</li>
+      <li>Run on SS304 60×30mm or 60×60mm blank</li>
+    </ol>
+
+    <div class="tip-box" style="margin-top:12px;">
+      <strong>India business tip:</strong> Personalized name plates are high-demand Diwali and wedding gifts. A set of 4 plates (family name + 4 individual names) sells for ₹800–1,500. Production cost: under ₹100. 10-minute job per set. Excellent side-income product.
+    </div>
+  </div>
+
+  <!-- PROJECT 5 -->
+  <div class="card" style="border-left:4px solid #58a6ff; margin-bottom:28px;">
+    <h3 style="color:#58a6ff;">Project 5 — Heraldry Shield for Warhammer Miniature</h3>
+    <p><strong>Difficulty:</strong> Intermediate &nbsp;|&nbsp; <strong>Time:</strong> ~6 minutes &nbsp;|&nbsp; <strong>Material:</strong> SS304 0.3mm thin sheet, 40×40mm</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Steps</h4>
+    <ol style="line-height:2.2;">
+      <li>Download heraldry SVG (free sources: heraldry.drawshield.net, or design in Inkscape)</li>
+      <li>Import into Lightburn — resize to <strong>40×40mm</strong> or smaller as needed for miniature scale</li>
+      <li>Zoom in — inspect node complexity. Reduce nodes (Edit &gt; Simplify paths) if too complex for scale</li>
+      <li>Fine detail settings: <strong>Speed: 300 mm/s, Power: 50%, Freq: 40 kHz, Passes: 1</strong></li>
+      <li>Focus extremely carefully — fine detail is very sensitive to defocus</li>
+      <li>Run on thin SS304 (0.3mm) — lighter material, less thermal mass, use slightly lower power (45%)</li>
+      <li>Inspect with 10× loupe — lines should be sharply defined at miniature scale</li>
+    </ol>
+
+    <p style="margin-top:12px; color:#8b949e;">Finished plates can be used as actual miniature shields or as collector display items. Niche but enthusiastic buyer community online.</p>
+  </div>
+
+  <!-- PROJECT 6 -->
+  <div class="card" style="border-left:4px solid #ffa657; margin-bottom:28px;">
+    <h3 style="color:#ffa657;">Project 6 — Anodized Aluminum Business Card</h3>
+    <p><strong>Difficulty:</strong> Intermediate &nbsp;|&nbsp; <strong>Time:</strong> ~4 minutes per card &nbsp;|&nbsp; <strong>Material:</strong> Anodized aluminum card blank (black or colored)</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">How it works</h4>
+    <p>Fiber/MOPA laser removes the anodized layer from aluminum, revealing bright bare aluminum beneath. No chemical processing needed. Result: permanent, bright white or silver text on black/colored card.</p>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Settings (anodized aluminum, not SS304)</h4>
+    <table class="guide-table">
+      <tr><th>Parameter</th><th>Value</th></tr>
+      <tr><td>Mode</td><td>Fill (for text and logo areas)</td></tr>
+      <tr><td>Speed</td><td>500–800 mm/s</td></tr>
+      <tr><td>Power</td><td>25–35%</td></tr>
+      <tr><td>Frequency</td><td>50–80 kHz</td></tr>
+      <tr><td>Line interval</td><td>0.05mm (508 DPI) for crisp text</td></tr>
+      <tr><td>Passes</td><td>1</td></tr>
+    </table>
+
+    <div class="tip-box" style="margin-top:12px;">
+      <strong>India business angle:</strong> Anodized aluminum cards (blank) available on Amazon.in for ₹20–40 per card. Personalized laser cards sell for ₹150–400 each. Corporate bulk orders (50–200 cards) are very common. Each card takes ~4 minutes → 15 cards/hour → strong revenue-per-hour product.
+    </div>
+
+    <h4 style="margin-top:14px; color:#e6edf3;">Steps</h4>
+    <ol style="line-height:2.2;">
+      <li>Design in Lightburn at 85×54mm (standard card size) with 3mm margin</li>
+      <li>Include: name, title, phone, email, logo — all as filled text/vector</li>
+      <li>Place card on bed — use a small jig or tape to fix position consistently for batch runs</li>
+      <li>Run at anodized aluminum settings above</li>
+      <li>Wipe with dry cloth — no IPA needed for anodized aluminum</li>
+    </ol>
+  </div>
+
+</div><!-- /tab-panel-11 -->
+
+<!-- ============================================================ TAB 12 -->
+<div id="tab-panel-12" class="tab-panel">
+
+  <h2 class="section-heading">Complete Shortcut Reference</h2>
+  <div class="two-col">
+    <div>
+      <table class="guide-table">
+        <tr><th>Shortcut</th><th>Action</th></tr>
+        <tr><td><kbd>F1</kbd></td><td>Select / Move tool</td></tr>
+        <tr><td><kbd>F2</kbd></td><td>Node edit tool</td></tr>
+        <tr><td><kbd>F3</kbd></td><td>Pan tool</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Draw rectangle</td></tr>
+        <tr><td><kbd>E</kbd></td><td>Draw ellipse / circle</td></tr>
+        <tr><td><kbd>L</kbd></td><td>Draw line</td></tr>
+        <tr><td><kbd>P</kbd></td><td>Draw polyline</td></tr>
+        <tr><td><kbd>B</kbd></td><td>Draw Bezier curve</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Text tool</td></tr>
+        <tr><td><kbd>Ctrl+I</kbd></td><td>Import file</td></tr>
+        <tr><td><kbd>Ctrl+S</kbd></td><td>Save file</td></tr>
+        <tr><td><kbd>Ctrl+Z</kbd></td><td>Undo</td></tr>
+        <tr><td><kbd>Ctrl+Y</kbd></td><td>Redo</td></tr>
+        <tr><td><kbd>Ctrl+A</kbd></td><td>Select all</td></tr>
+        <tr><td><kbd>Ctrl+G</kbd></td><td>Group selection</td></tr>
+        <tr><td><kbd>Ctrl+Shift+G</kbd></td><td>Ungroup</td></tr>
+        <tr><td><kbd>Ctrl+C</kbd></td><td>Copy</td></tr>
+        <tr><td><kbd>Ctrl+V</kbd></td><td>Paste</td></tr>
+        <tr><td><kbd>Ctrl+D</kbd></td><td>Duplicate</td></tr>
+        <tr><td><kbd>Delete</kbd></td><td>Delete selected</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="guide-table">
+        <tr><th>Shortcut</th><th>Action</th></tr>
+        <tr><td><kbd>~</kbd> (tilde)</td><td>Frame job (laser traces bounding box)</td></tr>
+        <tr><td><kbd>Shift+~</kbd></td><td>Frame actual path shapes</td></tr>
+        <tr><td><kbd>Spacebar</kbd></td><td>Start / Pause job</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Stop / back to select tool</td></tr>
+        <tr><td><kbd>Ctrl+Shift+A</kbd></td><td>Open Array dialog</td></tr>
+        <tr><td><kbd>Ctrl+Shift+O</kbd></td><td>Offset shape</td></tr>
+        <tr><td><kbd>Ctrl+Shift+W</kbd></td><td>Weld shapes</td></tr>
+        <tr><td><kbd>Ctrl+Shift+B</kbd></td><td>Boolean subtract</td></tr>
+        <tr><td><kbd>H</kbd></td><td>Flip horizontal</td></tr>
+        <tr><td><kbd>V</kbd></td><td>Flip vertical</td></tr>
+        <tr><td><kbd>Ctrl+Shift+C</kbd></td><td>Close open path</td></tr>
+        <tr><td><kbd>Alt+click</kbd></td><td>Select under (when objects overlap)</td></tr>
+        <tr><td><kbd>Tab</kbd></td><td>Select next object</td></tr>
+        <tr><td><kbd>Ctrl+F</kbd></td><td>Find / replace text</td></tr>
+        <tr><td><kbd>Num 0</kbd></td><td>Zoom to fit page</td></tr>
+        <tr><td><kbd>Num 5</kbd></td><td>Zoom to selection</td></tr>
+        <tr><td><kbd>Middle mouse</kbd></td><td>Pan canvas</td></tr>
+        <tr><td><kbd>Scroll wheel</kbd></td><td>Zoom in/out</td></tr>
+        <tr><td><kbd>Ctrl+P</kbd></td><td>Preview job (simulate run)</td></tr>
+        <tr><td><kbd>Ctrl+Shift+P</kbd></td><td>Power/speed test grid</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Pro Workflow Tips</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Always Frame First</h3>
+      <ul>
+        <li>Make it a habit: every job, every time — press <kbd>~</kbd> before Start</li>
+        <li>Takes 5 seconds, saves wasted materials and re-runs</li>
+        <li>Frame confirms position, confirms job is on the material, confirms no obstacles</li>
+        <li>Tape a note to your machine: <em>"FRAME BEFORE START"</em></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Named Material Presets</h3>
+      <ul>
+        <li>Save verified settings to <strong>Material Library</strong> (Window &gt; Material Library)</li>
+        <li>Name clearly: "SS304-0.5mm-Outline-30W-MOPA", "Anodized-Al-Fill"</li>
+        <li>Include: speed, power, freq, passes, focus note</li>
+        <li>Export library as backup before any Lightburn update</li>
+        <li>Share library with other machines in your workshop</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Focus Card Taped to Machine</h3>
+      <ul>
+        <li>Your fiber machine's focus card/gauge — tape it to the side of the machine</li>
+        <li>It will get lost otherwise; keeping it attached ensures it's always there</li>
+        <li>Also tape your most-used settings (SS304 outline, fill, deep mark) on a card nearby</li>
+        <li>Label your Z-height markings with a marker directly on the Z column</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Job Preview Before Running</h3>
+      <ul>
+        <li><kbd>Ctrl+P</kbd> opens the Preview window — simulates the entire laser path</li>
+        <li>Scrub through the timeline to verify cut order, travel moves, and path direction</li>
+        <li>Shows estimated time — use this to price jobs accurately</li>
+        <li>Reveals problems (e.g., outer cut before inner details) before any material is used</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Batch Production File Organization</h2>
+  <div class="card">
+    <h3>Recommended Folder Structure</h3>
+    <pre style="background:#0d1117; border:1px solid #30363d; border-radius:6px; padding:14px; font-size:0.82rem; color:#c9d1d9; overflow-x:auto; line-height:1.8;">
+StampPlates/
+├── Designs/
+│   ├── SVG_Originals/       ← customer or SVG Studio source files
+│   ├── Lightburn_Files/     ← .lbrn2 files, one per job
+│   └── Proofs/              ← photos of finished plates per order
+├── Settings/
+│   ├── material_library.clb ← Lightburn material library export
+│   └── device_settings.ini  ← Lightburn device settings backup
+└── Orders/
+    ├── 2025-06-Order001/    ← folder per order
+    └── 2025-06-Order002/
+    </pre>
+    <ul style="margin-top:12px;">
+      <li>Naming convention for Lightburn files: <strong>YYYY-MM-DD_ClientName_PlateType.lbrn2</strong></li>
+      <li>Always save the .lbrn2 file (not just the SVG) — it preserves layer settings, speeds, and layout</li>
+      <li>Photo every finished batch before shipping — proof of quality for disputes</li>
+    </ul>
+  </div>
+
+  <h2 class="section-heading">Workspace Templates for Stamp Plate Business</h2>
+  <ul>
+    <li>Create a template .lbrn2 file with standard plate sizes pre-drawn (40×60, 60×60 rectangles as guides)</li>
+    <li>Set your default material library as the startup library in Lightburn preferences</li>
+    <li>Configure the canvas size to match your laser bed in Device Settings</li>
+    <li>Save a "blank batch layout" file with 6 empty grouped boxes at correct positions — import designs into the groups each session</li>
+  </ul>
+
+  <h2 class="section-heading">Pricing Jobs Using Lightburn Time Estimate</h2>
+  <div class="card" style="border-color:#00b4d8;">
+    <h3 style="color:#00b4d8;">Pricing Formula for India Market</h3>
+    <table class="guide-table">
+      <tr><th>Cost Component</th><th>How to calculate</th></tr>
+      <tr><td>Material cost</td><td>SS304 sheet cost ÷ number of plates from that sheet</td></tr>
+      <tr><td>Machine time cost</td><td>Lightburn estimated minutes × ₹3–5/minute (electricity + machine amortization)</td></tr>
+      <tr><td>Design / setup time</td><td>15–30 min per new design × your hourly rate</td></tr>
+      <tr><td>Consumables (IPA, cloth)</td><td>₹5–10 per plate flat rate</td></tr>
+      <tr><td>Profit margin</td><td>Minimum 3× total cost for retail; 1.5× for wholesale bulk</td></tr>
+    </table>
+    <p style="margin-top:12px;"><strong>Example:</strong> 6-plate batch — material ₹100, machine time 25 min × ₹4 = ₹100, consumables ₹30. Total cost: ₹230. Retail price 6 plates: ₹1,200+. Gross margin: ~80%.</p>
+  </div>
+
+  <h2 class="section-heading">Lightburn Camera for Product Photography Positioning</h2>
+  <p>If you have a camera set up, use the bed overlay to position finished stamp plates precisely for photography consistency — place plate in the same spot on a white paper background each time, overlay shows exact position. Useful for Etsy listing photos where consistent framing looks more professional.</p>
+
+  <h2 class="section-heading">LightBurn Bridge — Wireless Control</h2>
+  <ul>
+    <li>LightBurn Bridge is a small device (Raspberry Pi based) that connects to your laser via USB and to your network via WiFi/Ethernet</li>
+    <li>Your PC running Lightburn connects to it wirelessly — laser no longer needs to be physically near your PC</li>
+    <li>Available from lightburnsoftware.com or build your own: ~₹2,500–4,000</li>
+    <li>Useful in Indian workshops where the laser is in a separate room for fume ventilation</li>
+    <li>Works with GRBL, Ruida, and some galvo setups</li>
+  </ul>
+
+  <h2 class="section-heading">Update Strategy</h2>
+  <div class="warn-box">
+    <strong>Before updating Lightburn:</strong>
+    <ol style="margin-top:8px; line-height:2.2;">
+      <li>Export your Material Library: Window &gt; Material Library &gt; Export</li>
+      <li>Export Device Settings: Edit &gt; Device Settings &gt; Export</li>
+      <li>Note your current version number (Help &gt; About)</li>
+      <li>Check Lightburn forum for reports of issues with the new version</li>
+      <li>Only then: Help &gt; Check for Updates</li>
+      <li>If new version has problems: Help &gt; Previous Versions to download older installer</li>
+    </ol>
+  </div>
+
+  <h2 class="section-heading">Community Resources</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Official Resources</h3>
+      <ul>
+        <li><a href="https://forum.lightburnsoftware.com" target="_blank">forum.lightburnsoftware.com</a> — official forum, very active, developers respond</li>
+        <li><a href="https://lightburnsoftware.com/pages/documentation" target="_blank">Lightburn Documentation</a> — comprehensive official docs</li>
+        <li>Lightburn YouTube channel — tutorial videos for all features</li>
+        <li>Lightburn changelog — read before updating</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>India Laser Community</h3>
+      <ul>
+        <li>Facebook: "Laser Engraving India" group — active community, settings sharing, machine buying advice</li>
+        <li>Facebook: "Fiber Laser Users India" — fiber-specific group</li>
+        <li>IndiaMART forums — sellers sharing production tips</li>
+        <li>YouTube channels: search "fiber laser India" for Hindi/regional language tutorials</li>
+        <li>WhatsApp groups: ask on Facebook groups for invite links — very active for real-time help</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Full Business Integration Workflow</h2>
+  <div class="card" style="border-color:#3fb950;">
+    <h3 style="color:#3fb950;">From Etsy Order to Shipped Stamp Plate</h3>
+    <ol style="line-height:2.4;">
+      <li><strong>Receive Etsy order</strong> — customer selects design from your listings, provides personalization details (name, text)</li>
+      <li><strong>Open SVG Studio</strong> — load or create the design, apply customer's text/customization, download SVG</li>
+      <li><strong>Open Lightburn</strong> — import SVG, set to customer's required plate size, verify dimensions</li>
+      <li><strong>Load material preset</strong> — apply saved SS304 settings from Material Library (2 clicks)</li>
+      <li><strong>If batch order</strong> — use Array to fill sheet with multiple identical or mixed designs</li>
+      <li><strong>Frame and run</strong> — verify, start, walk away for 5–25 minutes</li>
+      <li><strong>Inspect and photograph</strong> — check quality, photograph for records</li>
+      <li><strong>Pack and ship</strong> — bubble wrap, padded envelope; India Post or courier</li>
+      <li><strong>Mark order complete</strong> on Etsy, upload tracking number</li>
+      <li><strong>Typical turnaround:</strong> same day for orders received before noon; next day for afternoon orders</li>
+    </ol>
+  </div>
+
+  <h2 class="section-heading">Advanced: Lightburn API & Automation</h2>
+  <ul>
+    <li>Lightburn supports command-line job submission — useful for automating batch runs from a production script</li>
+    <li>Combine with Python scripts to auto-generate Lightburn job files from a spreadsheet of customer orders</li>
+    <li>Not officially documented but community scripts exist on the Lightburn forum</li>
+    <li>For high-volume operations (50+ plates/day): worth investing time to automate file generation</li>
+  </ul>
+
+  <div class="tip-box" style="margin-top:24px;">
+    <strong>Final tip — the single best habit for a stamp plate business</strong>
+    Keep a physical logbook next to your laser. For every job: date, design name, material batch, settings used, result quality (1–5 scale), any problems. After 3 months you'll have your own reference book of what works on your specific machine — more valuable than any guide because it's calibrated to your exact setup.
+  </div>
+
+</div><!-- /tab-panel-12 -->
+
+</body></html>
