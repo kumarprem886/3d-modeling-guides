@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -852,38 +852,105 @@
   </div>
 
   <!-- ══════════════════════════════════════════════════
-       SECTION 9: Workflow
+       SECTION 9: Inkscape to Engraver Workflow
   ═══════════════════════════════════════════════════ -->
   <div class="section">
     <div class="section-header purple">
-      <h2>&#9654; Workflow</h2>
+      <h2>&#9654; From SVG to Finished Stamp Plate</h2>
+    </div>
+
+    <p style="color:#8b949e;font-size:14px;margin-bottom:1.5rem;">Step-by-step: download from sources above &rarr; arrange in Inkscape &rarr; send to your laser engraver.</p>
+
+    <!-- What you need -->
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.1rem 1.4rem;margin-bottom:1.4rem;">
+      <div style="font-size:12px;font-weight:700;color:#7c6fff;margin-bottom:8px;">WHAT YOU NEED</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:5px 12px;font-size:12px;color:#e6edf3;">Inkscape (free &mdash; inkscape.org)</span>
+        <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:5px 12px;font-size:12px;color:#e6edf3;">SVG files from sources above</span>
+        <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:5px 12px;font-size:12px;color:#e6edf3;">SS304 mirror finish steel plate</span>
+        <span style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:5px 12px;font-size:12px;color:#e6edf3;">Fiber laser + EzCad / Lightburn / xTool XCS</span>
+      </div>
     </div>
 
     <div class="workflow-steps">
 
       <div class="workflow-step">
         <div class="step-num">1</div>
-        <div class="step-text">Find SVG from sources above &rarr; download .svg file</div>
+        <div>
+          <div style="font-weight:700;color:#e6edf3;margin-bottom:6px;">Set up your plate canvas in Inkscape</div>
+          <div class="step-text">
+            File &rarr; <strong>Document Properties</strong> (Shift+Ctrl+D) &rarr; set Units to <strong>mm</strong> &rarr; set canvas to your plate size.<br>
+            Common sizes: <code>40&times;60mm</code> &nbsp; <code>60&times;90mm</code> &nbsp; <code>100&times;150mm</code> &nbsp; <code>60&times;60mm square</code>
+          </div>
+        </div>
       </div>
 
       <div class="workflow-step">
         <div class="step-num">2</div>
-        <div class="step-text">Clean in <a href="https://inkscape.org" target="_blank">Inkscape</a> (free, inkscape.org) &rarr; all black strokes, no color</div>
+        <div>
+          <div style="font-weight:700;color:#e6edf3;margin-bottom:6px;">Import and clean each SVG</div>
+          <div class="step-text">
+            <strong>File &rarr; Import</strong> (Ctrl+I) &rarr; select SVG.<br>
+            Then: Ctrl+A &rarr; <strong>Path &rarr; Object to Path</strong> &rarr; Ctrl+Shift+G (ungroup, repeat until flat).<br>
+            Open Fill &amp; Stroke (Shift+Ctrl+F): Fill &rarr; <strong>No paint</strong>, Stroke &rarr; <strong>Black #000000</strong>, width <strong>0.1mm</strong>.<br>
+            Delete any white background rectangles. Then <strong>Path &rarr; Combine</strong> (Ctrl+K) to merge all paths.
+          </div>
+        </div>
       </div>
 
       <div class="workflow-step">
         <div class="step-num">3</div>
-        <div class="step-text">Compose plate in SVG Studio app &rarr; <a href="stamp_plate_app.html">stamp_plate_app.html</a></div>
+        <div>
+          <div style="font-weight:700;color:#e6edf3;margin-bottom:6px;">Arrange designs on the plate</div>
+          <div class="step-text">
+            Import each cleaned SVG with Ctrl+I. Resize holding <strong>Ctrl+Shift + drag corner</strong> (proportional).<br>
+            Leave <strong>2mm gap between designs</strong>, <strong>3mm from edges</strong>.<br>
+            Use <strong>Align &amp; Distribute</strong> (Shift+Ctrl+A) to space evenly.<br>
+            Typical layout for 60&times;90mm: <strong>3 columns &times; 4 rows = 12 designs</strong>.
+          </div>
+        </div>
       </div>
 
       <div class="workflow-step">
         <div class="step-num">4</div>
-        <div class="step-text">Open in Lightburn / EzCad / xTool XCS &rarr; set SS304 parameters</div>
+        <div>
+          <div style="font-weight:700;color:#e6edf3;margin-bottom:6px;">Export the final plate file</div>
+          <div class="step-text">
+            <strong>File &rarr; Save As &rarr; Plain SVG</strong> (for Lightburn / xTool XCS).<br>
+            <strong>File &rarr; Save a Copy &rarr; DXF (R14 format)</strong> for EzCad.<br>
+            Name clearly: <code>plate_warhammer_60x90mm.svg</code>
+          </div>
+        </div>
       </div>
 
       <div class="workflow-step">
         <div class="step-num">5</div>
-        <div class="step-text">Engrave on SS304 mirror finish steel &rarr; done</div>
+        <div>
+          <div style="font-weight:700;color:#e6edf3;margin-bottom:8px;">Send to laser software</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:#001a20;border-left:3px solid #00b4d8;padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#c9d1d9;">
+              <strong style="color:#00b4d8;">Lightburn:</strong> File &rarr; Import SVG &rarr; Layer mode: <strong>Line</strong> &rarr; Speed 200mm/s, Power 60%, Freq 30kHz, 1 pass &rarr; Frame &rarr; Start
+            </div>
+            <div style="background:#1a0a00;border-left:3px solid #ff6b35;padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#c9d1d9;">
+              <strong style="color:#ff6b35;">EzCad:</strong> Import DXF (R14) &rarr; Speed 200, Power 60%, Freq 30kHz, Q-Pulse 100ns, Loop 1 &rarr; F2 to engrave
+            </div>
+            <div style="background:#001020;border-left:3px solid #4cc9f0;padding:8px 12px;border-radius:0 6px 6px 0;font-size:13px;color:#c9d1d9;">
+              <strong style="color:#4cc9f0;">xTool XCS:</strong> Import SVG &rarr; mode: <strong>Score</strong> &rarr; Fiber module &rarr; Speed 200, Power 60%, Freq 30kHz, 1 pass &rarr; Process
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-step">
+        <div class="step-num">6</div>
+        <div>
+          <div style="font-weight:700;color:#e6edf3;margin-bottom:6px;">Finish the plate</div>
+          <div class="step-text">
+            Engrave <strong>shiny side up</strong> (mirror finish faces the laser).<br>
+            After engraving, wipe with <strong>isopropyl alcohol</strong> &rarr; marks turn crisp and sharp.<br>
+            Test settings on scrap SS304 before running the full plate.
+          </div>
+        </div>
       </div>
 
     </div>
