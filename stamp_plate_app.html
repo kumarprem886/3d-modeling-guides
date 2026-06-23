@@ -73,7 +73,7 @@ input[type=range] { flex: 1; accent-color: #e91e8c; }
     <button class="tab-nav-btn active" data-tab="library" onclick="switchTab('library')">📚 Library</button>
     <button class="tab-nav-btn" data-tab="upload" onclick="switchTab('upload')">⬆️ Upload &amp; Trace</button>
     <button class="tab-nav-btn" data-tab="prompts" onclick="switchTab('prompts')">🤖 AI Prompts</button>
-    <button class="tab-nav-btn" data-tab="composer" onclick="switchTab('composer')">🖼️ Plate Composer (0)</button>
+    <button class="tab-nav-btn" data-tab="composer" onclick="switchTab('composer')">🖼️ Plate Composer <span id="tab-composer-badge" style="background:#e91e8c;color:#fff;border-radius:10px;padding:1px 7px;font-size:11px;margin-left:4px;display:none"></span></button>
   </nav>
 </div>
 
@@ -217,15 +217,7 @@ input[type=range] { flex: 1; accent-color: #e91e8c; }
   </div>
 </div>
 
-<!-- AI PROMPTS TAB (Part B) -->
-<div id="tab-prompts" class="tab-panel">
-  <div style="padding:2rem;color:#8b949e;text-align:center">AI Prompts tab — loaded in Part B</div>
-</div>
-
-<!-- PLATE COMPOSER TAB (Part B) -->
-<div id="tab-composer" class="tab-panel">
-  <div style="padding:2rem;color:#8b949e;text-align:center">Plate Composer tab — loaded in Part B</div>
-</div>
+<!-- AI Prompts and Plate Composer tabs are below, injected by Part B -->
 
 <script>
 // ============================================================
@@ -781,19 +773,20 @@ function downloadSVG(content, filename) {
   a.click();
 }
 
+// plateItems lives in Part B script — these stubs are intentionally empty here
 function addToPlate(svgContent, label) {
+  // Overridden by Part B script below
   if (!svgContent) { showNotification('Generate a pattern first!'); return; }
-  const id = Date.now();
-  plateItems.push({id, svgContent, label: label || 'Pattern'});
-  updatePlateCount();
-  showNotification('✅ Added to plate!');
+  showNotification('Loading composer...');
 }
 
 function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  document.querySelector(`[data-tab="${name}"]`).classList.add('active');
+  const panel = document.getElementById('tab-' + name);
+  if (panel) panel.classList.add('active');
+  const btn = document.querySelector(`[data-tab="${name}"]`);
+  if (btn) btn.classList.add('active');
   if (name === 'composer' && typeof renderPlate === 'function') renderPlate();
 }
 
@@ -806,8 +799,7 @@ function showNotification(msg) {
 }
 
 function updatePlateCount() {
-  const el = document.querySelector('[data-tab="composer"]');
-  if (el) el.textContent = `🖼️ Plate Composer (${plateItems.length})`;
+  // Overridden by Part B script below
 }
 
 // Build pattern thumbnail grid
@@ -954,7 +946,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 <!-- ===== TAB 3: AI PROMPTS ===== -->
-<div id="tab-prompts" class="tab-content" style="display:none;">
+<div id="tab-prompts" class="tab-panel">
   <div style="max-width:900px;margin:0 auto;padding:1.5rem;">
 
     <!-- Header -->
@@ -1370,7 +1362,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 <!-- ===== TAB 4: PLATE COMPOSER ===== -->
-<div id="tab-composer" class="tab-content" style="display:none;">
+<div id="tab-composer" class="tab-panel">
   <div class="two-col" style="height:calc(100vh - 120px);min-height:500px;">
 
     <!-- SIDEBAR -->
@@ -1524,7 +1516,10 @@ function updatePlateCount() {
   var el = document.getElementById('plate-count-display');
   if (el) el.textContent = plateItems.length;
   var badge = document.getElementById('tab-composer-badge');
-  if (badge) badge.textContent = plateItems.length > 0 ? plateItems.length : '';
+  if (badge) {
+    badge.textContent = plateItems.length;
+    badge.style.display = plateItems.length > 0 ? 'inline' : 'none';
+  }
 }
 
 function renderPlate() {
