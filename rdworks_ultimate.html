@@ -1,0 +1,3530 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RDWorks Ultimate Guide — CO2 Laser Software Mastery</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --surface3: #21262d;
+    --border: #30363d;
+    --accent: #f72585;
+    --accent2: #7209b7;
+    --accent3: #4cc9f0;
+    --accent4: #4361ee;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #f0883e;
+    --red: #f85149;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Liberation Sans', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  a { color: var(--accent3); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a0a2e 40%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(247,37,133,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 auto 28px;
+  }
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .pill.hot { border-color: var(--accent); color: var(--accent); }
+  .pill.blue { border-color: var(--accent3); color: var(--accent3); }
+
+  /* ── Tab Nav ── */
+  .tab-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .tab-nav {
+    display: flex;
+    min-width: max-content;
+    padding: 0 16px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 16px 11px;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    font-family: inherit;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── Tab Panels ── */
+  .tab-panel { display: none; max-width: 1080px; margin: 0 auto; padding: 40px 24px 80px; }
+  .tab-panel.active { display: block; }
+
+  /* ── Typography ── */
+  h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  h2:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 28px 0 10px;
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent3);
+    margin: 20px 0 8px;
+  }
+  p { margin-bottom: 14px; color: var(--text-muted); }
+  p strong { color: var(--text); }
+  ul, ol { margin: 0 0 16px 20px; color: var(--text-muted); }
+  li { margin-bottom: 6px; }
+  li strong { color: var(--text); }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card h3 { margin-top: 0; }
+  .card-accent { border-left: 3px solid var(--accent); }
+  .card-blue { border-left: 3px solid var(--accent3); }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-yellow { border-left: 3px solid var(--yellow); }
+  .card-orange { border-left: 3px solid var(--orange); }
+
+  /* ── Callouts ── */
+  .callout {
+    display: flex;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    border: 1px solid;
+  }
+  .callout-icon { font-size: 1.4rem; flex-shrink: 0; line-height: 1.5; }
+  .callout-body { flex: 1; }
+  .callout-body p:last-child { margin-bottom: 0; }
+  .callout.tip { background: rgba(63,185,80,0.08); border-color: rgba(63,185,80,0.3); }
+  .callout.tip .callout-icon::before { content: '💡'; }
+  .callout.warn { background: rgba(210,153,34,0.08); border-color: rgba(210,153,34,0.3); }
+  .callout.warn .callout-icon::before { content: '⚠️'; }
+  .callout.info { background: rgba(76,201,240,0.08); border-color: rgba(76,201,240,0.3); }
+  .callout.info .callout-icon::before { content: 'ℹ️'; }
+  .callout.danger { background: rgba(248,81,73,0.08); border-color: rgba(248,81,73,0.3); }
+  .callout.danger .callout-icon::before { content: '🔴'; }
+  .callout.india { background: rgba(247,37,133,0.08); border-color: rgba(247,37,133,0.3); }
+  .callout.india .callout-icon::before { content: '🇮🇳'; }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 24px; border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead th {
+    background: var(--surface2);
+    color: var(--text);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody td { padding: 9px 14px; color: var(--text-muted); vertical-align: top; }
+  tbody td strong { color: var(--text); }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tag-green { background: rgba(63,185,80,0.15); color: var(--green); }
+  .tag-yellow { background: rgba(210,153,34,0.15); color: var(--yellow); }
+  .tag-red { background: rgba(248,81,73,0.15); color: var(--red); }
+  .tag-blue { background: rgba(76,201,240,0.15); color: var(--accent3); }
+  .tag-pink { background: rgba(247,37,133,0.15); color: var(--accent); }
+
+  /* ── Code ── */
+  code {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 13px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    color: var(--accent3);
+  }
+  pre {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+  pre code { background: none; border: none; padding: 0; color: var(--text-muted); font-size: 13px; }
+
+  /* ── Keyboard shortcuts ── */
+  kbd {
+    display: inline-block;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-bottom: 3px solid var(--border);
+    border-radius: 5px;
+    padding: 1px 8px;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ── Step list ── */
+  .steps { counter-reset: steps; list-style: none; margin-left: 0; padding: 0; }
+  .steps li {
+    counter-increment: steps;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(steps);
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .steps li strong { color: var(--text); }
+
+  /* ── Comparison grid ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .compare-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+  .compare-card h4 { margin-top: 0; }
+  .compare-card .score {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .compare-card.winner { border-color: var(--green); }
+  .compare-card.winner .score { color: var(--green); }
+
+  /* ── Price badge ── */
+  .price {
+    display: inline-block;
+    background: rgba(247,37,133,0.12);
+    border: 1px solid rgba(247,37,133,0.3);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 2px 12px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* ── Machine card ── */
+  .machine-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .machine-card-main { flex: 1 1 300px; }
+  .machine-card-specs { flex: 0 1 240px; }
+  .machine-card h3 { margin: 0 0 8px; }
+  .spec-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-label { color: var(--text-muted); }
+  .spec-val { color: var(--text); font-weight: 600; }
+
+  /* ── Layer color swatches ── */
+  .layer-swatch {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  /* ── Section header ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-header .icon {
+    width: 42px; height: 42px;
+    background: rgba(247,37,133,0.12);
+    border: 1px solid rgba(247,37,133,0.25);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .section-header h2 { margin: 0; padding: 0; border-top: none; font-size: 1.5rem; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+  /* ── Scroll indicator ── */
+  .scroll-top {
+    display: block;
+    text-align: right;
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 40px 16px 36px; }
+    .tab-panel { padding: 28px 16px 60px; }
+    .machine-card { flex-direction: column; }
+    .machine-card-specs { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-eyebrow">Complete Software Guide</div>
+  <h1>🔴 RDWorks Ultimate Guide</h1>
+  <p class="hero-sub">Master the free CO2 laser software — cutting acrylic, wood, leather and more with your Ruida-controller machine</p>
+  <div class="pills">
+    <span class="pill hot">Free Software</span>
+    <span class="pill hot">Ruida Controller</span>
+    <span class="pill blue">CO2 Lasers</span>
+    <span class="pill blue">Cut &amp; Engrave</span>
+    <span class="pill">India Popular</span>
+    <span class="pill">40W–150W Machines</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════
+     TAB NAV — all 12 tabs
+══════════════════════════════════════════════════════ -->
+<nav class="tab-nav-wrap" role="tablist" aria-label="Guide sections">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab(1)">1. Understanding RDWorks</button>
+    <button class="tab-btn" onclick="switchTab(2)">2. Installation &amp; Setup</button>
+    <button class="tab-btn" onclick="switchTab(3)">3. Interface &amp; Tools</button>
+    <button class="tab-btn" onclick="switchTab(4)">4. Importing Files</button>
+    <button class="tab-btn" onclick="switchTab(5)">5. Cut &amp; Engrave Settings</button>
+    <button class="tab-btn" onclick="switchTab(6)">6. Working with Layers</button>
+    <button class="tab-btn" onclick="switchTab(7)">7. Material Settings</button>
+    <button class="tab-btn" onclick="switchTab(8)">8. Camera &amp; Positioning</button>
+    <button class="tab-btn" onclick="switchTab(9)">9. Advanced Features</button>
+    <button class="tab-btn" onclick="switchTab(10)">10. Troubleshooting</button>
+    <button class="tab-btn" onclick="switchTab(11)">11. Practice Projects</button>
+    <button class="tab-btn" onclick="switchTab(12)">12. Expert Tips</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 1 — Understanding RDWorks
+══════════════════════════════════════════════════════ -->
+<div id="tab-panel-1" class="tab-panel active">
+
+  <div class="section-header">
+    <div class="icon">🔴</div>
+    <h2>Understanding RDWorks &amp; CO2 Lasers</h2>
+  </div>
+
+  <p>RDWorks (also marketed as LaserWorks) is the official free design-and-control software made by Ruida Technology for their RDC series laser controllers. If you own a Chinese CO2 laser cutter — the kind that dominates the Indian market from ₹50,000 to ₹1,50,000 — there is a very strong chance your machine already runs a Ruida controller, and RDWorks is the software that talks to it. No licence fee, no subscription, no dongle. Free forever.</p>
+
+  <div class="callout india">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Why RDWorks dominates India:</strong> The entire affordable CO2 laser segment in India — sold by Cron Laser, Endurance, local Delhi/Surat/Mumbai resellers — ships Ruida-controller machines. RDWorks comes pre-installed or on a bundled USB stick. LightBurn costs USD 60–80 which equals ₹5,000–6,700, a significant added expense for a machine that cost ₹60,000. For many Indian users, RDWorks is "the" laser software.
+    </div>
+  </div>
+
+  <h2>The Ruida Controller Explained</h2>
+
+  <p>The Ruida controller is a standalone embedded computer bolted inside your laser machine. It runs the motion system, fires the laser tube, reads the limit switches and manages the operator panel — all independently of your PC. Your computer only needs to be connected when you send a new job; once the file is transferred, you can disconnect and the controller runs the job entirely on its own from its internal memory.</p>
+
+  <div class="card-grid">
+    <div class="card card-accent">
+      <h3>RDC6442G</h3>
+      <p>The most common Ruida controller. Found in the majority of 50W–100W Chinese CO2 lasers sold in India. Supports up to 8 layers, has USB device + USB host (flash drive) + Ethernet. The "G" suffix means it has a built-in display panel connector.</p>
+      <div><span class="tag tag-green">Most Common</span></div>
+    </div>
+    <div class="card card-blue">
+      <h3>RDC6445G</h3>
+      <p>Upgraded version with smoother motion control algorithms and better high-speed engraving. Common on newer 80W–130W machines. Same RDWorks software, slightly different parameter menu layout. Supports rotary axis natively.</p>
+      <div><span class="tag tag-blue">Mid-Range</span></div>
+    </div>
+    <div class="card card-yellow">
+      <h3>RDC6332M</h3>
+      <p>Budget controller found on smaller 40W–60W entry machines (the "K40 upgrade" tier). Two-axis only, no rotary, limited layer count. Still uses the same RDWorks software. Very common in home-workshop setups in India.</p>
+      <div><span class="tag tag-yellow">Budget/K40</span></div>
+    </div>
+    <div class="card">
+      <h3>Panel Overview</h3>
+      <p>All Ruida panels share: <strong>LCD display</strong> (current position, speed, file name), <strong>arrow jog buttons</strong>, <strong>Start/Pause/Stop</strong>, <strong>Origin</strong> (set current position as job start), <strong>Frame</strong> (dry run the bounding box without firing), <strong>Z/U</strong> (Z-axis and user functions), and a <strong>USB-A port</strong> for job files.</p>
+    </div>
+  </div>
+
+  <h2>CO2 Laser Machines in India — Prices &amp; Models</h2>
+
+  <p>The Indian laser market is dominated by re-branded Chinese CO2 machines imported through Delhi, Mumbai, Surat and Chennai. Prices have stabilized post-2022 with GST normalisation. Below is a realistic 2024 price guide.</p>
+
+  <div class="machine-card">
+    <div class="machine-card-main">
+      <h3>40W–50W Desktop CO2 Laser</h3>
+      <p>The entry point. Suitable for engraving and light cutting: 3mm acrylic, 4mm plywood, leather. Common brands: generic "K40 upgraded", Cron C series. Popular in home businesses making keychains, nameplates, wooden coasters. Work area typically 300×200mm to 400×300mm.</p>
+      <ul>
+        <li>Good for: leather, felt, thin acrylic, paper</li>
+        <li>Struggles with: thick wood, dark acrylic colours</li>
+        <li>Most common controller: RDC6332M or RDC6442G</li>
+      </ul>
+    </div>
+    <div class="machine-card-specs">
+      <div class="spec-row"><span class="spec-label">Price range</span><span class="spec-val price">₹45,000–75,000</span></div>
+      <div class="spec-row"><span class="spec-label">Tube life</span><span class="spec-val">1,000–1,500 hrs</span></div>
+      <div class="spec-row"><span class="spec-label">Cooling</span><span class="spec-val">Water (DIY chiller)</span></div>
+      <div class="spec-row"><span class="spec-label">Power supply</span><span class="spec-val">220V, ~8A</span></div>
+    </div>
+  </div>
+
+  <div class="machine-card">
+    <div class="machine-card-main">
+      <h3>60W–80W Mid-Range CO2 Laser</h3>
+      <p>The sweet spot for small businesses in India. Cuts 6mm acrylic cleanly, 8mm plywood in one pass, engraves leather and wood with excellent detail. Work area 600×400mm to 900×600mm. Brands: Cron, local "Laser Master" resellers, imported OMTech equivalents.</p>
+      <ul>
+        <li>Good for: acrylic trophies, awards, leather bags, MDF</li>
+        <li>Can handle: 10mm wood in two passes</li>
+        <li>Most common controller: RDC6442G</li>
+      </ul>
+    </div>
+    <div class="machine-card-specs">
+      <div class="spec-row"><span class="spec-label">Price range</span><span class="spec-val price">₹80,000–1,30,000</span></div>
+      <div class="spec-row"><span class="spec-label">Tube life</span><span class="spec-val">1,500–2,000 hrs</span></div>
+      <div class="spec-row"><span class="spec-label">Cooling</span><span class="spec-val">CW-3000 chiller</span></div>
+      <div class="spec-row"><span class="spec-label">Power supply</span><span class="spec-val">220V, ~15A</span></div>
+    </div>
+  </div>
+
+  <div class="machine-card">
+    <div class="machine-card-main">
+      <h3>100W–130W Professional CO2 Laser</h3>
+      <p>Serious production machines. Cuts 12–15mm acrylic, 18mm plywood, thick leather. Used by acrylic signage shops, trophy manufacturers, textile cutting units. Work area often 1200×900mm or larger. Many Surat textile businesses use 130W CO2 for fabric cutting.</p>
+      <ul>
+        <li>Good for: bulk production, thick materials, fast throughput</li>
+        <li>Requires: proper 3-phase or heavy single-phase supply</li>
+        <li>Controller: RDC6445G or RDC6442G</li>
+      </ul>
+    </div>
+    <div class="machine-card-specs">
+      <div class="spec-row"><span class="spec-label">Price range</span><span class="spec-val price">₹1,30,000–2,50,000</span></div>
+      <div class="spec-row"><span class="spec-label">Tube life</span><span class="spec-val">2,000+ hrs</span></div>
+      <div class="spec-row"><span class="spec-label">Cooling</span><span class="spec-val">CW-5000/5200</span></div>
+      <div class="spec-row"><span class="spec-label">Power supply</span><span class="spec-val">220V, 25–30A</span></div>
+    </div>
+  </div>
+
+  <div class="callout india">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Popular Indian resellers &amp; markets:</strong> Nehru Place (Delhi) for spare parts, Lajpat Rai Market for electronics, GIDC Vatva area Ahmedabad for acrylic supplies, Dharavi Mumbai for leather, Crawford Market Mumbai for tools. Online: Industry Buying, Industrybuying.com, Amazon India for chillers and accessories. For tubes and controllers, search IndiaMART for "Ruida controller" or "CO2 laser tube 80W".
+    </div>
+  </div>
+
+  <h2>What CO2 Lasers Can Do That Fiber Lasers Cannot</h2>
+
+  <p>If you've seen fiber laser videos online (the ones cutting metal in sparks), understand that CO2 and fiber are completely different tools. CO2 lasers operate at 10,600nm wavelength — perfect for organic and polymer materials but essentially invisible to bare metals.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>CO2 Laser (RDWorks)</th>
+          <th>Fiber Laser</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Acrylic cutting</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td><span class="tag tag-red">No</span></td>
+          <td>CO2 gives flame-polished edges on acrylic</td>
+        </tr>
+        <tr>
+          <td><strong>Wood/MDF/plywood</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td><span class="tag tag-red">No</span></td>
+          <td>CO2 is the only choice for wood</td>
+        </tr>
+        <tr>
+          <td><strong>Leather cutting</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td><span class="tag tag-yellow">Limited</span></td>
+          <td>CO2 seals edges; fiber can mark but not cut well</td>
+        </tr>
+        <tr>
+          <td><strong>Fabric/textile</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td><span class="tag tag-yellow">Some fabrics</span></td>
+          <td>Surat textile industry uses CO2 exclusively</td>
+        </tr>
+        <tr>
+          <td><strong>Paper/cardboard</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td><span class="tag tag-red">Burns</span></td>
+          <td>Packaging, invitation cards, gift boxes</td>
+        </tr>
+        <tr>
+          <td><strong>Rubber/silicone</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td><span class="tag tag-red">No</span></td>
+          <td>Stamps, gaskets</td>
+        </tr>
+        <tr>
+          <td><strong>Bare steel/aluminium</strong></td>
+          <td><span class="tag tag-red">No</span></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td>CO2 needs metal marking spray (CerMark) for marks only</td>
+        </tr>
+        <tr>
+          <td><strong>Glass engraving</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td><span class="tag tag-red">No</span></td>
+          <td>CO2 creates frosted effect on glass</td>
+        </tr>
+        <tr>
+          <td><strong>Stone/granite</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td><span class="tag tag-yellow">Some</span></td>
+          <td>CO2 does memorial stones, marble tiles</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>India Popular Uses for CO2 Lasers</h2>
+
+  <div class="card-grid">
+    <div class="card card-accent">
+      <h3>🏆 Acrylic Trophies &amp; Awards</h3>
+      <p>The single biggest market in India. Acrylic sheets from local hardware shops (₹80–120 per sq ft for 3mm clear), cut and engraved for corporate events, school prizes, sports trophies. Cities: Delhi, Mumbai, Bengaluru trophy-making clusters.</p>
+    </div>
+    <div class="card card-blue">
+      <h3>🪵 Wooden Gifts &amp; Decor</h3>
+      <p>Engraved photo frames, nameplates, keychains, customised boxes. Plywood from local timber markets (₹30–60/sq ft for 3mm), MDF from hardware shops. Export to gifting companies on platforms like Amazon India, Flipkart.</p>
+    </div>
+    <div class="card card-green">
+      <h3>👜 Leather Goods</h3>
+      <p>Mumbai Dharavi leather market, Kanpur leather zone — CO2 lasers cut wallets, bags, belts with sealed edges. Much faster than die-cutting for small runs. Vegetable-tanned leather engraves beautifully.</p>
+    </div>
+    <div class="card card-yellow">
+      <h3>🧵 Fabric &amp; Textile Cutting</h3>
+      <p>Surat synthetic fabric cutting is a huge market. CO2 lasers seal edges on polyester and nylon, eliminating fraying. Also used for garment embellishments, cut-work in cotton (requires lower speed for clean cuts).</p>
+    </div>
+    <div class="card card-orange">
+      <h3>📋 Signage &amp; Nameplates</h3>
+      <p>Acrylic letter cutting for shop signage, door nameplates, house number plates. Reverse-engraved acrylic with coloured backing is a popular premium look sold by signage shops across India.</p>
+    </div>
+    <div class="card">
+      <h3>🎨 Personalised Products</h3>
+      <p>Wedding invitations, Diwali gift boxes, photo engravings on wood/stone, personalised mobile stands, laptop skins. Instagram and Meesho sellers use small CO2 lasers for this micro-business segment.</p>
+    </div>
+  </div>
+
+  <h2>RDWorks vs LightBurn vs CorelLaser</h2>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <div class="score">FREE</div>
+      <h4>RDWorks</h4>
+      <ul>
+        <li>Free, official Ruida software</li>
+        <li>Works perfectly with all Ruida controllers</li>
+        <li>UI is functional but dated (early 2000s feel)</li>
+        <li>Built-in drawing tools (limited but usable)</li>
+        <li>No subscription, no dongle</li>
+        <li>Windows only (XP through Windows 11)</li>
+        <li>Active community, lots of Hindi YouTube tutorials</li>
+        <li>File format: <code>.rld</code> (proprietary)</li>
+      </ul>
+    </div>
+    <div class="compare-card winner">
+      <div class="score">~₹6K</div>
+      <h4>LightBurn</h4>
+      <ul>
+        <li>USD 60–80 one-time (or USD 30/year subscription)</li>
+        <li>Vastly superior UI, node editing, boolean ops</li>
+        <li>Supports same Ruida controllers via USB/Ethernet</li>
+        <li>Mac, Windows, Linux — cross-platform</li>
+        <li>Better camera alignment workflow</li>
+        <li>Free 30-day trial — worth trying before buying</li>
+        <li>Most professionals switch eventually</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="score">BUNDLED</div>
+      <h4>CorelLaser</h4>
+      <ul>
+        <li>Requires CorelDRAW (expensive)</li>
+        <li>Plugin, not standalone — works inside CorelDRAW</li>
+        <li>Common in older trophy/signage shops that already use CorelDRAW</li>
+        <li>Not recommended for new setups</li>
+        <li>Rarely seen on new machines in India</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Bottom line:</strong> Start with RDWorks — it costs nothing and gets the job done. Once you're producing consistently and want better design tools, node editing, and camera alignment, invest in LightBurn. Most serious Indian laser businesses use LightBurn after 6–12 months.
+    </div>
+  </div>
+
+  <h2>Downloading RDWorks</h2>
+
+  <p>The official source is <strong>rd-acs.com</strong> — Ruida's website. Navigate to Downloads → Software. Current version as of 2024 is RDWorksV8 (also called LaserWorks V8). The installer is a self-contained Windows .exe, around 30–50MB.</p>
+
+  <div class="callout warn">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Version matching matters:</strong> Your machine's controller panel firmware version and the RDWorks version need to be reasonably compatible. If your machine came with a USB stick, use that version first. Newer RDWorks versions are generally backward-compatible but check if anything breaks after an upgrade.
+    </div>
+  </div>
+
+  <pre><code>Official download: http://www.rd-acs.com/
+Path: Products → Downloads → LaserWorks / RDWorks V8
+Alternative search: "RDWorks V8 download" — several mirror sites host it
+File: RDWorksV8Setup_8.01.xx.exe  (version number varies)</code></pre>
+
+</div><!-- /tab-panel-1 -->
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 2 — Installation & Setup
+══════════════════════════════════════════════════════ -->
+<div id="tab-panel-2" class="tab-panel">
+
+  <div class="section-header">
+    <div class="icon">⚙️</div>
+    <h2>Installation &amp; First-Time Setup</h2>
+  </div>
+
+  <p>Getting RDWorks talking to your machine is usually straightforward, but there are a handful of India-specific issues — power quality, summer heat stress on chillers, USB driver quirks on Windows 10/11 — that trip up new users. This section covers everything from install to first successful job.</p>
+
+  <h3>System Requirements</h3>
+
+  <div class="card-grid">
+    <div class="card card-green">
+      <h3>Minimum (Works Fine)</h3>
+      <ul>
+        <li>Windows 7 / 8 / 10 / 11 (32 or 64-bit)</li>
+        <li>2GB RAM, 500MB disk space</li>
+        <li>USB 2.0 port (for controller connection)</li>
+        <li>1024×768 display minimum</li>
+        <li>No graphics card requirements</li>
+      </ul>
+    </div>
+    <div class="card card-blue">
+      <h3>Recommended</h3>
+      <ul>
+        <li>Windows 10 64-bit (most stable)</li>
+        <li>4GB+ RAM</li>
+        <li>1920×1080 display (UI is much more usable)</li>
+        <li>SSD for faster file operations</li>
+        <li>Ethernet port for network connection</li>
+      </ul>
+    </div>
+    <div class="card card-yellow">
+      <h3>Not Supported</h3>
+      <ul>
+        <li>macOS (use LightBurn instead)</li>
+        <li>Linux (use LightBurn instead)</li>
+        <li>Android/iOS tablets</li>
+        <li>Windows RT or S-mode</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Installation Steps</h3>
+
+  <ol class="steps">
+    <li><strong>Run as Administrator:</strong> Right-click the installer .exe → "Run as administrator". This is critical — RDWorks installs USB drivers that require admin rights. Regular user installation often fails silently.</li>
+    <li><strong>Accept the license and choose path:</strong> Default path <code>C:\RDWorks\</code> is fine. Avoid paths with Chinese characters or very long paths (driver installer bug).</li>
+    <li><strong>Driver installation prompt:</strong> During setup, a separate "USB Driver" window will appear. Click Install. This installs the Ruida virtual COM port or HID driver. Do NOT cancel this step.</li>
+    <li><strong>Windows Defender / Antivirus warning:</strong> Some antivirus flags the driver installer as suspicious (false positive). Allow it. Add the RDWorks folder to your AV exclusions.</li>
+    <li><strong>Restart Windows:</strong> Required after driver installation for the USB device to be recognised properly.</li>
+    <li><strong>Launch RDWorks:</strong> First launch may be slow (30–60 seconds) as it initialises the work area. Subsequent launches are faster.</li>
+  </ol>
+
+  <h3>Connecting via USB</h3>
+
+  <p>USB is the most common connection method for smaller machines. The Ruida controller appears as a USB device (not a COM port — it uses bulk transfer protocol).</p>
+
+  <ol class="steps">
+    <li><strong>Power on the laser machine first,</strong> then connect the USB cable. Ruida controllers prefer this order — hot-plugging after PC boot can cause missed enumeration.</li>
+    <li><strong>Check Device Manager:</strong> Windows key → type "Device Manager" → look under "LibUSB-Win32 Devices" or "Universal Serial Bus devices" for "Ruida" or "RDC" device. If it shows with a yellow exclamation, driver didn't install — reinstall as Administrator.</li>
+    <li><strong>In RDWorks:</strong> Go to <strong>Config → Vendor Settings → USB</strong>. Connection type should auto-detect. Click "Read from machine" to test — if it returns machine parameters, you're connected.</li>
+    <li><strong>Test send:</strong> Draw a small shape (rectangle), click the Download button (↓), click "Send". The machine panel should beep and show the file name. If it does, USB is working perfectly.</li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>USB cable quality matters in India:</strong> The stock USB cable that comes with most Indian-sold machines is often flimsy. If you get intermittent disconnects or "device not found" errors, replace with a quality shielded USB-A to USB-B cable (printer cable style), 1.5m maximum length. Long cables lose signal integrity.
+    </div>
+  </div>
+
+  <h3>Connecting via Ethernet (Recommended for Larger Machines)</h3>
+
+  <p>Ethernet is more reliable than USB, especially for large files (detailed engravings). The Ruida controller has a built-in static IP address by default.</p>
+
+  <div class="card card-blue">
+    <h3>Ethernet Setup Procedure</h3>
+    <ol>
+      <li>Default controller IP: <strong>192.168.1.100</strong> (check your controller panel: Menu → IP Config)</li>
+      <li>Set your PC's network adapter to a static IP in the same subnet: e.g., <strong>192.168.1.101</strong>, subnet mask <strong>255.255.255.0</strong></li>
+      <li>Connect PC directly to controller with Ethernet cable (or via a router/switch — keep them on same subnet)</li>
+      <li>In RDWorks: Config → Vendor Settings → Network → enter controller IP → test</li>
+      <li>Ping test: open CMD, type <code>ping 192.168.1.100</code> — if you get replies, network is good</li>
+    </ol>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Direct cable vs router:</strong> For a dedicated machine PC, connect directly with an Ethernet crossover cable (modern NICs auto-negotiate, so a straight-through cable works too). This avoids IP conflicts and gives maximum reliability. If you're on a shared office network, assign the controller a unique IP and ensure the gateway doesn't interfere.
+    </div>
+  </div>
+
+  <h3>First-Time Machine Configuration</h3>
+
+  <p>These settings must match your physical machine. Wrong values here cause crashes, missed origins, or overtravel.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          <th>Where to Set</th>
+          <th>What to Enter</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Machine Size (X,Y)</strong></td>
+          <td>Config → Machine Settings</td>
+          <td>Your bed dimensions in mm (e.g., 600×400)</td>
+          <td>Check your machine's physical bed with a tape measure</td>
+        </tr>
+        <tr>
+          <td><strong>Laser Head Origin</strong></td>
+          <td>Config → Machine Settings → Origin</td>
+          <td>Top-left, top-right, or bottom-left</td>
+          <td>Most Chinese CO2 lasers: top-right or top-left. Check where head homes on startup.</td>
+        </tr>
+        <tr>
+          <td><strong>Max Speed X/Y</strong></td>
+          <td>Vendor Settings (password: <code>RD8888</code>)</td>
+          <td>Usually 400–600 mm/s for gantry machines</td>
+          <td>Don't exceed what the machine can handle mechanically</td>
+        </tr>
+        <tr>
+          <td><strong>Laser power %</strong></td>
+          <td>Layer settings per job</td>
+          <td>Start with 15–20% for test runs</td>
+          <td>Never start at 100% — tube shock</td>
+        </tr>
+        <tr>
+          <td><strong>Start Speed</strong></td>
+          <td>Vendor Settings</td>
+          <td>5–15 mm/s typical</td>
+          <td>Speed at which motion starts from rest</td>
+        </tr>
+        <tr>
+          <td><strong>Work Mode</strong></td>
+          <td>Config → Work Mode</td>
+          <td>Typically "Immediate" for most users</td>
+          <td>Immediate = job runs as soon as controller receives it</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>India Power Setup — Critical Safety</h3>
+
+  <div class="callout danger">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>CO2 lasers in India need stable power and proper grounding:</strong> These machines draw significant current (15–30A for 80W–130W machines), have high-voltage laser power supplies (15,000–25,000V), and water-cooled tubes. Poor power, bad grounding, or inadequate cooling causes tube failures costing ₹8,000–25,000 to replace.
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card card-accent">
+      <h3>⚡ Power Requirements</h3>
+      <ul>
+        <li><strong>Voltage:</strong> 220–240V single phase (standard India supply)</li>
+        <li><strong>Current:</strong> 40W machine ~8–10A; 80W ~15–18A; 130W ~25–30A</li>
+        <li><strong>Use a dedicated circuit</strong> — don't share with heavy machinery</li>
+        <li><strong>UPS/Stabiliser:</strong> A servo voltage stabiliser (₹3,000–8,000) is strongly recommended in areas with voltage fluctuation</li>
+        <li><strong>Earthing:</strong> Proper 3-pin grounded outlet is mandatory. CO2 laser power supplies have capacitors that retain lethal charge.</li>
+      </ul>
+    </div>
+    <div class="card card-yellow">
+      <h3>🌡️ Summer Heat — Indian Climate Challenge</h3>
+      <ul>
+        <li>CO2 laser tubes need water cooling, typically 15–25°C</li>
+        <li>In Indian summer (40–45°C ambient), basic water pump+bucket setups fail fast</li>
+        <li><strong>CW-3000 chiller</strong> (₹12,000–18,000): handles up to 80W in moderate climate</li>
+        <li><strong>CW-5000 chiller</strong> (₹22,000–32,000): required for 100W+ or for Delhi/Rajasthan summers</li>
+        <li>Clean chiller water monthly — add a few drops of bleach or algae inhibitor to prevent biofouling in Indian humidity</li>
+        <li>Keep chiller in ventilated space — if chiller fan blows into a hot corner, its cooling capacity drops by 30–40%</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Testing the Connection — First Test Job</h3>
+
+  <ol class="steps">
+    <li><strong>Draw a 20×20mm square</strong> in RDWorks canvas. Set layer to Cut, Speed 20mm/s, Power 15%.</li>
+    <li><strong>Click "Download"</strong> (the down-arrow button in the toolbar or in the right-side job panel).</li>
+    <li><strong>On machine panel:</strong> press Frame button — laser head should trace the bounding box without firing. Confirm it's positioned where you expect.</li>
+    <li><strong>Press Start on panel:</strong> Machine should move and cut. At 15% power on a 60W+ machine, this will barely mark acrylic — that's intentional for a connection test.</li>
+    <li><strong>If successful:</strong> Increase power for your actual material and run proper test grid (Tab 5 covers this).</li>
+  </ol>
+
+  <div class="callout tip">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Vendor Settings password:</strong> The default Ruida vendor settings password is <code>RD8888</code>. Some machines from Indian resellers are set to <code>HF888</code>, <code>888888</code>, or <code>123456</code>. If none work, contact your reseller — don't try to brute-force it as some firmware versions lock after failures.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-2 -->
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 3 — Interface & Tools
+══════════════════════════════════════════════════════ -->
+<div id="tab-panel-3" class="tab-panel">
+
+  <div class="section-header">
+    <div class="icon">🖥️</div>
+    <h2>Interface &amp; Drawing Tools</h2>
+  </div>
+
+  <p>RDWorks has a classic Windows-style interface that feels like a 2005 CAD program. Once you learn where everything is, it's perfectly efficient. Don't expect Illustrator — think of it as a precision laser control panel with drawing capability bolted on.</p>
+
+  <h3>Main Interface Layout</h3>
+
+  <div class="card card-blue">
+    <h3>Interface Zones (from top to bottom/left to right)</h3>
+    <ul>
+      <li><strong>Menu Bar (top):</strong> File, Edit, Draw, Setting, Config, Library, View, Help</li>
+      <li><strong>Main Toolbar (below menu):</strong> New, Open, Save, Undo, Redo, Zoom tools, selection tools</li>
+      <li><strong>Drawing Toolbar (left side):</strong> Selection arrow, Rectangle, Circle/Ellipse, Polygon, Line, Polyline, Bezier, Text, Bitmap, Dimension</li>
+      <li><strong>Canvas (centre):</strong> The work area, showing your machine bed dimensions as a grey rectangle</li>
+      <li><strong>Layers Panel (right side):</strong> 8 colour-coded layers, each with its own speed/power/mode settings</li>
+      <li><strong>Job Panel (right side, below layers):</strong> Send, Download, Frame, Start buttons, position readout</li>
+      <li><strong>Status Bar (bottom):</strong> X/Y cursor coordinates, object dimensions, zoom level</li>
+      <li><strong>Property Bar (top, context-sensitive):</strong> Changes to show properties of selected tool/object</li>
+    </ul>
+  </div>
+
+  <h3>Drawing Tools — Complete Reference</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Tool</th><th>Shortcut</th><th>How to Use</th><th>Laser Use Case</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Select (Arrow)</strong></td>
+          <td><kbd>F1</kbd> or <kbd>Esc</kbd></td>
+          <td>Click to select, drag to box-select, Shift+click to multi-select</td>
+          <td>Moving, resizing, rotating objects</td>
+        </tr>
+        <tr>
+          <td><strong>Rectangle</strong></td>
+          <td><kbd>F2</kbd></td>
+          <td>Click-drag to draw. Hold Shift for square. Enter exact dimensions in property bar.</td>
+          <td>Cutting boards to size, engraving plates</td>
+        </tr>
+        <tr>
+          <td><strong>Ellipse/Circle</strong></td>
+          <td><kbd>F3</kbd></td>
+          <td>Click-drag. Hold Shift for perfect circle. Set arc start/end for partial circles.</td>
+          <td>Round keychains, circular engraving, coasters</td>
+        </tr>
+        <tr>
+          <td><strong>Polygon</strong></td>
+          <td><kbd>F4</kbd></td>
+          <td>Set number of sides in property bar before drawing. Click to place.</td>
+          <td>Hex patterns, star shapes for decorative cutting</td>
+        </tr>
+        <tr>
+          <td><strong>Line</strong></td>
+          <td><kbd>F5</kbd></td>
+          <td>Click start, click end. Single straight line segment.</td>
+          <td>Score lines, fold marks</td>
+        </tr>
+        <tr>
+          <td><strong>Polyline</strong></td>
+          <td><kbd>F6</kbd></td>
+          <td>Click multiple points, double-click to end. Creates connected line path.</td>
+          <td>Custom shapes, tracing outlines</td>
+        </tr>
+        <tr>
+          <td><strong>Bezier Curve</strong></td>
+          <td><kbd>F7</kbd></td>
+          <td>Click and drag to set control points. Complex but powerful for organic shapes.</td>
+          <td>Decorative curves, logo elements</td>
+        </tr>
+        <tr>
+          <td><strong>Text</strong></td>
+          <td><kbd>F8</kbd></td>
+          <td>Click on canvas, type text. Choose font, size in property bar. Use Convert to Curves before cutting!</td>
+          <td>Name plates, labels, engraving text</td>
+        </tr>
+        <tr>
+          <td><strong>Bitmap Import</strong></td>
+          <td>Via Draw menu</td>
+          <td>Imports JPG/PNG/BMP for raster engraving. Set dithering mode in layer settings.</td>
+          <td>Photo engraving on wood, glass</td>
+        </tr>
+        <tr>
+          <td><strong>Node Edit</strong></td>
+          <td><kbd>F10</kbd></td>
+          <td>Select object then F10 to edit individual path nodes. Add, delete, convert node types.</td>
+          <td>Fine-tuning imported paths, fixing sharp corners</td>
+        </tr>
+        <tr>
+          <td><strong>Hatch Fill</strong></td>
+          <td>Draw → Hatch</td>
+          <td>Select closed path, apply hatch. Set line spacing = engraving interval.</td>
+          <td>Area engraving using vector lines instead of scan mode</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Essential Keyboard Shortcuts</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>File &amp; Edit</h4>
+      <ul>
+        <li><kbd>Ctrl</kbd>+<kbd>N</kbd> — New file</li>
+        <li><kbd>Ctrl</kbd>+<kbd>O</kbd> — Open file</li>
+        <li><kbd>Ctrl</kbd>+<kbd>S</kbd> — Save</li>
+        <li><kbd>Ctrl</kbd>+<kbd>Z</kbd> — Undo</li>
+        <li><kbd>Ctrl</kbd>+<kbd>Y</kbd> — Redo</li>
+        <li><kbd>Ctrl</kbd>+<kbd>C</kbd> / <kbd>Ctrl</kbd>+<kbd>V</kbd> — Copy/Paste</li>
+        <li><kbd>Ctrl</kbd>+<kbd>D</kbd> — Duplicate (copy in place)</li>
+        <li><kbd>Delete</kbd> — Delete selected</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Selection &amp; Transform</h4>
+      <ul>
+        <li><kbd>Ctrl</kbd>+<kbd>A</kbd> — Select all</li>
+        <li><kbd>Shift</kbd>+click — Add to selection</li>
+        <li><kbd>Ctrl</kbd>+<kbd>G</kbd> — Group selected objects</li>
+        <li><kbd>Ctrl</kbd>+<kbd>U</kbd> — Ungroup</li>
+        <li><kbd>Ctrl</kbd>+<kbd>T</kbd> — Transform / position dialog</li>
+        <li>Arrow keys — Nudge selected object 1mm</li>
+        <li><kbd>Shift</kbd>+Arrow — Nudge 10mm</li>
+        <li><kbd>Ctrl</kbd>+Arrow — Nudge 0.1mm (precision)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>View &amp; Zoom</h4>
+      <ul>
+        <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> — Zoom to fit canvas</li>
+        <li>Mouse wheel — Zoom in/out</li>
+        <li>Middle-click drag — Pan canvas</li>
+        <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> — Zoom to all objects</li>
+        <li><kbd>+</kbd> / <kbd>-</kbd> — Zoom in/out</li>
+        <li><kbd>F9</kbd> — Toggle grid on/off</li>
+        <li><kbd>Alt</kbd>+<kbd>Enter</kbd> — Object properties dialog</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Alignment (with objects selected)</h4>
+      <ul>
+        <li>Right-click → Align → Center Horizontally</li>
+        <li>Right-click → Align → Center Vertically</li>
+        <li>Right-click → Align → Align Left</li>
+        <li>Right-click → Align → Space Evenly</li>
+        <li>These align relative to selection bounding box</li>
+        <li>Use "Align to Page" option to centre on bed</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Path Operations</h4>
+      <ul>
+        <li>Right-click → Union — merge overlapping paths</li>
+        <li>Right-click → Subtract — cut one path from another</li>
+        <li>Right-click → Intersect — keep only overlap</li>
+        <li>Right-click → Convert to Curves — flatten text/shapes to paths (do this before sending)</li>
+        <li>Edit → Close Path — closes open polylines</li>
+        <li>Edit → Optimize Path — removes redundant nodes</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Laser Control</h4>
+      <ul>
+        <li><kbd>F5</kbd> in Job panel — Frame (trace bounding box)</li>
+        <li><kbd>F6</kbd> — Download to controller</li>
+        <li><kbd>F7</kbd> — Start job</li>
+        <li>Click position on canvas then "Set Origin" — moves job start</li>
+        <li>Right-click canvas → "Move to Origin" — places objects at (0,0)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Coordinate System &amp; Origins</h3>
+
+  <p>Understanding how RDWorks handles position is critical to avoid cutting in the wrong place.</p>
+
+  <div class="card-grid">
+    <div class="card card-accent">
+      <h3>Absolute Coordinates</h3>
+      <p>Objects are positioned relative to the machine's home (origin) position. If your machine homes to top-right, the canvas (0,0) in RDWorks represents that corner. Use this when you need the job to cut in a specific fixed position on the bed every time — useful for jigs and fixtures.</p>
+    </div>
+    <div class="card card-blue">
+      <h3>Current Position</h3>
+      <p>Job starts from wherever the laser head is when you press Start. Most commonly used mode. Position your laser head over the material corner, set that as origin on the controller panel, then send the job. Flexible but requires you to manually position each time.</p>
+    </div>
+    <div class="card card-green">
+      <h3>Centre Mode</h3>
+      <p>Job starts from the centre point of the work. Useful for engraving circular items (coasters, plates) on a jig — put the laser over the centre, set origin, and the job expands outward from there.</p>
+    </div>
+  </div>
+
+  <h3>The Layers Panel — Quick Overview</h3>
+
+  <p>The layers panel on the right side is where all the laser parameter magic happens. RDWorks supports 8 layers (colour-coded). Each object is assigned to a layer by its colour. Full layer details are in Tab 6.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>Default Colour</th><th>Typical Use</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Layer 1</td>
+          <td><span class="layer-swatch" style="background:#000000;"></span>Black</td>
+          <td>Primary engrave (low speed, medium power)</td>
+        </tr>
+        <tr>
+          <td>Layer 2</td>
+          <td><span class="layer-swatch" style="background:#0000ff;"></span>Blue</td>
+          <td>Secondary engrave / detail layer</td>
+        </tr>
+        <tr>
+          <td>Layer 3</td>
+          <td><span class="layer-swatch" style="background:#ff0000;"></span>Red</td>
+          <td>Cut lines (high power, lower speed)</td>
+        </tr>
+        <tr>
+          <td>Layer 4</td>
+          <td><span class="layer-swatch" style="background:#00aa00;"></span>Green</td>
+          <td>Score/crease lines or second engrave pass</td>
+        </tr>
+        <tr>
+          <td>Layer 5</td>
+          <td><span class="layer-swatch" style="background:#ffaa00;"></span>Orange</td>
+          <td>Perforation / partial cut</td>
+        </tr>
+        <tr>
+          <td>Layer 6</td>
+          <td><span class="layer-swatch" style="background:#aa00aa;"></span>Magenta</td>
+          <td>Mark only / no-fire trace</td>
+        </tr>
+        <tr>
+          <td>Layer 7</td>
+          <td><span class="layer-swatch" style="background:#00aaaa;"></span>Cyan</td>
+          <td>Special operation (e.g., Z-offset cut)</td>
+        </tr>
+        <tr>
+          <td>Layer 8</td>
+          <td><span class="layer-swatch" style="background:#ffff00;"></span>Yellow</td>
+          <td>User defined</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Pro workflow tip:</strong> Establish a consistent colour convention for your shop. Example — Red always = cut, Black always = deep engrave, Blue always = light engrave surface mark. Document it and apply it to every design. This prevents accidentally running engrave settings on cut lines or vice versa.
+    </div>
+  </div>
+
+  <h3>Setting Up the Canvas for Your Machine</h3>
+
+  <ol class="steps">
+    <li>Go to <strong>Config → Machine Settings</strong> and confirm X/Y dimensions match your bed.</li>
+    <li>Enable <strong>Show Work Area</strong> in View menu — displays bed boundary as a rectangle on canvas.</li>
+    <li>Set up grid: View → Grid → Enable, set grid spacing to 10mm for most work. Use Snap to Grid for precision placement.</li>
+    <li>Set rulers to show mm (not inches): Config → System → Units → mm.</li>
+    <li>Enable <strong>Snap to Objects</strong> (Edit → Snap Settings) for aligning multiple objects precisely.</li>
+  </ol>
+
+</div><!-- /tab-panel-3 -->
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 4 — Importing Files
+══════════════════════════════════════════════════════ -->
+<div id="tab-panel-4" class="tab-panel">
+
+  <div class="section-header">
+    <div class="icon">📁</div>
+    <h2>Importing Files into RDWorks</h2>
+  </div>
+
+  <p>Very few users design everything in RDWorks itself. The typical workflow is: design in Inkscape, CorelDRAW, Illustrator, or AutoCAD → export → import into RDWorks → assign layers → send to machine. Getting the import step right avoids hours of troubleshooting.</p>
+
+  <h3>Supported File Formats</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Support Level</th>
+          <th>Best For</th>
+          <th>Common Issues</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SVG</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td>Vector cut/engrave paths from Inkscape/Illustrator</td>
+          <td>Text not converted to curves; some effects lost</td>
+        </tr>
+        <tr>
+          <td><strong>DXF</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td>CAD designs, AutoCAD, Fusion 360 exports</td>
+          <td>Scale issues (check units: mm vs inch vs unitless)</td>
+        </tr>
+        <tr>
+          <td><strong>AI (Illustrator)</strong></td>
+          <td><span class="tag tag-yellow">Fair</span></td>
+          <td>Direct Illustrator files</td>
+          <td>Complex files often fail; export as SVG instead</td>
+        </tr>
+        <tr>
+          <td><strong>PLT / HPGL</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td>Old CAD/cutting plotter files</td>
+          <td>Uncommon but well-supported</td>
+        </tr>
+        <tr>
+          <td><strong>BMP</strong></td>
+          <td><span class="tag tag-green">Excellent</span></td>
+          <td>Raster images for photo engraving</td>
+          <td>Convert to greyscale before import for best results</td>
+        </tr>
+        <tr>
+          <td><strong>JPG / JPEG</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td>Photo engraving source images</td>
+          <td>Compression artefacts affect engraving quality</td>
+        </tr>
+        <tr>
+          <td><strong>PNG</strong></td>
+          <td><span class="tag tag-green">Good</span></td>
+          <td>Logos, graphics with transparency</td>
+          <td>Transparency handled inconsistently — flatten first</td>
+        </tr>
+        <tr>
+          <td><strong>RLD</strong></td>
+          <td><span class="tag tag-green">Native</span></td>
+          <td>RDWorks native project files</td>
+          <td>Only opens in RDWorks; saves all settings</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>SVG Import Workflow (Most Common)</h3>
+
+  <p>SVG from Inkscape is the most popular import path for Indian laser users. Inkscape is free, runs on Windows, and exports clean SVGs.</p>
+
+  <div class="card card-accent">
+    <h3>Inkscape → RDWorks: Step-by-Step</h3>
+    <ol>
+      <li><strong>Design in Inkscape</strong> with layers/colours matching your RDWorks layer convention (Red = cut, Black = engrave)</li>
+      <li><strong>Select all text</strong> → Path → Object to Path (converts fonts to curves — critical, RDWorks cannot use font files)</li>
+      <li><strong>Expand all strokes:</strong> If your cut lines have a stroke width, Path → Stroke to Path, then reduce outline stroke to 0.001mm (hairline). RDWorks cuts the centre of strokes.</li>
+      <li><strong>Remove fills from cut paths:</strong> Cut paths should be stroke-only, no fill. Fill on cut paths causes unexpected behaviour.</li>
+      <li><strong>Save as SVG</strong> (plain SVG, not Inkscape SVG — fewer compatibility issues): File → Save a Copy → Plain SVG</li>
+      <li><strong>In RDWorks:</strong> File → Import → select your SVG → click Open</li>
+      <li><strong>Verify scale:</strong> Check imported dimensions in the property bar against your design intent. SVG units can cause 3.78× scale error (96dpi vs 25.4mm px confusion) — if objects are wrong size, use Transform to scale by 25.4/96 = 0.2646</li>
+      <li><strong>Assign to layers:</strong> Objects should auto-assign by colour. If not, select objects and click the desired layer colour in the layer panel.</li>
+    </ol>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>The 3.78× scale trap:</strong> Inkscape documents set to 96 DPI units export SVGs where 1 SVG user unit = 1 pixel = 0.2646mm. RDWorks sometimes interprets 1 SVG unit as 1mm, making your 100mm design import as 378mm. Always check after import. Fix: select all, use Transform → Scale → set width to correct dimension → apply.
+    </div>
+  </div>
+
+  <h3>DXF Import Workflow</h3>
+
+  <p>DXF is the best format for precision work from CAD software. Use this when dimensions must be exact (mechanical parts, interlocking boxes, jigs).</p>
+
+  <ol class="steps">
+    <li><strong>In your CAD software</strong> (AutoCAD, FreeCAD, Fusion 360, LibreCAD), ensure you're working in mm units.</li>
+    <li><strong>Export DXF:</strong> Use AutoCAD 2004/2007/2010 compatibility level — newer versions sometimes cause import issues.</li>
+    <li><strong>In RDWorks:</strong> File → Import → select DXF. A dialog asks for units — select mm.</li>
+    <li><strong>Check dimensions immediately:</strong> Select all, check property bar width/height against your design. DXF unit mismatch (inches vs mm) is common — if everything is 25.4× too large, you imported inches as mm. Delete, reimport, choose inch units, then use Transform to convert.</li>
+    <li><strong>Assign layers:</strong> DXF imports usually come in as one layer. Select all objects you want to cut → click red in layer panel. Select engrave objects → click black.</li>
+  </ol>
+
+  <h3>Raster Image Import (BMP/JPG/PNG)</h3>
+
+  <p>For photo engraving on wood, bamboo, stone, glass — raster images are the input. The quality of your pre-processed image has enormous impact on engraving quality.</p>
+
+  <div class="card-grid">
+    <div class="card card-blue">
+      <h3>Image Preparation (Before Import)</h3>
+      <ul>
+        <li><strong>Convert to greyscale:</strong> RDWorks works best with true greyscale (not RGB)</li>
+        <li><strong>Increase contrast:</strong> Laser engravings have less tonal range than photos — boost contrast significantly</li>
+        <li><strong>Sharpen:</strong> Unsharp mask helps recover detail that softens during engraving</li>
+        <li><strong>Recommended DPI:</strong> 300–500 DPI at final size. 600+ DPI is wasted — laser spot size limits resolution</li>
+        <li><strong>BMP format:</strong> Uncompressed BMP gives most predictable import. JPG is fine at high quality (90%+)</li>
+        <li>Tools: Photoshop, GIMP (free), Lightroom</li>
+      </ul>
+    </div>
+    <div class="card card-green">
+      <h3>Import &amp; Layer Assignment</h3>
+      <ul>
+        <li>File → Import → select image</li>
+        <li>Image appears on canvas as a raster object</li>
+        <li>Assign to a layer — RDWorks will show "Scan" mode automatically for images</li>
+        <li>Resize using corner handles (hold Shift to constrain proportions)</li>
+        <li>In layer settings: choose dithering mode (Jarvis, Floyd-Steinberg, or Ordered)</li>
+        <li>Set scan interval (line spacing = effective DPI)</li>
+        <li>Lower scan interval = higher DPI = slower job</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Fixing Common Import Problems</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Objects import at wrong size</td>
+          <td>Unit mismatch (mm vs inch vs px)</td>
+          <td>Select all → Transform → scale to correct dimension</td>
+        </tr>
+        <tr>
+          <td>Text appears as outline boxes</td>
+          <td>Text not converted to paths in source app</td>
+          <td>Go back to Inkscape/Illustrator, convert text to paths, re-export</td>
+        </tr>
+        <tr>
+          <td>Open paths showing in cut layer</td>
+          <td>Paths not closed in source design</td>
+          <td>Select path in RDWorks → Edit → Close Path; or fix in source app</td>
+        </tr>
+        <tr>
+          <td>Duplicate lines (cut twice)</td>
+          <td>Outline + fill both generated paths</td>
+          <td>Delete duplicate. In RDWorks: select all, Edit → Delete Overlap</td>
+        </tr>
+        <tr>
+          <td>All objects on one layer</td>
+          <td>Source file didn't use matching colours</td>
+          <td>Manually select and reassign objects to correct layer colours</td>
+        </tr>
+        <tr>
+          <td>SVG import crashes RDWorks</td>
+          <td>Complex effects (blur, gradient, clip paths)</td>
+          <td>In Inkscape: Extensions → Generate from Path → Flatten Beziers; remove all effects</td>
+        </tr>
+        <tr>
+          <td>Curves look jagged after import</td>
+          <td>Too many or too few nodes</td>
+          <td>Select path → F10 node edit → Edit → Optimize Path (reduces excess nodes)</td>
+        </tr>
+        <tr>
+          <td>Image appears black rectangle</td>
+          <td>CMYK image not supported</td>
+          <td>Convert to RGB or greyscale in Photoshop/GIMP before import</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Setting Up Designs for Cut vs Engrave Using Layers</h3>
+
+  <p>The fundamental rule: <strong>every object that will be cut must be a closed path with no fill, assigned to a layer set to "Cut" mode. Every area that will be engraved can be either a filled vector shape on a layer set to "Scan" mode, or a bitmap image.</strong></p>
+
+  <div class="card card-accent">
+    <h3>Typical Multi-Operation Setup</h3>
+    <p>Example: engraved wooden name plate with cut outline</p>
+    <ol>
+      <li>Black layer (Layer 1): The engraved text/graphic — set to Scan mode, 300mm/s, 40% power</li>
+      <li>Red layer (Layer 3): The outer cut rectangle — set to Cut mode, 15mm/s, 75% power</li>
+      <li>In layer panel, ensure Black layer order is <strong>above</strong> Red (engrave runs first, cut after)</li>
+      <li>Enable both layers, disable any unused layers</li>
+      <li>Send to machine — it will engrave the design, then cut the outline</li>
+    </ol>
+  </div>
+
+  <div class="callout india">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>India use case — Acrylic trophies:</strong> Design in CorelDRAW (still dominant in Indian trophy shops) → export DXF or SVG → import to RDWorks. Green layer = text engrave, Red layer = outer shape cut. Most shops have template files saved as .rld with pre-set layer parameters for their standard 4mm clear acrylic.
+    </div>
+  </div>
+
+</div><!-- /tab-panel-4 -->
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 5 — Cut & Engrave Settings
+══════════════════════════════════════════════════════ -->
+<div id="tab-panel-5" class="tab-panel">
+
+  <div class="section-header">
+    <div class="icon">⚡</div>
+    <h2>Cut &amp; Engrave Settings</h2>
+  </div>
+
+  <p>Getting settings right is the difference between clean cuts and burnt disasters. Every combination of material type, material thickness, laser power, and focal length needs its own tested parameters. This tab gives you a solid starting framework, then explains every parameter in detail.</p>
+
+  <div class="callout warn">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Always test first:</strong> Run a power/speed test grid on a scrap piece of your actual material before any production run. A 5-minute test saves hours of ruined material. The tables below are starting points, not gospel — your tube's actual wattage, lens condition, and material batch all vary.
+    </div>
+  </div>
+
+  <h3>Layer Settings — Complete Parameter Explanation</h3>
+
+  <p>Double-click any layer in the layer panel to open the layer settings dialog. Here's what every parameter does:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Unit</th>
+          <th>What It Controls</th>
+          <th>Guidance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Speed</strong></td>
+          <td>mm/s</td>
+          <td>How fast the laser head moves during this operation</td>
+          <td>Lower = more power delivered to material. Cutting: 5–40mm/s. Engraving: 100–500mm/s.</td>
+        </tr>
+        <tr>
+          <td><strong>Max Power</strong></td>
+          <td>%</td>
+          <td>Peak power used when moving at full speed</td>
+          <td>Main power setting. For cutting, this drives depth. For engraving, affects darkness.</td>
+        </tr>
+        <tr>
+          <td><strong>Min Power</strong></td>
+          <td>%</td>
+          <td>Power used at corners and direction changes (when speed drops)</td>
+          <td>Set 5–10% below Max Power. Prevents burnt corners. Critical for delicate engraving.</td>
+        </tr>
+        <tr>
+          <td><strong>Corner Power</strong></td>
+          <td>%</td>
+          <td>Same as Min Power on some firmware versions</td>
+          <td>Typically same value as Min Power</td>
+        </tr>
+        <tr>
+          <td><strong>Mode</strong></td>
+          <td>—</td>
+          <td>Cut (vector), Scan (raster engrave), or Scan+Cut</td>
+          <td>Cut = follows path. Scan = sweeps back-and-forth rows. Scan+Cut = engrave then cut outline.</td>
+        </tr>
+        <tr>
+          <td><strong>Scan Interval</strong></td>
+          <td>mm</td>
+          <td>Spacing between scan lines (= effective DPI for engraving)</td>
+          <td>0.1mm = 254 DPI. 0.05mm = 508 DPI. Lower = finer, slower. Use 0.1mm for most work.</td>
+        </tr>
+        <tr>
+          <td><strong>Scan Direction</strong></td>
+          <td>—</td>
+          <td>X (horizontal, faster) or Y (vertical)</td>
+          <td>Almost always X. Y-axis engraving is much slower due to carriage mass.</td>
+        </tr>
+        <tr>
+          <td><strong>Bi-directional</strong></td>
+          <td>checkbox</td>
+          <td>Engrave on both left-to-right AND right-to-left passes</td>
+          <td>Doubles speed. Can cause alignment offset ("tearing") — calibrate backlash offset if lines don't align.</td>
+        </tr>
+        <tr>
+          <td><strong>Dither Mode</strong></td>
+          <td>—</td>
+          <td>How greyscale images are converted to laser-on/off patterns</td>
+          <td>Jarvis = best for photos. Ordered = good for logos. Threshold = high contrast, fast.</td>
+        </tr>
+        <tr>
+          <td><strong>Overscan</strong></td>
+          <td>mm</td>
+          <td>Extra distance head travels past image edges before reversing</td>
+          <td>2–5mm typical. Prevents start/end power variation marks at edges.</td>
+        </tr>
+        <tr>
+          <td><strong>Acceleration</strong></td>
+          <td>mm/s²</td>
+          <td>How quickly head reaches target speed</td>
+          <td>Higher = faster job, more mechanical stress, potential banding. Default controller settings usually fine.</td>
+        </tr>
+        <tr>
+          <td><strong>Passes</strong></td>
+          <td>count</td>
+          <td>How many times the operation repeats</td>
+          <td>Use multiple passes for thick materials rather than maximum power (less char, cleaner edges)</td>
+        </tr>
+        <tr>
+          <td><strong>Focus Offset</strong></td>
+          <td>mm</td>
+          <td>Z-axis offset between passes</td>
+          <td>For thick materials: offset each pass by half the depth per pass to keep focus in material</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Scan+Cut Mode</h3>
+
+  <p>Scan+Cut is a powerful single-layer operation where RDWorks first engraves the fill of a shape (scan mode), then cuts the outline of the same shape (cut mode), all in one layer pass. This is perfect for single-colour badge-style designs.</p>
+
+  <div class="card card-blue">
+    <h3>When to Use Scan+Cut</h3>
+    <ul>
+      <li>Small badges, labels, stickers where engrave+cut needed but design is simple</li>
+      <li>Rubber stamp making (engrave the design, cut the stamp outline)</li>
+      <li>Saves time vs managing two separate layers for simple designs</li>
+    </ul>
+    <p><strong>Limitation:</strong> Both engrave and cut use the same speed/power settings — you can't set cut power independently. For any complex job, separate layers are better.</p>
+  </div>
+
+  <h3>Complete Settings Tables — 40W CO2 Laser</h3>
+
+  <p>These values are for a well-maintained 40W CO2 machine with a 2" lens, fresh tube (80%+ of rated power). Material is positioned at correct focal distance.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Thickness</th>
+          <th>Operation</th>
+          <th>Speed (mm/s)</th>
+          <th>Power (%)</th>
+          <th>Passes</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>3mm Acrylic (clear)</strong></td>
+          <td>3mm</td>
+          <td>Cut</td>
+          <td>8</td>
+          <td>85</td>
+          <td>1</td>
+          <td>Remove protective paper first. Air assist helps.</td>
+        </tr>
+        <tr>
+          <td><strong>3mm Acrylic</strong></td>
+          <td>3mm</td>
+          <td>Engrave</td>
+          <td>300</td>
+          <td>20</td>
+          <td>1</td>
+          <td>0.1mm scan interval, bi-directional</td>
+        </tr>
+        <tr>
+          <td><strong>3mm Plywood</strong></td>
+          <td>3mm</td>
+          <td>Cut</td>
+          <td>10</td>
+          <td>85</td>
+          <td>1–2</td>
+          <td>Varies hugely by wood density and glue type</td>
+        </tr>
+        <tr>
+          <td><strong>3mm Plywood</strong></td>
+          <td>3mm</td>
+          <td>Engrave</td>
+          <td>250</td>
+          <td>30</td>
+          <td>1</td>
+          <td>Light brown engrave. 40% for darker.</td>
+        </tr>
+        <tr>
+          <td><strong>3mm MDF</strong></td>
+          <td>3mm</td>
+          <td>Cut</td>
+          <td>8</td>
+          <td>90</td>
+          <td>1</td>
+          <td>MDF dense — needs more power than plywood</td>
+        </tr>
+        <tr>
+          <td><strong>2mm Leather</strong></td>
+          <td>2mm</td>
+          <td>Cut</td>
+          <td>20</td>
+          <td>65</td>
+          <td>1</td>
+          <td>Vegetable tan cuts cleanest; avoid chrome-tan (toxic fumes)</td>
+        </tr>
+        <tr>
+          <td><strong>2mm Leather</strong></td>
+          <td>2mm</td>
+          <td>Engrave</td>
+          <td>200</td>
+          <td>25</td>
+          <td>1</td>
+          <td>Lighter brown; 35% for darker brand marks</td>
+        </tr>
+        <tr>
+          <td><strong>Cardboard</strong></td>
+          <td>2–4mm</td>
+          <td>Cut</td>
+          <td>30</td>
+          <td>55</td>
+          <td>1</td>
+          <td>Watch for fire — keep exhaust running</td>
+        </tr>
+        <tr>
+          <td><strong>Fabric (cotton)</strong></td>
+          <td>—</td>
+          <td>Cut</td>
+          <td>60</td>
+          <td>35</td>
+          <td>1</td>
+          <td>Fast pass prevents burning. Air assist off for fabric.</td>
+        </tr>
+        <tr>
+          <td><strong>Acrylic (black 3mm)</strong></td>
+          <td>3mm</td>
+          <td>Cut</td>
+          <td>6</td>
+          <td>85</td>
+          <td>1–2</td>
+          <td>Dark colours absorb more — slightly harder to cut cleanly</td>
+        </tr>
+        <tr>
+          <td><strong>Rubber stamp</strong></td>
+          <td>3–5mm</td>
+          <td>Engrave</td>
+          <td>200</td>
+          <td>55</td>
+          <td>1</td>
+          <td>Deep engrave needed; use flood fill, 0.15mm interval</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Complete Settings Tables — 80W CO2 Laser</h3>
+
+  <p>80W is the Indian workhorse machine. These values are for a 2" lens, good tube condition, CW-3000 chiller maintaining 20–25°C coolant.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Thickness</th>
+          <th>Operation</th>
+          <th>Speed (mm/s)</th>
+          <th>Power (%)</th>
+          <th>Passes</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>3mm Acrylic</strong></td>
+          <td>3mm</td>
+          <td>Cut</td>
+          <td>25</td>
+          <td>60</td>
+          <td>1</td>
+          <td>Flame-polished edge. Slower = better edge polish.</td>
+        </tr>
+        <tr>
+          <td><strong>5mm Acrylic</strong></td>
+          <td>5mm</td>
+          <td>Cut</td>
+          <td>12</td>
+          <td>70</td>
+          <td>1</td>
+          <td>May need 2 passes if tube aging. Use air assist.</td>
+        </tr>
+        <tr>
+          <td><strong>8mm Acrylic</strong></td>
+          <td>8mm</td>
+          <td>Cut</td>
+          <td>6</td>
+          <td>80</td>
+          <td>1–2</td>
+          <td>2 passes with refocus between = cleaner than 1 high-power pass</td>
+        </tr>
+        <tr>
+          <td><strong>3mm Acrylic</strong></td>
+          <td>3mm</td>
+          <td>Engrave</td>
+          <td>400</td>
+          <td>18</td>
+          <td>1</td>
+          <td>0.1mm interval. Min power 12%.</td>
+        </tr>
+        <tr>
+          <td><strong>4mm Plywood</strong></td>
+          <td>4mm</td>
+          <td>Cut</td>
+          <td>25</td>
+          <td>65</td>
+          <td>1</td>
+          <td>Good quality birch ply. Cheap local ply may need 75%.</td>
+        </tr>
+        <tr>
+          <td><strong>6mm Plywood</strong></td>
+          <td>6mm</td>
+          <td>Cut</td>
+          <td>15</td>
+          <td>75</td>
+          <td>1</td>
+          <td>Check glue line — some Indian plywoods have hard glue bands</td>
+        </tr>
+        <tr>
+          <td><strong>6mm MDF</strong></td>
+          <td>6mm</td>
+          <td>Cut</td>
+          <td>10</td>
+          <td>80</td>
+          <td>1</td>
+          <td>Lots of fumes — good exhaust essential</td>
+        </tr>
+        <tr>
+          <td><strong>Plywood</strong></td>
+          <td>4mm</td>
+          <td>Engrave</td>
+          <td>350</td>
+          <td>25</td>
+          <td>1</td>
+          <td>Medium brown. 35% for darker. Good for photo engravings.</td>
+        </tr>
+        <tr>
+          <td><strong>3mm Leather</strong></td>
+          <td>3mm</td>
+          <td>Cut</td>
+          <td>35</td>
+          <td>55</td>
+          <td>1</td>
+          <td>Sealed edge on veg-tan. Very good for bags and belts.</td>
+        </tr>
+        <tr>
+          <td><strong>Leather</strong></td>
+          <td>3mm</td>
+          <td>Engrave</td>
+          <td>300</td>
+          <td>20</td>
+          <td>1</td>
+          <td>Monogram engraving at 0.1mm interval</td>
+        </tr>
+        <tr>
+          <td><strong>Polyester fabric</strong></td>
+          <td>—</td>
+          <td>Cut</td>
+          <td>80</td>
+          <td>25</td>
+          <td>1</td>
+          <td>Very fast pass, sealed edge. No air assist.</td>
+        </tr>
+        <tr>
+          <td><strong>Cotton fabric</strong></td>
+          <td>—</td>
+          <td>Cut</td>
+          <td>60</td>
+          <td>30</td>
+          <td>1</td>
+          <td>Slightly higher power than polyester</td>
+        </tr>
+        <tr>
+          <td><strong>Bamboo sheet</strong></td>
+          <td>3mm</td>
+          <td>Engrave</td>
+          <td>350</td>
+          <td>28</td>
+          <td>1</td>
+          <td>Popular for eco-gifts. Similar to plywood settings.</td>
+        </tr>
+        <tr>
+          <td><strong>Slate/stone tile</strong></td>
+          <td>—</td>
+          <td>Engrave</td>
+          <td>200</td>
+          <td>50</td>
+          <td>1</td>
+          <td>White frost effect. No cutting.</td>
+        </tr>
+        <tr>
+          <td><strong>Glass</strong></td>
+          <td>—</td>
+          <td>Engrave</td>
+          <td>200</td>
+          <td>25</td>
+          <td>1</td>
+          <td>Frosted effect. Low power, higher speed prevents cracking.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout india">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Indian material note — Local plywood varies enormously:</strong> Greenply, CenturyPly, and Kitply brand plywoods cut consistently. Local "commercial ply" from timber markets has hard glue lines, voids, and density variation that can mean settings that work on one sheet fail on the next. Always buy a small test batch from a new supplier before ordering production quantities. Poplar core ply (often imported via Alibaba through Delhi re-sellers) cuts much more consistently than eucalyptus-core Indian commercial ply.
+    </div>
+  </div>
+
+  <h3>Building a Power-Speed Test Grid</h3>
+
+  <p>The test grid is your most important tool. Make one for every new material and every new tube.</p>
+
+  <div class="card card-green">
+    <h3>How to Make a Test Grid in RDWorks</h3>
+    <ol>
+      <li>Draw a grid of small rectangles (10×10mm each), 5 columns × 4 rows = 20 test squares</li>
+      <li>Each column = different speed (e.g., 10, 15, 20, 25, 30 mm/s for cutting)</li>
+      <li>Each row = different power (e.g., 50%, 60%, 70%, 80%)</li>
+      <li>Assign all to one layer. Run the job.</li>
+      <li>Examine results: find the fastest speed at which cuts fully penetrate → that's your optimal setting</li>
+      <li>Save the test grid as a .rld template so you can rerun it quickly on new materials</li>
+    </ol>
+    <p><strong>Alternative:</strong> Use the RDWorks "Array" feature to duplicate shapes in a grid pattern with incremental layer property changes — faster than drawing manually.</p>
+  </div>
+
+  <h3>Bi-directional Engraving Calibration</h3>
+
+  <p>Bi-directional scan nearly doubles engraving speed but can cause "tearing" — offset between left-to-right and right-to-left passes. This shows as blurry or doubled text.</p>
+
+  <ol class="steps">
+    <li>Engrave a test pattern: a series of vertical lines or text at your working speed.</li>
+    <li>Zoom in to check if lines from left passes align with lines from right passes.</li>
+    <li>In RDWorks: Config → Machine Settings → Backlash (or Scan Offset) — adjust X-axis backlash in 0.1mm increments.</li>
+    <li>Re-test. The correct value makes both scan directions land in the same position.</li>
+    <li>This value changes with speed — calibrate at the specific speed you engrave at.</li>
+  </ol>
+
+</div><!-- /tab-panel-5 -->
+
+<!-- ═══════════════════════════════════════════════════
+     TAB 6 — Working with Layers
+══════════════════════════════════════════════════════ -->
+<div id="tab-panel-6" class="tab-panel">
+
+  <div class="section-header">
+    <div class="icon">🎨</div>
+    <h2>Working with Layers</h2>
+  </div>
+
+  <p>Layers are the core of RDWorks' power. They let you run multiple operations — engrave photo, engrave text, cut score line, cut outline — all in a single job, in a controlled order, with independent settings for each. Mastering the layer system unlocks the full potential of your CO2 laser.</p>
+
+  <h3>How the Layer System Works</h3>
+
+  <p>In RDWorks, <strong>a layer is determined by object colour</strong>. Every object on the canvas has a stroke/outline colour. Whatever colour that is, the object belongs to the layer with that colour. There are 8 layers, each with a fixed colour (black, blue, red, green, orange, magenta, cyan, yellow). You cannot add more layers — 8 is the maximum.</p>
+
+  <div class="callout info">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>Key concept:</strong> Layers in RDWorks are NOT like Photoshop layers (which control visibility and stacking of artwork). They are parameter groups. Two objects of the same colour both share the same speed/power/mode settings, even if they were drawn at different times. Change the layer settings → both objects change.
+    </div>
+  </div>
+
+  <h3>The 8 Layers — Full Details</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Colour</th>
+          <th>Hex</th>
+          <th>Typical Assignment</th>
+          <th>Recommended Mode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Layer 1</strong></td>
+          <td><span class="layer-swatch" style="background:#000000;"></span>Black</td>
+          <td><code>#000000</code></td>
+          <td>Primary deep engrave, photo engrave</td>
+          <td>Scan</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 2</strong></td>
+          <td><span class="layer-swatch" style="background:#0000ff;"></span>Blue</td>
+          <td><code>#0000FF</code></td>
+          <td>Secondary engrave, lighter surface mark</td>
+          <td>Scan</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 3</strong></td>
+          <td><span class="layer-swatch" style="background:#ff0000;"></span>Red</td>
+          <td><code>#FF0000</code></td>
+          <td>Main cut — outlines, through-cuts</td>
+          <td>Cut</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 4</strong></td>
+          <td><span class="layer-swatch" style="background:#00aa00;"></span>Green</td>
+          <td><code>#00AA00</code></td>
+          <td>Score lines, half-depth cuts, fold marks</td>
+          <td>Cut (lower power)</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 5</strong></td>
+          <td><span class="layer-swatch" style="background:#ffaa00;"></span>Orange</td>
+          <td><code>#FFAA00</code></td>
+          <td>Perforation lines, dotted cuts</td>
+          <td>Cut (with pauses / dash pattern)</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 6</strong></td>
+          <td><span class="layer-swatch" style="background:#aa00aa;"></span>Magenta</td>
+          <td><code>#AA00AA</code></td>
+          <td>Construction/reference lines (disabled or 0% power)</td>
+          <td>Cut or disabled</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 7</strong></td>
+          <td><span class="layer-swatch" style="background:#00aaaa;"></span>Cyan</td>
+          <td><code>#00AAAA</code></td>
+          <td>Deep cut pass, Z-offset operations</td>
+          <td>Cut</td>
+        </tr>
+        <tr>
+          <td><strong>Layer 8</strong></td>
+          <td><span class="layer-swatch" style="background:#aaaa00;"></span>Yellow</td>
+          <td><code>#AAAA00</code></td>
+          <td>User-defined, often second engrave depth</td>
+          <td>Scan or Cut</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Assigning Objects to Layers</h3>
+
+  <div class="card-grid">
+    <div class="card card-accent">
+      <h3>Method 1: By Object Colour (Workflow Standard)</h3>
+      <p>Design your artwork with cut lines in red, engrave areas in black (or whatever your colour convention is). When you import into RDWorks, objects automatically go to the matching layer based on their stroke colour. This is the cleanest workflow — design with intent baked in.</p>
+      <p><strong>In Inkscape:</strong> Set stroke colour to pure #FF0000 for cuts, #000000 for engrave. No fill on cut paths.</p>
+    </div>
+    <div class="card card-blue">
+      <h3>Method 2: Select and Click Layer</h3>
+      <p>Select any object(s) on the canvas, then click the desired layer colour swatch in the layer panel on the right. The object(s) immediately move to that layer and take its colour and settings.</p>
+      <p>Use this when you imported a file where everything ended up on one layer and need to reassign.</p>
+    </div>
+  </div>
+
+  <h3>Layer Settings Dialog — Full Walkthrough</h3>
+
+  <p>Double-click the layer swatch in the layer panel (or click the settings icon next to it) to open the full settings dialog.</p>
+
+  <div class="card card-green">
+    <h3>Layer Settings for a Cut Layer (Example)</h3>
+    <ul>
+      <li><strong>Processing Type:</strong> Cut (vector path following)</li>
+      <li><strong>Speed:</strong> 15 mm/s (for 3mm acrylic on 80W machine)</li>
+      <li><strong>Max Power:</strong> 65%</li>
+      <li><strong>Min Power:</strong> 55% (corners don't burn)</li>
+      <li><strong>Passes:</strong> 1 (or 2 for thick material)</li>
+      <li><strong>Blowing (Air Assist):</strong> ON — critical for cutting, especially acrylic</li>
+      <li><strong>Focus:</strong> 0.0mm offset (focus set manually at material surface)</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>Layer Settings for a Scan/Engrave Layer (Example)</h3>
+    <ul>
+      <li><strong>Processing Type:</strong> Scan (raster engraving)</li>
+      <li><strong>Speed:</strong> 350 mm/s (for wood engraving on 80W)</li>
+      <li><strong>Max Power:</strong> 28%</li>
+      <li><strong>Min Power:</strong> 20%</li>
+      <li><strong>Scan Interval:</strong> 0.1mm (254 DPI equivalent)</li>
+      <li><strong>Scan Direction:</strong> X-axis</li>
+      <li><strong>Bi-directional:</strong> YES (faster)</li>
+      <li><strong>Dither Mode:</strong> Jarvis (for photographic images) or Ordered (for graphics)</li>
+      <li><strong>Overscan:</strong> 3mm</li>
+    </ul>
+  </div>
+
+  <h3>Layer Order — Execution Sequence</h3>
+
+  <p>RDWorks executes layers from top to bottom in the layer panel list. You can drag layers to reorder them. The correct order for most jobs is:</p>
+
+  <div class="card card-accent">
+    <h3>Recommended Layer Execution Order</h3>
+    <ol>
+      <li><strong>First: Deep engrave layers</strong> — photo engravings, area fills. These should run before cutting so the material is still held in place.</li>
+      <li><strong>Second: Light engrave / surface mark layers</strong> — text, light graphics.</li>
+      <li><strong>Third: Score/crease lines</strong> — half-depth cuts for folding.</li>
+      <li><strong>Last: Cut layers</strong> — full through-cuts. Always cut last so parts stay in place during engraving.</li>
+    </ol>
+    <p><strong>Why this order matters:</strong> If you cut first, the cut piece shifts slightly (or falls through the honeycomb). Then the engrave pass runs over a moved piece — result is misaligned engraving. Engrave first, cut last is the golden rule.</p>
+  </div>
+
+  <h3>Enabling and Disabling Layers</h3>
+
+  <p>Each layer has a visibility/enable checkbox in the layer panel. Disable a layer to prevent it from running in the next job send — it stays in the file but won't execute.</p>
+
+  <div class="card-grid">
+    <div class="card card-yellow">
+      <h3>Use Cases for Disabling Layers</h3>
+      <ul>
+        <li>Run <strong>only the engrave</strong> first on a test piece, check alignment, then enable and run the cut layer</li>
+        <li>Send a job to machine <strong>without construction/reference lines</strong> you use for layout only</li>
+        <li>Run <strong>partial production</strong>: disable layers that are already done if a job was interrupted</li>
+        <li>Test a multi-operation job <strong>in stages</strong> before committing full production run</li>
+      </ul>
+    </div>
+    <div class="card card-green">
+      <h3>Layer Output Toggle</h3>
+      <p>In the layer panel, the checkbox column controls whether each layer sends to the machine. There's also a separate "Show" toggle (eye icon on some versions) for canvas visibility — this is different. You can have a layer visible on screen but disabled from output.</p>
+      <p><strong>Tip:</strong> Use a reference/dimension layer in magenta with Output disabled — it helps with design layout but never accidentally fires the laser on your dimension lines.</p>
+    </div>
+  </div>
+
+  <h3>Colour-to-Layer Workflow — Full Example</h3>
+
+  <p>Example: A wooden personalised gift box with engraved monogram, decorative score lines, and cut outline.</p>
+
+  <div class="card card-accent">
+    <h3>Complete Workflow: Wooden Gift Box Lid</h3>
+    <ol>
+      <li><strong>Inkscape design:</strong>
+        <ul>
+          <li>Monogram letters: fill = black (#000000), no stroke</li>
+          <li>Decorative border frame: stroke = blue (#0000FF), no fill</li>
+          <li>Score line (for fold): stroke = green (#00AA00), no fill</li>
+          <li>Outer cut outline: stroke = red (#FF0000), no fill</li>
+        </ul>
+      </li>
+      <li><strong>Export as Plain SVG from Inkscape</strong></li>
+      <li><strong>Import into RDWorks</strong> — objects auto-assign to Black/Blue/Green/Red layers</li>
+      <li><strong>Configure Black layer:</strong> Scan, 300mm/s, 30% power, 0.1mm interval (deep engrave for monogram)</li>
+      <li><strong>Configure Blue layer:</strong> Scan, 400mm/s, 18% power, 0.1mm interval (light engrave for border)</li>
+      <li><strong>Configure Green layer:</strong> Cut, 30mm/s, 30% power (score = half depth, not through)</li>
+      <li><strong>Configure Red layer:</strong> Cut, 20mm/s, 72% power (full through-cut)</li>
+      <li><strong>Order in panel:</strong> Black → Blue → Green → Red (engrave first, cut last)</li>
+      <li><strong>Position on machine:</strong> Place material, jog laser to corner, set origin on controller panel</li>
+      <li><strong>Frame check:</strong> Press Frame on controller — head traces bounding box. Confirm it fits on material.</li>
+      <li><strong>Start job</strong></li>
+    </ol>
+  </div>
+
+  <div class="callout india">
+    <div class="callout-icon"></div>
+    <div class="callout-body">
+      <strong>India tip — Save layer presets:</strong> Indian trophy and gift shops do the same operations repeatedly (3mm acrylic engrave+cut, 4mm ply engrave+cut). Save your layer configurations as template .rld files. Open the template → paste in your new design → the layer settings are pre-loaded. This is far faster than reconfiguring layers for every new job. Keep a folder of templates: "3mm_acrylic_60W.rld", "4mm_ply_80W.rld", "leather_2mm_80W.rld" etc.
+    </div>
+  </div>
+
+  <h3>Advanced Layer Techniques</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>Nested Cuts (Puzzle Pattern)</h3>
+      <p>For interlocking parts, use one layer for inner cuts and another for outer cuts. Set inner cut layer first in execution order. This prevents inner pieces from shifting before outer cuts separate them from the sheet.</p>
+    </div>
+    <div class="card">
+      <h3>Two-Pass Deep Cutting</h3>
+      <p>For thick acrylic (8–10mm on 80W machine): use two separate layers for the same cut path. First layer: 60% power, second layer: same path, 65% power. Between passes, the first kerf helps guide the second pass deeper without excessive heating.</p>
+    </div>
+    <div class="card">
+      <h3>Selective Output per Production Run</h3>
+      <p>Have a base design with multiple text/name fields on different layers. For each customer order, enable only the name/text layer for that customer. This avoids redesigning for each piece and reduces risk of errors.</p>
+    </div>
+    <div class="card">
+      <h3>Layer as Jig Reference</h3>
+      <p>Create a "jig" layer (disabled from output) showing the exact position of pre-cut material on the bed. Use this to place new cuts in correct registration — e.g., second-side engraving on a workpiece that was flipped.</p>
+    </div>
+  </div>
+
+</div><!-- /tab-panel-6 -->
+
+<!-- ═══════════════════════════════════════════════════
+     JS — switchTab function
+══════════════════════════════════════════════════════ -->
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  var panel = document.getElementById('tab-panel-' + n);
+  if (panel) panel.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b, i) {
+    if (i === n - 1) b.classList.add('active');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+
+
+
+
+<!-- TAB 7: Material Settings -->
+<div class="tab-panel" id="tab-panel-7">
+  <h2 class="section-title">Material Settings — India Focus</h2>
+  <p class="section-intro">These settings are tested starting points. Always run a test on a scrap piece. Indian power supply fluctuations (±10%) can affect results — use a stabilizer for consistent output.</p>
+
+  <!-- WOOD -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Wood</h3>
+    <p style="margin-bottom:1rem;opacity:.85;">Sources: Local timber market, hardware shops, IndiaMART. Cost: ₹20–80/sheet (3mm ply). Buy in bulk from your city's wholesale timber market for best rates.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed (mm/s)</th><th>40W Power (%)</th><th>80W Speed (mm/s)</th><th>80W Power (%)</th><th>Passes</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>3mm Plywood</td><td>Engrave</td><td>300–400</td><td>20–30</td><td>400–600</td><td>15–20</td><td>1</td><td>Scan gap 0.1mm for fill engraving</td></tr>
+          <tr><td>3mm Plywood</td><td>Cut</td><td>8–12</td><td>75–85</td><td>15–25</td><td>55–65</td><td>1–2</td><td>Use air assist; poplar ply cuts cleanest</td></tr>
+          <tr><td>6mm Plywood</td><td>Cut</td><td>4–6</td><td>85–90</td><td>8–12</td><td>70–80</td><td>2–3</td><td>Multiple passes reduce burn marks</td></tr>
+          <tr><td>MDF 3mm</td><td>Engrave</td><td>300–350</td><td>25–35</td><td>400–500</td><td>18–25</td><td>1</td><td>MDF burns evenly — great for deep engraving</td></tr>
+          <tr><td>MDF 3mm</td><td>Cut</td><td>6–10</td><td>80–88</td><td>14–20</td><td>60–70</td><td>1–2</td><td>Strong fumes — good exhaust mandatory</td></tr>
+          <tr><td>Teak / Rosewood</td><td>Engrave only</td><td>200–300</td><td>20–30</td><td>300–400</td><td>15–22</td><td>1</td><td>Do not cut — too expensive; beautiful dark contrast</td></tr>
+          <tr><td>Bamboo sheet</td><td>Engrave</td><td>300–400</td><td>20–28</td><td>400–500</td><td>15–20</td><td>1</td><td>Very popular eco product in India; consistent grain</td></tr>
+          <tr><td>Bamboo sheet</td><td>Cut (3mm)</td><td>8–12</td><td>75–82</td><td>16–22</td><td>55–65</td><td>1</td><td>Cuts cleaner than plywood with less char</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>India Tip:</strong> Bamboo products (coasters, name plates, desk organizers) sell extremely well on Meesho, Amazon India, and local craft fairs. Bamboo sheets available in Hyderabad, Pune, and Bengaluru wholesale markets at ₹25–50/sheet.
+    </div>
+  </div>
+
+  <!-- ACRYLIC -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Acrylic</h3>
+    <p style="margin-bottom:1rem;opacity:.85;">Sources: Acrylic sheet suppliers in industrial areas, IndiaMART, local hardware markets. Cost: ₹150–400/sheet (600×400mm). Mumbai's Dharavi, Delhi's Lajpat Rai, Hyderabad's Secunderabad market are major hubs.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>Passes</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>3mm Clear Acrylic</td><td>Cut</td><td>6–10</td><td>80–88</td><td>14–20</td><td>60–68</td><td>1</td><td>Leave protective film on when cutting</td></tr>
+          <tr><td>3mm Clear Acrylic</td><td>Engrave</td><td>300–400</td><td>18–28</td><td>400–600</td><td>12–18</td><td>1</td><td>Remove protective film before engraving</td></tr>
+          <tr><td>5mm Clear Acrylic</td><td>Cut</td><td>4–6</td><td>88–92</td><td>8–14</td><td>68–78</td><td>1–2</td><td>Slow speed = cleaner edge polish</td></tr>
+          <tr><td>Colored Acrylic 3mm</td><td>Cut</td><td>6–10</td><td>78–85</td><td>14–20</td><td>58–65</td><td>1</td><td>Dark colors absorb more — reduce power slightly</td></tr>
+          <tr><td>Colored Acrylic 3mm</td><td>Engrave</td><td>300–400</td><td>20–30</td><td>400–500</td><td>15–22</td><td>1</td><td>Reveals white/frosted contrast — great for trophies</td></tr>
+          <tr><td>Mirror Acrylic 3mm</td><td>Cut</td><td>6–8</td><td>80–88</td><td>14–18</td><td>58–65</td><td>1</td><td>Engrave from back side for mirror text effect</td></tr>
+          <tr><td>Mirror Acrylic 3mm</td><td>Engrave</td><td>250–350</td><td>15–22</td><td>350–450</td><td>10–15</td><td>1</td><td>Low power to avoid melting mirror coating</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Critical Rule — Protective Film:</strong>
+      <ul style="margin:.5rem 0 0 1.2rem;">
+        <li><strong>Cutting:</strong> Keep the protective film ON. It prevents scratch marks and makes edge cleanup easier.</li>
+        <li><strong>Engraving:</strong> Remove the protective film. Film over engraving area causes uneven burn and residue.</li>
+        <li>Cast acrylic engraves white and milky — perfect for awards. Extruded acrylic engraves clear — less visible.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LEATHER -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Leather</h3>
+    <p style="margin-bottom:1rem;opacity:.85;">India leather hubs: Kanpur (North India), Kolkata (East), Chennai (South). Genuine leather ₹200–800/sq ft. Faux leather (rexine) ₹60–150/sq ft — widely available in local markets.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Genuine Leather (2–3mm)</td><td>Engrave</td><td>150–250</td><td>25–40</td><td>250–350</td><td>20–30</td><td>Dark burn marks; beautiful contrast</td></tr>
+          <tr><td>Genuine Leather (2–3mm)</td><td>Cut</td><td>8–12</td><td>70–80</td><td>14–20</td><td>55–65</td><td>Strong fumes — exhaust critical</td></tr>
+          <tr><td>Faux Leather / Rexine</td><td>Engrave</td><td>200–300</td><td>20–30</td><td>300–400</td><td>15–22</td><td>Very popular, affordable, great for wallets/belts</td></tr>
+          <tr><td>Faux Leather / Rexine</td><td>Cut</td><td>10–15</td><td>60–70</td><td>18–25</td><td>45–55</td><td>Cuts cleanly; PVC fumes — exhaust essential</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warning-box">
+      <strong>Warning:</strong> PVC-based faux leather releases chlorine gas when laser cut. Always use strong exhaust and do not breathe fumes. Test unknown leather with a small spot first. Genuine vegetable-tanned leather is safest.
+    </div>
+  </div>
+
+  <!-- FABRIC -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Fabric</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>India Market</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Felt (3–5mm)</td><td>Cut</td><td>20–35</td><td>30–45</td><td>35–55</td><td>22–35</td><td>Craft market, school projects, decor</td></tr>
+          <tr><td>Denim</td><td>Engrave</td><td>200–300</td><td>30–45</td><td>300–400</td><td>22–35</td><td>Jeans customization — trending on Instagram</td></tr>
+          <tr><td>Jute</td><td>Cut + Engrave</td><td>150–250</td><td>35–50</td><td>250–350</td><td>25–38</td><td>Corporate gifting B2B — eco bags, coasters</td></tr>
+          <tr><td>Cotton (plain)</td><td>Engrave</td><td>200–300</td><td>30–42</td><td>300–400</td><td>22–32</td><td>Kurta customization, fashion label India</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>India Trend:</strong> Denim jacket engraving and kurta monogram engraving are gaining massive traction on Instagram Reels. Document your process with short videos — this drives direct DM orders without needing a website.
+    </div>
+  </div>
+
+  <!-- RUBBER -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Rubber — Stamp Making</h3>
+    <p style="margin-bottom:1rem;opacity:.85;">Rubber stamp sheets available at Itsy Bitsy, local art stores, and stationery wholesale markets. Cost: ₹200–500/sheet (A4 size). Stamp making is a lucrative add-on service.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>DPI / Settings</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Rubber stamp sheet (2mm)</td><td>Engrave (relief)</td><td>100–150</td><td>60–75</td><td>150–220</td><td>45–60</td><td>500 DPI; deep engrave for clean stamp relief</td></tr>
+          <tr><td>Rubber stamp sheet (2mm)</td><td>Cut outline</td><td>15–20</td><td>70–80</td><td>25–35</td><td>55–65</td><td>Cut after engraving; strong fumes — exhaust on</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Stamp Pro Tip:</strong> ALWAYS mirror your design before engraving. In RDWorks: select design → Mirror Horizontal. Text must read backwards on the rubber so it reads correctly when stamped. See Tab 9 for the full mirror workflow.
+    </div>
+  </div>
+
+  <!-- STONE & SLATE -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Stone, Slate & Marble</h3>
+    <p style="margin-bottom:1rem;opacity:.85;">India is the world's largest marble producer (Rajasthan). Slate and granite are abundantly available. These are high-margin products with low material cost.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Slate coasters (10mm)</td><td>Engrave</td><td>100–200</td><td>55–70</td><td>150–250</td><td>40–55</td><td>Light gray mark; beautiful contrast on dark slate</td></tr>
+          <tr><td>Marble tile surface</td><td>Engrave</td><td>100–180</td><td>50–65</td><td>150–220</td><td>38–50</td><td>White frosted mark; Rajasthan pink/white marble ideal</td></tr>
+          <tr><td>Granite tile surface</td><td>Engrave</td><td>80–150</td><td>60–75</td><td>120–200</td><td>45–60</td><td>Requires higher power; test on scrap first</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>India Business Angle:</strong> Slate coasters with mandala designs → gift sets ₹600–1200. Marble tiles with family name → home decor ₹800–2000. Approach Rajasthan handicraft exporters for bulk B2B orders.
+    </div>
+  </div>
+
+  <!-- GLASS -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Glass</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Glass (flat surface)</td><td>Engrave</td><td>300–500</td><td>18–28</td><td>400–600</td><td>12–20</td><td>Fill mode; low power to avoid cracking</td></tr>
+          <tr><td>Borosilicate glass</td><td>Engrave</td><td>200–350</td><td>22–32</td><td>300–450</td><td>16–24</td><td>More stable than regular glass for laser</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Glass Tips:</strong> Apply a thin layer of dish soap or wet newspaper over the glass surface before engraving. This reduces micro-fracturing and gives a smoother frosted finish. Wipe clean after. Glass awards and trophies are big in India's corporate gifting market.
+    </div>
+  </div>
+
+  <!-- PAPER -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Paper & Cardstock</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Material</th><th>Operation</th><th>40W Speed</th><th>40W Power</th><th>80W Speed</th><th>80W Power</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cardstock 300 GSM</td><td>Cut</td><td>40–80</td><td>20–35</td><td>60–120</td><td>14–25</td><td>Very fast; intricate patterns possible</td></tr>
+          <tr><td>Plain paper (80–120 GSM)</td><td>Cut</td><td>60–100</td><td>15–25</td><td>80–150</td><td>10–18</td><td>Wedding invitations, paper art</td></tr>
+          <tr><td>Foam sheet (3mm EVA)</td><td>Cut</td><td>30–50</td><td>30–40</td><td>50–80</td><td>22–30</td><td>Rangoli stencil base material option</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>India-Unique Product Alert:</strong> Laser-cut rangoli stencils for Diwali/Navratri/Onam are a zero-competition niche on Etsy and Amazon India. Intricate geometric and floral patterns cut beautifully from cardstock or acrylic. See Project 4 in Tab 11 for the complete workflow.
+    </div>
+  </div>
+
+  <!-- WHAT CO2 CANNOT DO -->
+  <div class="card" style="border-color:#ff4444;">
+    <h3 class="card-title" style="color:#ff4444;">What CO2 Laser CANNOT Do — Bare Metal</h3>
+    <p>A CO2 laser (10,600nm wavelength) <strong>cannot engrave or cut bare steel, aluminum, copper, or brass</strong>. The metal surface reflects the CO2 beam instead of absorbing it — this wastes energy and can even damage your laser tube or optics.</p>
+    <h4 style="margin:1rem 0 .5rem;opacity:.9;">Why this happens:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>CO2 wavelength (10.6 micron) reflects off polished metal surfaces</li>
+      <li>Fiber laser (1064nm wavelength) is absorbed by metal — that's the correct tool</li>
+      <li>CO2 CAN mark metal using <strong>Cermark / LaserBond spray</strong> — apply spray, engrave, wash off excess. The bonded residue leaves a permanent black mark.</li>
+    </ul>
+    <div class="tip-box" style="margin-top:1rem;">
+      <strong>India Market:</strong> If customers ask for steel/aluminum trophy engraving → refer them to a fiber laser operator or quote with Cermark spray (+₹50–100/piece for spray cost). Fiber lasers start at ₹1.5 lakh in India — a natural upgrade when your business grows.
+    </div>
+  </div>
+</div>
+
+<!-- TAB 8: Camera & Positioning -->
+<div class="tab-panel" id="tab-panel-8">
+  <h2 class="section-title">Camera & Positioning</h2>
+  <p class="section-intro">RDWorks does not have a built-in camera preview like Lightburn. But with the right workflows, you can achieve precise, repeatable positioning for batch production — critical for profitable laser work in India.</p>
+
+  <!-- Red Dot Pointer -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Red Dot Pointer for Positioning</h3>
+    <p>Most Ruida-controller machines include a red diode laser pointer (650nm) that shows exactly where the CO2 beam will fire. Use it for:</p>
+    <ul style="margin:1rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>Origin setting:</strong> Jog the head to where you want the job to start, check with red dot, then press <kbd>Origin</kbd> on the controller.</li>
+      <li><strong>Material alignment:</strong> Move to corners of your bounding box using the "Frame" function to check fit before firing.</li>
+      <li><strong>Single item centering:</strong> Jog red dot to center of your material, set origin, use "Current Position" origin mode in RDWorks.</li>
+    </ul>
+    <div class="tip-box" style="margin-top:1rem;">
+      <strong>Frame Before You Fire:</strong> Always press <strong>Frame</strong> on the controller (or in RDWorks) before starting any job. The laser head traces the bounding box of your design at high speed without firing. This confirms your design fits on the material and is positioned correctly.
+    </div>
+  </div>
+
+  <!-- Origin Types -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Origin Types on Ruida Controller</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Origin Mode</th><th>How It Works</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Absolute Origin</strong></td><td>Always starts from machine's fixed home (usually top-left corner). Position in software matches physical bed position exactly.</td><td>Batch jobs with fixed jigs; repeatable production</td></tr>
+          <tr><td><strong>Anchor Point (User Origin)</strong></td><td>You manually jog the head to a position and press Origin to set it as the job start point.</td><td>Single custom pieces; irregular material placement</td></tr>
+          <tr><td><strong>Current Position</strong></td><td>Job starts wherever the laser head currently sits when you press Start.</td><td>Quick one-off tests; small items centered under head</td></tr>
+          <tr><td><strong>Machine Zero</strong></td><td>Returns head to mechanical home (homing switches). Resets after every power cycle.</td><td>Calibration; resetting after manual positioning errors</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Recommended for India Production:</strong> Use <strong>Absolute Origin</strong> with a fixed jig system. Once your jig is aligned to machine zero, every job repeats perfectly without re-aligning. This is the key to scalable production.
+    </div>
+  </div>
+
+  <!-- Controller Panel Navigation -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Ruida Controller Panel — Positioning Workflow</h3>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Power On & Home</strong><br>Machine homes automatically. Wait for homing to complete before any operation.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Place Material</strong><br>Place your material on the honeycomb bed. Use tape or pins at corners to prevent movement.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Jog Head</strong><br>Use arrow keys on controller to move head to desired start position. Hold Shift for faster movement.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Set Focus</strong><br>Use the Z-axis buttons to set correct focus distance (use the focus tool / acrylic gauge that came with your machine).</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Set Origin</strong><br>Press the <strong>Origin</strong> button. The controller confirms "Anchor Point Set." This is your job start position.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-content"><strong>Frame Test</strong><br>Press <strong>Frame</strong>. Head traces the design outline. Confirm fit. If off, adjust and repeat steps 3–6.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">7</div>
+        <div class="step-content"><strong>Start Job</strong><br>Close lid, press <strong>Start/Pause</strong>. Monitor first few seconds. Have your hand near the E-Stop.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Jig Making -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Jig Making for Repeatable Positioning</h3>
+    <p>A jig is a template that holds your material in exactly the same position every time. Jigs are the #1 productivity tool for batch production.</p>
+    <h4 style="margin:1rem 0 .5rem;opacity:.9;">How to Make an Acrylic Jig:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Measure your product (e.g., coaster: 90×90mm, 10mm thick)</li>
+      <li>In RDWorks, draw a rectangle 90×90mm and arrange your grid (e.g., 3×3 = 9 coasters)</li>
+      <li>Add 1–2mm tolerance to each slot (so 92×92mm per slot)</li>
+      <li>Cut the jig from 3mm acrylic — the cutouts become the holding slots</li>
+      <li>Tape the jig to your bed at Machine Origin (Absolute mode)</li>
+      <li>Drop in products, run batch job — repeat without re-aligning</li>
+    </ol>
+    <div class="tip-box">
+      <strong>India Batch Production Example:</strong> A jig for 10 slate coasters at once. Engrave all 10 in one run (~8 minutes). Reload and repeat. At ₹150/coaster selling price, one jig run = ₹1,500. A skilled operator can do 6–8 runs/hour = ₹9,000–12,000/hour gross revenue (before costs).
+    </div>
+  </div>
+
+  <!-- Array Engraving -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Array Engraving — Batch Production Setup</h3>
+    <p>Use RDWorks' array/copy features to set up multi-unit jobs on a single sheet:</p>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li><strong>Design one unit</strong> with your full artwork and settings</li>
+      <li><strong>Select all elements</strong> of that unit → Group (Ctrl+G)</li>
+      <li><strong>Edit → Array Copy</strong>: set rows, columns, and spacing (match your jig layout)</li>
+      <li>RDWorks duplicates the entire design in a grid pattern</li>
+      <li>Check total size fits within your bed dimensions (shown in bottom status bar)</li>
+      <li>Assign layers with correct power/speed to each array element</li>
+      <li>Use "Absolute Coordinate" mode — positions match jig slots exactly</li>
+    </ol>
+    <div class="tip-box">
+      <strong>Trophy Batch Tip:</strong> For engraving 20 trophies per sheet — use Variable Text (Tab 9) combined with Array layout to auto-number each trophy. This is the professional production workflow used by India's award manufacturers.
+    </div>
+  </div>
+
+  <!-- Print & Cut -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Print & Cut Workflow</h3>
+    <p>RDWorks lacks automatic print-and-cut registration. Use this manual method:</p>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li><strong>Design in software:</strong> Create your full-color design + cut lines in Inkscape/CorelDraw</li>
+      <li><strong>Add registration marks:</strong> Place small crosses (+) at 3 corners of your design</li>
+      <li><strong>Print on your inkjet printer</strong> (or get printed at print shop)</li>
+      <li><strong>Import cut path to RDWorks</strong> (SVG or DXF — curves converted)</li>
+      <li><strong>Place printed sheet on laser bed</strong></li>
+      <li><strong>Jog to first registration mark</strong> using red dot, note X/Y coordinates</li>
+      <li><strong>Adjust design position in RDWorks</strong> to match physical sheet position</li>
+      <li><strong>Frame test → cut</strong></li>
+    </ol>
+    <div class="tip-box">
+      <strong>India Use Case:</strong> Print full-color photos on glossy paper → cut into custom shapes (hearts, stars, frames) for photo booth props and wedding decor. Material cost ₹5–10 per piece, selling price ₹50–200 each.
+    </div>
+  </div>
+
+  <!-- Rubber Stamp Positioning -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Rubber Stamp Production — Multi-Stamp Layout</h3>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Arrange all stamp designs on rubber sheet in RDWorks with 5mm gaps between stamps</li>
+      <li>Set engrave layer: deep engrave settings (slow, high power)</li>
+      <li>Set cut layer: outline cut after engraving (slightly slower than acrylic)</li>
+      <li>Process order in RDWorks: set engrave layer to process BEFORE cut layer</li>
+      <li>Run engrave first (removes rubber from non-stamp areas), then cut separates individual stamps</li>
+      <li>Wash rubber under running water, pat dry, mount on wood/acrylic block</li>
+    </ol>
+    <div class="tip-box">
+      <strong>India Wedding Market:</strong> Custom wedding stamps (bride/groom name + date) for invitation wax seals, envelope stamping, and favor stickers. Charge ₹400–800 per set of 3–4 stamps. Wedding season (Oct–Feb, May–Jun) = peak demand.
+    </div>
+  </div>
+</div>
+
+<!-- TAB 9: Advanced Features -->
+<div class="tab-panel" id="tab-panel-9">
+  <h2 class="section-title">Advanced Features</h2>
+  <p class="section-intro">RDWorks has powerful built-in features that most beginners miss. These tools separate hobbyists from professional production operators.</p>
+
+  <!-- Variable Text -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Variable Text & Auto-Numbering</h3>
+    <p>RDWorks supports variable text — automatic serial numbers, sequential names, and date/time stamps without manual editing each file.</p>
+    <h4 style="margin:1rem 0 .5rem;opacity:.9;">Setting Up Auto-Numbering:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Create your design with all fixed elements (logo, borders, frame)</li>
+      <li>Select the Text tool → click where the serial number should appear</li>
+      <li>Type your prefix, then go to <strong>Text → Variable Text</strong> from menu</li>
+      <li>Set: Start Number (e.g., 001), Increment (1), Total Count (how many pieces)</li>
+      <li>Set Padding (e.g., 3 digits with leading zeros: 001, 002, 003…)</li>
+      <li>RDWorks auto-fills each piece with the next number when you run the job</li>
+      <li>The controller steps through numbers automatically — no pausing between pieces</li>
+    </ol>
+    <h4 style="margin:1rem 0 .5rem;opacity:.9;">Date/Time Stamping:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.9;">
+      <li>Variable Text → Date/Time type: auto-inserts current date from computer</li>
+      <li>Format: DD/MM/YYYY, MM-DD-YYYY, or custom</li>
+      <li>Useful for: manufacturing date on products, certificate issue dates, award dates</li>
+    </ul>
+    <div class="tip-box">
+      <strong>India Trophy Market:</strong> Schools and cricket clubs order 50–200 trophies per event. Auto-numbering means you load a sheet, press Start, and the machine cycles through all 200 unique numbers. This job takes hours manually — RDWorks does it in minutes of setup.
+    </div>
+  </div>
+
+  <!-- Barcode & QR -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Barcode & QR Code Generation</h3>
+    <p>RDWorks has a built-in barcode/QR code generator — no external app needed.</p>
+    <h4 style="margin:1rem 0 .5rem;opacity:.9;">To Generate a QR Code in RDWorks:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Menu: <strong>Draw → Barcode</strong></li>
+      <li>Select type: QR Code, Code 128, EAN-13, etc.</li>
+      <li>Enter your data (URL, text, phone number, UPI ID)</li>
+      <li>Set size (minimum 20×20mm for reliable scanning after engraving)</li>
+      <li>Click OK — QR code appears on canvas, ready to engrave</li>
+    </ol>
+    <div class="tip-box">
+      <strong>India Business Uses:</strong>
+      <ul style="margin:.5rem 0 0 1.2rem;">
+        <li>Engrave your UPI QR code on a slate/acrylic payment stand for your stall</li>
+        <li>QR code on products linking to your Instagram or shop page</li>
+        <li>Restaurant table numbers with QR code for digital menu</li>
+        <li>Asset tags for offices and schools</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Image Dithering -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Image Dithering — Portraits & Photos</h3>
+    <p>For photo engraving, the laser can only be ON or OFF (no true grayscale). Dithering simulates grayscale using dot patterns. Choosing the right dither mode dramatically affects portrait quality.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Dither Mode</th><th>Best For</th><th>Characteristics</th><th>India Skin Tone Result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Jarvis</strong></td><td>Portraits, faces</td><td>Spreads error to many neighboring pixels; smooth gradients</td><td>Excellent — captures medium-brown skin tones with natural gradients</td></tr>
+          <tr><td><strong>Floyd-Steinberg</strong></td><td>General photos</td><td>Spreads error to 4 neighbors; slightly grainy in shadows</td><td>Good — may appear slightly harsh in dark shadow areas of brown skin</td></tr>
+          <tr><td><strong>Stucki</strong></td><td>Fine detail images</td><td>Similar to Jarvis; slightly sharper</td><td>Good for high-detail portraits; may over-sharpen skin texture</td></tr>
+          <tr><td><strong>Ordered/Bayer</strong></td><td>Geometric patterns</td><td>Regular dot grid; very visible pattern</td><td>Not recommended for portraits — looks mechanical</td></tr>
+          <tr><td><strong>Threshold (halftone)</strong></td><td>High-contrast logos</td><td>Simple on/off; no dithering</td><td>Not suitable for portraits</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Portrait Pre-Processing Workflow (India skin tones):</strong>
+      <ol style="margin:.5rem 0 0 1.2rem;line-height:1.8;">
+        <li>Open photo in Photoshop/GIMP → Convert to Grayscale</li>
+        <li>Increase Contrast: +20 to +35 (Indian skin tones need higher contrast for laser)</li>
+        <li>Sharpen slightly (Unsharp Mask: 80%, 1.0px, 0)</li>
+        <li>Import into RDWorks → Select image → Set Engrave mode to Dither: <strong>Jarvis</strong></li>
+        <li>DPI: 300–500 for wood/leather; 200–300 for slate</li>
+        <li>Test on same material before running the real piece</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Path Operations -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Path Operations — Offset, Combine, Weld</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Operation</th><th>Location in RDWorks</th><th>What It Does</th><th>Use Case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Offset (Inner/Outer)</strong></td><td>Edit → Offset Curve</td><td>Creates a parallel path inside or outside a shape</td><td>Shadow effect behind text; kerf compensation for tight-fit parts</td></tr>
+          <tr><td><strong>Combine (Union)</strong></td><td>Edit → Combine</td><td>Merges overlapping paths into one continuous path</td><td>Joining text to a shape for single-pass cutting</td></tr>
+          <tr><td><strong>Weld</strong></td><td>Edit → Weld</td><td>Removes internal overlap lines between touching shapes</td><td>Creating connected lettering for cutting (no internal cuts)</td></tr>
+          <tr><td><strong>Intersect</strong></td><td>Edit → Intersect</td><td>Keeps only the overlapping area of two shapes</td><td>Clipping designs to a specific shape boundary</td></tr>
+          <tr><td><strong>Subtract</strong></td><td>Edit → Subtract</td><td>Removes one shape from another</td><td>Cutting a hole in a shape; creating cutout letters</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Mirror for Stamps -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Mirror / Flip — Critical for Rubber Stamps</h3>
+    <div class="warning-box">
+      <strong>CRITICAL:</strong> Any design that will be stamped, transferred, or read through a material MUST be mirrored horizontally before engraving. Text engraved normally onto rubber will print backwards.
+    </div>
+    <h4 style="margin:1rem 0 .5rem;opacity:.9;">How to Mirror in RDWorks:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Select all elements of your stamp design</li>
+      <li>Right-click → <strong>Flip Horizontal</strong> OR use menu: Edit → Mirror → Horizontal</li>
+      <li>Your text will appear backwards on screen — this is correct</li>
+      <li>Verify: the mirrored design when stamped on paper should read normally</li>
+      <li>Save as a separate file with "_MIRROR" in the name to avoid confusion</li>
+    </ol>
+    <div class="tip-box">
+      <strong>Also mirror when:</strong> Engraving on the back of acrylic (so text reads correctly through the front) — very common for lit acrylic signs and name plates.
+    </div>
+  </div>
+
+  <!-- Group/Ungroup -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Group, Ungroup & Layer Management</h3>
+    <ul style="margin-left:1.2rem;line-height:1.9;">
+      <li><strong>Group (Ctrl+G):</strong> Combine multiple elements into one selectable unit. Essential for array copy and positioning complex designs.</li>
+      <li><strong>Ungroup (Ctrl+Shift+G):</strong> Break group apart to edit individual elements.</li>
+      <li><strong>Layer colors:</strong> Assign different elements to different color layers → set different power/speed per layer (e.g., red = cut, black = engrave).</li>
+      <li><strong>Layer order:</strong> In RDWorks Output panel, drag layers to set processing order. Always process engrave layers BEFORE cut layers so the material stays in position.</li>
+      <li><strong>Layer enable/disable:</strong> Uncheck layers in the layer panel to preview or skip without deleting.</li>
+    </ul>
+  </div>
+
+  <!-- RLD File Format -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">RLD File Format — Saving Complete Jobs</h3>
+    <p>The .rld format saves your complete RDWorks job: design, layer settings, power, speed, passes — everything. Use it to:</p>
+    <ul style="margin:1rem 0 0 1.2rem;line-height:1.9;">
+      <li><strong>Archive production jobs:</strong> Save customer jobs so you can re-run in future without re-setting parameters</li>
+      <li><strong>Transfer to USB:</strong> Copy .rld files to a USB drive and load directly on the Ruida controller without a PC connection</li>
+      <li><strong>Template library:</strong> Build a folder of standard jobs (trophy sizes, coaster layouts, standard frames)</li>
+    </ul>
+    <div class="tip-box">
+      <strong>India Production Tip:</strong> Build a "Master Job Library" folder on a USB stick with your 20 most common production jobs as .rld files. When power cuts happen (common in India), you can reload from USB and resume without needing a connected PC.
+    </div>
+  </div>
+
+  <!-- RDWorks vs Lightburn -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">RDWorks vs Lightburn — When to Switch</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Feature</th><th>RDWorks</th><th>Lightburn</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cost</td><td>Free</td><td>~₹10,000 (one-time license)</td></tr>
+          <tr><td>Camera integration</td><td>No</td><td>Yes — live bed preview</td></tr>
+          <tr><td>Text on path</td><td>Limited</td><td>Full support</td></tr>
+          <tr><td>Node editing</td><td>Basic</td><td>Advanced</td></tr>
+          <tr><td>Image processing</td><td>Basic dither</td><td>Advanced + preview</td></tr>
+          <tr><td>Variable text</td><td>Yes</td><td>Yes (more powerful)</td></tr>
+          <tr><td>Mac/Linux support</td><td>No</td><td>Yes</td></tr>
+          <tr><td>UI quality</td><td>Dated</td><td>Modern, intuitive</td></tr>
+          <tr><td>Ruida compatibility</td><td>Excellent (native)</td><td>Excellent</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Recommendation:</strong> Start with RDWorks (free) for the first 3–6 months. Once you're doing regular paid work and want camera positioning, better image processing, or more design control → invest in Lightburn. The ₹10,000 pays back in 2–3 jobs.
+    </div>
+  </div>
+</div>
+
+<!-- TAB 10: Troubleshooting -->
+<div class="tab-panel" id="tab-panel-10">
+  <h2 class="section-title">Troubleshooting</h2>
+  <p class="section-intro">Most laser problems have simple causes. Work through this table systematically. India-specific issues (power cuts, monsoon humidity, summer heat) are highlighted.</p>
+
+  <!-- Main Troubleshooting Table -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Problem → Cause → Fix</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>#</th><th>Problem</th><th>Most Likely Cause</th><th>Fix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Machine not connecting to PC</td><td>Wrong USB driver, COM port conflict, Ethernet IP mismatch</td><td>Install CH340 USB driver; check Device Manager for correct COM port; for Ethernet, set PC IP to same subnet as machine (default: 192.168.1.100)</td></tr>
+          <tr><td>2</td><td>RDWorks can't find machine</td><td>Vendor ID/serial not set in RDWorks</td><td>RDWorks → File → Machine Settings → add machine with correct IP or COM port</td></tr>
+          <tr><td>3</td><td>Red dot not visible</td><td>Diode pointer dim or dead; misaligned</td><td>Check if pointer powers on (small 650nm diode, separate from CO2); replace if dead (~₹500 on IndiaMART)</td></tr>
+          <tr><td>4</td><td>Uneven engraving — banding</td><td>Dirty/scratched lens, dirty mirrors, loose mirror mount</td><td>Clean all optics with lens tissue + IPA; check all 3 mirrors for scratches; tighten mirror mount screws</td></tr>
+          <tr><td>5</td><td>Engraving too light on one side</td><td>Beam misalignment (not hitting mirror center)</td><td>Perform 3-point mirror alignment (Tab 4 in Part A); focus check at multiple bed positions</td></tr>
+          <tr><td>6</td><td>Burn marks / char on cut edges</td><td>Too slow speed, too high power, multiple unnecessary passes</td><td>Increase speed or reduce power; ensure air assist is on; clean lens</td></tr>
+          <tr><td>7</td><td>Acrylic not cutting through</td><td>Wrong focus, dirty lens, insufficient power, wrong settings</td><td>Refocus; clean lens with IPA; use cast acrylic not extruded; increase power or reduce speed; check tube output</td></tr>
+          <tr><td>8</td><td>Acrylic edge melted, not clean</td><td>Speed too slow or power too high</td><td>Increase speed slightly; cast acrylic gives cleaner edges than extruded; ensure protective film stays on during cut</td></tr>
+          <tr><td>9</td><td>File not importing to RDWorks</td><td>SVG text not converted to curves; units mismatch; file version</td><td>In Inkscape: Path → Object to Path before saving; set RDWorks units to mm; try exporting as DXF or AI format</td></tr>
+          <tr><td>10</td><td>Design imported at wrong size</td><td>Units set to inches vs mm; DPI mismatch in SVG</td><td>Set SVG document properties to mm before export; check RDWorks import unit setting</td></tr>
+          <tr><td>11</td><td>Machine display shows error code</td><td>Various hardware/software errors</td><td>See Ruida Error Code table below</td></tr>
+          <tr><td>12</td><td>Ruida controller frozen / unresponsive</td><td>Firmware crash; static discharge; corrupted file</td><td>Power off completely (switch + unplug); wait 30 seconds; power on. If recurring, update Ruida firmware via USB stick.</td></tr>
+          <tr><td>13</td><td>Water temperature alarm</td><td>Chiller too warm (critical in Indian summer 40°C+)</td><td>CW-3000 cannot handle above ~28°C ambient. Upgrade to CW-5000 for India. Add ice bucket as emergency fix. Never run machine without cooling.</td></tr>
+          <tr><td>14</td><td>Laser tube flickering / intermittent fire</td><td>Power supply failing; loose HV wire; tube aging</td><td>Check HV connections; test at low power (10%) — if unstable, power supply needs replacement (~₹3,000–8,000); tube may be near end of life</td></tr>
+          <tr><td>15</td><td>Power cut mid-job (India)</td><td>Load shedding; circuit breaker</td><td>Ruida controller saves job position. After power restores: power on machine → controller → Resume Job option. Use UPS (₹5,000–15,000) to prevent mid-job cuts.</td></tr>
+          <tr><td>16</td><td>Exhaust fan alarm</td><td>Blocked exhaust duct, clogged filter, fan failure</td><td>Check duct for kinks or blockage; clean pre-filter; check fan spins freely. Replace carbon filter every 3–6 months.</td></tr>
+          <tr><td>17</td><td>Lid interlock stopping job</td><td>Safety switch triggered; switch misaligned</td><td>Verify lid is fully closed; clean switch contacts; for commercial production with custom enclosure, consult technician for bypass (do not bypass for safety)</td></tr>
+          <tr><td>18</td><td>After monsoon — engraving quality drops</td><td>Moisture/fungus on mirrors and lens (India-specific)</td><td>Inspect all optics with flashlight; clean with IPA + lens tissue; if fungus spotted on optic, replace lens (~₹500–2,000). Run machine in monsoon to keep internals dry.</td></tr>
+          <tr><td>19</td><td>Chiller water overheating</td><td>Hard water scale buildup in chiller coils (India tap water is hard)</td><td>Flush chiller with distilled water + mild descaler. Always use distilled/demineralized water. Hard water deposits reduce cooling efficiency by 30–50% over time.</td></tr>
+          <tr><td>20</td><td>Laser output power weak</td><td>Tube aging (after 2,000+ hours); HV power supply weakening</td><td>Test tube output with power meter if available. Chinese tubes on India machines often rated optimistically — a "40W" tube may only deliver 35W. Consider tube replacement at ₹8,000–25,000.</td></tr>
+          <tr><td>21</td><td>Design prints mirrored</td><td>Mirror setting accidentally enabled</td><td>Check Output panel in RDWorks — disable mirror checkbox. Check design is not accidentally mirrored in RDWorks canvas.</td></tr>
+          <tr><td>22</td><td>Machine makes grinding noise</td><td>Belt tension too loose; bearing worn; debris on rail</td><td>Clean X/Y rails with dry cloth; check belt tension (should feel like guitar string); lubricate rails with silicone grease (not WD-40)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Ruida Error Codes -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Ruida Controller Error Codes</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Error Code</th><th>Meaning</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Er 01</td><td>X-axis following error / limit hit</td><td>Check X motor cable; verify home switch not blocked; reduce acceleration in machine parameters</td></tr>
+          <tr><td>Er 02</td><td>Y-axis following error</td><td>Same as Er 01 but Y-axis; check Y belt tension</td></tr>
+          <tr><td>Er 03</td><td>Z-axis following error</td><td>Check Z motor (table up/down); verify no obstruction</td></tr>
+          <tr><td>Er 10</td><td>Water protect alarm</td><td>Water flow sensor not detecting flow; check chiller is on; check flow sensor cable</td></tr>
+          <tr><td>Er 11</td><td>Air protect alarm</td><td>Air pressure too low; check air pump/compressor is on</td></tr>
+          <tr><td>Er 12</td><td>Lid open alarm</td><td>Close lid fully; check lid safety switch alignment</td></tr>
+          <tr><td>Er 20</td><td>Overspeed</td><td>Speed setting exceeds machine capability; reduce speed in layer settings</td></tr>
+          <tr><td>Er 30</td><td>Homing failed</td><td>Home switches blocked or failed; manually move head away from corners; check switch wiring</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- India Specific -->
+  <div class="card" style="border-color:#f72585;">
+    <h3 class="card-title" style="color:#f72585;">India-Specific Maintenance Calendar</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Season</th><th>Check</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Pre-Monsoon (May–Jun)</strong></td><td>Electrical connections, exhaust sealing</td><td>Seal any gaps in exhaust duct; check all connectors for corrosion; ensure enclosure is as sealed as practical</td></tr>
+          <tr><td><strong>Monsoon (Jul–Sep)</strong></td><td>Optics moisture, machine internals</td><td>Run machine daily even briefly (keeps internals warm and dry); inspect mirrors weekly for fogging/fungus; use silica gel packets inside enclosure</td></tr>
+          <tr><td><strong>Post-Monsoon (Oct)</strong></td><td>Full optics clean, alignment check</td><td>Thorough mirror clean with IPA; full alignment test; check all cables for moisture damage</td></tr>
+          <tr><td><strong>Summer (Mar–Jun)</strong></td><td>Chiller performance, ambient temp</td><td>Monitor chiller water temp — should stay ≤20°C; CW-3000 struggles above 38°C ambient; upgrade to CW-5000 or add room AC for machine area</td></tr>
+          <tr><td><strong>Daily</strong></td><td>Water level, cleanliness</td><td>Check chiller water level (evaporation); check lens for debris before first job; wipe honeycomb of residue</td></tr>
+          <tr><td><strong>Weekly</strong></td><td>Mirror cleanliness, belt check</td><td>Clean all 3 mirrors + focus lens; check belt tension; empty resin/debris from drip tray</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chiller Recommendation -->
+  <div class="card" style="border-color:#ffaa00;">
+    <h3 class="card-title" style="color:#ffaa00;">Chiller: CW-3000 vs CW-5000 for India</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Model</th><th>Cooling Type</th><th>Works in India Summer?</th><th>Price (India)</th><th>Recommendation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>CW-3000</td><td>Industrial circulation (no refrigeration)</td><td>NO above 30°C ambient</td><td>₹8,000–15,000</td><td>Only for AC rooms in mild climates</td></tr>
+          <tr><td>CW-5000</td><td>Refrigeration (active compressor cooling)</td><td>YES — maintains 20°C regardless of ambient</td><td>₹25,000–45,000</td><td>Essential for India, especially 40W+ lasers</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1rem;opacity:.85;">Many India machines are sold with CW-3000 to keep price low. In summers above 38°C, CW-3000 cannot maintain safe tube temperature. A burned tube costs ₹8,000–25,000. Upgrade to CW-5000 before your first Indian summer.</p>
+  </div>
+</div>
+
+<!-- TAB 11: Practice Projects -->
+<div class="tab-panel" id="tab-panel-11">
+  <h2 class="section-title">Practice Projects — India Focus</h2>
+  <p class="section-intro">Six complete projects chosen for India's market reality: high demand, good margins, minimal equipment beyond your laser. Each project includes real ₹ material and selling prices.</p>
+
+  <!-- PROJECT 1 -->
+  <div class="card project-card">
+    <div class="project-header">
+      <div class="project-badge">PROJECT 1</div>
+      <h3>Acrylic Trophy with Logo</h3>
+      <div class="project-market">Corporate India — B2B Market</div>
+    </div>
+    <div class="project-economics">
+      <div class="econ-item">
+        <span class="econ-label">Material Cost</span>
+        <span class="econ-value cost">₹80</span>
+      </div>
+      <div class="econ-arrow">→</div>
+      <div class="econ-item">
+        <span class="econ-label">Selling Price</span>
+        <span class="econ-value sell">₹500–1,500</span>
+      </div>
+      <div class="econ-item">
+        <span class="econ-label">Margin</span>
+        <span class="econ-value margin">6–18×</span>
+      </div>
+    </div>
+
+    <h4>Materials Needed:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>3mm clear or colored acrylic sheet — ₹150–200/sheet (multiple trophies per sheet)</li>
+      <li>5mm acrylic base block — ₹30–50</li>
+      <li>Acrylic adhesive / super glue</li>
+      <li>Customer logo (PNG or SVG, minimum 300 DPI)</li>
+    </ul>
+
+    <h4>Step-by-Step:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li><strong>Design layout:</strong> Trophy panel (150×200mm typical). Import logo, add award text, add recipient name placeholder.</li>
+      <li><strong>Set up Variable Text</strong> for auto-numbering if batch (Text → Variable Text → set range).</li>
+      <li><strong>Layers:</strong> Red = cut outline; Black = engrave logo+text. Set engrave to process first.</li>
+      <li><strong>Engrave settings (3mm clear acrylic):</strong> Speed 350mm/s, Power 22%, DPI 500</li>
+      <li><strong>Cut settings:</strong> Speed 8mm/s, Power 85%, 1 pass</li>
+      <li>Remove protective film from engrave area only before running</li>
+      <li><strong>Post-process:</strong> Flame polish cut edges with torch (optional) for crystal-clear finish</li>
+      <li>Glue to base; add adhesive rubber feet to base bottom</li>
+    </ol>
+
+    <h4>B2B Sales Strategy for India:</h4>
+    <ul style="margin:1rem 0 0 1.2rem;line-height:1.8;">
+      <li>Visit local schools in July–August (sports day and annual day preparation) and December</li>
+      <li>Approach cricket clubs, badminton academies — tournaments happen year-round</li>
+      <li>HR managers at IT companies (employee of the month, team awards)</li>
+      <li>Rate card: 1–9 pieces ₹800 each, 10–49 pieces ₹600 each, 50+ pieces ₹400 each</li>
+      <li>Minimum order: 5 pieces (makes it worth the jig setup)</li>
+    </ul>
+  </div>
+
+  <!-- PROJECT 2 -->
+  <div class="card project-card">
+    <div class="project-header">
+      <div class="project-badge">PROJECT 2</div>
+      <h3>Wooden Photo Frame with Personalized Engraving</h3>
+      <div class="project-market">Diwali / Wedding / Anniversary Gift Market</div>
+    </div>
+    <div class="project-economics">
+      <div class="econ-item">
+        <span class="econ-label">Material Cost</span>
+        <span class="econ-value cost">₹60</span>
+      </div>
+      <div class="econ-arrow">→</div>
+      <div class="econ-item">
+        <span class="econ-label">Selling Price</span>
+        <span class="econ-value sell">₹400–800</span>
+      </div>
+      <div class="econ-item">
+        <span class="econ-label">Margin</span>
+        <span class="econ-value margin">7–13×</span>
+      </div>
+    </div>
+
+    <h4>Materials:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>3–4mm MDF or birch plywood sheet — ₹30–50</li>
+      <li>Glass/acrylic sheet for photo cover — ₹20–30</li>
+      <li>Frame clips/backing — ₹10–20</li>
+      <li>Customer's photo (convert to grayscale before import)</li>
+    </ul>
+
+    <h4>Step-by-Step:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Design frame shape in RDWorks (rectangular, arch, or custom shape)</li>
+      <li>Import customer's photo: <strong>Pre-process in GIMP first</strong> — grayscale, contrast +25, sharpen</li>
+      <li>In RDWorks → select image → Mode: Dither → Algorithm: <strong>Jarvis</strong> → DPI: 400</li>
+      <li><strong>Engrave settings (MDF/plywood):</strong> Speed 300mm/s, Power 28%, scan gap 0.08mm</li>
+      <li>Add personalized text below photo (name, date, message)</li>
+      <li>Cut frame outline and photo aperture: Speed 8mm/s, Power 82%</li>
+      <li>Sand lightly, apply walnut stain or clear varnish for premium look</li>
+      <li>Assemble with glass/acrylic cover and backing</li>
+    </ol>
+
+    <h4>Seasonal Demand in India:</h4>
+    <div class="tip-box">
+      <strong>Peak seasons:</strong> Diwali (Oct–Nov) — 300% demand spike; Wedding season (Nov–Feb, May–Jun); Valentine's Day (Feb); Mother's/Father's Day; anniversaries year-round. Build a waitlist system during Diwali — last year's demand vastly outstripped supply for personalized gifts.
+    </div>
+  </div>
+
+  <!-- PROJECT 3 -->
+  <div class="card project-card">
+    <div class="project-header">
+      <div class="project-badge">PROJECT 3</div>
+      <h3>Leather Wallet — Monogram & Custom Design</h3>
+      <div class="project-market">Instagram / Fashion Gift Market</div>
+    </div>
+    <div class="project-economics">
+      <div class="econ-item">
+        <span class="econ-label">Material Cost</span>
+        <span class="econ-value cost">₹150</span>
+      </div>
+      <div class="econ-arrow">→</div>
+      <div class="econ-item">
+        <span class="econ-label">Selling Price</span>
+        <span class="econ-value sell">₹600–1,200</span>
+      </div>
+      <div class="econ-item">
+        <span class="econ-label">Margin</span>
+        <span class="econ-value margin">4–8×</span>
+      </div>
+    </div>
+
+    <h4>Materials:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>Faux leather (rexine) wallet blank — ₹80–120 (wholesale in local market)</li>
+      <li>Or: genuine leather from Kanpur/Chennai suppliers — ₹200–400 for premium version</li>
+    </ul>
+
+    <h4>Step-by-Step:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Source plain wallet blanks in bulk from wholesale leather/rexine market</li>
+      <li>Create monogram design: customer's initials in elegant script font</li>
+      <li>Add any requested design (mandala border, logo, quote)</li>
+      <li><strong>Faux leather settings:</strong> Speed 220mm/s, Power 25%, 1 pass</li>
+      <li>Place wallet flat on honeycomb bed; tape to prevent movement</li>
+      <li>Use jig for batch production of same-size wallets</li>
+      <li>Immediately brush residue off with soft brush after engraving</li>
+    </ol>
+
+    <h4>Instagram Strategy:</h4>
+    <div class="tip-box">
+      <strong>Content formula:</strong> Film a 15-second Reel of the laser engraving in real time — the glowing engrave process is hypnotic and gets massive organic reach. Show before/after. Add text: "Your name on a wallet — DM to order." This single content type drives consistent orders without paid ads. Many India laser operators report 50–100 DM inquiries per viral Reel.
+    </div>
+  </div>
+
+  <!-- PROJECT 4 -->
+  <div class="card project-card" style="border-color:#f72585;">
+    <div class="project-header">
+      <div class="project-badge" style="background:#f72585;">PROJECT 4</div>
+      <h3>Rangoli Stencil Set from Acrylic</h3>
+      <div class="project-market" style="color:#f72585;">India-Unique Product — Zero Global Competition</div>
+    </div>
+    <div class="project-economics">
+      <div class="econ-item">
+        <span class="econ-label">Material Cost</span>
+        <span class="econ-value cost">₹50</span>
+      </div>
+      <div class="econ-arrow">→</div>
+      <div class="econ-item">
+        <span class="econ-label">Selling Price</span>
+        <span class="econ-value sell">₹200–500/set</span>
+      </div>
+      <div class="econ-item">
+        <span class="econ-label">Margin</span>
+        <span class="econ-value margin">4–10×</span>
+      </div>
+    </div>
+
+    <h4>Why This Product is Special:</h4>
+    <p style="opacity:.85;margin-bottom:1rem;">Rangoli stencils are an India-specific product. No significant seller on Etsy, Amazon Global, or international craft markets. You have a genuine first-mover advantage in the export market. The festival calendar ensures predictable demand spikes.</p>
+
+    <h4>Materials:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>1.5–2mm transparent acrylic sheet — ₹100–150/large sheet (cuts into 8–12 stencils)</li>
+      <li>Or: 300 GSM mylar/cardstock for budget version (less durable)</li>
+    </ul>
+
+    <h4>Step-by-Step:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Source rangoli designs: SVG Studio app, free design websites, or create geometric patterns in Inkscape</li>
+      <li>Import SVG to RDWorks; convert all objects to paths</li>
+      <li>Arrange multiple patterns per sheet (4–6 designs per A4 sheet)</li>
+      <li>All cut, no engrave: <strong>1.5mm acrylic settings:</strong> Speed 12mm/s, Power 78%, 1 pass</li>
+      <li>Remove protective film; cut; carefully separate stencil pieces</li>
+      <li>Package as set of 4–6 stencils with rubber bands or small zip bag</li>
+    </ol>
+
+    <h4>Festival Demand Calendar:</h4>
+    <div class="table-wrap" style="margin-top:.5rem;">
+      <table class="data-table">
+        <thead>
+          <tr><th>Festival</th><th>Months</th><th>Stencil Types</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Diwali</td><td>Oct–Nov</td><td>Diya, lotus, geometric, Lakshmi motifs</td></tr>
+          <tr><td>Navratri</td><td>Sep–Oct</td><td>Circular geometric, floral patterns</td></tr>
+          <tr><td>Onam</td><td>Aug–Sep</td><td>Pookalam (flower carpet patterns)</td></tr>
+          <tr><td>Pongal / Sankranti</td><td>Jan</td><td>Kolam patterns, sun motifs</td></tr>
+          <tr><td>Holi</td><td>Mar</td><td>Floral, peacock, abstract</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Etsy Export Tip:</strong> List 2 months before each festival season. Target diaspora markets (USA, UK, Canada, Australia) who celebrate Indian festivals but cannot find quality rangoli stencils locally. Price in USD ($8–20/set). Your ₹50 material cost becomes ₹600–1,600 per sale at US pricing.
+    </div>
+  </div>
+
+  <!-- PROJECT 5 -->
+  <div class="card project-card">
+    <div class="project-header">
+      <div class="project-badge">PROJECT 5</div>
+      <h3>Slate Coaster Set with Mandala Design</h3>
+      <div class="project-market">Gift Market — Domestic & Export</div>
+    </div>
+    <div class="project-economics">
+      <div class="econ-item">
+        <span class="econ-label">Material Cost (4 coasters)</span>
+        <span class="econ-value cost">₹100</span>
+      </div>
+      <div class="econ-arrow">→</div>
+      <div class="econ-item">
+        <span class="econ-label">Selling Price (set of 4)</span>
+        <span class="econ-value sell">₹600–1,200</span>
+      </div>
+      <div class="econ-item">
+        <span class="econ-label">Margin</span>
+        <span class="econ-value margin">6–12×</span>
+      </div>
+    </div>
+
+    <h4>Materials:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>Slate tiles (90×90mm or 100×100mm) — ₹20–30 each, buy from tile shops or IndiaMART</li>
+      <li>Adhesive felt pads for base — ₹5 for a pack</li>
+      <li>Gift box (kraft paper, ribbon) — ₹30–50</li>
+    </ul>
+
+    <h4>Step-by-Step:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Download mandala SVG from SVG Studio app (free, India-made) or Freepik</li>
+      <li>Import to RDWorks; resize to fit within 80×80mm (leaving 5mm border)</li>
+      <li>Set up 4-coaster jig from scrap acrylic (3mm, with 4 slots matching coaster size)</li>
+      <li><strong>Slate engrave settings:</strong> Speed 150mm/s, Power 60%, scan gap 0.15mm</li>
+      <li>Load jig, drop 4 slates in, run batch job (all 4 engrave in one run)</li>
+      <li>Wipe slate with damp cloth to reveal clean white engraving on black slate</li>
+      <li>Apply felt pads to base; package in gift box</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>Scaling Up:</strong> With a 10-slot jig, engrave 10 coasters per run. At ₹150/coaster (set price ÷ 4), that's ₹1,500 per 8-minute run. 5 runs/hour × 6 hours/day = ₹45,000 gross revenue/day. Real output is lower after packaging and sales time, but this shows the unit economics.
+    </div>
+  </div>
+
+  <!-- PROJECT 6 -->
+  <div class="card project-card">
+    <div class="project-header">
+      <div class="project-badge">PROJECT 6</div>
+      <h3>Rubber Stamp Set — Wedding Invitation Stamps</h3>
+      <div class="project-market">India Wedding Market — Year-Round Demand</div>
+    </div>
+    <div class="project-economics">
+      <div class="econ-item">
+        <span class="econ-label">Material Cost</span>
+        <span class="econ-value cost">₹80</span>
+      </div>
+      <div class="econ-arrow">→</div>
+      <div class="econ-item">
+        <span class="econ-label">Selling Price (set of 3–4)</span>
+        <span class="econ-value sell">₹400–800</span>
+      </div>
+      <div class="econ-item">
+        <span class="econ-label">Margin</span>
+        <span class="econ-value margin">5–10×</span>
+      </div>
+    </div>
+
+    <h4>Typical Wedding Stamp Set:</h4>
+    <ul style="margin-left:1.2rem;line-height:1.8;">
+      <li>Stamp 1: Bride & Groom names + wedding date (rectangular)</li>
+      <li>Stamp 2: Floral/mandala corner design (square)</li>
+      <li>Stamp 3: "Thank you" or custom message (small rectangular)</li>
+      <li>Stamp 4: Envelope seal / wax seal design (circular)</li>
+    </ul>
+
+    <h4>Step-by-Step:</h4>
+    <ol style="margin-left:1.2rem;line-height:1.9;">
+      <li>Get customer's requirements: names, date, preferred design style (traditional/modern)</li>
+      <li>Create all 4 stamp designs in Inkscape/CorelDraw; convert text to paths</li>
+      <li><strong>CRITICAL: Mirror ALL designs horizontally</strong> in RDWorks before proceeding (Edit → Mirror Horizontal)</li>
+      <li>Verify: text on screen looks backwards — correct. Stamp impression will be correct.</li>
+      <li>Arrange all 4 on one rubber sheet with 5mm gaps</li>
+      <li><strong>Engrave settings:</strong> Speed 120mm/s, Power 68%, DPI 500</li>
+      <li><strong>Cut settings (after engrave):</strong> Speed 18mm/s, Power 75%</li>
+      <li>Wash rubber under water, dry, mount on wood/acrylic block</li>
+      <li>Test stamp on paper; deliver with a fresh ink pad</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>India Wedding Market:</strong> India has ~10 million weddings per year. Every couple that does DIY invitations is a potential customer. Wedding stamp sets are also used for: envelope addressing, favor bag stamping, menu card decoration, and wax seals. Market through local wedding planners, invitation printers, and bridal Instagram pages.
+    </div>
+  </div>
+</div>
+
+<!-- TAB 12: Expert Tips & Reference -->
+<div class="tab-panel" id="tab-panel-12">
+  <h2 class="section-title">Expert Tips & Complete Reference</h2>
+
+  <!-- Keyboard Shortcuts -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">RDWorks Keyboard Shortcut Reference</h3>
+    <div class="shortcut-grid">
+      <div class="shortcut-section">
+        <h4>File & Edit</h4>
+        <table class="shortcut-table">
+          <tr><td><kbd>Ctrl+N</kbd></td><td>New file</td></tr>
+          <tr><td><kbd>Ctrl+O</kbd></td><td>Open file</td></tr>
+          <tr><td><kbd>Ctrl+S</kbd></td><td>Save</td></tr>
+          <tr><td><kbd>Ctrl+Z</kbd></td><td>Undo</td></tr>
+          <tr><td><kbd>Ctrl+Y</kbd></td><td>Redo</td></tr>
+          <tr><td><kbd>Ctrl+X</kbd></td><td>Cut</td></tr>
+          <tr><td><kbd>Ctrl+C</kbd></td><td>Copy</td></tr>
+          <tr><td><kbd>Ctrl+V</kbd></td><td>Paste</td></tr>
+          <tr><td><kbd>Delete</kbd></td><td>Delete selected</td></tr>
+          <tr><td><kbd>Ctrl+A</kbd></td><td>Select all</td></tr>
+        </table>
+      </div>
+      <div class="shortcut-section">
+        <h4>Selection & View</h4>
+        <table class="shortcut-table">
+          <tr><td><kbd>Escape</kbd></td><td>Deselect / cancel</td></tr>
+          <tr><td><kbd>Ctrl+G</kbd></td><td>Group selected</td></tr>
+          <tr><td><kbd>Ctrl+Shift+G</kbd></td><td>Ungroup</td></tr>
+          <tr><td><kbd>Ctrl+D</kbd></td><td>Duplicate selected</td></tr>
+          <tr><td><kbd>F5</kbd></td><td>Refresh / redraw</td></tr>
+          <tr><td><kbd>Ctrl+Scroll</kbd></td><td>Zoom in/out</td></tr>
+          <tr><td><kbd>Middle Click</kbd></td><td>Pan canvas</td></tr>
+          <tr><td><kbd>Ctrl+Shift+A</kbd></td><td>Align and distribute</td></tr>
+          <tr><td><kbd>Tab</kbd></td><td>Select next object</td></tr>
+        </table>
+      </div>
+      <div class="shortcut-section">
+        <h4>Tools</h4>
+        <table class="shortcut-table">
+          <tr><td><kbd>F1</kbd></td><td>Select tool (arrow)</td></tr>
+          <tr><td><kbd>F2</kbd></td><td>Node edit tool</td></tr>
+          <tr><td><kbd>T</kbd></td><td>Text tool</td></tr>
+          <tr><td><kbd>R</kbd></td><td>Rectangle tool</td></tr>
+          <tr><td><kbd>E</kbd></td><td>Ellipse/circle tool</td></tr>
+          <tr><td><kbd>L</kbd></td><td>Line tool</td></tr>
+          <tr><td><kbd>P</kbd></td><td>Pen/bezier tool</td></tr>
+          <tr><td><kbd>H</kbd></td><td>Hand/pan tool</td></tr>
+        </table>
+      </div>
+      <div class="shortcut-section">
+        <h4>Machine Control</h4>
+        <table class="shortcut-table">
+          <tr><td><kbd>F9</kbd></td><td>Download to machine</td></tr>
+          <tr><td><kbd>F8</kbd></td><td>Start job</td></tr>
+          <tr><td><kbd>F7</kbd></td><td>Pause job</td></tr>
+          <tr><td><kbd>F6</kbd></td><td>Stop job</td></tr>
+          <tr><td><kbd>Ctrl+F</kbd></td><td>Frame (bounding box preview)</td></tr>
+          <tr><td><kbd>Ctrl+M</kbd></td><td>Move to origin</td></tr>
+          <tr><td><kbd>Space</kbd></td><td>Start/stop (when output focused)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pro Tips -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Pro Maintenance Tips</h3>
+    <div class="tips-masonry">
+      <div class="pro-tip">
+        <div class="pro-tip-icon">🔍</div>
+        <div>
+          <strong>Clean mirrors weekly in India</strong><br>
+          India's dust, pollen, and particulate air quality means optics get dirty 3× faster than in temperate climates. A dirty mirror reduces power by 20–40% and causes uneven beams. Weekly clean = consistent output.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">💧</div>
+        <div>
+          <strong>Check water level daily</strong><br>
+          Chiller water evaporates, especially in dry seasons. Low water level means inadequate cooling → tube damage. Check every morning before starting. Top up with distilled water only.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">💨</div>
+        <div>
+          <strong>Never run without exhaust</strong><br>
+          Even for "just a quick test." Fumes from acrylic, rubber, and MDF are toxic. Exhaust must vent outside. Carbon filter alone is not sufficient for daily production — always use active exhaust to outside.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">⚡</div>
+        <div>
+          <strong>Use a servo stabilizer</strong><br>
+          India's power supply can fluctuate ±15%. A 2KVA servo voltage stabilizer (₹3,000–8,000) protects your machine electronics and ensures consistent laser output. Essential in Tier-2/3 cities with unreliable power.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">🔧</div>
+        <div>
+          <strong>Lens tissue only for optics</strong><br>
+          Never use paper towel, cloth, or kitchen tissue on mirrors and lenses. Only use proper lens tissue with 99% IPA. One scratch on a lens = ₹500–2,000 replacement. Wipe in one direction, not circular.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">📁</div>
+        <div>
+          <strong>Maintain a test log book</strong><br>
+          Keep a physical notebook with material tests: date, material, supplier, settings, result (photo). This becomes invaluable over months — you'll never need to re-test the same material twice.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">🌡️</div>
+        <div>
+          <strong>Warm-up the machine</strong><br>
+          Run a 5-minute warm-up at 10–15% power before starting production jobs. CO2 tubes perform more consistently after thermal stabilization. Skip warm-up = first few pieces may have slightly different output.
+        </div>
+      </div>
+      <div class="pro-tip">
+        <div class="pro-tip-icon">📐</div>
+        <div>
+          <strong>Focus is everything</strong><br>
+          1mm out of focus = 20–40% power loss at the material surface. Re-focus every time you change material thickness. Make 5 acrylic focus gauges for your common thicknesses (3mm, 5mm, 6mm, 10mm, 15mm) and label them.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- India Seasonal Maintenance -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">India Seasonal Maintenance Deep Dive</h3>
+    <div class="season-grid">
+      <div class="season-card summer">
+        <h4>Summer (Mar–Jun)</h4>
+        <ul>
+          <li>Monitor chiller water temp constantly</li>
+          <li>Target: keep water ≤20°C</li>
+          <li>CW-3000 owners: keep AC on in machine room</li>
+          <li>Reduce session lengths in peak heat</li>
+          <li>Check air assist pump — heat affects motor life</li>
+          <li>Ice bath emergency: sealed bags of ice in CW-3000 reservoir (temporary fix)</li>
+        </ul>
+      </div>
+      <div class="season-card monsoon">
+        <h4>Monsoon (Jul–Sep)</h4>
+        <ul>
+          <li>Run machine daily — even 10 minutes keeps internals dry</li>
+          <li>Place silica gel packets inside machine enclosure</li>
+          <li>Weekly mirror inspection (fungus grows on optics in humidity)</li>
+          <li>Check all cable connectors for corrosion</li>
+          <li>Never leave machine idle for weeks in monsoon</li>
+          <li>If fungus appears on optic: replace immediately — cannot clean off reliably</li>
+        </ul>
+      </div>
+      <div class="season-card postmonsoon">
+        <h4>Post-Monsoon (Oct–Nov)</h4>
+        <ul>
+          <li>Full machine inspection before Diwali rush</li>
+          <li>Deep clean all optics</li>
+          <li>Full mirror alignment verification test</li>
+          <li>Check and lubricate all rails</li>
+          <li>Inspect all belts for stretch/wear</li>
+          <li>Stock up on common spare parts before peak season</li>
+        </ul>
+      </div>
+      <div class="season-card winter">
+        <h4>Winter (Dec–Feb)</h4>
+        <ul>
+          <li>Best laser performance season in India</li>
+          <li>Cool temperatures = efficient chiller, stable tube output</li>
+          <li>Peak production season (weddings, events)</li>
+          <li>Routine maintenance is sufficient</li>
+          <li>Keep chiller water above 10°C to prevent thermal shock to tube</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Business Guide -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">CO2 Laser Business Guide — India</h3>
+    <p style="margin-bottom:1.5rem;opacity:.85;">A CO2 laser is a real production tool, not a hobby toy. These are proven business models operating successfully in India's laser market today.</p>
+
+    <h4>Business Verticals by Revenue Potential:</h4>
+    <div class="business-grid">
+      <div class="business-card tier-a">
+        <div class="tier-badge">Tier A — High Volume B2B</div>
+        <h5>Acrylic Trophies & Awards</h5>
+        <p>Schools, sports clubs, IT companies, corporates. Annual recurring orders. 50–500 pieces per order.</p>
+        <div class="biz-stats">
+          <span>₹400–1,500/trophy</span>
+          <span>Repeat customers</span>
+        </div>
+      </div>
+      <div class="business-card tier-a">
+        <div class="tier-badge">Tier A — Seasonal Spike</div>
+        <h5>Wedding & Event Personalization</h5>
+        <p>Name plates, centerpieces, return gifts, invitation accessories. High margins, festival season demand.</p>
+        <div class="biz-stats">
+          <span>₹200–2,000/item</span>
+          <span>Oct–Feb peak</span>
+        </div>
+      </div>
+      <div class="business-card tier-b">
+        <div class="tier-badge">Tier B — Export Market</div>
+        <h5>Rangoli Stencils (India-Unique)</h5>
+        <p>Zero competition globally. Diaspora in USA/UK pays USD prices. Festival-season inventory planning needed.</p>
+        <div class="biz-stats">
+          <span>₹600–1,600/set (export)</span>
+          <span>Etsy + Amazon Global</span>
+        </div>
+      </div>
+      <div class="business-card tier-b">
+        <div class="tier-badge">Tier B — Growing Market</div>
+        <h5>Restaurant & Retail Signage</h5>
+        <p>Acrylic menu boards, table numbers, brand boards, QR-code displays. One-time setup + repeat orders.</p>
+        <div class="biz-stats">
+          <span>₹500–5,000/piece</span>
+          <span>New restaurant openings</span>
+        </div>
+      </div>
+      <div class="business-card tier-b">
+        <div class="tier-badge">Tier B — Real Estate</div>
+        <h5>Home & Office Name Plates</h5>
+        <p>Acrylic, slate, wood name plates. New housing societies are constant customers. Easy repeat referrals.</p>
+        <div class="biz-stats">
+          <span>₹400–2,000/plate</span>
+          <span>Society bulk deals</span>
+        </div>
+      </div>
+      <div class="business-card tier-c">
+        <div class="tier-badge">Tier C — Fashion/Lifestyle</div>
+        <h5>Leather & Fabric Customization</h5>
+        <p>Wallets, jackets, bags. Instagram-driven demand. Lower per-piece margin but high viral potential.</p>
+        <div class="biz-stats">
+          <span>₹300–1,200/item</span>
+          <span>Social media dependent</span>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin:2rem 0 1rem;">Pricing Formula:</h4>
+    <div class="formula-box">
+      <div class="formula">Selling Price = Material Cost × 4 to 6</div>
+      <div class="formula-note">At 5× markup: ₹100 material → ₹500 selling price. This covers machine depreciation (~₹100/hour), electricity (~₹20/hour), consumables (lens, exhaust filter), your time, and profit. For rush orders or complex designs, use 6–8× multiplier.</div>
+    </div>
+
+    <h4 style="margin:2rem 0 1rem;">Monthly Income Potential:</h4>
+    <div class="income-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>Business Stage</th><th>Hours/Day (Laser)</th><th>Focus</th><th>Monthly Gross</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Part-time (starting out)</td><td>2–3 hrs</td><td>Gifts, coasters, stamps</td><td>₹15,000–40,000</td></tr>
+          <tr><td>Full-time (solo)</td><td>6–8 hrs</td><td>Mix of B2B + B2C</td><td>₹50,000–1,00,000</td></tr>
+          <tr><td>Small team (1 operator + sales)</td><td>8–10 hrs</td><td>B2B trophies + events</td><td>₹1,00,000–1,50,000</td></tr>
+          <tr><td>Multi-machine</td><td>Multiple shifts</td><td>Bulk contracts</td><td>₹2,00,000+</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Machine Buying Guide -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">CO2 Laser Machine Buying Guide — India</h3>
+    <p style="opacity:.85;margin-bottom:1rem;">Most India CO2 lasers come from China (directly or through Indian importers). Here's what to check before buying:</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>What to Check</th><th>What to Verify</th><th>Red Flags</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tube wattage (real vs claimed)</strong></td><td>Ask for tube brand (SPT, Reci, EFR are reputable). Request power meter test at the supplier's premises.</td><td>"100W" tube actually delivering 60–70W is common. Be skeptical of inflated wattages from unknown brands.</td></tr>
+          <tr><td><strong>Controller</strong></td><td>Insist on genuine Ruida RDC6442G or similar. Ruida = reliable, software support, error codes documented.</td><td>Cheap clones crash frequently, have limited software support, and are hard to diagnose.</td></tr>
+          <tr><td><strong>Chiller</strong></td><td>For Indian summer: CW-5000 (refrigeration type) is minimum. Confirm it's included, not just "air cooled."</td><td>CW-3000 (recirculation only) included to cut price — insufficient for India summers above 30°C ambient.</td></tr>
+          <tr><td><strong>Bed size</strong></td><td>700×500mm is standard and recommended. Smaller beds limit what you can make.</td><td>400×300mm beds are too small for commercial production of frames and large trophies.</td></tr>
+          <tr><td><strong>Exhaust fan</strong></td><td>Should come with the machine. Verify CFM rating (minimum 400 CFM for 40W machine).</td><td>No exhaust included, or underpowered fan — adds ₹3,000–8,000 to your setup cost.</td></tr>
+          <tr><td><strong>After-sales support</strong></td><td>Ask: Do you have a technician in my city? Do you stock spare parts (tube, lens, mirrors)?</td><td>Import-only suppliers with no local tech support leave you stranded when problems arise.</td></tr>
+          <tr><td><strong>Warranty</strong></td><td>Minimum 1-year machine warranty, 6-month tube warranty. Get it in writing.</td><td>Verbal-only warranties. Tube warranties under 6 months.</td></tr>
+          <tr><td><strong>Air assist</strong></td><td>Compressor or air pump for air assist should be included. Verify it works on demo.</td><td>No air assist = poor cut quality, more residue, higher fire risk.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Budget Guidance (India, 2024):</strong>
+      <ul style="margin:.5rem 0 0 1.2rem;line-height:1.8;">
+        <li>40W CO2 with CW-5000 + Ruida: ₹1,20,000–1,80,000</li>
+        <li>60W CO2 with CW-5000 + Ruida: ₹1,60,000–2,20,000</li>
+        <li>80W CO2 with CW-5000 + Ruida: ₹2,00,000–3,00,000</li>
+        <li>Fiber laser 20W (for metal): ₹1,50,000–2,50,000</li>
+      </ul>
+      Buy from IndiaMART-verified suppliers or established dealers in your city. Visit the showroom and see a live demo before payment.
+    </div>
+  </div>
+
+  <!-- Upgrade Path -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">Your Upgrade Path</h3>
+    <div class="upgrade-timeline">
+      <div class="upgrade-step active">
+        <div class="upgrade-dot"></div>
+        <div class="upgrade-content">
+          <h5>Stage 1 — Start Here</h5>
+          <p><strong>RDWorks (Free)</strong> + CO2 laser machine</p>
+          <p>Learn the machine, run your first jobs, build your customer base. RDWorks handles all basic production needs.</p>
+        </div>
+      </div>
+      <div class="upgrade-step">
+        <div class="upgrade-dot"></div>
+        <div class="upgrade-content">
+          <h5>Stage 2 — After 3–6 Months of Paid Work</h5>
+          <p><strong>Upgrade to Lightburn (~₹10,000)</strong></p>
+          <p>When you need: camera bed positioning, text on path, better image processing, more design control, Mac/Linux support. The ₹10,000 pays back in 2–3 orders.</p>
+        </div>
+      </div>
+      <div class="upgrade-step">
+        <div class="upgrade-dot"></div>
+        <div class="upgrade-content">
+          <h5>Stage 3 — When Customers Ask for Metal</h5>
+          <p><strong>Add a Fiber Laser (₹1.5–2.5 lakh)</strong></p>
+          <p>CO2 cannot engrave bare metal. When you're consistently getting rejected business for steel/aluminum/brass engraving, a 20W fiber laser pays for itself quickly. Many India operators run CO2 + fiber in parallel.</p>
+        </div>
+      </div>
+      <div class="upgrade-step">
+        <div class="upgrade-dot"></div>
+        <div class="upgrade-content">
+          <h5>Stage 4 — Scale Up</h5>
+          <p><strong>Second CO2 machine + hire operator</strong></p>
+          <p>When your single machine runs 8+ hours/day consistently, it's time to add capacity. Second machine doubles throughput; hiring an operator frees you for sales and design work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Community -->
+  <div class="card">
+    <h3 class="card-title" style="color:#f72585;">India Laser Community & Resources</h3>
+    <div class="community-grid">
+      <div class="community-card">
+        <h5>Facebook Groups</h5>
+        <ul>
+          <li>CO2 Laser India (search on Facebook)</li>
+          <li>Laser Engraving India</li>
+          <li>Laser Cutting India Community</li>
+          <li>IndiaMART Laser Equipment Sellers groups</li>
+        </ul>
+      </div>
+      <div class="community-card">
+        <h5>Online Marketplaces</h5>
+        <ul>
+          <li>IndiaMART — machine parts, materials, spare optics</li>
+          <li>Amazon India — consumables, lens tissue, IPA</li>
+          <li>Meesho — sell finished products, low commission</li>
+          <li>Etsy — export finished products (rangoli stencils, art)</li>
+        </ul>
+      </div>
+      <div class="community-card">
+        <h5>Design Resources</h5>
+        <ul>
+          <li>SVG Studio app (India-made, excellent for mandala/rangoli)</li>
+          <li>Freepik — free SVG downloads</li>
+          <li>Vecteezy — laser-ready vector designs</li>
+          <li>Design Bundles — paid bundles, laser-optimized</li>
+        </ul>
+      </div>
+      <div class="community-card">
+        <h5>Learning Resources</h5>
+        <ul>
+          <li>RDWorks official manual (Chinese manufacturer site)</li>
+          <li>YouTube: search "RDWorks tutorial" + "laser engraving India"</li>
+          <li>Lightburn forum (even if you use RDWorks — settings knowledge transfers)</li>
+          <li>CO2 Laser India WhatsApp groups (ask in Facebook groups for invite)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Words -->
+  <div class="card" style="border-color:#f72585;background:linear-gradient(135deg,rgba(247,37,133,.08),rgba(72,12,168,.08));">
+    <h3 class="card-title" style="color:#f72585;">You're Ready. Now Start Making.</h3>
+    <p style="line-height:1.9;font-size:1.05rem;">You now have everything: the software knowledge, material settings, business models, and India-specific context to run a profitable CO2 laser operation. The difference between operators who succeed and those who don't is simple — <strong>action</strong>.</p>
+    <p style="line-height:1.9;margin-top:1rem;">Run your first test piece today. Take a photo. Share it. The first customer order will follow. India's personalization and gifting market is worth thousands of crores — and your laser machine is your entry point into it.</p>
+    <p style="margin-top:1.5rem;opacity:.7;font-size:.9rem;">RDWorks Ultimate Guide — Tabs 1–12 Complete. Designed for India's CO2 laser community.</p>
+  </div>
+</div>
+
+<style>
+.project-card { position:relative; }
+.project-header { margin-bottom:1.5rem; }
+.project-badge { display:inline-block; background:#f72585; color:#fff; font-size:.75rem; font-weight:700; padding:.25rem .75rem; border-radius:20px; letter-spacing:.08em; margin-bottom:.5rem; }
+.project-header h3 { font-size:1.3rem; font-weight:700; margin:.25rem 0; }
+.project-market { font-size:.9rem; opacity:.7; font-style:italic; }
+.project-economics { display:flex; align-items:center; gap:1rem; background:rgba(247,37,133,.07); border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+.econ-item { display:flex; flex-direction:column; gap:.2rem; }
+.econ-label { font-size:.75rem; opacity:.65; text-transform:uppercase; letter-spacing:.05em; }
+.econ-value { font-size:1.1rem; font-weight:700; }
+.econ-value.cost { color:#ff6b6b; }
+.econ-value.sell { color:#51cf66; }
+.econ-value.margin { color:#f72585; }
+.econ-arrow { font-size:1.5rem; opacity:.5; }
+.shortcut-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.5rem; }
+.shortcut-section h4 { font-size:.9rem; font-weight:700; color:#f72585; margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.06em; }
+.shortcut-table { width:100%; border-collapse:collapse; }
+.shortcut-table tr { border-bottom:1px solid rgba(255,255,255,.05); }
+.shortcut-table td { padding:.3rem .4rem; font-size:.85rem; }
+.shortcut-table td:first-child { white-space:nowrap; }
+kbd { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:4px; padding:.1rem .4rem; font-family:monospace; font-size:.8rem; }
+.tips-masonry { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; }
+.pro-tip { display:flex; gap:1rem; background:rgba(255,255,255,.04); border-radius:10px; padding:1rem; }
+.pro-tip-icon { font-size:1.5rem; flex-shrink:0; }
+.pro-tip strong { display:block; margin-bottom:.25rem; }
+.season-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+.season-card { border-radius:10px; padding:1.25rem; }
+.season-card h4 { font-size:1rem; font-weight:700; margin-bottom:.75rem; }
+.season-card ul { margin-left:1rem; }
+.season-card li { margin-bottom:.35rem; font-size:.88rem; opacity:.88; }
+.summer { background:rgba(255,120,50,.1); border:1px solid rgba(255,120,50,.3); }
+.summer h4 { color:#ff7832; }
+.monsoon { background:rgba(50,150,255,.1); border:1px solid rgba(50,150,255,.3); }
+.monsoon h4 { color:#3296ff; }
+.postmonsoon { background:rgba(247,37,133,.1); border:1px solid rgba(247,37,133,.3); }
+.postmonsoon h4 { color:#f72585; }
+.winter { background:rgba(100,200,255,.08); border:1px solid rgba(100,200,255,.25); }
+.winter h4 { color:#64c8ff; }
+.business-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+.business-card { border-radius:10px; padding:1.25rem; border:1px solid rgba(255,255,255,.1); }
+.tier-badge { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:.5rem; opacity:.75; }
+.business-card h5 { font-size:1rem; font-weight:700; margin:.25rem 0 .5rem; }
+.business-card p { font-size:.88rem; opacity:.8; margin-bottom:.75rem; }
+.biz-stats { display:flex; flex-direction:column; gap:.2rem; }
+.biz-stats span { font-size:.82rem; background:rgba(255,255,255,.07); border-radius:5px; padding:.2rem .5rem; }
+.tier-a { background:rgba(247,37,133,.08); border-color:rgba(247,37,133,.3); }
+.tier-a .tier-badge { color:#f72585; }
+.tier-b { background:rgba(72,12,168,.1); border-color:rgba(72,12,168,.3); }
+.tier-b .tier-badge { color:#a855f7; }
+.tier-c { background:rgba(255,180,50,.07); border-color:rgba(255,180,50,.25); }
+.tier-c .tier-badge { color:#ffb432; }
+.formula-box { background:rgba(247,37,133,.08); border:1px solid rgba(247,37,133,.3); border-radius:10px; padding:1.25rem; }
+.formula { font-size:1.3rem; font-weight:700; color:#f72585; margin-bottom:.75rem; font-family:monospace; }
+.formula-note { font-size:.9rem; opacity:.82; line-height:1.7; }
+.income-table-wrap { margin-top:.5rem; }
+.upgrade-timeline { display:flex; flex-direction:column; gap:0; }
+.upgrade-step { display:flex; gap:1.25rem; padding-bottom:1.5rem; position:relative; }
+.upgrade-step:not(:last-child)::after { content:''; position:absolute; left:11px; top:28px; width:2px; height:calc(100% - 16px); background:rgba(255,255,255,.1); }
+.upgrade-dot { width:24px; height:24px; border-radius:50%; background:rgba(255,255,255,.15); border:2px solid rgba(255,255,255,.3); flex-shrink:0; margin-top:2px; }
+.upgrade-step.active .upgrade-dot { background:#f72585; border-color:#f72585; }
+.upgrade-content h5 { font-size:1rem; font-weight:700; margin-bottom:.35rem; }
+.upgrade-content p { font-size:.88rem; opacity:.82; line-height:1.7; margin-bottom:.25rem; }
+.community-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; }
+.community-card { background:rgba(255,255,255,.04); border-radius:10px; padding:1.25rem; }
+.community-card h5 { font-size:.95rem; font-weight:700; color:#f72585; margin-bottom:.75rem; }
+.community-card li { font-size:.85rem; opacity:.85; margin-bottom:.4rem; }
+.community-card ul { margin-left:1rem; }
+</style>
+
+</body></html>
