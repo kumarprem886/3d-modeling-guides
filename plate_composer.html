@@ -664,120 +664,277 @@ function cleanSVG(rawStr) {
   return { svgString: str, vb };
 }
 
+// ─── Interactive plate state ──────────────────────────────────────────
+let iDesigns = [];       // [{name, svgString, vb, x, y, w, h}]
+let iPlateW = 0, iPlateH = 0;  // plate dimensions in px
+let iSelectedIdx = -1;
+let iDragState = null;
+
 // ─── Plate Composition ─────────────────────────────────────────────
 function composePlate() {
-  if (!loadedFiles.length) {
-    alert('Please load at least one SVG first.');
-    return;
-  }
+  if (!loadedFiles.length) { alert('Please load at least one SVG first.'); return; }
 
-  const plateW = parseFloat(document.getElementById('plateW').value);
-  const plateH = parseFloat(document.getElementById('plateH').value);
+  const plateW   = parseFloat(document.getElementById('plateW').value);
+  const plateH   = parseFloat(document.getElementById('plateH').value);
   const userCols = parseInt(document.getElementById('cols').value) || 0;
-  const gap = parseFloat(document.getElementById('gap').value);
-  const margin = parseFloat(document.getElementById('margin').value);
-  const N = loadedFiles.length;
+  const gap      = parseFloat(document.getElementById('gap').value);
+  const margin   = parseFloat(document.getElementById('margin').value);
+  const N        = loadedFiles.length;
 
   const plateW_px = plateW * PX_PER_MM;
   const plateH_px = plateH * PX_PER_MM;
-  const gap_px = gap * PX_PER_MM;
+  const gap_px    = gap    * PX_PER_MM;
   const margin_px = margin * PX_PER_MM;
 
   const cols = userCols > 0 ? userCols : Math.max(1, Math.ceil(Math.sqrt(N * plateW / plateH)));
   const rows = Math.ceil(N / cols);
-
   const cellW = (plateW_px - 2*margin_px - (cols-1)*gap_px) / cols;
   const cellH = (plateH_px - 2*margin_px - (rows-1)*gap_px) / rows;
 
   if (cellW <= 0 || cellH <= 0) {
-    alert('Cell size is zero or negative. Reduce margin/gap or increase plate size.');
-    return;
+    alert('Cell size is zero or negative. Reduce margin/gap or increase plate size.'); return;
   }
 
-  const cellW_mm = cellW / PX_PER_MM;
-  const cellH_mm = cellH / PX_PER_MM;
+  iPlateW = plateW_px;
+  iPlateH = plateH_px;
+  iSelectedIdx = -1;
 
-  // Build composed SVG
-  const outDoc = (new DOMParser()).parseFromString('<svg xmlns="http://www.w3.org/2000/svg"></svg>', 'image/svg+xml');
-  const svg = outDoc.documentElement;
-  svg.setAttribute('xmlns', NS);
-  svg.setAttribute('width', plateW + 'mm');
-  svg.setAttribute('height', plateH + 'mm');
-  svg.setAttribute('viewBox', `0 0 ${plateW_px.toFixed(4)} ${plateH_px.toFixed(4)}`);
-
-  // Red dashed border
-  const border = outDoc.createElementNS(NS, 'rect');
-  border.setAttribute('id', 'PLATE-BORDER-DELETE-BEFORE-ENGRAVING');
-  border.setAttribute('x', '1');
-  border.setAttribute('y', '1');
-  border.setAttribute('width', (plateW_px - 2).toFixed(4));
-  border.setAttribute('height', (plateH_px - 2).toFixed(4));
-  border.setAttribute('fill', 'none');
-  border.setAttribute('stroke', 'red');
-  border.setAttribute('stroke-width', '1');
-  border.setAttribute('stroke-dasharray', '4 3');
-  svg.appendChild(border);
-
-  // Place designs
-  loadedFiles.forEach((f, i) => {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    const cx = margin_px + col * (cellW + gap_px) + cellW/2;
-    const cy = margin_px + row * (cellH + gap_px) + cellH/2;
-
-    const vb = f.cleaned.vb;
+  iDesigns = loadedFiles.map((f, i) => {
+    const col = i % cols, row = Math.floor(i / cols);
+    const vb  = f.cleaned.vb;
     const scale = Math.min(cellW / vb.w, cellH / vb.h);
-    const tx = cx - (vb.x + vb.w/2) * scale;
-    const ty = cy - (vb.y + vb.h/2) * scale;
-
-    // Parse the cleaned SVG
-    const parser = new DOMParser();
-    const cleanDoc = parser.parseFromString(f.cleaned.svgString, 'image/svg+xml');
-    const cleanSVGEl = cleanDoc.documentElement;
-
-    const g = outDoc.createElementNS(NS, 'g');
-    const safeName = f.name.replace(/[^a-zA-Z0-9_-]/g, '-').replace(/\.svg$/i, '');
-    const padIdx = String(i+1).padStart(2,'0');
-    g.setAttribute('id', `design-${padIdx}-${safeName}`);
-    g.setAttribute('transform', `translate(${tx.toFixed(4)},${ty.toFixed(4)}) scale(${scale.toFixed(6)})`);
-
-    // Import all children of the cleaned SVG into composed doc
-    for (const child of cleanSVGEl.childNodes) {
-      try {
-        const imported = outDoc.importNode(child, true);
-        g.appendChild(imported);
-      } catch(e) { /* skip bad nodes */ }
-    }
-    svg.appendChild(g);
+    const sw = vb.w * scale, sh = vb.h * scale;
+    const cx = margin_px + col * (cellW + gap_px) + (cellW - sw) / 2;
+    const cy = margin_px + row * (cellH + gap_px) + (cellH - sh) / 2;
+    return { name: f.name, svgString: f.cleaned.svgString, vb, x: cx, y: cy, w: sw, h: sh };
   });
 
-  const ser = new XMLSerializer();
-  composedSVGString = '<?xml version="1.0" encoding="UTF-8"?>\n' + ser.serializeToString(svg);
-  lastFilename = `plate_${plateW}x${plateH}mm_${N}designs.svg`;
-
-  // Update stats
+  const cellW_mm = cellW / PX_PER_MM, cellH_mm = cellH / PX_PER_MM;
   document.getElementById('statsBox').innerHTML =
     `<strong>Layout:</strong> ${cols}×${rows} = ${cols*rows} cells<br>` +
     `<strong>Cell size:</strong> ${cellW_mm.toFixed(1)}×${cellH_mm.toFixed(1)}mm each<br>` +
     `<strong>Designs:</strong> ${N} | <strong>Empty cells:</strong> ${cols*rows - N}`;
-
-  // Preview
   document.getElementById('previewInfo').innerHTML =
     `<strong>${plateW}×${plateH}mm</strong> | ${N} designs | ${cols} cols × ${rows} rows`;
 
+  lastFilename = `plate_${plateW}x${plateH}mm_${N}designs.svg`;
+  setDownloadEnabled(true);
+  renderInteractivePlate();
+}
+
+// ─── Interactive plate renderer ────────────────────────────────────
+function renderInteractivePlate() {
   const wrap = document.getElementById('previewWrap');
-  // Render as inline SVG so vector-effect, fills and strokes all work correctly
-  wrap.innerHTML = ser.serializeToString(svg);
-  const inlineSVG = wrap.firstElementChild;
-  if (inlineSVG) {
-    inlineSVG.style.maxWidth = '100%';
-    inlineSVG.style.height = 'auto';
-    inlineSVG.style.display = 'block';
-    inlineSVG.removeAttribute('width');
-    inlineSVG.removeAttribute('height');
+  wrap.innerHTML = '';
+
+  const svgEl = document.createElementNS(NS, 'svg');
+  svgEl.setAttribute('viewBox', `0 0 ${iPlateW} ${iPlateH}`);
+  svgEl.style.cssText = 'width:100%;height:auto;display:block;cursor:default;user-select:none;';
+
+  // White plate background
+  const bg = document.createElementNS(NS, 'rect');
+  bg.setAttribute('width', iPlateW); bg.setAttribute('height', iPlateH);
+  bg.setAttribute('fill', '#ffffff');
+  bg.addEventListener('mousedown', () => { iSelectedIdx = -1; renderInteractivePlate(); });
+  svgEl.appendChild(bg);
+
+  // Red dashed border
+  const border = document.createElementNS(NS, 'rect');
+  border.setAttribute('id', 'PLATE-BORDER-DELETE-BEFORE-ENGRAVING');
+  border.setAttribute('x','1'); border.setAttribute('y','1');
+  border.setAttribute('width', iPlateW-2); border.setAttribute('height', iPlateH-2);
+  border.setAttribute('fill','none'); border.setAttribute('stroke','red');
+  border.setAttribute('stroke-width','1'); border.setAttribute('stroke-dasharray','4 3');
+  border.setAttribute('pointer-events','none');
+  svgEl.appendChild(border);
+
+  // Designs
+  iDesigns.forEach((d, i) => {
+    const parser = new DOMParser();
+    const cleanDoc = parser.parseFromString(d.svgString, 'image/svg+xml');
+    const srcSVG = cleanDoc.documentElement;
+    const vb = d.vb;
+    const scaleX = d.w / vb.w, scaleY = d.h / vb.h;
+    const tx = d.x - vb.x * scaleX, ty = d.y - vb.y * scaleY;
+
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('transform', `translate(${tx.toFixed(3)},${ty.toFixed(3)}) scale(${scaleX.toFixed(6)},${scaleY.toFixed(6)})`);
+
+    for (const child of srcSVG.childNodes) {
+      try { g.appendChild(document.importNode(child, true)); } catch(e) {}
+    }
+
+    // Invisible hit rect for move
+    const hit = document.createElementNS(NS, 'rect');
+    hit.setAttribute('x', vb.x); hit.setAttribute('y', vb.y);
+    hit.setAttribute('width', vb.w); hit.setAttribute('height', vb.h);
+    hit.setAttribute('fill', 'transparent');
+    hit.style.cursor = 'move';
+    hit.addEventListener('mousedown', e => startDrag(e, i, 'move', svgEl));
+    g.appendChild(hit);
+
+    svgEl.appendChild(g);
+
+    // Selection overlay (outside the scaled g)
+    if (i === iSelectedIdx) {
+      const sel = document.createElementNS(NS, 'rect');
+      sel.setAttribute('x', d.x-1); sel.setAttribute('y', d.y-1);
+      sel.setAttribute('width', d.w+2); sel.setAttribute('height', d.h+2);
+      sel.setAttribute('fill','none'); sel.setAttribute('stroke','#2563eb');
+      sel.setAttribute('stroke-width','1.5'); sel.setAttribute('stroke-dasharray','5 3');
+      sel.setAttribute('pointer-events','none');
+      svgEl.appendChild(sel);
+
+      // Corner resize handles
+      const HS = Math.min(8, d.w * 0.12, d.h * 0.12);
+      const handles = [
+        {hx: d.x,     hy: d.y,     type:'tl', cur:'nwse-resize'},
+        {hx: d.x+d.w, hy: d.y,     type:'tr', cur:'nesw-resize'},
+        {hx: d.x,     hy: d.y+d.h, type:'bl', cur:'nesw-resize'},
+        {hx: d.x+d.w, hy: d.y+d.h, type:'br', cur:'nwse-resize'},
+      ];
+      handles.forEach(h => {
+        const hr = document.createElementNS(NS, 'rect');
+        hr.setAttribute('x', h.hx-HS/2); hr.setAttribute('y', h.hy-HS/2);
+        hr.setAttribute('width', HS); hr.setAttribute('height', HS);
+        hr.setAttribute('fill','#2563eb'); hr.setAttribute('stroke','#fff');
+        hr.setAttribute('stroke-width','1'); hr.setAttribute('rx','1');
+        hr.style.cursor = h.cur;
+        hr.addEventListener('mousedown', e => startDrag(e, i, h.type, svgEl));
+        svgEl.appendChild(hr);
+      });
+
+      // Size label
+      const wMM = (d.w / PX_PER_MM).toFixed(1), hMM = (d.h / PX_PER_MM).toFixed(1);
+      const lbl = document.createElementNS(NS, 'text');
+      lbl.setAttribute('x', d.x + d.w/2);
+      lbl.setAttribute('y', Math.max(d.y - 3, 10));
+      lbl.setAttribute('text-anchor','middle');
+      lbl.setAttribute('font-size', Math.min(8, d.h * 0.15));
+      lbl.setAttribute('fill','#2563eb');
+      lbl.setAttribute('font-family','monospace');
+      lbl.setAttribute('pointer-events','none');
+      lbl.textContent = `${wMM}×${hMM}mm`;
+      svgEl.appendChild(lbl);
+
+      // Delete button (×)
+      const delBg = document.createElementNS(NS, 'circle');
+      delBg.setAttribute('cx', d.x+d.w); delBg.setAttribute('cy', d.y);
+      delBg.setAttribute('r', HS); delBg.setAttribute('fill','#e91e8c');
+      delBg.style.cursor = 'pointer';
+      delBg.addEventListener('mousedown', e => {
+        e.stopPropagation();
+        iDesigns.splice(i, 1);
+        iSelectedIdx = -1;
+        renderInteractivePlate();
+      });
+      svgEl.appendChild(delBg);
+      const delX = document.createElementNS(NS, 'text');
+      delX.setAttribute('x', d.x+d.w); delX.setAttribute('y', d.y+HS*0.38);
+      delX.setAttribute('text-anchor','middle'); delX.setAttribute('font-size', HS*1.2);
+      delX.setAttribute('fill','#fff'); delX.setAttribute('font-family','sans-serif');
+      delX.setAttribute('pointer-events','none');
+      delX.textContent = '×';
+      svgEl.appendChild(delX);
+    }
+  });
+
+  wrap.appendChild(svgEl);
+  composedSVGString = buildFinalSVGString();
+}
+
+// ─── Drag handling ─────────────────────────────────────────────────
+function startDrag(e, idx, type, svgEl) {
+  e.preventDefault(); e.stopPropagation();
+  iSelectedIdx = idx;
+
+  const rect = svgEl.getBoundingClientRect();
+  const toSVG = { x: iPlateW / rect.width, y: iPlateH / rect.height };
+  const d = iDesigns[idx];
+  const snap = { x: d.x, y: d.y, w: d.w, h: d.h };
+  const aspect = d.w / d.h;
+  const mx0 = e.clientX, my0 = e.clientY;
+
+  function onMove(e) {
+    const dx = (e.clientX - mx0) * toSVG.x;
+    const dy = (e.clientY - my0) * toSVG.y;
+    const MIN = 5;
+    if (type === 'move') {
+      d.x = snap.x + dx; d.y = snap.y + dy;
+    } else if (type === 'br') {
+      d.w = Math.max(MIN, snap.w + dx); d.h = Math.max(MIN, snap.h + dy);
+    } else if (type === 'bl') {
+      const nw = Math.max(MIN, snap.w - dx);
+      d.x = snap.x + snap.w - nw; d.w = nw; d.h = Math.max(MIN, snap.h + dy);
+    } else if (type === 'tr') {
+      const nh = Math.max(MIN, snap.h - dy);
+      d.y = snap.y + snap.h - nh; d.w = Math.max(MIN, snap.w + dx); d.h = nh;
+    } else if (type === 'tl') {
+      const nw = Math.max(MIN, snap.w - dx), nh = Math.max(MIN, snap.h - dy);
+      d.x = snap.x + snap.w - nw; d.y = snap.y + snap.h - nh; d.w = nw; d.h = nh;
+    }
+    renderInteractivePlate();
   }
 
-  setDownloadEnabled(true);
+  function onUp() {
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+  }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+  renderInteractivePlate();
+}
+
+// Keyboard: Delete removes selected
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Delete' || e.key === 'Backspace') && iSelectedIdx >= 0) {
+    if (document.activeElement.tagName === 'INPUT') return;
+    iDesigns.splice(iSelectedIdx, 1);
+    iSelectedIdx = -1;
+    if (iDesigns.length) renderInteractivePlate();
+    else document.getElementById('previewWrap').innerHTML = '';
+  }
+});
+
+// ─── Build final SVG for download ─────────────────────────────────
+function buildFinalSVGString() {
+  const outDoc = (new DOMParser()).parseFromString('<svg xmlns="http://www.w3.org/2000/svg"></svg>', 'image/svg+xml');
+  const svg = outDoc.documentElement;
+  svg.setAttribute('xmlns', NS);
+  const plateW_mm = (iPlateW / PX_PER_MM).toFixed(1);
+  const plateH_mm = (iPlateH / PX_PER_MM).toFixed(1);
+  svg.setAttribute('width',   plateW_mm + 'mm');
+  svg.setAttribute('height',  plateH_mm + 'mm');
+  svg.setAttribute('viewBox', `0 0 ${iPlateW.toFixed(4)} ${iPlateH.toFixed(4)}`);
+
+  const border = outDoc.createElementNS(NS, 'rect');
+  border.setAttribute('id','PLATE-BORDER-DELETE-BEFORE-ENGRAVING');
+  border.setAttribute('x','1'); border.setAttribute('y','1');
+  border.setAttribute('width', (iPlateW-2).toFixed(4)); border.setAttribute('height', (iPlateH-2).toFixed(4));
+  border.setAttribute('fill','none'); border.setAttribute('stroke','red');
+  border.setAttribute('stroke-width','1'); border.setAttribute('stroke-dasharray','4 3');
+  svg.appendChild(border);
+
+  iDesigns.forEach((d, i) => {
+    const parser = new DOMParser();
+    const cleanDoc = parser.parseFromString(d.svgString, 'image/svg+xml');
+    const srcSVG = cleanDoc.documentElement;
+    const vb = d.vb;
+    const scaleX = d.w / vb.w, scaleY = d.h / vb.h;
+    const tx = d.x - vb.x * scaleX, ty = d.y - vb.y * scaleY;
+
+    const g = outDoc.createElementNS(NS, 'g');
+    const safeName = d.name.replace(/[^a-zA-Z0-9_-]/g,'-').replace(/\.svg$/i,'');
+    g.setAttribute('id', `design-${String(i+1).padStart(2,'0')}-${safeName}`);
+    g.setAttribute('transform', `translate(${tx.toFixed(3)},${ty.toFixed(3)}) scale(${scaleX.toFixed(6)},${scaleY.toFixed(6)})`);
+    for (const child of srcSVG.childNodes) {
+      try { g.appendChild(outDoc.importNode(child, true)); } catch(e) {}
+    }
+    svg.appendChild(g);
+  });
+
+  return '<?xml version="1.0" encoding="UTF-8"?>\n' + (new XMLSerializer()).serializeToString(svg);
 }
 
 function setDownloadEnabled(enabled) {
@@ -789,14 +946,13 @@ function setDownloadEnabled(enabled) {
 }
 
 function downloadSVG() {
-  if (!composedSVGString) return;
-  const blob = new Blob([composedSVGString], {type:'image/svg+xml;charset=utf-8'});
+  const str = buildFinalSVGString();
+  if (!str) return;
+  const blob = new Blob([str], {type:'image/svg+xml;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = lastFilename;
-  document.body.appendChild(a);
-  a.click();
+  a.href = url; a.download = lastFilename;
+  document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
