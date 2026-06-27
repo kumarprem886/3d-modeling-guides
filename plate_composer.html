@@ -601,7 +601,17 @@ function cleanSVG(rawStr) {
 
     const el = outDoc.createElementNS(NS, node.tagName);
 
-    // Copy attributes
+    // Read original fill/stroke before stripping style
+    const styleStr = node.getAttribute('style') || '';
+    const styleMap = {};
+    styleStr.split(';').forEach(s => {
+      const [k, v] = s.split(':');
+      if (k && v) styleMap[k.trim()] = v.trim();
+    });
+    const origFill   = styleMap['fill']   || node.getAttribute('fill')   || '';
+    const origStroke = styleMap['stroke'] || node.getAttribute('stroke') || '';
+
+    // Copy non-style/color attributes
     for (const attr of node.attributes) {
       if (['style','fill','stroke','stroke-width','fill-opacity','stroke-opacity','opacity',
            'fill-rule','clip-path','mask','filter','display'].includes(attr.name)) continue;
@@ -610,9 +620,15 @@ function cleanSVG(rawStr) {
 
     // Set drawing attrs for drawable elements (not g)
     if (DRAWABLE.has(tag) && tag !== 'g') {
-      el.setAttribute('fill', 'none');
+      // Preserve fill-based shapes as solid black — don't hollow them out
+      const hasFill = origFill && origFill !== 'none' && origFill !== '';
+      const isWhiteFill = /^(#fff|#ffffff|white|rgb\(255,255,255\))$/i.test((origFill||'').trim());
+      // If original fill was a real color (not white/none), keep it as black
+      el.setAttribute('fill', hasFill && !isWhiteFill ? '#000000' : 'none');
       el.setAttribute('stroke', '#000000');
-      el.setAttribute('stroke-width', '1.5');
+      // Non-scaling stroke so it stays visible at any zoom/scale level
+      el.setAttribute('vector-effect', 'non-scaling-stroke');
+      el.setAttribute('stroke-width', '1');
     }
 
     // Recurse
