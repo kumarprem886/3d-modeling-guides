@@ -676,10 +676,12 @@ function cleanSVG(rawStr) {
 
     const isWhitish = v => /^(#fff(fff)?|white|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))$/i.test((v||'').trim());
 
-    // Copy non-color/style attributes (preserve structural attrs like d, cx, r, points, etc.)
+    // Copy non-color/style attributes — strip namespaced attrs (inkscape:*, xlink:*, sodipodi:*, etc.)
+    // those cause "Namespace prefix not defined" errors in the composed output
     for (const attr of node.attributes) {
       if (['style','fill','stroke','stroke-width','fill-opacity','stroke-opacity','opacity',
            'fill-rule','clip-path','mask','filter','display'].includes(attr.name)) continue;
+      if (attr.name.includes(':')) continue; // skip all prefixed namespace attrs
       el.setAttribute(attr.name, attr.value);
     }
 
