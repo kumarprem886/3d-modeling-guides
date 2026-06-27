@@ -318,17 +318,50 @@
       Load SVGs and click Compose to see layout stats.
     </div>
 
+    <!-- Mode toggle -->
+    <div>
+      <div class="section-label">Output Mode</div>
+      <div style="display:flex;gap:8px;margin-top:6px;">
+        <button id="modeLaser" onclick="setMode('laser')"
+          style="flex:1;padding:8px;border-radius:6px;border:2px solid #00b4d8;background:#001a20;color:#00b4d8;font-size:12px;font-weight:700;cursor:pointer;">
+          ⚡ Laser
+        </button>
+        <button id="modeEtch" onclick="setMode('etch')"
+          style="flex:1;padding:8px;border-radius:6px;border:2px solid #30363d;background:transparent;color:var(--sub);font-size:12px;font-weight:700;cursor:pointer;">
+          🧪 Etch
+        </button>
+      </div>
+      <div id="etchOptions" style="display:none;margin-top:10px;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px;">
+        <div style="font-size:11px;color:var(--sub);margin-bottom:8px;">Chemical Etch — solid fills, print to transparency film</div>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;">
+          <input type="checkbox" id="invertCheck" onchange="renderInteractivePlate()" style="accent-color:var(--pink);">
+          Invert (white on black — for negative resist)
+        </label>
+        <div style="margin-top:8px;font-size:11px;color:var(--sub);">Download as PNG for film printing (600 DPI)</div>
+      </div>
+    </div>
+
     <!-- Compose Button -->
     <button class="btn btn-pink" onclick="composePlate()">⚡ Compose Plate</button>
 
     <!-- Download -->
     <div>
       <div class="section-label">Download</div>
-      <div class="warn-note" style="margin-bottom:8px;">⚠ Delete the red border before engraving</div>
+      <div class="warn-note" id="downloadNote" style="margin-bottom:8px;">⚠ Delete the red border before engraving</div>
       <button class="btn btn-pink" id="downloadBtn" onclick="downloadSVG()" disabled style="background:#30363d;border-color:#30363d;color:var(--sub);">⬇ Download SVG</button>
-      <div class="laser-settings" style="margin-top:10px;">
+      <button class="btn" id="downloadPngBtn" onclick="downloadPNG()" disabled
+        style="background:#30363d;border:1px solid #30363d;color:var(--sub);margin-top:6px;display:none;">⬇ Download PNG (600 DPI)</button>
+      <div class="laser-settings" id="laserSettings" style="margin-top:10px;">
         SS304 Laser Settings:<br>
         Speed <span>200</span> · Power <span>60%</span> · Freq <span>30kHz</span> · <span>1 pass</span>
+      </div>
+      <div id="etchSettings" style="display:none;margin-top:10px;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px;font-size:12px;color:var(--sub);line-height:1.8;">
+        Chemical Etch process:<br>
+        1. Print file on transparency at 600 DPI<br>
+        2. Apply photoresist to clean plate<br>
+        3. UV expose with film on top<br>
+        4. Develop, then etch with acid<br>
+        5. Strip resist → raised design ✓
       </div>
     </div>
   </div>
@@ -366,6 +399,24 @@ const NS = 'http://www.w3.org/2000/svg';
 let loadedFiles = []; // [{name, raw, cleaned, vb:{x,y,w,h}}]
 let composedSVGString = null;
 let lastFilename = '';
+let currentMode = 'laser'; // 'laser' | 'etch'
+
+function setMode(mode) {
+  currentMode = mode;
+  const isEtch = mode === 'etch';
+  document.getElementById('modeLaser').style.cssText =
+    `flex:1;padding:8px;border-radius:6px;border:2px solid ${isEtch?'#30363d':'#00b4d8'};background:${isEtch?'transparent':'#001a20'};color:${isEtch?'var(--sub)':'#00b4d8'};font-size:12px;font-weight:700;cursor:pointer;`;
+  document.getElementById('modeEtch').style.cssText =
+    `flex:1;padding:8px;border-radius:6px;border:2px solid ${isEtch?'#f59e0b':'#30363d'};background:${isEtch?'#1a1000':'transparent'};color:${isEtch?'#f59e0b':'var(--sub)'};font-size:12px;font-weight:700;cursor:pointer;`;
+  document.getElementById('etchOptions').style.display   = isEtch ? 'block' : 'none';
+  document.getElementById('etchSettings').style.display  = isEtch ? 'block' : 'none';
+  document.getElementById('laserSettings').style.display = isEtch ? 'none'  : 'block';
+  document.getElementById('downloadPngBtn').style.display= isEtch ? 'block' : 'none';
+  document.getElementById('downloadNote').textContent    = isEtch
+    ? 'Print on transparency film at 600 DPI'
+    : '⚠ Delete the red border before engraving';
+  if (iDesigns.length) renderInteractivePlate();
+}
 
 // ─── Preset handling ───────────────────────────────────────────────
 const PRESETS = {
@@ -839,8 +890,42 @@ function renderInteractivePlate() {
     }
   });
 
+  // Apply etch mode post-processing to preview
+  if (currentMode === 'etch') applyEtchToSVG(svgEl);
+
   wrap.appendChild(svgEl);
   composedSVGString = buildFinalSVGString();
+}
+
+// ─── Etch mode post-processor ──────────────────────────────────────
+function applyEtchToSVG(svgEl) {
+  const invert = document.getElementById('invertCheck').checked;
+
+  // Force all drawable elements to solid black (or white if inverted)
+  const drawTags = new Set(['path','circle','rect','ellipse','polygon','polyline','line']);
+  svgEl.querySelectorAll('*').forEach(el => {
+    const tag = el.tagName.toLowerCase();
+    if (tag === 'rect' && el.id === 'PLATE-BORDER-DELETE-BEFORE-ENGRAVING') return;
+    if (drawTags.has(tag)) {
+      const fill = el.getAttribute('fill');
+      if (fill !== 'none') el.setAttribute('fill', invert ? '#ffffff' : '#000000');
+      el.setAttribute('stroke', 'none');
+      el.removeAttribute('vector-effect');
+    }
+    if (tag === 'g') {
+      const fill = el.getAttribute('fill');
+      if (fill && fill !== 'none') el.setAttribute('fill', invert ? '#ffffff' : '#000000');
+    }
+  });
+
+  // Invert: add black background behind everything
+  if (invert) {
+    const bg2 = document.createElementNS(NS, 'rect');
+    bg2.setAttribute('width', iPlateW); bg2.setAttribute('height', iPlateH);
+    bg2.setAttribute('fill', '#000000');
+    bg2.setAttribute('pointer-events', 'none');
+    svgEl.insertBefore(bg2, svgEl.children[1]); // after white bg, before border
+  }
 }
 
 // ─── Drag handling ─────────────────────────────────────────────────
@@ -862,16 +947,28 @@ function startDrag(e, idx, type, svgEl) {
     if (type === 'move') {
       d.x = snap.x + dx; d.y = snap.y + dy;
     } else if (type === 'br') {
-      d.w = Math.max(MIN, snap.w + dx); d.h = Math.max(MIN, snap.h + dy);
+      // Uniform: scale by diagonal movement, anchor = TL
+      const scale = Math.max(MIN/snap.w, Math.max(MIN/snap.h,
+        (snap.w + dx + snap.h + dy) / (snap.w + snap.h)));
+      d.w = snap.w * scale; d.h = snap.h * scale;
     } else if (type === 'bl') {
-      const nw = Math.max(MIN, snap.w - dx);
-      d.x = snap.x + snap.w - nw; d.w = nw; d.h = Math.max(MIN, snap.h + dy);
+      // Anchor = TR
+      const scale = Math.max(MIN/snap.w, Math.max(MIN/snap.h,
+        (snap.w - dx + snap.h + dy) / (snap.w + snap.h)));
+      d.w = snap.w * scale; d.h = snap.h * scale;
+      d.x = snap.x + snap.w - d.w;
     } else if (type === 'tr') {
-      const nh = Math.max(MIN, snap.h - dy);
-      d.y = snap.y + snap.h - nh; d.w = Math.max(MIN, snap.w + dx); d.h = nh;
+      // Anchor = BL
+      const scale = Math.max(MIN/snap.w, Math.max(MIN/snap.h,
+        (snap.w + dx + snap.h - dy) / (snap.w + snap.h)));
+      d.w = snap.w * scale; d.h = snap.h * scale;
+      d.y = snap.y + snap.h - d.h;
     } else if (type === 'tl') {
-      const nw = Math.max(MIN, snap.w - dx), nh = Math.max(MIN, snap.h - dy);
-      d.x = snap.x + snap.w - nw; d.y = snap.y + snap.h - nh; d.w = nw; d.h = nh;
+      // Anchor = BR
+      const scale = Math.max(MIN/snap.w, Math.max(MIN/snap.h,
+        (snap.w - dx + snap.h - dy) / (snap.w + snap.h)));
+      d.w = snap.w * scale; d.h = snap.h * scale;
+      d.x = snap.x + snap.w - d.w; d.y = snap.y + snap.h - d.h;
     }
     renderInteractivePlate();
   }
@@ -898,7 +995,11 @@ document.addEventListener('keydown', e => {
 });
 
 // ─── Build final SVG for download ─────────────────────────────────
-function buildFinalSVGString() {
+function buildFinalSVGString(forceEtch = false) {
+  const etchMode = forceEtch || currentMode === 'etch';
+  const invert   = etchMode && document.getElementById('invertCheck').checked;
+  const drawTags = new Set(['path','circle','rect','ellipse','polygon','polyline','line']);
+
   const outDoc = (new DOMParser()).parseFromString('<svg xmlns="http://www.w3.org/2000/svg"></svg>', 'image/svg+xml');
   const svg = outDoc.documentElement;
   svg.setAttribute('xmlns', NS);
@@ -908,18 +1009,47 @@ function buildFinalSVGString() {
   svg.setAttribute('height',  plateH_mm + 'mm');
   svg.setAttribute('viewBox', `0 0 ${iPlateW.toFixed(4)} ${iPlateH.toFixed(4)}`);
 
-  const border = outDoc.createElementNS(NS, 'rect');
-  border.setAttribute('id','PLATE-BORDER-DELETE-BEFORE-ENGRAVING');
-  border.setAttribute('x','1'); border.setAttribute('y','1');
-  border.setAttribute('width', (iPlateW-2).toFixed(4)); border.setAttribute('height', (iPlateH-2).toFixed(4));
-  border.setAttribute('fill','none'); border.setAttribute('stroke','red');
-  border.setAttribute('stroke-width','1'); border.setAttribute('stroke-dasharray','4 3');
-  svg.appendChild(border);
+  // Etch: background colour
+  if (etchMode) {
+    const bgR = outDoc.createElementNS(NS, 'rect');
+    bgR.setAttribute('width', iPlateW); bgR.setAttribute('height', iPlateH);
+    bgR.setAttribute('fill', invert ? '#000000' : '#ffffff');
+    svg.appendChild(bgR);
+  }
+
+  // Border (laser only — etch prints don't need it)
+  if (!etchMode) {
+    const border = outDoc.createElementNS(NS, 'rect');
+    border.setAttribute('id','PLATE-BORDER-DELETE-BEFORE-ENGRAVING');
+    border.setAttribute('x','1'); border.setAttribute('y','1');
+    border.setAttribute('width', (iPlateW-2).toFixed(4)); border.setAttribute('height', (iPlateH-2).toFixed(4));
+    border.setAttribute('fill','none'); border.setAttribute('stroke','red');
+    border.setAttribute('stroke-width','1'); border.setAttribute('stroke-dasharray','4 3');
+    svg.appendChild(border);
+  }
 
   iDesigns.forEach((d, i) => {
     const parser = new DOMParser();
     const cleanDoc = parser.parseFromString(d.svgString, 'image/svg+xml');
     const srcSVG = cleanDoc.documentElement;
+
+    // Apply etch colours to source before importing
+    if (etchMode) {
+      srcSVG.querySelectorAll('*').forEach(el => {
+        const tag = el.tagName.toLowerCase();
+        if (drawTags.has(tag)) {
+          const fill = el.getAttribute('fill');
+          if (fill !== 'none') el.setAttribute('fill', invert ? '#ffffff' : '#000000');
+          el.setAttribute('stroke', 'none');
+          el.removeAttribute('vector-effect');
+        }
+        if (tag === 'g') {
+          const fill = el.getAttribute('fill');
+          if (fill && fill !== 'none') el.setAttribute('fill', invert ? '#ffffff' : '#000000');
+        }
+      });
+    }
+
     const vb = d.vb;
     const scaleX = d.w / vb.w, scaleY = d.h / vb.h;
     const tx = d.x - vb.x * scaleX, ty = d.y - vb.y * scaleY;
@@ -938,11 +1068,16 @@ function buildFinalSVGString() {
 }
 
 function setDownloadEnabled(enabled) {
-  const btn = document.getElementById('downloadBtn');
-  btn.disabled = !enabled;
-  btn.style.background = enabled ? 'var(--pink)' : '#30363d';
-  btn.style.borderColor = enabled ? 'var(--pink)' : '#30363d';
-  btn.style.color = enabled ? '#fff' : 'var(--sub)';
+  const svgBtn = document.getElementById('downloadBtn');
+  svgBtn.disabled = !enabled;
+  svgBtn.style.background   = enabled ? 'var(--pink)' : '#30363d';
+  svgBtn.style.borderColor  = enabled ? 'var(--pink)' : '#30363d';
+  svgBtn.style.color        = enabled ? '#fff' : 'var(--sub)';
+  const pngBtn = document.getElementById('downloadPngBtn');
+  pngBtn.disabled = !enabled;
+  pngBtn.style.background  = enabled ? '#f59e0b' : '#30363d';
+  pngBtn.style.border      = enabled ? '1px solid #f59e0b' : '1px solid #30363d';
+  pngBtn.style.color       = enabled ? '#000' : 'var(--sub)';
 }
 
 function downloadSVG() {
@@ -955,6 +1090,44 @@ function downloadSVG() {
   document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// ─── PNG export (600 DPI) for chemical etch film ───────────────────
+function downloadPNG() {
+  const DPI = 600;
+  const plateW_mm = iPlateW / PX_PER_MM;
+  const plateH_mm = iPlateH / PX_PER_MM;
+  const pxW = Math.round(plateW_mm / 25.4 * DPI);
+  const pxH = Math.round(plateH_mm / 25.4 * DPI);
+
+  // Build etch SVG string
+  const svgStr = buildFinalSVGString(true); // true = etch mode
+  const blob = new Blob([svgStr], {type: 'image/svg+xml'});
+  const url  = URL.createObjectURL(blob);
+
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = pxW; canvas.height = pxH;
+    const ctx = canvas.getContext('2d');
+
+    const invert = document.getElementById('invertCheck').checked;
+    ctx.fillStyle = invert ? '#000000' : '#ffffff';
+    ctx.fillRect(0, 0, pxW, pxH);
+    ctx.drawImage(img, 0, 0, pxW, pxH);
+    URL.revokeObjectURL(url);
+
+    canvas.toBlob(pngBlob => {
+      const pngUrl = URL.createObjectURL(pngBlob);
+      const a = document.createElement('a');
+      a.href = pngUrl;
+      a.download = lastFilename.replace('.svg', `_${DPI}dpi.png`);
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(pngUrl), 1000);
+    }, 'image/png');
+  };
+  img.src = url;
 }
 </script>
 </body>
