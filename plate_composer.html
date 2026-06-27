@@ -271,8 +271,10 @@
     <div>
       <div class="section-label">Plate Settings</div>
       <div class="control-group">
-        <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
           <label>Plate Preset</label>
+          <button onclick="suggestSettings()" style="font-size:11px;padding:3px 9px;border-radius:5px;border:1px solid #f59e0b;background:#1a1000;color:#f59e0b;cursor:pointer;" title="Auto-pick plate size and columns based on number of loaded SVGs">✨ Suggest</button>
+        </div>
           <select id="preset" onchange="applyPreset()">
             <option value="40x60">40×60mm</option>
             <option value="60x90" selected>60×90mm</option>
@@ -434,6 +436,44 @@ function applyPreset() {
 }
 function onCustomSize() {
   document.getElementById('preset').value = 'custom';
+}
+
+function suggestSettings() {
+  const N = loadedFiles.length;
+  if (!N) { alert('Load some SVGs first, then click Suggest.'); return; }
+
+  // Pick plate size
+  let preset, w, h;
+  if      (N <= 4)  { preset='40x60';   w=40;  h=60;  }
+  else if (N <= 9)  { preset='60x60';   w=60;  h=60;  }
+  else if (N <= 16) { preset='60x90';   w=60;  h=90;  }
+  else if (N <= 28) { preset='60x120';  w=60;  h=120; }
+  else if (N <= 40) { preset='100x150'; w=100; h=150; }
+  else              { preset='210x297'; w=210; h=297; }
+
+  // Pick cols: target square cells — cols = round(sqrt(N * W/H))
+  let cols = Math.max(1, Math.round(Math.sqrt(N * w / h)));
+  // Nudge cols so we don't waste more than 1 empty row
+  while (cols > 1 && Math.ceil(N / cols) * cols - N > cols) cols--;
+
+  // Gap and margin scaled to plate size
+  const gap    = w <= 60 ? 1 : 2;
+  const margin = w <= 60 ? 2 : 5;
+
+  document.getElementById('preset').value = preset;
+  document.getElementById('plateW').value = w;
+  document.getElementById('plateH').value = h;
+  document.getElementById('cols').value   = cols;
+  document.getElementById('gap').value    = gap;
+  document.getElementById('gapSlider').value = gap;
+  document.getElementById('gapVal').textContent = gap;
+  document.getElementById('margin').value = margin;
+  document.getElementById('marginSlider').value = margin;
+  document.getElementById('marginVal').textContent = margin;
+
+  const rows = Math.ceil(N / cols);
+  const empty = cols * rows - N;
+  alert(`Suggested for ${N} SVGs:\n• Plate: ${w}×${h}mm (${preset})\n• Columns: ${cols} → ${rows} rows (${empty} empty cell${empty===1?'':'s'})\n• Gap: ${gap}mm  Margin: ${margin}mm\n\nClick Compose to apply.`);
 }
 
 // ─── Slider sync ───────────────────────────────────────────────────
