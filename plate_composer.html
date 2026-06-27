@@ -628,7 +628,16 @@ function isWhiteFill(el) {
 const DRAWABLE = new Set(['path','circle','rect','ellipse','polygon','polyline','line','g','use','text','tspan']);
 const REMOVE_TAGS = new Set(['style','metadata','title','desc','script','defs']);
 
+function sanitizeSVG(raw) {
+  // Strip DOCTYPE (including internal subset [...])
+  raw = raw.replace(/<!DOCTYPE\b[\s\S]*?(?:\[[\s\S]*?\])?\s*>/gi, '');
+  // Remove unknown XML entity references — keep &amp; &lt; &gt; &quot; &apos;
+  raw = raw.replace(/&(?!(amp|lt|gt|quot|apos);)([a-zA-Z_]\w*);/g, '');
+  return raw;
+}
+
 function cleanSVG(rawStr) {
+  rawStr = sanitizeSVG(rawStr);
   const parser = new DOMParser();
   const doc = parser.parseFromString(rawStr, 'image/svg+xml');
   const origSVG = doc.documentElement;
