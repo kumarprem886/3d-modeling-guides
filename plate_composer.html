@@ -601,34 +601,47 @@ function cleanSVG(rawStr) {
 
     const el = outDoc.createElementNS(NS, node.tagName);
 
-    // Read original fill/stroke before stripping style
+    // Read original fill — check both style attr and direct attr
     const styleStr = node.getAttribute('style') || '';
     const styleMap = {};
     styleStr.split(';').forEach(s => {
-      const [k, v] = s.split(':');
-      if (k && v) styleMap[k.trim()] = v.trim();
+      const [k, ...vs] = s.split(':');
+      if (k && vs.length) styleMap[k.trim()] = vs.join(':').trim();
     });
-    const origFill   = styleMap['fill']   || node.getAttribute('fill')   || '';
-    const origStroke = styleMap['stroke'] || node.getAttribute('stroke') || '';
+    // style attr takes priority over direct attr (CSS specificity)
+    const explicitFill = (styleMap['fill'] !== undefined) ? styleMap['fill']
+                       : (node.hasAttribute('fill') ? node.getAttribute('fill') : null);
 
-    // Copy non-style/color attributes
+    const isWhitish = v => /^(#fff(fff)?|white|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))$/i.test((v||'').trim());
+
+    // Copy non-color/style attributes (preserve structural attrs like d, cx, r, points, etc.)
     for (const attr of node.attributes) {
       if (['style','fill','stroke','stroke-width','fill-opacity','stroke-opacity','opacity',
            'fill-rule','clip-path','mask','filter','display'].includes(attr.name)) continue;
       el.setAttribute(attr.name, attr.value);
     }
 
-    // Set drawing attrs for drawable elements (not g)
-    if (DRAWABLE.has(tag) && tag !== 'g') {
-      // Preserve fill-based shapes as solid black — don't hollow them out
-      const hasFill = origFill && origFill !== 'none' && origFill !== '';
-      const isWhiteFill = /^(#fff|#ffffff|white|rgb\(255,255,255\))$/i.test((origFill||'').trim());
-      // If original fill was a real color (not white/none), keep it as black
-      el.setAttribute('fill', hasFill && !isWhiteFill ? '#000000' : 'none');
-      el.setAttribute('stroke', '#000000');
-      // Non-scaling stroke so it stays visible at any zoom/scale level
-      el.setAttribute('vector-effect', 'non-scaling-stroke');
-      el.setAttribute('stroke-width', '1');
+    if (DRAWABLE.has(tag)) {
+      if (tag === 'g') {
+        // Groups: preserve fill so children can inherit it correctly
+        if (explicitFill !== null) {
+          el.setAttribute('fill', (explicitFill === 'none' || isWhitish(explicitFill)) ? 'none' : '#000000');
+        }
+        // No explicit fill on g → don't set it; SVG default (black) applies to children
+      } else {
+        // Leaf drawable elements
+        if (explicitFill === null) {
+          // No explicit fill → don't force none; let parent/SVG default (black) apply
+          // Just ensure stroke is set
+        } else if (explicitFill === 'none' || isWhitish(explicitFill)) {
+          el.setAttribute('fill', 'none');
+        } else {
+          el.setAttribute('fill', '#000000');
+        }
+        el.setAttribute('stroke', '#000000');
+        el.setAttribute('vector-effect', 'non-scaling-stroke');
+        el.setAttribute('stroke-width', '1');
+      }
     }
 
     // Recurse
