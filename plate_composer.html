@@ -276,6 +276,7 @@
           <select id="preset" onchange="applyPreset()">
             <option value="40x60">40×60mm</option>
             <option value="60x90" selected>60×90mm</option>
+            <option value="60x120">60×120mm</option>
             <option value="60x60">60×60mm</option>
             <option value="100x150">100×150mm</option>
             <option value="210x297">A4 210×297mm</option>
@@ -420,7 +421,7 @@ function setMode(mode) {
 
 // ─── Preset handling ───────────────────────────────────────────────
 const PRESETS = {
-  '40x60': [40,60], '60x90': [60,90], '60x60': [60,60],
+  '40x60': [40,60], '60x90': [60,90], '60x120': [60,120], '60x60': [60,60],
   '100x150': [100,150], '210x297': [210,297]
 };
 function applyPreset() {
