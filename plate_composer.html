@@ -640,6 +640,12 @@ function cleanSVG(rawStr) {
   rawStr = sanitizeSVG(rawStr);
   const parser = new DOMParser();
   const doc = parser.parseFromString(rawStr, 'image/svg+xml');
+  // DOMParser returns <parsererror> as root, or embeds it, when XML is malformed
+  const pe = doc.querySelector('parsererror');
+  if (pe || doc.documentElement.tagName.toLowerCase() === 'parseerror' ||
+      doc.documentElement.tagName.toLowerCase() === 'html') {
+    throw new Error('SVG parse failed: ' + (pe ? pe.textContent.slice(0, 120) : 'unknown'));
+  }
   const origSVG = doc.documentElement;
   const vb = parseVB(origSVG);
 
