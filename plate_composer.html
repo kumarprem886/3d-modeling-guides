@@ -11,87 +11,301 @@
     --card: #161b22;
     --border: #30363d;
     --pink: #e91e8c;
+    --blue: #2563eb;
+    --cyan: #00b4d8;
+    --amber: #f59e0b;
+    --green: #22c55e;
     --text: #e6edf3;
     --sub: #8b949e;
+    --muted: #484f58;
     --gap: 16px;
   }
-  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; min-height: 100vh; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+  }
+
   a { color: var(--pink); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* ── Header ── */
   header {
     background: var(--card);
     border-bottom: 1px solid var(--border);
-    padding: 12px 20px;
+    padding: 0 20px;
+    height: 48px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-left {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 8px;
   }
-  header h1 { font-size: 18px; font-weight: 600; }
-  .hub-link { font-size: 13px; color: var(--sub); display: flex; align-items: center; gap: 4px; }
-  .hub-link:hover { color: var(--pink); text-decoration: none; }
+  .hub-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--sub);
+    transition: color 0.15s;
+    text-decoration: none;
+  }
+  .hub-link:hover { color: var(--text); text-decoration: none; }
+  .hub-link svg { flex-shrink: 0; }
+  .site-name {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    border-left: 1px solid var(--border);
+    padding-left: 8px;
+    margin-left: 4px;
+  }
+  .header-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .header-center svg { color: var(--pink); flex-shrink: 0; }
+  .header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .kbd-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--sub);
+  }
+  .kbd {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-family: monospace;
+    color: var(--text);
+  }
 
+  /* ── Layout ── */
   .layout {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 0;
-    height: calc(100vh - 53px);
+    grid-template-columns: 320px 1fr;
+    height: calc(100vh - 48px);
     overflow: hidden;
   }
 
+  /* ── Sidebar ── */
   .sidebar {
     background: var(--card);
     border-right: 1px solid var(--border);
     overflow-y: auto;
-    padding: 16px;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
   }
 
-  .main {
-    overflow-y: auto;
-    padding: 16px;
+  .step-block {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+  }
+  .step-block:last-child { border-bottom: none; }
+
+  .step-header {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
   }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--sub);
-    margin-bottom: 10px;
-  }
-
-  .card {
-    background: var(--card);
+  .step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sub);
   }
 
-  /* Drop Zone */
+  /* ── Dropzone ── */
   .dropzone {
     border: 2px dashed var(--border);
     border-radius: 10px;
-    padding: 32px 16px;
+    padding: 24px 16px 20px;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
     background: #0d111780;
+    position: relative;
+    animation: dash-anim 12s linear infinite;
+  }
+  @keyframes dash-anim {
+    to { background-position: 100% 100%; }
   }
   .dropzone.drag-over {
     border-color: var(--pink);
-    background: #e91e8c15;
+    background: #e91e8c12;
   }
-  .dropzone-icon { font-size: 32px; margin-bottom: 10px; }
-  .dropzone-text { color: var(--sub); font-size: 13px; line-height: 1.6; }
-  .dropzone-count { color: var(--pink); font-weight: 600; font-size: 14px; margin-top: 6px; }
+  .dropzone-icon { margin-bottom: 8px; opacity: 0.6; }
+  .dropzone-text {
+    color: var(--sub);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .file-count-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--sub);
+    transition: all 0.2s;
+  }
+  .file-count-pill.has-files {
+    border-color: var(--pink);
+    color: var(--pink);
+    font-weight: 600;
+  }
+  .file-count-pill .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
 
-  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .browse-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .clear-link {
+    display: block;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    background: none;
+    border: none;
+    text-decoration: none;
+  }
+  .clear-link:hover { color: #f85149; }
+
+  /* ── Preset pills ── */
+  .preset-scroll {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .preset-scroll::-webkit-scrollbar { display: none; }
+  .preset-pill {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--sub);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .preset-pill:hover { border-color: var(--sub); color: var(--text); }
+  .preset-pill.active {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* ── Form controls ── */
+  .field-label {
+    display: block;
+    font-size: 11px;
+    color: var(--sub);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  input[type=number], select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 5px 9px;
+    font-size: 13px;
+    transition: border-color 0.15s;
+  }
+  input[type=number]:focus, select:focus {
+    outline: none;
+    border-color: var(--pink);
+  }
+  input[type=range] {
+    width: 100%;
+    accent-color: var(--pink);
+    cursor: pointer;
+  }
+
+  .control-group { display: flex; flex-direction: column; gap: 10px; }
+  .control-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
+
+  .slider-field { display: flex; flex-direction: column; gap: 4px; }
+  .slider-row { display: grid; grid-template-columns: 1fr 52px; gap: 6px; align-items: center; }
+  .slider-header { display: flex; justify-content: space-between; align-items: center; }
+  .slider-val-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0 5px;
+    line-height: 18px;
+    min-width: 34px;
+    text-align: center;
+  }
+
+  /* ── Buttons ── */
   .btn {
     padding: 7px 14px;
     border-radius: 6px;
@@ -99,182 +313,498 @@
     background: #21262d;
     color: var(--text);
     cursor: pointer;
-    font-size: 13px;
-    transition: background 0.15s, border-color 0.15s;
+    font-size: 12px;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
   }
-  .btn:hover { background: #30363d; border-color: #8b949e; }
-  .btn-pink {
-    background: var(--pink);
-    border-color: var(--pink);
+  .btn:hover { background: #2d333b; border-color: var(--sub); }
+
+  .btn-primary {
+    background: var(--blue);
+    border-color: var(--blue);
     color: #fff;
     font-weight: 600;
+  }
+  .btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; }
+
+  .btn-secondary {
+    border-color: var(--amber);
+    color: var(--amber);
+    background: #1a100000;
+  }
+  .btn-secondary:hover { background: #f59e0b18; }
+
+  .btn-compose {
+    background: linear-gradient(135deg, #e91e8c 0%, #c91578 100%);
+    border: none;
+    color: #fff;
+    font-weight: 700;
     font-size: 14px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     width: 100%;
     border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 12px #e91e8c30;
   }
-  .btn-pink:hover { background: #c91578; border-color: #c91578; }
-  .btn-sm { padding: 5px 10px; font-size: 12px; }
-  .btn-danger { border-color: #da3633; color: #f85149; }
-  .btn-danger:hover { background: #da363320; }
+  .btn-compose:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px #e91e8c40; }
+  .btn-compose:active { transform: translateY(0); }
 
-  /* Form controls */
-  label { display: block; font-size: 12px; color: var(--sub); margin-bottom: 4px; }
-  input[type=number], select {
-    width: 100%;
+  .btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid var(--border);
+    background: #21262d;
+    color: var(--sub);
+  }
+  .btn-download.enabled-svg {
+    border-color: var(--pink);
+    background: #e91e8c18;
+    color: var(--pink);
+  }
+  .btn-download.enabled-svg:hover { background: #e91e8c28; }
+  .btn-download.enabled-png {
+    border-color: var(--amber);
+    background: #f59e0b18;
+    color: var(--amber);
+  }
+  .btn-download.enabled-png:hover { background: #f59e0b28; }
+  .btn-download:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+  /* ── Segmented control (mode toggle) ── */
+  .seg-control {
+    display: flex;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 3px;
+  }
+  .seg-btn {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--sub);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .seg-btn:hover { color: var(--text); }
+  #modeLaser.mode-active-laser {
+    background: #001e2b;
+    color: var(--cyan);
+    box-shadow: 0 0 0 1px var(--cyan) inset;
+  }
+  #modeEtch.mode-active-etch {
+    background: #1a1200;
+    color: var(--amber);
+    box-shadow: 0 0 0 1px var(--amber) inset;
+  }
+
+  .etch-options {
+    margin-top: 10px;
     background: #0d1117;
     border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    padding: 6px 10px;
-    font-size: 13px;
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: none;
+    animation: slide-down 0.15s ease;
   }
-  input[type=number]:focus, select:focus { outline: none; border-color: var(--pink); }
-  input[type=range] { width: 100%; accent-color: var(--pink); cursor: pointer; }
+  .etch-options.visible { display: block; }
+  @keyframes slide-down { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
-  .control-group { display: grid; gap: 10px; }
-  .control-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
-  .slider-row { display: grid; grid-template-columns: 1fr 60px; gap: 8px; align-items: center; }
+  /* ── Stats chips ── */
+  .stats-chips {
+    display: none;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .stats-chips.visible { display: flex; }
+  .stat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 3px 9px;
+    font-size: 11px;
+    color: var(--sub);
+  }
+  .stat-chip .chip-val {
+    font-weight: 700;
+    color: var(--text);
+  }
 
-  .stats-box {
-    background: #0d1117;
+  /* ── Process info boxes ── */
+  .info-box {
+    background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 6px;
     padding: 10px 12px;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--sub);
-    line-height: 1.7;
+    line-height: 1.8;
   }
-  .stats-box strong { color: var(--text); }
+  .info-box strong { color: var(--text); font-size: 12px; }
+  .warn-inline {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
 
-  /* Thumbnail grid */
+  /* ── Main area ── */
+  .main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  /* ── Tab bar ── */
+  .tab-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: var(--sub);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--text);
+    border-bottom-color: var(--pink);
+    font-weight: 600;
+  }
+  .tab-badge {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 1px 7px;
+    font-size: 10px;
+    color: var(--sub);
+  }
+  .tab-btn.active .tab-badge {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: #fff;
+  }
+
+  /* ── Tab panels ── */
+  .tab-panel { display: none; flex: 1; overflow: hidden; flex-direction: column; }
+  .tab-panel.active { display: flex; }
+
+  /* ── Thumbnails tab ── */
+  .thumb-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+  }
   .thumb-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: 10px;
   }
   .thumb-item {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px;
+    border-radius: 8px;
+    padding: 8px;
     text-align: center;
     cursor: pointer;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s;
     position: relative;
   }
-  .thumb-item:hover { border-color: var(--sub); }
-  .thumb-item.selected { border-color: var(--pink); }
-  .thumb-svg { width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fff; border-radius: 4px; }
-  .thumb-svg svg { max-width: 100%; max-height: 100%; }
-  .thumb-name { font-size: 10px; color: var(--sub); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .thumb-remove {
-    position: absolute; top: 3px; right: 3px;
-    background: #da3633; color: #fff; border: none;
-    border-radius: 3px; width: 16px; height: 16px;
-    font-size: 10px; cursor: pointer; display: none;
-    align-items: center; justify-content: center; line-height: 1;
-  }
-  .thumb-item:hover .thumb-remove { display: flex; }
-
-  /* Preview */
-  .preview-container {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-  }
-  .preview-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .preview-info { font-size: 13px; color: var(--sub); }
-  .preview-info strong { color: var(--text); }
-  .preview-svg-wrap {
-    background: #fff;
-    border-radius: 6px;
-    overflow: hidden;
+  .thumb-item:hover { border-color: var(--sub); box-shadow: 0 2px 8px #0004; }
+  .thumb-item.selected { border-color: var(--pink); box-shadow: 0 0 0 2px #e91e8c30; }
+  .thumb-svg {
+    width: 100%;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 200px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 5px;
   }
-  .preview-svg-wrap svg { max-width: 100%; height: auto; display: block; }
-  .preview-empty {
+  .thumb-svg svg { max-width: 100%; max-height: 100%; }
+  .thumb-name {
+    font-size: 10px;
     color: var(--sub);
-    font-size: 13px;
-    text-align: center;
-    padding: 60px 20px;
+    margin-top: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+  .thumb-remove {
+    position: absolute;
+    top: 4px; right: 4px;
+    background: #da3633;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    width: 18px; height: 18px;
+    font-size: 11px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background 0.15s;
+  }
+  .thumb-item:hover .thumb-remove { display: flex; }
+  .thumb-remove:hover { background: #b91c1c; }
 
-  .download-section {
+  /* ── Preview tab ── */
+  .preview-toolbar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
     gap: 12px;
     flex-wrap: wrap;
   }
-  .laser-settings {
-    background: #0d1117;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 14px;
+  .preview-info-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .preview-meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-size: 12px;
     color: var(--sub);
   }
-  .laser-settings span { color: var(--text); font-weight: 500; }
-  .warn-note { color: #f85149; font-size: 12px; display: flex; align-items: center; gap: 4px; }
+  .preview-meta-pill strong { color: var(--text); }
+  .preview-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .download-note {
+    font-size: 11px;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .preview-scroll {
+    flex: 1;
+    overflow: auto;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .preview-svg-wrap {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px #0006;
+    max-width: 100%;
+  }
+  .preview-svg-wrap svg { max-width: 100%; height: auto; display: block; }
+  .preview-empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--sub);
+  }
+  .preview-empty-state svg { opacity: 0.3; margin-bottom: 12px; }
+  .preview-empty-state p { font-size: 13px; margin-top: 6px; }
+  .preview-empty-state .hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-  /* Hidden inputs */
+  /* ── Empty state ── */
+  .empty-state {
+    color: var(--sub);
+    font-size: 13px;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  /* ── Toast notifications ── */
+  #toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #1c2028;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    box-shadow: 0 4px 20px #000a;
+    max-width: 320px;
+    pointer-events: all;
+    animation: toast-in 0.2s ease;
+  }
+  @keyframes toast-in { from { opacity: 0; transform: translateY(8px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .toast.out { animation: toast-out 0.2s ease forwards; }
+  @keyframes toast-out { to { opacity: 0; transform: translateY(6px) scale(0.96); } }
+  .toast-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .toast-body { flex: 1; }
+  .toast-title { font-weight: 600; font-size: 13px; line-height: 1.3; }
+  .toast-msg { font-size: 12px; color: var(--sub); margin-top: 2px; line-height: 1.5; }
+  .toast.info  { border-left: 3px solid var(--cyan); }
+  .toast.success { border-left: 3px solid var(--green); }
+  .toast.warn { border-left: 3px solid var(--amber); }
+  .toast.error { border-left: 3px solid #f85149; }
+
+  /* ── Hidden inputs ── */
   #fileInput, #folderInput { display: none; }
-
-  .empty-state { color: var(--sub); font-size: 13px; text-align: center; padding: 20px; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  #preset { display: none; }
 </style>
 </head>
 <body>
 
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- HEADER -->
 <header>
-  <a href="index.html" class="hub-link">← Hub</a>
-  <h1>Stamp Plate Composer</h1>
+  <div class="header-left">
+    <a href="index.html" class="hub-link">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+      Hub
+    </a>
+    <span class="site-name">3D Guides</span>
+  </div>
+  <div class="header-center">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--pink)">
+      <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/><path d="M3 9h6M15 9h6M9 3v6M15 3v6M3 15h6M15 15h6M9 15v6M15 15v6"/>
+    </svg>
+    Stamp Plate Composer
+  </div>
+  <div class="header-right">
+    <div class="kbd-hint">
+      <kbd class="kbd">Del</kbd>
+      <span>to remove selected</span>
+    </div>
+  </div>
 </header>
 
 <div class="layout">
-  <!-- SIDEBAR: Controls -->
+
+  <!-- ══════════ SIDEBAR ══════════ -->
   <div class="sidebar">
-    <!-- File Loading -->
-    <div>
-      <div class="section-label">Load SVGs</div>
+
+    <!-- Step 1: Load SVGs -->
+    <div class="step-block">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Load SVGs</div>
+      </div>
+
       <div class="dropzone" id="dropzone">
-        <div class="dropzone-icon">🎨</div>
+        <div class="dropzone-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
         <div class="dropzone-text">Drag &amp; drop SVG files<br>or an entire folder here</div>
-        <div class="dropzone-count" id="fileCount">No files loaded</div>
+        <div id="fileCount">
+          <div class="file-count-pill">
+            <span class="dot"></span>
+            <span>No files loaded</span>
+          </div>
+        </div>
       </div>
-      <div class="btn-row" style="margin-top:10px;">
-        <button class="btn" onclick="document.getElementById('fileInput').click()">Browse Files</button>
-        <button class="btn" onclick="document.getElementById('folderInput').click()">Browse Folder</button>
-        <button class="btn btn-sm btn-danger" onclick="clearAll()">Clear All</button>
+
+      <div class="browse-row">
+        <button class="btn" onclick="document.getElementById('fileInput').click()">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+          Browse Files
+        </button>
+        <button class="btn" onclick="document.getElementById('folderInput').click()">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.19a2 2 0 0 1 1.45.63l.40.44a2 2 0 0 0 1.45.63H13.5a2 2 0 0 1 2 1.96l.04.69A1.5 1.5 0 0 0 14 4.5H2a1.5 1.5 0 0 0-1.46 1.87L2.54 13.6A1.5 1.5 0 0 0 4 14.5h8a1.5 1.5 0 0 0 1.46-1.13L14.6 7.5H2a.5.5 0 0 1 0-1H15a1.5 1.5 0 0 0-1.5-1.5H8.03a1 1 0 0 1-.72-.31L6.91 4.25A1 1 0 0 0 6.19 4H2.5A1 1 0 0 0 1.54 4.87L.54 3.87z"/></svg>
+          Browse Folder
+        </button>
       </div>
+      <button class="clear-link" onclick="clearAll()">Clear all files</button>
+
       <input type="file" id="fileInput" multiple accept=".svg">
       <input type="file" id="folderInput" webkitdirectory multiple>
     </div>
 
-    <!-- Plate Controls -->
-    <div>
-      <div class="section-label">Plate Settings</div>
+    <!-- Step 2: Plate Settings -->
+    <div class="step-block">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Plate Settings</div>
+      </div>
+
       <div class="control-group">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <label>Plate Preset</label>
-          <button onclick="suggestSettings()" style="font-size:11px;padding:3px 9px;border-radius:5px;border:1px solid #f59e0b;background:#1a1000;color:#f59e0b;cursor:pointer;" title="Auto-pick plate size and columns based on number of loaded SVGs">✨ Suggest</button>
-        </div>
+        <!-- Preset pills -->
+        <div>
+          <div class="field-label">Preset</div>
+          <div class="preset-scroll" id="presetPills">
+            <button class="preset-pill" onclick="clickPresetPill(this,'40x60')">40×60</button>
+            <button class="preset-pill" onclick="clickPresetPill(this,'60x90')">60×90</button>
+            <button class="preset-pill" onclick="clickPresetPill(this,'60x120')">60×120</button>
+            <button class="preset-pill" onclick="clickPresetPill(this,'120x60')">120×60</button>
+            <button class="preset-pill" onclick="clickPresetPill(this,'60x60')">60×60</button>
+            <button class="preset-pill" onclick="clickPresetPill(this,'100x150')">100×150</button>
+            <button class="preset-pill" onclick="clickPresetPill(this,'210x297')">A4</button>
+          </div>
+          <!-- Hidden select kept for JS compatibility -->
           <select id="preset" onchange="applyPreset()">
             <option value="40x60">40×60mm</option>
             <option value="60x90" selected>60×90mm</option>
@@ -286,81 +816,95 @@
             <option value="custom">Custom…</option>
           </select>
         </div>
+
+        <!-- Width × Height -->
         <div class="control-row">
           <div>
-            <label>Width (mm)</label>
+            <label class="field-label">Width <span style="color:var(--muted)">mm</span></label>
             <input type="number" id="plateW" value="60" min="10" max="500" step="1" oninput="onCustomSize()">
           </div>
           <div>
-            <label>Height (mm)</label>
+            <label class="field-label">Height <span style="color:var(--muted)">mm</span></label>
             <input type="number" id="plateH" value="90" min="10" max="500" step="1" oninput="onCustomSize()">
           </div>
         </div>
+
+        <!-- Columns -->
         <div>
-          <label>Columns (0 = auto)</label>
-          <input type="number" id="cols" value="0" min="0" max="50" step="1">
+          <label class="field-label">Columns <span style="color:var(--muted);font-style:italic" id="colsAutoLabel">(auto)</span></label>
+          <input type="number" id="cols" value="0" min="0" max="50" step="1" oninput="updateColsLabel()">
         </div>
-        <div>
-          <label>Gap between designs (mm) — <span id="gapVal">2</span>mm</label>
+
+        <!-- Gap -->
+        <div class="slider-field">
+          <div class="slider-header">
+            <label class="field-label" style="margin:0">Gap between designs</label>
+            <span class="slider-val-badge"><span id="gapVal">2</span>mm</span>
+          </div>
           <div class="slider-row">
             <input type="range" id="gapSlider" min="0" max="20" step="0.5" value="2" oninput="syncSlider('gap')">
             <input type="number" id="gap" value="2" min="0" max="20" step="0.5" oninput="syncInput('gap')">
           </div>
         </div>
-        <div>
-          <label>Margin from edge (mm) — <span id="marginVal">3</span>mm</label>
+
+        <!-- Margin -->
+        <div class="slider-field">
+          <div class="slider-header">
+            <label class="field-label" style="margin:0">Margin from edge</label>
+            <span class="slider-val-badge"><span id="marginVal">3</span>mm</span>
+          </div>
           <div class="slider-row">
             <input type="range" id="marginSlider" min="0" max="30" step="0.5" value="3" oninput="syncSlider('margin')">
             <input type="number" id="margin" value="3" min="0" max="30" step="0.5" oninput="syncInput('margin')">
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Stats -->
-    <div class="stats-box" id="statsBox">
-      Load SVGs and click Compose to see layout stats.
-    </div>
-
-    <!-- Mode toggle -->
-    <div>
-      <div class="section-label">Output Mode</div>
-      <div style="display:flex;gap:8px;margin-top:6px;">
-        <button id="modeLaser" onclick="setMode('laser')"
-          style="flex:1;padding:8px;border-radius:6px;border:2px solid #00b4d8;background:#001a20;color:#00b4d8;font-size:12px;font-weight:700;cursor:pointer;">
-          ⚡ Laser
-        </button>
-        <button id="modeEtch" onclick="setMode('etch')"
-          style="flex:1;padding:8px;border-radius:6px;border:2px solid #30363d;background:transparent;color:var(--sub);font-size:12px;font-weight:700;cursor:pointer;">
-          🧪 Etch
+        <!-- Auto-suggest -->
+        <button class="btn btn-secondary" onclick="suggestSettings()" style="width:100%">
+          ✨ Auto-suggest layout
         </button>
       </div>
-      <div id="etchOptions" style="display:none;margin-top:10px;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px;">
-        <div style="font-size:11px;color:var(--sub);margin-bottom:8px;">Chemical Etch — solid fills, print to transparency film</div>
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;">
+
+      <!-- Stats chips — shown after compose -->
+      <div class="stats-chips" id="statsBox"></div>
+    </div>
+
+    <!-- Step 3: Output Mode -->
+    <div class="step-block">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Output Mode</div>
+      </div>
+
+      <div class="seg-control">
+        <button class="seg-btn mode-active-laser" id="modeLaser" onclick="setMode('laser')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Laser
+        </button>
+        <button class="seg-btn" id="modeEtch" onclick="setMode('etch')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+          Etch
+        </button>
+      </div>
+
+      <div class="etch-options" id="etchOptions">
+        <div style="font-size:11px;color:var(--sub);margin-bottom:8px;line-height:1.5">
+          Chemical etch — solid fills, print to transparency film at 600 DPI
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text)">
           <input type="checkbox" id="invertCheck" onchange="renderInteractivePlate()" style="accent-color:var(--pink);">
-          Invert (white on black — for negative resist)
+          Invert — white on black (negative resist)
         </label>
-        <div style="margin-top:8px;font-size:11px;color:var(--sub);">Download as PNG for film printing (600 DPI)</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--muted)">Download PNG for film printing (600 DPI)</div>
       </div>
-    </div>
 
-    <!-- Compose Button -->
-    <button class="btn btn-pink" onclick="composePlate()">⚡ Compose Plate</button>
-
-    <!-- Download -->
-    <div>
-      <div class="section-label">Download</div>
-      <div class="warn-note" id="downloadNote" style="margin-bottom:8px;">⚠ Delete the red border before engraving</div>
-      <button class="btn btn-pink" id="downloadBtn" onclick="downloadSVG()" disabled style="background:#30363d;border-color:#30363d;color:var(--sub);">⬇ Download SVG</button>
-      <button class="btn" id="downloadPngBtn" onclick="downloadPNG()" disabled
-        style="background:#30363d;border:1px solid #30363d;color:var(--sub);margin-top:6px;display:none;">⬇ Download PNG (600 DPI)</button>
-      <div class="laser-settings" id="laserSettings" style="margin-top:10px;">
-        SS304 Laser Settings:<br>
-        Speed <span>200</span> · Power <span>60%</span> · Freq <span>30kHz</span> · <span>1 pass</span>
+      <!-- Mode-specific info -->
+      <div class="info-box" id="laserSettings" style="margin-top:10px;">
+        <strong>SS304 Laser Settings</strong><br>
+        Speed <span style="color:var(--text)">200</span> · Power <span style="color:var(--text)">60%</span> · Freq <span style="color:var(--text)">30 kHz</span> · <span style="color:var(--text)">1 pass</span>
       </div>
-      <div id="etchSettings" style="display:none;margin-top:10px;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px;font-size:12px;color:var(--sub);line-height:1.8;">
-        Chemical Etch process:<br>
+      <div class="info-box" id="etchSettings" style="margin-top:10px;display:none;line-height:2">
+        <strong>Chemical Etch Process</strong><br>
         1. Print file on transparency at 600 DPI<br>
         2. Apply photoresist to clean plate<br>
         3. UV expose with film on top<br>
@@ -368,33 +912,83 @@
         5. Strip resist → raised design ✓
       </div>
     </div>
-  </div>
 
-  <!-- MAIN: Thumbnails + Preview -->
+    <!-- Step 4: Compose -->
+    <div class="step-block">
+      <div class="step-header">
+        <div class="step-num">4</div>
+        <div class="step-title">Compose</div>
+      </div>
+      <button class="btn-compose" onclick="composePlate()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+        Compose Plate
+      </button>
+    </div>
+
+  </div><!-- /sidebar -->
+
+  <!-- ══════════ MAIN ══════════ -->
   <div class="main">
-    <!-- Thumbnails -->
-    <div class="card">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div class="section-label" style="margin-bottom:0;">Loaded SVGs</div>
-        <span id="thumbCount" style="font-size:12px;color:var(--sub);"></span>
-      </div>
-      <div id="thumbGrid" class="thumb-grid">
-        <div class="empty-state">No SVGs loaded yet. Drag files or use the Browse buttons.</div>
+
+    <!-- Tab bar -->
+    <div class="tab-bar">
+      <button class="tab-btn" id="tab-files" onclick="switchTab('files')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Loaded SVGs
+        <span class="tab-badge" id="thumbCount">0</span>
+      </button>
+      <button class="tab-btn active" id="tab-preview" onclick="switchTab('preview')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Plate Preview
+      </button>
+    </div>
+
+    <!-- Thumbnails panel -->
+    <div class="tab-panel" id="panel-files">
+      <div class="thumb-scroll">
+        <div id="thumbGrid" class="thumb-grid">
+          <div class="empty-state">No SVGs loaded yet. Drag files or use the Browse buttons.</div>
+        </div>
       </div>
     </div>
 
-    <!-- Preview -->
-    <div class="preview-container">
-      <div class="preview-header">
-        <div class="section-label" style="margin-bottom:0;">Plate Preview</div>
-        <div class="preview-info" id="previewInfo"></div>
+    <!-- Preview panel -->
+    <div class="tab-panel active" id="panel-preview">
+      <!-- Toolbar -->
+      <div class="preview-toolbar">
+        <div class="preview-info-left" id="previewInfo">
+          <span style="font-size:12px;color:var(--muted)">Compose a plate to see the preview</span>
+        </div>
+        <div class="preview-toolbar-right">
+          <span class="download-note" id="downloadNote" style="display:none">
+            ⚠ Delete red border before engraving
+          </span>
+          <button class="btn-download" id="downloadBtn" onclick="downloadSVG()" disabled>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+            Download SVG
+          </button>
+          <button class="btn-download" id="downloadPngBtn" onclick="downloadPNG()" disabled style="display:none">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+            Download PNG (600 DPI)
+          </button>
+        </div>
       </div>
-      <div class="preview-svg-wrap" id="previewWrap">
-        <div class="preview-empty">Compose a plate to see the preview here.</div>
+
+      <!-- Preview SVG wrap -->
+      <div class="preview-scroll">
+        <div id="previewWrap">
+          <div class="preview-empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/><path d="M3 9h6M15 9h6M9 3v6M15 3v6M3 15h6M15 15h6M9 15v6M15 15v6"/></svg>
+            <p>No plate composed yet</p>
+            <p class="hint">Load SVGs, configure settings, then click Compose Plate</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- /main -->
+
+</div><!-- /layout -->
 
 <script>
 const PX_PER_MM = 3.7795275591;
@@ -405,20 +999,72 @@ let composedSVGString = null;
 let lastFilename = '';
 let currentMode = 'laser'; // 'laser' | 'etch'
 
+// ─── Toast notifications ───────────────────────────────────────────
+function showToast(message, type = 'info', title = '') {
+  const container = document.getElementById('toast-container');
+  const icons = { info: 'ℹ️', success: '✅', warn: '⚠️', error: '❌' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <div class="toast-icon">${icons[type] || icons.info}</div>
+    <div class="toast-body">
+      ${title ? `<div class="toast-title">${title}</div>` : ''}
+      <div class="toast-msg">${message}</div>
+    </div>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('out');
+    setTimeout(() => toast.remove(), 220);
+  }, 3200);
+}
+
+// ─── Tab switching ─────────────────────────────────────────────────
+function switchTab(name) {
+  document.getElementById('tab-files').classList.toggle('active', name === 'files');
+  document.getElementById('tab-preview').classList.toggle('active', name === 'preview');
+  document.getElementById('panel-files').classList.toggle('active', name === 'files');
+  document.getElementById('panel-preview').classList.toggle('active', name === 'preview');
+}
+
+// ─── Preset pill handling ──────────────────────────────────────────
+function clickPresetPill(el, value) {
+  document.querySelectorAll('.preset-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('preset').value = value;
+  applyPreset();
+}
+
+function setActivePill(value) {
+  document.querySelectorAll('.preset-pill').forEach(p => {
+    const v = p.getAttribute('onclick').match(/'([^']+)'/g);
+    if (v && v[1] && v[1].replace(/'/g,'') === value) p.classList.add('active');
+    else p.classList.remove('active');
+  });
+}
+
+// ─── Columns label update ──────────────────────────────────────────
+function updateColsLabel() {
+  const v = parseInt(document.getElementById('cols').value) || 0;
+  document.getElementById('colsAutoLabel').textContent = v === 0 ? '(auto)' : '';
+}
+
+// ─── Mode toggle ───────────────────────────────────────────────────
 function setMode(mode) {
   currentMode = mode;
   const isEtch = mode === 'etch';
-  document.getElementById('modeLaser').style.cssText =
-    `flex:1;padding:8px;border-radius:6px;border:2px solid ${isEtch?'#30363d':'#00b4d8'};background:${isEtch?'transparent':'#001a20'};color:${isEtch?'var(--sub)':'#00b4d8'};font-size:12px;font-weight:700;cursor:pointer;`;
-  document.getElementById('modeEtch').style.cssText =
-    `flex:1;padding:8px;border-radius:6px;border:2px solid ${isEtch?'#f59e0b':'#30363d'};background:${isEtch?'#1a1000':'transparent'};color:${isEtch?'#f59e0b':'var(--sub)'};font-size:12px;font-weight:700;cursor:pointer;`;
-  document.getElementById('etchOptions').style.display   = isEtch ? 'block' : 'none';
+  const laserBtn = document.getElementById('modeLaser');
+  const etchBtn  = document.getElementById('modeEtch');
+
+  laserBtn.classList.toggle('mode-active-laser', !isEtch);
+  etchBtn.classList.toggle('mode-active-etch', isEtch);
+
+  document.getElementById('etchOptions').classList.toggle('visible', isEtch);
   document.getElementById('etchSettings').style.display  = isEtch ? 'block' : 'none';
   document.getElementById('laserSettings').style.display = isEtch ? 'none'  : 'block';
-  document.getElementById('downloadPngBtn').style.display= isEtch ? 'block' : 'none';
+  document.getElementById('downloadPngBtn').style.display= isEtch ? 'inline-flex' : 'none';
   document.getElementById('downloadNote').textContent    = isEtch
     ? 'Print on transparency film at 600 DPI'
-    : '⚠ Delete the red border before engraving';
+    : '⚠ Delete red border before engraving';
   if (iDesigns.length) renderInteractivePlate();
 }
 
@@ -436,11 +1082,12 @@ function applyPreset() {
 }
 function onCustomSize() {
   document.getElementById('preset').value = 'custom';
+  document.querySelectorAll('.preset-pill').forEach(p => p.classList.remove('active'));
 }
 
 function suggestSettings() {
   const N = loadedFiles.length;
-  if (!N) { alert('Load some SVGs first, then click Suggest.'); return; }
+  if (!N) { showToast('Load some SVGs first, then click Auto-suggest.', 'warn'); return; }
 
   // Pick plate size
   let preset, w, h;
@@ -461,6 +1108,7 @@ function suggestSettings() {
   const margin = w <= 60 ? 2 : 5;
 
   document.getElementById('preset').value = preset;
+  setActivePill(preset);
   document.getElementById('plateW').value = w;
   document.getElementById('plateH').value = h;
   document.getElementById('cols').value   = cols;
@@ -470,10 +1118,25 @@ function suggestSettings() {
   document.getElementById('margin').value = margin;
   document.getElementById('marginSlider').value = margin;
   document.getElementById('marginVal').textContent = margin;
+  updateColsLabel();
 
   const rows = Math.ceil(N / cols);
   const empty = cols * rows - N;
-  alert(`Suggested for ${N} SVGs:\n• Plate: ${w}×${h}mm (${preset})\n• Columns: ${cols} → ${rows} rows (${empty} empty cell${empty===1?'':'s'})\n• Gap: ${gap}mm  Margin: ${margin}mm\n\nClick Compose to apply.`);
+
+  // Show suggestion in statsBox as chips
+  const statsBox = document.getElementById('statsBox');
+  statsBox.className = 'stats-chips visible';
+  statsBox.innerHTML =
+    `<div class="stat-chip">Plate <span class="chip-val">${w}×${h}mm</span></div>` +
+    `<div class="stat-chip">Cols <span class="chip-val">${cols}</span> × Rows <span class="chip-val">${rows}</span></div>` +
+    `<div class="stat-chip">Gap <span class="chip-val">${gap}mm</span></div>` +
+    `<div class="stat-chip">Margin <span class="chip-val">${margin}mm</span></div>`;
+
+  showToast(
+    `${w}×${h}mm plate · ${cols} cols × ${rows} rows · ${empty} empty cell${empty===1?'':'s'}`,
+    'success',
+    `Suggested for ${N} SVGs`
+  );
 }
 
 // ─── Slider sync ───────────────────────────────────────────────────
@@ -576,16 +1239,30 @@ function clearAll() {
   composedSVGString = null;
   updateFileCount();
   renderThumbnails();
-  document.getElementById('previewWrap').innerHTML = '<div class="preview-empty">Compose a plate to see the preview here.</div>';
-  document.getElementById('previewInfo').textContent = '';
-  document.getElementById('statsBox').textContent = 'Load SVGs and click Compose to see layout stats.';
+  document.getElementById('previewWrap').innerHTML =
+    `<div class="preview-empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/><path d="M3 9h6M15 9h6M9 3v6M15 3v6M3 15h6M15 15h6M9 15v6M15 15v6"/></svg>
+      <p>No plate composed yet</p>
+      <p class="hint">Load SVGs, configure settings, then click Compose Plate</p>
+    </div>`;
+  document.getElementById('previewInfo').innerHTML = '<span style="font-size:12px;color:var(--muted)">Compose a plate to see the preview</span>';
+  const statsBox = document.getElementById('statsBox');
+  statsBox.className = 'stats-chips';
+  statsBox.innerHTML = '';
   setDownloadEnabled(false);
+  switchTab('files');
 }
 
 function updateFileCount() {
   const n = loadedFiles.length;
-  document.getElementById('fileCount').textContent = n === 0 ? 'No files loaded' : `${n} SVG${n===1?'':'s'} loaded`;
-  document.getElementById('thumbCount').textContent = n ? `${n} file${n===1?'':'s'}` : '';
+  const pill = document.getElementById('fileCount');
+  if (n === 0) {
+    pill.innerHTML = `<div class="file-count-pill"><span class="dot"></span><span>No files loaded</span></div>`;
+  } else {
+    pill.innerHTML = `<div class="file-count-pill has-files"><span class="dot"></span><span>${n} SVG${n===1?'':'s'} loaded</span></div>`;
+  }
+  const badge = document.getElementById('thumbCount');
+  badge.textContent = n;
 }
 
 function renderThumbnails() {
@@ -782,7 +1459,7 @@ let iDragState = null;
 
 // ─── Plate Composition ─────────────────────────────────────────────
 function composePlate() {
-  if (!loadedFiles.length) { alert('Please load at least one SVG first.'); return; }
+  if (!loadedFiles.length) { showToast('Please load at least one SVG first.', 'warn'); return; }
 
   const plateW   = parseFloat(document.getElementById('plateW').value);
   const plateH   = parseFloat(document.getElementById('plateH').value);
@@ -802,7 +1479,7 @@ function composePlate() {
   const cellH = (plateH_px - 2*margin_px - (rows-1)*gap_px) / rows;
 
   if (cellW <= 0 || cellH <= 0) {
-    alert('Cell size is zero or negative. Reduce margin/gap or increase plate size.'); return;
+    showToast('Cell size is zero or negative. Reduce margin/gap or increase plate size.', 'error'); return;
   }
 
   iPlateW = plateW_px;
@@ -820,16 +1497,27 @@ function composePlate() {
   });
 
   const cellW_mm = cellW / PX_PER_MM, cellH_mm = cellH / PX_PER_MM;
-  document.getElementById('statsBox').innerHTML =
-    `<strong>Layout:</strong> ${cols}×${rows} = ${cols*rows} cells<br>` +
-    `<strong>Cell size:</strong> ${cellW_mm.toFixed(1)}×${cellH_mm.toFixed(1)}mm each<br>` +
-    `<strong>Designs:</strong> ${N} | <strong>Empty cells:</strong> ${cols*rows - N}`;
+
+  // Stats chips
+  const statsBox = document.getElementById('statsBox');
+  statsBox.className = 'stats-chips visible';
+  statsBox.innerHTML =
+    `<div class="stat-chip">Grid <span class="chip-val">${cols}×${rows}</span></div>` +
+    `<div class="stat-chip">Cell <span class="chip-val">${cellW_mm.toFixed(1)}×${cellH_mm.toFixed(1)}mm</span></div>` +
+    `<div class="stat-chip">Designs <span class="chip-val">${N}</span></div>` +
+    (cols*rows - N > 0 ? `<div class="stat-chip">Empty <span class="chip-val">${cols*rows-N}</span></div>` : '');
+
   document.getElementById('previewInfo').innerHTML =
-    `<strong>${plateW}×${plateH}mm</strong> | ${N} designs | ${cols} cols × ${rows} rows`;
+    `<div class="preview-meta-pill"><strong>${plateW}×${plateH}mm</strong></div>` +
+    `<div class="preview-meta-pill">${N} design${N===1?'':'s'}</div>` +
+    `<div class="preview-meta-pill">${cols} col${cols===1?'':'s'} × ${rows} row${rows===1?'':'s'}</div>`;
+
+  document.getElementById('downloadNote').style.display = 'flex';
 
   lastFilename = `plate_${plateW}x${plateH}mm_${N}designs.svg`;
   setDownloadEnabled(true);
   renderInteractivePlate();
+  switchTab('preview');
 }
 
 // ─── Interactive plate renderer ────────────────────────────────────
@@ -1129,14 +1817,11 @@ function buildFinalSVGString(forceEtch = false) {
 function setDownloadEnabled(enabled) {
   const svgBtn = document.getElementById('downloadBtn');
   svgBtn.disabled = !enabled;
-  svgBtn.style.background   = enabled ? 'var(--pink)' : '#30363d';
-  svgBtn.style.borderColor  = enabled ? 'var(--pink)' : '#30363d';
-  svgBtn.style.color        = enabled ? '#fff' : 'var(--sub)';
+  svgBtn.className = 'btn-download' + (enabled ? ' enabled-svg' : '');
+
   const pngBtn = document.getElementById('downloadPngBtn');
   pngBtn.disabled = !enabled;
-  pngBtn.style.background  = enabled ? '#f59e0b' : '#30363d';
-  pngBtn.style.border      = enabled ? '1px solid #f59e0b' : '1px solid #30363d';
-  pngBtn.style.color       = enabled ? '#000' : 'var(--sub)';
+  pngBtn.className = 'btn-download' + (enabled ? ' enabled-png' : '');
 }
 
 function downloadSVG() {
@@ -1188,6 +1873,11 @@ function downloadPNG() {
   };
   img.src = url;
 }
+
+// ─── Init: set default active preset pill ─────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  setActivePill('60x90');
+});
 </script>
 </body>
 </html>
