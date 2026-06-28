@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miniature Painting — Ultimate Guide | 3D Learning Hub</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #161b22; border-bottom: 1px solid #30363d;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.5rem; gap: 1rem;
+  }
+  .site-nav a.back-link { color: #e07b39; text-decoration: none; font-size: 14px; white-space: nowrap; transition: color 0.2s; }
+  .site-nav a.back-link:hover { color: #f09a5a; }
+  .site-nav .nav-title { font-size: 17px; font-weight: 700; color: #e6edf3; text-align: center; flex: 1; }
+  .site-nav .nav-sub { font-size: 13px; color: #8b949e; white-space: nowrap; }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    background: linear-gradient(135deg, #1a0800 0%, #0d1117 40%, #0a1a0a 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  .hero-icon { font-size: 52px; margin-bottom: 0.5rem; }
+  .hero h1 { font-size: 30px; font-weight: 800; color: #e6edf3; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+  .hero h1 span { color: #e07b39; }
+  .hero p { color: #8b949e; font-size: 14px; max-width: 580px; margin: 0 auto; }
+  .hero-pills { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+  .hero-pill { background: #21262d; border: 1px solid #30363d; border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 600; color: #8b949e; }
+  .hero-pill.orange { border-color: #e07b39; color: #e07b39; background: #1a0800; }
+
+  /* ── PROGRESS PILLS ── */
+  .progress-bar { background: #161b22; border-bottom: 1px solid #30363d; padding: 0.55rem 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .progress-pill { padding: 3px 14px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+  .pill-beginner     { background: #0d4429; color: #3fb950; border: 1px solid #2daa6b; }
+  .pill-intermediate { background: #2d1f00; color: #e3b341; border: 1px solid #f0a500; }
+  .pill-advanced     { background: #1a0045; color: #c0abff; border: 1px solid #7c6fff; }
+  .pill-expert       { background: #3d0000; color: #ff7b72; border: 1px solid #e74c3c; }
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    background: #0d1117; border-bottom: 1px solid #30363d;
+    padding: 0.75rem 1.5rem 0;
+    display: flex; gap: 0.35rem; flex-wrap: wrap;
+    position: sticky; top: 53px; z-index: 90;
+  }
+  .tab-btn {
+    background: #161b22; border: 1px solid #30363d; color: #8b949e;
+    border-bottom: none; border-radius: 8px 8px 0 0;
+    padding: 0.45rem 1rem; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+    font-family: inherit; white-space: nowrap;
+  }
+  .tab-btn:hover { background: #21262d; color: #e6edf3; }
+  .tab-btn.active { background: #e07b39; color: #fff; border-color: #e07b39; }
+
+  /* ── CONTENT ── */
+  .content-wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1.5rem 5rem; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .tab-title { font-size: 24px; font-weight: 700; color: #e6edf3; margin-bottom: 0.35rem; }
+  .tab-subtitle { color: #8b949e; font-size: 14px; margin-bottom: 1.5rem; }
+
+  /* ── CARDS ── */
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.2rem; }
+  .card-grid .card { margin-bottom: 0; }
+  .card-grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.2rem; }
+  .card-grid-3 .card { margin-bottom: 0; }
+
+  /* ── HEADINGS ── */
+  .section-heading { color: #e07b39; font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 0.5rem; }
+  h3 { font-size: 14px; font-weight: 600; color: #c9d1d9; margin: 0.85rem 0 0.45rem; }
+  p { margin-bottom: 0.6rem; color: #c9d1d9; font-size: 14px; }
+
+  /* ── TIPS ── */
+  .tip { border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.9rem; font-size: 13.5px; line-height: 1.55; }
+  .tip-green  { background: #0d4429; border-left: 4px solid #2daa6b; color: #aff5c8; }
+  .tip-yellow { background: #3d2c00; border-left: 4px solid #f0a500; color: #ffe08a; }
+  .tip-red    { background: #3d0000; border-left: 4px solid #e74c3c; color: #ffb3b0; }
+  .tip-blue   { background: #001d3d; border-left: 4px solid #1a8cff; color: #9ecfff; }
+  .tip-orange { background: #1a0800; border-left: 4px solid #e07b39; color: #f5c49a; }
+  .tip strong { font-weight: 700; }
+
+  /* ── LISTS ── */
+  ul.plain { list-style: none; padding: 0; }
+  ul.plain li { padding: 5px 0; font-size: 13.5px; color: #c9d1d9; border-bottom: 1px solid #21262d; }
+  ul.plain li:last-child { border-bottom: none; }
+  ul.plain li::before { content: '▸ '; color: #e07b39; font-size: 11px; }
+  ul.bullet { padding-left: 1.4rem; }
+  ul.bullet li { font-size: 13.5px; color: #c9d1d9; margin-bottom: 5px; }
+  ol.steps { padding-left: 1.4rem; }
+  ol.steps li { font-size: 13.5px; color: #c9d1d9; margin-bottom: 8px; padding-left: 4px; }
+
+  /* ── WORKFLOW ── */
+  .workflow { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.2rem; }
+  .workflow-step { display: flex; gap: 1rem; align-items: flex-start; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 1rem 1.2rem; }
+  .step-num { width: 28px; height: 28px; background: #e07b39; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; margin-top: 2px; }
+  .step-body .step-title { font-weight: 700; color: #e6edf3; font-size: 14px; margin-bottom: 4px; }
+  .step-body p { font-size: 13px; color: #8b949e; margin: 0; }
+
+  /* ── COLOR SWATCHES ── */
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; margin-bottom: 1.2rem; }
+  .swatch { border-radius: 8px; padding: 0.7rem 0.9rem; border: 1px solid rgba(255,255,255,0.08); }
+  .swatch .swatch-name { font-size: 12px; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.7); margin-bottom: 2px; }
+  .swatch .swatch-use  { font-size: 11px; color: rgba(255,255,255,0.75); text-shadow: 0 1px 2px rgba(0,0,0,0.6); }
+
+  /* ── TECHNIQUE CARDS ── */
+  .technique-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.9rem; margin-bottom: 1.2rem; }
+  .technique-card { background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 1rem 1.2rem; transition: border-color 0.2s; }
+  .technique-card:hover { border-color: #e07b39; }
+  .technique-card .tc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .technique-card .tc-icon { font-size: 22px; }
+  .technique-card .tc-name { font-weight: 700; color: #e6edf3; font-size: 14px; }
+  .technique-card .tc-level { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-left: auto; }
+  .level-beginner     { background: #0d4429; color: #3fb950; }
+  .level-intermediate { background: #2d1f00; color: #f0a500; }
+  .level-advanced     { background: #1a0045; color: #c0abff; }
+  .level-expert       { background: #3d0000; color: #ff7b72; }
+  .technique-card p { font-size: 12.5px; color: #8b949e; margin: 0 0 6px; }
+  .technique-card .tc-tip { font-size: 11.5px; color: #e07b39; margin-top: 4px; }
+
+  /* ── TABLE ── */
+  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; font-size: 13px; }
+  .data-table th { background: #21262d; color: #e6edf3; padding: 8px 12px; text-align: left; font-size: 12px; letter-spacing: 0.04em; }
+  .data-table td { padding: 7px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: #161b22; }
+  .good { color: #3fb950; } .warn { color: #f0a500; } .bad { color: #ff7b72; }
+
+  /* ── BADGES ── */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge-green  { background: #0d4429; color: #3fb950; }
+  .badge-yellow { background: #3d2c00; color: #f0a500; }
+  .badge-red    { background: #3d0000; color: #ff7b72; }
+  .badge-orange { background: #1a0800; color: #e07b39; }
+  .badge-purple { background: #1a0045; color: #c0abff; }
+
+  /* ── CONCEPT CARDS ── */
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+  .concept-card { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 0.85rem 1rem; }
+  .concept-card .concept-title { font-size: 13px; font-weight: 700; color: #e07b39; margin-bottom: 4px; }
+  .concept-card p { font-size: 12.5px; margin: 0; color: #8b949e; }
+
+  hr.divider { border: none; border-top: 1px solid #30363d; margin: 1.2rem 0; }
+
+  /* ── SCROLL TOP ── */
+  .scroll-top { position: fixed; bottom: 2rem; right: 2rem; background: #e07b39; color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 12px rgba(224,123,57,0.4); z-index: 200; display: none; }
+  .scroll-top:hover { background: #f09a5a; }
+
+  /* ── PAINT RATIO DISPLAY ── */
+  .ratio { display: inline-block; background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 3px 10px; font-family: monospace; font-size: 12px; color: #e6edf3; margin: 2px; }
+
+  @media (max-width: 600px) {
+    .site-nav { flex-wrap: wrap; gap: 0.4rem; }
+    .tab-btn { font-size: 12px; padding: 0.35rem 0.6rem; }
+    .content-wrap { padding: 1rem; }
+    .card-grid, .card-grid-3, .technique-grid, .concept-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+  <span class="nav-title">🎨 Miniature Painting — Ultimate Guide</span>
+  <span class="nav-sub">Camlin Acrylics Edition</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-icon">🖌</div>
+  <h1>Miniature Painting with <span>Camlin Acrylics</span></h1>
+  <p>Complete guide from your first basecoat to expert-level techniques — using affordable Camlin artist acrylics to achieve results that rival dedicated miniature paints.</p>
+  <div class="hero-pills">
+    <span class="hero-pill orange">Camlin Artist Acrylics</span>
+    <span class="hero-pill">Warhammer 40K</span>
+    <span class="hero-pill">Fantasy Minis</span>
+    <span class="hero-pill">Scale Models</span>
+    <span class="hero-pill">Busts</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <span class="progress-pill pill-beginner">Beginner</span>
+  <span class="progress-pill pill-intermediate">Intermediate</span>
+  <span class="progress-pill pill-advanced">Advanced</span>
+  <span class="progress-pill pill-expert">Expert</span>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('start',this)">🚀 Getting Started</button>
+  <button class="tab-btn" onclick="switchTab('camlin',this)">🎨 Camlin Paints</button>
+  <button class="tab-btn" onclick="switchTab('color',this)">🌈 Color Theory</button>
+  <button class="tab-btn" onclick="switchTab('prep',this)">🔧 Prep &amp; Prime</button>
+  <button class="tab-btn" onclick="switchTab('techniques',this)">✏ Techniques</button>
+  <button class="tab-btn" onclick="switchTab('workflow',this)">📋 Full Workflow</button>
+  <button class="tab-btn" onclick="switchTab('advanced',this)">⚡ Advanced</button>
+  <button class="tab-btn" onclick="switchTab('basing',this)">🌿 Basing</button>
+  <button class="tab-btn" onclick="switchTab('troubleshoot',this)">🛠 Troubleshoot</button>
+</div>
+
+<div class="content-wrap">
+
+<!-- ══════════════════════════════════════ GETTING STARTED ══ -->
+<div id="tab-start" class="tab-panel active">
+  <div class="tab-title">Getting Started</div>
+  <div class="tab-subtitle">Everything you need to buy, set up, and paint your very first miniature</div>
+
+  <div class="tip tip-orange">
+    <strong>The Camlin advantage:</strong> Camlin Artist Acrylics are water-based, fast-drying, and highly pigmented. While dedicated miniature paints (Citadel, Vallejo) are pre-thinned and ready to go, Camlin requires a little thinning and preparation — but costs a fraction of the price and the results are excellent once you know the tricks.
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🛒 Essential Supply List</div>
+    <div class="card-grid">
+      <div>
+        <h3>Paints (Camlin)</h3>
+        <ul class="plain">
+          <li><strong>Ivory Black</strong> — primer base, shading, lining</li>
+          <li><strong>Titanium White</strong> — highlighting, mixing, edge lights</li>
+          <li><strong>Burnt Sienna</strong> — skin tones, leather, rust</li>
+          <li><strong>Raw Umber</strong> — earth, brown shading, washes</li>
+          <li><strong>Cadmium Red</strong> — armour, cloth, OSL</li>
+          <li><strong>Phthalo Blue</strong> — space marines, sky, water</li>
+          <li><strong>Sap Green</strong> — orks, foliage, cloth</li>
+          <li><strong>Yellow Ochre</strong> — bone, sand, aged metal</li>
+          <li><strong>Burnt Umber</strong> — deep browns, fur, wood</li>
+          <li><strong>Gold / Metallic set</strong> — Camlin metallic range</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Brushes</h3>
+        <ul class="plain">
+          <li><strong>Size 1 round</strong> — basecoating large areas</li>
+          <li><strong>Size 0 round</strong> — detail work, general use</li>
+          <li><strong>Size 000 round</strong> — eyes, extreme detail</li>
+          <li><strong>Flat brush (size 4)</strong> — drybrushing only</li>
+          <li><strong>Old beaten brush</strong> — stippling, weathering</li>
+        </ul>
+        <div class="tip tip-green" style="margin-top:10px;">
+          <strong>Indian brands to look for:</strong> Camlin, Brustro, or Da Vinci round brushes. Avoid synthetic flat brushes for detail — go for Kolinsky sable or good synthetic rounds.
+        </div>
+      </div>
+      <div>
+        <h3>Other Supplies</h3>
+        <ul class="plain">
+          <li><strong>Spray primer</strong> — Grey or black (Rustoleum / Asian Paints)</li>
+          <li><strong>Wet palette</strong> — or DIY with baking paper + sponge</li>
+          <li><strong>Palette / tile</strong> — ceramic tile for mixing</li>
+          <li><strong>Water pot × 2</strong> — one for cleaning, one for mixing</li>
+          <li><strong>Flow improver</strong> — Vallejo or DIY (see below)</li>
+          <li><strong>Matte varnish</strong> — Rustoleum 2X, Vallejo Matte</li>
+          <li><strong>Gloss varnish</strong> — before washes and decals</li>
+          <li><strong>Superglue</strong> — Fevi-Kwik / Loctite for assembly</li>
+          <li><strong>Blu-tack / handle</strong> — to hold mini while painting</li>
+          <li><strong>Hobby knife</strong> — mold line removal, flash cleanup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🖥 Workspace Setup</div>
+    <div class="card-grid">
+      <div>
+        <h3>Lighting — Most Important</h3>
+        <ul class="bullet">
+          <li>Use a <strong>daylight bulb (5000–6500K)</strong> directly over your work — shadows kill detail visibility</li>
+          <li>Angle from the upper-left (like a studio light) so your brush hand doesn't cast a shadow</li>
+          <li>Avoid warm yellow household bulbs — they shift all your colours</li>
+          <li>A cheap LED ring light from Amazon works well</li>
+          <li>Never paint in dim light — you'll get poor consistency and miss details</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Desk Setup</h3>
+        <ul class="bullet">
+          <li>Paint standing or with the mini at <strong>eye level</strong> — not looking down</li>
+          <li>Keep two water jars — one dirty, one clean for mixing</li>
+          <li>Paper towels on the left, brushes on the right (or vice versa)</li>
+          <li>Use a <strong>wet palette</strong> — Camlin paints dry fast on a normal palette</li>
+          <li>Keep a magnifier lamp for extreme detail (eyes, insignia)</li>
+          <li>Have a white background card behind your mini to judge colours accurately</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">💧 DIY Wet Palette</div>
+    <p>A wet palette keeps Camlin acrylics workable for hours instead of minutes. Essential for blending and layering.</p>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Get a shallow plastic container with lid</div>
+          <p>Any airtight container — old takeaway box, plastic tiffin box. Bigger is better.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Add a wet sponge or foam layer</div>
+          <p>Cut a kitchen sponge or foam to fit the bottom. Soak with water — squeeze out excess so it's damp, not dripping.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Lay baking paper (parchment paper) on top</div>
+          <p>Cut to fit. Baking/parchment paper is semi-permeable — water slowly seeps through keeping paint wet. Do NOT use regular paper or foil.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Place paint on the baking paper</div>
+          <p>Squeeze small dots of each Camlin colour. The moisture from below keeps them workable for 4–8 hours. Close the lid between sessions — paint stays fresh for days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🧪 Thinning Camlin Paints — Critical Skill</div>
+    <div class="tip tip-red">
+      <strong>Most common beginner mistake:</strong> Painting straight from the tube. Camlin acrylics from the tube are too thick — they obscure detail, leave brush strokes, and dry rough. Always thin your paint!
+    </div>
+    <div class="card-grid">
+      <div>
+        <h3>Consistency Guide</h3>
+        <table class="data-table">
+          <tr><th>Use</th><th>Consistency</th><th>Method</th></tr>
+          <tr><td>Basecoating</td><td>Skimmed milk</td><td>2–3 drops water per dab</td></tr>
+          <tr><td>Layering</td><td>Whole milk</td><td>1–2 drops water per dab</td></tr>
+          <tr><td>Washes</td><td>Ink / watercolour</td><td>5+ drops water, add flow improver</td></tr>
+          <tr><td>Glazing</td><td>Very watery tint</td><td>8–10 drops water, tiny pigment</td></tr>
+          <tr><td>Drybrushing</td><td>Almost no water</td><td>Wipe brush almost completely dry</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Flow Improver Recipe</h3>
+        <p>Makes Camlin flow smoothly without breaking down pigment:</p>
+        <ul class="plain">
+          <li><strong>DIY:</strong> 10 parts water + 1 part Fevicol (PVA) — mix in a small bottle</li>
+          <li><strong>Or:</strong> Vallejo Flow Improver — widely available in India</li>
+          <li><strong>Or:</strong> Liquitex Flow Aid — best quality</li>
+          <li>Add 1–2 drops flow improver to your thinning water</li>
+          <li>Improves levelling, reduces brush marks, slows drying slightly</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip tip-yellow">
+      <strong>Brush test:</strong> Load your brush, then stroke it on the baking paper. You should get a smooth, even coat that covers without pooling. If it beads up = too thick. If it runs and shows no pigment = too thin.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ CAMLIN PAINTS ══ -->
+<div id="tab-camlin" class="tab-panel">
+  <div class="tab-title">Camlin Acrylics — Complete Reference</div>
+  <div class="tab-subtitle">How to use Camlin's range specifically for miniature painting</div>
+
+  <div class="tip tip-orange">
+    <strong>Camlin vs Miniature Paints:</strong> Citadel/Vallejo paints are pre-thinned to 1:1 water ratio, have added binders for smooth flow, and have specific formulas (Base, Layer, Shade, Dry). Camlin are artist acrylics — more pigment-dense, need thinning, but mix beautifully and cost 5–10× less. Master thinning and you match the results.
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🎨 Camlin Starter Palette — 18 Essential Colours</div>
+    <div class="swatch-grid">
+      <div class="swatch" style="background: linear-gradient(135deg,#1a1a1a,#333);">
+        <div class="swatch-name">Ivory Black</div>
+        <div class="swatch-use">Lining, priming, shading</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#f5f5f5,#ddd);color:#333;">
+        <div class="swatch-name" style="color:#333;text-shadow:none;">Titanium White</div>
+        <div class="swatch-use" style="color:#555;text-shadow:none;">Highlights, mixing, NMM</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#8b1a1a,#c0392b);">
+        <div class="swatch-name">Cadmium Red</div>
+        <div class="swatch-use">Armour, cloth, blood</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#d35400,#e07b39);">
+        <div class="swatch-name">Burnt Sienna</div>
+        <div class="swatch-use">Skin, leather, rust</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#5d4037,#795548);">
+        <div class="swatch-name">Burnt Umber</div>
+        <div class="swatch-use">Deep brown, wood, fur</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#4a3000,#7d6000);">
+        <div class="swatch-name">Raw Umber</div>
+        <div class="swatch-use">Earth tones, wash base</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#b8860b,#d4a017);">
+        <div class="swatch-name">Yellow Ochre</div>
+        <div class="swatch-use">Bone, sand, aged gold</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#e8a000,#f5c518);">
+        <div class="swatch-name">Cadmium Yellow</div>
+        <div class="swatch-use">Bright cloth, insignia</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#0d3d0d,#1a6b1a);">
+        <div class="swatch-name">Sap Green</div>
+        <div class="swatch-use">Orks, foliage, jungle</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#1a4a1a,#2d7a2d);">
+        <div class="swatch-name">Viridian</div>
+        <div class="swatch-use">Gemstones, teal armour</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#003366,#1a5580);">
+        <div class="swatch-name">Phthalo Blue</div>
+        <div class="swatch-use">Space Marines, sky, water</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#000066,#1a1a99);">
+        <div class="swatch-name">Ultramarine</div>
+        <div class="swatch-use">Deep blue, robes, shadows</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#4a004a,#7a1a7a);">
+        <div class="swatch-name">Dioxazine Purple</div>
+        <div class="swatch-use">Chaos, gems, robes</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#1a0a00,#3d1f00);">
+        <div class="swatch-name">Payne's Grey</div>
+        <div class="swatch-use">Neutral shadow, NMM</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#808080,#a0a0a0);">
+        <div class="swatch-name">Neutral Grey</div>
+        <div class="swatch-use">Metal basecoat, stone</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#c8a000,#e8c800);">
+        <div class="swatch-name">Gold (Metallic)</div>
+        <div class="swatch-use">Trim, ornaments, icons</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#707070,#b0b0b0);">
+        <div class="swatch-name">Silver (Metallic)</div>
+        <div class="swatch-use">Blades, chainmail, bolts</div>
+      </div>
+      <div class="swatch" style="background: linear-gradient(135deg,#e8d5b0,#f5e8c8);">
+        <div class="swatch-name" style="color:#333;text-shadow:none;">Naples Yellow</div>
+        <div class="swatch-use" style="color:#555;text-shadow:none;">Skull, bone, parchment</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🔄 Camlin Equivalents to Citadel Paints</div>
+    <table class="data-table">
+      <thead><tr><th>Citadel (GW)</th><th>Vallejo</th><th>Camlin Mix</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>Abaddon Black</td><td>Black</td><td>Ivory Black straight</td><td>Black armour basecoat</td></tr>
+        <tr><td>Macragge Blue</td><td>Ultramarine Blue</td><td>Ultramarine + touch Ivory Black</td><td>Ultramarines basecoat</td></tr>
+        <tr><td>Mephiston Red</td><td>Flat Red</td><td>Cadmium Red + touch Burnt Sienna</td><td>Blood Angels basecoat</td></tr>
+        <tr><td>Caliban Green</td><td>Dark Green</td><td>Sap Green + Ivory Black 2:1</td><td>Dark Angels basecoat</td></tr>
+        <tr><td>Agrax Earthshade</td><td>Sepia Shade</td><td>Burnt Umber + water 1:6 + flow improver</td><td>Universal brown wash</td></tr>
+        <tr><td>Nuln Oil</td><td>Black Wash</td><td>Ivory Black + water 1:8 + flow improver</td><td>Universal black shade</td></tr>
+        <tr><td>Ushabti Bone</td><td>Iraqi Sand</td><td>Yellow Ochre + Titanium White 2:1</td><td>Bone, parchment</td></tr>
+        <tr><td>Leadbelcher</td><td>Oily Steel</td><td>Neutral Grey + Silver metallic 1:1</td><td>Metal basecoat</td></tr>
+        <tr><td>Retributor Armour</td><td>Gold</td><td>Gold metallic straight or + Burnt Sienna</td><td>Gold trim</td></tr>
+        <tr><td>White Scar</td><td>White</td><td>Titanium White + drop of Naples Yellow</td><td>Bright white layering</td></tr>
+        <tr><td>Rhinox Hide</td><td>Chocolate Brown</td><td>Burnt Umber straight</td><td>Dark brown base</td></tr>
+        <tr><td>Corax White</td><td>Off White</td><td>Titanium White + tiny Payne's Grey</td><td>Smooth white highlights</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">⚗ Making Camlin Washes &amp; Inks</div>
+    <div class="tip tip-blue">
+      <strong>Washes are the single most impactful skill.</strong> A good wash applied over a basecoat instantly adds depth, shadow, and realism with almost zero effort.
+    </div>
+    <div class="card-grid">
+      <div>
+        <h3>Basic Wash Formula</h3>
+        <p>Mix in a small jar or bottle cap:</p>
+        <ul class="plain">
+          <li><span class="ratio">1 part</span> Camlin paint</li>
+          <li><span class="ratio">5–8 parts</span> water</li>
+          <li><span class="ratio">1 drop</span> Fevicol / PVA (prevents tide marks)</li>
+          <li><span class="ratio">1 drop</span> flow improver (optional)</li>
+          <li><span class="ratio">1 drop</span> dishwashing liquid (breaks surface tension)</li>
+        </ul>
+        <p style="margin-top:8px;">Test on a spare mini first — adjust ratio until it flows into recesses without pooling on flat areas.</p>
+      </div>
+      <div>
+        <h3>Camlin Wash Recipes</h3>
+        <ul class="plain">
+          <li><strong>Brown wash (universal):</strong> Burnt Umber + Burnt Sienna 3:1 diluted 1:7</li>
+          <li><strong>Black wash (metal/dark):</strong> Ivory Black diluted 1:8</li>
+          <li><strong>Green wash (orks/flesh):</strong> Sap Green 1:7</li>
+          <li><strong>Blue wash (NMM cool):</strong> Phthalo Blue 1:8</li>
+          <li><strong>Sepia wash (skin/bone):</strong> Raw Umber + Burnt Sienna 2:1 diluted 1:7</li>
+          <li><strong>Purple wash (gems):</strong> Dioxazine Purple 1:6</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">✨ Camlin Metallics — Getting the Best Result</div>
+    <div class="card-grid">
+      <div>
+        <p>Camlin metallics have large metallic flake particles — they can look grainy at small scale. Tips to fix this:</p>
+        <ul class="bullet">
+          <li>Thin with <strong>very little</strong> water — too much water separates flakes</li>
+          <li>Apply in thin coats, let dry, apply again — builds up coverage</li>
+          <li>For gold: basecoat in Burnt Sienna first, then gold on top — richer result</li>
+          <li>For silver: basecoat in dark grey (Payne's Grey), then silver</li>
+          <li>Always finish metallics with a <strong>gloss varnish</strong> — makes them shine properly</li>
+          <li>Mix a little Ivory Black into silver for "dark" steel</li>
+          <li>Mix gold + silver for aged bronze effect</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Metallic Layering Order</h3>
+        <div class="workflow" style="margin-bottom:0;">
+          <div class="workflow-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Dark basecoat</div>
+              <p>Burnt Sienna (gold) or Payne's Grey (silver) in recesses</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Metallic layer</div>
+              <p>Apply main metallic paint leaving dark areas in recesses</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Wash</div>
+              <p>Brown or black wash in recesses — deepens shadows dramatically</p>
+            </div>
+          </div>
+          <div class="workflow-step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Edge highlight</div>
+              <p>Pure silver/gold on sharp edges only — catchlights</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ COLOR THEORY ══ -->
+<div id="tab-color" class="tab-panel">
+  <div class="tab-title">Color Theory for Miniatures</div>
+  <div class="tab-subtitle">Understanding colour makes every mini look more professional — even with simple techniques</div>
+
+  <div class="card">
+    <div class="section-heading">🌈 The Colour Wheel</div>
+    <div class="card-grid">
+      <div>
+        <h3>Primary Colours (Camlin)</h3>
+        <ul class="plain">
+          <li><strong>Red</strong> — Cadmium Red</li>
+          <li><strong>Blue</strong> — Phthalo Blue or Ultramarine</li>
+          <li><strong>Yellow</strong> — Cadmium Yellow or Yellow Ochre</li>
+        </ul>
+        <h3 style="margin-top:12px;">Secondary Colours (mix from primaries)</h3>
+        <ul class="plain">
+          <li><strong>Orange</strong> = Red + Yellow</li>
+          <li><strong>Purple</strong> = Red + Blue</li>
+          <li><strong>Green</strong> = Blue + Yellow</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Warm vs Cool</h3>
+        <ul class="plain">
+          <li><strong>Warm colours:</strong> Reds, oranges, yellows — appear to advance (come forward)</li>
+          <li><strong>Cool colours:</strong> Blues, purples, greens — appear to recede (go back)</li>
+          <li>Use warm colours for highlights, cool for shadows — creates life-like depth</li>
+          <li>Example: flesh shadow = add purple/blue, flesh highlight = add yellow/orange</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🎭 Colour Schemes for Miniatures</div>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-title">Monochromatic</div>
+        <p>One colour in different shades and tints. Easy to execute, always looks cohesive. Add black to shade, white to highlight. Great for Chaos undivided, stone statues.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Complementary</div>
+        <p>Opposite colours on the wheel (Red + Green, Blue + Orange, Purple + Yellow). Maximum contrast. Use one as primary, the other as accent. Classic for vibrant minis.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Triadic</div>
+        <p>Three equally-spaced colours. Red + Blue + Yellow. Bold and vibrant. Use one dominant, one secondary, one accent. Hard to execute but striking.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Analogous</div>
+        <p>Three neighbouring colours (Blue + Blue-Green + Green). Natural, harmonious look. Great for nature-themed minis, Sylvaneth, Nurgle.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Split Complementary</div>
+        <p>One colour + two adjacent to its complement. Softer than full complementary. More interesting than analogous. E.g. Blue + Red-Orange + Yellow-Orange.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Neutral with Pop</div>
+        <p>Mostly grey/brown/bone with one strong accent colour. Very cinematic look. Ideal for modern sci-fi minis — grey armour, red lenses, gold trim.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">💡 Value — Light and Shadow</div>
+    <div class="tip tip-orange">
+      <strong>Value is more important than colour.</strong> A mini painted in greyscale with good light and shadow will look better than a colourful mini with flat, even paint. Train your eye to see value first.
+    </div>
+    <div class="card-grid">
+      <div>
+        <h3>The 5-Value System</h3>
+        <ul class="plain">
+          <li><strong>Deep shadow</strong> — recesses, underneath, behind — 10–20% brightness</li>
+          <li><strong>Shadow</strong> — sides, mid-lower areas — 30–40%</li>
+          <li><strong>Midtone (basecoat)</strong> — main colour — 50%</li>
+          <li><strong>Highlight</strong> — raised edges, top surfaces — 65–75%</li>
+          <li><strong>Specular highlight</strong> — sharpest edges only — 90–100%</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mixing Shades and Highlights</h3>
+        <ul class="bullet">
+          <li><strong>Shade:</strong> Add Ivory Black or Payne's Grey to your base colour (not pure black — it looks dead)</li>
+          <li><strong>Cool shade:</strong> Add Phthalo Blue or Dioxazine Purple for a cool shadow</li>
+          <li><strong>Highlight:</strong> Add Titanium White or Naples Yellow to your base colour</li>
+          <li><strong>Warm highlight:</strong> Add Yellow Ochre or touch Cadmium Yellow for warm light</li>
+          <li><strong>Never mix pure black/white</strong> — always add to the base colour</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🌟 Colour Recipes — Common Factions</div>
+    <table class="data-table">
+      <thead><tr><th>Faction / Subject</th><th>Base</th><th>Shadow</th><th>Highlight</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Space Marines (Blue)</strong></td><td>Ultramarine + Ivory Black 3:1</td><td>+ Phthalo Blue + Black</td><td>+ Titanium White 3:1</td></tr>
+        <tr><td><strong>Blood Angels (Red)</strong></td><td>Cadmium Red + Burnt Sienna</td><td>+ Burnt Umber + Black</td><td>+ Yellow Ochre 4:1</td></tr>
+        <tr><td><strong>Dark Angels (Green)</strong></td><td>Sap Green + Black 2:1</td><td>+ more Black</td><td>+ Naples Yellow touch</td></tr>
+        <tr><td><strong>Space Wolves (Grey)</strong></td><td>Neutral Grey + White 1:1</td><td>Payne's Grey</td><td>Titanium White</td></tr>
+        <tr><td><strong>Ork Skin (Green)</strong></td><td>Sap Green + Yellow Ochre 2:1</td><td>Sap Green + Black</td><td>+ Cadmium Yellow</td></tr>
+        <tr><td><strong>Human Skin (Med)</strong></td><td>Burnt Sienna + White + Yellow 3:2:1</td><td>+ Burnt Sienna + Purple</td><td>+ White + Yellow Ochre</td></tr>
+        <tr><td><strong>Bone / Skull</strong></td><td>Yellow Ochre + White 1:2</td><td>Burnt Umber wash</td><td>Naples Yellow + White</td></tr>
+        <tr><td><strong>Dark Leather</strong></td><td>Burnt Umber</td><td>Burnt Umber + Black</td><td>Burnt Sienna, then Yellow Ochre</td></tr>
+        <tr><td><strong>Power Armour Metal</strong></td><td>Neutral Grey + Silver 1:1</td><td>Ivory Black wash</td><td>Silver edge highlight</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ PREP & PRIME ══ -->
+<div id="tab-prep" class="tab-panel">
+  <div class="tab-title">Prep &amp; Priming</div>
+  <div class="tab-subtitle">Good prep is half the paintjob — skip this and all your work peels off</div>
+
+  <div class="tip tip-red">
+    <strong>Never skip priming.</strong> Acrylic paint (including Camlin) does not bond to bare plastic, resin, or metal. Primer creates a micro-textured surface for paint to grip. Without it, paint chips, peels, and slides within hours.
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🔧 Assembly &amp; Cleaning</div>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Remove mold lines</div>
+          <p>Run a hobby knife or the back edge of a blade gently along every join seam — the mold line appears as a faint ridge. Scrape, don't cut. Then smooth with 400-grit sandpaper. Mold lines show up horribly after painting.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Remove flash (thin plastic film)</div>
+          <p>Carefully clip off any thin film or sprue remnants with clippers. Clean with knife if needed.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Wash the model in warm soapy water</div>
+          <p>Scrub gently with an old toothbrush. Rinse thoroughly, pat dry. This removes mold release agents that prevent paint adhesion. Especially important for resin models.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Assemble strategically</div>
+          <p>Consider leaving some parts separate (arms, backpack) to access hard-to-reach areas. Glue these after painting. Use Fevi-Kwik (superglue) for plastic-to-plastic; add baking soda to fill gaps.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Mount on a painting handle</div>
+          <p>Blu-tack the model to a bottle cap, cork, or dedicated painting handle. Never hold the model directly — skin oils contaminate paint, and finger grease creates a barrier.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🎨 Priming Options in India</div>
+    <table class="data-table">
+      <thead><tr><th>Primer</th><th>Type</th><th>Colour</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Rustoleum 2X</strong></td><td class="good">Spray — Best</td><td>Grey, Black, White</td><td>Excellent adhesion, very smooth, widely available in hardware stores</td></tr>
+        <tr><td><strong>Asian Paints Spray</strong></td><td class="good">Spray — Good</td><td>Grey, White</td><td>Affordable, available in hardware stores. Test on sprue first.</td></tr>
+        <tr><td><strong>Citadel Primer</strong></td><td class="good">Spray — Best</td><td>Many colours</td><td>Best quality but expensive. Available online.</td></tr>
+        <tr><td><strong>Vallejo Surface Primer</strong></td><td class="good">Brush-on</td><td>Many colours</td><td>Brush-on, great for touch-ups. Airbrush-thinnable.</td></tr>
+        <tr><td><strong>Camlin Gesso</strong></td><td class="warn">Brush-on — OK</td><td>White, Black</td><td>Artist gesso works as primer for plastic. Apply thin. Multiple coats.</td></tr>
+        <tr><td><strong>Regular wall primer</strong></td><td class="bad">Brush-on — Avoid</td><td>White</td><td>Too thick — clogs detail. Use only if desperate and dilute heavily.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="card-grid">
+      <div>
+        <h3>Black Primer — When to Use</h3>
+        <ul class="bullet">
+          <li>Dark armies (Chaos, Undead, Dark Eldar)</li>
+          <li>Armoured metallic minis</li>
+          <li>Quick batch painting — shadows are already done</li>
+          <li>Beginners — mistakes are less visible on dark primer</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Grey Primer — Recommended Default</h3>
+        <ul class="bullet">
+          <li>Works for any colour scheme</li>
+          <li>Easier to judge paint consistency than black</li>
+          <li>Neither too bright nor too dark</li>
+          <li>Best for Zenithal priming technique</li>
+        </ul>
+      </div>
+      <div>
+        <h3>White Primer — When to Use</h3>
+        <ul class="bullet">
+          <li>Bright colour schemes (white armour, yellow, light blue)</li>
+          <li>Speed painting with washes directly over primer</li>
+          <li>Showing off translucent paint effects</li>
+          <li>Harder to control — mistakes stand out more</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🌟 Zenithal Priming — Instant Depth</div>
+    <p>The single best technique to instantly add light-and-shadow before painting even starts.</p>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Black prime the whole model</div>
+          <p>Full coverage black spray from all angles. This fills every shadow area automatically.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Grey prime from 45°</div>
+          <p>Hold spray at 45° above the model. Light mist only — grey should hit the sides.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">White prime from directly above</div>
+          <p>Spray white from directly above — only the tops of raised surfaces get white. Result: a perfect light-to-shadow gradient before any paint touches the brush.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip tip-green">
+      After zenithal priming, apply a thin wash over the whole model — it will settle into the pre-existing shadows and create instant realism. Then just add basecolours and light highlights. This technique halves painting time.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ TECHNIQUES ══ -->
+<div id="tab-techniques" class="tab-panel">
+  <div class="tab-title">Painting Techniques</div>
+  <div class="tab-subtitle">Every major technique explained — when to use it and how to execute it with Camlin paints</div>
+
+  <div class="technique-grid">
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🖌</span>
+        <span class="tc-name">Basecoating</span>
+        <span class="tc-level level-beginner">Beginner</span>
+      </div>
+      <p>Applying the first solid layer of colour over primer. Should achieve full, even coverage in 1–2 thin coats.</p>
+      <p><strong>Camlin tip:</strong> Thin to skimmed-milk consistency. Two thin coats always beat one thick coat. Let each coat dry fully (5–10 min) before the next.</p>
+      <div class="tc-tip">Goal: even coverage, no streaks, no obscured detail</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">💧</span>
+        <span class="tc-name">Washing / Shading</span>
+        <span class="tc-level level-beginner">Beginner</span>
+      </div>
+      <p>Applying a very thin, dark paint mixture that flows into recesses by gravity and surface tension. Instantly adds depth and shadow.</p>
+      <p><strong>Camlin tip:</strong> Use the brown wash recipe (Burnt Umber 1:7 + drop of Fevicol). Apply generously over the basecoat and let gravity do the work. Don't brush it around — let it flow.</p>
+      <div class="tc-tip">Let it dry completely before the next step (20–30 min)</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🔺</span>
+        <span class="tc-name">Drybrushing</span>
+        <span class="tc-level level-beginner">Beginner</span>
+      </div>
+      <p>Load a flat brush with paint, wipe almost all of it off on paper, then lightly drag it over raised surfaces. Paint catches only on the highest points.</p>
+      <p><strong>Camlin tip:</strong> Use undiluted or barely thinned paint. Keep wiping until brush leaves almost nothing on paper, then flick across textured areas. Perfect for fur, hair, stone, rust.</p>
+      <div class="tc-tip">Use a separate dedicated flat brush — drybrushing ruins good brushes</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🎭</span>
+        <span class="tc-name">Layering</span>
+        <span class="tc-level level-intermediate">Intermediate</span>
+      </div>
+      <p>Building up highlights in progressively lighter colours, each coat applied over a smaller area than the last. Creates smooth, controlled gradients.</p>
+      <p><strong>Camlin tip:</strong> Thin to whole-milk consistency. Each layer should be transparent enough to see the previous one through it. 3–5 layers typical for quality work.</p>
+      <div class="tc-tip">Work from dark to light, smaller area each time</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🌊</span>
+        <span class="tc-name">Wet Blending</span>
+        <span class="tc-level level-advanced">Advanced</span>
+      </div>
+      <p>Placing two wet colours side by side and blending the transition while both are still wet. Creates seamless, smooth colour transitions.</p>
+      <p><strong>Camlin tip:</strong> Add a tiny drop of retarder medium or glycerin to slow drying. Work quickly. Use a damp brush to blend the middle zone. Camlin's thick pigment holds well for wet blending.</p>
+      <div class="tc-tip">Work small areas at a time — paint dries in seconds on small surfaces</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🔮</span>
+        <span class="tc-name">Glazing</span>
+        <span class="tc-level level-intermediate">Intermediate</span>
+      </div>
+      <p>Applying very thin transparent washes of colour to tint or shift hues without obscuring the detail below. Like coloured glass over a surface.</p>
+      <p><strong>Camlin tip:</strong> Dilute 1:10 or more. The paint should be barely tinted water. Build up 5–10 thin glazes for subtle colour shifts. Great for skin and blending transitions.</p>
+      <div class="tc-tip">Add flow improver — helps spread perfectly without streaks</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">📍</span>
+        <span class="tc-name">Edge Highlighting</span>
+        <span class="tc-level level-intermediate">Intermediate</span>
+      </div>
+      <p>Painting a thin bright line only on the sharpest edges of armour panels, cloaks, and raised detail. Creates a "comic book" style contrast.</p>
+      <p><strong>Camlin tip:</strong> Use your finest round brush (000). Load minimal paint, drag the very tip along the edge at a shallow angle. Keep lines thin and consistent — confidence in stroke matters more than speed.</p>
+      <div class="tc-tip">Practice on card before touching the mini</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">✏</span>
+        <span class="tc-name">Line / Recess Shading</span>
+        <span class="tc-level level-intermediate">Intermediate</span>
+      </div>
+      <p>Carefully drawing a thin dark line inside panel recesses and joins with a fine brush. More controlled than a wash — applies shade exactly where you want.</p>
+      <p><strong>Camlin tip:</strong> Thin Ivory Black or Burnt Umber to an ink consistency. Use the tip of a 000 brush. Draw the brush along the recess like writing. Patience — go slow and steady.</p>
+      <div class="tc-tip">Correct with the base colour if you overshoot</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🌀</span>
+        <span class="tc-name">Stippling</span>
+        <span class="tc-level level-intermediate">Intermediate</span>
+      </div>
+      <p>Dabbing with an almost-dry brush to create texture — skin pores, rough stone, weathered leather, rust spots.</p>
+      <p><strong>Camlin tip:</strong> Use an old frayed brush with minimal paint. Dab in circular or random patterns. Layer multiple colours for realistic rust or aged surfaces.</p>
+      <div class="tc-tip">Great for quick texture on large surfaces like bases</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">💥</span>
+        <span class="tc-name">Sponge Weathering</span>
+        <span class="tc-level level-beginner">Beginner</span>
+      </div>
+      <p>Dabbing with a torn blister foam/sponge piece to create random chipping patterns on armour.</p>
+      <p><strong>Camlin tip:</strong> Tear the sponge for an irregular edge. Dab Ivory Black first (deep chip), then Burnt Sienna (rust inside chip), then Silver (fresh metal edge).</p>
+      <div class="tc-tip">Less is more — one or two dabs per panel looks realistic</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🌈</span>
+        <span class="tc-name">Two-Brush Blending</span>
+        <span class="tc-level level-advanced">Advanced</span>
+      </div>
+      <p>One brush applies paint, a second clean damp brush immediately blends and softens the edges. Achieves smooth transitions without a retarder medium.</p>
+      <p><strong>Camlin tip:</strong> Keep the second brush damp (not wet). Apply a stroke, immediately soften the hard edge with the second brush. Work fast — Camlin dries in 30–60 seconds on miniature-scale surfaces.</p>
+      <div class="tc-tip">Wet palette essential — keeps paint workable longer</div>
+    </div>
+
+    <div class="technique-card">
+      <div class="tc-header">
+        <span class="tc-icon">🔥</span>
+        <span class="tc-name">Freehanding</span>
+        <span class="tc-level level-expert">Expert</span>
+      </div>
+      <p>Painting freehand designs — chapter symbols, squad markings, murals on cloaks, insignia on banners — directly on the mini.</p>
+      <p><strong>Camlin tip:</strong> Sketch lightly with a watered-down Ivory Black first (easily corrected). Work in layers: outline → fill → clean up edges with base colour → refine. Good lighting and magnification essential.</p>
+      <div class="tc-tip">Sketch on paper first, then transfer confidence to the mini</div>
+    </div>
+  </div>
+
+  <div class="tip tip-orange">
+    <strong>Learning order recommendation:</strong> Basecoat → Wash → Drybrush → Layer → Edge highlight → Glaze → Wet blend → Freehand. Master each technique on 2–3 minis before moving to the next. Don't rush advanced techniques — value from basics beats poor execution of advanced ones.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ FULL WORKFLOW ══ -->
+<div id="tab-workflow" class="tab-panel">
+  <div class="tab-title">Complete Painting Workflow</div>
+  <div class="tab-subtitle">Step-by-step from bare plastic to display-ready miniature — three quality levels</div>
+
+  <div class="card">
+    <div class="section-heading">⚡ Speed Paint (1–2 hours per mini) <span class="badge badge-green">Batch Painting</span></div>
+    <div class="tip tip-blue">Perfect for painting large armies quickly. Looks great on the table at arm's length.</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Prime in grey spray</div><p>Zenithal if you have 10 extra minutes — adds instant depth for free.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Basecoat all major areas</div><p>Thin Camlin paint to skimmed milk. Block in armour, cloth, skin, weapons — one colour per area, don't worry about neatness yet.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Apply a brown wash over everything</div><p>Burnt Umber 1:7 wash generously applied. Let it flow into all recesses. Let dry completely.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Drybrush highlights</div><p>Take the basecolour + add white. Drybrush raised areas. Fast and effective.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Tidy edges, add eyes</div><p>Clean up any accidents. Paint eyes: black, then tiny white dot in the corner. Don't overthink eyes at this level.</p></div></div>
+      <div class="workflow-step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Base the model, varnish</div><p>Quick texture paste or PVA + sand on base, paint it. Matte varnish the whole model. Done.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🎨 Standard Paint (4–8 hours per mini) <span class="badge badge-yellow">Display Quality</span></div>
+    <div class="tip tip-yellow">Great balance of quality and time. Looks stunning up close. Your go-to for characters and centrepiece models.</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Prep &amp; prime</div><p>Remove all mold lines, wash model, assemble. Grey spray prime. Zenithal highlight with white from above.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Basecoat in thin layers</div><p>2–3 thin coats per colour area. Full even coverage. Let each layer dry. Mix colours to match your chosen scheme.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Shade with washes</div><p>Apply targeted washes per area — brown wash on skin/leather, black wash on metal, colour-appropriate wash on armour. Don't use one wash on everything.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Layer highlights</div><p>Mix base colour + 30% white. Apply to raised areas avoiding deepest recesses. Repeat with 60% white on even smaller areas. 2–3 highlight layers per surface.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Edge highlight</div><p>Near-white on the sharpest edges of armour panels and raised details. Thin line only — don't flood the edge.</p></div></div>
+      <div class="workflow-step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Details: eyes, gems, metallics</div><p>Eyes: black → bright colour → white dot. Gems: dark at top, bright at bottom, tiny white speck. Metallics: layer and edge highlight.</p></div></div>
+      <div class="workflow-step"><div class="step-num">7</div><div class="step-body"><div class="step-title">Base and varnish</div><p>Detailed base — multiple layers, tufts, rocks. Gloss varnish on lenses/gems, matte on everything else.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🏆 Competition Quality (20–40+ hours) <span class="badge badge-red">Display Masterpiece</span></div>
+    <div class="tip tip-red">Maximum effort for single showcase pieces. Every surface blended smoothly, every detail pushed to its limit.</div>
+    <ol class="steps" style="padding-left:1.5rem;">
+      <li>Perfect prep — every mold line removed, gap-filled with putty, re-sculpted if needed</li>
+      <li>Zenithal prime with airbrush for ultra-smooth gradient base</li>
+      <li>Pre-shade recesses with thinned Ivory Black or deep colour mix</li>
+      <li>Basecoat with airbrush or many thin brush layers for zero brush strokes</li>
+      <li>Wet blend all major surfaces — smooth gradients across every panel</li>
+      <li>Multiple glaze layers to deepen colour richness and adjust temperature</li>
+      <li>5–7 highlight layers per surface — each smaller and brighter</li>
+      <li>Recess shade every panel line with thinned dark colour</li>
+      <li>NMM on metal surfaces — no metallic paint, pure colour gradients</li>
+      <li>OSL — coloured light from glowing sources bleeds onto surrounding surfaces</li>
+      <li>Freehand designs on banners, cloaks, armour panels</li>
+      <li>Eyes, gems, teeth, tongues — each its own micro-painting session</li>
+      <li>Sculpted or premium resin base — detailed and painted to same standard</li>
+      <li>Strategic varnish — gloss on wet surfaces, satin on skin, matte on cloth, gloss on lenses</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ ADVANCED ══ -->
+<div id="tab-advanced" class="tab-panel">
+  <div class="tab-title">Advanced Techniques</div>
+  <div class="tab-subtitle">OSL, NMM, skin, eyes — the techniques that separate good painters from great ones</div>
+
+  <div class="card">
+    <div class="section-heading">💡 OSL — Object Source Lighting</div>
+    <p>Painting the coloured light cast by glowing elements (plasma coils, lenses, fire, runes) onto surrounding surfaces.</p>
+    <div class="card-grid">
+      <div>
+        <h3>OSL Rules</h3>
+        <ul class="plain">
+          <li>Light falls on surfaces <strong>facing the source</strong> — not behind or occluded</li>
+          <li>Intensity <strong>decreases with distance</strong> — stronger near the source</li>
+          <li>Light colour <strong>desaturates and lightens</strong> as it spreads</li>
+          <li>Surfaces cast <strong>hard shadows</strong> blocking light beyond them</li>
+          <li>The source itself should be the <strong>brightest point</strong> on the model</li>
+        </ul>
+      </div>
+      <div>
+        <h3>OSL with Camlin — Step by Step</h3>
+        <ol class="steps">
+          <li>Paint the normal basecoat and shading on all surfaces first</li>
+          <li>Identify which surfaces face the glow source</li>
+          <li>Mix light source colour + white (e.g. Phthalo Blue + white for blue plasma)</li>
+          <li>Glaze it onto facing surfaces — most concentrated nearest source</li>
+          <li>Add pure white to the glaze and apply an even smaller area right next to source</li>
+          <li>The source itself: near-white centre, full colour mid, dark edge</li>
+          <li>Add a gloss varnish on the source element for extra glow effect</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip tip-orange">
+      <strong>Common OSL sources on Warhammer minis:</strong> Plasma guns (blue/teal), power swords (blue-white), chainswords (red-orange), daemon eyes (green/red), neon runes (purple), fire (orange-yellow).
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">⚙ NMM — Non-Metallic Metal</div>
+    <p>Painting the appearance of metal using only matt colours — no metallic paint. Requires understanding how metal reflects light.</p>
+    <div class="card-grid">
+      <div>
+        <h3>How Metal Behaves</h3>
+        <ul class="bullet">
+          <li>Metal reflects its surroundings like a mirror — the sky above, ground below</li>
+          <li>High contrast — very bright highlights and very dark shadows, close together</li>
+          <li>Transition from near-black to near-white in millimetres</li>
+          <li>The brightest spot is a tiny sharp "specular" highlight — almost pure white</li>
+          <li>Dark areas often reflect the complementary colour of the light source</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Gold NMM with Camlin</h3>
+        <ul class="plain">
+          <li><strong>Darkest:</strong> Burnt Umber + Black</li>
+          <li><strong>Dark mid:</strong> Burnt Sienna + Raw Umber</li>
+          <li><strong>Mid:</strong> Yellow Ochre + Burnt Sienna</li>
+          <li><strong>Highlight:</strong> Yellow Ochre + Cadmium Yellow</li>
+          <li><strong>Brightest:</strong> Titanium White + touch Cadmium Yellow</li>
+          <li>Blend each step smoothly into the next</li>
+          <li>Specular: pure white dot on the sharpest corner</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-grid">
+      <div>
+        <h3>Silver NMM with Camlin</h3>
+        <ul class="plain">
+          <li><strong>Darkest:</strong> Ivory Black + Phthalo Blue</li>
+          <li><strong>Dark:</strong> Payne's Grey</li>
+          <li><strong>Mid:</strong> Neutral Grey</li>
+          <li><strong>Highlight:</strong> White + small Neutral Grey</li>
+          <li><strong>Specular:</strong> Pure Titanium White</li>
+        </ul>
+      </div>
+      <div class="tip tip-purple" style="align-self:start;">
+        <strong>NMM tip:</strong> Tape a silver spoon to your lamp and study where the dark and light areas fall. NMM is about accurate observation — where is the sky reflection? Where is the shadow from below? Paint what you see, not what you know.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">👁 Painting Eyes</div>
+    <div class="tip tip-orange"><strong>Eyes make or break a mini.</strong> Small and difficult — but the first thing anyone looks at. Worth spending 15 extra minutes getting right.</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Fill the eye socket black</div><p>Ivory Black into the entire eye cavity. This becomes the pupil and the outline all in one.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Paint the white</div><p>Titanium White (+ tiny touch Payne's Grey for off-white) — fill the eye from the bottom leaving a black "lid line" at the top. Slightly below the top of the socket.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add the iris (optional for small minis)</div><p>A dot of colour (brown, blue, green) in the centre of the white area. For 28mm scale, just black + white is often enough.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Specular highlight</div><p>A single tiny dot of pure white in the upper corner of the eye (upper right for both eyes). Creates the "alive" look.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Clean up</div><p>Use the skin base colour on a 000 brush to neaten the borders of the eye. Fix any accidents carefully.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🩺 Painting Skin</div>
+    <div class="card-grid">
+      <div>
+        <h3>Human Skin (Medium tone) — Camlin</h3>
+        <ul class="plain">
+          <li><strong>Base:</strong> Burnt Sienna + Titanium White + Yellow Ochre 3:2:1</li>
+          <li><strong>Shadow:</strong> Base + Burnt Sienna + touch Dioxazine Purple</li>
+          <li><strong>Deep shadow:</strong> Raw Umber + Purple</li>
+          <li><strong>Mid highlight:</strong> Base + more White + Yellow Ochre</li>
+          <li><strong>High highlight:</strong> Near-white + tiny Yellow Ochre</li>
+          <li><strong>Blush:</strong> Cadmium Red very diluted glazed on cheeks, nose, ears</li>
+          <li><strong>5 o'clock shadow:</strong> Phthalo Blue + Dioxazine Purple + white glaze on jaw</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Dark Skin Tone</h3>
+        <ul class="plain">
+          <li><strong>Base:</strong> Burnt Umber + Raw Umber 2:1</li>
+          <li><strong>Shadow:</strong> + Ivory Black</li>
+          <li><strong>Highlight:</strong> + Burnt Sienna + Yellow Ochre</li>
+          <li><strong>Bright highlight:</strong> + Naples Yellow + White</li>
+          <li>Specular highlights on nose, brow, cheekbones are brighter contrast</li>
+        </ul>
+        <h3 style="margin-top:12px;">Ork / Alien Skin</h3>
+        <ul class="plain">
+          <li><strong>Base:</strong> Sap Green + Yellow Ochre 2:1</li>
+          <li><strong>Shadow:</strong> Sap Green + Ivory Black</li>
+          <li><strong>Highlight:</strong> + Cadmium Yellow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">💎 Painting Gemstones</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Basecoat in mid-tone colour</div><p>E.g. Phthalo Blue for a blue gem, Cadmium Red for red.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Dark top half</div><p>Mix base + Ivory Black. Fill the upper half of the gem — this is the shadow where no light enters from below.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Bright lower half</div><p>Mix base + Titanium White. Fill the lower half — this is the light transmitted through the gem.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Specular highlight</div><p>Tiny pure white dot in the upper-left corner of the gem — this is the direct light reflection.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Gloss varnish</div><p>A tiny dot of gloss varnish on top — makes gems look wet and glass-like.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ BASING ══ -->
+<div id="tab-basing" class="tab-panel">
+  <div class="tab-title">Basing &amp; Finishing</div>
+  <div class="tab-subtitle">The base completes the mini — a great base elevates even an average paintjob</div>
+
+  <div class="card">
+    <div class="section-heading">🌿 Basing Materials (Available in India)</div>
+    <div class="card-grid-3">
+      <div class="concept-card">
+        <div class="concept-title">Sand / Fine Grit</div>
+        <p>Regular building sand or aquarium sand. PVA glue to base, let dry, paint brown then drybrush tan/bone. The most versatile base texture.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Model Railway Grass (Green)</div>
+        <p>Available online (Amazon India). Apply with PVA while wet. Looks great for fantasy, nature-themed armies.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Cork / Foam Chunks</div>
+        <p>Wine cork broken into irregular chunks = rocky rubble. Buy foam basing kits or use packing foam painted grey. Good for urban bases.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Cat Litter / Aquarium Gravel</div>
+        <p>Large irregular stones for rocky bases. Cheap and effective. Non-clumping cat litter is the right texture.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Dried Herbs / Tea Leaves</div>
+        <p>Dried oregano, thyme, or tea leaves look like forest undergrowth when painted green/brown. Free from your kitchen.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Texture Paste (DIY)</div>
+        <p>Mix PVA + fine sand + Camlin brown paint = ready-to-apply texture paste. Apply with old brush, dry, done.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Tufts (Dry Grass)</div>
+        <p>Static grass tufts available online. Apply with superglue when the base is fully painted. Instant professionalism.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Printed Resin Details</div>
+        <p>3D print skulls, ropes, debris, fallen columns for base details. Glue on before priming.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Leaves (Real Dried)</div>
+        <p>Dried and pressed autumn leaves, scaled down, look incredibly realistic on autumn forest bases.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🏔 Basing Styles &amp; Recipes</div>
+    <table class="data-table">
+      <thead><tr><th>Style</th><th>Materials</th><th>Paint Recipe</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Desert / Sand</strong></td><td>Fine sand + occasional grit</td><td>Burnt Sienna base → drybrush Yellow Ochre → drybrush Titanium White on highest points</td></tr>
+        <tr><td><strong>Urban / Rubble</strong></td><td>Cork chunks + sand fill</td><td>Neutral Grey base → Ivory Black wash → drybrush Neutral Grey → drybrush White edges</td></tr>
+        <tr><td><strong>Forest / Nature</strong></td><td>Sand + static grass + tufts</td><td>Raw Umber base → drybrush Yellow Ochre → add green static grass + tufts</td></tr>
+        <tr><td><strong>Snow</strong></td><td>Sand + baking soda + PVA</td><td>Burnt Umber base → Neutral Grey rocks → PVA + baking soda snow on top</td></tr>
+        <tr><td><strong>Lava / Volcanic</strong></td><td>Cork + sand</td><td>Black base → drybrush dark grey → paint cracks in yellow/orange → gloss varnish cracks</td></tr>
+        <tr><td><strong>Swamp / Mud</strong></td><td>Sand + PVA puddles</td><td>Raw Umber base → Burnt Umber wash → PVA puddles painted dark green-brown + gloss varnish</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🔮 Varnishing — Protecting Your Work</div>
+    <div class="tip tip-red">
+      <strong>Always varnish your minis.</strong> Acrylic paint — especially Camlin — chips easily during handling and gaming. Varnish protects weeks of work. It also fixes frosting, corrects sheen inconsistencies, and makes the model look intentional.
+    </div>
+    <div class="card-grid">
+      <div>
+        <h3>Varnish Types</h3>
+        <ul class="plain">
+          <li><strong>Gloss</strong> — shiny, strong protection, great under washes</li>
+          <li><strong>Satin</strong> — semi-sheen, good for skin and leather</li>
+          <li><strong>Matte</strong> — flat/no shine, the final coat for most minis</li>
+        </ul>
+        <h3 style="margin-top:12px;">Available in India</h3>
+        <ul class="plain">
+          <li>Rustoleum 2X Matte Clear — hardware stores</li>
+          <li>Vallejo Matte Varnish — brush-on, excellent</li>
+          <li>Citadel Munitorum Varnish — spray, premium</li>
+          <li>Mod Podge Matte — craft stores, works well</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Varnishing Workflow</h3>
+        <ol class="steps">
+          <li>Let mini dry completely — 24 hours is ideal</li>
+          <li>Apply <strong>gloss varnish</strong> first — seals the paint and provides a smooth surface for the matte coat</li>
+          <li>Let gloss dry fully (1–2 hours)</li>
+          <li>Apply <strong>matte varnish</strong> — thin even coats</li>
+          <li>After matte: apply gloss selectively on gems, lenses, wet surfaces</li>
+          <li>Never spray varnish in humid conditions (above 70% RH) — causes frosting</li>
+        </ol>
+        <div class="tip tip-yellow" style="margin-top:10px;">
+          <strong>Fix frosted varnish:</strong> Brush-on gloss varnish over frosted areas — it remelts the surface and removes the white haze. Then re-apply matte on top.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ TROUBLESHOOT ══ -->
+<div id="tab-troubleshoot" class="tab-panel">
+  <div class="tab-title">Troubleshooting</div>
+  <div class="tab-subtitle">Common problems and exactly how to fix them</div>
+
+  <div class="card">
+    <div class="section-heading">🛠 Paint Problems</div>
+    <table class="data-table">
+      <thead><tr><th>Problem</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Paint obscures detail</strong></td><td class="bad">Paint too thick</td><td class="good">Thin more — add 2–3 drops water. Strip model with Dettol/IPA and repaint if severe</td></tr>
+        <tr><td><strong>Paint beads/separates</strong></td><td class="bad">Too much water, or oil on surface</td><td class="good">Add a drop of flow improver or Fevicol. Re-wash model with soapy water</td></tr>
+        <tr><td><strong>Brush strokes visible</strong></td><td class="bad">Paint drying before levelling, or too thick</td><td class="good">Add flow improver. Work in smaller areas. Use wet palette to slow drying</td></tr>
+        <tr><td><strong>Paint chips/peels</strong></td><td class="bad">No primer, or primer not adhering</td><td class="good">Strip and re-prime. Use Rustoleum spray on properly cleaned (soapy water) model</td></tr>
+        <tr><td><strong>Wash pools on flat areas</strong></td><td class="bad">Too much wash applied, no flow improver</td><td class="good">Add drop of dishwashing liquid to wash. Apply in smaller amounts. Wick up pooled wash with dry brush tip</td></tr>
+        <tr><td><strong>Tide marks from wash</strong></td><td class="bad">Wash dried with watermark ring</td><td class="good">Add Fevicol (PVA) to wash. Or re-apply a diluted coat over the area, then wick away before it dries</td></tr>
+        <tr><td><strong>Metallic looks grainy</strong></td><td class="bad">Too much water separating metallic flakes</td><td class="good">Thin less. Apply in thin coats. Finish with gloss varnish to enhance the metallic effect</td></tr>
+        <tr><td><strong>Colours look muddy</strong></td><td class="bad">Mixing too many colours, or dirty brush</td><td class="good">Clean brush between every colour. Use clean water. Mix max 2–3 colours together</td></tr>
+        <tr><td><strong>White primer shows through</strong></td><td class="bad">Paint too thin, single coat</td><td class="good">Apply a second or third thin coat. Allow each to fully dry before the next</td></tr>
+        <tr><td><strong>Paint dries too fast</strong></td><td class="bad">Low humidity, hot room</td><td class="good">Use a wet palette. Add a drop of glycerin or Fevicol to slow drying. Work in smaller sections</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🖌 Brush Problems</div>
+    <table class="data-table">
+      <thead><tr><th>Problem</th><th>Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Brush tip splays / won't point</strong></td><td class="bad">Paint dried in ferrule, heat damage, cheap brush</td><td class="good">Clean with brush soap, reshape while wet, let dry pointed. Use brush restorer (hair conditioner works). Replace if beyond saving.</td></tr>
+        <tr><td><strong>Hairs falling out</strong></td><td class="bad">Paint dried into bristles repeatedly, or poor quality brush</td><td class="good">Clean thoroughly after every session. Never let paint dry in the brush. Replace when shedding badly.</td></tr>
+        <tr><td><strong>Brush leaves fibres on mini</strong></td><td class="bad">Brush shedding, or brush not broken in</td><td class="good">Pre-condition new brushes — paint on paper 20 times, rotating. Check for loose hairs before painting.</td></tr>
+        <tr><td><strong>Can't keep a fine line</strong></td><td class="bad">Too much paint loaded, or shaky hand</td><td class="good">Less paint on brush tip. Rest your painting hand on the table. Brace the mini holding hand. Use a thinner brush.</td></tr>
+      </tbody>
+    </table>
+    <div class="tip tip-green">
+      <strong>Brush care routine:</strong> Never leave brushes tip-down in water — it bends the bristles permanently. After painting: (1) wipe on paper towel, (2) rinse in clean water, (3) dip in brush soap, (4) work into a point with fingers, (5) store tip-up or horizontal.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">💡 Pro Tips — The Things Nobody Tells You</div>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-title">Less paint, more passes</div>
+        <p>Two thin coats always beat one thick coat. Every time. No exceptions. Thin your paint more than you think you need to.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Wipe brush before loading</div>
+        <p>After rinsing, always wipe on a paper towel before dipping in paint again. Excess water dilutes your paint unpredictably.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Rotate the mini, not the brush</div>
+        <p>Turn the mini to a comfortable angle for each stroke. Don't try to paint upside-down or awkwardly — always put your brush in its strongest direction.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Paint eye level</div>
+        <p>Hold the mini at eye level when painting faces, eyes, and fine detail. Looking down distorts perspective and causes poor placement.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Dark before light always</div>
+        <p>Always paint darks first, then midtones, then lights. Correcting a bright area with dark paint is much harder — the dark must go over many coats to cover.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Take photos to see mistakes</div>
+        <p>Phone camera sees things your eye misses. Photograph under bright light every few sessions to spot patchy coverage, missed areas, and proportion issues.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">One focal point</div>
+        <p>The face is always the focal point. Spend 40% of your time on the face and make everything else support it. Over-detailed armour competing with a plain face looks wrong.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Consistent light source</div>
+        <p>Decide your light comes from above-left and never change it. All highlights on top-left surfaces, all shadows on bottom-right. Inconsistent lighting looks amateur.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Dettol stripping</div>
+        <p>Submerge a badly painted mini in Dettol (brown antiseptic) for 12 hours, then scrub with old toothbrush. Removes all paint cleanly — back to bare plastic. Start fresh.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Compare to references</div>
+        <p>Keep reference photos of real miniatures next to your work. Your brain adjusts to what it sees — a fresh reference resets your eye and reveals where to improve.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Finished is better than perfect</div>
+        <p>A completed mini on the table beats a perfect mini never finished. Perfection leads to abandonment. Paint to done, not to ideal.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Watch while you paint</div>
+        <p>Put on YouTube painting tutorials while you paint. Passively absorbing techniques for hours while practicing them is the fastest way to improve.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📚 Recommended Learning Path</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Month 1: Learn the basics on cheap minis</div><p>Buy a cheap box (Night Goblins, Skeleton Warriors, or Contrast paints starter set). Paint 10 using just basecoat + wash + drybrush. Focus on getting comfortable, not perfect results.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Month 2: Add layering &amp; edge highlighting</div><p>Pick 3 minis from your first batch. Re-paint them with added layering on armour and edge highlights. Compare before/after — the improvement will be dramatic.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Month 3: Tackle a character or hero model</div><p>Spend a week on one mini. Apply everything learned. Face, eyes, details, proper basing. This is your benchmark — photograph it for your "first real mini."</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Month 4–6: Learn wet blending &amp; glazing</div><p>Dedicate sessions to just practicing the technique on spare models. Don't try to rush a display piece while still learning wet blending — practice first.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Month 6+: Attempt OSL or NMM</div><p>These are advanced techniques. Try OSL on a mini with a plasma gun or power sword. Don't aim for perfection first time — understanding the concept is the goal.</p></div></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content-wrap -->
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+</script>
+</body>
+</html>
