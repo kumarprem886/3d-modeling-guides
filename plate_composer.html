@@ -792,27 +792,17 @@
       </div>
 
       <div class="control-group">
-        <!-- Preset pills -->
+        <!-- Preset dropdown -->
         <div>
-          <div class="field-label">Preset</div>
-          <div class="preset-scroll" id="presetPills">
-            <button class="preset-pill" onclick="clickPresetPill(this,'40x60')">40×60</button>
-            <button class="preset-pill" onclick="clickPresetPill(this,'60x90')">60×90</button>
-            <button class="preset-pill" onclick="clickPresetPill(this,'60x120')">60×120</button>
-            <button class="preset-pill" onclick="clickPresetPill(this,'120x60')">120×60</button>
-            <button class="preset-pill" onclick="clickPresetPill(this,'60x60')">60×60</button>
-            <button class="preset-pill" onclick="clickPresetPill(this,'100x150')">100×150</button>
-            <button class="preset-pill" onclick="clickPresetPill(this,'210x297')">A4</button>
-          </div>
-          <!-- Hidden select kept for JS compatibility -->
-          <select id="preset" onchange="applyPreset()">
-            <option value="40x60">40×60mm</option>
-            <option value="60x90" selected>60×90mm</option>
-            <option value="60x120">60×120mm</option>
-            <option value="120x60">120×60mm</option>
-            <option value="60x60">60×60mm</option>
-            <option value="100x150">100×150mm</option>
-            <option value="210x297">A4 210×297mm</option>
+          <label class="field-label" for="preset">Plate Preset</label>
+          <select id="preset" onchange="applyPreset()" style="display:block;width:100%;padding:8px 10px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:6px;font-size:13px;cursor:pointer;margin-bottom:8px;">
+            <option value="40x60">40 × 60 mm — tiny test plate</option>
+            <option value="60x60">60 × 60 mm — square sampler</option>
+            <option value="60x90" selected>60 × 90 mm — small plate (default)</option>
+            <option value="60x120">60 × 120 mm — tall strip</option>
+            <option value="120x60">120 × 60 mm — wide strip</option>
+            <option value="100x150">100 × 150 mm — medium plate</option>
+            <option value="210x297">A4 210 × 297 mm — full sheet</option>
             <option value="custom">Custom…</option>
           </select>
         </div>

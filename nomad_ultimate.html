@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nomad Sculpt — Ultimate Guide | 3D Learning Hub</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #161b22; border-bottom: 1px solid #30363d;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.5rem; gap: 1rem;
+  }
+  .site-nav a.back-link { color: #29b6d4; text-decoration: none; font-size: 14px; white-space: nowrap; transition: color 0.2s; }
+  .site-nav a.back-link:hover { color: #6dd5e8; }
+  .site-nav .nav-title { font-size: 17px; font-weight: 700; color: #e6edf3; text-align: center; flex: 1; }
+  .site-nav .nav-sub { font-size: 13px; color: #8b949e; white-space: nowrap; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #001520 0%, #0d1117 40%, #001020 100%);
+    border-bottom: 1px solid #30363d;
+    padding: 2.5rem 1.5rem 2rem; text-align: center;
+  }
+  .hero-icon { font-size: 56px; margin-bottom: 0.5rem; }
+  .hero h1 { font-size: 30px; font-weight: 800; color: #e6edf3; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+  .hero h1 span { color: #29b6d4; }
+  .hero p { color: #8b949e; font-size: 14px; max-width: 580px; margin: 0 auto 1rem; }
+  .hero-pills { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .hero-pill { border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .hero-pill.cyan  { background: #001a20; border: 1px solid #29b6d4; color: #29b6d4; }
+  .hero-pill.plain { background: #21262d; border: 1px solid #30363d; color: #8b949e; }
+
+  /* ── PROGRESS ── */
+  .progress-bar { background: #161b22; border-bottom: 1px solid #30363d; padding: 0.55rem 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .progress-pill { padding: 3px 14px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+  .pill-beginner     { background: #0d4429; color: #3fb950; border: 1px solid #2daa6b; }
+  .pill-intermediate { background: #2d1f00; color: #e3b341; border: 1px solid #f0a500; }
+  .pill-advanced     { background: #001520; color: #29b6d4; border: 1px solid #29b6d4; }
+  .pill-expert       { background: #3d0000; color: #ff7b72; border: 1px solid #e74c3c; }
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    background: #0d1117; border-bottom: 1px solid #30363d;
+    padding: 0.75rem 1.5rem 0;
+    display: flex; gap: 0.35rem; flex-wrap: wrap;
+    position: sticky; top: 53px; z-index: 90;
+  }
+  .tab-btn {
+    background: #161b22; border: 1px solid #30363d; color: #8b949e;
+    border-bottom: none; border-radius: 8px 8px 0 0;
+    padding: 0.45rem 1rem; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+    font-family: inherit; white-space: nowrap;
+  }
+  .tab-btn:hover { background: #21262d; color: #e6edf3; }
+  .tab-btn.active { background: #29b6d4; color: #000; border-color: #29b6d4; font-weight: 700; }
+
+  /* ── CONTENT ── */
+  .content-wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1.5rem 5rem; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .tab-title { font-size: 24px; font-weight: 700; color: #e6edf3; margin-bottom: 0.35rem; }
+  .tab-subtitle { color: #8b949e; font-size: 14px; margin-bottom: 1.5rem; }
+
+  /* ── CARDS ── */
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1.2rem; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 1.2rem; }
+  .card-grid .card { margin-bottom: 0; }
+  .card-grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.9rem; margin-bottom: 1.2rem; }
+  .card-grid-3 .card { margin-bottom: 0; }
+
+  /* ── HEADINGS ── */
+  .section-heading { color: #29b6d4; font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 0.5rem; }
+  h3 { font-size: 14px; font-weight: 600; color: #c9d1d9; margin: 0.85rem 0 0.45rem; }
+  p { margin-bottom: 0.6rem; color: #c9d1d9; font-size: 14px; }
+
+  /* ── TIPS ── */
+  .tip { border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.9rem; font-size: 13.5px; line-height: 1.55; }
+  .tip-green  { background: #0d4429; border-left: 4px solid #2daa6b; color: #aff5c8; }
+  .tip-yellow { background: #3d2c00; border-left: 4px solid #f0a500; color: #ffe08a; }
+  .tip-red    { background: #3d0000; border-left: 4px solid #e74c3c; color: #ffb3b0; }
+  .tip-blue   { background: #001d3d; border-left: 4px solid #1a8cff; color: #9ecfff; }
+  .tip-cyan   { background: #001520; border-left: 4px solid #29b6d4; color: #a0dde8; }
+  .tip strong { font-weight: 700; }
+
+  /* ── LISTS ── */
+  ul.plain { list-style: none; padding: 0; }
+  ul.plain li { padding: 5px 0; font-size: 13.5px; color: #c9d1d9; border-bottom: 1px solid #21262d; }
+  ul.plain li:last-child { border-bottom: none; }
+  ul.plain li::before { content: '▸ '; color: #29b6d4; font-size: 11px; }
+  ul.bullet { padding-left: 1.4rem; }
+  ul.bullet li { font-size: 13.5px; color: #c9d1d9; margin-bottom: 5px; }
+  ol.steps { padding-left: 1.4rem; }
+  ol.steps li { font-size: 13.5px; color: #c9d1d9; margin-bottom: 8px; padding-left: 4px; }
+
+  /* ── WORKFLOW ── */
+  .workflow { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.2rem; }
+  .workflow-step { display: flex; gap: 1rem; align-items: flex-start; background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 1rem 1.2rem; }
+  .step-num { width: 28px; height: 28px; background: #29b6d4; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #000; flex-shrink: 0; margin-top: 2px; }
+  .step-body .step-title { font-weight: 700; color: #e6edf3; font-size: 14px; margin-bottom: 4px; }
+  .step-body p { font-size: 13px; color: #8b949e; margin: 0; }
+
+  /* ── TOOL GRID ── */
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+  .tool-card { background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 0.9rem 1.1rem; transition: border-color 0.2s; }
+  .tool-card:hover { border-color: #29b6d4; }
+  .tool-card .tc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .tool-card .tc-icon { font-size: 20px; }
+  .tool-card .tc-name { font-weight: 700; color: #e6edf3; font-size: 14px; }
+  .tool-card .tc-level { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin-left: auto; }
+  .level-b { background: #0d4429; color: #3fb950; }
+  .level-i { background: #2d1f00; color: #f0a500; }
+  .level-a { background: #001520; color: #29b6d4; }
+  .level-e { background: #3d0000; color: #ff7b72; }
+  .tool-card p { font-size: 12.5px; color: #8b949e; margin: 0; }
+  .tool-card .tc-tip { font-size: 11.5px; color: #29b6d4; margin-top: 5px; }
+
+  /* ── SHORTCUT ROWS ── */
+  .shortcut-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #21262d; padding: 6px 0; gap: 1rem; }
+  .shortcut-row:last-child { border-bottom: none; }
+  .shortcut-desc { color: #c9d1d9; font-size: 13px; flex: 1; }
+  .shortcut-keys { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  kbd { background: #21262d; border: 1px solid #444; border-bottom: 2px solid #444; border-radius: 5px; padding: 2px 7px; font-family: monospace; font-size: 12px; color: #e6edf3; white-space: nowrap; display: inline-block; }
+
+  /* ── TABLE ── */
+  .data-table { width: 100%; border-collapse: collapse; margin-bottom: 1.2rem; font-size: 13px; }
+  .data-table th { background: #21262d; color: #e6edf3; padding: 8px 12px; text-align: left; font-size: 12px; letter-spacing: 0.04em; }
+  .data-table td { padding: 7px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: #161b22; }
+  .good { color: #3fb950; } .warn { color: #f0a500; } .bad { color: #ff7b72; }
+
+  /* ── CONCEPT CARDS ── */
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+  .concept-card { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 0.85rem 1rem; }
+  .concept-card .concept-title { font-size: 13px; font-weight: 700; color: #29b6d4; margin-bottom: 4px; }
+  .concept-card p { font-size: 12.5px; margin: 0; color: #8b949e; }
+
+  /* ── BADGE ── */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge-green  { background: #0d4429; color: #3fb950; }
+  .badge-yellow { background: #3d2c00; color: #f0a500; }
+  .badge-cyan   { background: #001520; color: #29b6d4; }
+  .badge-red    { background: #3d0000; color: #ff7b72; }
+
+  hr.divider { border: none; border-top: 1px solid #30363d; margin: 1.2rem 0; }
+
+  /* ── SCROLL TOP ── */
+  .scroll-top { position: fixed; bottom: 2rem; right: 2rem; background: #29b6d4; color: #000; border: none; border-radius: 50%; width: 44px; height: 44px; font-size: 20px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 12px rgba(41,182,212,0.4); z-index: 200; display: none; }
+  .scroll-top:hover { background: #6dd5e8; }
+
+  @media (max-width: 600px) {
+    .site-nav { flex-wrap: wrap; gap: 0.4rem; }
+    .tab-btn { font-size: 12px; padding: 0.35rem 0.6rem; }
+    .content-wrap { padding: 1rem; }
+    .card-grid, .card-grid-3, .tool-grid, .concept-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="back-link">← Back to Hub</a>
+  <span class="nav-title">🗿 Nomad Sculpt — Ultimate Guide</span>
+  <span class="nav-sub">iPad / Android Tablet</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-icon">🗿</div>
+  <h1>Nomad Sculpt — <span>Ultimate Guide</span></h1>
+  <p>Professional 3D sculpting on your iPad or Android tablet — from your very first sphere to a print-ready miniature, character, or prop.</p>
+  <div class="hero-pills">
+    <span class="hero-pill cyan">iPad / Apple Pencil</span>
+    <span class="hero-pill cyan">Android Tablet</span>
+    <span class="hero-pill plain">3D Printing</span>
+    <span class="hero-pill plain">Miniatures</span>
+    <span class="hero-pill plain">Characters</span>
+    <span class="hero-pill plain">Warhammer</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <span class="progress-pill pill-beginner">Beginner</span>
+  <span class="progress-pill pill-intermediate">Intermediate</span>
+  <span class="progress-pill pill-advanced">Advanced</span>
+  <span class="progress-pill pill-expert">Expert</span>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('start',this)">🚀 Getting Started</button>
+  <button class="tab-btn" onclick="switchTab('interface',this)">🖥 Interface</button>
+  <button class="tab-btn" onclick="switchTab('tools',this)">🛠 Tools</button>
+  <button class="tab-btn" onclick="switchTab('shortcuts',this)">👆 Gestures</button>
+  <button class="tab-btn" onclick="switchTab('topology',this)">🔺 Topology</button>
+  <button class="tab-btn" onclick="switchTab('techniques',this)">✏ Techniques</button>
+  <button class="tab-btn" onclick="switchTab('painting',this)">🎨 Painting</button>
+  <button class="tab-btn" onclick="switchTab('lighting',this)">💡 Lighting &amp; Scene</button>
+  <button class="tab-btn" onclick="switchTab('printing',this)">🖨 3D Printing</button>
+  <button class="tab-btn" onclick="switchTab('tips',this)">⚡ Pro Tips</button>
+</div>
+
+<div class="content-wrap">
+
+<!-- ══════════════════════════════════════ GETTING STARTED ══ -->
+<div id="tab-start" class="tab-panel active">
+  <div class="tab-title">Getting Started with Nomad Sculpt</div>
+  <div class="tab-subtitle">What it is, what you need, and how to set it up for serious work</div>
+
+  <div class="tip tip-cyan">
+    <strong>What is Nomad Sculpt?</strong> Nomad Sculpt is a professional-grade 3D sculpting app for iPad and Android tablets. It rivals desktop software like ZBrush for sculpting workflows — dynamic topology, voxel remesh, PBR materials, vertex painting, and STL export for 3D printing. One-time purchase, no subscription (~₹800 on App Store / Play Store).
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="section-heading">📱 Recommended Hardware</div>
+      <h3>Best iPad Models</h3>
+      <ul class="plain">
+        <li><strong>iPad Pro M2/M4</strong> — best performance, no compromise <span class="badge badge-green">Best</span></li>
+        <li><strong>iPad Air M1/M2</strong> — excellent, great value <span class="badge badge-green">Recommended</span></li>
+        <li><strong>iPad Pro M1</strong> — still very capable</li>
+        <li><strong>iPad (10th gen)</strong> — works for moderate complexity</li>
+        <li><strong>iPad mini 6</strong> — portable, good for sketching</li>
+      </ul>
+      <h3>Stylus</h3>
+      <ul class="plain">
+        <li><strong>Apple Pencil 2</strong> — best, low latency, pressure <span class="badge badge-green">Best</span></li>
+        <li><strong>Apple Pencil 1</strong> — good, USB-C version available</li>
+        <li><strong>Logitech Crayon</strong> — no pressure sensitivity but works</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="section-heading">🤖 Android Tablets</div>
+      <ul class="plain">
+        <li><strong>Samsung Galaxy Tab S9 Ultra</strong> — best Android option</li>
+        <li><strong>Samsung Galaxy Tab S9+/S9</strong> — excellent</li>
+        <li><strong>Samsung Galaxy Tab S8 Ultra</strong> — still great</li>
+        <li>Use with <strong>Samsung S Pen</strong> (included) — supports pressure</li>
+        <li>Xiaomi Pad 6 Pro — budget option, limited complexity</li>
+      </ul>
+      <div class="tip tip-yellow" style="margin-top:10px;">
+        <strong>Android tip:</strong> Android version has slight feature lag behind iOS. Core sculpting is identical. Some lighting/rendering features arrive on iOS first.
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-heading">⚙ Initial Setup</div>
+      <ul class="plain">
+        <li>Download <strong>Nomad Sculpt</strong> from App Store or Play Store (~₹800, one-time)</li>
+        <li>Open app → <strong>Settings (⚙)</strong> → Performance → set <strong>Max Polycount</strong> to match your device RAM</li>
+        <li>Enable <strong>Smooth shading</strong> in scene settings for better preview</li>
+        <li>Set <strong>Unit System to mm</strong> if printing (Settings → Scene → Units)</li>
+        <li>Turn on <strong>Lazy mouse</strong> in brush settings for smoother strokes</li>
+        <li>Enable <strong>Symmetry (X axis)</strong> — top toolbar — for all character sculpting</li>
+        <li>Set background to <strong>grey</strong> — easier to judge form than white or black</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🧠 Core Concepts</div>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-title">Polygon Mesh</div>
+        <p>Your model is made of triangles or quads. More polygons = more detail, but heavier on performance. Nomad manages this with dynamic topology and remesh.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Dynamic Topology (Dyntopo)</div>
+        <p>Nomad adds and removes polygons automatically as you sculpt. Sculpt anywhere — detail only exists where you paint it. Great for freeform organic work.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Voxel Remesh</div>
+        <p>Rebuilds the mesh at a uniform resolution — like a 3D grid. Cleans up messy topology mid-sculpt. Destructive but powerful for starting fresh.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Multiresolution</div>
+        <p>Sculpt at multiple detail levels — rough blocking at low res, fine surface detail at high res. Switch between levels non-destructively.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Symmetry</div>
+        <p>Mirror sculpt strokes across an axis. Enable X symmetry for characters — every stroke on the left mirrors to the right instantly. Saves 50% of sculpting time.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Masking</div>
+        <p>Paint a mask to protect areas from sculpting. Masked areas (shown in darker grey) are unaffected by brushes. Essential for partial edits.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">PBR Materials</div>
+        <p>Physically Based Rendering — realistic material properties (roughness, metallic, colour). Nomad renders these in real-time on your tablet — no render farm needed.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Scene Graph</div>
+        <p>The object list (left panel) — all your objects, groups, and primitives. Tap to select, drag to reorder, use groups to organise complex models.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📐 Setting Up for 3D Printing</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Set units to millimetres</div><p>Settings (⚙) → Scene → Units → Millimetres. Now 1 unit = 1mm — what you sculpt is what you print.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Enable grid snapping</div><p>Helps keep base flat. Grid → enable in the scene settings. Useful when placing a model on a flat base.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add a reference cube</div><p>Add → Box → resize to your target print size (e.g. 32mm tall for 28mm scale miniature). Sculpt your character inside this bounding reference.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Check wall thickness regularly</div><p>Thin walls (under 0.8mm for resin, 1.5mm for FDM) will fail to print. View → Thickness overlay to visualise thin areas in red.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Export as STL or OBJ</div><p>Files (📁 icon) → Export → STL or OBJ. Send to slicer via AirDrop, Files app, or cloud storage.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ INTERFACE ══ -->
+<div id="tab-interface" class="tab-panel">
+  <div class="tab-title">Interface Overview</div>
+  <div class="tab-subtitle">Every panel, button, and menu — know exactly where everything lives</div>
+
+  <div class="card">
+    <div class="section-heading">📱 Main UI Layout</div>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-title">Top Toolbar (left)</div>
+        <p>Camera, gizmo, symmetry toggle, snap, background, rulers, scene settings. Always visible.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Top Toolbar (right)</div>
+        <p>Undo/Redo, validate, reference image, post-process, render, screenshot, full-screen.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Left Panel — Tools</div>
+        <p>All sculpt brushes and tool modes (Sculpt, Mask, Smooth, Move, Transform, Paint). Swipe left panel to scroll through tools.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Right Panel — Properties</div>
+        <p>Brush properties, stroke settings, and active tool options. Context-sensitive — changes based on selected tool.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Bottom Bar</div>
+        <p>Scene graph (object list), material/light toggles, and camera view shortcuts (Front, Top, Right). Can be toggled to save screen space.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Scene Panel (☰)</div>
+        <p>Object list, hierarchy, visibility toggles (eye icon), lock objects (lock icon). Tap any object to select. Long-press for rename/delete/duplicate.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Files Panel (📁)</div>
+        <p>New scene, Open, Save, Import (OBJ/STL/GLB), Export, and recent files. Also where you manage reference images and HDRIs.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Settings (⚙)</div>
+        <p>Performance limits, UI scale, canvas background, grid, units, shortcuts, and import/export defaults. Set up once and forget.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🎛 Key Settings to Configure</div>
+    <div class="card-grid">
+      <div>
+        <h3>Performance (⚙ → Performance)</h3>
+        <ul class="plain">
+          <li><strong>Polygon budget:</strong> iPad Pro M2 → 20–50M. iPad Air → 10–20M. Older iPad → 5M</li>
+          <li><strong>Pressure curve:</strong> Adjust to your Apple Pencil pressure sensitivity preference</li>
+          <li><strong>Multisample AA:</strong> Off for performance, 2× for clean display</li>
+          <li><strong>Shadow quality:</strong> Low for sculpting speed, High for screenshots</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Brush Defaults (Right panel)</h3>
+        <ul class="plain">
+          <li><strong>Radius:</strong> Set with two-finger pinch or the slider — muscle memory is key</li>
+          <li><strong>Intensity:</strong> Start at 50%, reduce for subtle shaping</li>
+          <li><strong>Lazy Mouse:</strong> Enable — smooths stroke input, reduces shaky lines</li>
+          <li><strong>Spacing:</strong> Lower = smoother stroke, higher = dotted effect</li>
+          <li><strong>Falloff:</strong> Gaussian (soft edge) vs Constant (hard edge)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📷 Camera Controls</div>
+    <table class="data-table">
+      <thead><tr><th>Action</th><th>Gesture</th></tr></thead>
+      <tbody>
+        <tr><td>Orbit / rotate view</td><td>1 finger drag (on empty space)</td></tr>
+        <tr><td>Pan / move view</td><td>2 finger drag</td></tr>
+        <tr><td>Zoom in / out</td><td>2 finger pinch</td></tr>
+        <tr><td>Reset view</td><td>Tap the home icon in top toolbar</td></tr>
+        <tr><td>Front view</td><td>Bottom bar → Front (or F shortcut)</td></tr>
+        <tr><td>Top view</td><td>Bottom bar → Top</td></tr>
+        <tr><td>Orthographic mode</td><td>Tap the camera icon → toggle Ortho</td></tr>
+        <tr><td>Focus on selection</td><td>Double-tap the object</td></tr>
+        <tr><td>Set pivot point</td><td>Long-press on canvas → Set pivot</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">➕ Adding Primitives</div>
+    <p>Tap the <strong>+ icon</strong> in the scene panel to add new primitives:</p>
+    <div class="card-grid-3">
+      <div class="concept-card"><div class="concept-title">Sphere</div><p>Starting point for organic forms — characters, heads, creatures. UV sphere or Icosphere options.</p></div>
+      <div class="concept-card"><div class="concept-title">Box / Cube</div><p>Hard surface base — weapons, armour plates, buildings. Booleans work best starting from boxes.</p></div>
+      <div class="concept-card"><div class="concept-title">Cylinder</div><p>Arms, legs, barrels, columns. Set segment count before converting to sculpt.</p></div>
+      <div class="concept-card"><div class="concept-title">Torus</div><p>Rings, rope loops, donuts, O-rings. Great for armour details.</p></div>
+      <div class="concept-card"><div class="concept-title">Plane</div><p>Flat surfaces, cloth base, terrain. Subdivide before sculpting.</p></div>
+      <div class="concept-card"><div class="concept-title">Lathe</div><p>Rotational shapes — vases, gems, helmets. Draw a profile curve and it revolves it 360°.</p></div>
+      <div class="concept-card"><div class="concept-title">Tube</div><p>Pipes, cables, tails, tentacles. Set path with control points.</p></div>
+      <div class="concept-card"><div class="concept-title">Import</div><p>Import OBJ, STL, or GLB from Files app, iCloud, or cloud storage to continue work from another app.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ TOOLS ══ -->
+<div id="tab-tools" class="tab-panel">
+  <div class="tab-title">Sculpt Tools Reference</div>
+  <div class="tab-subtitle">Every brush explained — what it does, when to use it, and how to get the best result</div>
+
+  <div class="section-heading">🏗 Volume Building Brushes</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🏔</span><span class="tc-name">Clay</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Builds up volume smoothly — like adding clay. The most-used brush for blocking and building forms. Soft falloff, even distribution.</p>
+      <div class="tc-tip">Use for: body mass, general volume building, blocking out shapes</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🧱</span><span class="tc-name">Clay Strips</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Like Clay but with a flat, strip-like shape. Builds up more pronounced ridges and strips — perfect for muscles and directional forms.</p>
+      <div class="tc-tip">Use for: muscles, raised armour ridges, directional forms</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🌊</span><span class="tc-name">Flatten</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Flattens geometry to the average plane of the brush area. Excellent for creating flat armour surfaces and smoothing broad areas.</p>
+      <div class="tc-tip">Use for: armour plates, flat surfaces, knocking back bumps</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">⬆</span><span class="tc-name">Inflate</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Pushes geometry outward along normals — puffs up the surface evenly. Hold invert (or enable subtract) to deflate.</p>
+      <div class="tc-tip">Use for: cheeks, belly, inflated surfaces, scars</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🔵</span><span class="tc-name">Blob</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Spherical volume addition — like pressing a ball into the surface. Creates round bumps and warts. Very strong falloff.</p>
+      <div class="tc-tip">Use for: warts, eyes, bolts, rivets, organic bumps</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🌀</span><span class="tc-name">Layer</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Builds geometry to a fixed height — won't exceed a set depth limit. Ideal for consistent thin layers like scales or tiling panels.</p>
+      <div class="tc-tip">Use for: fish scales, tile patterns, panel depth consistency</div>
+    </div>
+  </div>
+
+  <div class="section-heading">✂ Carving &amp; Cutting Brushes</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">✏</span><span class="tc-name">Crease</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Carves a sharp crease into the surface — the most important detail brush. Creates wrinkles, seams, panel lines, armour joints.</p>
+      <div class="tc-tip">Use for: wrinkles, seams, panel lines, sharp folds in cloth</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">〰</span><span class="tc-name">Pinch</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Pulls geometry inward toward the brush stroke centre — sharpens ridges and defines edges. Use subtly.</p>
+      <div class="tc-tip">Use for: sharpening edges, tightening creases, fins</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🔪</span><span class="tc-name">Trim</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Cuts a flat plane through the mesh — like slicing with a knife. Creates hard flat cuts on the surface. Excellent for hard-surface work.</p>
+      <div class="tc-tip">Use for: cutting flat surfaces, slicing shapes, armour planes</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">💠</span><span class="tc-name">Trim (Line)</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Draw a straight line — everything on one side is trimmed flat. Great for flat base cuts or sharp mechanical cuts.</p>
+      <div class="tc-tip">Use for: cutting model flat for printing base, mechanical edges</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🔲</span><span class="tc-name">Trim (Rectangle)</span><span class="tc-level level-a">Advanced</span></div>
+      <p>Trim a rectangular area flat in one stroke — like milling a slot or recess into the surface.</p>
+      <div class="tc-tip">Use for: panel recesses, slots, mechanical cavities</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🔘</span><span class="tc-name">Cavity</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Sculpts into concave areas only — follows existing cavities and deepens them without affecting raised areas.</p>
+      <div class="tc-tip">Use for: deepening eye sockets, nostrils, panel lines</div>
+    </div>
+  </div>
+
+  <div class="section-heading">🖐 Transform &amp; Move Brushes</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">👆</span><span class="tc-name">Move</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Pushes geometry in the direction of your stroke — like pushing clay with a finger. Essential for posing and major form adjustments.</p>
+      <div class="tc-tip">Use for: adjusting proportions, posing, pushing large masses</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🌀</span><span class="tc-name">Grab</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Grabs a region of geometry and moves it as a unit — like picking up a lump of clay. Larger radius = larger grab area.</p>
+      <div class="tc-tip">Use for: pulling out noses, ears, horns from the base mesh</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">↔</span><span class="tc-name">Elastic Grab</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Like Grab but with elastic deformation — surrounding geometry follows the movement smoothly. Great for organic posing.</p>
+      <div class="tc-tip">Use for: natural-feeling pose adjustments, organic deformation</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🌀</span><span class="tc-name">Twist</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Rotates geometry in a circular motion around the brush centre. Creates spirals, twisted cloth, and rotating deformations.</p>
+      <div class="tc-tip">Use for: twisted cloth, rope texture, spiral horns</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">〰</span><span class="tc-name">Snake Hook</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Pulls geometry out in the stroke direction, creating tentacle-like extrusions from the surface. Dynamic topology recommended.</p>
+      <div class="tc-tip">Use for: tentacles, horns, spines, tails, spikes</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">⚙</span><span class="tc-name">Transform (Gizmo)</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Standard move/rotate/scale gizmo for precise object-level transformation. Switch between local and world coordinates.</p>
+      <div class="tc-tip">Use for: placing objects, scaling primitives, precise positioning</div>
+    </div>
+  </div>
+
+  <div class="section-heading">🎨 Utility Brushes</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">💧</span><span class="tc-name">Smooth</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Softens and blurs geometry — removes lumps, brush marks, and rough detail. The second most-used brush after Clay. Hold Shift to smooth temporarily from any other brush.</p>
+      <div class="tc-tip">Hold Shift on any brush to get temporary Smooth</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🟤</span><span class="tc-name">Mask</span><span class="tc-level level-i">Intermediate</span></div>
+      <p>Paint areas to protect from sculpting. Masked areas turn dark grey and are immune to all brush effects. Invert mask, clear mask, or grow/shrink mask options available.</p>
+      <div class="tc-tip">Use for: protecting finished areas while sculpting nearby</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🔲</span><span class="tc-name">Face Group</span><span class="tc-level level-a">Advanced</span></div>
+      <p>Paint coloured face groups to define regions of the mesh. Used with masking and for material assignment zones.</p>
+      <div class="tc-tip">Use for: defining UV zones, material regions, selective remesh</div>
+    </div>
+    <div class="tool-card">
+      <div class="tc-header"><span class="tc-icon">🎨</span><span class="tc-name">Paint</span><span class="tc-level level-b">Beginner</span></div>
+      <p>Vertex colour painting directly on the mesh. Set colour, roughness, and metallic value per vertex. Exports with GLB format.</p>
+      <div class="tc-tip">Use for: adding colour and material variation to sculpts</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ GESTURES ══ -->
+<div id="tab-shortcuts" class="tab-panel">
+  <div class="tab-title">Gestures &amp; Shortcuts</div>
+  <div class="tab-subtitle">Touch gestures, Apple Pencil shortcuts, and the quickest ways to work</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="section-heading">👆 Touch Gestures</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Orbit view</span><span class="shortcut-keys"><kbd>1 finger drag</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pan view</span><span class="shortcut-keys"><kbd>2 finger drag</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Zoom</span><span class="shortcut-keys"><kbd>2 finger pinch</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>2 finger tap</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>3 finger tap</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Smooth (temporary)</span><span class="shortcut-keys"><kbd>Shift</kbd> + stroke</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Subtract mode (invert)</span><span class="shortcut-keys"><kbd>2 finger</kbd> + stroke</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Symmetry toggle</span><span class="shortcut-keys">Top toolbar S icon</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Mask clear</span><span class="shortcut-keys">Mask tool → Clear button</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Invert mask</span><span class="shortcut-keys">Mask tool → Invert</span></div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">✏ Apple Pencil Shortcuts</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Sculpt</span><span class="shortcut-keys">Pencil tip on screen</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Temporary Smooth</span><span class="shortcut-keys">Hold Shift + pencil</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Subtract / Invert brush</span><span class="shortcut-keys">2nd finger + pencil stroke</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Adjust radius</span><span class="shortcut-keys">Pinch 2 fingers (no pencil)</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Double tap (AP2)</span><span class="shortcut-keys">Switch tool (configurable)</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Squeeze (AP Pro)</span><span class="shortcut-keys">Configurable shortcut</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Hover (AP Pro)</span><span class="shortcut-keys">See brush preview on screen</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Tilt angle</span><span class="shortcut-desc">Affects brush shape if tilt is enabled in brush settings</span></div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">🎛 Brush Radius &amp; Intensity</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Increase brush radius</span><span class="shortcut-keys">Drag right on radius slider</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Decrease brush radius</span><span class="shortcut-keys">Drag left on radius slider</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Quick resize (pinch)</span><span class="shortcut-keys">2-finger pinch without pencil</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Increase intensity</span><span class="shortcut-keys">Drag right on intensity slider</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Pressure sensitivity</span><span class="shortcut-keys">Pen pressure → radius or intensity</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lock radius to pressure</span><span class="shortcut-keys">Brush settings → Pressure → Radius</span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Lazy mouse on/off</span><span class="shortcut-keys">Brush settings → Stroke → Lazy</span></div>
+    </div>
+
+    <div class="card">
+      <div class="section-heading">⌨ Keyboard Shortcuts (Bluetooth)</div>
+      <div class="tip tip-cyan" style="margin-bottom:12px;"><strong>Bluetooth keyboard works!</strong> Pair a Magic Keyboard or any BT keyboard for extra shortcuts.</div>
+      <div class="shortcut-row"><span class="shortcut-desc">Undo</span><span class="shortcut-keys"><kbd>Cmd</kbd>+<kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Redo</span><span class="shortcut-keys"><kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle symmetry</span><span class="shortcut-keys"><kbd>S</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle wireframe</span><span class="shortcut-keys"><kbd>W</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Front view</span><span class="shortcut-keys"><kbd>F</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Top view</span><span class="shortcut-keys"><kbd>T</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Side view</span><span class="shortcut-keys"><kbd>L</kbd></span></div>
+      <div class="shortcut-row"><span class="shortcut-desc">Toggle matcap / PBR</span><span class="shortcut-keys"><kbd>M</kbd></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">⚙ Configurable Apple Pencil Double-Tap</div>
+    <p>Settings → Pencil → Double Tap Action. Set to one of:</p>
+    <div class="card-grid-3">
+      <div class="concept-card"><div class="concept-title">Smooth / Last tool</div><p>Switch between your current tool and Smooth. Most popular — smooth without moving to the sidebar.</p></div>
+      <div class="concept-card"><div class="concept-title">Subtract toggle</div><p>Flip between add and subtract mode. Great for Clay brush users — carve and build with one tool.</p></div>
+      <div class="concept-card"><div class="concept-title">Mask toggle</div><p>Instantly switch to Mask brush. Protect areas then switch back.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ TOPOLOGY ══ -->
+<div id="tab-topology" class="tab-panel">
+  <div class="tab-title">Topology &amp; Remeshing</div>
+  <div class="tab-subtitle">Managing polygon density — the most important technical skill in Nomad</div>
+
+  <div class="tip tip-cyan">
+    <strong>Why topology matters:</strong> Too few polygons = blocky, can't add detail. Too many = slow performance, laggy sculpting. The right density for each stage of the workflow is the key skill that separates smooth workflows from frustrating ones.
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🔺 Dynamic Topology (Dyntopo)</div>
+    <p>Enable in the top toolbar → <strong>Topology → Dynamic</strong>. Nomad adds and removes triangles as you sculpt — detail only exists where you paint.</p>
+    <div class="card-grid">
+      <div>
+        <h3>When to Use</h3>
+        <ul class="bullet">
+          <li>Freeform organic sculpting — creatures, characters</li>
+          <li>When you don't know the final form yet</li>
+          <li>Pulling out tentacles, spines, complex shapes with Snake Hook</li>
+          <li>Early blocking where you need flexibility</li>
+        </ul>
+        <h3>Settings</h3>
+        <ul class="plain">
+          <li><strong>Detail size:</strong> Controls triangle size — smaller = more detail. Set relative to your brush size.</li>
+          <li><strong>Method:</strong> Subdivide (adds) / Collapse (removes) / Subdivide+Collapse (both)</li>
+          <li><strong>Constant detail:</strong> Uniform density everywhere vs brush-relative density</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Pros & Cons</h3>
+        <table class="data-table">
+          <tr><th>Pro</th><th>Con</th></tr>
+          <tr><td class="good">Works anywhere on the mesh</td><td class="bad">Irregular triangles</td></tr>
+          <tr><td class="good">No pre-planning needed</td><td class="bad">Can get very heavy fast</td></tr>
+          <tr><td class="good">Detail exactly where needed</td><td class="bad">Harder to remesh later</td></tr>
+          <tr><td class="good">Great for organic forms</td><td class="bad">Not ideal for hard-surface</td></tr>
+        </table>
+        <div class="tip tip-yellow" style="margin-top:8px;">
+          <strong>Tip:</strong> Use Dyntopo for blocking only. Once happy with the form, voxel remesh to get clean even topology, then continue detailing with multiresolution.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🔲 Voxel Remesh</div>
+    <p>Topology → <strong>Remesh (Voxel)</strong>. Rebuilds the entire mesh at a uniform resolution — like filling a 3D grid with the shape of your model.</p>
+    <div class="card-grid">
+      <div>
+        <h3>When to Use</h3>
+        <ul class="bullet">
+          <li>After boolean operations (union/subtract) to clean up</li>
+          <li>Switching from Dyntopo blocking to detail sculpting</li>
+          <li>When topology has become a tangled mess</li>
+          <li>Before adding Multiresolution levels</li>
+        </ul>
+        <h3>Voxel Size Guide</h3>
+        <table class="data-table">
+          <tr><th>Stage</th><th>Voxel Size</th><th>Result</th></tr>
+          <tr><td>Rough block</td><td>3–5mm</td><td>Very low poly, fast</td></tr>
+          <tr><td>Mid detail</td><td>1–2mm</td><td>Good for muscles/cloth</td></tr>
+          <tr><td>Fine detail</td><td>0.3–0.8mm</td><td>Wrinkles, pores</td></tr>
+          <tr><td>Extreme detail</td><td>0.1–0.2mm</td><td>Heavy — Pro iPads only</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Important Notes</h3>
+        <ul class="plain">
+          <li><strong>Destructive</strong> — replaces all topology. Undo available immediately after.</li>
+          <li><strong>Removes vertex paint</strong> — bake vertex colours before remeshing if needed</li>
+          <li><strong>Closes holes</strong> — remesh fills any holes in your mesh (good for printing)</li>
+          <li><strong>Smoothing option</strong> — enable smooth after remesh to remove voxel stepping</li>
+        </ul>
+        <div class="tip tip-green" style="margin-top:8px;">
+          <strong>Save before remesh!</strong> Always save a copy before voxel remesh — it's destructive and high voxel counts can be very heavy.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📐 Multiresolution (Multires)</div>
+    <p>Topology → <strong>Multires</strong>. Add subdivision levels non-destructively — sculpt at high res, go back to low res, changes propagate both ways.</p>
+    <div class="card-grid">
+      <div>
+        <h3>Workflow</h3>
+        <ol class="steps">
+          <li>Block out with Dyntopo or primitives</li>
+          <li>Voxel remesh to get clean even topology</li>
+          <li>Add Multires → Subdivide once (level 1)</li>
+          <li>Sculpt medium detail (muscles, cloth folds)</li>
+          <li>Subdivide again (level 2)</li>
+          <li>Sculpt fine detail (wrinkles, skin pores, cloth weave)</li>
+          <li>Go back to level 1 to adjust major forms if needed</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Level Guide</h3>
+        <ul class="plain">
+          <li><strong>Level 0 (base):</strong> Base cage — major proportion adjustments</li>
+          <li><strong>Level 1:</strong> Muscles, major folds, armour plates</li>
+          <li><strong>Level 2:</strong> Cloth texture, skin, secondary forms</li>
+          <li><strong>Level 3:</strong> Pores, fine wrinkles, microdetail</li>
+          <li><strong>Level 4+:</strong> iPad Pro M2+ only — extreme detail</li>
+        </ul>
+        <div class="tip tip-cyan" style="margin-top:8px;"><strong>Best of both worlds:</strong> Block with Dyntopo → Voxel remesh → Multires for detailing. This is the professional workflow.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">✂ Booleans</div>
+    <p>Scene panel → select objects → long press → <strong>Boolean</strong>. Combine, subtract, or intersect meshes.</p>
+    <table class="data-table">
+      <thead><tr><th>Operation</th><th>Result</th><th>Use For</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Union</strong></td><td>Merge two objects into one mesh</td><td>Combining body parts, attaching accessories</td></tr>
+        <tr><td><strong>Difference</strong></td><td>Subtract one from the other</td><td>Cutting holes, carving recesses, chamfers</td></tr>
+        <tr><td><strong>Intersect</strong></td><td>Keep only the overlapping volume</td><td>Creating complex intersecting shapes</td></tr>
+      </tbody>
+    </table>
+    <div class="tip tip-yellow">After any boolean operation, <strong>Voxel Remesh</strong> the result to get clean topology before continuing to sculpt.</div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📉 Decimate (Reduce Polycount)</div>
+    <p>Topology → <strong>Decimate</strong>. Reduces polygon count while preserving shape — essential before exporting to a slicer.</p>
+    <ul class="bullet">
+      <li>Set target % — 50% decimate keeps half the polygons with minimal visual loss</li>
+      <li>Preview the result before committing</li>
+      <li>Aim for under 1M triangles for most slicers (Chitubox, Lychee handle up to 5M)</li>
+      <li>Decimate after all sculpting is finished — do not decimate and then continue sculpting</li>
+      <li>Use <strong>Smooth Normals</strong> after decimating to reduce shading artifacts</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ TECHNIQUES ══ -->
+<div id="tab-techniques" class="tab-panel">
+  <div class="tab-title">Sculpting Techniques</div>
+  <div class="tab-subtitle">How to actually sculpt — workflows, approaches, and technique breakdowns</div>
+
+  <div class="card">
+    <div class="section-heading">🏗 Blocking Workflow — The Right Order</div>
+    <div class="tip tip-cyan"><strong>Golden rule:</strong> Always work from big forms to small detail. Never add fine detail before the big shapes are correct. Detail on bad proportions is wasted work.</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Start from a primitive</div><p>Add a Sphere for organic forms (heads, bodies), Box for hard-surface (armour, weapons). Enable X symmetry.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Block the overall silhouette</div><p>Use <strong>Move/Grab</strong> and <strong>Clay</strong> to establish the overall mass and proportions. Check from Front, Side, and Top views. Spend 30% of your time here.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Secondary forms</div><p>Add the big secondary shapes — chest muscles, shoulder blades, jaw, brow. Still use large brushes. Don't crease anything yet.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Voxel remesh to clean up</div><p>After major forms are established, remesh for clean topology. Choose voxel size for the next level of detail.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Add Multiresolution — Level 1</div><p>Subdivide once. Define muscles, cloth folds, armour panel shapes. Smooth between forms.</p></div></div>
+      <div class="workflow-step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Subdivide — Level 2</div><p>Fine surface detail: wrinkles, cloth texture, skin pores, stitching, filigree. Use Crease, Pinch, and small Clay brushes.</p></div></div>
+      <div class="workflow-step"><div class="step-num">7</div><div class="step-body"><div class="step-title">Final pass</div><p>Check from all angles. Rotate around and spot errors. Add missing details. Paint vertex colours if needed.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">👤 Human Head Sculpting</div>
+    <div class="card-grid">
+      <div>
+        <h3>Proportions (28mm scale)</h3>
+        <ul class="plain">
+          <li>Head height = 1/7 to 1/8 of total body</li>
+          <li>Eyes sit at the <strong>midpoint</strong> of the head height</li>
+          <li>Nose = 1/3 from eye line to chin</li>
+          <li>Mouth = 1/3 from nose to chin</li>
+          <li>Eye width = 1 eye-width between eyes</li>
+          <li>Ear = between eye line and nose line</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Step-by-Step Head Block</h3>
+        <ol class="steps">
+          <li>Start with UV Sphere — squash to egg shape (wider at top)</li>
+          <li>Move front face forward slightly — cheekbones, brow ridge</li>
+          <li>Push eye sockets in with <strong>Cavity</strong> or <strong>Crease</strong></li>
+          <li>Pull nose out with <strong>Grab</strong></li>
+          <li>Define jaw edge — flatten the chin</li>
+          <li>Add ears as separate spheres, boolean union</li>
+          <li>Crease the nasolabial folds, brow line</li>
+          <li>Add lip line with thin Crease brush</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">⚔ Hard-Surface Sculpting (Armour, Weapons)</div>
+    <div class="card-grid">
+      <div>
+        <h3>Key Brushes for Hard-Surface</h3>
+        <ul class="plain">
+          <li><strong>Flatten</strong> — the most important brush. Makes true flat planes.</li>
+          <li><strong>Trim (Line)</strong> — cuts sharp flat edges across the mesh</li>
+          <li><strong>Crease</strong> — sharp panel lines and bevels</li>
+          <li><strong>Clay</strong> + <strong>Flatten</strong> — build up then flatten: clean panels</li>
+          <li><strong>Pinch</strong> — sharpen edges after flattening</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Hard-Surface Workflow</h3>
+        <ol class="steps">
+          <li>Start from Box primitive for armour panels</li>
+          <li>Trim the outer silhouette with Trim (Line)</li>
+          <li>Flatten panel faces one by one</li>
+          <li>Crease the panel line edges</li>
+          <li>Pinch the edges to sharpen them</li>
+          <li>Add rivets — add small Sphere primitives, boolean Union</li>
+          <li>Add embossed details with Clay strips</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tip tip-cyan">For extreme hard-surface (perfect 90° angles, parametric shapes), model in Shapr3D or Fusion 360, export as OBJ/STL, import into Nomad, then add organic surface detail on top.</div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">👘 Cloth &amp; Fabric Techniques</div>
+    <div class="card-grid">
+      <div>
+        <h3>Cloth Sculpting Rules</h3>
+        <ul class="bullet">
+          <li>Fabric folds where it is <strong>pinched</strong> (belt, shoulder, knee)</li>
+          <li>Folds hang down from pinch points by gravity</li>
+          <li>Compressed folds: small, tight, many (bunched fabric)</li>
+          <li>Stretched folds: long, smooth, few (taut fabric)</li>
+          <li>Study real fabric — drape a cloth over your hand and look at the folds</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Cloth Brush Technique</h3>
+        <ol class="steps">
+          <li>Establish cloth panel shapes with <strong>Clay</strong></li>
+          <li>Smooth broad areas — cloth should be smooth between folds</li>
+          <li>Use <strong>Crease</strong> to carve in main fold lines (pinch-point to edge)</li>
+          <li>Clay Strips to build up fold ridges</li>
+          <li>Smooth the top of each ridge — round top, sharp base</li>
+          <li>Add fine cloth texture with Stamp (use fabric alpha) or fine Crease</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ PAINTING ══ -->
+<div id="tab-painting" class="tab-panel">
+  <div class="tab-title">Vertex Painting &amp; Materials</div>
+  <div class="tab-subtitle">Colour your sculpt with vertex paint and set up PBR materials for realistic renders</div>
+
+  <div class="tip tip-cyan">
+    <strong>Vertex painting in Nomad</strong> stores colour on mesh vertices — not a texture map. It exports with GLB and renders beautifully in Nomad's real-time PBR renderer. For 3D printing, vertex paint is just for visualisation — the printer only sees geometry.
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="section-heading">🎨 Vertex Paint Basics</div>
+      <ul class="plain">
+        <li>Select <strong>Paint tool</strong> from left toolbar</li>
+        <li>Tap the colour swatch (right panel) to pick colour</li>
+        <li><strong>Roughness slider:</strong> 0 = mirror/glossy, 1 = fully matte</li>
+        <li><strong>Metallic slider:</strong> 0 = non-metal, 1 = pure metal</li>
+        <li><strong>Intensity:</strong> opacity of the paint stroke</li>
+        <li><strong>Wet edge:</strong> blends colour at stroke edges naturally</li>
+        <li>Use <strong>Fill</strong> to flood fill an entire object</li>
+        <li>Use <strong>Smooth</strong> with paint active to blend colours</li>
+      </ul>
+      <div class="tip tip-green" style="margin-top:10px;">
+        <strong>Before painting:</strong> You need sufficient polygon density — vertex colours look pixelated on low-poly meshes. Subdivide or remesh to at least level 2 before painting detail.
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-heading">🔮 PBR Materials</div>
+      <p>Materials → tap any object's material slot to open the material editor.</p>
+      <ul class="plain">
+        <li><strong>Base Colour:</strong> The main diffuse colour of the surface</li>
+        <li><strong>Roughness:</strong> How rough or smooth the surface is (0=glass, 1=chalk)</li>
+        <li><strong>Metallic:</strong> Whether the surface acts like a metal (0=plastic, 1=chrome)</li>
+        <li><strong>Opacity:</strong> Transparency of the material</li>
+        <li><strong>Emission:</strong> Glow — makes the surface emit light</li>
+        <li><strong>Normal Map:</strong> Import a normal map for surface detail without extra polygons</li>
+        <li><strong>Matcap:</strong> Switch to matcap mode for a classic ZBrush-style clay preview</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🖼 Matcaps</div>
+    <p>Matcaps (Material Captures) simulate lighting in a single texture — great for sculpting as they show form clearly without needing to set up lights.</p>
+    <div class="card-grid-3">
+      <div class="concept-card"><div class="concept-title">Clay (warm)</div><p>Standard sculpting view — shows all form clearly. Use this while sculpting 90% of the time.</p></div>
+      <div class="concept-card"><div class="concept-title">Metal</div><p>Shows reflective metal surface — useful for checking hard-surface geometry.</p></div>
+      <div class="concept-card"><div class="concept-title">Skin</div><p>Soft subsurface scattering simulation — great for evaluating character faces.</p></div>
+      <div class="concept-card"><div class="concept-title">Custom matcaps</div><p>Import your own matcap .png files — download ZBrush matcaps (most are compatible).</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ LIGHTING ══ -->
+<div id="tab-lighting" class="tab-panel">
+  <div class="tab-title">Lighting &amp; Scene Rendering</div>
+  <div class="tab-subtitle">Create stunning renders directly in Nomad — no desktop software needed</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="section-heading">💡 Light Types</div>
+      <ul class="plain">
+        <li><strong>Directional light</strong> — parallel rays, like sunlight. Main key light for most renders.</li>
+        <li><strong>Point light</strong> — radiates in all directions from a point. Good for lamps, fires, OSL.</li>
+        <li><strong>Spot light</strong> — cone of light. Dramatic cinematic lighting.</li>
+        <li><strong>HDRI environment</strong> — 360° image-based lighting. Most realistic. Load from Files.</li>
+      </ul>
+      <div class="tip tip-cyan" style="margin-top:10px;">
+        <strong>Best setup:</strong> One strong directional key light from upper-left + HDRI for ambient fill. This gives a cinematic render in Nomad with minimal setup.
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-heading">🌐 HDRI Lighting</div>
+      <p>Scene → Environment → Load HDRI. Download free HDRIs from <strong>polyhaven.com</strong> — save to Files app, then load into Nomad.</p>
+      <ul class="plain">
+        <li><strong>Exposure:</strong> Brightness of the environment light</li>
+        <li><strong>Blur:</strong> How soft the reflections are</li>
+        <li><strong>Rotation:</strong> Rotate the HDRI to control main light direction</li>
+        <li><strong>Show background:</strong> Toggle whether the HDRI shows in render or just lighting</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📸 Screenshots &amp; Renders</div>
+    <div class="card-grid">
+      <div>
+        <h3>Taking a Great Screenshot</h3>
+        <ol class="steps">
+          <li>Set background to a complementary colour or load HDRI</li>
+          <li>Enable <strong>Post-process</strong> → turn on Ambient Occlusion (AO) — darkens crevices for depth</li>
+          <li>Enable <strong>Depth of Field</strong> — blurs background for cinematic look</li>
+          <li>Enable <strong>Bloom</strong> if you have glowing emission materials</li>
+          <li>Set resolution to 4× in screenshot settings for a high-res output</li>
+          <li>Tap the camera icon → Save to Photos</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Post-Process Effects</h3>
+        <ul class="plain">
+          <li><strong>Ambient Occlusion (AO):</strong> Darkens where surfaces are close together — adds instant depth</li>
+          <li><strong>Depth of Field (DoF):</strong> Blurs objects away from focus — cinematic feel</li>
+          <li><strong>Bloom:</strong> Glow around bright/emissive areas</li>
+          <li><strong>Tone mapping:</strong> Adjusts overall colour/contrast curve</li>
+          <li><strong>Vignette:</strong> Darkens edges of the frame slightly</li>
+          <li><strong>Chromatic Aberration:</strong> Colour fringing — photographic lens effect</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ 3D PRINTING ══ -->
+<div id="tab-printing" class="tab-panel">
+  <div class="tab-title">3D Printing Workflow</div>
+  <div class="tab-subtitle">From finished Nomad sculpt to physical model — complete pipeline</div>
+
+  <div class="card">
+    <div class="section-heading">✅ Pre-Export Checklist</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Check scale in mm</div><p>Scene → Units → mm. Verify your model dimensions match the intended print size. A 28mm miniature should be ~28mm tall. Adjust scale using the Transform gizmo.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Check for holes in the mesh</div><p>Topology → Remesh (Voxel) — this closes all holes automatically. Or check with wireframe view for any obvious gaps in the surface.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Check wall thickness</div><p>View → Thickness. Red areas are too thin to print reliably. Use Inflate brush to thicken thin areas (fingers, weapon blades, spines). Min: 0.8mm resin, 1.5mm FDM.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Merge all objects</div><p>Select all objects → Boolean Union (or just Voxel Remesh all) → single merged mesh. Slicers prefer a single mesh.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Decimate</div><p>Topology → Decimate to 50–70% if the model is over 5M triangles. Slicers struggle with very heavy files. Most printable detail survives 50% decimation.</p></div></div>
+      <div class="workflow-step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Export STL</div><p>Files → Export → STL. Name the file clearly (character_v3_28mm.stl). This goes into your slicer app.</p></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📤 Export Formats</div>
+    <table class="data-table">
+      <thead><tr><th>Format</th><th>Best For</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>STL</strong></td><td class="good">3D Printing (universal)</td><td>Standard format. Works in all slicers. No colour data.</td></tr>
+        <tr><td><strong>OBJ</strong></td><td class="good">Transfer to other software</td><td>Supported everywhere. Includes UV if applicable. No vertex colour.</td></tr>
+        <tr><td><strong>GLB/GLTF</strong></td><td class="good">Sharing, AR, online viewers</td><td>Includes vertex colour, PBR materials, animation. Best for showcasing work.</td></tr>
+        <tr><td><strong>Nomad (.nom)</strong></td><td class="good">Saving work in progress</td><td>Native format. Saves all tools, layers, history. Not importable by other apps.</td></tr>
+        <tr><td><strong>FBX</strong></td><td class="warn">Game engines</td><td>For Unity/Unreal import. Limited support in Nomad — use OBJ or GLB instead.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🖨 Printer Type Guide</div>
+    <table class="data-table">
+      <thead><tr><th>Printer</th><th>Best For</th><th>Min Wall</th><th>Nomad Setting</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MSLA Resin (Elegoo, Anycubic)</strong></td><td class="good">Miniatures, fine detail</td><td>0.8mm</td><td>High detail remesh (0.3mm voxel)</td></tr>
+        <tr><td><strong>FDM (Bambu, Prusa)</strong></td><td class="warn">Larger models, terrain</td><td>1.5mm</td><td>Medium remesh, reduce fine detail</td></tr>
+        <tr><td><strong>DLP Resin (Phrozen)</strong></td><td class="good">Miniatures, jewelry</td><td>0.5mm</td><td>Highest detail possible</td></tr>
+        <tr><td><strong>SLA (Formlabs)</strong></td><td class="good">Professional, engineering</td><td>0.4mm</td><td>Full detail, no decimation needed</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📱 Transfer to Slicer</div>
+    <div class="card-grid">
+      <div>
+        <h3>iPad to Computer</h3>
+        <ul class="plain">
+          <li><strong>AirDrop</strong> — fastest for Mac users. Export STL → Share → AirDrop</li>
+          <li><strong>iCloud Drive</strong> — export to Files → iCloud → open on Mac</li>
+          <li><strong>Email</strong> — for small files under 25MB</li>
+          <li><strong>USB cable</strong> — Files app → share via cable to PC/Mac</li>
+          <li><strong>Google Drive / Dropbox</strong> — universal cross-platform</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Direct Slicing on iPad</h3>
+        <ul class="plain">
+          <li><strong>Lychee Slicer</strong> — iOS app available, direct slice on iPad</li>
+          <li><strong>Chitubox</strong> — iOS viewer available (limited slice features)</li>
+          <li>Export GLB → <strong>Sketchfab</strong> app to view and share</li>
+          <li><strong>Reality Composer</strong> — view in AR on your desk at real scale</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ PRO TIPS ══ -->
+<div id="tab-tips" class="tab-panel">
+  <div class="tab-title">Pro Tips &amp; Advanced Workflow</div>
+  <div class="tab-subtitle">The tricks that separate professional results from amateur work</div>
+
+  <div class="card">
+    <div class="section-heading">⚡ Speed &amp; Efficiency Tips</div>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-title">Always use symmetry</div>
+        <p>Enable X symmetry for any character from the very first stroke. Turn it off only for unique asymmetric details at the end.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Save versions, not just saves</div>
+        <p>Files → Save As with a version number (character_v01, v02). Never overwrite your only save. Nomad files include undo history.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Use reference images</div>
+        <p>Top toolbar → Reference → load a reference image that stays on screen. Split view between reference and sculpt. Don't sculpt from imagination alone.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Rotate constantly</div>
+        <p>Check your model from all angles every 5 minutes. Silhouette mistakes only visible from one angle. Turn off symmetry temporarily to check the back.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Lazy Mouse for clean lines</div>
+        <p>Enable Lazy Mouse in brush settings. It follows your stroke with a delay — dramatically smoother lines. Essential for Crease and panel lines.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Work in separate objects</div>
+        <p>Keep head, body, armour, weapons as separate objects in the scene graph. Easier to move, rescale, and replace parts. Merge only for final export.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Use the Trim brush early</div>
+        <p>Trim (Line) brush early in blocking gives you flat planes to build detail on. Don't try to flatten with Clay — use the dedicated Flatten and Trim tools.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Mask before risky moves</div>
+        <p>Before grabbing a large area or doing a major move, mask the parts you want to stay fixed. Prevents accidental deformation of finished areas.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Pipe tool for cables</div>
+        <p>Use Tube primitive for cables, pipes, tentacles, tails. Set control points along the path. Boolean Union into the main mesh when positioned correctly.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Stamp with alpha brushes</div>
+        <p>Brush settings → Alpha → import a texture. Stamp it onto the surface for instant texture patterns — scales, chainmail, fabric weave, hex patterns.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Brush falloff matters</div>
+        <p>Gaussian falloff = soft, organic. Constant = hard, even. Change falloff in brush settings to completely change how a brush behaves — experiment.</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-title">Post-process for screenshots only</div>
+        <p>Turn off AO and DoF while sculpting (performance hit). Only enable them when taking the final screenshot. Assign this to a quick-access button.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🎯 Miniature-Specific Tips (28mm Scale)</div>
+    <div class="tip tip-yellow">
+      <strong>28mm scale reality check:</strong> At 28mm height, most surface detail below 0.5mm will not print clearly on resin printers. Don't waste hours sculpting microscopic detail that disappears in print. Focus on silhouette and forms visible at arm's length.
+    </div>
+    <div class="card-grid">
+      <div>
+        <h3>What Prints Well</h3>
+        <ul class="bullet">
+          <li>Strong silhouette with interesting shapes</li>
+          <li>Recessed panel lines (0.3mm+ depth)</li>
+          <li>Raised rivets, bolts (0.5mm+ diameter)</li>
+          <li>Cloth folds with 0.5mm+ relief</li>
+          <li>Eyes with defined socket and brow ridge</li>
+          <li>Text if 1mm+ letter height</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What Doesn't Print Well</h3>
+        <ul class="bullet">
+          <li>Fingers thinner than 1mm (merge or simplify)</li>
+          <li>Fabric textures under 0.3mm relief</li>
+          <li>Pores, skin texture (paint it instead)</li>
+          <li>Horizontal overhangs over 45° without supports</li>
+          <li>Weapon blades thinner than 0.8mm (they snap)</li>
+          <li>Hollow spaces without drainage holes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">🔗 Nomad + Other Apps Workflow</div>
+    <table class="data-table">
+      <thead><tr><th>Task</th><th>Best App</th><th>File Transfer</th></tr></thead>
+      <tbody>
+        <tr><td>Precision hard-surface base shapes</td><td>Shapr3D / Fusion 360</td><td>Export STEP → OBJ → import to Nomad</td></tr>
+        <tr><td>Retopology (clean quads)</td><td>Blender (desktop)</td><td>Export OBJ from Nomad → Blender → retopo → back to Nomad</td></tr>
+        <tr><td>UV unwrapping + texture painting</td><td>Blender / Substance Painter</td><td>OBJ from Nomad → unwrap → bake → reimport GLB</td></tr>
+        <tr><td>Slicing for resin print</td><td>Lychee (iPad) / Chitubox</td><td>STL via Files app / AirDrop</td></tr>
+        <tr><td>Sharing + portfolio</td><td>Sketchfab / ArtStation</td><td>GLB upload directly from Nomad share sheet</td></tr>
+        <tr><td>Rendering (photorealistic)</td><td>Blender Cycles</td><td>OBJ → Blender → PBR material → HDRI render</td></tr>
+        <tr><td>Reference drawing</td><td>Procreate (iPad)</td><td>Draw turnaround → export as image → load as reference in Nomad</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">📈 Learning Path</div>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Week 1–2: Learn the interface and basic brushes</div><p>Sculpt simple objects — a rock, a sword, a simple helmet. Learn Clay, Smooth, Move, Crease. Practice undo/redo, camera controls, symmetry.</p></div></div>
+      <div class="workflow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Week 3–4: Complete a simple head sculpt</div><p>Follow a reference. Focus on proportions, not detail. Practise the big-to-small approach. Don't add fine wrinkles before the nose shape is right.</p></div></div>
+      <div class="workflow-step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Month 2: Full character block-out</div><p>Full body at low-medium resolution. Get proportions, pose, and silhouette right. Don't finish any part until the whole is blocked out.</p></div></div>
+      <div class="workflow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Month 3: Add armour and accessories</div><p>Hard-surface on top of organic base. Learn boolean workflow. Practise panel lines and flat surfaces with Flatten/Trim/Crease.</p></div></div>
+      <div class="workflow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Month 4+: Export and print your first model</div><p>Full pipeline: sculpt → fix → scale → export → slice → print → clean → paint. The full loop from digital to physical is the real milestone.</p></div></div>
+    </div>
+  </div>
+
+</div><!-- /tab-tips -->
+
+</div><!-- /content-wrap -->
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+</script>
+</body>
+</html>
