@@ -371,6 +371,7 @@
   <button class="tab-btn" data-tab="tab10">10. Geometry Nodes</button>
   <button class="tab-btn" data-tab="tab11">11. Practice Projects</button>
   <button class="tab-btn" data-tab="tab12">12. Expert Tips</button>
+  <button class="tab-btn" data-tab="tab13">13. 🧩 Addons</button>
 </div>
 
 <!-- ══════════════════════════════════════════ CONTENT WRAPPER ═══ -->
@@ -2202,4 +2203,241 @@
     <p style="line-height:1.85;margin:0 0 10px;">Every great 3D artist you admire was once completely lost in Blender's interface, Googling "how to add loop cut" and accidentally closing the wrong window. They pushed through it. The interface that felt alien in week one becomes muscle memory by month three.</p>
     <p style="line-height:1.85;margin:0;">Make the donut. Model the sword. Render the product shot. Rig the character. Each finished project teaches you more than a hundred tutorials watched but not followed through. The tools are here. The rest is just showing up and making things.</p>
   </div>
+
+<div class="tab-panel" id="tab13">
+  <h2 class="section-heading">🧩 Essential Addons — Sculpting &amp; 3D Printing</h2>
+  <p style="color:#8b949e;font-size:14px;margin-bottom:1.2rem;">How to install: <strong style="color:#e6edf3;">Edit → Preferences → Add-ons → Install…</strong> → select the .zip file → tick the checkbox to enable → Save Preferences.</p>
+
+  <!-- BUILT-IN ADDONS -->
+  <div class="card">
+    <div class="section-heading">✅ Built-in Addons (Already Installed — Just Enable)</div>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:1rem;">Go to Edit → Preferences → Add-ons → search the name → tick the checkbox.</p>
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">🖨 3D Printing Toolbox <span class="badge beginner">Built-in</span></h3>
+    <p>The most important addon for 3D printing. Analyses your mesh for printability problems and fixes them.</p>
+    <div class="mod-list">
+      <div class="mod-item"><div class="mod-name">What it does</div><p>Checks wall thickness, overhangs, non-manifold edges, intersecting faces, zero faces, and sharp edges. Shows count of each problem.</p></div>
+      <div class="mod-item"><div class="mod-name">Where to find it</div><p>After enabling: open the <strong>N panel</strong> in the 3D Viewport (press N) → go to the <strong>3D Print</strong> tab.</p></div>
+      <div class="mod-item"><div class="mod-name">Key features</div><p>One-click <strong>Make Manifold</strong> — fixes most non-manifold errors automatically. Volume and area statistics. Export directly to STL from here.</p></div>
+    </div>
+    <div class="tip tip-box">Search: <kbd>3D Print Toolbox</kbd> in the addons list.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">⬢ Mesh: Extra Objects <span class="badge beginner">Built-in</span></h3>
+    <p>Adds extra primitive shapes useful for sculpting and printing bases — gears, diamonds, torus knots, honeycomb, math functions.</p>
+    <div class="tip tip-box">Search: <kbd>Extra Objects</kbd>. Access via <strong>Add → Mesh</strong> in the viewport.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">〰 Curve: Extra Objects <span class="badge beginner">Built-in</span></h3>
+    <p>Adds spirals, Archemedian curves, and other parametric curve types — useful for decorative sculpt bases and ornamental details.</p>
+    <div class="tip tip-box">Search: <kbd>Curve Extra Objects</kbd>.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">🔲 Bool Tool <span class="badge beginner">Built-in</span></h3>
+    <p>Fast boolean operations — Union, Difference, Intersect — directly in the viewport with <kbd>Ctrl</kbd>+<kbd>Numpad</kbd> shortcuts. Essential for hard-surface and support-cutting workflows.</p>
+    <div class="tip tip-box">Search: <kbd>Bool Tool</kbd>. After enabling, access via <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd> or the N panel.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">📐 Measureit <span class="badge intermediate">Built-in</span></h3>
+    <p>Display real-world measurements (mm/cm) directly in the viewport. Critical for 3D printing — verify your model is the correct physical size before export.</p>
+    <div class="tip tip-box">Search: <kbd>MeasureIt</kbd>. Access from the N panel → Measureit tab.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">🌊 Sculpt: Multi-resolution Tools <span class="badge beginner">Built-in</span></h3>
+    <p>Already built into Blender's sculpt mode — the <strong>Multiresolution modifier</strong> lets you sculpt at multiple detail levels and switch between them non-destructively. Use for character sculpting workflow.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">🔗 Import-Export: STL <span class="badge beginner">Built-in</span></h3>
+    <p>Exports your model as STL — the standard 3D printing format. Also imports STL files from other software.</p>
+    <div class="tip tip-box">Search: <kbd>STL format</kbd>. Access via <strong>File → Export → STL</strong>.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#3fb950;margin-bottom:8px;">📦 Import-Export: 3MF <span class="badge beginner">Built-in</span></h3>
+    <p>Export as 3MF format — newer than STL, supports colour, scale metadata, and multiple objects. Bambu Studio, PrusaSlicer, and Cura all support 3MF natively.</p>
+    <div class="tip tip-box">Search: <kbd>3MF</kbd>. File → Export → 3MF.</div>
+  </div>
+
+  <!-- FREE THIRD-PARTY -->
+  <div class="card">
+    <div class="section-heading">🆓 Free Third-Party Addons (Download &amp; Install)</div>
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">🧱 Quad Remesher Lite / Auto-Remesh <span class="badge intermediate">Free</span></h3>
+    <p>After sculpting a high-poly mesh, retopologise it into clean quads. Important before rigging, UV unwrapping, or reducing polycount for slicers. Use Blender's built-in <strong>Remesh modifier</strong> (Voxel mode) as the free option — or install <strong>QuadRemesher</strong> for better results.</p>
+    <div class="tip tip-box info">Built-in: <strong>Remesh modifier → Voxel</strong>. Set Voxel Size to match desired detail level. Lower = more polygons.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">🪄 Sculpt Layers — Brush+ (Blender Extension) <span class="badge intermediate">Free</span></h3>
+    <p>Enhanced sculpt brush controls. Available in Blender 4.x via the Extensions platform (Extensions → Get Extensions → search "Sculpt").</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">⚗ Tisane Sculpt Tools <span class="badge intermediate">Free – GitHub</span></h3>
+    <p>Adds missing sculpt brushes and tools. Download from GitHub: <strong>github.com/Tisane-Lab</strong>. Drag the .zip into Blender Preferences → Addons → Install.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">🔩 Bolt Factory <span class="badge beginner">Free – Built-in</span></h3>
+    <p>Generate parametric bolts, nuts, screws with correct thread profiles. Indispensable for printing mechanical parts, Warhammer bases, sci-fi details.</p>
+    <div class="tip tip-box">Search: <kbd>Bolt Factory</kbd> in built-in addons. Access via Add → Mesh → Bolt.</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">📏 CAD Sketcher <span class="badge advanced">Free – blenderbim.org</span></h3>
+    <p>Constraint-based 2D sketching inside Blender — like FreeCAD or SolidWorks sketcher but in Blender. Draw constrained geometry, extrude to 3D. Great for precision parts before sculpting details on top.</p>
+    <div class="tip tip-box info">Install via Blender Extensions or download from <strong>hlorus.github.io/CAD_Sketcher</strong>. Requires the <strong>solver</strong> library (included in installer).</div>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">🎭 Faceit <span class="badge advanced">Freemium</span></h3>
+    <p>Facial rigging and shape key system. If you're sculpting character faces for printing or animation — Faceit automates most of the rigging workflow. Free basic version available.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#f0a500;margin-bottom:8px;">🌐 STL Check + Manifold Utils <span class="badge intermediate">Free</span></h3>
+    <p>Extra mesh cleanup tools beyond the built-in 3D Print Toolbox. Fills holes, removes loose geometry, fixes winding order.</p>
+    <div class="tip tip-box">Blender's built-in: <strong>Mesh → Cleanup → Fill Holes / Degenerate Dissolve / Merge by Distance</strong> — run these in Edit Mode before export.</div>
+  </div>
+
+  <!-- PAID ADDONS -->
+  <div class="card">
+    <div class="section-heading">💎 Paid Addons — Worth Every Rupee</div>
+
+    <h3 style="color:#c0abff;margin-bottom:8px;">🦴 ZBrush-style Sculpting: Sculpt+Paint Workbench <span class="badge advanced">Paid</span></h3>
+    <p>Extends Blender's sculpt mode with ZBrush-like workflows — layer masks, polypaint, advanced brushes. Available on Blender Market (~₹800–₹2000).</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#c0abff;margin-bottom:8px;">⬡ QuadRemesher <span class="badge advanced">Paid — ~₹3500/yr</span></h3>
+    <p>The best automatic retopology tool. Converts any sculpted high-poly mesh into clean quad topology in seconds. Absolutely essential if you sculpt characters. Works inside Blender natively.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#c0abff;margin-bottom:8px;">🖨 Chitubox / Lychee Integration <span class="badge beginner">Free Slicers</span></h3>
+    <p>Not an addon — but the workflow. Export from Blender as STL → import into Chitubox or Lychee Slicer for resin printing. Or OrcaSlicer/Bambu Studio for FDM. All free.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#c0abff;margin-bottom:8px;">🪛 HardOps + Boxcutter Bundle <span class="badge advanced">Paid — ~₹2000</span></h3>
+    <p>The gold standard for hard-surface modeling and boolean cutting in Blender. HardOps manages object states and shading. Boxcutter is an interactive boolean cutter. Together they're faster than any other workflow for mechanical and sci-fi models destined for printing.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#c0abff;margin-bottom:8px;">🧩 Mesh Machine <span class="badge advanced">Paid — ~₹1800</span></h3>
+    <p>Advanced mesh editing — loop tools, fuse, unfuse, offset edges, flatten. Fills the gap between Blender's basic edit tools and full CAD-precision editing. Great for cleaning up booleans before printing.</p>
+
+    <hr style="border-color:#30363d;margin:1.2rem 0;">
+
+    <h3 style="color:#c0abff;margin-bottom:8px;">🌊 Fluent Materializer / Fluent Power Trip <span class="badge advanced">Paid</span></h3>
+    <p>Non-destructive surface detailing and boolean-based mechanical greebling. Add panels, vents, bolts, and surface detail non-destructively. Great for Warhammer-style bases and terrain.</p>
+  </div>
+
+  <!-- WORKFLOW TABLE -->
+  <div class="card">
+    <div class="section-heading">📋 Addon Workflow — Sculpting to Print</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr style="background:#21262d;">
+          <th style="padding:8px 12px;text-align:left;color:#e6edf3;">Stage</th>
+          <th style="padding:8px 12px;text-align:left;color:#e6edf3;">Addon / Tool</th>
+          <th style="padding:8px 12px;text-align:left;color:#e6edf3;">What to do</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #21262d;"><td style="padding:7px 12px;color:#3fb950;font-weight:600;">1. Block out</td><td style="padding:7px 12px;color:#c9d1d9;">Bool Tool (built-in)</td><td style="padding:7px 12px;color:#8b949e;">Use boolean primitives to rough out the main shape</td></tr>
+        <tr style="border-bottom:1px solid #21262d;"><td style="padding:7px 12px;color:#3fb950;font-weight:600;">2. Sculpt detail</td><td style="padding:7px 12px;color:#c9d1d9;">Blender Sculpt Mode + Multiresolution</td><td style="padding:7px 12px;color:#8b949e;">Add muscle, skin, fabric, surface detail at multiple resolutions</td></tr>
+        <tr style="border-bottom:1px solid #21262d;"><td style="padding:7px 12px;color:#f0a500;font-weight:600;">3. Check size</td><td style="padding:7px 12px;color:#c9d1d9;">MeasureIt (built-in)</td><td style="padding:7px 12px;color:#8b949e;">Verify real-world dimensions in mm match your intended print size</td></tr>
+        <tr style="border-bottom:1px solid #21262d;"><td style="padding:7px 12px;color:#f0a500;font-weight:600;">4. Fix mesh</td><td style="padding:7px 12px;color:#c9d1d9;">3D Print Toolbox (built-in)</td><td style="padding:7px 12px;color:#8b949e;">Run analysis → fix non-manifold, zero faces, thin walls</td></tr>
+        <tr style="border-bottom:1px solid #21262d;"><td style="padding:7px 12px;color:#f0a500;font-weight:600;">5. Decimate</td><td style="padding:7px 12px;color:#c9d1d9;">Decimate Modifier (built-in)</td><td style="padding:7px 12px;color:#8b949e;">Reduce polycount for slicer performance — keep detail, lose file size</td></tr>
+        <tr style="border-bottom:1px solid #21262d;"><td style="padding:7px 12px;color:#c0abff;font-weight:600;">6. Export</td><td style="padding:7px 12px;color:#c9d1d9;">STL / 3MF Export (built-in)</td><td style="padding:7px 12px;color:#8b949e;">File → Export → STL. Set scale to 1.0. Apply all modifiers.</td></tr>
+        <tr><td style="padding:7px 12px;color:#c0abff;font-weight:600;">7. Slice</td><td style="padding:7px 12px;color:#c9d1d9;">Chitubox / Lychee / OrcaSlicer</td><td style="padding:7px 12px;color:#8b949e;">Import STL, add supports, check layer preview, export to printer</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- QUICK INSTALL CHECKLIST -->
+  <div class="card">
+    <div class="section-heading">✅ Quick Enable Checklist — Do This Right Now</div>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:1rem;">Open <strong>Edit → Preferences → Add-ons</strong> and enable all of these (they're already installed, just off by default):</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.75rem;">
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Mesh: 3D Print Toolbox</div>
+        <div style="font-size:12px;color:#8b949e;">N panel → 3D-Print tab. Fix all print errors.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Mesh: Bool Tool</div>
+        <div style="font-size:12px;color:#8b949e;">Ctrl+Shift+B for live booleans in viewport.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Mesh: Extra Objects</div>
+        <div style="font-size:12px;color:#8b949e;">Add → Mesh → extra shapes for bases.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Mesh: Bolt Factory</div>
+        <div style="font-size:12px;color:#8b949e;">Add → Mesh → Bolt. Parametric screws/bolts.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Import-Export: STL</div>
+        <div style="font-size:12px;color:#8b949e;">File → Export → STL for all slicers.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Measureit</div>
+        <div style="font-size:12px;color:#8b949e;">N panel → MeasureIt. Real mm in viewport.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Import-Export: 3MF</div>
+        <div style="font-size:12px;color:#8b949e;">Better than STL for Bambu/Prusa slicers.</div>
+      </div>
+      <div style="background:#0d1117;border:1px solid #2daa6b;border-radius:8px;padding:0.8rem 1rem;">
+        <div style="font-weight:700;color:#3fb950;margin-bottom:4px;">✓ Curve: Extra Objects</div>
+        <div style="font-size:12px;color:#8b949e;">Spirals and decorative curves for detailing.</div>
+      </div>
+    </div>
+
+    <div class="tip tip-box" style="margin-top:1rem;">
+      <strong>After enabling all addons:</strong> Click the <strong>☰ hamburger menu</strong> at the bottom-left of the Preferences window → <strong>Save Preferences</strong>. Otherwise addons reset on Blender restart.
+    </div>
+  </div>
+
+  <!-- SCULPT-SPECIFIC TIPS -->
+  <div class="card">
+    <div class="section-heading">🎨 Sculpting Setup Tips (No Addons Needed)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;">
+      <div>
+        <h3>Best Sculpting Workflow</h3>
+        <ul style="list-style:none;padding:0;">
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ Start with a Sphere (Add → Mesh → UV Sphere)</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ Add <strong>Multiresolution modifier</strong> — subdivide 2–3 times</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ Enter Sculpt Mode — rough shape with <strong>Clay Strips</strong> brush</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ Subdivide more levels for fine detail</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ Use <strong>Remesh (R key in sculpt mode)</strong> to reset topology mid-sculpt</li>
+          <li style="padding:5px 0;font-size:13px;color:#c9d1d9;">▸ <strong>Dyntopo</strong> for organic freeform — adds geometry where you sculpt</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Essential Sculpt Brushes</h3>
+        <ul style="list-style:none;padding:0;">
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ <strong>Clay Strips</strong> — build up volume, like adding clay</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ <strong>Smooth</strong> (<kbd>Shift</kbd> held) — smooth any brush area</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ <strong>Crease</strong> — sharp folds, wrinkles, seams</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ <strong>Inflate</strong> — puff out areas (cheeks, muscles)</li>
+          <li style="padding:5px 0;border-bottom:1px solid #21262d;font-size:13px;color:#c9d1d9;">▸ <strong>Flatten</strong> — push surfaces to a flat plane</li>
+          <li style="padding:5px 0;font-size:13px;color:#c9d1d9;">▸ <strong>Mask</strong> (<kbd>M</kbd>) — protect areas from sculpting</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip tip-box info" style="margin-top:1rem;">
+      <strong>3D Printing scale:</strong> Before sculpting, set your scene units to <strong>Millimeters</strong>. Scene Properties → Units → Unit System: Metric, Unit Scale: 0.001. This ensures 1 Blender unit = 1mm — what you see is what you print.
+    </div>
+  </div>
+
+</div><!-- /tab13 -->
+
 </div><!-- /tabs-container --></div><!-- /main --></body></html>
