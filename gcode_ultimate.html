@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G-code — Ultra Ultimate Guide | 3D Learning Hub</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── STICKY NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.5rem; gap: 1rem;
+  }
+  .site-nav a.back-link { color: #39d353; text-decoration: none; font-size: 14px; white-space: nowrap; transition: color 0.2s; }
+  .site-nav a.back-link:hover { color: #6ee77a; }
+  .site-nav .nav-title { font-size: 17px; font-weight: 700; color: #e6edf3; text-align: center; flex: 1; }
+  .site-nav .nav-sub { font-size: 13px; color: #8b949e; white-space: nowrap; }
+
+  /* ── PROGRESS PILLS ── */
+  .progress-bar {
+    background: #161b22; border-bottom: 1px solid #30363d;
+    padding: 0.55rem 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .progress-pill { padding: 3px 14px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+  .pill-beginner     { background: #0d4429; color: #3fb950; border: 1px solid #2daa6b; }
+  .pill-intermediate { background: #2d1f00; color: #e3b341; border: 1px solid #f0a500; }
+  .pill-advanced     { background: #1a0045; color: #c0abff; border: 1px solid #7c6fff; }
+  .pill-pro          { background: #3d0000; color: #ff7b72; border: 1px solid #e74c3c; }
+
+  /* ── TAB BAR ── */
+  .tab-bar {
+    background: #0d1117; border-bottom: 1px solid #30363d;
+    padding: 0.75rem 1.5rem 0;
+    display: flex; gap: 0.35rem; flex-wrap: wrap;
+    position: sticky; top: 53px; z-index: 90;
+  }
+  .tab-btn {
+    background: #161b22; border: 1px solid #30363d; color: #8b949e;
+    border-bottom: none; border-radius: 8px 8px 0 0;
+    padding: 0.45rem 1rem; font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+    font-family: inherit; white-space: nowrap;
+  }
+  .tab-btn:hover { background: #21262d; color: #e6edf3; }
+  .tab-btn.active { background: #39d353; color: #0d1117; border-color: #39d353; font-weight: 700; }
+
+  /* ── CONTENT ── */
+  .content { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  h2 { font-size: 1.55rem; font-weight: 800; color: #e6edf3; margin-bottom: 0.35rem; }
+  h3 { font-size: 1.1rem; font-weight: 700; color: #39d353; margin: 1.6rem 0 0.6rem; }
+  h4 { font-size: 0.95rem; font-weight: 600; color: #8b949e; margin: 1rem 0 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  p  { color: #c9d1d9; margin-bottom: 0.75rem; }
+  ul, ol { padding-left: 1.4rem; color: #c9d1d9; margin-bottom: 0.75rem; }
+  li { margin-bottom: 0.3rem; }
+  code { background: #1e2733; color: #39d353; padding: 1px 6px; border-radius: 4px; font-family: 'Cascadia Code','Fira Code',monospace; font-size: 13px; }
+  strong { color: #e6edf3; }
+
+  .section-intro { color: #8b949e; font-size: 14px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #21262d; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-left: 3px solid #39d353;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-family: 'Cascadia Code','Fira Code',monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+    margin: 0.75rem 0 1.2rem;
+    color: #e6edf3;
+  }
+  .code-block .cmt { color: #8b949e; }
+  .code-block .cmd { color: #79c0ff; }
+  .code-block .param { color: #ffa657; }
+  .code-block .val  { color: #a5d6ff; }
+  .code-block .str  { color: #39d353; }
+
+  /* ── CARDS ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
+  .card {
+    background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+    padding: 1rem 1.1rem; transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #39d353; }
+  .card-title { font-size: 14px; font-weight: 700; color: #e6edf3; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem; }
+  .card-body  { font-size: 13px; color: #8b949e; line-height: 1.55; }
+  .card-code  { font-family: 'Cascadia Code','Fira Code',monospace; font-size: 13px; color: #39d353; background: #0d1117; border-radius: 4px; padding: 2px 7px; margin-bottom: 0.4rem; display: inline-block; }
+
+  /* ── COMMAND TABLE ── */
+  .cmd-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0 1.5rem; font-size: 13px; }
+  .cmd-table th { background: #1e2733; color: #8b949e; text-align: left; padding: 7px 12px; border-bottom: 1px solid #30363d; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cmd-table td { padding: 8px 12px; border-bottom: 1px solid #21262d; color: #c9d1d9; vertical-align: top; }
+  .cmd-table tr:hover td { background: #161b22; }
+  .cmd-table td:first-child { font-family: 'Cascadia Code','Fira Code',monospace; color: #79c0ff; white-space: nowrap; }
+  .cmd-table td:nth-child(2) { color: #ffa657; font-family: 'Cascadia Code','Fira Code',monospace; font-size: 12px; }
+
+  /* ── TIP / WARN / INFO BOXES ── */
+  .tip-box, .warn-box, .info-box, .danger-box {
+    border-radius: 8px; padding: 0.85rem 1.1rem; margin: 1rem 0;
+    font-size: 13.5px; line-height: 1.6;
+  }
+  .tip-box    { background: #0d2e1f; border-left: 3px solid #39d353; color: #c9d1d9; }
+  .warn-box   { background: #2d1f00; border-left: 3px solid #e3b341; color: #c9d1d9; }
+  .info-box   { background: #0c2040; border-left: 3px solid #58a6ff; color: #c9d1d9; }
+  .danger-box { background: #3d0000; border-left: 3px solid #ff7b72; color: #c9d1d9; }
+  .tip-box strong, .warn-box strong, .info-box strong, .danger-box strong { display: block; margin-bottom: 0.25rem; }
+
+  /* ── WORKFLOW STEPS ── */
+  .steps { list-style: none; padding: 0; margin: 1rem 0 1.5rem; counter-reset: step; }
+  .steps li {
+    counter-increment: step;
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 0.75rem 0; border-bottom: 1px solid #21262d;
+  }
+  .steps li::before {
+    content: counter(step);
+    min-width: 28px; height: 28px;
+    background: #39d353; color: #0d1117;
+    border-radius: 50%; font-weight: 800; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* ── FIRMWARE BADGE ── */
+  .fw { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 4px; vertical-align: middle; }
+  .fw-marlin  { background: #0c2040; color: #58a6ff; }
+  .fw-klipper { background: #2d0d0d; color: #ff7b72; }
+  .fw-reprap  { background: #1a0045; color: #c0abff; }
+  .fw-both    { background: #1e2733; color: #e3b341; }
+
+  /* ── SCROLL TO TOP ── */
+  #scrollTop {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: #39d353; color: #0d1117;
+    border: none; border-radius: 50%; width: 44px; height: 44px;
+    font-size: 20px; cursor: pointer; display: none; z-index: 999;
+    box-shadow: 0 4px 16px rgba(57,211,83,0.4);
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="back-link" href="index.html">← Hub</a>
+  <span class="nav-title">⚙️ G-code — Ultra Ultimate Guide</span>
+  <span class="nav-sub">Marlin · Klipper · RepRap</span>
+</nav>
+
+<div class="progress-bar">
+  <span class="progress-pill pill-beginner">Beginner</span>
+  <span class="progress-pill pill-intermediate">Intermediate</span>
+  <span class="progress-pill pill-advanced">Advanced</span>
+  <span class="progress-pill pill-pro">Expert / Firmware</span>
+</div>
+
+<div class="tab-bar" id="tabBar">
+  <button class="tab-btn active" data-tab="tab1">1. What is G-code</button>
+  <button class="tab-btn" data-tab="tab2">2. File Structure</button>
+  <button class="tab-btn" data-tab="tab3">3. Movement (G)</button>
+  <button class="tab-btn" data-tab="tab4">4. Temp & Fan (M)</button>
+  <button class="tab-btn" data-tab="tab5">5. Extruder & Flow</button>
+  <button class="tab-btn" data-tab="tab6">6. Bed Leveling</button>
+  <button class="tab-btn" data-tab="tab7">7. Start / End Scripts</button>
+  <button class="tab-btn" data-tab="tab8">8. Advanced Tuning</button>
+  <button class="tab-btn" data-tab="tab9">9. Klipper Extras</button>
+  <button class="tab-btn" data-tab="tab10">10. Troubleshoot</button>
+  <button class="tab-btn" data-tab="tab11">11. Full Reference</button>
+</div>
+
+<div class="content">
+
+<!-- ═══════════════════════════════════════ TAB 1 ═══ -->
+<div class="tab-panel active" id="tab1">
+  <h2>⚙️ What is G-code?</h2>
+  <p class="section-intro">G-code is the universal language of CNC machines and 3D printers. Every layer, every move, every temperature change is a G-code command.</p>
+
+  <h3>How It Works</h3>
+  <p>Your slicer (Bambu Studio, PrusaSlicer, Cura) takes your 3D model and converts it into thousands of G-code lines. Your printer reads these line by line and executes each instruction precisely.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">📐 G Commands</div>
+      <div class="card-body">Geometric / movement commands. Tell the machine <strong>where to go</strong> and <strong>how fast</strong>. G0, G1, G28, G29…</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔧 M Commands</div>
+      <div class="card-body">Machine commands. Control <strong>hardware states</strong> — temperatures, fans, motors, LEDs. M104, M106, M420…</div>
+    </div>
+    <div class="card">
+      <div class="card-title">💬 Comments</div>
+      <div class="card-body">Lines starting with <code>;</code> are ignored by the printer. Slicers use them to annotate layer changes, settings, timestamps.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔢 Coordinates</div>
+      <div class="card-body">X, Y, Z = axes. E = extruder. F = feedrate (mm/min). All distances are in <strong>millimetres</strong>.</div>
+    </div>
+  </div>
+
+  <h3>Firmware Flavours</h3>
+  <div class="info-box"><strong>💡 Most commands are the same across firmware — but some differ.</strong>
+  Throughout this guide, badges show which firmware each command targets.</div>
+
+  <table class="cmd-table">
+    <tr><th>Firmware</th><th>Used By</th><th>Config Style</th><th>Strengths</th></tr>
+    <tr><td>Marlin</td><td>Creality, Prusa MK3, Bambu (partial)</td><td>EEPROM (M500/M501)</td><td>Most compatible, huge community</td></tr>
+    <tr><td>Klipper</td><td>Voron, Ratrig, many DIY</td><td>printer.cfg (text file)</td><td>Fast, Python macros, resonance compensation</td></tr>
+    <tr><td>RepRapFirmware</td><td>Duet boards, some Snapmaker</td><td>config.g (SD card)</td><td>Web interface, object model</td></tr>
+    <tr><td>Bambu Firmware</td><td>Bambu Lab printers</td><td>Proprietary + partial Marlin</td><td>Closed ecosystem, multi-colour</td></tr>
+  </table>
+
+  <h3>Anatomy of a G-code Line</h3>
+  <div class="code-block">
+<span class="cmt">; This is a comment — ignored by the printer</span>
+<span class="cmd">G1</span> <span class="param">X</span><span class="val">100.5</span> <span class="param">Y</span><span class="val">75.0</span> <span class="param">Z</span><span class="val">0.2</span> <span class="param">E</span><span class="val">1.245</span> <span class="param">F</span><span class="val">3000</span>
+<span class="cmt">; G1 = linear move</span>
+<span class="cmt">; X/Y/Z = destination in mm</span>
+<span class="cmt">; E = total filament extruded (mm)</span>
+<span class="cmt">; F = feedrate in mm/min (3000 = 50 mm/s)</span>
+  </div>
+
+  <h3>Units & Conventions</h3>
+  <ul>
+    <li>All distances: <strong>millimetres</strong> (G21 sets this, always default)</li>
+    <li>Feedrate (F): <strong>mm/min</strong> — divide by 60 to get mm/s</li>
+    <li>Temperature: <strong>°C</strong></li>
+    <li>Fan speed: <strong>0–255</strong> (Marlin) or <strong>0–1.0</strong> percentage (Klipper)</li>
+    <li>Extrusion (E): cumulative mm since start, or per-move delta in relative mode</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 2 ═══ -->
+<div class="tab-panel" id="tab2">
+  <h2>📄 G-code File Structure</h2>
+  <p class="section-intro">A well-formed G-code file has a predictable structure. Understanding it lets you edit files manually and write powerful start/end scripts.</p>
+
+  <h3>Full File Anatomy</h3>
+  <div class="code-block">
+<span class="cmt">; ──────────────────────────────────────────</span>
+<span class="cmt">; HEADER — slicer metadata (all comments)</span>
+<span class="cmt">; Generated by PrusaSlicer 2.8.0</span>
+<span class="cmt">; Layer height: 0.2mm</span>
+<span class="cmt">; Filament: PLA, 215°C / 60°C bed</span>
+<span class="cmt">; ──────────────────────────────────────────</span>
+
+<span class="cmt">; ── INIT — machine units & absolute mode</span>
+<span class="cmd">G21</span>        <span class="cmt">; millimetres</span>
+<span class="cmd">G90</span>        <span class="cmt">; absolute positioning</span>
+<span class="cmd">M82</span>        <span class="cmt">; extruder absolute</span>
+
+<span class="cmt">; ── START SCRIPT (user-defined in slicer)</span>
+<span class="cmd">M104</span> <span class="param">S</span><span class="val">215</span>  <span class="cmt">; set hotend (no wait)</span>
+<span class="cmd">M140</span> <span class="param">S</span><span class="val">60</span>   <span class="cmt">; set bed (no wait)</span>
+<span class="cmd">G28</span>        <span class="cmt">; home all axes</span>
+<span class="cmd">M190</span> <span class="param">S</span><span class="val">60</span>   <span class="cmt">; wait for bed temp</span>
+<span class="cmd">M109</span> <span class="param">S</span><span class="val">215</span>  <span class="cmt">; wait for hotend temp</span>
+<span class="cmd">G29</span>        <span class="cmt">; auto bed leveling</span>
+
+<span class="cmt">; ── PRINT BODY (slicer generated)</span>
+<span class="cmt">; Layer 1</span>
+<span class="cmd">G0</span> <span class="param">F</span><span class="val">9000</span> <span class="param">X</span><span class="val">10</span> <span class="param">Y</span><span class="val">10</span> <span class="param">Z</span><span class="val">0.2</span>
+<span class="cmd">G1</span> <span class="param">F</span><span class="val">1800</span> <span class="param">X</span><span class="val">200</span> <span class="param">Y</span><span class="val">10</span> <span class="param">E</span><span class="val">5.432</span>
+<span class="cmt">; ... thousands more lines ...</span>
+
+<span class="cmt">; ── END SCRIPT</span>
+<span class="cmd">M104</span> <span class="param">S</span><span class="val">0</span>   <span class="cmt">; hotend off</span>
+<span class="cmd">M140</span> <span class="param">S</span><span class="val">0</span>   <span class="cmt">; bed off</span>
+<span class="cmd">M106</span> <span class="param">S</span><span class="val">0</span>   <span class="cmt">; fan off</span>
+<span class="cmd">G91</span>        <span class="cmt">; relative mode</span>
+<span class="cmd">G1</span> <span class="param">Z</span><span class="val">10</span>    <span class="cmt">; lift nozzle 10mm</span>
+<span class="cmd">G28</span> <span class="param">X</span> <span class="param">Y</span>  <span class="cmt">; park printhead</span>
+<span class="cmd">M84</span>        <span class="cmt">; disable steppers</span>
+  </div>
+
+  <h3>Slicer Comment Markers</h3>
+  <p>Slicers embed special comments as hooks — some firmware reads these:</p>
+  <table class="cmd-table">
+    <tr><th>Comment</th><th>Meaning</th></tr>
+    <tr><td>; LAYER_CHANGE</td><td>PrusaSlicer layer boundary — used by plugins & displays</td></tr>
+    <tr><td>; layer num/total</td><td>Cura layer counter</td></tr>
+    <tr><td>; TYPE:WALL-OUTER</td><td>Cura feature type (walls, infill, support…)</td></tr>
+    <tr><td>; filament used [mm]</td><td>Filament consumption summary</td></tr>
+    <tr><td>; estimated printing time</td><td>Time prediction from slicer</td></tr>
+    <tr><td>EXCLUDE_OBJECT_DEFINE</td><td>Klipper object cancellation (non-comment, special command)</td></tr>
+  </table>
+
+  <h3>Editing G-code Manually</h3>
+  <div class="tip-box"><strong>✅ Safe to edit:</strong> Start/end scripts, temperatures, fan speed values, travel feedrate (F on G0 lines), comments.</div>
+  <div class="warn-box"><strong>⚠️ Be careful editing:</strong> E values (affect flow), Z values (crash risk), G29 removed without compensation loaded.</div>
+  <div class="danger-box"><strong>🚫 Never edit:</strong> X/Y coordinates of the print body unless you know exactly what you're doing — dimensional errors compound over thousands of lines.</div>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 3 ═══ -->
+<div class="tab-panel" id="tab3">
+  <h2>🎯 Movement Commands (G-codes)</h2>
+  <p class="section-intro">Movement commands control where the printhead goes, how fast, and in what coordinate system.</p>
+
+  <h3>Core Movement</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th></tr>
+    <tr><td>G0</td><td>X Y Z F</td><td><strong>Rapid/travel move</strong> — no extrusion. Printer moves as fast as it safely can. F sets max speed.</td></tr>
+    <tr><td>G1</td><td>X Y Z E F</td><td><strong>Linear move with extrusion.</strong> The main printing command — moves and pushes filament simultaneously.</td></tr>
+    <tr><td>G2</td><td>X Y I J F E</td><td>Clockwise arc move. I/J = arc centre offset from current position.</td></tr>
+    <tr><td>G3</td><td>X Y I J F E</td><td>Counter-clockwise arc move. Rarely used in FDM slicers.</td></tr>
+    <tr><td>G4</td><td>P (ms) or S (sec)</td><td><strong>Dwell/pause.</strong> <code>G4 P500</code> = wait 500ms. <code>G4 S2</code> = wait 2 seconds.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Travel to start of next line (no extrusion)</span>
+<span class="cmd">G0</span> <span class="param">F</span><span class="val">9000</span> <span class="param">X</span><span class="val">50</span> <span class="param">Y</span><span class="val">50</span>
+
+<span class="cmt">; Print a line at 50mm/s (F3000 = 3000mm/min ÷ 60 = 50mm/s)</span>
+<span class="cmd">G1</span> <span class="param">F</span><span class="val">3000</span> <span class="param">X</span><span class="val">150</span> <span class="param">Y</span><span class="val">50</span> <span class="param">E</span><span class="val">8.250</span>
+
+<span class="cmt">; Dwell 1 second (let bridge cool before continuing)</span>
+<span class="cmd">G4</span> <span class="param">S</span><span class="val">1</span>
+  </div>
+
+  <h3>Homing</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th></tr>
+    <tr><td>G28</td><td>X Y Z (optional)</td><td>Home axes. <code>G28</code> = all. <code>G28 X Y</code> = X and Y only. <code>G28 Z</code> = Z only.</td></tr>
+    <tr><td>G28.2</td><td></td><td>Home with sensorless homing (Klipper). <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+
+  <div class="warn-box"><strong>⚠️ Always G28 before G29 or any probing.</strong> The probe sequence assumes the machine has a known reference point.</div>
+
+  <h3>Coordinate Modes</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>G90</td><td><strong>Absolute positioning</strong> — X/Y/Z coordinates are from machine origin. Default for most prints.</td></tr>
+    <tr><td>G91</td><td><strong>Relative positioning</strong> — X/Y/Z are offsets from current position. Useful in end scripts (<code>G1 Z10</code> = lift 10mm).</td></tr>
+    <tr><td>G92</td><td><strong>Set current position</strong> — defines where the machine "thinks" it is without moving. <code>G92 E0</code> resets extruder counter.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Reset extruder position to 0 (very common in start scripts)</span>
+<span class="cmd">G92</span> <span class="param">E</span><span class="val">0</span>
+
+<span class="cmt">; End script: switch to relative, lift nozzle, park, restore absolute</span>
+<span class="cmd">G91</span>
+<span class="cmd">G1</span> <span class="param">Z</span><span class="val">10</span> <span class="param">F</span><span class="val">600</span>   <span class="cmt">; lift 10mm relative</span>
+<span class="cmd">G90</span>
+<span class="cmd">G0</span> <span class="param">X</span><span class="val">0</span> <span class="param">Y</span><span class="val">220</span>   <span class="cmt">; park at back</span>
+  </div>
+
+  <h3>Units & Feedrate Tips</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">G20 / G21</div>
+      <div class="card-body"><code>G20</code> = inches, <code>G21</code> = mm. Always use G21. Your slicer already sets this.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Feedrate Math</div>
+      <div class="card-body">F is mm/min. To print at 60 mm/s → <code>F3600</code>. To travel at 150 mm/s → <code>F9000</code>.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">F is Sticky</div>
+      <div class="card-body">Once set, F stays until changed. You don't need to repeat it on every line — only when the speed changes.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">G0 vs G1</div>
+      <div class="card-body">On most 3D printer firmware, G0 and G1 are identical — both do linear moves. G0 is convention for travel (no E).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 4 ═══ -->
+<div class="tab-panel" id="tab4">
+  <h2>🌡️ Temperature & Fan Commands (M-codes)</h2>
+  <p class="section-intro">M-codes control machine hardware state — heaters, fans, motors, LEDs, and more.</p>
+
+  <h3>Hotend Temperature</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th></tr>
+    <tr><td>M104</td><td>S[temp] T[extruder]</td><td>Set hotend temperature — <strong>non-blocking</strong>. Continues to next line immediately.</td></tr>
+    <tr><td>M109</td><td>S[temp] R[temp] T[extruder]</td><td>Set hotend + <strong>wait</strong> until reached. Use in start script before printing. <code>R</code> = wait for exact temp (cool OR heat).</td></tr>
+    <tr><td>M104 S0</td><td>—</td><td>Turn hotend OFF. Always in end script.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Preheat while homing (non-blocking — saves time)</span>
+<span class="cmd">M104</span> <span class="param">S</span><span class="val">215</span>   <span class="cmt">; start heating, don't wait</span>
+<span class="cmd">G28</span>          <span class="cmt">; home while heating</span>
+<span class="cmd">M109</span> <span class="param">S</span><span class="val">215</span>   <span class="cmt">; now wait until 215°C</span>
+  </div>
+
+  <h3>Bed Temperature</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th></tr>
+    <tr><td>M140</td><td>S[temp]</td><td>Set bed temperature — <strong>non-blocking</strong>.</td></tr>
+    <tr><td>M190</td><td>S[temp] R[temp]</td><td>Set bed + <strong>wait</strong>. Use after homing, before M109.</td></tr>
+    <tr><td>M140 S0</td><td>—</td><td>Turn bed heater OFF.</td></tr>
+  </table>
+
+  <div class="tip-box"><strong>💡 Optimal order:</strong> M104 (preheat hotend) → M140 (preheat bed) → G28 (home) → M190 (wait bed) → M109 (wait hotend). This saves 1–2 minutes on every print.</div>
+
+  <h3>Fan Control</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th></tr>
+    <tr><td>M106</td><td>S[0-255] P[fan index]</td><td>Set part cooling fan speed. <code>S255</code> = 100%. <code>S128</code> = ~50%.</td></tr>
+    <tr><td>M107</td><td>—</td><td>Part cooling fan OFF. Same as <code>M106 S0</code>.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Turn fan off for first layer (better adhesion)</span>
+<span class="cmd">M107</span>
+<span class="cmt">; After layer 3, turn fan to 100%</span>
+<span class="cmd">M106</span> <span class="param">S</span><span class="val">255</span>
+<span class="cmt">; Bridge layer — reduce fan to 30% to prevent warping</span>
+<span class="cmd">M106</span> <span class="param">S</span><span class="val">77</span>
+  </div>
+
+  <h3>Chamber & Other Heaters</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Firmware</th><th>Description</th></tr>
+    <tr><td>M141 S[temp]</td><td><span class="fw fw-marlin">Marlin</span></td><td>Set chamber heater temperature (non-blocking)</td></tr>
+    <tr><td>M191 S[temp]</td><td><span class="fw fw-marlin">Marlin</span></td><td>Set chamber + wait</td></tr>
+    <tr><td>M116</td><td><span class="fw fw-both">Both</span></td><td>Wait for all heaters to reach target</td></tr>
+  </table>
+
+  <h3>Temperature Reporting</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M105</td><td>Report current temperatures — response: <code>ok T:215.2 /215.0 B:60.1 /60.0</code></td></tr>
+    <tr><td>M155 S[seconds]</td><td>Auto-report temperatures every N seconds (Marlin). <code>M155 S2</code> = every 2s.</td></tr>
+    <tr><td>TEMPERATURE_WAIT SENSOR=extruder MINIMUM=200</td><td>Klipper equivalent of M109 <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+
+  <h3>Typical Temperatures by Material</h3>
+  <table class="cmd-table">
+    <tr><th>Material</th><th>Hotend (°C)</th><th>Bed (°C)</th><th>Fan</th></tr>
+    <tr><td>PLA</td><td>195–220</td><td>50–65</td><td>100%</td></tr>
+    <tr><td>PETG</td><td>230–250</td><td>70–90</td><td>30–60%</td></tr>
+    <tr><td>ABS</td><td>230–250</td><td>100–110</td><td>0–20%</td></tr>
+    <tr><td>ASA</td><td>240–260</td><td>100–110</td><td>0–10%</td></tr>
+    <tr><td>TPU</td><td>220–240</td><td>40–60</td><td>50%</td></tr>
+    <tr><td>Nylon</td><td>250–280</td><td>70–90</td><td>0–50%</td></tr>
+    <tr><td>PC</td><td>270–310</td><td>110–130</td><td>0%</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 5 ═══ -->
+<div class="tab-panel" id="tab5">
+  <h2>🔩 Extruder & Flow Control</h2>
+  <p class="section-intro">The E axis controls how much filament is pushed. Getting this right is fundamental to print quality.</p>
+
+  <h3>Absolute vs Relative Extrusion</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M82</td><td><strong>Absolute extrusion</strong> — E values are total mm from start (or last G92 E0). Default in most slicers.</td></tr>
+    <tr><td>M83</td><td><strong>Relative extrusion</strong> — each E value is distance for that move only. Simpler math, used by some slicers.</td></tr>
+    <tr><td>G92 E0</td><td>Reset extruder position counter to 0. Common in start scripts and after retracts.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Absolute mode — E keeps growing</span>
+<span class="cmd">M82</span>
+<span class="cmd">G92</span> <span class="param">E</span><span class="val">0</span>
+<span class="cmd">G1</span> <span class="param">X</span><span class="val">100</span> <span class="param">E</span><span class="val">5.0</span>   <span class="cmt">; extruded 5mm total</span>
+<span class="cmd">G1</span> <span class="param">X</span><span class="val">200</span> <span class="param">E</span><span class="val">10.5</span>  <span class="cmt">; extruded 5.5mm more (total 10.5)</span>
+
+<span class="cmt">; Relative mode — E is per-move delta</span>
+<span class="cmd">M83</span>
+<span class="cmd">G1</span> <span class="param">X</span><span class="val">100</span> <span class="param">E</span><span class="val">5.0</span>   <span class="cmt">; extrude 5mm</span>
+<span class="cmd">G1</span> <span class="param">X</span><span class="val">200</span> <span class="param">E</span><span class="val">5.5</span>   <span class="cmt">; extrude 5.5mm more</span>
+  </div>
+
+  <h3>Retraction</h3>
+  <p>Retraction pulls filament back before a travel move to prevent stringing. Slicer handles this automatically, but you can tune or script it.</p>
+  <div class="code-block">
+<span class="cmt">; Retract 0.8mm at 45mm/s (F2700)</span>
+<span class="cmd">G1</span> <span class="param">F</span><span class="val">2700</span> <span class="param">E</span><span class="val">9.7</span>   <span class="cmt">; was at E10.5, now pull back 0.8mm</span>
+<span class="cmt">; Travel move</span>
+<span class="cmd">G0</span> <span class="param">F</span><span class="val">9000</span> <span class="param">X</span><span class="val">50</span> <span class="param">Y</span><span class="val">80</span>
+<span class="cmt">; Un-retract (prime) before next print move</span>
+<span class="cmd">G1</span> <span class="param">F</span><span class="val">2700</span> <span class="param">E</span><span class="val">10.5</span>  <span class="cmt">; push back the 0.8mm</span>
+  </div>
+
+  <h3>Retraction by Material</h3>
+  <table class="cmd-table">
+    <tr><th>Material</th><th>Direct Drive (mm)</th><th>Bowden (mm)</th><th>Speed (mm/s)</th></tr>
+    <tr><td>PLA</td><td>0.5–1.0</td><td>3.5–6.0</td><td>25–45</td></tr>
+    <tr><td>PETG</td><td>0.5–1.5</td><td>4.0–7.0</td><td>20–35</td></tr>
+    <tr><td>ABS</td><td>0.5–1.0</td><td>3.0–5.0</td><td>25–40</td></tr>
+    <tr><td>TPU</td><td>0.5–2.0</td><td>Not recommended</td><td>15–25</td></tr>
+  </table>
+
+  <h3>Flow Rate Override</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M221 S[%]</td><td>Set flow rate multiplier. <code>M221 S95</code> = 95% flow (underextrusion). Default 100.</td></tr>
+    <tr><td>M220 S[%]</td><td>Set speed multiplier. <code>M220 S150</code> = 150% speed. Applies globally.</td></tr>
+  </table>
+
+  <div class="tip-box"><strong>💡 E-step Calibration</strong> — The most important extruder setting. Mark 100mm on filament, command <code>G1 E100 F100</code>, measure what actually moved. If 98mm moved: new steps = old steps × (100 / 98). Do this first on any new printer.</div>
+
+  <h3>Extruder Motor</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M84</td><td>Disable all steppers (motors go limp). Use in end script.</td></tr>
+    <tr><td>M84 E</td><td>Disable only extruder motor.</td></tr>
+    <tr><td>M18</td><td>Same as M84 — disable steppers.</td></tr>
+    <tr><td>M17</td><td>Enable all steppers.</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 6 ═══ -->
+<div class="tab-panel" id="tab6">
+  <h2>📏 Bed Leveling & Probing</h2>
+  <p class="section-intro">A level bed is the single biggest factor in first-layer success. G-code gives you full control over the probing process.</p>
+
+  <h3>Homing & Z-offset</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>G28</td><td>Home all axes. Must run before any probing.</td></tr>
+    <tr><td>G28 Z</td><td>Home Z only (re-trigger Z endstop/probe).</td></tr>
+    <tr><td>M851 Z[-offset]</td><td><strong>Set Z probe offset</strong>. Negative = nozzle is below probe. <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M206 Z[value]</td><td>Set home offset (alternative Z offset method). <span class="fw fw-marlin">Marlin</span></td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Set Z probe offset to -1.25mm (probe is 1.25mm above nozzle)</span>
+<span class="cmd">M851</span> <span class="param">Z</span><span class="val">-1.25</span>
+<span class="cmd">M500</span>  <span class="cmt">; save to EEPROM</span>
+  </div>
+
+  <h3>Auto Bed Leveling (ABL)</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th></tr>
+    <tr><td>G29</td><td>varies</td><td><strong>Run ABL sequence</strong>. Probes multiple points and creates a mesh. Behavior depends on firmware config.</td></tr>
+    <tr><td>G29 A</td><td>—</td><td>Activate UBL mesh <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G29 S1</td><td>—</td><td>Save UBL mesh to slot 1 <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G29 L1</td><td>—</td><td>Load UBL mesh from slot 1 <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M420 S1</td><td>—</td><td><strong>Enable bed leveling compensation</strong>. Use in start script after G28 if you saved mesh. <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M420 S0</td><td>—</td><td>Disable bed leveling compensation temporarily.</td></tr>
+    <tr><td>BED_MESH_CALIBRATE</td><td>—</td><td>Run bed mesh (equivalent of G29) <span class="fw fw-klipper">Klipper</span></td></tr>
+    <tr><td>BED_MESH_PROFILE LOAD=default</td><td>—</td><td>Load saved mesh <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+
+  <div class="info-box"><strong>💡 Smart start script pattern (Marlin):</strong> Run G29 only on first print of the day. All subsequent prints use <code>M420 S1</code> to load the saved mesh without re-probing — saves 3–5 minutes per print.</div>
+
+  <div class="code-block">
+<span class="cmt">; Efficient start script — load saved mesh instead of probing every time</span>
+<span class="cmd">G28</span>          <span class="cmt">; home all</span>
+<span class="cmd">M420</span> <span class="param">S</span><span class="val">1</span>    <span class="cmt">; enable saved mesh</span>
+<span class="cmt">; To reprobe instead: replace M420 S1 with G29</span>
+  </div>
+
+  <h3>Manual Tramming</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>G35</td><td>Assisted tramming — probes corners and tells you how many turns each screw needs. <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>SCREWS_TILT_CALCULATE</td><td>Klipper equivalent — reports clockwise/CCW turns per screw. <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+
+  <h3>Probe Commands</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>G30</td><td>Probe a single point at current X/Y position. Reports Z height. Useful for manual mesh building.</td></tr>
+    <tr><td>M48</td><td>Probe repeatability test. Run 10+ probes, reports deviation. Good deviation: &lt;0.01mm. <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>PROBE_ACCURACY</td><td>Klipper probe accuracy test. <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 7 ═══ -->
+<div class="tab-panel" id="tab7">
+  <h2>📝 Start & End G-code Scripts</h2>
+  <p class="section-intro">The start and end scripts run before and after every print. Getting these right saves time and prevents failures.</p>
+
+  <h3>Universal Start Script (PLA / Marlin)</h3>
+  <div class="code-block">
+<span class="cmt">; ─── START GCODE ───────────────────────────────</span>
+<span class="cmd">G21</span>              <span class="cmt">; mm units</span>
+<span class="cmd">G90</span>              <span class="cmt">; absolute positioning</span>
+<span class="cmd">M82</span>              <span class="cmt">; absolute extrusion</span>
+
+<span class="cmt">; Preheat while homing (parallel = time saving)</span>
+<span class="cmd">M104</span> <span class="param">S</span><span class="val">215</span>        <span class="cmt">; start hotend (don't wait)</span>
+<span class="cmd">M140</span> <span class="param">S</span><span class="val">60</span>         <span class="cmt">; start bed (don't wait)</span>
+
+<span class="cmd">G28</span>              <span class="cmt">; home all axes</span>
+<span class="cmd">M190</span> <span class="param">S</span><span class="val">60</span>         <span class="cmt">; wait for bed 60°C</span>
+<span class="cmd">M109</span> <span class="param">S</span><span class="val">215</span>        <span class="cmt">; wait for hotend 215°C</span>
+
+<span class="cmd">M420</span> <span class="param">S</span><span class="val">1</span>          <span class="cmt">; load saved mesh (or G29 to re-probe)</span>
+
+<span class="cmt">; Purge line along left edge</span>
+<span class="cmd">G92</span> <span class="param">E</span><span class="val">0</span>
+<span class="cmd">G0</span>  <span class="param">F</span><span class="val">9000</span> <span class="param">X</span><span class="val">1</span> <span class="param">Y</span><span class="val">20</span> <span class="param">Z</span><span class="val">0.3</span>
+<span class="cmd">G1</span>  <span class="param">F</span><span class="val">1500</span> <span class="param">X</span><span class="val">1</span> <span class="param">Y</span><span class="val">200</span> <span class="param">E</span><span class="val">16</span> <span class="cmt">; draw purge line</span>
+<span class="cmd">G1</span>  <span class="param">F</span><span class="val">2700</span> <span class="param">E</span><span class="val">15.2</span>       <span class="cmt">; retract</span>
+<span class="cmd">G92</span> <span class="param">E</span><span class="val">0</span>               <span class="cmt">; reset E</span>
+<span class="cmd">G0</span>  <span class="param">F</span><span class="val">9000</span> <span class="param">X</span><span class="val">5</span> <span class="param">Y</span><span class="val">20</span>    <span class="cmt">; wipe off blob</span>
+  </div>
+
+  <h3>Universal End Script</h3>
+  <div class="code-block">
+<span class="cmt">; ─── END GCODE ─────────────────────────────────</span>
+<span class="cmd">M104</span> <span class="param">S</span><span class="val">0</span>          <span class="cmt">; hotend off</span>
+<span class="cmd">M140</span> <span class="param">S</span><span class="val">0</span>          <span class="cmt">; bed off</span>
+<span class="cmd">M106</span> <span class="param">S</span><span class="val">0</span>          <span class="cmt">; fan off</span>
+
+<span class="cmd">G91</span>              <span class="cmt">; relative mode</span>
+<span class="cmd">G1</span>  <span class="param">Z</span><span class="val">10</span> <span class="param">F</span><span class="val">600</span>    <span class="cmt">; lift nozzle 10mm</span>
+<span class="cmd">G1</span>  <span class="param">E</span><span class="val">-2</span> <span class="param">F</span><span class="val">2700</span>   <span class="cmt">; retract filament 2mm</span>
+<span class="cmd">G90</span>              <span class="cmt">; back to absolute</span>
+<span class="cmd">G0</span>  <span class="param">X</span><span class="val">0</span> <span class="param">Y</span><span class="val">235</span> <span class="param">F</span><span class="val">9000</span> <span class="cmt">; park at front-left / present print</span>
+<span class="cmd">M84</span>              <span class="cmt">; disable steppers</span>
+  </div>
+
+  <h3>Klipper Start Script</h3>
+  <div class="code-block">
+<span class="cmt">; Klipper uses macros in printer.cfg — call them from slicer start gcode</span>
+<span class="str">PRINT_START EXTRUDER=215 BED=60</span>
+
+<span class="cmt">; Your printer.cfg macro handles homing, heating, QGL, mesh, purge</span>
+<span class="cmt">; [gcode_macro PRINT_START]</span>
+<span class="cmt">; gcode:</span>
+<span class="cmt">;   {% set EXTRUDER = params.EXTRUDER|default(200)|int %}</span>
+<span class="cmt">;   {% set BED = params.BED|default(60)|int %}</span>
+<span class="cmt">;   M104 S{EXTRUDER}</span>
+<span class="cmt">;   M140 S{BED}</span>
+<span class="cmt">;   G28</span>
+<span class="cmt">;   BED_MESH_CALIBRATE</span>
+<span class="cmt">;   M109 S{EXTRUDER}</span>
+<span class="cmt">;   M190 S{BED}</span>
+  </div>
+
+  <h3>Slicer Placeholder Variables</h3>
+  <p>Modern slicers let you embed variables in start/end scripts — no need to hardcode temperatures:</p>
+  <table class="cmd-table">
+    <tr><th>Variable</th><th>Slicer</th><th>Expands to</th></tr>
+    <tr><td>{first_layer_temperature[0]}</td><td>PrusaSlicer</td><td>First layer hotend temp from filament profile</td></tr>
+    <tr><td>{first_layer_bed_temperature}</td><td>PrusaSlicer</td><td>First layer bed temp</td></tr>
+    <tr><td>{material_print_temperature}</td><td>Cura</td><td>Print temperature</td></tr>
+    <tr><td>{material_bed_temperature}</td><td>Cura</td><td>Bed temperature</td></tr>
+    <tr><td>[nozzle_temperature_initial_layer]</td><td>Bambu Studio</td><td>First layer nozzle temp</td></tr>
+    <tr><td>[bed_temperature_initial_layer_single]</td><td>Bambu Studio</td><td>First layer bed temp</td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 8 ═══ -->
+<div class="tab-panel" id="tab8">
+  <h2>🚀 Advanced Tuning Commands</h2>
+  <p class="section-intro">Beyond basic printing — commands for calibration, compensation, and firmware configuration.</p>
+
+  <h3>EEPROM (Persistent Storage)</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M500</td><td><strong>Save settings to EEPROM</strong>. Run after any calibration change to make it permanent across power cycles.</td></tr>
+    <tr><td>M501</td><td>Load settings from EEPROM (restore saved values). Run after accidental changes.</td></tr>
+    <tr><td>M502</td><td>Factory reset — load firmware defaults. Run M500 after if you want to save them.</td></tr>
+    <tr><td>M503</td><td><strong>Print current settings</strong>. Shows all EEPROM values — steps/mm, PID, offsets, etc.</td></tr>
+  </table>
+
+  <div class="tip-box"><strong>💡 Always run M503 first</strong> before calibrating a new/used printer. Know your baseline before changing anything.</div>
+
+  <h3>Steps per mm</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Example</th><th>Description</th></tr>
+    <tr><td>M92</td><td>M92 X80 Y80 Z400 E415</td><td>Set steps/mm for each axis. Critical for dimensional accuracy.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Read current steps</span>
+<span class="cmd">M503</span>
+<span class="cmt">; Output: M92 X80.00 Y80.00 Z400.00 E415.00</span>
+
+<span class="cmt">; Example: extruder calibration — commanded 100mm, got 96mm</span>
+<span class="cmt">; New E steps = 415 × (100/96) = 432.29</span>
+<span class="cmd">M92</span> <span class="param">E</span><span class="val">432.29</span>
+<span class="cmd">M500</span>   <span class="cmt">; save</span>
+  </div>
+
+  <h3>PID Tuning</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M303 E0 S215 C8</td><td>Auto-tune hotend PID at 215°C, 8 cycles. <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M303 E-1 S60 C8</td><td>Auto-tune bed PID at 60°C. E-1 = bed heater. <span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M301 P[p] I[i] D[d]</td><td>Set hotend PID values manually.</td></tr>
+    <tr><td>M304 P[p] I[i] D[d]</td><td>Set bed PID values manually.</td></tr>
+    <tr><td>PID_CALIBRATE HEATER=extruder TARGET=215</td><td>Klipper PID auto-tune. <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+
+  <h3>Linear Advance / Pressure Advance</h3>
+  <p>Compensates for filament pressure lag — improves corners and sharp features dramatically.</p>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Firmware</th><th>Description</th></tr>
+    <tr><td>M900 K[value]</td><td><span class="fw fw-marlin">Marlin</span></td><td>Set Linear Advance factor K. Typical PLA: 0.05–0.2. Bowden: 0.5–1.5.</td></tr>
+    <tr><td>SET_PRESSURE_ADVANCE ADVANCE=[value]</td><td><span class="fw fw-klipper">Klipper</span></td><td>Set pressure advance. Typical: 0.04–0.08 for direct drive.</td></tr>
+    <tr><td>SET_PRESSURE_ADVANCE SMOOTH_TIME=0.04</td><td><span class="fw fw-klipper">Klipper</span></td><td>Smooth time for PA. Default 0.04s is good for most printers.</td></tr>
+  </table>
+
+  <div class="code-block">
+<span class="cmt">; Marlin — enable and set Linear Advance for PLA</span>
+<span class="cmd">M900</span> <span class="param">K</span><span class="val">0.08</span>
+<span class="cmd">M500</span>
+
+<span class="cmt">; Klipper — in printer.cfg</span>
+<span class="cmt">; [extruder]</span>
+<span class="cmt">; pressure_advance: 0.06</span>
+<span class="cmt">; pressure_advance_smooth_time: 0.040</span>
+  </div>
+
+  <h3>Input Shaping (Resonance Compensation)</h3>
+  <p>Eliminates ghosting/ringing artifacts caused by printer vibration.</p>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Firmware</th><th>Description</th></tr>
+    <tr><td>M593 F[freq] D[damping]</td><td><span class="fw fw-marlin">Marlin</span></td><td>Set ZV input shaper. Measure resonance frequency with accelerometer or test print.</td></tr>
+    <tr><td>SET_INPUT_SHAPER SHAPER_TYPE=mzv SHAPER_FREQ_X=50</td><td><span class="fw fw-klipper">Klipper</span></td><td>Set shaper type and frequency.</td></tr>
+    <tr><td>SHAPER_CALIBRATE</td><td><span class="fw fw-klipper">Klipper</span></td><td>Auto-calibrate with ADXL345 accelerometer. Most accurate method.</td></tr>
+  </table>
+
+  <h3>Acceleration & Jerk</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>M201 X[acc] Y[acc]</td><td>Set max acceleration per axis (mm/s²). Marlin default: 500–1000.</td></tr>
+    <tr><td>M204 P[print] T[travel]</td><td>Set print acceleration and travel acceleration.</td></tr>
+    <tr><td>M205 X[jerk] Y[jerk]</td><td>Set jerk (Marlin) — max instantaneous velocity change. Lower = smoother, higher = faster corners.</td></tr>
+    <tr><td>SET_VELOCITY_LIMIT ACCEL=3000</td><td>Klipper acceleration limit (live, not saved). <span class="fw fw-klipper">Klipper</span></td></tr>
+  </table>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 9 ═══ -->
+<div class="tab-panel" id="tab9">
+  <h2>🔴 Klipper Extras & Macros</h2>
+  <p class="section-intro">Klipper extends G-code with Python-powered macros and a rich set of extended commands that go far beyond standard Marlin.</p>
+
+  <h3>Essential Klipper Commands</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>FIRMWARE_RESTART</td><td>Restart Klipper firmware (like power cycle). Clears errors.</td></tr>
+    <tr><td>RESTART</td><td>Reload printer.cfg without full firmware restart.</td></tr>
+    <tr><td>STATUS</td><td>Report printer readiness state.</td></tr>
+    <tr><td>QUERY_ENDSTOPS</td><td>Check all endstop states — open or triggered.</td></tr>
+    <tr><td>GET_POSITION</td><td>Report current head position (stepper counts + mm).</td></tr>
+    <tr><td>SET_GCODE_OFFSET Z=[value]</td><td>Live Z offset adjustment. Positive = nozzle higher.</td></tr>
+    <tr><td>SAVE_CONFIG</td><td>Write calibration results back to printer.cfg automatically.</td></tr>
+  </table>
+
+  <h3>Quad Gantry Leveling / Z-Tilt</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td>QUAD_GANTRY_LEVEL</td><td>Level a 4-point Z gantry (Voron 2.4, etc.) using probe.</td></tr>
+    <tr><td>Z_TILT_ADJUST</td><td>Level a 3-point Z system (Trident, etc.).</td></tr>
+    <tr><td>BED_MESH_CALIBRATE</td><td>Probe bed mesh. Add PROFILE=name to save named profiles.</td></tr>
+    <tr><td>BED_MESH_PROFILE SAVE=default</td><td>Save current mesh to a named profile.</td></tr>
+    <tr><td>BED_MESH_PROFILE LOAD=default</td><td>Load a saved mesh without re-probing.</td></tr>
+  </table>
+
+  <h3>Writing Klipper Macros</h3>
+  <div class="code-block">
+<span class="cmt">; In printer.cfg — a full PRINT_START macro</span>
+<span class="str">[gcode_macro PRINT_START]</span>
+<span class="str">gcode:</span>
+<span class="str">  {% set EXTRUDER = params.EXTRUDER|default(200)|int %}</span>
+<span class="str">  {% set BED      = params.BED|default(60)|int %}</span>
+
+<span class="str">  M104 S{EXTRUDER}        # preheat nozzle (no wait)</span>
+<span class="str">  M140 S{BED}             # preheat bed (no wait)</span>
+<span class="str">  G28                     # home all</span>
+<span class="str">  QUAD_GANTRY_LEVEL       # level gantry (Voron)</span>
+<span class="str">  BED_MESH_CALIBRATE      # probe mesh</span>
+<span class="str">  M190 S{BED}             # wait bed</span>
+<span class="str">  M109 S{EXTRUDER}        # wait nozzle</span>
+<span class="str">  G92 E0</span>
+<span class="str">  # purge line</span>
+<span class="str">  G0 X5 Y5 Z0.3 F9000</span>
+<span class="str">  G1 X5 Y200 E18 F1500</span>
+<span class="str">  G92 E0</span>
+  </div>
+
+  <h3>Conditional Logic in Macros</h3>
+  <div class="code-block">
+<span class="cmt">; Jinja2 templating in Klipper macros</span>
+<span class="str">[gcode_macro HEAT_SOAK]</span>
+<span class="str">gcode:</span>
+<span class="str">  {% set TEMP = params.TEMP|default(110)|int %}</span>
+<span class="str">  {% if TEMP > 100 %}</span>
+<span class="str">    M141 S{TEMP}         # heat chamber</span>
+<span class="str">    M191 S{TEMP}         # wait for chamber</span>
+<span class="str">  {% endif %}</span>
+<span class="str">  M190 S{TEMP}           # bed to chamber temp</span>
+  </div>
+
+  <h3>Useful Klipper Extras (moonraker / klicky / etc.)</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">🔃 Object Cancel</div>
+      <div class="card-body">Slicer annotates objects → Klipper can cancel individual objects mid-print. Enable: <code>EXCLUDE_OBJECT_START NAME=...</code></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 ADXL345</div>
+      <div class="card-body">Accelerometer wired to MCU → <code>SHAPER_CALIBRATE</code> auto-tunes input shaping. Eliminates ringing permanently.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 Endless Spool</div>
+      <div class="card-body">MMU/filament sensor macros let Klipper auto-switch spools when one runs out.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🌡️ Thermal Expansion</div>
+      <div class="card-body"><code>SET_GCODE_OFFSET Z=0.01</code> live-adjust Z without stopping. Great for first-layer tuning.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 10 ═══ -->
+<div class="tab-panel" id="tab10">
+  <h2>🔍 Troubleshooting by Symptom</h2>
+  <p class="section-intro">Map a print defect to the G-code or setting that causes it — and the command to fix it.</p>
+
+  <h3>First Layer Problems</h3>
+  <table class="cmd-table">
+    <tr><th>Symptom</th><th>Likely Cause</th><th>G-code Fix</th></tr>
+    <tr><td>Not sticking / gaps</td><td>Z too high</td><td>Decrease <code>M851 Z</code> value (more negative) → <code>M500</code></td></tr>
+    <tr><td>Squished flat, nozzle dragging</td><td>Z too low</td><td>Increase <code>M851 Z</code> value (less negative) → <code>M500</code></td></tr>
+    <tr><td>Sticks in center, lifts at corners</td><td>Bed not level</td><td>Run <code>G29</code> or <code>G35</code> (Marlin screws tilt)</td></tr>
+    <tr><td>First layer varies across bed</td><td>No mesh compensation</td><td>Run <code>G29</code> then <code>M420 S1</code> in start script</td></tr>
+    <tr><td>No extrusion at start</td><td>Missing prime / retract too far</td><td>Add purge line to start script; check E-step calibration</td></tr>
+  </table>
+
+  <h3>Stringing & Oozing</h3>
+  <table class="cmd-table">
+    <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Fine strings between features</td><td>Retraction too low</td><td>Increase retraction distance in slicer; check <code>M503</code> for current config</td></tr>
+    <tr><td>Blobs at travel start/end</td><td>Retraction speed too low</td><td>Increase retraction speed; tune pressure advance (<code>M900 K</code>)</td></tr>
+    <tr><td>Strings even with retraction</td><td>Temp too high</td><td>Lower <code>M104</code>/<code>M109</code> by 5°C increments</td></tr>
+    <tr><td>Stringing after Klipper upgrade</td><td>Pressure advance not set</td><td><code>SET_PRESSURE_ADVANCE ADVANCE=0.05</code> — tune with PA test print</td></tr>
+  </table>
+
+  <h3>Layer Shifting</h3>
+  <table class="cmd-table">
+    <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Shift only in X or Y</td><td>Acceleration too high</td><td>Reduce <code>M204 P</code> or <code>M201</code> values → <code>M500</code></td></tr>
+    <tr><td>Random shifts at high speed</td><td>Jerk / speed too high</td><td>Reduce <code>M205</code> X/Y jerk; reduce print speed</td></tr>
+    <tr><td>Consistent shift at same height</td><td>Mechanical obstruction at that Z height</td><td>Check Z-axis lead screw / coupler — G-code is not the cause</td></tr>
+  </table>
+
+  <h3>Under/Over Extrusion</h3>
+  <table class="cmd-table">
+    <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+    <tr><td>Gaps between lines</td><td>Under-extrusion</td><td>Calibrate E-steps (<code>M92 E</code>); increase <code>M221 S</code> flow %</td></tr>
+    <tr><td>Bulging lines, rough surface</td><td>Over-extrusion</td><td>Calibrate E-steps; decrease <code>M221 S</code>; check filament diameter</td></tr>
+    <tr><td>Inconsistent extrusion</td><td>Temperature fluctuation</td><td>Run PID tune: <code>M303 E0 S215 C8</code> → <code>M301</code> → <code>M500</code></td></tr>
+  </table>
+
+  <h3>Ringing / Ghosting</h3>
+  <table class="cmd-table">
+    <tr><th>Symptom</th><th>Fix</th></tr>
+    <tr><td>Waves after sharp corners</td><td>Enable input shaping: <code>M593 F[freq]</code> (Marlin) or <code>SHAPER_CALIBRATE</code> (Klipper)</td></tr>
+    <tr><td>Ringing gets worse at higher speeds</td><td>Reduce acceleration <code>M204</code>; enable pressure advance</td></tr>
+  </table>
+
+  <h3>Heat Creep / Clogs</h3>
+  <table class="cmd-table">
+    <tr><th>Symptom</th><th>G-code to diagnose</th></tr>
+    <tr><td>Gradual under-extrusion over hours</td><td>Check <code>M105</code> for temp drops; check hotend fan with <code>M106 P1 S255</code></td></tr>
+    <tr><td>Complete clog</td><td>Heat to 260°C (<code>M109 S260</code>), push filament manually, cold pull</td></tr>
+  </table>
+
+  <div class="warn-box"><strong>⚠️ Cold pull G-code:</strong> Heat to print temp → <code>M109 S260</code>. Push filament. Then cool: <code>M109 S90</code>. At 90°C, pull filament sharply. Repeat until clean plug comes out.</div>
+</div>
+
+<!-- ═══════════════════════════════════════ TAB 11 ═══ -->
+<div class="tab-panel" id="tab11">
+  <h2>📚 Full G-code Reference</h2>
+  <p class="section-intro">Complete quick-reference for all commonly used G and M codes across Marlin, Klipper, and RepRapFirmware.</p>
+
+  <h3>G Commands — Movement & Geometry</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th><th>Firmware</th></tr>
+    <tr><td>G0</td><td>X Y Z F</td><td>Rapid/travel linear move</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G1</td><td>X Y Z E F</td><td>Linear move with extrusion</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G2</td><td>X Y I J F E</td><td>Clockwise arc</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G3</td><td>X Y I J F E</td><td>Counter-clockwise arc</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G4</td><td>P / S</td><td>Dwell (pause) — P=ms, S=seconds</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G10</td><td>—</td><td>Firmware retract (uses M207 settings)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G11</td><td>—</td><td>Firmware un-retract</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G17/18/19</td><td>—</td><td>Select arc plane XY/XZ/YZ</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G20</td><td>—</td><td>Set units to inches</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G21</td><td>—</td><td>Set units to millimetres (default)</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G26</td><td>—</td><td>Mesh validation print (prints test pattern)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G27</td><td>P[0-2]</td><td>Park printhead (P0=no move, P1=Z+20, P2=max Z)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G28</td><td>X Y Z</td><td>Home axes</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G29</td><td>various</td><td>Auto bed leveling / mesh probe</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G30</td><td>X Y</td><td>Single point probe</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G31</td><td>—</td><td>Dock probe</td><td><span class="fw fw-reprap">RRF</span></td></tr>
+    <tr><td>G32</td><td>—</td><td>Probe bed and update mesh</td><td><span class="fw fw-reprap">RRF</span></td></tr>
+    <tr><td>G34</td><td>—</td><td>Z steppers auto-align</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G35</td><td>—</td><td>Tramming assistant (screw turns)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G38.2</td><td>X Y Z F</td><td>Probe toward target until contact</td><td><span class="fw fw-both">Marlin/Klipper</span></td></tr>
+    <tr><td>G75</td><td>—</td><td>Print temperature interpolation</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G76</td><td>—</td><td>Probe temperature calibration</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>G80</td><td>—</td><td>Cancel current motion mode</td><td><span class="fw fw-reprap">RRF</span></td></tr>
+    <tr><td>G90</td><td>—</td><td>Absolute positioning mode</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G91</td><td>—</td><td>Relative positioning mode</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>G92</td><td>X Y Z E</td><td>Set current position (no move)</td><td><span class="fw fw-both">All</span></td></tr>
+  </table>
+
+  <h3>M Commands — Machine Control</h3>
+  <table class="cmd-table">
+    <tr><th>Command</th><th>Parameters</th><th>Description</th><th>Firmware</th></tr>
+    <tr><td>M0</td><td>—</td><td>Unconditional stop / pause (wait for user)</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M1</td><td>—</td><td>Conditional stop</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M17</td><td>—</td><td>Enable all steppers</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M18/M84</td><td>X Y Z E S</td><td>Disable steppers. S[seconds] = auto-timeout.</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M20</td><td>—</td><td>List SD card files</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M23</td><td>[filename]</td><td>Select SD file</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M24</td><td>—</td><td>Start/resume SD print</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M25</td><td>—</td><td>Pause SD print</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M82</td><td>—</td><td>Extruder absolute mode</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M83</td><td>—</td><td>Extruder relative mode</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M92</td><td>X Y Z E</td><td>Set steps per mm</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M104</td><td>S T</td><td>Set hotend temperature (non-blocking)</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M105</td><td>—</td><td>Report temperatures</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M106</td><td>S P</td><td>Set fan speed (0-255)</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M107</td><td>—</td><td>Fan off</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M109</td><td>S R T</td><td>Set hotend + wait</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M112</td><td>—</td><td><strong>Emergency stop</strong> — kills everything immediately</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M114</td><td>—</td><td>Report current position</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M115</td><td>—</td><td>Report firmware version and capabilities</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M117</td><td>[message]</td><td>Display message on LCD screen</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M118</td><td>[message]</td><td>Send message to host (terminal)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M119</td><td>—</td><td>Report endstop states</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M140</td><td>S</td><td>Set bed temperature (non-blocking)</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M141</td><td>S</td><td>Set chamber temperature (non-blocking)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M155</td><td>S</td><td>Auto-report temps every N seconds</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M190</td><td>S R</td><td>Set bed + wait</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M191</td><td>S</td><td>Set chamber + wait</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M200</td><td>D</td><td>Set filament diameter (for volumetric extrusion)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M201</td><td>X Y Z E</td><td>Set max acceleration per axis</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M203</td><td>X Y Z E</td><td>Set max feedrate per axis</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M204</td><td>P T</td><td>Set print / travel acceleration</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M205</td><td>X Y Z E J</td><td>Set jerk limits</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M206</td><td>X Y Z</td><td>Set home offsets</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M207</td><td>S F Z T</td><td>Set firmware retract settings</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M208</td><td>S F</td><td>Set firmware un-retract settings</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M218</td><td>T X Y</td><td>Set hotend offset (multi-extruder)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M220</td><td>S</td><td>Set speed override %</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M221</td><td>S</td><td>Set extrusion/flow override %</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M280</td><td>P S</td><td>Set servo position (BLTouch, deploy/stow)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M290</td><td>Z</td><td>Baby-step Z (live offset during print)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M300</td><td>S P</td><td>Beep — S=frequency (Hz), P=duration (ms)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M301</td><td>P I D</td><td>Set hotend PID</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M303</td><td>E S C</td><td>Auto-tune PID</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M304</td><td>P I D</td><td>Set bed PID</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M350</td><td>X Y Z E B</td><td>Set microstepping</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M400</td><td>—</td><td>Wait for moves to finish (buffer empty)</td><td><span class="fw fw-both">All</span></td></tr>
+    <tr><td>M401</td><td>—</td><td>Deploy probe</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M402</td><td>—</td><td>Stow probe</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M404</td><td>N W</td><td>Filament diameter and cross-section area</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M420</td><td>S V Z</td><td>Bed leveling on/off; load mesh</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M421</td><td>I J Z Q</td><td>Set mesh point value manually</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M500</td><td>—</td><td>Save settings to EEPROM</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M501</td><td>—</td><td>Load settings from EEPROM</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M502</td><td>—</td><td>Reset settings to firmware defaults</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M503</td><td>—</td><td>Print all current settings</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M504</td><td>—</td><td>Validate EEPROM</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M569</td><td>P S</td><td>Set stepper driver direction</td><td><span class="fw fw-reprap">RRF</span></td></tr>
+    <tr><td>M600</td><td>—</td><td>Filament change — pause, retract, park, wait</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M701</td><td>T</td><td>Load filament</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M702</td><td>T</td><td>Unload filament</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M851</td><td>X Y Z</td><td>Set probe Z offset</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M900</td><td>K</td><td>Set Linear Advance factor</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M906</td><td>X Y Z E</td><td>Set stepper motor current (mA)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M913</td><td>X Y Z E</td><td>Set motor current % (TMC hybrid threshold)</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+    <tr><td>M914</td><td>X Y Z</td><td>Set sensorless homing threshold</td><td><span class="fw fw-marlin">Marlin</span></td></tr>
+  </table>
+
+  <div class="tip-box"><strong>💡 Quick lookup tip:</strong> Run <code>M115</code> on your printer to see exactly which commands it supports. Different Marlin builds have different features compiled in.</div>
+</div>
+
+</div><!-- /content -->
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Scroll-to-top button
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTop').style.display = window.scrollY > 400 ? 'flex' : 'none';
+  });
+  document.getElementById('scrollTop').style.cssText += 'align-items:center;justify-content:center;';
+</script>
+</body>
+</html>
